@@ -1,0 +1,41 @@
+{
+  "schema": "longevity-skill/1",
+  "name": "epigenetic-clock-reliability",
+  "kind": "paper",
+  "tier": "A",
+  "species": [
+    "human"
+  ],
+  "evidence": "method",
+  "domains": [
+    "甲基化"
+  ],
+  "blurb_zh": "同一个时钟两次年龄的差。",
+  "intents": [
+    "epigenetic_age",
+    "before_after"
+  ],
+  "triage": {
+    "reason_zh": "用同一时钟两次甲基化年龄算绝对差，并与论文技术重复的中位差并列。",
+    "reviewed": false
+  },
+  "paper": {
+    "doi": "10.1038/s43587-022-00248-2",
+    "title": "A computational solution for bolstering reliability of epigenetic clocks: implications for clinical trials and longitudinal tracking",
+    "title_zh": "两次甲基化年龄的差",
+    "journal": "Nature Aging",
+    "year": 2022,
+    "authors": "Higgins-Chen 等",
+    "article_url": "https://doi.org/10.1038/s43587-022-00248-2",
+    "summary_zh": "这项研究发现同一份样本重复测量时，技术噪声可让几种常用表观遗传时钟的结果相差多达数年，于是先从CpG位点数据提取主成分再重新训练这些时钟，使多数重复之间的差距明显缩小。个人报告只算你交来的同一时钟两次技术重复年龄的绝对差，并与论文里的重复差并排，不计算主成分版本的年龄，也不据此开始或停止任何药物。",
+    "summary_status": "draft"
+  },
+  "entry": {
+    "script": "scripts/personal_report.py",
+    "measurements_flag": "--measurements",
+    "medications_flag": "--medications",
+    "labs_flag": "--labs",
+    "out_flag": "--out"
+  },
+  "inputs_status": "none"
+}

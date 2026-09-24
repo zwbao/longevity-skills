@@ -1,0 +1,42 @@
+{
+  "schema": "longevity-skill/1",
+  "name": "semaglutide-epigenetic-aging-trial",
+  "kind": "paper",
+  "tier": "A",
+  "species": [
+    "human"
+  ],
+  "evidence": "rct",
+  "domains": [
+    "甲基化"
+  ],
+  "blurb_zh": "同一时钟在基线和第 32 周的变化。",
+  "intents": [
+    "before_after",
+    "epigenetic_age",
+    "intervention_evidence"
+  ],
+  "triage": {
+    "reason_zh": "司美格鲁肽随机试验，用个人同一时钟第32周减基线算出变化。",
+    "reviewed": false
+  },
+  "paper": {
+    "doi": "10.1038/s41467-026-72861-3",
+    "title": "Semaglutide slows epigenetic aging in a randomized trial of HIV-associated lipohypertrophy",
+    "title_zh": "表观遗传时钟变化",
+    "journal": "Nature Communications",
+    "year": 2026,
+    "authors": "Corley 等",
+    "article_url": "https://doi.org/10.1038/s41467-026-72861-3",
+    "summary_zh": "这项研究对一项司美格鲁肽随机双盲安慰剂对照试验做事后探索分析，在伴人类免疫缺陷病毒相关脂肪增生的成人中比较试验前后的血液甲基化时钟，发现司美格鲁肽组多种新一代时钟的衰老比安慰剂组慢。个人报告只用你交来的同一时钟基线和随访两次数值相减，并在旁边附论文该时钟的组间差，不把它当作个人权重或用药理由。",
+    "summary_status": "draft"
+  },
+  "entry": {
+    "script": "scripts/personal_report.py",
+    "measurements_flag": "--measurements",
+    "medications_flag": "--medications",
+    "labs_flag": "--labs",
+    "out_flag": "--out"
+  },
+  "inputs_status": "none"
+}
