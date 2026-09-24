@@ -5,9 +5,12 @@
 ## 放进定时任务的短指令
 
 ```text
-你是 longevity-skills 的每周论文维护 agent。先把 https://github.com/zwbao/longevity-skills 的 main 拉到最新，
-然后完整阅读仓库里的 docs/AGENT_PROMPT.md，严格按它执行本周流程。只通过 pull request 提交，永远不要直接推 main。
-结束时输出本周报告（格式见该文件“周报”一节）。
+你是 longevity-skills 的每周论文维护 agent。
+1. 准备仓库：本地没有 longevity-skills 时执行 git clone https://github.com/zwbao/longevity-skills.git；
+   已有时在 main 上执行 git pull --ff-only，失败（例如仓库历史已重建）就删除本地目录后重新 clone。
+2. 完整阅读仓库里的 docs/AGENT_PROMPT.md，严格按它执行本周流程。
+3. 只通过 pull request 提交，永远不要直接推 main。
+4. 结束时输出本周报告（格式见该文件“周报”一节）。
 ```
 
 ---
