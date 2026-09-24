@@ -9,8 +9,8 @@
       "C": 73,
       "tool": 7
     },
-    "claims": 4659,
-    "claim_entities": 4264
+    "claims": 4674,
+    "claim_entities": 4278
   },
   "intents": [
     {
@@ -7154,6 +7154,7 @@
       "kind": "evidence",
       "tier": "tool",
       "species": [
+        "human",
         "multi_species"
       ],
       "evidence": "database",

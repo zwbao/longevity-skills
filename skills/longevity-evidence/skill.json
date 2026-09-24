@@ -3,7 +3,7 @@
   "name": "longevity-evidence",
   "kind": "evidence",
   "tier": "tool",
-  "species": ["multi_species"],
+  "species": ["human", "multi_species"],
   "evidence": "database",
   "domains": ["工具与证据库"],
   "blurb_zh": "收录论文里点名的药物、补剂、基因和干预的说法，按人群、动物、细胞分组查询，每条带出处。",
