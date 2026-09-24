@@ -9,8 +9,8 @@
 1. 准备仓库：本地没有 longevity-skills 时执行 git clone https://github.com/zwbao/longevity-skills.git；
    已有时在 main 上执行 git pull --ff-only，失败（例如仓库历史已重建）就删除本地目录后重新 clone。
 2. 完整阅读仓库里的 docs/AGENT_PROMPT.md，严格按它执行本周流程。
-3. 只通过 pull request 提交，永远不要直接推 main。
-4. 结束时输出本周报告（格式见该文件“周报”一节）。
+3. 本地检查通过后可由项目 owner agent 直接推 main；也可用 pull request 提交便于审阅的批次。
+4. 凡符合分级标准的高质量论文全部处理，不设周篇数上限；结束时输出本周报告（格式见该文件“周报”一节）。
 ```
 
 ---
@@ -79,7 +79,7 @@ python3 -m tools.lsk doi "https://doi.org/10.1038/S41586-026-01234-5."   # → 1
 - `accessibility`：routine_labs、wearable、questionnaire、home_measurement 为 high；repeated_measures、genotype 为 medium；其余为 low。
 - `reason_zh`：一句中文（80 字以内），写决定分级的那个事实。
 
-**名额**：每周最多 3 个 A、10 个 B。A 的名额按 accessibility（高 → 低）、再按把握排队，先给普通人跑得起来的方法。排不上的记为 pending，写“本周 A 类名额已满”。
+**处理范围**：凡符合分级标准的高质量论文全部处理，不设周篇数上限；单篇失败记原因后继续下一篇。A 类可按 accessibility（高 → 低）、再按把握优先做普通人跑得起来的方法，但不因排队或“名额”把合格论文压成 pending。
 
 ### 3.5 A 类：做成技能
 
@@ -137,7 +137,7 @@ python3 -m tools.lsk upsert-paper --doi <DOI> --tier rejected --outcome rejected
 - 只提交这篇论文相关的文件：A 类是 `skills/<方法名>/` 和 `registry/papers.jsonl`；B 类是 `claims.jsonl`、`data/effects.jsonl`、`registry/papers.jsonl`；C 类只有 `registry/papers.jsonl`。`catalog.json`、README 列表、`skills/_registry/` 由 CI 重建，不用提交，提交了也会被重建。
 - 提交说明写为什么，例如 `Add <方法名> from <DOI>`，正文一句分级理由。不改 git 配置，不 amend，不提交密钥。
 - `git push -u origin <分支>`，然后 `gh pr create --base main --label pipeline --title … --body …`（仓库里还没有 `pipeline` 标签时先 `gh label create pipeline`，或去掉 `--label`）。描述里写：论文和链接；分级和理由；个人需要的数据（data_type、accessibility）；产品合同三句话（用户提供什么、技能自己取什么、报告能说什么）；打开过的补充表；本地检查结果。检查没全过时开草稿 PR（`--draft`）并贴出失败输出。
-- **永远不要直接推 main，不要自己合并 A 类 PR。** A 类由人核对分级、系数出处、单位和范围后合并；B 类由人核对新增效应量并把 `verified` 改成 `true` 后合并；C 类在 CI 通过后可以合并（如果仓库开了自动合并）。
+- **项目 owner agent 在本地 `lsk check`（及 A 类相关测试）通过后可以直接推 `main`；也可用 pull request 提交便于审阅的批次。** A 类若走 PR，由人核对分级、系数出处、单位和范围后合并；B 类新增效应量需人核对并把 `verified` 改成 `true` 后才对插件生效；C 类在检查通过后可直接上 main 或经 PR 合并。自动化 weekly agent 默认仍可开 PR；owner 授权时可直推。
 - 合并后 CI 会重建生成文件（`regenerate.yml`），每周一 02:00 UTC 发版（`release.yml`）。
 
 ### 3.9 周报
@@ -151,7 +151,7 @@ python3 -m tools.lsk upsert-paper --doi <DOI> --tier rejected --outcome rejected
 - 不上传个人数据：你只处理公开论文。
 - 不改 `data/biological_variation.json`、`schema/`、`tools/`、`.github/`，除非人明确要求。个体变异表的每个数都来自期刊论文，并在 `cvi_source.quote` 里附印着这个数的原文；不要从 EFLM 生物变异数据库（biologicalvariation.eu）复制任何数值，它的条款限制再发布，`lsk check` 会拒绝引用它的行。
 - 仓库是公开的：不放个人数据、账号、token 和服务器地址，不复制论文正文和图。
-- 只通过 PR 提交；一次失败不要重试到通过为止，把失败原样写进 PR 和周报。
+- 检查通过后可由项目 owner agent 直接推 main；也可用 PR 提交便于审阅的批次。一次失败不要重试到通过为止：把失败原样写进 PR/周报或登记原因后继续下一篇。
 - `lsk check` 报的每一行都要改掉，不要绕过或删测试。
 
 ## 5. 仓库地图
