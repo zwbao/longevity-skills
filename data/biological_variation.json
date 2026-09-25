@@ -5,7 +5,7 @@
  "sources_note_zh": [
   "化验项目的个体内变异（CVI）都来自期刊论文，每一行的 cvi_source.quote 是原文里印着这个数的句子或表格行：EuBIVAS 汇总报告（Carobene 等，CCLM 2022）和它的原始论文（肌酐、酶类），EFLM 生物变异工作组发表的血液学 meta 分析（Coskun 等，CCLM 2020）和 HbA1c meta 分析（Ricós 等，Adv Lab Med 2020，CC BY 4.0），以及 25(OH)D 研究（Cavalier 等，Nutrients 2021，CC BY 4.0）。lsk check 会检查每个数都出现在引文里。",
   "本表不收录 EFLM 生物变异数据库（biologicalvariation.eu）里的数值：该数据库的条款限制未经许可的再发布。",
-  "淋巴细胞百分比和 RDW-CV 没有找到可核对的个体内变异估计（已发表的是淋巴细胞绝对计数和 RDW-SD），所以不在表里；表型年龄的噪声带因此不含这两项，是下限。",
+  "淋巴细胞百分比和 RDW-CV 没有找到可核对的个体内变异估计（已发表的是淋巴细胞绝对计数和 RDW-SD；淋巴细胞绝对计数单列为 lymph_abs），所以不在表里；表型年龄的噪声带因此不含这两项，是下限。",
   "血压和体重来自同行评审研究，测量误差已经包含在内，见各行来源。"
  ],
  "markers": [
@@ -204,6 +204,173 @@
    "caveat_zh": "MCV 的个体内变异非常小，仪器误差可能和它一样大；按默认规则估的检测误差偏小，噪声带可能偏窄。"
   },
   {
+   "key": "rbc",
+   "label_zh": "红细胞计数",
+   "loinc": [
+    "789-8"
+   ],
+   "aliases": [
+    "RBC",
+    "红细胞数"
+   ],
+   "unit": "10^12/L",
+   "cvi_pct": 2.8,
+   "cvi_ci_pct": [
+    1.96,
+    3.07
+   ],
+   "cva_pct": null,
+   "log_normal": false,
+   "better": "range",
+   "min_retest_days": null,
+   "cvi_source": {
+    "title": "Coskun A et al. Systematic review and meta-analysis of within-subject and between-subject biological variation estimates of 20 haematological parameters. Clin Chem Lab Med 2020;58(1):25-32",
+    "url": "https://doi.org/10.1515/cclm-2019-0658",
+    "doi": "10.1515/cclm-2019-0658",
+    "note": "Meta-analysis of BIVAC-graded studies in healthy adults (7 papers, 12 subgroups), men and women pooled. The quote is the Table 2 row (papers, subgroups, mean, CVI (CI), ...).",
+    "quote": "Erythrocyte, ×10¹²/L | 7 | 12 | 4.82 ± 0.33 | 2.80 (1.96–3.07) | 5 | 10 | 4.85 ± 0.36 | 6.29 (6.16–7.40) | 3.20 | 6.30",
+    "quote_location": "Table 2 row",
+    "license": "free to read at the publisher, no Creative Commons licence"
+   },
+   "verified": true
+  },
+  {
+   "key": "hb",
+   "label_zh": "血红蛋白",
+   "loinc": [
+    "718-7"
+   ],
+   "aliases": [
+    "HGB",
+    "Hb",
+    "血红蛋白浓度"
+   ],
+   "unit": "g/L",
+   "cvi_pct": 2.71,
+   "cvi_ci_pct": [
+    1.72,
+    2.8
+   ],
+   "cva_pct": null,
+   "log_normal": false,
+   "better": "range",
+   "min_retest_days": null,
+   "convert": {
+    "g/dL": 10
+   },
+   "cvi_source": {
+    "title": "Coskun A et al. Systematic review and meta-analysis of within-subject and between-subject biological variation estimates of 20 haematological parameters. Clin Chem Lab Med 2020;58(1):25-32",
+    "url": "https://doi.org/10.1515/cclm-2019-0658",
+    "doi": "10.1515/cclm-2019-0658",
+    "note": "Meta-analysis of BIVAC-graded studies in healthy adults (11 papers, 21 subgroups), men and women pooled. The quote is the Table 2 row (papers, subgroups, mean, CVI (CI), ...). Table 2 prints haemoglobin in mmol/L; a CV is unitless, so the CVI holds for g/L.",
+    "quote": "Haemoglobin, mmol/L | 11 | 21 | 8.77 ± 0.61 | 2.71 (1.72–2.80) | 6 | 13 | 8.72 ± 0.63 | 6.07 (3.20–6.28) | 2.85 | 6.80",
+    "quote_location": "Table 2 row",
+    "license": "free to read at the publisher, no Creative Commons licence"
+   },
+   "verified": true
+  },
+  {
+   "key": "hct",
+   "label_zh": "红细胞压积",
+   "loinc": [
+    "4544-3"
+   ],
+   "aliases": [
+    "HCT",
+    "血细胞比容",
+    "红细胞比容"
+   ],
+   "unit": "L/L",
+   "cvi_pct": 2.71,
+   "cvi_ci_pct": [
+    2.24,
+    3.4
+   ],
+   "cva_pct": null,
+   "log_normal": false,
+   "better": "range",
+   "min_retest_days": null,
+   "convert": {
+    "%": 0.01
+   },
+   "cvi_source": {
+    "title": "Coskun A et al. Systematic review and meta-analysis of within-subject and between-subject biological variation estimates of 20 haematological parameters. Clin Chem Lab Med 2020;58(1):25-32",
+    "url": "https://doi.org/10.1515/cclm-2019-0658",
+    "doi": "10.1515/cclm-2019-0658",
+    "note": "Meta-analysis of BIVAC-graded studies in healthy adults (6 papers, 13 subgroups), men and women pooled. The quote is the Table 2 row (papers, subgroups, mean, CVI (CI), ...).",
+    "quote": "Haematocrit, L/L | 6 | 13 | 0.43 ± 0.03 | 2.71 (2.24–3.40) | 6 | 13 | 0.43 ± 0.03 | 5.45 (3.40–5.51) | 2.70 | 6.41",
+    "quote_location": "Table 2 row",
+    "license": "free to read at the publisher, no Creative Commons licence"
+   },
+   "verified": true
+  },
+  {
+   "key": "mch",
+   "label_zh": "平均红细胞血红蛋白含量",
+   "loinc": [
+    "785-6"
+   ],
+   "aliases": [
+    "MCH",
+    "平均红细胞血红蛋白量"
+   ],
+   "unit": "pg",
+   "cvi_pct": 0.85,
+   "cvi_ci_pct": [
+    0.24,
+    1.6
+   ],
+   "cva_pct": null,
+   "log_normal": false,
+   "better": "range",
+   "min_retest_days": null,
+   "cvi_source": {
+    "title": "Coskun A et al. Systematic review and meta-analysis of within-subject and between-subject biological variation estimates of 20 haematological parameters. Clin Chem Lab Med 2020;58(1):25-32",
+    "url": "https://doi.org/10.1515/cclm-2019-0658",
+    "doi": "10.1515/cclm-2019-0658",
+    "note": "Meta-analysis of BIVAC-graded studies in healthy adults (6 papers, 9 subgroups), men and women pooled. The quote is the Table 2 row (papers, subgroups, mean, CVI (CI), ...). Table 2 prints MCH in fmol; a CV is unitless, so the CVI holds for pg.",
+    "quote": "MCH, fmol | 6 | 9 | 1.85 ± 0.05 | 0.85 (0.24–1.60) | 5 | 8 | 1.84 ± 0.05 | 4.30 (4.06–5.31) | 1.40 | 5.20",
+    "quote_location": "Table 2 row",
+    "license": "free to read at the publisher, no Creative Commons licence"
+   },
+   "verified": true,
+   "caveat_zh": "MCH 的个体内变异非常小，仪器误差可能和它一样大；按默认规则估的检测误差偏小，噪声带可能偏窄。"
+  },
+  {
+   "key": "mchc",
+   "label_zh": "平均红细胞血红蛋白浓度",
+   "loinc": [
+    "786-4"
+   ],
+   "aliases": [
+    "MCHC"
+   ],
+   "unit": "g/L",
+   "cvi_pct": 0.95,
+   "cvi_ci_pct": [
+    0.6,
+    1.1
+   ],
+   "cva_pct": null,
+   "log_normal": false,
+   "better": "range",
+   "min_retest_days": null,
+   "convert": {
+    "g/dL": 10
+   },
+   "cvi_source": {
+    "title": "Coskun A et al. Systematic review and meta-analysis of within-subject and between-subject biological variation estimates of 20 haematological parameters. Clin Chem Lab Med 2020;58(1):25-32",
+    "url": "https://doi.org/10.1515/cclm-2019-0658",
+    "doi": "10.1515/cclm-2019-0658",
+    "note": "Meta-analysis of BIVAC-graded studies in healthy adults (6 papers, 11 subgroups), men and women pooled. The quote is the Table 2 row (papers, subgroups, mean, CVI (CI), ...). Table 2 prints MCHC in mmol/L; a CV is unitless, so the CVI holds for g/L.",
+    "quote": "MCHC, mmol/L | 6 | 11 | 20.8 ± 0.38 | 0.95 (0.60–1.10) | 5 | 10 | 20.9 ± 0.38 | 1.49 (1.25–2.30) | 1.06 | 1.20",
+    "quote_location": "Table 2 row",
+    "license": "free to read at the publisher, no Creative Commons licence"
+   },
+   "verified": true,
+   "caveat_zh": "MCHC 的个体内变异非常小，仪器误差可能和它一样大；按默认规则估的检测误差偏小，噪声带可能偏窄。"
+  },
+  {
    "key": "alp",
    "label_zh": "碱性磷酸酶",
    "loinc": [
@@ -263,6 +430,39 @@
     "doi": "10.1515/cclm-2019-0658",
     "note": "Meta-analysis of BIVAC-graded studies in healthy adults (7 papers, 12 subgroups), men and women pooled. The quote is the Table 2 row.",
     "quote": "Leukocyte, ×10⁹ | 7 | 12 | 6.62 ± 0.39 | 10.01 (8.90–11.35) | 4 | 7 | 6.75 ± 0.47 | 16.48 (15.78–23.70) | 11.40 | 21.30",
+    "quote_location": "Table 2 row",
+    "license": "free to read at the publisher, no Creative Commons licence"
+   },
+   "verified": true
+  },
+  {
+   "key": "lymph_abs",
+   "label_zh": "淋巴细胞绝对值",
+   "loinc": [
+    "731-0"
+   ],
+   "aliases": [
+    "LYM#",
+    "LYMPH#",
+    "淋巴细胞计数",
+    "淋巴细胞数"
+   ],
+   "unit": "10^9/L",
+   "cvi_pct": 10.13,
+   "cvi_ci_pct": [
+    9.45,
+    13.59
+   ],
+   "cva_pct": null,
+   "log_normal": false,
+   "better": "range",
+   "min_retest_days": null,
+   "cvi_source": {
+    "title": "Coskun A et al. Systematic review and meta-analysis of within-subject and between-subject biological variation estimates of 20 haematological parameters. Clin Chem Lab Med 2020;58(1):25-32",
+    "url": "https://doi.org/10.1515/cclm-2019-0658",
+    "doi": "10.1515/cclm-2019-0658",
+    "note": "Meta-analysis of BIVAC-graded studies in healthy adults (5 papers, 7 subgroups), men and women pooled. The quote is the Table 2 row (papers, subgroups, mean, CVI (CI), ...).",
+    "quote": "Lymphocyte, ×10⁹ | 5 | 7 | 2.12 ± 0.08 | 10.13 (9.45–13.59) | 4 | 6 | 2.12 ± 0.09 | 23.87 (21.30–25.10) | 10.20 | 35.30",
     "quote_location": "Table 2 row",
     "license": "free to read at the publisher, no Creative Commons licence"
    },
