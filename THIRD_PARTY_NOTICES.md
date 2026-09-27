@@ -14,7 +14,16 @@ If you hold rights in something listed here and want it credited differently or 
 | `skills/chaperone-autophagy-tissue-aging/data/cmascore_genes.xlsx` | [amsegura/Khawaja_et_al_2024](https://github.com/amsegura/Khawaja_et_al_2024), unmodified | BSD-3-Clause, © 2024 Adrián Martín-Segura; original Tabula Muris Senis data © 2022 Chan Zuckerberg Biohub. See `LICENSE-Khawaja_et_al_2024` beside the file. |
 | `skills/plasma-proteomic-cellular-aging/scripts/soma_clock_coefficients_min.csv` | [dingdaisy/cellage](https://github.com/dingdaisy/cellage), unmodified | MIT, © 2026 Daisy Ding, see `LICENSE-cellage` beside the file |
 | `skills/longevitybench/scripts/presets.py`, `control_laws.py`, `drugage.py` | Constants copied from and code ported from [Insilico-org/longeclaw](https://github.com/Insilico-org/longeclaw) | MIT, © 2026 Insilico Medicine, see `LICENSE-longeclaw` beside the files |
+| `skills/epiage/scripts/compute_clocks.py`, `skills/epiage/references/model-audit.md` | [gangchen/epiage-skill](https://github.com/gangchen/epiage-skill) @ fcf4e3b, unmodified | MIT, © 2026 gangchen, see `skills/epiage/LICENSE-epiage` and `NOTICE-epiage` |
+| `skills/epiage/data/` (model coefficient CSVs, `DunedinPACE_Gold_Means.csv`, `sesame_450k_median.csv`, `blood_panel.npz`) | gangchen/epiage-skill @ fcf4e3b, unmodified. Coefficients and medians derived from [bio-learn/biolearn](https://github.com/bio-learn/biolearn) and the original clock papers; `blood_panel.npz` built by epiage-skill from GEO GSE40279 whole-blood 450K data. Per-file sources and SHA-256 are in `skills/epiage/skill.json` `data_files` | MIT (epiage-skill). biolearn's own licence is New BSD (BSD-3-Clause); epiage-skill's NOTICE calls it MIT. See the restrictions below |
 | `skills/longevitybench/data/drugage.csv`, and the DrugAge rows in `skills/longevity-evidence/data/claims.jsonl` | DrugAge Build 5, Human Ageing Genomic Resources ([HAGR](https://genomics.senescence.info/drugs/)), via Insilico-org/longeclaw | CC BY 3.0 (HAGR terms). Please cite Barardo D et al., *Aging Cell* 2017;16:594-597, and de Magalhães JP et al., *Nucleic Acids Res* 2024;52:D900-D908. |
+
+Two models in `skills/epiage/data/` carry use restrictions from their owners, which also apply to the same models in `pyaging`:
+
+- GrimAge (`GrimAgeV1.csv`, `GrimAgeV2.csv`): commercial use is restricted by UCLA TDG and licensed through the [Clock Foundation](https://clockfoundation.org/). For cosmetics, life-insurance or any other commercial use, contact the Clock Foundation.
+- DunedinPACE (`DunedinPACE.csv`, `DunedinPACE_Gold_Means.csv`): the authors' [danbelsky/DunedinPACE](https://github.com/danbelsky/DunedinPACE) package is GPL-3.0, and its README says the algorithm is for research users only; commercial users are referred to the exclusive licensee TruDiagnostic.
+
+They are included, as in epiage-skill, biolearn and pyaging, for research and personal use.
 
 ## Tables from open-access articles (CC BY 4.0)
 

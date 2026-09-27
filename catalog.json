@@ -2,12 +2,12 @@
   "schema": "longevity-catalog/1",
   "version": "2026.39.0",
   "counts": {
-    "skills": 171,
+    "skills": 172,
     "tiers": {
       "A": 56,
       "B": 35,
       "C": 73,
-      "tool": 7
+      "tool": 8
     },
     "claims": 4674,
     "claim_entities": 4278
@@ -89,6 +89,7 @@
       ],
       "skills": [
         "pyaging",
+        "epiage",
         "epigenetic-frailty-risk-score",
         "blood-epigenetic-intrinsic-capacity",
         "calerie-methylation-clocks",
@@ -3387,6 +3388,299 @@
         "title_zh": "暴露对照",
         "journal": "Nature Medicine",
         "year": 2025
+      }
+    },
+    {
+      "name": "epiage",
+      "kind": "tool",
+      "tier": "tool",
+      "species": [
+        "human"
+      ],
+      "evidence": "method",
+      "domains": [
+        "工具与证据库"
+      ],
+      "blurb_zh": "epiage-skill（gangchen/epiage-skill fcf4e3b）。离线读一份血液甲基化 β 值文件，算 25 个衰老时钟和 10 个暴露组与健康分值（另有 2 个上游暂停）。",
+      "description": "Computes 25 DNA-methylation aging clocks and markers (GrimAge V1/V2, Horvath, Hannum, PhenoAge, DunedinPACE, DNAmTL, stochastic and Ying clocks) and 12 exposome and health scores (McCartney smoking, alcohol, BMI, cholesterol, education) from one human whole-blood β-value file, offline, with gangchen/epiage-skill. Use when the user has a blood methylation export (WeGene, EPIC, 450K, MSA, or SeSAMe betas.csv), mentions IDAT, 甲基化年龄, 表观遗传时钟, GrimAge, DunedinPACE or DNAmTL, or asks for their epigenetic age. Prefer pyaging for non-blood tissue, AltumAge, PC clocks, or transcriptomic clocks. Clock outputs are model estimates, not a reason to start or stop a treatment.",
+      "intents": [
+        "epigenetic_age"
+      ],
+      "has_script": true,
+      "entry": {
+        "script": "scripts/personal_report.py",
+        "runtime": "scientific",
+        "age_flag": "--age",
+        "sex_flag": "--sex",
+        "out_flag": "--out",
+        "result_json": true
+      },
+      "inputs_status": "verified",
+      "inputs": [
+        {
+          "key": "betas",
+          "label_zh": "血液甲基化 β 值文件（CSV 或 TSV，可以 .gz）",
+          "required": true,
+          "from": "argument",
+          "flag": "--betas",
+          "note_zh": "长表（CpG 编号, β 值）或矩阵（第一列 CpG 编号，其余每列一个样本）。β 值在 0 到 1 之间，缺失写 NA。IDAT 要先按上游 SeSAMe 流程转成 β 值。"
+        },
+        {
+          "key": "clocks",
+          "label_zh": "要跑的模型或组名（逗号分隔，默认 core）",
+          "required": false,
+          "from": "argument",
+          "flag": "--clocks",
+          "note_zh": "组名：all、aging、grimage、core、firstgen、secondgen、thirdgen、exposome、health、phenotypes。core 含 GrimAge。"
+        },
+        {
+          "key": "age",
+          "label_zh": "实足年龄",
+          "unit": "a",
+          "range": [
+            0,
+            120
+          ],
+          "required": false,
+          "from": "profile",
+          "flag": "--age",
+          "note_zh": "GrimAge 要用到。"
+        },
+        {
+          "key": "sex",
+          "label_zh": "性别",
+          "required": false,
+          "from": "profile",
+          "flag": "--sex",
+          "note_zh": "GrimAge 必须有，其他模型不用。"
+        },
+        {
+          "key": "sensitivity",
+          "label_zh": "GrimAgeV2 敏感性分析的其他年龄（逗号分隔）",
+          "required": false,
+          "from": "argument",
+          "flag": "--sensitivity",
+          "note_zh": "只知道年龄范围时用；只影响 GrimAgeV2，只算第一个样本。"
+        }
+      ],
+      "outputs": [
+        {
+          "key": "dnam_grimagev1",
+          "label_zh": "GrimAge V1 甲基化年龄",
+          "unit": "a",
+          "note_zh": "按死亡风险训练的第二代时钟；公式直接用实足年龄和性别，是以年为单位的风险分。"
+        },
+        {
+          "key": "dnam_grimagev2",
+          "label_zh": "GrimAge V2 甲基化年龄",
+          "unit": "a",
+          "note_zh": "按死亡风险训练的第二代时钟；公式直接用实足年龄和性别，是以年为单位的风险分。"
+        },
+        {
+          "key": "dnam_horvath",
+          "label_zh": "Horvath 多组织甲基化年龄（2013）",
+          "unit": "a"
+        },
+        {
+          "key": "dnam_horvath2",
+          "label_zh": "Horvath 皮肤和血液甲基化年龄（2018）",
+          "unit": "a"
+        },
+        {
+          "key": "dnam_hannum",
+          "label_zh": "Hannum 甲基化年龄",
+          "unit": "a"
+        },
+        {
+          "key": "dnam_lin",
+          "label_zh": "Lin 甲基化年龄",
+          "unit": "a"
+        },
+        {
+          "key": "dnam_vidalbralo",
+          "label_zh": "Vidal-Bralo 甲基化年龄",
+          "unit": "a"
+        },
+        {
+          "key": "dnam_weidner",
+          "label_zh": "Weidner 甲基化年龄",
+          "unit": "a"
+        },
+        {
+          "key": "dnam_garagnani",
+          "label_zh": "ELOVL2 单个 CpG 的 β 值（Garagnani）",
+          "unit": "1",
+          "note_zh": "cg16867657 的 β 值，0 到 1，不是年龄。"
+        },
+        {
+          "key": "dnam_bocklandt",
+          "label_zh": "EDARADD 单个 CpG 的 β 值（Bocklandt）",
+          "unit": "1",
+          "note_zh": "cg09809672 的 β 值，0 到 1，不是年龄。"
+        },
+        {
+          "key": "dnam_pedbe",
+          "label_zh": "PedBE 甲基化年龄（儿童口腔拭子模型）",
+          "unit": "a",
+          "note_zh": "为儿童口腔拭子训练，这里用在血液上。"
+        },
+        {
+          "key": "dnam_cortical",
+          "label_zh": "DNAmClockCortical 甲基化年龄（脑皮层模型）",
+          "unit": "a",
+          "note_zh": "为脑皮层组织训练，这里用在血液上。"
+        },
+        {
+          "key": "dnam_stoch",
+          "label_zh": "StocH 随机甲基化年龄",
+          "unit": "a"
+        },
+        {
+          "key": "dnam_stocp",
+          "label_zh": "StocP 随机甲基化年龄",
+          "unit": "a"
+        },
+        {
+          "key": "dnam_stocz",
+          "label_zh": "StocZ 随机甲基化年龄",
+          "unit": "a",
+          "note_zh": "由 Zhang 年龄时钟的 CpG 训练，是年龄，不是 Zhang 死亡风险分。"
+        },
+        {
+          "key": "dnam_phenoage",
+          "label_zh": "甲基化表型年龄（DNAm PhenoAge，不是血检表型年龄）",
+          "unit": "a"
+        },
+        {
+          "key": "dnam_hrsinchphenoage",
+          "label_zh": "HRSInCHPhenoAge 甲基化表型年龄",
+          "unit": "a"
+        },
+        {
+          "key": "dnam_yingcausage",
+          "label_zh": "Ying CausAge 甲基化年龄",
+          "unit": "a"
+        },
+        {
+          "key": "dnam_yingdamage",
+          "label_zh": "Ying DamAge 甲基化年龄",
+          "unit": "a"
+        },
+        {
+          "key": "dnam_yingadaptage",
+          "label_zh": "Ying AdaptAge 甲基化年龄",
+          "unit": "a"
+        },
+        {
+          "key": "dnam_zhang",
+          "label_zh": "Zhang 10 个 CpG 死亡风险分",
+          "unit": "score",
+          "note_zh": "加权和，无单位，可以是负数；不是年龄，也不是概率。"
+        },
+        {
+          "key": "dnam_dunedinpace",
+          "label_zh": "DunedinPACE 衰老速度",
+          "unit": "1",
+          "note_zh": "每过一年的生物学衰老年数（年/年），不是年龄。"
+        },
+        {
+          "key": "dnam_dunedinpoam",
+          "label_zh": "DunedinPoAm 衰老速度",
+          "unit": "1",
+          "note_zh": "每过一年的生物学衰老年数（年/年），不是年龄。"
+        },
+        {
+          "key": "dnam_dnamtl",
+          "label_zh": "DNAmTL 端粒长度甲基化替代值",
+          "unit": "kb",
+          "note_zh": "按甲基化估计的替代值，单位千碱基（kb），不是实测端粒长度。"
+        },
+        {
+          "key": "dnam_epitoc1",
+          "label_zh": "EpiTOC1 有丝分裂分值",
+          "unit": "score",
+          "note_zh": "385 个 CpG 的平均 β 值；不是细胞分裂次数，也不是年龄。"
+        },
+        {
+          "key": "dnam_smoking",
+          "label_zh": "吸烟相关甲基化分值（McCartney）",
+          "unit": "score",
+          "note_zh": "原始加权 DNAm 分数，不是吸烟包年。"
+        },
+        {
+          "key": "dnam_alcohol",
+          "label_zh": "饮酒相关甲基化分值（McCartney）",
+          "unit": "score",
+          "note_zh": "原始加权 DNAm 分数，不是饮酒量。"
+        },
+        {
+          "key": "dnam_bmi",
+          "label_zh": "BMI 相关甲基化分值（McCartney）",
+          "unit": "score",
+          "note_zh": "原始加权 DNAm 分数，不是 kg/m²。"
+        },
+        {
+          "key": "dnam_bmi_reed",
+          "label_zh": "BMI 相关甲基化分值（Reed）",
+          "unit": "score",
+          "note_zh": "DNAm 分数，不是 kg/m²。"
+        },
+        {
+          "key": "dnam_bodyfat",
+          "label_zh": "体脂相关甲基化分值（McCartney）",
+          "unit": "score",
+          "note_zh": "原始加权 DNAm 分数，不是体脂百分比。"
+        },
+        {
+          "key": "dnam_hdl",
+          "label_zh": "HDL 胆固醇相关甲基化分值（McCartney）",
+          "unit": "score",
+          "note_zh": "原始加权 DNAm 分数，不是血脂浓度。"
+        },
+        {
+          "key": "dnam_ldl",
+          "label_zh": "LDL 胆固醇相关甲基化分值（McCartney）",
+          "unit": "score",
+          "note_zh": "原始加权 DNAm 分数，不是血脂浓度。"
+        },
+        {
+          "key": "dnam_totalchol",
+          "label_zh": "总胆固醇相关甲基化分值（McCartney）",
+          "unit": "score",
+          "note_zh": "原始加权 DNAm 分数，不是血脂浓度。"
+        },
+        {
+          "key": "dnam_education",
+          "label_zh": "受教育程度相关甲基化分值（McCartney）",
+          "unit": "score",
+          "note_zh": "原始加权 DNAm 分数，不是受教育年限。"
+        },
+        {
+          "key": "dnam_cvd",
+          "label_zh": "冠心病相关甲基化分值（Westerman）",
+          "unit": "score",
+          "note_zh": "上游暂停计算：随附系数缺项、缺队列标准化，恒为空。"
+        },
+        {
+          "key": "dnam_alzheimers",
+          "label_zh": "阿尔茨海默病相关甲基化分值（Bahado-Singh）",
+          "unit": "score",
+          "note_zh": "模型分值，不是患病概率。"
+        },
+        {
+          "key": "dnam_depression",
+          "label_zh": "抑郁相关甲基化分值（Barbu）",
+          "unit": "score",
+          "note_zh": "上游暂停计算：原文用 M 值输入，截距没有核实，恒为空。"
+        }
+      ],
+      "tool": {
+        "upstream": "https://github.com/gangchen/epiage-skill",
+        "commit": "fcf4e3b",
+        "requires": [
+          "pandas",
+          "numpy"
+        ]
       }
     },
     {
@@ -9299,6 +9593,7 @@
         "script": "scripts/personal_report.py",
         "runtime": "pyaging",
         "age_flag": "--age",
+        "sex_flag": "--sex",
         "out_flag": "--out",
         "result_json": true
       },
@@ -9329,13 +9624,27 @@
           ],
           "required": false,
           "from": "profile",
-          "flag": "--age"
+          "flag": "--age",
+          "note_zh": "GrimAge 等时钟把实足年龄当作模型输入；其余时钟只用它算读数减实足年龄。"
+        },
+        {
+          "key": "sex",
+          "label_zh": "性别",
+          "required": false,
+          "from": "profile",
+          "flag": "--sex",
+          "note_zh": "GrimAge、GrimAge2、PCGrimAge 等时钟把性别当作模型输入（female，1 女 0 男）；缺了这些时钟不运行。"
         }
       ],
       "outputs": [
         {
           "key": "dnam_horvath2013",
           "label_zh": "Horvath 甲基化年龄",
+          "unit": "a"
+        },
+        {
+          "key": "dnam_skinandblood",
+          "label_zh": "Horvath 皮肤与血液甲基化年龄",
           "unit": "a"
         },
         {
@@ -9349,8 +9658,18 @@
           "unit": "a"
         },
         {
+          "key": "dnam_grimage",
+          "label_zh": "GrimAge 甲基化年龄",
+          "unit": "a"
+        },
+        {
           "key": "dnam_grimage2",
           "label_zh": "GrimAge2 甲基化年龄",
+          "unit": "a"
+        },
+        {
+          "key": "dnam_lin",
+          "label_zh": "Lin 甲基化年龄",
           "unit": "a"
         },
         {
@@ -9359,8 +9678,63 @@
           "unit": "a"
         },
         {
+          "key": "dnam_pedbe",
+          "label_zh": "PedBE 儿童口腔黏膜甲基化年龄",
+          "unit": "a"
+        },
+        {
+          "key": "dnam_stoch",
+          "label_zh": "StocH 随机甲基化年龄（Horvath 位点）",
+          "unit": "a"
+        },
+        {
+          "key": "dnam_stocp",
+          "label_zh": "StocP 随机甲基化年龄（PhenoAge 位点）",
+          "unit": "a"
+        },
+        {
+          "key": "dnam_stocz",
+          "label_zh": "StocZ 随机甲基化年龄（Zhang 位点）",
+          "unit": "a"
+        },
+        {
+          "key": "dnam_yingcausage",
+          "label_zh": "CausAge 因果甲基化年龄",
+          "unit": "a"
+        },
+        {
+          "key": "dnam_yingdamage",
+          "label_zh": "DamAge 损伤型甲基化年龄",
+          "unit": "a"
+        },
+        {
+          "key": "dnam_yingadaptage",
+          "label_zh": "AdaptAge 适应型甲基化年龄",
+          "unit": "a"
+        },
+        {
           "key": "dnam_dunedinpace",
           "label_zh": "DunedinPACE 衰老速度",
+          "unit": "1"
+        },
+        {
+          "key": "dnam_dunedinpoam38",
+          "label_zh": "DunedinPoAm38 衰老速度",
+          "unit": "1"
+        },
+        {
+          "key": "dnam_tl",
+          "label_zh": "甲基化端粒长度（DNAmTL）",
+          "unit": "kb"
+        },
+        {
+          "key": "dnam_zhangmortality",
+          "label_zh": "Zhang 甲基化死亡风险分数",
+          "unit": "1"
+        },
+        {
+          "key": "dnam_epitoc1",
+          "label_zh": "epiTOC1 有丝分裂时钟（位点平均 β 值）",
           "unit": "1"
         }
       ],
