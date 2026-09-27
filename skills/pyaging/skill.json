@@ -28,6 +28,7 @@
     "script": "scripts/personal_report.py",
     "runtime": "pyaging",
     "age_flag": "--age",
+    "sex_flag": "--sex",
     "out_flag": "--out",
     "result_json": true
   },
@@ -58,13 +59,27 @@
       ],
       "required": false,
       "from": "profile",
-      "flag": "--age"
+      "flag": "--age",
+      "note_zh": "GrimAge 等时钟把实足年龄当作模型输入；其余时钟只用它算读数减实足年龄。"
+    },
+    {
+      "key": "sex",
+      "label_zh": "性别",
+      "required": false,
+      "from": "profile",
+      "flag": "--sex",
+      "note_zh": "GrimAge、GrimAge2、PCGrimAge 等时钟把性别当作模型输入（female，1 女 0 男）；缺了这些时钟不运行。"
     }
   ],
   "outputs": [
     {
       "key": "dnam_horvath2013",
       "label_zh": "Horvath 甲基化年龄",
+      "unit": "a"
+    },
+    {
+      "key": "dnam_skinandblood",
+      "label_zh": "Horvath 皮肤与血液甲基化年龄",
       "unit": "a"
     },
     {
@@ -78,8 +93,18 @@
       "unit": "a"
     },
     {
+      "key": "dnam_grimage",
+      "label_zh": "GrimAge 甲基化年龄",
+      "unit": "a"
+    },
+    {
       "key": "dnam_grimage2",
       "label_zh": "GrimAge2 甲基化年龄",
+      "unit": "a"
+    },
+    {
+      "key": "dnam_lin",
+      "label_zh": "Lin 甲基化年龄",
       "unit": "a"
     },
     {
@@ -88,8 +113,63 @@
       "unit": "a"
     },
     {
+      "key": "dnam_pedbe",
+      "label_zh": "PedBE 儿童口腔黏膜甲基化年龄",
+      "unit": "a"
+    },
+    {
+      "key": "dnam_stoch",
+      "label_zh": "StocH 随机甲基化年龄（Horvath 位点）",
+      "unit": "a"
+    },
+    {
+      "key": "dnam_stocp",
+      "label_zh": "StocP 随机甲基化年龄（PhenoAge 位点）",
+      "unit": "a"
+    },
+    {
+      "key": "dnam_stocz",
+      "label_zh": "StocZ 随机甲基化年龄（Zhang 位点）",
+      "unit": "a"
+    },
+    {
+      "key": "dnam_yingcausage",
+      "label_zh": "CausAge 因果甲基化年龄",
+      "unit": "a"
+    },
+    {
+      "key": "dnam_yingdamage",
+      "label_zh": "DamAge 损伤型甲基化年龄",
+      "unit": "a"
+    },
+    {
+      "key": "dnam_yingadaptage",
+      "label_zh": "AdaptAge 适应型甲基化年龄",
+      "unit": "a"
+    },
+    {
       "key": "dnam_dunedinpace",
       "label_zh": "DunedinPACE 衰老速度",
+      "unit": "1"
+    },
+    {
+      "key": "dnam_dunedinpoam38",
+      "label_zh": "DunedinPoAm38 衰老速度",
+      "unit": "1"
+    },
+    {
+      "key": "dnam_tl",
+      "label_zh": "甲基化端粒长度（DNAmTL）",
+      "unit": "kb"
+    },
+    {
+      "key": "dnam_zhangmortality",
+      "label_zh": "Zhang 甲基化死亡风险分数",
+      "unit": "1"
+    },
+    {
+      "key": "dnam_epitoc1",
+      "label_zh": "epiTOC1 有丝分裂时钟（位点平均 β 值）",
       "unit": "1"
     }
   ]
