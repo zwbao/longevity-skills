@@ -1,6 +1,6 @@
 {
   "schema": "longevity-catalog/1",
-  "version": "2026.39.0",
+  "version": "2026.40.0",
   "counts": {
     "skills": 172,
     "tiers": {
