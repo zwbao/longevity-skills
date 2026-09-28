@@ -57,6 +57,7 @@ python3 -m tools.lsk test --changed origin/main   # 只测相对 main 改动过�
 
 - `skills/ai4l/` — AI4L 1.3.29（forever-healthy/AI4L c3ea3e9）。按 Forever Healthy 的协议写干预证据综述。已有 Evipedia 综述时先引用综述。
 - `skills/biomcp/` — BioMCP v0.9.0（genomoncology/biomcp a450303）。检索文献、基因、变异、试验、药物、疾病和通路。本机需要 biomcp。
+- `skills/epiage/` — epiage-skill（gangchen/epiage-skill fcf4e3b）。离线读一份血液甲基化 β 值文件，算 25 个衰老时钟和 10 个暴露组与健康分值（另有 2 个上游暂停）。
 - `skills/evipedia/` — Evipedia 0.1.30（forever-healthy/evipedia-mcp b94febd）。已发布的干预证据综述。
 - `skills/longevity-evidence/` — 收录论文里点名的药物、补剂、基因和干预的说法，按人群、动物、细胞分组查询，每条带出处。
 - `skills/opengenes/` — OpenGenes 0.2.0（longevity-genie/opengenes-mcp 02accbd）。寿命干预、衰老标志和人类长寿相关变异。只读 SQL。
