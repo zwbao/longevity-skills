@@ -121,8 +121,25 @@ def read_probs(path):
     return values
 
 
+def retinal_from_file(path):
+    if path is None:
+        return None
+    for line in Path(path).read_text(encoding="utf-8").splitlines():
+        text = line.strip()
+        if not text or text.startswith("#") or "," not in text:
+            continue
+        cells = [cell.strip() for cell in text.split(",")]
+        if cells[0].lower() in {"marker", "item", "name", "key", "项目"}:
+            continue
+        if cells[0].lower() in {"retinal_age", "retinalage", "视网膜年龄"} and len(cells) >= 2:
+            return float(cells[1])
+    return None
+
+
 def report(args):
     retinal = None
+    if getattr(args, "retinal_age", None) is None:
+        args.retinal_age = retinal_from_file(getattr(args, "measurements", None))
     if args.retinal_age is not None and args.age is not None:
         retinal = args.retinal_age
     elif args.probs is not None and args.age is not None:
@@ -149,6 +166,7 @@ def report(args):
 
 def add_args(parser):
     parser.add_argument("--retinal-age", dest="retinal_age", type=float, default=None)
+    parser.add_argument("--measurements", type=Path, default=None)
     parser.add_argument("--age", type=float, default=None)
     parser.add_argument("--probs", type=Path, default=None)
 

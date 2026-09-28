@@ -35,7 +35,43 @@
     "age_flag": "--age",
     "medications_flag": "--medications",
     "labs_flag": "--labs",
-    "out_flag": "--out"
+    "out_flag": "--out",
+    "measurements_flag": "--measurements",
+    "measurements_header": [
+      "marker",
+      "value",
+      "unit"
+    ]
   },
-  "inputs_status": "none"
+  "inputs_status": "verified",
+  "inputs": [
+    {
+      "key": "retinal_age",
+      "label_zh": "视网膜年龄",
+      "aliases": [
+        "视网膜年龄",
+        "retinal age"
+      ],
+      "unit": "a",
+      "range": [
+        0,
+        120
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "眼底模型已经给出的年龄，本技能不从图像重算。"
+    },
+    {
+      "key": "age",
+      "label_zh": "实足年龄",
+      "unit": "a",
+      "range": [
+        0,
+        120
+      ],
+      "required": true,
+      "from": "profile",
+      "flag": "--age"
+    }
+  ]
 }

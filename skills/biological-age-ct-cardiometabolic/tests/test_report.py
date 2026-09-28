@@ -54,6 +54,22 @@ def test_case_example_orders_by_ipa_drop(tmp_path: Path):
     assert listed(text) == listed(bare)
 
 
+def test_coronary_agatston_is_not_scored_as_abdominal_calcium(tmp_path: Path):
+    meas = tmp_path / "ct.csv"
+    meas.write_text("name,value\nsex,male\nagatston,486\n", encoding="utf-8")
+    text = personal_report.report(tmp_path / "out", meas, None, None, 59).read_text(encoding="utf-8")
+    assert "冠状动脉" in text
+    assert "486" in text
+    assert "腹主动脉钙化积分" not in text
+    assert "5 年内死亡中位数" not in text
+    assert "没有标志进入名单" in text
+    abdominal = tmp_path / "aac.csv"
+    abdominal.write_text("name,value\nsex,male\n腹主动脉钙化,12342\n", encoding="utf-8")
+    kept = personal_report.report(tmp_path / "aac", abdominal, None, None, 55).read_text(encoding="utf-8")
+    assert "腹主动脉钙化积分" in kept
+    assert "12342" in kept
+
+
 def test_blank_run(tmp_path: Path):
     text = personal_report.report(tmp_path / "blank", None, None, None).read_text(encoding="utf-8")
     assert text.splitlines()[0] == "# 腹部影像生物标志"

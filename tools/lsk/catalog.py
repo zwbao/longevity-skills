@@ -56,6 +56,8 @@ def skill_entry(name: str, data: Dict[str, Any]) -> Dict[str, Any]:
     }
     if data.get("entry"):
         entry["entry"] = data["entry"]
+    if data.get("population"):
+        entry["population"] = data["population"]
     if data.get("inputs"):
         entry["inputs_status"] = data.get("inputs_status", "draft")
         entry["inputs"] = data["inputs"]

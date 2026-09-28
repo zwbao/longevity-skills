@@ -130,16 +130,34 @@ def levers(values: dict, flags: dict, age: float, targets: dict, sex: str = "mal
         spec = skillkit.spec_by_key(skillkit.load_manifest(__file__), key)
         sensitivity.append({"key": key, "label_zh": spec.get("label_zh", key), "unit": spec.get("unit", ""), "value": x,
                             "per_unit": (high - low) / (2 * step)})
+    low, high = DERIVATION_AGES
+    waist_note = (
+        "男性腰围系数在 Yang 2016 补充表 1 印作 −0.71（系数×值 −3.12）。"
+        "腰围变小会让这个模型的风险变高。这不是建议把腰围变大，也不要把减腰围当成这项风险的改善。"
+    )
     out = {"schema": "longevity-levers/1", "model": "china-par", "model_zh": "China-PAR（中国成人队列）",
            "current": {"risk_pct": current, "category": category(current)}, "sensitivity": sensitivity, "levers": [],
+           "population_age_years": [low, high],
+           "age_outside_derivation": not (low <= age <= high),
            "note_zh": "吸烟、糖尿病、降压治疗等是否项不在杠杆里；这里只算血压、血脂、腰围到目标值时的变化。"}
+    if sex == "male":
+        out["waist_coefficient_sign"] = "negative"
+        out["waist_note_zh"] = waist_note
+        for item in sensitivity:
+            if item["key"] == "waist_cm":
+                item["not_a_target"] = True
+                item["reason_zh"] = waist_note
     usable = {key: value for key, value in targets.items() if key in MODIFIABLE}
     if usable:
         for key, target in usable.items():
             moved = compute(dict(values, **{key: target}), flags, age, sex)["risk_pct"]
             spec = skillkit.spec_by_key(skillkit.load_manifest(__file__), key)
-            out["levers"].append({"key": key, "label_zh": spec.get("label_zh", key), "unit": spec.get("unit", ""),
-                                  "from": values[key], "to": target, "risk_delta_pct": moved - current})
+            lever = {"key": key, "label_zh": spec.get("label_zh", key), "unit": spec.get("unit", ""),
+                     "from": values[key], "to": target, "risk_delta_pct": moved - current}
+            if sex == "male" and key == "waist_cm":
+                lever["not_a_target"] = True
+                lever["reason_zh"] = waist_note
+            out["levers"].append(lever)
         together = compute(dict(values, **usable), flags, age, sex)["risk_pct"]
         out["targets"] = {"values": usable, "risk_pct": together, "risk_delta_pct": together - current, "category": category(together)}
         out["levers"].sort(key=lambda item: item["risk_delta_pct"])
@@ -200,6 +218,8 @@ def write_report(out_dir: Path, measurements: Path | None, age: float | None, se
     lines += ["", "## 说明", "",
               "- 论文用的是诊室里坐位测三次取平均的收缩压；家用血压计的读数通常偏低，结果会随之偏低。",
               "- 论文印出的两位小数系数和女性基线生存率不够精确，复现不了论文自己的结果。这里男性的六个连续项系数、女性的基线生存率由论文印出的计算示例反推，复现论文表 2 的误差在 1% 以内（见 references/contract.md）。",
+              "- 男性腰围的系数在补充表 1 里是负数（印出 −0.71，示例的系数×值是 −3.12）。腰围变小，模型风险变高。这是论文里的系数，不是录入把符号写反了。不要据此建议增大腰围，也不要把减腰围说成这项风险的改善。女性腰围系数是正的（印出 1.48）。" if person_sex == "male" else
+              "- 女性腰围系数在补充表 1 里是正的（印出 1.48）。男性方程的腰围系数是负的，两套方程不要混用。",
               "- 这是一组人群的平均风险，不是这个人一定会发生的事。", "", f"边界: {BOUNDARY}"]
     path = out_dir / "report.md"
     path.write_text(_with_paper_card("\n".join(lines) + "\n"), encoding="utf-8")

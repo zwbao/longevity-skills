@@ -622,7 +622,7 @@
         "临床年龄与可穿戴"
       ],
       "blurb_zh": "九项血液指标和实足年龄的表型年龄。",
-      "description": "Computes one person's phenotypic age and its difference from chronological age from nine blood chemistries, using the original PhenoAge coefficients in the BioAge package. Applies the printed questionnaire, body-mass, alcohol, activity, systolic-pressure, and childhood-adversity cutoffs only when those measurements are supplied. States that KDM biological age and the cohort residual acceleration are not computed. Use when the user mentions KDM-BA, PhenoAge acceleration, or biological age with depression and anxiety in UK Biobank. Current medicines and checkup labs do not change the biomarker list or the phenotypic age. The report does not say what to start or stop.",
+      "description": "Computes one person's phenotypic age and its difference from chronological age from nine blood chemistries, using the Levine 2018 PhenoAge coefficients in the BioAge package (orig=TRUE). The paper card cites that calculator. Gao et al. 2023 uses phenotypic age for depression and anxiety and does not publish these coefficients; its questionnaire, body-mass, alcohol, activity, systolic-pressure, and childhood-adversity cutoffs apply only when those measurements are supplied. States that KDM biological age and the cohort residual acceleration are not computed. Use when the user mentions KDM-BA, PhenoAge acceleration, or biological age with depression and anxiety in UK Biobank. Current medicines and checkup labs do not change the biomarker list or the phenotypic age. The report does not say what to start or stop.",
       "intents": [
         "biological_age",
         "lab_meaning"
@@ -709,7 +709,9 @@
             "葡萄糖",
             "空腹血糖",
             "空腹葡萄糖",
-            "fasting glucose"
+            "fasting glucose",
+            "空腹血葡萄糖",
+            "FBG"
           ],
           "loinc": [
             "14771-0",
@@ -787,10 +789,12 @@
           "label_zh": "平均红细胞体积",
           "aliases": [
             "mcv",
-            "MCV(平均红细胞体积)"
+            "MCV(平均红细胞体积)",
+            "30428-7"
           ],
           "loinc": [
-            "787-2"
+            "787-2",
+            "30428-7"
           ],
           "unit": "fL",
           "range": [
@@ -808,10 +812,13 @@
             "RDW-CV",
             "红细胞分布宽度-CV",
             "红细胞体积分布宽度",
-            "红细胞体积分布宽度-CV"
+            "红细胞体积分布宽度-CV",
+            "红细胞分布宽度-变异系数",
+            "30385-9"
           ],
           "loinc": [
-            "788-0"
+            "788-0",
+            "30385-9"
           ],
           "unit": "%",
           "range": [
@@ -907,11 +914,11 @@
         }
       ],
       "paper": {
-        "doi": "10.1038/s41467-023-38013-7",
-        "title": "Accelerated biological aging and risk of depression and anxiety: evidence from 424,299 UK Biobank participants",
+        "doi": "10.18632/aging.101414",
+        "title": "An epigenetic biomarker of aging for lifespan and healthspan",
         "title_zh": "表型年龄",
-        "journal": "Nature Communications",
-        "year": 2023
+        "journal": "Aging",
+        "year": 2018
       }
     },
     {
@@ -2634,6 +2641,13 @@
         "targets_flag": "--targets",
         "levers_json": true
       },
+      "population": {
+        "age_years": [
+          35,
+          74
+        ],
+        "note_zh": "方程由 35–74 岁人群推导。年龄在此范围外时仍可计算，调用方应提示结果更不确定。"
+      },
       "inputs_status": "verified",
       "inputs": [
         {
@@ -2721,7 +2735,8 @@
           "aliases": [
             "waist",
             "waist circumference",
-            "腰围(cm)"
+            "腰围(cm)",
+            "腹围"
           ],
           "unit": "cm",
           "range": [
@@ -3773,8 +3788,304 @@
         "measurements_flag": "--measurements",
         "medications_flag": "--medications",
         "labs_flag": "--labs",
-        "out_flag": "--out"
+        "out_flag": "--out",
+        "measurements_header": [
+          "marker",
+          "value",
+          "unit"
+        ]
       },
+      "inputs_status": "verified",
+      "inputs": [
+        {
+          "key": "Horvath1_a",
+          "label_zh": "霍瓦特时钟第一次",
+          "required": false,
+          "from": "measurements",
+          "unit": "a",
+          "range": [
+            0,
+            120
+          ],
+          "note_zh": "同一次检测的一个重复。"
+        },
+        {
+          "key": "Horvath1_b",
+          "label_zh": "霍瓦特时钟第二次",
+          "required": false,
+          "from": "measurements",
+          "unit": "a",
+          "range": [
+            0,
+            120
+          ],
+          "note_zh": "同一个时钟的另一个重复。至少一对到齐才算绝对差。"
+        },
+        {
+          "key": "Horvath2_a",
+          "label_zh": "霍瓦特皮肤时钟第一次",
+          "required": false,
+          "from": "measurements",
+          "unit": "a",
+          "range": [
+            0,
+            120
+          ],
+          "note_zh": "同一次检测的一个重复。"
+        },
+        {
+          "key": "Horvath2_b",
+          "label_zh": "霍瓦特皮肤时钟第二次",
+          "required": false,
+          "from": "measurements",
+          "unit": "a",
+          "range": [
+            0,
+            120
+          ],
+          "note_zh": "同一个时钟的另一个重复。至少一对到齐才算绝对差。"
+        },
+        {
+          "key": "Hannum_a",
+          "label_zh": "汉纳姆时钟第一次",
+          "required": false,
+          "from": "measurements",
+          "unit": "a",
+          "range": [
+            0,
+            120
+          ],
+          "note_zh": "同一次检测的一个重复。"
+        },
+        {
+          "key": "Hannum_b",
+          "label_zh": "汉纳姆时钟第二次",
+          "required": false,
+          "from": "measurements",
+          "unit": "a",
+          "range": [
+            0,
+            120
+          ],
+          "note_zh": "同一个时钟的另一个重复。至少一对到齐才算绝对差。"
+        },
+        {
+          "key": "PhenoAge_a",
+          "label_zh": "表型年龄第一次",
+          "required": false,
+          "from": "measurements",
+          "unit": "a",
+          "range": [
+            0,
+            120
+          ],
+          "note_zh": "同一次检测的一个重复。"
+        },
+        {
+          "key": "PhenoAge_b",
+          "label_zh": "表型年龄第二次",
+          "required": false,
+          "from": "measurements",
+          "unit": "a",
+          "range": [
+            0,
+            120
+          ],
+          "note_zh": "同一个时钟的另一个重复。至少一对到齐才算绝对差。"
+        },
+        {
+          "key": "GrimAge_a",
+          "label_zh": "格里姆年龄第一次",
+          "required": false,
+          "from": "measurements",
+          "unit": "a",
+          "range": [
+            0,
+            120
+          ],
+          "note_zh": "同一次检测的一个重复。"
+        },
+        {
+          "key": "GrimAge_b",
+          "label_zh": "格里姆年龄第二次",
+          "required": false,
+          "from": "measurements",
+          "unit": "a",
+          "range": [
+            0,
+            120
+          ],
+          "note_zh": "同一个时钟的另一个重复。至少一对到齐才算绝对差。"
+        },
+        {
+          "key": "DNAmTL_a",
+          "label_zh": "甲基化端粒长度第一次",
+          "required": false,
+          "from": "measurements",
+          "unit": "a",
+          "range": [
+            0,
+            120
+          ],
+          "note_zh": "同一次检测的一个重复。"
+        },
+        {
+          "key": "DNAmTL_b",
+          "label_zh": "甲基化端粒长度第二次",
+          "required": false,
+          "from": "measurements",
+          "unit": "a",
+          "range": [
+            0,
+            120
+          ],
+          "note_zh": "同一个时钟的另一个重复。至少一对到齐才算绝对差。"
+        },
+        {
+          "key": "PCHorvath1_a",
+          "label_zh": "主成分霍瓦特时钟第一次",
+          "required": false,
+          "from": "measurements",
+          "unit": "a",
+          "range": [
+            0,
+            120
+          ],
+          "note_zh": "同一次检测的一个重复。"
+        },
+        {
+          "key": "PCHorvath1_b",
+          "label_zh": "主成分霍瓦特时钟第二次",
+          "required": false,
+          "from": "measurements",
+          "unit": "a",
+          "range": [
+            0,
+            120
+          ],
+          "note_zh": "同一个时钟的另一个重复。至少一对到齐才算绝对差。"
+        },
+        {
+          "key": "PCHorvath2_a",
+          "label_zh": "主成分霍瓦特皮肤时钟第一次",
+          "required": false,
+          "from": "measurements",
+          "unit": "a",
+          "range": [
+            0,
+            120
+          ],
+          "note_zh": "同一次检测的一个重复。"
+        },
+        {
+          "key": "PCHorvath2_b",
+          "label_zh": "主成分霍瓦特皮肤时钟第二次",
+          "required": false,
+          "from": "measurements",
+          "unit": "a",
+          "range": [
+            0,
+            120
+          ],
+          "note_zh": "同一个时钟的另一个重复。至少一对到齐才算绝对差。"
+        },
+        {
+          "key": "PCHannum_a",
+          "label_zh": "主成分汉纳姆时钟第一次",
+          "required": false,
+          "from": "measurements",
+          "unit": "a",
+          "range": [
+            0,
+            120
+          ],
+          "note_zh": "同一次检测的一个重复。"
+        },
+        {
+          "key": "PCHannum_b",
+          "label_zh": "主成分汉纳姆时钟第二次",
+          "required": false,
+          "from": "measurements",
+          "unit": "a",
+          "range": [
+            0,
+            120
+          ],
+          "note_zh": "同一个时钟的另一个重复。至少一对到齐才算绝对差。"
+        },
+        {
+          "key": "PCPhenoAge_a",
+          "label_zh": "主成分表型年龄第一次",
+          "required": false,
+          "from": "measurements",
+          "unit": "a",
+          "range": [
+            0,
+            120
+          ],
+          "note_zh": "同一次检测的一个重复。"
+        },
+        {
+          "key": "PCPhenoAge_b",
+          "label_zh": "主成分表型年龄第二次",
+          "required": false,
+          "from": "measurements",
+          "unit": "a",
+          "range": [
+            0,
+            120
+          ],
+          "note_zh": "同一个时钟的另一个重复。至少一对到齐才算绝对差。"
+        },
+        {
+          "key": "PCGrimAge_a",
+          "label_zh": "主成分格里姆年龄第一次",
+          "required": false,
+          "from": "measurements",
+          "unit": "a",
+          "range": [
+            0,
+            120
+          ],
+          "note_zh": "同一次检测的一个重复。"
+        },
+        {
+          "key": "PCGrimAge_b",
+          "label_zh": "主成分格里姆年龄第二次",
+          "required": false,
+          "from": "measurements",
+          "unit": "a",
+          "range": [
+            0,
+            120
+          ],
+          "note_zh": "同一个时钟的另一个重复。至少一对到齐才算绝对差。"
+        },
+        {
+          "key": "PCDNAmTL_a",
+          "label_zh": "主成分甲基化端粒长度第一次",
+          "required": false,
+          "from": "measurements",
+          "unit": "a",
+          "range": [
+            0,
+            120
+          ],
+          "note_zh": "同一次检测的一个重复。"
+        },
+        {
+          "key": "PCDNAmTL_b",
+          "label_zh": "主成分甲基化端粒长度第二次",
+          "required": false,
+          "from": "measurements",
+          "unit": "a",
+          "range": [
+            0,
+            120
+          ],
+          "note_zh": "同一个时钟的另一个重复。至少一对到齐才算绝对差。"
+        }
+      ],
       "paper": {
         "doi": "10.1038/s43587-022-00248-2",
         "title": "A computational solution for bolstering reliability of epigenetic clocks: implications for clinical trials and longitudinal tracking",
@@ -4190,8 +4501,61 @@
         "age_flag": "--age",
         "medications_flag": "--medications",
         "labs_flag": "--labs",
-        "out_flag": "--out"
+        "out_flag": "--out",
+        "measurements_header": [
+          "marker",
+          "value",
+          "unit"
+        ]
       },
+      "inputs_status": "verified",
+      "inputs": [
+        {
+          "key": "face_age_1",
+          "label_zh": "第一次面容年龄",
+          "required": true,
+          "from": "measurements",
+          "unit": "a",
+          "range": [
+            0,
+            120
+          ],
+          "aliases": [
+            "faceage1",
+            "第一次面容年龄"
+          ]
+        },
+        {
+          "key": "face_age_2",
+          "label_zh": "第二次面容年龄",
+          "required": true,
+          "from": "measurements",
+          "unit": "a",
+          "range": [
+            0,
+            120
+          ],
+          "aliases": [
+            "faceage2",
+            "第二次面容年龄"
+          ]
+        },
+        {
+          "key": "interval_days",
+          "label_zh": "两次间隔天数",
+          "required": true,
+          "from": "measurements",
+          "unit": "d",
+          "range": [
+            1,
+            2000
+          ],
+          "aliases": [
+            "间隔天数",
+            "days"
+          ]
+        }
+      ],
       "paper": {
         "doi": "10.1038/s41467-025-66758-w",
         "title": "Face aging rate quantifies change in biological age to predict cancer outcomes",
@@ -6618,8 +6982,149 @@
         "measurements_flag": "--measurements",
         "medications_flag": "--medications",
         "labs_flag": "--labs",
-        "out_flag": "--out"
+        "out_flag": "--out",
+        "measurements_header": [
+          "marker",
+          "value",
+          "unit"
+        ],
+        "age_flag": "--age"
       },
+      "inputs_status": "verified",
+      "inputs": [
+        {
+          "key": "liver",
+          "label_zh": "肝预测年龄",
+          "required": false,
+          "from": "measurements",
+          "unit": "a",
+          "range": [
+            0,
+            120
+          ],
+          "note_zh": "已经算好的组织预测年龄，不是从切片重算的。"
+        },
+        {
+          "key": "heart",
+          "label_zh": "心脏预测年龄",
+          "required": false,
+          "from": "measurements",
+          "unit": "a",
+          "range": [
+            0,
+            120
+          ],
+          "note_zh": "已经算好的组织预测年龄，不是从切片重算的。"
+        },
+        {
+          "key": "lung",
+          "label_zh": "肺预测年龄",
+          "required": false,
+          "from": "measurements",
+          "unit": "a",
+          "range": [
+            0,
+            120
+          ],
+          "note_zh": "已经算好的组织预测年龄，不是从切片重算的。"
+        },
+        {
+          "key": "kidney",
+          "label_zh": "肾预测年龄",
+          "required": false,
+          "from": "measurements",
+          "unit": "a",
+          "range": [
+            0,
+            120
+          ],
+          "note_zh": "已经算好的组织预测年龄，不是从切片重算的。"
+        },
+        {
+          "key": "brain",
+          "label_zh": "脑预测年龄",
+          "required": false,
+          "from": "measurements",
+          "unit": "a",
+          "range": [
+            0,
+            120
+          ],
+          "note_zh": "已经算好的组织预测年龄，不是从切片重算的。"
+        },
+        {
+          "key": "skin",
+          "label_zh": "皮肤预测年龄",
+          "required": false,
+          "from": "measurements",
+          "unit": "a",
+          "range": [
+            0,
+            120
+          ],
+          "note_zh": "已经算好的组织预测年龄，不是从切片重算的。"
+        },
+        {
+          "key": "muscle",
+          "label_zh": "肌肉预测年龄",
+          "required": false,
+          "from": "measurements",
+          "unit": "a",
+          "range": [
+            0,
+            120
+          ],
+          "note_zh": "已经算好的组织预测年龄，不是从切片重算的。"
+        },
+        {
+          "key": "adipose",
+          "label_zh": "脂肪预测年龄",
+          "required": false,
+          "from": "measurements",
+          "unit": "a",
+          "range": [
+            0,
+            120
+          ],
+          "note_zh": "已经算好的组织预测年龄，不是从切片重算的。"
+        },
+        {
+          "key": "spleen",
+          "label_zh": "脾预测年龄",
+          "required": false,
+          "from": "measurements",
+          "unit": "a",
+          "range": [
+            0,
+            120
+          ],
+          "note_zh": "已经算好的组织预测年龄，不是从切片重算的。"
+        },
+        {
+          "key": "pancreas",
+          "label_zh": "胰腺预测年龄",
+          "required": false,
+          "from": "measurements",
+          "unit": "a",
+          "range": [
+            0,
+            120
+          ],
+          "note_zh": "已经算好的组织预测年龄，不是从切片重算的。"
+        },
+        {
+          "key": "age",
+          "label_zh": "实足年龄",
+          "unit": "a",
+          "range": [
+            0,
+            120
+          ],
+          "required": true,
+          "from": "profile",
+          "flag": "--age"
+        }
+      ],
       "paper": {
         "doi": "10.1038/s41591-026-04566-5",
         "title": "Histological aging signatures for monitoring tissue-specific aging and disease",
@@ -6933,8 +7438,136 @@
         "age_flag": "--age",
         "medications_flag": "--medications",
         "labs_flag": "--labs",
-        "out_flag": "--out"
+        "out_flag": "--out",
+        "measurements_header": [
+          "marker",
+          "value",
+          "unit"
+        ]
       },
+      "inputs_status": "verified",
+      "inputs": [
+        {
+          "key": "brain",
+          "label_zh": "脑预测年龄",
+          "required": false,
+          "from": "measurements",
+          "unit": "a",
+          "range": [
+            0,
+            120
+          ],
+          "note_zh": "已经算好的器官预测年龄。七个器官齐了才报平均差；灰质和白质不进平均。"
+        },
+        {
+          "key": "heart",
+          "label_zh": "心脏预测年龄",
+          "required": false,
+          "from": "measurements",
+          "unit": "a",
+          "range": [
+            0,
+            120
+          ],
+          "note_zh": "已经算好的器官预测年龄。七个器官齐了才报平均差；灰质和白质不进平均。"
+        },
+        {
+          "key": "body",
+          "label_zh": "体成分预测年龄",
+          "required": false,
+          "from": "measurements",
+          "unit": "a",
+          "range": [
+            0,
+            120
+          ],
+          "note_zh": "已经算好的器官预测年龄。七个器官齐了才报平均差；灰质和白质不进平均。"
+        },
+        {
+          "key": "kidney",
+          "label_zh": "肾预测年龄",
+          "required": false,
+          "from": "measurements",
+          "unit": "a",
+          "range": [
+            0,
+            120
+          ],
+          "note_zh": "已经算好的器官预测年龄。七个器官齐了才报平均差；灰质和白质不进平均。"
+        },
+        {
+          "key": "liver",
+          "label_zh": "肝预测年龄",
+          "required": false,
+          "from": "measurements",
+          "unit": "a",
+          "range": [
+            0,
+            120
+          ],
+          "note_zh": "已经算好的器官预测年龄。七个器官齐了才报平均差；灰质和白质不进平均。"
+        },
+        {
+          "key": "pancreas",
+          "label_zh": "胰腺预测年龄",
+          "required": false,
+          "from": "measurements",
+          "unit": "a",
+          "range": [
+            0,
+            120
+          ],
+          "note_zh": "已经算好的器官预测年龄。七个器官齐了才报平均差；灰质和白质不进平均。"
+        },
+        {
+          "key": "eye",
+          "label_zh": "眼预测年龄",
+          "required": false,
+          "from": "measurements",
+          "unit": "a",
+          "range": [
+            0,
+            120
+          ],
+          "note_zh": "已经算好的器官预测年龄。七个器官齐了才报平均差；灰质和白质不进平均。"
+        },
+        {
+          "key": "brain_gm",
+          "label_zh": "脑灰质预测年龄",
+          "required": false,
+          "from": "measurements",
+          "unit": "a",
+          "range": [
+            0,
+            120
+          ],
+          "note_zh": "已经算好的器官预测年龄。七个器官齐了才报平均差；灰质和白质不进平均。"
+        },
+        {
+          "key": "brain_wm",
+          "label_zh": "脑白质预测年龄",
+          "required": false,
+          "from": "measurements",
+          "unit": "a",
+          "range": [
+            0,
+            120
+          ],
+          "note_zh": "已经算好的器官预测年龄。七个器官齐了才报平均差；灰质和白质不进平均。"
+        },
+        {
+          "key": "age",
+          "label_zh": "实足年龄",
+          "unit": "a",
+          "range": [
+            0,
+            120
+          ],
+          "required": true,
+          "from": "profile",
+          "flag": "--age"
+        }
+      ],
       "paper": {
         "doi": "10.1038/s41746-026-02488-7",
         "title": "Imaging-based organ-specific aging clock predicts human diseases and mortality",
@@ -7135,8 +7768,44 @@
         "age_flag": "--age",
         "medications_flag": "--medications",
         "labs_flag": "--labs",
-        "out_flag": "--out"
+        "out_flag": "--out",
+        "measurements_header": [
+          "marker",
+          "value",
+          "unit"
+        ]
       },
+      "inputs_status": "verified",
+      "inputs": [
+        {
+          "key": "lens_age",
+          "label_zh": "晶状体年龄",
+          "required": true,
+          "from": "measurements",
+          "unit": "a",
+          "range": [
+            0,
+            120
+          ],
+          "aliases": [
+            "晶状体年龄",
+            "lens age"
+          ],
+          "note_zh": "照片模型已经给出的晶状体年龄，本技能不从照片重算。"
+        },
+        {
+          "key": "age",
+          "label_zh": "实足年龄",
+          "unit": "a",
+          "range": [
+            0,
+            120
+          ],
+          "required": true,
+          "from": "profile",
+          "flag": "--age"
+        }
+      ],
       "paper": {
         "doi": "10.1038/s41467-023-42934-8",
         "title": "LensAge index as a deep learning-based biological age for self-monitoring the risks of age-related diseases and mortality",
@@ -7577,8 +8246,46 @@
         "measurements_flag": "--measurements",
         "medications_flag": "--medications",
         "labs_flag": "--labs",
-        "out_flag": "--out"
+        "out_flag": "--out",
+        "measurements_header": [
+          "marker",
+          "value",
+          "unit"
+        ],
+        "age_flag": "--age"
       },
+      "inputs_status": "verified",
+      "inputs": [
+        {
+          "key": "predicted_lung_age",
+          "label_zh": "肺预测年龄",
+          "required": true,
+          "from": "measurements",
+          "unit": "a",
+          "range": [
+            0,
+            120
+          ],
+          "aliases": [
+            "predicted",
+            "肺预测年龄",
+            "lung age"
+          ],
+          "note_zh": "残差是实足年龄减去预测年龄，和配套代码里 y 减预测一致。"
+        },
+        {
+          "key": "age",
+          "label_zh": "实足年龄",
+          "unit": "a",
+          "range": [
+            0,
+            120
+          ],
+          "required": true,
+          "from": "profile",
+          "flag": "--age"
+        }
+      ],
       "paper": {
         "doi": "10.1038/s41467-026-75427-5",
         "title": "Cellular hallmarks and aging clock of the human lung parenchyma",
@@ -7773,8 +8480,112 @@
         "age_flag": "--age",
         "medications_flag": "--medications",
         "labs_flag": "--labs",
-        "out_flag": "--out"
+        "out_flag": "--out",
+        "measurements_header": [
+          "marker",
+          "value",
+          "unit"
+        ]
       },
+      "inputs_status": "verified",
+      "inputs": [
+        {
+          "key": "brain",
+          "label_zh": "脑预测年龄",
+          "required": false,
+          "from": "measurements",
+          "unit": "a",
+          "range": [
+            0,
+            120
+          ],
+          "note_zh": "消费者磁共振报告上已经印出的预测年龄。"
+        },
+        {
+          "key": "heart",
+          "label_zh": "心脏预测年龄",
+          "required": false,
+          "from": "measurements",
+          "unit": "a",
+          "range": [
+            0,
+            120
+          ],
+          "note_zh": "消费者磁共振报告上已经印出的预测年龄。"
+        },
+        {
+          "key": "liver",
+          "label_zh": "肝预测年龄",
+          "required": false,
+          "from": "measurements",
+          "unit": "a",
+          "range": [
+            0,
+            120
+          ],
+          "note_zh": "消费者磁共振报告上已经印出的预测年龄。"
+        },
+        {
+          "key": "adipose",
+          "label_zh": "脂肪预测年龄",
+          "required": false,
+          "from": "measurements",
+          "unit": "a",
+          "range": [
+            0,
+            120
+          ],
+          "note_zh": "消费者磁共振报告上已经印出的预测年龄。"
+        },
+        {
+          "key": "spleen",
+          "label_zh": "脾预测年龄",
+          "required": false,
+          "from": "measurements",
+          "unit": "a",
+          "range": [
+            0,
+            120
+          ],
+          "note_zh": "消费者磁共振报告上已经印出的预测年龄。"
+        },
+        {
+          "key": "kidney",
+          "label_zh": "肾预测年龄",
+          "required": false,
+          "from": "measurements",
+          "unit": "a",
+          "range": [
+            0,
+            120
+          ],
+          "note_zh": "消费者磁共振报告上已经印出的预测年龄。"
+        },
+        {
+          "key": "pancreas",
+          "label_zh": "胰腺预测年龄",
+          "required": false,
+          "from": "measurements",
+          "unit": "a",
+          "range": [
+            0,
+            120
+          ],
+          "note_zh": "消费者磁共振报告上已经印出的预测年龄。"
+        },
+        {
+          "key": "age",
+          "label_zh": "实足年龄",
+          "unit": "a",
+          "range": [
+            0,
+            120
+          ],
+          "required": true,
+          "from": "profile",
+          "flag": "--age"
+        }
+      ],
       "paper": {
         "doi": "10.1038/s41591-025-03999-8",
         "title": "MRI-based multi-organ clocks for healthy aging and disease assessment",
@@ -9495,8 +10306,44 @@
         "age_flag": "--age",
         "medications_flag": "--medications",
         "labs_flag": "--labs",
-        "out_flag": "--out"
+        "out_flag": "--out",
+        "measurements_header": [
+          "marker",
+          "value",
+          "unit"
+        ]
       },
+      "inputs_status": "verified",
+      "inputs": [
+        {
+          "key": "protage",
+          "label_zh": "蛋白质年龄",
+          "required": true,
+          "from": "measurements",
+          "unit": "a",
+          "range": [
+            0,
+            120
+          ],
+          "aliases": [
+            "蛋白质年龄",
+            "ProtAge"
+          ],
+          "note_zh": "年龄差是蛋白质年龄减去实足年龄。没有 LightGBM 系数时不能从蛋白量重算。"
+        },
+        {
+          "key": "age",
+          "label_zh": "实足年龄",
+          "unit": "a",
+          "range": [
+            0,
+            120
+          ],
+          "required": true,
+          "from": "profile",
+          "flag": "--age"
+        }
+      ],
       "paper": {
         "doi": "10.1038/s41591-024-03164-7",
         "title": "Proteomic aging clock predicts mortality and risk of common age-related diseases in diverse populations",
@@ -9943,8 +10790,45 @@
         "age_flag": "--age",
         "medications_flag": "--medications",
         "labs_flag": "--labs",
-        "out_flag": "--out"
+        "out_flag": "--out",
+        "measurements_flag": "--measurements",
+        "measurements_header": [
+          "marker",
+          "value",
+          "unit"
+        ]
       },
+      "inputs_status": "verified",
+      "inputs": [
+        {
+          "key": "retinal_age",
+          "label_zh": "视网膜年龄",
+          "required": true,
+          "from": "measurements",
+          "unit": "a",
+          "range": [
+            0,
+            120
+          ],
+          "aliases": [
+            "视网膜年龄",
+            "retinal age"
+          ],
+          "note_zh": "眼底模型已经给出的年龄，本技能不从图像重算。"
+        },
+        {
+          "key": "age",
+          "label_zh": "实足年龄",
+          "unit": "a",
+          "range": [
+            0,
+            120
+          ],
+          "required": true,
+          "from": "profile",
+          "flag": "--age"
+        }
+      ],
       "paper": {
         "doi": "10.1038/s41746-025-01751-7",
         "title": "A cross population study of retinal aging biomarkers with longitudinal pre-training and label distribution learning",
@@ -10044,8 +10928,152 @@
         "measurements_flag": "--measurements",
         "medications_flag": "--medications",
         "labs_flag": "--labs",
-        "out_flag": "--out"
+        "out_flag": "--out",
+        "measurements_header": [
+          "marker",
+          "value",
+          "unit"
+        ]
       },
+      "inputs_status": "verified",
+      "inputs": [
+        {
+          "key": "phenoage_baseline",
+          "label_zh": "表型年龄基线",
+          "required": true,
+          "from": "measurements",
+          "unit": "a",
+          "range": [
+            0,
+            120
+          ]
+        },
+        {
+          "key": "phenoage_week32",
+          "label_zh": "表型年龄第32周",
+          "required": true,
+          "from": "measurements",
+          "unit": "a",
+          "range": [
+            0,
+            120
+          ],
+          "note_zh": "第32周减去基线。论文的组间数字不是这个人的变化。"
+        },
+        {
+          "key": "pcgrimage_baseline",
+          "label_zh": "主成分格里姆年龄基线",
+          "required": false,
+          "from": "measurements",
+          "unit": "a",
+          "range": [
+            0,
+            120
+          ]
+        },
+        {
+          "key": "pcgrimage_week32",
+          "label_zh": "主成分格里姆年龄第32周",
+          "required": false,
+          "from": "measurements",
+          "unit": "a",
+          "range": [
+            0,
+            120
+          ],
+          "note_zh": "第32周减去基线。论文的组间数字不是这个人的变化。"
+        },
+        {
+          "key": "grimagev2_baseline",
+          "label_zh": "格里姆年龄第二版基线",
+          "required": false,
+          "from": "measurements",
+          "unit": "a",
+          "range": [
+            0,
+            120
+          ]
+        },
+        {
+          "key": "grimagev2_week32",
+          "label_zh": "格里姆年龄第二版第32周",
+          "required": false,
+          "from": "measurements",
+          "unit": "a",
+          "range": [
+            0,
+            120
+          ],
+          "note_zh": "第32周减去基线。论文的组间数字不是这个人的变化。"
+        },
+        {
+          "key": "omicmage_baseline",
+          "label_zh": "多组学生物年龄基线",
+          "required": false,
+          "from": "measurements",
+          "unit": "a",
+          "range": [
+            0,
+            120
+          ]
+        },
+        {
+          "key": "omicmage_week32",
+          "label_zh": "多组学生物年龄第32周",
+          "required": false,
+          "from": "measurements",
+          "unit": "a",
+          "range": [
+            0,
+            120
+          ],
+          "note_zh": "第32周减去基线。论文的组间数字不是这个人的变化。"
+        },
+        {
+          "key": "retroage_baseline",
+          "label_zh": "RetroAge基线",
+          "required": false,
+          "from": "measurements",
+          "unit": "a",
+          "range": [
+            0,
+            120
+          ]
+        },
+        {
+          "key": "retroage_week32",
+          "label_zh": "RetroAge第32周",
+          "required": false,
+          "from": "measurements",
+          "unit": "a",
+          "range": [
+            0,
+            120
+          ],
+          "note_zh": "第32周减去基线。论文的组间数字不是这个人的变化。"
+        },
+        {
+          "key": "dunedinpace_baseline",
+          "label_zh": "达尼丁节奏基线",
+          "required": false,
+          "from": "measurements",
+          "range": [
+            0.2,
+            2.5
+          ]
+        },
+        {
+          "key": "dunedinpace_week32",
+          "label_zh": "达尼丁节奏第32周",
+          "required": false,
+          "from": "measurements",
+          "range": [
+            0.2,
+            2.5
+          ],
+          "note_zh": "第32周减去基线。论文的组间数字不是这个人的变化。"
+        }
+      ],
       "paper": {
         "doi": "10.1038/s41467-026-72861-3",
         "title": "Semaglutide slows epigenetic aging in a randomized trial of HIV-associated lipohypertrophy",

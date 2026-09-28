@@ -35,7 +35,42 @@
     "age_flag": "--age",
     "medications_flag": "--medications",
     "labs_flag": "--labs",
-    "out_flag": "--out"
+    "out_flag": "--out",
+    "measurements_header": [
+      "marker",
+      "value",
+      "unit"
+    ]
   },
-  "inputs_status": "none"
+  "inputs_status": "verified",
+  "inputs": [
+    {
+      "key": "protage",
+      "label_zh": "蛋白质年龄",
+      "aliases": [
+        "蛋白质年龄",
+        "ProtAge"
+      ],
+      "unit": "a",
+      "range": [
+        0,
+        120
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "年龄差是蛋白质年龄减去实足年龄。没有 LightGBM 系数时不能从蛋白量重算。"
+    },
+    {
+      "key": "age",
+      "label_zh": "实足年龄",
+      "unit": "a",
+      "range": [
+        0,
+        120
+      ],
+      "required": true,
+      "from": "profile",
+      "flag": "--age"
+    }
+  ]
 }

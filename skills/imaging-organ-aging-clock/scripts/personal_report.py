@@ -67,8 +67,18 @@ def parse_organs(path):
         text = line.strip()
         if not text or text.startswith("#"):
             continue
-        key, raw = text.split()[:2]
-        key = key.lower()
+        if "," in text:
+            cells = [cell.strip() for cell in text.split(",")]
+            if not cells or cells[0].lower() in {"marker", "item", "name", "key", "项目"}:
+                continue
+            if len(cells) < 2:
+                continue
+            key, raw = cells[0].lower(), cells[1]
+        else:
+            parts = text.split()
+            if len(parts) < 2:
+                continue
+            key, raw = parts[0].lower(), parts[1]
         if key in ORGAN_LABELS:
             found[key] = float(raw)
     return found

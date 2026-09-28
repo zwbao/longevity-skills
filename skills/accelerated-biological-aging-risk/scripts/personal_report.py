@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Personal phenotypic-age readout for Gao et al., Nature Communications 2023.
+"""Personal phenotypic-age readout. The calculator is Levine et al., Aging 2018.
 
 Phenotypic age uses the original coefficients in BioAge phenoage_calc.R.
 KDM biological age is not computed: the clone does not store q, k, s, or s_BA.
@@ -580,7 +580,7 @@ def write_report(
 
 
 def main(argv: list[str] | None = None) -> int:
-    parser = argparse.ArgumentParser(description="Phenotypic age readout from Gao et al. 2023")
+    parser = argparse.ArgumentParser(description="Phenotypic age readout from Levine et al. 2018")
     parser.add_argument("--biomarkers", type=Path)
     parser.add_argument("--age", type=float)
     parser.add_argument("--sex", default=None)

@@ -1,6 +1,6 @@
 # Claims
 
-Full text was read from the local PDF and from Europe PMC `PMC10119095`. The method repository is `https://github.com/dayoonkwon/BioAge`, cloned to `/tmp/paper-code/p21`. That repository is the Kwon and Belsky NHANES toolkit (GeroScience 2021). It is not the UK Biobank depression and anxiety analysis. A similarly named calculator is any later port of Levine phenotypic age; those ports are not this paper's Cox models, and this skill does not import them.
+The phenotypic-age calculator is Levine et al., Aging 2018 (doi:10.18632/aging.101414), as the unrounded `orig=TRUE` weights in `phenoage_calc.R` from `https://github.com/dayoonkwon/BioAge`. Gao et al., Nature Communications 2023 (doi:10.1038/s41467-023-38013-7, Europe PMC `PMC10119095`) uses phenotypic age for depression and anxiety and does not publish these coefficients. Its questionnaire cutoffs are applied only when that file is supplied. The BioAge repository is the Kwon and Belsky NHANES toolkit (GeroScience 2021). It is not the UK Biobank depression analysis, and this skill does not import a later port's Cox models.
 
 | What the paper states | What the code computes | What is missing |
 | --- | --- | --- |

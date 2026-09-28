@@ -21,12 +21,12 @@ def load_measurements(path):
     lines = [line for line in text.splitlines() if line.strip() and not line.strip().startswith("#")]
     if not lines:
         return rows
-    start = 1 if "," in lines[0] and lines[0].split(",")[0].strip().lower() in {"name", "项目", "key"} else 0
+    start = 1 if "," in lines[0] and lines[0].split(",")[0].strip().lower() in {"name", "项目", "key", "item", "marker"} else 0
     for line in lines[start:]:
-        if "," not in line:
+        cells = [cell.strip() for cell in line.split(",")]
+        if len(cells) < 2 or not cells[0]:
             continue
-        key, value = line.split(",", 1)
-        rows[key.strip()] = value.strip()
+        rows[cells[0]] = cells[1]
     return rows
 
 

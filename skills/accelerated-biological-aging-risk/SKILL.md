@@ -2,9 +2,11 @@
 name: accelerated-biological-aging-risk
 description: >-
   Computes one person's phenotypic age and its difference from chronological
-  age from nine blood chemistries, using the original PhenoAge coefficients in
-  the BioAge package. Applies the printed questionnaire, body-mass, alcohol,
-  activity, systolic-pressure, and childhood-adversity cutoffs only when those
+  age from nine blood chemistries, using the Levine 2018 PhenoAge coefficients
+  in the BioAge package (orig=TRUE). The paper card cites that calculator.
+  Gao et al. 2023 uses phenotypic age for depression and anxiety and does not
+  publish these coefficients; its questionnaire, body-mass, alcohol, activity,
+  systolic-pressure, and childhood-adversity cutoffs apply only when those
   measurements are supplied. States that KDM biological age and the cohort
   residual acceleration are not computed. Use when the user mentions KDM-BA,
   PhenoAge acceleration, or biological age with depression and anxiety in UK

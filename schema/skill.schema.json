@@ -115,6 +115,9 @@
     "entry": {
       "$ref": "#/$defs/entry"
     },
+    "population": {
+      "$ref": "#/$defs/population"
+    },
     "inputs_status": {
       "enum": [
         "none",
@@ -286,6 +289,26 @@
         "doi": {
           "type": "string",
           "pattern": "^10\\.[0-9]{4,9}/\\S+$"
+        }
+      }
+    },
+    "population": {
+      "type": "object",
+      "description": "Who the equation was fit on. Callers warn when the person is outside age_years even if an input range still accepts the value.",
+      "required": ["age_years"],
+      "additionalProperties": false,
+      "properties": {
+        "age_years": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 2,
+          "items": {"type": "number"},
+          "description": "Inclusive derivation ages in years, low then high."
+        },
+        "note_zh": {
+          "type": "string",
+          "minLength": 4,
+          "maxLength": 300
         }
       }
     },

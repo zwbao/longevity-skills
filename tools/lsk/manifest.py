@@ -17,7 +17,7 @@ from .doi import normalize_doi
 
 KEY_ORDER = [
     "$schema", "schema", "name", "kind", "tier", "species", "evidence", "domains", "blurb_zh", "intents",
-    "triage", "paper", "tool", "entry", "inputs_status", "inputs", "outputs", "related_not_same", "data_files",
+    "triage", "paper", "tool", "entry", "population", "inputs_status", "inputs", "outputs", "related_not_same", "data_files",
 ]
 PAPER_ORDER = [
     "doi", "source_id", "title", "title_zh", "journal", "year", "authors", "article_url", "supplements",
@@ -118,6 +118,10 @@ def check_one(skill_dir: Path, manifest: Dict[str, Any], schema: Dict[str, Any],
     for other in manifest.get("related_not_same", []):
         if other not in all_names:
             errors.append(f"{name}: related_not_same names a missing skill {other!r}")
+    population = manifest.get("population") or {}
+    span = population.get("age_years")
+    if span and not span[0] < span[1]:
+        errors.append(f"{name}: population.age_years must be [low, high] with low < high")
     entry = manifest.get("entry")
     default_script = skill_dir / "scripts" / "personal_report.py"
     if entry:

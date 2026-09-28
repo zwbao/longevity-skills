@@ -24,8 +24,12 @@ ALIASES = {
     "肌密度": "muscle_density",
     "muscle": "muscle_density",
     "腹主动脉钙化": "aortic_calcium",
+    "腹主动脉钙化积分": "aortic_calcium",
+    "腹主动脉agatston": "aortic_calcium",
+    "abdominal_aortic_calcium": "aortic_calcium",
+    "abdominal_aorta_calcium": "aortic_calcium",
+    "aac": "aortic_calcium",
     "主动脉钙化": "aortic_calcium",
-    "agatston": "aortic_calcium",
     "内脏脂肪密度": "visceral_fat_density",
     "骨密度": "bone_density",
     "骨小梁密度": "bone_density",
@@ -86,8 +90,36 @@ def load_measurements(path: Path | None) -> dict[str, str]:
     return rows
 
 
+def fold(name: str) -> str:
+    return name.strip().lower().replace(" ", "_").replace("-", "_")
+
+
+# A bare Agatston score is a coronary calcium total. This paper's calcium
+# column is abdominal aortic calcium from an abdominal CT, scored in Agatston
+# units. The unit name is not an alias for the column.
+CORONARY_NAMES = {
+    "agatston",
+    "agatston_score",
+    "coronary_agatston",
+    "coronary_calcium",
+    "coronary_artery_calcium",
+    "cac",
+    "cac_score",
+    "total_agatston",
+}
+
+
+def is_coronary(name: str) -> bool:
+    key = fold(name)
+    if key in CORONARY_NAMES or key.startswith("coronary_"):
+        return True
+    return "冠脉" in name or "冠状动脉" in name
+
+
 def canonical(name: str) -> str | None:
-    key = name.strip().lower().replace(" ", "_")
+    if is_coronary(name):
+        return None
+    key = fold(name)
     if key in IPA_DROP:
         return key
     return ALIASES.get(name.strip()) or ALIASES.get(key)
@@ -144,6 +176,13 @@ def score(measurements: dict[str, str], age: float | None) -> tuple[list[str], l
         return [], []
     sex_zh = "男性" if sex == "male" else "女性"
     ranked = []
+    for name, raw in measurements.items():
+        if not is_coronary(name):
+            continue
+        notes.append(
+            f"{name} 的值 {raw} 是冠状动脉钙化（Agatston）积分。"
+            "这个方法只比较腹部 CT 的腹主动脉钙化，没有把冠状动脉积分放进名单。"
+        )
     for key, drop in IPA_DROP.items():
         raw = None
         for name, value in measurements.items():
@@ -199,14 +238,17 @@ def exam_section(labs: list[tuple[str, str, str]]) -> list[str]:
 
 
 def render(list_lines: list[str], notes: list[str], meds: list[str], labs: list[tuple[str, str, str]], age: float | None) -> str:
-    del notes
     if age is None and not list_lines:
         intro = "这次没有提供年龄和影像测量，所以没有对照中位数。"
     elif not list_lines:
         intro = "这次没有标志比存活中位数更靠近死亡中位数，所以名单是空的。"
     else:
         intro = "这次把更靠近死亡中位数的影像标志，按论文的贡献从大到小排列。更靠近存活中位数的项目不进入名单。没有计算生存概率。"
-    body = ["# 腹部影像生物标志", "", intro, "", "## 方法算出的名单", ""]
+    body = ["# 腹部影像生物标志", "", intro, ""]
+    if notes:
+        body.extend(notes)
+        body.append("")
+    body.extend(["## 方法算出的名单", ""])
     body.extend(list_lines or ["没有标志进入名单。"])
     body.extend(["", *medication_lines(meds, "\n".join(list_lines))])
     body.extend(["", *exam_section(labs)])

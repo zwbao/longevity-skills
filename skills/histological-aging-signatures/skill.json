@@ -35,7 +35,147 @@
     "measurements_flag": "--measurements",
     "medications_flag": "--medications",
     "labs_flag": "--labs",
-    "out_flag": "--out"
+    "out_flag": "--out",
+    "measurements_header": [
+      "marker",
+      "value",
+      "unit"
+    ],
+    "age_flag": "--age"
   },
-  "inputs_status": "none"
+  "inputs_status": "verified",
+  "inputs": [
+    {
+      "key": "liver",
+      "label_zh": "肝预测年龄",
+      "unit": "a",
+      "range": [
+        0,
+        120
+      ],
+      "required": false,
+      "from": "measurements",
+      "note_zh": "已经算好的组织预测年龄，不是从切片重算的。"
+    },
+    {
+      "key": "heart",
+      "label_zh": "心脏预测年龄",
+      "unit": "a",
+      "range": [
+        0,
+        120
+      ],
+      "required": false,
+      "from": "measurements",
+      "note_zh": "已经算好的组织预测年龄，不是从切片重算的。"
+    },
+    {
+      "key": "lung",
+      "label_zh": "肺预测年龄",
+      "unit": "a",
+      "range": [
+        0,
+        120
+      ],
+      "required": false,
+      "from": "measurements",
+      "note_zh": "已经算好的组织预测年龄，不是从切片重算的。"
+    },
+    {
+      "key": "kidney",
+      "label_zh": "肾预测年龄",
+      "unit": "a",
+      "range": [
+        0,
+        120
+      ],
+      "required": false,
+      "from": "measurements",
+      "note_zh": "已经算好的组织预测年龄，不是从切片重算的。"
+    },
+    {
+      "key": "brain",
+      "label_zh": "脑预测年龄",
+      "unit": "a",
+      "range": [
+        0,
+        120
+      ],
+      "required": false,
+      "from": "measurements",
+      "note_zh": "已经算好的组织预测年龄，不是从切片重算的。"
+    },
+    {
+      "key": "skin",
+      "label_zh": "皮肤预测年龄",
+      "unit": "a",
+      "range": [
+        0,
+        120
+      ],
+      "required": false,
+      "from": "measurements",
+      "note_zh": "已经算好的组织预测年龄，不是从切片重算的。"
+    },
+    {
+      "key": "muscle",
+      "label_zh": "肌肉预测年龄",
+      "unit": "a",
+      "range": [
+        0,
+        120
+      ],
+      "required": false,
+      "from": "measurements",
+      "note_zh": "已经算好的组织预测年龄，不是从切片重算的。"
+    },
+    {
+      "key": "adipose",
+      "label_zh": "脂肪预测年龄",
+      "unit": "a",
+      "range": [
+        0,
+        120
+      ],
+      "required": false,
+      "from": "measurements",
+      "note_zh": "已经算好的组织预测年龄，不是从切片重算的。"
+    },
+    {
+      "key": "spleen",
+      "label_zh": "脾预测年龄",
+      "unit": "a",
+      "range": [
+        0,
+        120
+      ],
+      "required": false,
+      "from": "measurements",
+      "note_zh": "已经算好的组织预测年龄，不是从切片重算的。"
+    },
+    {
+      "key": "pancreas",
+      "label_zh": "胰腺预测年龄",
+      "unit": "a",
+      "range": [
+        0,
+        120
+      ],
+      "required": false,
+      "from": "measurements",
+      "note_zh": "已经算好的组织预测年龄，不是从切片重算的。"
+    },
+    {
+      "key": "age",
+      "label_zh": "实足年龄",
+      "unit": "a",
+      "range": [
+        0,
+        120
+      ],
+      "required": true,
+      "from": "profile",
+      "flag": "--age"
+    }
+  ]
 }

@@ -170,13 +170,25 @@ PUBLISHED = {
 
 def _devs(rows: list[dict[str, str]]) -> dict[str, float]:
     found = {}
+    bag: dict[str, float | None] = {}
     for row in rows:
         keys = field_map(row)
-        clock = keys.get("clock") or keys.get("name")
+        clock = keys.get("clock")
         a = as_float(keys.get("age_a"))
         b = as_float(keys.get("age_b"))
-        if clock and a is not None and b is not None:
+        if clock and a is not None and b is not None and "age_a" in keys:
             found[norm(clock)] = replicate_deviation(a, b)
+            continue
+        item = keys.get("marker") or keys.get("item") or keys.get("key")
+        if item and keys.get("value") not in (None, ""):
+            bag[norm(item)] = as_float(keys.get("value"))
+    for clock in CLOCKS:
+        if norm(clock) in found:
+            continue
+        left = bag.get(norm(f"{clock}_a"))
+        right = bag.get(norm(f"{clock}_b"))
+        if left is not None and right is not None:
+            found[norm(clock)] = replicate_deviation(left, right)
     return found
 
 

@@ -102,19 +102,23 @@ def items(rows):
     out = {}
     for row in rows:
         low = {(k or "").strip().lower(): (v or "").strip() for k, v in row.items() if k}
-        name = (low.get("item") or "").lower()
+        name = (low.get("item") or low.get("marker") or low.get("name") or "").lower()
         if name:
             out[name] = low.get("value") or ""
     return out
 
 
-def pair(rows):
+def pair(rows, age_arg=None):
     got = items(rows)
-    return as_float(got.get("predicted")), as_float(got.get("age"))
+    predicted = as_float(got.get("predicted") or got.get("predicted_lung_age"))
+    age = as_float(got.get("age") or got.get("chronological_age"))
+    if age is None and age_arg is not None:
+        age = float(age_arg)
+    return predicted, age
 
 
-def opening(rows):
-    predicted, age = pair(rows)
+def opening(rows, age_arg=None):
+    predicted, age = pair(rows, age_arg)
     if predicted is None or age is None:
         return "配套仓库里没有保存好的预测模型。这次也没有同时提供预测年龄和实足年龄，所以没有算出残差。"
     residual = code_residual(age, predicted)
@@ -124,8 +128,8 @@ def opening(rows):
     )
 
 
-def method_lines(rows):
-    predicted, age = pair(rows)
+def method_lines(rows, age_arg=None):
+    predicted, age = pair(rows, age_arg)
     lines = ["## 方法算出的名单", ""]
     if predicted is None or age is None:
         lines.append("- 肺实质年龄残差：这次没有算出。")
@@ -138,16 +142,16 @@ def known_names(rows):
     return set()
 
 
-def render(meds, labs, rows):
-    lines = ["# 肺实质年龄残差", "", opening(rows), ""]
-    lines.extend(method_lines(rows))
+def render(meds, labs, rows, age_arg=None):
+    lines = ["# 肺实质年龄残差", "", opening(rows, age_arg), ""]
+    lines.extend(method_lines(rows, age_arg))
     lines.extend(["", *medication_lines(meds, known_names(rows))])
     lines.extend(["", *lab_lines(labs)])
     return finish(lines)
 
 
-def report(out, meds, labs, measurements):
-    return write_report(out, render(load_meds(meds), labs, read_rows(measurements)))
+def report(out, meds, labs, measurements, age=None):
+    return write_report(out, render(load_meds(meds), labs, read_rows(measurements), age))
 
 
 def main():
@@ -155,9 +159,10 @@ def main():
     parser.add_argument("--measurements", type=Path)
     parser.add_argument("--medications", type=Path)
     parser.add_argument("--labs", type=Path)
+    parser.add_argument("--age", type=float)
     parser.add_argument("--out", type=Path, required=True)
     args = parser.parse_args()
-    print(report(args.out, args.medications, args.labs, args.measurements))
+    print(report(args.out, args.medications, args.labs, args.measurements, args.age))
 
 
 

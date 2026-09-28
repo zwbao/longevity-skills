@@ -17,9 +17,9 @@ sys.path.insert(0, str(ROOT / "scripts"))
 
 import personal_report
 import skillkit
-from presets import (EXAMPLE, EXAMPLE_MEN_SUM, EXAMPLE_MEN_TERMS, EXAMPLE_WOMEN_SUM, GUIDELINE_EXAMPLE,
+from presets import (DERIVATION_AGES, EXAMPLE, EXAMPLE_MEN_SUM, EXAMPLE_MEN_TERMS, EXAMPLE_WOMEN_SUM, GUIDELINE_EXAMPLE,
                      GUIDELINE_EXAMPLE_RISK, MEAN_MEN, MEAN_WOMEN, MEN, MEN_PRINTED, MEN_TERM_VALUES, MMOL_TO_MG_DL,
-                     S10_MEN, S10_WOMEN, S10_WOMEN_PRINTED, TABLE2)
+                     S10_MEN, S10_WOMEN, S10_WOMEN_PRINTED, TABLE2, WOMEN)
 
 MANIFEST = json.loads((ROOT / "skill.json").read_text(encoding="utf-8"))
 MEN_FLAGS = ["--treated", "no", "--smoker", "no", "--diabetes", "yes", "--north", "yes", "--urban", "yes", "--family-history", "no"]
@@ -141,6 +141,48 @@ def test_women_do_not_need_the_men_only_flags(tmp_path: Path):
     code = personal_report.main(["--measurements", str(m), "--age", "60", "--sex", "female", "--treated", "no", "--smoker", "no",
                                  "--diabetes", "yes", "--north", "yes", "--out", str(tmp_path / "out")])
     assert code == 0
+
+
+def test_male_waist_sign_is_the_published_negative_coefficient():
+    assert MEN_PRINTED["ln_waist"] == -0.71
+    assert WOMEN["ln_waist"] == 1.48
+    product, value = MEN_TERM_VALUES["ln_waist"]
+    assert product == -3.12 and value == pytest.approx(math.log(80))
+    assert MEN["ln_waist"] * math.log(80) == pytest.approx(-3.12, abs=0.005)
+    flags = {"treated": False, "smoker": False, "diabetes": False, "north": False, "urban": False, "family_history": False}
+    base = {"sbp_mmhg": 130, "tc_mg_dl": 210, "hdl_mg_dl": 55, "waist_cm": 90}
+    male_wide = personal_report.compute(base, flags, 55, "male")["risk_pct"]
+    male_narrow = personal_report.compute(dict(base, waist_cm=85), flags, 55, "male")["risk_pct"]
+    assert male_narrow > male_wide
+    female_wide = personal_report.compute(base, flags, 55, "female")["risk_pct"]
+    female_narrow = personal_report.compute(dict(base, waist_cm=85), flags, 55, "female")["risk_pct"]
+    assert female_narrow < female_wide
+    levers = personal_report.levers(base, flags, 55, {"waist_cm": 85}, "male")
+    waist = next(item for item in levers["sensitivity"] if item["key"] == "waist_cm")
+    assert waist["not_a_target"] is True and waist["per_unit"] < 0
+    moved = next(item for item in levers["levers"] if item["key"] == "waist_cm")
+    assert moved["not_a_target"] is True and moved["risk_delta_pct"] > 0
+    women = personal_report.levers(base, flags, 55, {"waist_cm": 85}, "female")
+    assert all(not item.get("not_a_target") for item in women["sensitivity"])
+
+
+def test_population_age_warns_outside_35_to_74(tmp_path: Path):
+    assert MANIFEST["population"]["age_years"] == [35, 74]
+    assert DERIVATION_AGES == (35, 74)
+    waist = next(item for item in MANIFEST["inputs"] if item["key"] == "waist_cm")
+    assert "腹围" in waist["aliases"]
+    m = _csv(tmp_path / "m.csv", EXAMPLE_ROWS)
+    code = personal_report.main(["--measurements", str(m), "--age", "30", "--sex", "male", *MEN_FLAGS, "--out", str(tmp_path / "out")])
+    assert code == 0
+    report = (tmp_path / "out" / "report.md").read_text(encoding="utf-8")
+    assert "35–74" in report and "之外" in report
+    levers = json.loads((tmp_path / "out" / "levers.json").read_text(encoding="utf-8"))
+    assert levers["population_age_years"] == [35, 74]
+    assert levers["age_outside_derivation"] is True
+    code = personal_report.main(["--measurements", str(m), "--age", "60", "--sex", "male", *MEN_FLAGS, "--out", str(tmp_path / "in")])
+    inside = (tmp_path / "in" / "report.md").read_text(encoding="utf-8")
+    assert "之外" not in inside
+    assert "−0.71" in inside
 
 
 def test_manifest():

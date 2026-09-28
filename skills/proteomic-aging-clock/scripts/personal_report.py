@@ -121,8 +121,8 @@ def matched_proteins(rows: list[dict[str, str]]) -> tuple[list[str], float | Non
     protage = None
     for row in rows:
         keys = {k.strip().lower(): (v or "").strip() for k, v in row.items() if k}
-        if "item" in keys:
-            name = keys["item"]
+        if "item" in keys or "marker" in keys or "name" in keys:
+            name = keys.get("item") or keys.get("marker") or keys.get("name") or ""
             value = keys.get("value", "")
         elif "gene" in keys:
             name = keys["gene"]

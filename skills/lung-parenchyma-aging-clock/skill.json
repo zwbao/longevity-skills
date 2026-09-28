@@ -34,7 +34,44 @@
     "measurements_flag": "--measurements",
     "medications_flag": "--medications",
     "labs_flag": "--labs",
-    "out_flag": "--out"
+    "out_flag": "--out",
+    "measurements_header": [
+      "marker",
+      "value",
+      "unit"
+    ],
+    "age_flag": "--age"
   },
-  "inputs_status": "none"
+  "inputs_status": "verified",
+  "inputs": [
+    {
+      "key": "predicted_lung_age",
+      "label_zh": "肺预测年龄",
+      "aliases": [
+        "predicted",
+        "肺预测年龄",
+        "lung age"
+      ],
+      "unit": "a",
+      "range": [
+        0,
+        120
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "残差是实足年龄减去预测年龄，和配套代码里 y 减预测一致。"
+    },
+    {
+      "key": "age",
+      "label_zh": "实足年龄",
+      "unit": "a",
+      "range": [
+        0,
+        120
+      ],
+      "required": true,
+      "from": "profile",
+      "flag": "--age"
+    }
+  ]
 }

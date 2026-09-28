@@ -30,9 +30,10 @@ def load_kv(path):
     if not rows:
         return out
     fields = {name.strip().lower(): name for name in rows[0].keys() if name}
-    if "item" in fields and "value" in fields:
+    name_field = fields.get("item") or fields.get("marker") or fields.get("name") or fields.get("key")
+    if name_field and "value" in fields:
         for row in rows:
-            key = (row.get(fields["item"]) or "").strip()
+            key = (row.get(name_field) or "").strip()
             if key:
                 out[key] = (row.get(fields["value"]) or "").strip()
         return out
@@ -143,9 +144,11 @@ def fast_cut_text(index):
 
 
 def method_lines(kv, age, rows=None):
-    del age, rows
+    del rows
     lens = as_float(kv.get("lens_age"))
     chrono = as_float(kv.get("chronological_age"))
+    if chrono is None and age is not None:
+        chrono = float(age)
     if lens is None or chrono is None:
         return "这次没有同时给出晶状体年龄和实足年龄，所以没有算出指数。", [
             "## 方法算出的名单",

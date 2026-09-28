@@ -112,9 +112,9 @@ def parse_table(rows):
     records = []
     for row in rows:
         keys = {(k or "").strip().lower(): (v or "").strip() for k, v in row.items()}
-        if "item" in keys and "value" in keys and "organ" not in keys:
-            if keys["item"]:
-                items[keys["item"].lower()] = keys["value"]
+        name = keys.get("item") or keys.get("marker") or ""
+        if name and "value" in keys and "organ" not in keys:
+            items[name.lower()] = keys["value"]
         else:
             records.append(keys)
     return items, records
@@ -134,13 +134,21 @@ def organ_key(text: str):
 
 
 def collect(rows):
-    _items, records = parse_table(rows)
+    items, records = parse_table(rows)
     found = []
+    seen = set()
     for rec in records:
         key = organ_key(rec.get("organ") or rec.get("器官") or "")
         pred = as_float(rec.get("predicted_age") or rec.get("预测年龄"))
-        if key and pred is not None:
+        if key and pred is not None and key not in seen:
             found.append((key, pred))
+            seen.add(key)
+    for name, raw in items.items():
+        key = organ_key(name)
+        pred = as_float(raw)
+        if key and pred is not None and key not in seen:
+            found.append((key, pred))
+            seen.add(key)
     return found
 
 

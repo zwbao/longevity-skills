@@ -48,6 +48,39 @@ def _expected(age: float) -> float:
     return personal_report.phenotypic_age({**CANONICAL, "age": age}, "ln")
 
 
+def test_paper_card_cites_levine_2018_not_the_depression_paper(tmp_path: Path):
+    bio = _csv(tmp_path / "bio.csv", CHINESE_WITH_UNITS)
+    text = personal_report.write_report(tmp_path / "out", bio, 40, "男", None, None, None).read_text(encoding="utf-8")
+    card = text.split("## 输入", 1)[0]
+    assert "10.18632/aging.101414" in card
+    assert "Levine" in card
+    assert "2018" in card
+    assert "An epigenetic biomarker of aging for lifespan and healthspan" in card
+    assert "Accelerated biological aging and risk of depression" not in card
+    assert "10.1038/s41467-023-38013-7" in card
+    assert MANIFEST["paper"]["doi"] == "10.18632/aging.101414"
+    assert MANIFEST["paper"]["year"] == 2018
+
+
+def test_owner_sheet_names_match_the_canonical_panel(tmp_path: Path):
+    rows = [
+        ("白蛋白", "45", "g/L"), ("肌酐", "80", "μmol/L"), ("空腹血葡萄糖", "5.0", "mmol/L"),
+        ("超敏C反应蛋白", "1.0", "mg/L"), ("淋巴细胞百分比", "30", "%"), ("平均红细胞体积", "90", "fL"),
+        ("红细胞分布宽度-变异系数", "13", "%"), ("碱性磷酸酶", "70", "U/L"), ("白细胞计数", "6", "×10⁹/L"),
+    ]
+    glucose = next(item for item in MANIFEST["inputs"] if item["key"] == "glucose_mmol")
+    rdw = next(item for item in MANIFEST["inputs"] if item["key"] == "rdw_pct")
+    mcv = next(item for item in MANIFEST["inputs"] if item["key"] == "mcv_fl")
+    assert "空腹血葡萄糖" in glucose["aliases"] and "FBG" in glucose["aliases"]
+    assert "红细胞分布宽度-变异系数" in rdw["aliases"] and "30385-9" in rdw["loinc"]
+    assert "30428-7" in mcv["loinc"]
+    report = personal_report.write_report(tmp_path / "out", _csv(tmp_path / "bio.csv", rows), 40, "男", None, None, None)
+    assert f"是 {_expected(40):.2f} 岁" in report.read_text(encoding="utf-8")
+    collected = skillkit.collect_file(_csv(tmp_path / "codes.csv", [("30385-9", "13", "%"), ("30428-7", "90", "fL")]), MANIFEST)
+    assert collected.values["rdw_pct"] == pytest.approx(13)
+    assert collected.values["mcv_fl"] == pytest.approx(90)
+
+
 def test_manifest_matches_presets():
     declared = {item["key"]: item for item in MANIFEST["inputs"] if item["from"] == "measurements"}
     assert list(declared) == [key for key, _label, _unit in PHENOAGE_BIOMARKERS]

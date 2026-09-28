@@ -98,8 +98,20 @@ def write_report(out: Path, text: str) -> Path:
 from presets import GROUP_EFFECTS, week32_delta
 
 
+CLOCK_KEYS = {
+    "phenoage": "PhenoAge",
+    "pcgrimage": "PCGrimAge",
+    "grimagev2": "GrimAgeV2",
+    "omicmage": "OMICmAge",
+    "retroage": "RetroAge",
+    "dunedinpace": "DunedinPACE",
+}
+
+
 def clocks(rows):
     found = []
+    seen = set()
+    bag = {}
     for row in rows:
         low = {(k or "").strip().lower(): (v or "").strip() for k, v in row.items() if k}
         name = low.get("clock")
@@ -107,6 +119,18 @@ def clocks(rows):
         week32 = as_float(low.get("week32"))
         if name and baseline is not None and week32 is not None:
             found.append((name, week32_delta(baseline, week32)))
+            seen.add(name)
+            continue
+        item = low.get("item") or low.get("marker") or low.get("name") or ""
+        if item and "value" in low and "baseline" not in low:
+            bag[item.lower().replace("-", "").replace("_", "")] = as_float(low.get("value"))
+    for key, display in CLOCK_KEYS.items():
+        if display in seen:
+            continue
+        baseline = bag.get(key + "baseline")
+        week32 = bag.get(key + "week32")
+        if baseline is not None and week32 is not None:
+            found.append((display, week32_delta(baseline, week32)))
     return found
 
 

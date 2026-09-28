@@ -116,8 +116,9 @@ def tissue_name(raw: str) -> str:
     return TISSUE_ZH.get(raw.casefold(), raw)
 
 
-def tissues(rows):
+def tissues(rows, age_arg=None):
     found = []
+    bag = {}
     for row in rows:
         low = {(k or "").strip().lower(): (v or "").strip() for k, v in row.items() if k}
         tissue = low.get("tissue")
@@ -126,11 +127,21 @@ def tissues(rows):
         n_samples = as_float(low.get("n_samples"))
         if tissue and predicted is not None and age is not None:
             found.append((tissue_name(tissue), age_gap(predicted, age), n_samples))
+            continue
+        item = low.get("item") or low.get("marker") or low.get("name") or ""
+        if item and "value" in low and not tissue:
+            bag[item.lower()] = low.get("value") or ""
+    if age_arg is not None:
+        for tissue in TISSUE_ZH:
+            raw = bag.get(tissue) or bag.get(f"{tissue}_predicted")
+            pred = as_float(raw) if raw else None
+            if pred is not None:
+                found.append((tissue_name(tissue), age_gap(pred, float(age_arg)), None))
     return found
 
 
-def opening(rows):
-    found = tissues(rows)
+def opening(rows, age_arg=None):
+    found = tissues(rows, age_arg)
     if not found:
         return "配套源码里没有拟合好的切片权重。这次也没有同时提供组织的预测年龄和实足年龄，所以没有算出年龄差。"
     bits = [f"{tissue} 的预测年龄减去实足年龄是 {gap:.1f} 年" for tissue, gap, _n in found]
@@ -140,8 +151,8 @@ def opening(rows):
     return text
 
 
-def method_lines(rows):
-    found = tissues(rows)
+def method_lines(rows, age_arg=None):
+    found = tissues(rows, age_arg)
     lines = ["## 方法算出的名单", ""]
     if not found:
         lines.append("- 组织年龄差：这次没有算出。")
@@ -155,16 +166,16 @@ def known_names(rows):
     return {tissue for tissue, _gap, _n in tissues(rows)}
 
 
-def render(meds, labs, rows):
-    lines = ["# 组织切片年龄差", "", opening(rows), ""]
-    lines.extend(method_lines(rows))
+def render(meds, labs, rows, age_arg=None):
+    lines = ["# 组织切片年龄差", "", opening(rows, age_arg), ""]
+    lines.extend(method_lines(rows, age_arg))
     lines.extend(["", *medication_lines(meds, known_names(rows))])
     lines.extend(["", *lab_lines(labs)])
     return finish(lines)
 
 
-def report(out, meds, labs, measurements):
-    return write_report(out, render(load_meds(meds), labs, read_rows(measurements)))
+def report(out, meds, labs, measurements, age=None):
+    return write_report(out, render(load_meds(meds), labs, read_rows(measurements), age))
 
 
 def main():
@@ -172,9 +183,10 @@ def main():
     parser.add_argument("--measurements", type=Path)
     parser.add_argument("--medications", type=Path)
     parser.add_argument("--labs", type=Path)
+    parser.add_argument("--age", type=float)
     parser.add_argument("--out", type=Path, required=True)
     args = parser.parse_args()
-    print(report(args.out, args.medications, args.labs, args.measurements))
+    print(report(args.out, args.medications, args.labs, args.measurements, args.age))
 
 
 

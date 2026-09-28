@@ -1,6 +1,9 @@
-"""Constants read from Gao et al. 2023 and from dayoonkwon/BioAge.
+"""PhenoAge coefficients are Levine et al., Aging 2018, as orig=TRUE in BioAge.
 
-PhenoAge numbers are the orig=TRUE coefficients in R/phenoage_calc.R.
+The optional questionnaire, body-mass, alcohol, activity and childhood cutoffs
+are Gao et al., Nature Communications 2023. That paper uses phenotypic age for
+depression and anxiety and does not publish these coefficients.
+
 The paper prints a rounded xb and gamma = 0.0076927. This module keeps the
 unrounded code values and does not store KDM q, k, s, or s_BA, because
 kdm_calc.R fits those on NHANES and the clone does not save the fit.
@@ -8,7 +11,9 @@ kdm_calc.R fits those on NHANES and the clone does not save the fit.
 
 from __future__ import annotations
 
-DOI = "10.1038/s41467-023-38013-7"
+LEVINE_DOI = "10.18632/aging.101414"
+GAO_DOI = "10.1038/s41467-023-38013-7"
+DOI = LEVINE_DOI
 FULL_TEXT_READ = True
 
 BOUNDARY = (
