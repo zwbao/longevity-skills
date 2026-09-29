@@ -66,7 +66,7 @@ The report never prints CPIC's recommendation text, because it contains doses. E
 
 - none: "No recommendation", "n/a", "No action recommended", or neither TPMT nor NUDT15 assigned.
 - avoid (换药或避免): the first sentence says avoid the drug, contraindicated, do not use, or choose/select/prescribe/consider an alternative. "Avoid moderate and strong CYP2D6 inhibitors" (tamoxifen, about other drugs) is not counted.
-- standard (按常规): a plain standard start ("Initiate therapy with recommended starting dose", "use at standard dose", "label recommended", "prescribe desired starting dose", "No adjustments needed…"), unless a later sentence asks for slower titration, a lower maintenance dose, awareness of myopathy risk, trough titration or a dose increase.
+- standard (按常规): a plain standard start ("Initiate therapy with recommended starting dose", "use at standard dose", "label recommended", "prescribe desired starting dose", "No adjustments needed…"), unless a later sentence asks for slower titration, a lower maintenance dose, awareness of myopathy risk or trough titration. Indication-specific options after a standard start stay standard: the PPI rows "Consider increasing dose by 50-100% for the treatment of H. pylori infection and erosive esophagitis" (normal and rapid metabolizers) and "For chronic therapy (>12 weeks) and efficacy achieved, consider 50% reduction in daily dose" (intermediate and poor metabolizers).
 - caution (调整或监测): everything else (reduce, increase, capped or percentage starting dose, drastically reduced).
 
 Every stored row is re-derived by this rule in `tests/test_calls.py`. Rows keep CPIC's id, version and classification (Strong, Moderate, Optional), which the report shows as 推荐强度.

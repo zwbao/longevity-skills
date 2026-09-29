@@ -10724,7 +10724,7 @@
      },
      "classification": "Optional",
      "recommendation": "Initiate standard starting daily dose. Consider increasing dose by 50-100% for the treatment of H. pylori infection and erosive esophagitis. Daily dose may be given in divided doses. Monitor for efficacy.",
-     "category": "caution"
+     "category": "standard"
     },
     {
      "id": 8480528,
@@ -10746,7 +10746,7 @@
      },
      "classification": "Optional",
      "recommendation": "Initiate standard starting daily dose. Consider increasing dose by 50-100% for the treatment of H. pylori infection and erosive esophagitis. Daily dose may be given in divided doses. Monitor for efficacy.",
-     "category": "caution"
+     "category": "standard"
     },
     {
      "id": 8480522,
@@ -17685,7 +17685,7 @@
      },
      "classification": "Moderate",
      "recommendation": "Initiate standard starting daily dose. Consider increasing dose by 50-100% for the treatment of H. pylori infection and erosive esophagitis. Daily dose may be given in divided doses. Monitor for efficacy.",
-     "category": "caution"
+     "category": "standard"
     },
     {
      "id": 8481171,
@@ -17707,7 +17707,7 @@
      },
      "classification": "Moderate",
      "recommendation": "Initiate standard starting daily dose. Consider increasing dose by 50-100% for the treatment of H. pylori infection and erosive esophagitis. Daily dose may be given in divided doses. Monitor for efficacy.",
-     "category": "caution"
+     "category": "standard"
     },
     {
      "id": 8481165,
@@ -18946,7 +18946,7 @@
      },
      "classification": "Moderate",
      "recommendation": "Initiate standard starting daily dose. Consider increasing dose by 50-100% for the treatment of H. pylori infection and erosive esophagitis. Daily dose may be given in divided doses. Monitor for efficacy.",
-     "category": "caution"
+     "category": "standard"
     },
     {
      "id": 8481163,
@@ -18968,7 +18968,7 @@
      },
      "classification": "Moderate",
      "recommendation": "Initiate standard starting daily dose. Consider increasing dose by 50-100% for the treatment of H. pylori infection and erosive esophagitis. Daily dose may be given in divided doses. Monitor for efficacy.",
-     "category": "caution"
+     "category": "standard"
     },
     {
      "id": 8481157,
@@ -19098,7 +19098,7 @@
      },
      "classification": "Moderate",
      "recommendation": "Initiate standard starting daily dose. Consider increasing dose by 50-100% for the treatment of H. pylori infection and erosive esophagitis. Daily dose may be given in divided doses. Monitor for efficacy.",
-     "category": "caution"
+     "category": "standard"
     },
     {
      "id": 8481179,
@@ -19120,7 +19120,7 @@
      },
      "classification": "Moderate",
      "recommendation": "Initiate standard starting daily dose. Consider increasing dose by 50-100% for the treatment of H. pylori infection and erosive esophagitis. Daily dose may be given in divided doses. Monitor for efficacy.",
-     "category": "caution"
+     "category": "standard"
     },
     {
      "id": 8481173,

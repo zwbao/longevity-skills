@@ -267,7 +267,8 @@ def parse_diplotype_lines(tables: Dict[str, Any], text: str) -> Tuple[Dict[str, 
 
 
 def _hla_call(gene: str, rest: str) -> Optional[str]:
-    match = re.search(r"\*?\s*(\d{2}:\d{2})", rest)
+    # Chinese reports often drop the colon: HLA-B*5801.
+    match = re.search(r"\*?\s*(\d{2}):?(\d{2})(?!\d)", rest)
     if not match:
         return None
     lowered = rest.casefold()
@@ -278,7 +279,7 @@ def _hla_call(gene: str, rest: str) -> Optional[str]:
         sign = "positive"
     else:
         return None
-    return f"*{match.group(1)} {sign}"
+    return f"*{match.group(1)}:{match.group(2)} {sign}"
 
 
 # ---------------------------------------------------------------------------

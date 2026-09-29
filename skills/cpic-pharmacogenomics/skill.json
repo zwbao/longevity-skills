@@ -128,7 +128,7 @@
       "path": "data/cpic_tables.json",
       "source_url": "https://api.cpicpgx.org/v1/",
       "license": "CC0-1.0",
-      "sha256": "8e999f3eff714ed6a1fd1adf5c08f3678fa22f1758bea30386df76d94279d233",
+      "sha256": "60372f3f9cbe8bddddfb02d7419ffe85a6239b12b1606569360411d7e23dedff",
       "redistributable": "yes"
     }
   ]

@@ -109,8 +109,12 @@ CAUTION_LATER = [
     r"lower maintenance dose",
     r"aware of possible increased risk",
     r"titrate dose to therapeutic trough",
-    r"consider increasing dose",
 ]
+# Not in the list: indication-specific options after a standard start, such as
+# the PPI rows "Consider increasing dose by 50-100% for the treatment of H.
+# pylori infection..." (normal and rapid metabolizers) and "For chronic therapy
+# (>12 weeks)... consider 50% reduction" (intermediate and poor metabolizers).
+# Both stay standard, as their first sentence says.
 
 
 def first_sentence(text: str) -> str:
@@ -125,8 +129,8 @@ def category_for(text: str) -> str:
     The first sentence decides: no recommendation -> none; avoid, contraindicated,
     do not use, or choose/select/consider an alternative -> avoid; a plain
     standard start -> standard unless a later sentence asks for slower
-    titration, a lower maintenance dose, awareness of myopathy risk, trough
-    titration or a dose increase; anything else (reduce, increase, a capped or
+    titration, a lower maintenance dose, awareness of myopathy risk or trough
+    titration; anything else (reduce, increase, a capped or
     percentage starting dose, drastically reduced) -> caution.
     """
     full = " ".join((text or "").split()).casefold()

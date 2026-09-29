@@ -222,6 +222,33 @@ def test_allopurinol_hla_b():
     assert categories("allopurinol", calls)[0] == {"general": ["standard"]}
 
 
+def test_hla_b_without_colon_as_on_chinese_reports():
+    calls, problems = parse_diplotype_lines(TABLES, "HLA-B*5801 阳性")
+    assert not problems
+    assert categories("allopurinol", calls)[0] == {"general": ["avoid"]}
+
+
+def test_ppi_direction_follows_cpic_2020():
+    """CPIC PPIs: normal metabolizer 'Initiate standard starting daily dose. Consider increasing dose by 50-100%
+    for the treatment of H. pylori...'; poor metabolizer 'Initiate standard starting daily dose. For chronic
+    therapy (>12 weeks) and efficacy achieved, consider 50% reduction...'; ultrarapid 'Increase starting daily
+    dose by 100%.'"""
+    normal = {"CYP2C19": array("CYP2C19", rs4244285="GG", rs12248560="CC")}
+    poor = {"CYP2C19": array("CYP2C19", rs4244285="AA")}
+    ultra = {"CYP2C19": array("CYP2C19", rs4244285="GG", rs12248560="TT")}
+    for drug in ("omeprazole", "lansoprazole", "pantoprazole", "dexlansoprazole"):
+        assert categories(drug, normal)[0] == {"general": ["standard"]}
+        assert categories(drug, poor)[0] == {"general": ["standard"]}
+        assert categories(drug, ultra)[0] == {"general": ["caution"]}
+
+
+def test_tacrolimus_direction_follows_cpic_2015():
+    """CPIC tacrolimus: expressers 'Increase starting dose 1.5 to 2 times recommended starting dose';
+    CYP3A5 poor metabolizers (*3/*3) 'Initiate therapy with standard recommended dose'."""
+    assert categories("tacrolimus", {"CYP3A5": array("CYP3A5", rs776746="CC", rs10264272="CC")})[0] == {"general": ["standard"]}
+    assert categories("tacrolimus", {"CYP3A5": array("CYP3A5", rs776746="TT", rs10264272="CC")})[0] == {"general": ["caution"]}
+
+
 def test_hla_b_result_for_one_allele_is_no_result_for_another():
     calls, _ = parse_diplotype_lines(TABLES, "HLA-B*58:01 阴性")
     result = drug_result(TABLES, "carbamazepine", calls)
