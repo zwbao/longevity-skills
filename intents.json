@@ -152,7 +152,8 @@
       "label_zh": "可穿戴、睡眠和作息节律",
       "description_zh": "用手环、手表的活动和睡眠数据看节律年龄和睡眠分组。",
       "data": [
-        "wearable"
+        "wearable",
+        "questionnaire"
       ],
       "triggers": [
         "手环",
@@ -186,14 +187,28 @@
         "早醒",
         "入睡",
         "熬夜",
-        "睡几个小时"
+        "睡几个小时",
+        "晨型",
+        "夜型",
+        "夜猫子",
+        "早起型",
+        "百灵鸟",
+        "时型",
+        "早睡早起",
+        "晚睡晚起",
+        "chronotype",
+        "morningness",
+        "eveningness",
+        "meq",
+        "rmeq"
       ],
       "skills": [
         "wearable-circadian-aging-biomarker",
         "circadian-frailty-older-adults",
         "sleep-chart-biological-ageing",
         "wearable-aging-clock",
-        "sleep-study-life-expectancy"
+        "sleep-study-life-expectancy",
+        "rmeq-chronotype"
       ],
       "priority": 1
     },

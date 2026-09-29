@@ -78,6 +78,7 @@ These skills hold model coefficients, cut points or gene lists printed in articl
 | `chaperone-autophagy-tissue-aging` | Sex-specific and cell-type-specific changes in chaperone-mediated autophagy across tissues during aging. *Nature Aging* 2025. https://doi.org/10.1038/s43587-024-00799-6 | CC BY-NC-ND 4.0 |
 | `uls8-loneliness-scale` | A Short-Form Measure of Loneliness. *Journal of Personality Assessment* 1987. https://doi.org/10.1207/s15327752jpa5101_6 | no open licence (subscription or unstated) |
 | `iief5-erectile-function` | Development and evaluation of an abridged, 5-item version of the International Index of Erectile Function (IIEF-5) as a diagnostic tool for erectile dysfunction. *International Journal of Impotence Research* 1999. https://doi.org/10.1038/sj.ijir.3900472 | no open licence (subscription or unstated) |
+| `rmeq-chronotype` | Horne & Östberg morningness-eveningness questionnaire: A reduced scale. *Personality and Individual Differences* 1991. https://doi.org/10.1016/0191-8869(91)90110-w | no open licence (subscription or unstated) |
 
 `skills/immune-aging-clock-runx1/scripts/table_s3.csv` is the article's whole Table S3 (18,851 clock coefficients); the two TIME-Seq clock files are unmodified copies from [patricktgriffin/TIME-Seq](https://github.com/patricktgriffin/TIME-Seq), which carries no licence and whose values the article also prints in Supplementary Table 6.
 
@@ -89,6 +90,7 @@ These skills hold only a questionnaire's scoring rules (item score ranges, rever
 | --- | --- | --- |
 | `uls8-loneliness-scale` | ULS-8. The items come from the Revised UCLA Loneliness Scale (Russell, Peplau and Cutrona, *J Pers Soc Psychol* 1980). | VitaClaw `social-health-tracker` |
 | `iief5-erectile-function` | IIEF-5 (Sexual Health Inventory for Men). Copyright Pfizer Inc., distributed by [Mapi Research Trust](https://eprovide.mapi-trust.org/instruments/international-index-of-erectile-function); it may not be copied, retyped, translated or modified without their written permission. | VitaClaw `sexual-health-analyzer` |
+| `rmeq-chronotype` | rMEQ: items 1, 7, 10, 18 and 19 of the Horne–Östberg Morningness–Eveningness Questionnaire, copyright © 1976 Gordon and Breach Science Publishers. | VitaClaw `circadian-rhythm-optimizer` |
 
 [VitaClaw](https://github.com/vitaclaw/vitaclaw) is MIT licensed according to its README, and the skills ported from it are prose only. No VitaClaw code or text is included; the scoring was rebuilt from the sources above.
 
