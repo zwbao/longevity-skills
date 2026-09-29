@@ -596,6 +596,38 @@
       ],
       "skills": [],
       "priority": 2
+    },
+    {
+      "id": "loneliness_social",
+      "label_zh": "孤独和社交",
+      "description_zh": "用孤独感量表给出自评孤独分，并给出可以做的社交小步骤。",
+      "data": [
+        "questionnaire"
+      ],
+      "triggers": [
+        "孤独",
+        "寂寞",
+        "孤单",
+        "没人说话",
+        "没人陪",
+        "一个人住",
+        "独居",
+        "空巢",
+        "社交",
+        "朋友少",
+        "没朋友",
+        "被冷落",
+        "隔绝",
+        "loneliness",
+        "lonely",
+        "social isolation",
+        "ucla",
+        "uls-8"
+      ],
+      "skills": [
+        "uls8-loneliness-scale"
+      ],
+      "priority": 1
     }
   ]
 }

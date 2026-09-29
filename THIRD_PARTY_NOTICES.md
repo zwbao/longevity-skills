@@ -76,8 +76,19 @@ These skills hold model coefficients, cut points or gene lists printed in articl
 | `epigenetic-age-single-cells` | Profiling epigenetic age in single cells. *Nature Aging* 2021. https://doi.org/10.1038/s43587-021-00134-3 | no open licence (subscription or unstated) |
 | `china-par-ascvd-risk` | Predicting the 10-Year Risks of Atherosclerotic Cardiovascular Disease in Chinese Population: The China-PAR Project (Prediction for ASCVD Risk in China). *Circulation* 2016. https://doi.org/10.1161/circulationaha.116.022367 | no open licence (subscription or unstated) |
 | `chaperone-autophagy-tissue-aging` | Sex-specific and cell-type-specific changes in chaperone-mediated autophagy across tissues during aging. *Nature Aging* 2025. https://doi.org/10.1038/s43587-024-00799-6 | CC BY-NC-ND 4.0 |
+| `uls8-loneliness-scale` | A Short-Form Measure of Loneliness. *Journal of Personality Assessment* 1987. https://doi.org/10.1207/s15327752jpa5101_6 | no open licence (subscription or unstated) |
 
 `skills/immune-aging-clock-runx1/scripts/table_s3.csv` is the article's whole Table S3 (18,851 clock coefficients); the two TIME-Seq clock files are unmodified copies from [patricktgriffin/TIME-Seq](https://github.com/patricktgriffin/TIME-Seq), which carries no licence and whose values the article also prints in Supplementary Table 6.
+
+### Questionnaires: scoring rules only, no item wording
+
+These skills hold only a questionnaire's scoring rules (item score ranges, reverse-scored items, totals) and its published cut-points, taken from the article's abstract or from open-access papers that quote it; each skill's `references/contract.md` gives the quotations. The item wording is not reproduced: each item is described by its number and a short topic, and a person answers on a published or licensed copy.
+
+| Skill | Instrument and rights holder | Ported from |
+| --- | --- | --- |
+| `uls8-loneliness-scale` | ULS-8. The items come from the Revised UCLA Loneliness Scale (Russell, Peplau and Cutrona, *J Pers Soc Psychol* 1980). | VitaClaw `social-health-tracker` |
+
+[VitaClaw](https://github.com/vitaclaw/vitaclaw) is MIT licensed according to its README, and the skills ported from it are prose only. No VitaClaw code or text is included; the scoring was rebuilt from the sources above.
 
 ## Reference tables in `data/`
 
