@@ -392,6 +392,7 @@
       "skills": [
         "accelerated-biological-aging-risk",
         "life-cycle-biological-clock",
+        "ckd-epi-2021-egfr",
         "longevity-evidence",
         "biomcp"
       ],
@@ -557,6 +558,42 @@
         "ageing-inflammatory-marker"
       ],
       "priority": 0
+    },
+    {
+      "id": "kidney_function",
+      "label_zh": "肾功能和肾小球滤过率",
+      "description_zh": "用血肌酐（可加胱抑素 C）算 eGFR，按 KDIGO 分 G 档；有尿白蛋白/肌酐比时再分 A 档，并说明什么时候复查、看医生。",
+      "data": [
+        "routine_labs"
+      ],
+      "triggers": [
+        "肾功能",
+        "肾小球滤过率",
+        "滤过率",
+        "egfr",
+        "gfr",
+        "肌酐",
+        "胱抑素",
+        "cystatin",
+        "尿白蛋白",
+        "白蛋白尿",
+        "微量白蛋白",
+        "尿蛋白",
+        "uacr",
+        "肾脏",
+        "肾病",
+        "肾不好",
+        "伤肾",
+        "肾衰",
+        "慢性肾",
+        "ckd",
+        "kidney",
+        "creatinine"
+      ],
+      "skills": [
+        "ckd-epi-2021-egfr"
+      ],
+      "priority": 1
     },
     {
       "id": "model_organism",

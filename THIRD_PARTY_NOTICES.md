@@ -76,6 +76,8 @@ These skills hold model coefficients, cut points or gene lists printed in articl
 | `epigenetic-age-single-cells` | Profiling epigenetic age in single cells. *Nature Aging* 2021. https://doi.org/10.1038/s43587-021-00134-3 | no open licence (subscription or unstated) |
 | `china-par-ascvd-risk` | Predicting the 10-Year Risks of Atherosclerotic Cardiovascular Disease in Chinese Population: The China-PAR Project (Prediction for ASCVD Risk in China). *Circulation* 2016. https://doi.org/10.1161/circulationaha.116.022367 | no open licence (subscription or unstated) |
 | `chaperone-autophagy-tissue-aging` | Sex-specific and cell-type-specific changes in chaperone-mediated autophagy across tissues during aging. *Nature Aging* 2025. https://doi.org/10.1038/s43587-024-00799-6 | CC BY-NC-ND 4.0 |
+| `ckd-epi-2021-egfr` | New Creatinine- and Cystatin C–Based Equations to Estimate GFR without Race. *New England Journal of Medicine* 2021. https://doi.org/10.1056/nejmoa2102953 (equation coefficients from Table 2 and Table S10; worked values from Table S11) | no open licence (NEJM terms of use) |
+| `ckd-epi-2021-egfr` | KDIGO 2024 Clinical Practice Guideline for the Evaluation and Management of Chronic Kidney Disease. *Kidney International* 2024. https://doi.org/10.1016/j.kint.2023.10.018 (GFR and albuminuria cut points, monitoring frequencies and referral thresholds; practice points paraphrased) | CC BY-NC-ND 4.0 |
 
 `skills/immune-aging-clock-runx1/scripts/table_s3.csv` is the article's whole Table S3 (18,851 clock coefficients); the two TIME-Seq clock files are unmodified copies from [patricktgriffin/TIME-Seq](https://github.com/patricktgriffin/TIME-Seq), which carries no licence and whose values the article also prints in Supplementary Table 6.
 

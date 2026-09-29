@@ -2,9 +2,9 @@
   "schema": "longevity-catalog/1",
   "version": "2026.40.0",
   "counts": {
-    "skills": 172,
+    "skills": 173,
     "tiers": {
-      "A": 56,
+      "A": 57,
       "B": 35,
       "C": 73,
       "tool": 8
@@ -403,6 +403,7 @@
       "skills": [
         "accelerated-biological-aging-risk",
         "life-cycle-biological-clock",
+        "ckd-epi-2021-egfr",
         "longevity-evidence",
         "biomcp"
       ],
@@ -568,6 +569,42 @@
         "ageing-inflammatory-marker"
       ],
       "priority": 0
+    },
+    {
+      "id": "kidney_function",
+      "label_zh": "肾功能和肾小球滤过率",
+      "description_zh": "用血肌酐（可加胱抑素 C）算 eGFR，按 KDIGO 分 G 档；有尿白蛋白/肌酐比时再分 A 档，并说明什么时候复查、看医生。",
+      "data": [
+        "routine_labs"
+      ],
+      "triggers": [
+        "肾功能",
+        "肾小球滤过率",
+        "滤过率",
+        "egfr",
+        "gfr",
+        "肌酐",
+        "胱抑素",
+        "cystatin",
+        "尿白蛋白",
+        "白蛋白尿",
+        "微量白蛋白",
+        "尿蛋白",
+        "uacr",
+        "肾脏",
+        "肾病",
+        "肾不好",
+        "伤肾",
+        "肾衰",
+        "慢性肾",
+        "ckd",
+        "kidney",
+        "creatinine"
+      ],
+      "skills": [
+        "ckd-epi-2021-egfr"
+      ],
+      "priority": 1
     },
     {
       "id": "model_organism",
@@ -3135,6 +3172,201 @@
         "title_zh": "睑板腺的局部甾体合成",
         "journal": "Nature Aging",
         "year": 2022
+      }
+    },
+    {
+      "name": "ckd-epi-2021-egfr",
+      "kind": "paper",
+      "tier": "A",
+      "species": [
+        "human"
+      ],
+      "evidence": "cross_sectional",
+      "domains": [
+        "肾脏"
+      ],
+      "blurb_zh": "血肌酐、年龄和性别算肾小球滤过率估计值（eGFR），有胱抑素 C 时用肌酐加胱抑素 C 方程，按 KDIGO 分 G1–G5；有尿白蛋白/肌酐比时再分 A1–A3。",
+      "description": "Computes estimated glomerular filtration rate (eGFR) from serum creatinine, age and sex with the CKD-EPI 2021 race-free equation (Inker et al., NEJM 2021), and with the 2021 creatinine-cystatin C equation when cystatin C is given; stages it with KDIGO 2024 GFR categories G1-G5 and, when a urine albumin-to-creatinine ratio is given, albuminuria categories A1-A3. Says plainly when to see a doctor and how KDIGO frames retesting. Use for 肾功能, 肾小球滤过率, eGFR, 肌酐, 胱抑素C, 尿白蛋白/肌酐比, 慢性肾脏病分期. Does not track trends.",
+      "intents": [
+        "kidney_function",
+        "lab_meaning"
+      ],
+      "has_script": true,
+      "entry": {
+        "script": "scripts/personal_report.py",
+        "measurements_flag": "--measurements",
+        "measurements_header": [
+          "item",
+          "value",
+          "unit"
+        ],
+        "age_flag": "--age",
+        "sex_flag": "--sex",
+        "out_flag": "--out",
+        "result_json": true
+      },
+      "inputs_status": "verified",
+      "inputs": [
+        {
+          "key": "creatinine_umol_l",
+          "label_zh": "血肌酐",
+          "aliases": [
+            "creatinine",
+            "serum creatinine",
+            "Scr",
+            "SCr",
+            "Cr",
+            "CREA",
+            "肌酐",
+            "血清肌酐",
+            "肌酐(CREA)",
+            "肌酐(Cr)"
+          ],
+          "loinc": [
+            "14682-9",
+            "2160-0"
+          ],
+          "unit": "umol/L",
+          "accept": {
+            "mg/dL": 88.4
+          },
+          "molar_mass": 113.12,
+          "range": [
+            15,
+            2000
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "血清或血浆肌酐。论文表 S10：mg/dL 乘 88.4 等于 µmol/L。"
+        },
+        {
+          "key": "cystatin_c_mg_l",
+          "label_zh": "胱抑素C",
+          "aliases": [
+            "cystatin c",
+            "cystatin-c",
+            "Cys-C",
+            "CysC",
+            "CYSC",
+            "血清胱抑素C",
+            "胱抑素 C",
+            "胱抑素C(Cys-C)"
+          ],
+          "loinc": [
+            "33863-2"
+          ],
+          "unit": "mg/L",
+          "range": [
+            0.2,
+            10
+          ],
+          "required": false,
+          "from": "measurements",
+          "note_zh": "血清或血浆胱抑素 C，单位 mg/L。和肌酐最好是同一次抽血（KDIGO 表 11）。"
+        },
+        {
+          "key": "uacr_mg_g",
+          "label_zh": "尿白蛋白/肌酐比",
+          "aliases": [
+            "UACR",
+            "ACR",
+            "uACR",
+            "urine albumin-to-creatinine ratio",
+            "albumin/creatinine ratio",
+            "尿白蛋白肌酐比",
+            "尿微量白蛋白/肌酐",
+            "尿微量白蛋白肌酐比",
+            "尿微量白蛋白/肌酐比值",
+            "尿白蛋白/肌酐比值",
+            "尿微量白蛋白/尿肌酐"
+          ],
+          "loinc": [
+            "9318-7",
+            "14959-1",
+            "32294-1"
+          ],
+          "unit": "mg/g",
+          "accept": {
+            "mg/mmol": 8.84
+          },
+          "range": [
+            0,
+            30000
+          ],
+          "unit_required": true,
+          "required": false,
+          "from": "measurements",
+          "note_zh": "化验单常见 mg/g 和 mg/mmol 两种单位，差 8.84 倍，请写明单位。尿微量白蛋白浓度（mg/L）不是这个比值，不能用来分档。"
+        },
+        {
+          "key": "age",
+          "label_zh": "实足年龄",
+          "unit": "a",
+          "range": [
+            18,
+            120
+          ],
+          "required": true,
+          "from": "profile",
+          "flag": "--age",
+          "note_zh": "CKD-EPI 方程只用于 18 岁及以上成人。"
+        },
+        {
+          "key": "sex",
+          "label_zh": "性别",
+          "required": true,
+          "from": "profile",
+          "flag": "--sex"
+        }
+      ],
+      "outputs": [
+        {
+          "key": "egfr_cr",
+          "label_zh": "eGFR（CKD-EPI 2021 肌酐方程）",
+          "unit": "mL/min/1.73m²",
+          "note_zh": "按 KDIGO 表 11 四舍五入到整数。"
+        },
+        {
+          "key": "egfr_cr_cys",
+          "label_zh": "eGFR（CKD-EPI 2021 肌酐加胱抑素 C 方程）",
+          "unit": "mL/min/1.73m²",
+          "note_zh": "只有交了胱抑素 C 时才算。"
+        },
+        {
+          "key": "gfr_category",
+          "label_zh": "GFR 分档（KDIGO 2024 表 2）",
+          "unit": ""
+        },
+        {
+          "key": "gfr_category_equation",
+          "label_zh": "分档用的方程",
+          "unit": "",
+          "note_zh": "有胱抑素 C 时是 eGFRcr-cys（KDIGO 推荐 1.1.2.1），否则是 eGFRcr。"
+        },
+        {
+          "key": "albuminuria_category",
+          "label_zh": "白蛋白尿分档（KDIGO 2024 表 3）",
+          "unit": ""
+        },
+        {
+          "key": "kdigo_checks_per_year",
+          "label_zh": "如果医生确认是慢性肾脏病，KDIGO 图 13 建议每年复查的次数",
+          "unit": "",
+          "note_zh": "只在 eGFR <60 或白蛋白尿 A2 及以上、且两项分档都有时给出。"
+        },
+        {
+          "key": "doctor_visit",
+          "label_zh": "就医建议",
+          "unit": "",
+          "note_zh": "不需要特别就诊、建议就诊，或尽快就诊。"
+        }
+      ],
+      "paper": {
+        "doi": "10.1056/nejmoa2102953",
+        "title": "New Creatinine- and Cystatin C-Based Equations to Estimate GFR without Race",
+        "title_zh": "不含种族的新肌酐和胱抑素 C 肾小球滤过率估算方程（CKD-EPI 2021）",
+        "journal": "New England Journal of Medicine",
+        "year": 2021
       }
     },
     {
