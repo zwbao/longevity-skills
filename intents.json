@@ -357,7 +357,8 @@
         "biomcp",
         "synergy-age",
         "centenarian-longevity-genes",
-        "multiomic-human-longevity"
+        "multiomic-human-longevity",
+        "cpic-pharmacogenomics"
       ],
       "priority": 1
     },
@@ -595,6 +596,38 @@
         "heliconius"
       ],
       "skills": [],
+      "priority": 2
+    },
+    {
+      "id": "pharmacogenomics",
+      "label_zh": "用药和基因",
+      "description_zh": "用基因检测原始数据或医院药物基因检测结果，按 CPIC 指南看哪些药要先问医生；不给剂量。",
+      "data": [
+        "genotype"
+      ],
+      "triggers": [
+        "药物基因",
+        "用药基因",
+        "药物代谢基因",
+        "药物基因组",
+        "基因指导用药",
+        "慢代谢",
+        "快代谢",
+        "中间代谢",
+        "超快代谢",
+        "药物代谢",
+        "pharmacogen",
+        "pgx",
+        "cpic",
+        "metabolizer",
+        "re:(氯吡格雷|波立维|华法林|他汀|别嘌醇|卡马西平|硫唑嘌呤|他莫昔芬|可待因).{0,10}(基因|代谢型|慢代谢|检测)",
+        "re:(用药|吃药|药物|服药|药).{0,8}基因",
+        "re:基因.{0,8}(用药|吃药|药物|服药|药效|副作用)",
+        "re:(?<![a-z0-9])(cyp2c19|cyp2d6|cyp2c9|cyp3a5|slco1b1|abcg2|tpmt|nudt15|dpyd|vkorc1|hla-b|hla-a)(?![a-z0-9])"
+      ],
+      "skills": [
+        "cpic-pharmacogenomics"
+      ],
       "priority": 2
     }
   ]
