@@ -2,10 +2,10 @@
   "schema": "longevity-catalog/1",
   "version": "2026.40.0",
   "counts": {
-    "skills": 174,
+    "skills": 179,
     "tiers": {
-      "A": 58,
-      "B": 35,
+      "A": 61,
+      "B": 37,
       "C": 73,
       "tool": 8
     },
@@ -163,7 +163,8 @@
       "label_zh": "可穿戴、睡眠和作息节律",
       "description_zh": "用手环、手表的活动和睡眠数据看节律年龄和睡眠分组。",
       "data": [
-        "wearable"
+        "wearable",
+        "questionnaire"
       ],
       "triggers": [
         "手环",
@@ -197,14 +198,28 @@
         "早醒",
         "入睡",
         "熬夜",
-        "睡几个小时"
+        "睡几个小时",
+        "晨型",
+        "夜型",
+        "夜猫子",
+        "早起型",
+        "百灵鸟",
+        "时型",
+        "早睡早起",
+        "晚睡晚起",
+        "chronotype",
+        "morningness",
+        "eveningness",
+        "meq",
+        "rmeq"
       ],
       "skills": [
         "wearable-circadian-aging-biomarker",
         "circadian-frailty-older-adults",
         "sleep-chart-biological-ageing",
         "wearable-aging-clock",
-        "sleep-study-life-expectancy"
+        "sleep-study-life-expectancy",
+        "rmeq-chronotype"
       ],
       "priority": 1
     },
@@ -368,7 +383,9 @@
         "biomcp",
         "synergy-age",
         "centenarian-longevity-genes",
-        "multiomic-human-longevity"
+        "multiomic-human-longevity",
+        "cpic-pharmacogenomics",
+        "nutrigenetic-variant-panel"
       ],
       "priority": 1
     },
@@ -682,6 +699,130 @@
       ],
       "skills": [],
       "priority": 2
+    },
+    {
+      "id": "pharmacogenomics",
+      "label_zh": "用药和基因",
+      "description_zh": "用基因检测原始数据或医院药物基因检测结果，按 CPIC 指南看哪些药要先问医生；不给剂量。",
+      "data": [
+        "genotype"
+      ],
+      "triggers": [
+        "药物基因",
+        "用药基因",
+        "药物代谢基因",
+        "药物基因组",
+        "基因指导用药",
+        "慢代谢",
+        "快代谢",
+        "中间代谢",
+        "超快代谢",
+        "药物代谢",
+        "pharmacogen",
+        "pgx",
+        "cpic",
+        "metabolizer",
+        "re:(氯吡格雷|波立维|华法林|他汀|别嘌醇|卡马西平|硫唑嘌呤|他莫昔芬|可待因).{0,10}(基因|代谢型|慢代谢|检测)",
+        "re:(用药|吃药|药物|服药|药).{0,8}基因",
+        "re:基因.{0,8}(用药|吃药|药物|服药|药效|副作用)",
+        "re:(?<![a-z0-9])(cyp2c19|cyp2d6|cyp2c9|cyp3a5|slco1b1|abcg2|tpmt|nudt15|dpyd|vkorc1|hla-b|hla-a)(?![a-z0-9])"
+      ],
+      "skills": [
+        "cpic-pharmacogenomics"
+      ],
+      "priority": 2
+    },
+    {
+      "id": "nutrigenetics",
+      "label_zh": "饮食和基因",
+      "description_zh": "用基因检测原始数据看喝酒脸红、叶酸代谢和乳糖不耐这几个有依据的位点，给可以考虑的检查；不给补剂剂量。",
+      "data": [
+        "genotype"
+      ],
+      "triggers": [
+        "喝酒脸红",
+        "喝酒上脸",
+        "一喝酒就脸红",
+        "酒精脸红",
+        "乳糖不耐",
+        "喝奶拉肚子",
+        "喝牛奶拉肚子",
+        "喝奶腹泻",
+        "叶酸代谢",
+        "营养基因",
+        "饮食基因",
+        "nutrigen",
+        "aldh2",
+        "mthfr",
+        "rs671",
+        "rs1801133",
+        "rs4988235",
+        "re:(营养|饮食|吃什么|喝酒|酒量|叶酸|乳糖).{0,8}基因",
+        "re:基因.{0,8}(营养|饮食|吃什么|喝酒|酒量|叶酸|乳糖)"
+      ],
+      "skills": [
+        "nutrigenetic-variant-panel"
+      ],
+      "priority": 2
+    },
+    {
+      "id": "loneliness_social",
+      "label_zh": "孤独和社交",
+      "description_zh": "用孤独感量表给出自评孤独分，并给出可以做的社交小步骤。",
+      "data": [
+        "questionnaire"
+      ],
+      "triggers": [
+        "孤独",
+        "寂寞",
+        "孤单",
+        "没人说话",
+        "没人陪",
+        "一个人住",
+        "独居",
+        "空巢",
+        "社交",
+        "朋友少",
+        "没朋友",
+        "被冷落",
+        "隔绝",
+        "loneliness",
+        "lonely",
+        "social isolation",
+        "ucla",
+        "uls-8"
+      ],
+      "skills": [
+        "uls8-loneliness-scale"
+      ],
+      "priority": 1
+    },
+    {
+      "id": "sexual_health",
+      "label_zh": "男性性功能",
+      "description_zh": "用勃起功能问卷 IIEF-5 给出分数和已发表的分档，并提示何时看医生、做心血管风险检查。",
+      "data": [
+        "questionnaire"
+      ],
+      "triggers": [
+        "勃起",
+        "阳痿",
+        "性功能",
+        "性生活",
+        "硬不起来",
+        "举不起来",
+        "不够硬",
+        "男科",
+        "iief",
+        "shim",
+        "erectile",
+        "impotence",
+        "re:(?<![A-Za-z])ED(?![A-Za-z])"
+      ],
+      "skills": [
+        "iief5-erectile-function"
+      ],
+      "priority": 1
     }
   ],
   "skills": [
@@ -3405,6 +3546,120 @@
         "title_zh": "不含种族的新肌酐和胱抑素 C 肾小球滤过率估算方程（CKD-EPI 2021）",
         "journal": "New England Journal of Medicine",
         "year": 2021
+      }
+    },
+    {
+      "name": "cpic-pharmacogenomics",
+      "kind": "paper",
+      "tier": "B",
+      "species": [
+        "human"
+      ],
+      "evidence": "database",
+      "domains": [
+        "用药与基因"
+      ],
+      "blurb_zh": "基因检测原始数据里的药物代谢基因，对照 CPIC 用药指南看哪些药要先问医生。",
+      "description": "Reads a consumer genotype raw file (23andMe format; WeGene and other exports in the same four-column format; AncestryDNA) and/or star-allele results from a clinical pharmacogenetic test, calls CPIC diplotypes and phenotypes for CYP2C19, CYP2C9, SLCO1B1, ABCG2, TPMT, NUDT15, DPYD and CYP3A5, and looks up the CPIC recommendation rows for 50 guideline drugs (clopidogrel, PPIs, statins, NSAIDs, SSRIs, tricyclics, thiopurines, fluoropyrimidines, tacrolimus, phenytoin, warfarin, and CYP2D6/HLA drugs when a clinical result is given). Each drug is worded as avoid/alternative, adjust or monitor, standard, or no recommendation, never as a dose; anything but standard gets \"用药前请把这份结果给开药的医生或药师看\". States that array data cannot call CYP2D6 (deletion, duplications, *36 hybrids), HLA, UGT1A1*28 or CYP2B6. Use when the user asks about drug genes, 药物基因检测, 慢代谢, clopidogrel and CYP2C19, statins and SLCO1B1, or shows a pill box together with a raw DNA file.",
+      "intents": [
+        "pharmacogenomics",
+        "gene_variant"
+      ],
+      "has_script": true,
+      "entry": {
+        "script": "scripts/personal_report.py",
+        "medications_flag": "--medications",
+        "out_flag": "--out",
+        "result_json": true
+      },
+      "inputs_status": "verified",
+      "inputs": [
+        {
+          "key": "genotype",
+          "label_zh": "基因检测原始数据文件（23andMe 格式，WeGene 等导出的同格式文件）",
+          "aliases": [
+            "raw data",
+            "原始数据",
+            "23andMe",
+            "WeGene",
+            "微基因"
+          ],
+          "required": false,
+          "from": "argument",
+          "flag": "--genotype",
+          "note_zh": "每行 rsID、染色体、位置、基因型，制表符或逗号分隔；.txt、.zip、.gz 都可以。按 rsID 匹配，正链碱基。和 --diplotypes 至少交一样。"
+        },
+        {
+          "key": "diplotypes",
+          "label_zh": "临床药物基因检测结果（每行一个基因，例如 CYP2C19 *1/*2、CYP2D6 *1/*10、HLA-B*58:01 阴性）",
+          "aliases": [
+            "药物基因检测报告",
+            "用药基因检测",
+            "星号等位基因"
+          ],
+          "required": false,
+          "from": "argument",
+          "flag": "--diplotypes",
+          "note_zh": "有临床结果时按临床结果对照，芯片推断不同时会写出来。CYP2D6 和 HLA 只能这样交。"
+        },
+        {
+          "key": "drug",
+          "label_zh": "想先看的药名（中文通用名、英文名或常见商品名，可写多次）",
+          "required": false,
+          "from": "argument",
+          "flag": "--drug",
+          "note_zh": "看到药盒照片时，读出通用名再交进来。"
+        }
+      ],
+      "outputs": [
+        {
+          "key": "cyp2c19_phenotype",
+          "label_zh": "CYP2C19 表型（CPIC 用语）"
+        },
+        {
+          "key": "cyp2c9_phenotype",
+          "label_zh": "CYP2C9 表型和活性分"
+        },
+        {
+          "key": "cyp2d6_phenotype",
+          "label_zh": "CYP2D6 表型和活性分（只来自临床结果）"
+        },
+        {
+          "key": "slco1b1_phenotype",
+          "label_zh": "SLCO1B1 功能"
+        },
+        {
+          "key": "abcg2_phenotype",
+          "label_zh": "ABCG2 功能"
+        },
+        {
+          "key": "tpmt_phenotype",
+          "label_zh": "TPMT 表型"
+        },
+        {
+          "key": "nudt15_phenotype",
+          "label_zh": "NUDT15 表型"
+        },
+        {
+          "key": "dpyd_phenotype",
+          "label_zh": "DPYD 表型和活性分"
+        },
+        {
+          "key": "cyp3a5_phenotype",
+          "label_zh": "CYP3A5 表型"
+        },
+        {
+          "key": "drugs_to_discuss",
+          "label_zh": "CPIC 建议换药、避免、调整或加强监测的药（英文通用名，逗号分隔）",
+          "note_zh": "这些药用药前请把结果给开药的医生或药师看。"
+        }
+      ],
+      "paper": {
+        "doi": "10.1038/gim.2016.87",
+        "title": "Standardizing terms for clinical pharmacogenetic test results: consensus terms from the Clinical Pharmacogenetics Implementation Consortium (CPIC)",
+        "title_zh": "CPIC 药物基因检测结果的标准用语",
+        "journal": "Genetics in Medicine",
+        "year": 2017
       }
     },
     {
@@ -7685,6 +7940,195 @@
       }
     },
     {
+      "name": "iief5-erectile-function",
+      "kind": "paper",
+      "tier": "A",
+      "species": [
+        "human"
+      ],
+      "evidence": "method",
+      "domains": [
+        "男性性功能"
+      ],
+      "blurb_zh": "勃起功能问卷 IIEF-5 的 5 道题相加（5–25 分），按发表的五档分出无、轻、轻到中、中、重。21 分及以下提示去看医生并查心血管风险。",
+      "description": "Scores the IIEF-5 (Sexual Health Inventory for Men; Rosen et al. 1999) for one man: five item scores of 1 to 5 over the past 6 months, total 5 to 25, and the published severity band (none 22-25, mild 17-21, mild to moderate 12-16, moderate 8-11, severe 5-7). A score of 21 or less is referred to a urologist with a cardiovascular risk check. Men who attempted intercourse only. Use for 勃起, 阳痿, 性功能, ED, IIEF-5 or SHIM. Item wording is copyrighted (Pfizer, distributed by Mapi Research Trust) and is not reproduced.",
+      "intents": [
+        "sexual_health"
+      ],
+      "has_script": true,
+      "entry": {
+        "script": "scripts/personal_report.py",
+        "measurements_flag": "--measurements",
+        "measurements_header": [
+          "item",
+          "value",
+          "unit"
+        ],
+        "age_flag": "--age",
+        "sex_flag": "--sex",
+        "out_flag": "--out",
+        "result_json": true
+      },
+      "inputs_status": "verified",
+      "inputs": [
+        {
+          "key": "iief5_item1",
+          "label_zh": "IIEF-5 第1题（对能勃起并维持勃起的信心）",
+          "aliases": [
+            "IIEF-5 第1题",
+            "IIEF5 q1",
+            "SHIM 第1题",
+            "勃起问卷第1题",
+            "第1题",
+            "item1",
+            "q1"
+          ],
+          "unit": "score",
+          "range": [
+            1,
+            5
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "填这一题的得分，1 到 5 的整数，分越高功能越好。问的是过去 6 个月。完整版 IIEF 里「没有性活动」「没有尝试性交」的 0 分不收。"
+        },
+        {
+          "key": "iief5_item2",
+          "label_zh": "IIEF-5 第2题（受到性刺激时，勃起硬度够不够插入）",
+          "aliases": [
+            "IIEF-5 第2题",
+            "IIEF5 q2",
+            "SHIM 第2题",
+            "勃起问卷第2题",
+            "第2题",
+            "item2",
+            "q2"
+          ],
+          "unit": "score",
+          "range": [
+            1,
+            5
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "填这一题的得分，1 到 5 的整数，分越高功能越好。问的是过去 6 个月。完整版 IIEF 里「没有性活动」「没有尝试性交」的 0 分不收。"
+        },
+        {
+          "key": "iief5_item3",
+          "label_zh": "IIEF-5 第3题（插入以后能不能维持勃起）",
+          "aliases": [
+            "IIEF-5 第3题",
+            "IIEF5 q3",
+            "SHIM 第3题",
+            "勃起问卷第3题",
+            "第3题",
+            "item3",
+            "q3"
+          ],
+          "unit": "score",
+          "range": [
+            1,
+            5
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "填这一题的得分，1 到 5 的整数，分越高功能越好。问的是过去 6 个月。完整版 IIEF 里「没有性活动」「没有尝试性交」的 0 分不收。"
+        },
+        {
+          "key": "iief5_item4",
+          "label_zh": "IIEF-5 第4题（维持勃起直到性交结束有多难）",
+          "aliases": [
+            "IIEF-5 第4题",
+            "IIEF5 q4",
+            "SHIM 第4题",
+            "勃起问卷第4题",
+            "第4题",
+            "item4",
+            "q4"
+          ],
+          "unit": "score",
+          "range": [
+            1,
+            5
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "填这一题的得分，1 到 5 的整数，分越高功能越好。问的是过去 6 个月。完整版 IIEF 里「没有性活动」「没有尝试性交」的 0 分不收。"
+        },
+        {
+          "key": "iief5_item5",
+          "label_zh": "IIEF-5 第5题（尝试性交时，自己满意的次数）",
+          "aliases": [
+            "IIEF-5 第5题",
+            "IIEF5 q5",
+            "SHIM 第5题",
+            "勃起问卷第5题",
+            "第5题",
+            "item5",
+            "q5"
+          ],
+          "unit": "score",
+          "range": [
+            1,
+            5
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "填这一题的得分，1 到 5 的整数，分越高功能越好。问的是过去 6 个月。完整版 IIEF 里「没有性活动」「没有尝试性交」的 0 分不收。"
+        },
+        {
+          "key": "sex",
+          "label_zh": "性别",
+          "required": true,
+          "from": "profile",
+          "flag": "--sex",
+          "note_zh": "男性问卷；女性不计算。"
+        },
+        {
+          "key": "age",
+          "label_zh": "实足年龄",
+          "unit": "a",
+          "range": [
+            18,
+            110
+          ],
+          "required": false,
+          "from": "profile",
+          "flag": "--age",
+          "note_zh": "年龄不进得分，只用来说明能不能接着用 China-PAR 估算心血管风险。"
+        },
+        {
+          "key": "attempted",
+          "label_zh": "过去 6 个月是否尝试过性交",
+          "required": false,
+          "from": "argument",
+          "flag": "--attempted",
+          "note_zh": "yes 或 no。no 时不计算：问卷只适用于尝试过性交的男性。"
+        }
+      ],
+      "outputs": [
+        {
+          "key": "iief5_score",
+          "label_zh": "IIEF-5 总分",
+          "unit": "score",
+          "note_zh": "5 题相加，5–25，分越高越好。"
+        },
+        {
+          "key": "iief5_band",
+          "label_zh": "IIEF-5 分档（Rosen 1999）",
+          "unit": "",
+          "note_zh": "无勃起功能障碍 22–25，轻度 17–21，轻到中度 12–16，中度 8–11，重度 5–7。"
+        }
+      ],
+      "paper": {
+        "doi": "10.1038/sj.ijir.3900472",
+        "title": "Development and evaluation of an abridged, 5-item version of the International Index of Erectile Function (IIEF-5) as a diagnostic tool for erectile dysfunction",
+        "title_zh": "勃起功能国际指数五项简版 IIEF-5",
+        "journal": "International Journal of Impotence Research",
+        "year": 1999
+      }
+    },
+    {
       "name": "imaging-organ-aging-clock",
       "kind": "paper",
       "tier": "A",
@@ -9569,6 +10013,89 @@
       }
     },
     {
+      "name": "nutrigenetic-variant-panel",
+      "kind": "paper",
+      "tier": "B",
+      "species": [
+        "human"
+      ],
+      "evidence": "review",
+      "domains": [
+        "饮食与基因"
+      ],
+      "blurb_zh": "基因检测原始数据里和喝酒、叶酸、喝奶有关的三个位点，按要求再看 APOE 与血脂。",
+      "description": "Reads three diet-related variants from a consumer genotype raw file (23andMe format; WeGene and other exports in the same format; AncestryDNA): ALDH2 rs671 (alcohol flushing and oesophageal cancer risk with drinking, Brooks et al. PLoS Med 2009), MTHFR rs1801133 C677T (homocysteine, Frosst et al. 1995, with the ACMG 2013 caution), and LCT rs4988235 -13910 (lactase persistence, Enattah et al. 2002, uninformative in East Asians). APOE rs429358/rs7412 is read only with --apoe and only for the LDL-cholesterol direction (Bennet et al. JAMA 2007); the dementia interpretation is excluded and the report points to a doctor or genetic counsellor. Actions are worded as tests to consider or things to discuss with a doctor, never a supplement dose. Use when the user asks what their DNA says about drinking, 喝酒脸红, folate/MTHFR, lactose intolerance, or diet genes.",
+      "intents": [
+        "nutrigenetics",
+        "gene_variant"
+      ],
+      "has_script": true,
+      "entry": {
+        "script": "scripts/personal_report.py",
+        "out_flag": "--out",
+        "result_json": true
+      },
+      "inputs_status": "verified",
+      "inputs": [
+        {
+          "key": "genotype",
+          "label_zh": "基因检测原始数据文件（23andMe 格式，WeGene 等导出的同格式文件）",
+          "aliases": [
+            "raw data",
+            "原始数据",
+            "23andMe",
+            "WeGene",
+            "微基因"
+          ],
+          "required": true,
+          "from": "argument",
+          "flag": "--genotype",
+          "note_zh": "每行 rsID、染色体、位置、基因型，制表符或逗号分隔；.txt、.zip、.gz 都可以。按 rsID 匹配，正链碱基。"
+        },
+        {
+          "key": "apoe",
+          "label_zh": "是否也看 APOE（只看血脂方向）",
+          "required": false,
+          "from": "argument",
+          "flag": "--apoe",
+          "note_zh": "只在用户明确要看 APOE 时加。报告不解读痴呆风险。"
+        }
+      ],
+      "outputs": [
+        {
+          "key": "aldh2_rs671_copies",
+          "label_zh": "ALDH2*2（rs671 A）的份数",
+          "unit": "copies"
+        },
+        {
+          "key": "mthfr_rs1801133_copies",
+          "label_zh": "MTHFR 677T（rs1801133 A）的份数",
+          "unit": "copies"
+        },
+        {
+          "key": "lct_rs4988235_copies",
+          "label_zh": "乳糖酶持续型 -13910T（rs4988235 A）的份数",
+          "unit": "copies"
+        },
+        {
+          "key": "apoe_genotype",
+          "label_zh": "APOE 型（只在要求时读）"
+        }
+      ],
+      "paper": {
+        "doi": "10.1371/journal.pmed.1000050",
+        "title": "The alcohol flushing response: an unrecognized risk factor for esophageal cancer from alcohol consumption",
+        "title_zh": "喝酒脸红与食管癌风险",
+        "journal": "PLoS Medicine",
+        "year": 2009
+      },
+      "related_not_same": [
+        "serum-proteomics-apoe-signatures",
+        "proteomic-apoe-alzheimers-signatures",
+        "cpic-pharmacogenomics"
+      ]
+    },
+    {
       "name": "omicmage-biological-age-multiomics",
       "kind": "paper",
       "tier": "B",
@@ -11318,6 +11845,187 @@
       }
     },
     {
+      "name": "rmeq-chronotype",
+      "kind": "paper",
+      "tier": "A",
+      "species": [
+        "human"
+      ],
+      "evidence": "method",
+      "domains": [
+        "昼夜节律"
+      ],
+      "blurb_zh": "晨型夜型问卷简版 rMEQ 的 5 道题相加（4–25 分），按发表的五档分出明确夜型、中度夜型、中间型、中度晨型、明确晨型。",
+      "description": "Scores the reduced Morningness-Eveningness Questionnaire (rMEQ; Adan and Almirall 1991) for one person: five items taken from MEQ items 1, 7, 10, 18 and 19, total 4 to 25, and the published five chronotype categories (definitely evening 4-7, moderately evening 8-11, neither 12-17, moderately morning 18-21, definitely morning 22-25). Use for 晨型, 夜型, 夜猫子, chronotype or morningness. Does not estimate melatonin onset or prescribe sleep schedules. Item wording is copyrighted and is not reproduced.",
+      "intents": [
+        "wearable_sleep"
+      ],
+      "has_script": true,
+      "entry": {
+        "script": "scripts/personal_report.py",
+        "measurements_flag": "--measurements",
+        "measurements_header": [
+          "item",
+          "value",
+          "unit"
+        ],
+        "age_flag": "--age",
+        "out_flag": "--out",
+        "result_json": true
+      },
+      "inputs_status": "verified",
+      "inputs": [
+        {
+          "key": "rmeq_item1",
+          "label_zh": "rMEQ 第1题（完全自由安排时，几点起床）",
+          "aliases": [
+            "rMEQ 第1题",
+            "rMEQ q1",
+            "MEQ第1题",
+            "meq1",
+            "晨型问卷第1题",
+            "第1题",
+            "item1",
+            "q1"
+          ],
+          "unit": "score",
+          "range": [
+            1,
+            5
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "填这一题选项对应的分数。五个时段，越早分越高，记 5 到 1。"
+        },
+        {
+          "key": "rmeq_item2",
+          "label_zh": "rMEQ 第2题（早上醒来后半小时内有多累）",
+          "aliases": [
+            "rMEQ 第2题",
+            "rMEQ q2",
+            "MEQ第7题",
+            "meq7",
+            "晨型问卷第2题",
+            "第2题",
+            "item2",
+            "q2"
+          ],
+          "unit": "score",
+          "range": [
+            1,
+            4
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "填这一题选项对应的分数。四个选项，越清醒分越高，记 1 到 4。"
+        },
+        {
+          "key": "rmeq_item3",
+          "label_zh": "rMEQ 第3题（晚上几点开始觉得累、想睡）",
+          "aliases": [
+            "rMEQ 第3题",
+            "rMEQ q3",
+            "MEQ第10题",
+            "meq10",
+            "晨型问卷第3题",
+            "第3题",
+            "item3",
+            "q3"
+          ],
+          "unit": "score",
+          "range": [
+            1,
+            5
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "填这一题选项对应的分数。五个时段，越早分越高，记 5 到 1。"
+        },
+        {
+          "key": "rmeq_item4",
+          "label_zh": "rMEQ 第4题（一天里几点状态最好）",
+          "aliases": [
+            "rMEQ 第4题",
+            "rMEQ q4",
+            "MEQ第18题",
+            "meq18",
+            "晨型问卷第4题",
+            "第4题",
+            "item4",
+            "q4"
+          ],
+          "unit": "score",
+          "range": [
+            1,
+            5
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "填这一题选项对应的分数。五个时段，越早分越高，记 5 到 1。"
+        },
+        {
+          "key": "rmeq_item5",
+          "label_zh": "rMEQ 第5题（觉得自己是晨型还是夜型）",
+          "aliases": [
+            "rMEQ 第5题",
+            "rMEQ q5",
+            "MEQ第19题",
+            "meq19",
+            "晨型问卷第5题",
+            "第5题",
+            "item5",
+            "q5"
+          ],
+          "unit": "score",
+          "range": [
+            0,
+            6
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "填这一题选项对应的分数。四个选项只记 6、4、2、0：越偏晨型分越高。"
+        },
+        {
+          "key": "age",
+          "label_zh": "实足年龄",
+          "unit": "a",
+          "range": [
+            18,
+            110
+          ],
+          "required": false,
+          "from": "profile",
+          "flag": "--age",
+          "note_zh": "年龄不进得分。"
+        }
+      ],
+      "outputs": [
+        {
+          "key": "rmeq_score",
+          "label_zh": "rMEQ 总分",
+          "unit": "score",
+          "note_zh": "5 题相加，4–25，分越高越偏晨型。"
+        },
+        {
+          "key": "rmeq_chronotype",
+          "label_zh": "晨型夜型分档（Adan 和 Almirall 1991）",
+          "unit": "",
+          "note_zh": "明确夜型 4–7，中度夜型 8–11，中间型 12–17，中度晨型 18–21，明确晨型 22–25。"
+        }
+      ],
+      "paper": {
+        "doi": "10.1016/0191-8869(91)90110-w",
+        "title": "Horne & Östberg morningness-eveningness questionnaire: A reduced scale",
+        "title_zh": "晨型夜型问卷简版 rMEQ",
+        "journal": "Personality and Individual Differences",
+        "year": 1991
+      },
+      "related_not_same": [
+        "wearable-circadian-aging-biomarker",
+        "circadian-frailty-older-adults"
+      ]
+    },
+    {
       "name": "scepiage-single-cell-ageing",
       "kind": "paper",
       "tier": "C",
@@ -12515,6 +13223,227 @@
         "title_zh": "血清和脑脊液里的自噬激酶",
         "journal": "Nature Aging",
         "year": 2026
+      }
+    },
+    {
+      "name": "uls8-loneliness-scale",
+      "kind": "paper",
+      "tier": "A",
+      "species": [
+        "human"
+      ],
+      "evidence": "method",
+      "domains": [
+        "社交与孤独"
+      ],
+      "blurb_zh": "孤独感简式量表 ULS-8 的 8 道题，按原量表规则（第 3、6 题反向）加成 8–32 分的孤独分。没有公认切点，只给分数。",
+      "description": "Scores the ULS-8 short-form UCLA Loneliness Scale (Hays and DiMatteo 1987) for one person: eight answers coded 1 to 4, items 3 and 6 reverse-scored, total 8 to 32, higher means lonelier. Gives the score without a category, because no published cut-point was found. Use when the user mentions loneliness, feeling isolated, 孤独, 寂寞, 没人说话, or the UCLA loneliness scale. Item wording is copyrighted and is not reproduced.",
+      "intents": [
+        "loneliness_social"
+      ],
+      "has_script": true,
+      "entry": {
+        "script": "scripts/personal_report.py",
+        "measurements_flag": "--measurements",
+        "measurements_header": [
+          "item",
+          "value",
+          "unit"
+        ],
+        "age_flag": "--age",
+        "out_flag": "--out",
+        "result_json": true
+      },
+      "inputs_status": "verified",
+      "inputs": [
+        {
+          "key": "uls8_item1",
+          "label_zh": "ULS-8 第1题（缺少陪伴）",
+          "aliases": [
+            "ULS-8 第1题",
+            "ULS8 q1",
+            "孤独量表第1题",
+            "第1题",
+            "item1",
+            "q1"
+          ],
+          "unit": "score",
+          "range": [
+            1,
+            4
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "照答卷原样填 1–4：从不 1、很少 2、有时 3、经常或总是 4。也可以直接写这几个词。"
+        },
+        {
+          "key": "uls8_item2",
+          "label_zh": "ULS-8 第2题（有没有可以求助的人）",
+          "aliases": [
+            "ULS-8 第2题",
+            "ULS8 q2",
+            "孤独量表第2题",
+            "第2题",
+            "item2",
+            "q2"
+          ],
+          "unit": "score",
+          "range": [
+            1,
+            4
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "照答卷原样填 1–4：从不 1、很少 2、有时 3、经常或总是 4。也可以直接写这几个词。"
+        },
+        {
+          "key": "uls8_item3",
+          "label_zh": "ULS-8 第3题（自己是不是外向的人）",
+          "aliases": [
+            "ULS-8 第3题",
+            "ULS8 q3",
+            "孤独量表第3题",
+            "第3题",
+            "item3",
+            "q3"
+          ],
+          "unit": "score",
+          "range": [
+            1,
+            4
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "照答卷原样填 1–4：从不 1、很少 2、有时 3、经常或总是 4。也可以直接写这几个词。这一题是反着问的，但也照原样填，脚本自己反向计分（原答 1 记 4 分），不要先自己反过来。"
+        },
+        {
+          "key": "uls8_item4",
+          "label_zh": "ULS-8 第4题（觉得被冷落、被排除在外）",
+          "aliases": [
+            "ULS-8 第4题",
+            "ULS8 q4",
+            "孤独量表第4题",
+            "第4题",
+            "item4",
+            "q4"
+          ],
+          "unit": "score",
+          "range": [
+            1,
+            4
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "照答卷原样填 1–4：从不 1、很少 2、有时 3、经常或总是 4。也可以直接写这几个词。"
+        },
+        {
+          "key": "uls8_item5",
+          "label_zh": "ULS-8 第5题（觉得和别人隔绝）",
+          "aliases": [
+            "ULS-8 第5题",
+            "ULS8 q5",
+            "孤独量表第5题",
+            "第5题",
+            "item5",
+            "q5"
+          ],
+          "unit": "score",
+          "range": [
+            1,
+            4
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "照答卷原样填 1–4：从不 1、很少 2、有时 3、经常或总是 4。也可以直接写这几个词。"
+        },
+        {
+          "key": "uls8_item6",
+          "label_zh": "ULS-8 第6题（想要陪伴时能不能找到）",
+          "aliases": [
+            "ULS-8 第6题",
+            "ULS8 q6",
+            "孤独量表第6题",
+            "第6题",
+            "item6",
+            "q6"
+          ],
+          "unit": "score",
+          "range": [
+            1,
+            4
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "照答卷原样填 1–4：从不 1、很少 2、有时 3、经常或总是 4。也可以直接写这几个词。这一题是反着问的，但也照原样填，脚本自己反向计分（原答 1 记 4 分），不要先自己反过来。"
+        },
+        {
+          "key": "uls8_item7",
+          "label_zh": "ULS-8 第7题（因为自己退缩、孤僻而不开心）",
+          "aliases": [
+            "ULS-8 第7题",
+            "ULS8 q7",
+            "孤独量表第7题",
+            "第7题",
+            "item7",
+            "q7"
+          ],
+          "unit": "score",
+          "range": [
+            1,
+            4
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "照答卷原样填 1–4：从不 1、很少 2、有时 3、经常或总是 4。也可以直接写这几个词。"
+        },
+        {
+          "key": "uls8_item8",
+          "label_zh": "ULS-8 第8题（身边有人，却觉得他们并不和自己在一起）",
+          "aliases": [
+            "ULS-8 第8题",
+            "ULS8 q8",
+            "孤独量表第8题",
+            "第8题",
+            "item8",
+            "q8"
+          ],
+          "unit": "score",
+          "range": [
+            1,
+            4
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "照答卷原样填 1–4：从不 1、很少 2、有时 3、经常或总是 4。也可以直接写这几个词。"
+        },
+        {
+          "key": "age",
+          "label_zh": "实足年龄",
+          "unit": "a",
+          "range": [
+            18,
+            110
+          ],
+          "required": false,
+          "from": "profile",
+          "flag": "--age",
+          "note_zh": "年龄不进得分。"
+        }
+      ],
+      "outputs": [
+        {
+          "key": "uls8_score",
+          "label_zh": "ULS-8 孤独分",
+          "unit": "score",
+          "note_zh": "8 题相加，第 3、6 题反向计分，范围 8–32，分越高越孤独。没有分档。"
+        }
+      ],
+      "paper": {
+        "doi": "10.1207/s15327752jpa5101_6",
+        "title": "A Short-Form Measure of Loneliness",
+        "title_zh": "孤独感简式量表 ULS-8",
+        "journal": "Journal of Personality Assessment",
+        "year": 1987
       }
     },
     {

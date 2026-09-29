@@ -188,6 +188,7 @@ python3 -m tools.lsk test --changed origin/main   # 只测相对 main 改动过�
 ## 昼夜节律
 
 - `skills/circadian-frailty-older-adults/` — 见「衰弱与死亡风险」。
+- `skills/rmeq-chronotype/` — 晨型夜型问卷简版 rMEQ 的 5 道题相加（4–25 分），按发表的五档分出明确夜型、中度夜型、中间型、中度晨型、明确晨型。
 - `skills/wearable-circadian-aging-biomarker/` — MESOR、振幅、峰值相位和年龄到齐时的 CosinorAge。缺一项就不算。
 
 ## 基质、软骨与纤维化
@@ -219,9 +220,25 @@ python3 -m tools.lsk test --changed origin/main   # 只测相对 main 改动过�
 
 - `skills/china-par-ascvd-risk/` — 收缩压、血脂、腰围、年龄和几个是否项到齐时，按 China-PAR 算中国成人的 10 年心血管病风险，男女都算。
 
+## 用药与基因
+
+- `skills/cpic-pharmacogenomics/` — 基因检测原始数据里的药物代谢基因，对照 CPIC 用药指南看哪些药要先问医生。（名单类）
+
+## 男性性功能
+
+- `skills/iief5-erectile-function/` — 勃起功能问卷 IIEF-5 的 5 道题相加（5–25 分），按发表的五档分出无、轻、轻到中、中、重。21 分及以下提示去看医生并查心血管风险。
+
+## 社交与孤独
+
+- `skills/uls8-loneliness-scale/` — 孤独感简式量表 ULS-8 的 8 道题，按原量表规则（第 3、6 题反向）加成 8–32 分的孤独分。没有公认切点，只给分数。
+
 ## 肾脏
 
 - `skills/ckd-epi-2021-egfr/` — 血肌酐、年龄和性别算肾小球滤过率估计值（eGFR），有胱抑素 C 时用肌酐加胱抑素 C 方程，按 KDIGO 分 G1–G5；有尿白蛋白/肌酐比时再分 A1–A3。
+
+## 饮食与基因
+
+- `skills/nutrigenetic-variant-panel/` — 基因检测原始数据里和喝酒、叶酸、喝奶有关的三个位点，按要求再看 APOE 与血脂。（名单类）
 
 ## 只收录，不参与个人调度
 
