@@ -128,3 +128,10 @@ def test_wrong_unit_is_refused(tmp_path: Path):
     code, text, outputs, _out = _run(tmp_path, _answers_for(20), "--sex", "male", unit="mmol/L")
     assert code == skillkit.EXIT_INPUT_PROBLEM and outputs["iief5_score"]["value"] is None
     assert "不能换算" in text
+
+
+def test_standard_dispatch_flags_are_accepted_and_ignored(tmp_path: Path):
+    meds = tmp_path / "meds.txt"
+    meds.write_text("氨氯地平\n", encoding="utf-8")
+    code, _text, outputs, _out = _run(tmp_path, _answers_for(23), "--sex", "male", "--medications", str(meds), "--labs", str(meds))
+    assert code == 0 and outputs["iief5_band"]["value"] == "无勃起功能障碍"

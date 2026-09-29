@@ -135,3 +135,10 @@ def test_wrong_unit_is_refused(tmp_path: Path):
     code, text, outputs, _out = _run(tmp_path, _answers_for(14), unit="h")
     assert code == skillkit.EXIT_INPUT_PROBLEM and outputs["rmeq_score"]["value"] is None
     assert "不能换算" in text
+
+
+def test_standard_dispatch_flags_are_accepted_and_ignored(tmp_path: Path):
+    meds = tmp_path / "meds.txt"
+    meds.write_text("褪黑素\n", encoding="utf-8")
+    code, _text, outputs, _out = _run(tmp_path, _answers_for(14), "--medications", str(meds), "--labs", str(meds), "--sex", "male")
+    assert code == 0 and outputs["rmeq_score"]["value"] == 14

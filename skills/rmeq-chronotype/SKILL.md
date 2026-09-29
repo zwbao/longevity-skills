@@ -24,7 +24,7 @@ description: >-
 | 4 | 18 | 一天里几点状态最好 | 1–5，越早越高 |
 | 5 | 19 | 觉得自己是晨型还是夜型 | 只能是 6、4、2、0，越偏晨型越高 |
 
-## 命令
+## Command
 
 ```bash
 python "$SKILL/scripts/personal_report.py" --measurements rmeq.csv --age 45 --out out

@@ -28,7 +28,7 @@ description: >-
 
 第 3、6 题也照答卷原样填，脚本自己反向计分（5 减原答）。不要先自己反过来。
 
-## 命令
+## Command
 
 ```bash
 python "$SKILL/scripts/personal_report.py" --measurements answers.csv --age 68 --out out

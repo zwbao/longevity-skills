@@ -199,6 +199,8 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--age", type=float)
     parser.add_argument("--sex", help="male; the questionnaire is for men")
     parser.add_argument("--attempted", help="yes or no: attempted intercourse in the past 6 months")
+    parser.add_argument("--medications", type=Path, help="accepted and ignored: medicines do not change the score")
+    parser.add_argument("--labs", type=Path, help="accepted and ignored: checkup labs do not change the score")
     parser.add_argument("--out", type=Path, required=True)
     args = parser.parse_args(argv)
     path = write_report(args.out, args.measurements, args.age, args.sex, args.attempted)

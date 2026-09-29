@@ -125,3 +125,12 @@ def test_conflicting_duplicate_is_refused(tmp_path: Path):
     out = tmp_path / "out"
     assert personal_report.main(["--measurements", str(path), "--out", str(out)]) == skillkit.EXIT_INPUT_PROBLEM
     assert "出现了两次" in (out / "report.md").read_text(encoding="utf-8")
+
+
+def test_standard_dispatch_flags_are_accepted_and_ignored(tmp_path: Path):
+    meds = tmp_path / "meds.txt"
+    meds.write_text("氨氯地平\n", encoding="utf-8")
+    labs = tmp_path / "labs.csv"
+    labs.write_text("项目,结果,单位\n总胆固醇,5.2,mmol/L\n", encoding="utf-8")
+    code, _text, value, _out = _run(tmp_path, MOST, "--medications", str(meds), "--labs", str(labs), "--sex", "female")
+    assert code == 0 and value == 32

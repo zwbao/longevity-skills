@@ -123,7 +123,7 @@ def render(answers: dict) -> str:
     else:
         lines.append(f"8 道题里有 {len(lonely_side)} 道落在更孤独的一侧（计分 3 或 4）。"
                      f"计分最高的是{'、'.join(top_items)}。")
-    lines.append("这个量表没有公认的分档切点，原作者和中文版的验证研究都没有给出，所以这里不说「轻度」「中度」「重度」。"
+    lines.append("我们没有找到这个量表公认的分档切点（原作者和中文版验证研究里都没有找到），所以这里不说「轻度」「中度」「重度」。"
                  "隔几周再做一次，看分数往哪个方向走，比一次的分数更有用。")
     lines += ["", "## 为什么值得在意", ""]
     lines.append("研究发现，长期的孤独和社交隔绝与更高的死亡风险有关，也和冠心病、脑卒中风险升高有关"
@@ -169,6 +169,9 @@ def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=TITLE)
     parser.add_argument("--measurements", type=Path, help="item,value,unit: uls8_item1 ... uls8_item8, answers as marked (1-4)")
     parser.add_argument("--age", type=float, help="accepted and range-checked; not used in the score")
+    parser.add_argument("--medications", type=Path, help="accepted and ignored: medicines do not change the score")
+    parser.add_argument("--labs", type=Path, help="accepted and ignored: checkup labs do not change the score")
+    parser.add_argument("--sex", help="accepted and ignored: the score is the same for men and women")
     parser.add_argument("--out", type=Path, required=True)
     args = parser.parse_args(argv)
     path = write_report(args.out, args.measurements, args.age)

@@ -24,7 +24,7 @@ def test_score_without_invented_bands(tmp_path: Path):
     text = _report(tmp_path, MIXED)
     assert text.splitlines()[0] == "# ULS-8 孤独感量表"
     assert "## 论文卡片" in text
-    assert "没有公认的分档切点" in text
+    assert "没有找到这个量表公认的分档切点" in text
     for label in ("低度孤独", "中度孤独", "高度孤独", "重度孤独", "Moderate", "Severe", "0-100", "邓巴"):
         assert label not in text
     assert "反向计分" in text

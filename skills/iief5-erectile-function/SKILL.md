@@ -26,7 +26,7 @@ description: >-
 
 问卷只适用于过去 6 个月尝试过性交的男性。填了 0 分（完整版 IIEF 的「没有性活动」「没有尝试性交」）、`--attempted no` 或 `--sex female` 时不计算，退出码 3。
 
-## 命令
+## Command
 
 ```bash
 python "$SKILL/scripts/personal_report.py" --measurements iief5.csv --sex male --age 52 --attempted yes --out out

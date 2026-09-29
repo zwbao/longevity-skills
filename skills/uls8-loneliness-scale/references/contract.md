@@ -15,14 +15,16 @@
 
 Hays 和 DiMatteo 1987 是订阅文章，全文没有打开；上面的计分来自引用它的开放获取论文。第四档答案 Xu 2018 印作 always，常见中文版写作「经常」或「总是」，两种写法都按 4 分读。
 
-## 分档切点：没有
+## 分档切点：没有找到
 
-找过的地方：Hays 和 DiMatteo 1987 摘要；Wu CH, Yao G. Personality and Individual Differences 2008;44:1762–1771（doi:10.1016/j.paid.2008.02.003，台湾大学生的中文版，摘要只报告单因子结构和效度）；Zhou L 等 2012（中南大学学报医学版，农村老人中文版）；Xu 等 2018（中国青少年）；Zhong Q 等 Int J Geriatr Psychiatry 2024（doi:10.1002/gps.70017，中国老人，Rasch 分析）。都没有印出把 ULS-8 分成轻、中、重的切点。VitaClaw 原技能里的 8–12/13–18/19–24/25–32 四档没有出处，没有带过来。所以报告只给分数，并说明没有公认切点。
+读过的地方：Hays 和 DiMatteo 1987 的摘要；Wu CH, Yao G. Personality and Individual Differences 2008;44:1762–1771（doi:10.1016/j.paid.2008.02.003，台湾大学生的中文版）的摘要，只报告单因子结构和效度；Zhou L 等. 中南大学学报（医学版）2012（doi:10.3969/j.issn.1672-7347.2012.11.008，农村老人）的摘要；Xu 等 2018 的全文；Zhong Q 等. Int J Geriatr Psychiatry 2024（doi:10.1002/gps.70017，中国老人，Rasch 分析）的摘要。这些地方都没有把 ULS-8 分成轻、中、重的切点。Hays 和 DiMatteo、Wu 和 Yao 的全文是订阅文章，没有打开。VitaClaw 原技能里的 8–12/13–18/19–24/25–32 四档没有出处，没有带过来。所以报告只给分数，并说明没有找到公认切点。
+
+Zhou 2012 摘要："After deleting item-3 (I am an outgoing person) and item-6 (I can find companionship when I want it), the exploratory factor analysis showed that the construction of the new scale (ULS-6) fit the original construction of ULS-8, a single-factor resolution." 这是卡片上「第 3、6 题不太贴合」的出处之一；计分仍按原 ULS-8。
 
 ## 为什么值得在意（报告里的一句话）
 
-- Holt-Lunstad J 等. Loneliness and social isolation as risk factors for mortality: a meta-analytic review. Perspect Psychol Sci 2015;10(2):227–237，doi:10.1177/1745691614568352。
-- Valtorta NK 等. Loneliness and social isolation as risk factors for coronary heart disease and stroke: systematic review and meta-analysis of longitudinal observational studies. Heart 2016;102:1009–1016，doi:10.1136/heartjnl-2015-308790。
+- Holt-Lunstad J 等. Perspect Psychol Sci 2015;10(2):227–237，doi:10.1177/1745691614568352，摘要："Actual and perceived social isolation are both associated with increased risk for early mortality."
+- Valtorta NK 等. Heart 2016;102:1009–1016，doi:10.1136/heartjnl-2015-308790，摘要："Our findings suggest that deficiencies in social relationships are associated with an increased risk of developing CHD and stroke."
 
 报告只写「有关」，不写风险比，也不把人群结果说成这个人的风险。
 
