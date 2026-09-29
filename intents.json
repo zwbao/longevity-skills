@@ -596,6 +596,44 @@
       "priority": 1
     },
     {
+      "id": "body_fat_waist",
+      "label_zh": "体脂率、腰围和肚子",
+      "description_zh": "用身高、颈围、腰围、臀围估算体脂率，算腰围身高比和腰臀比，并按国家标准看是否中心型肥胖。",
+      "data": [
+        "home_measurement"
+      ],
+      "triggers": [
+        "体脂",
+        "脂肪率",
+        "腰围",
+        "臀围",
+        "颈围",
+        "腰臀比",
+        "腰高比",
+        "腰围身高比",
+        "中心型肥胖",
+        "中心性肥胖",
+        "腹型肥胖",
+        "向心性肥胖",
+        "肚子大",
+        "大肚子",
+        "啤酒肚",
+        "小肚子",
+        "肚腩",
+        "腹部脂肪",
+        "苹果型",
+        "body fat",
+        "waist",
+        "hip circumference",
+        "whtr",
+        "whr"
+      ],
+      "skills": [
+        "navy-circumference-body-fat"
+      ],
+      "priority": 1
+    },
+    {
       "id": "model_organism",
       "label_zh": "模式生物和比较生物学",
       "description_zh": "动物和细胞研究，只作科普和文献检索，不当成个人读出。",
