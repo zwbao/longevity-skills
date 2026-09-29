@@ -358,7 +358,8 @@
         "synergy-age",
         "centenarian-longevity-genes",
         "multiomic-human-longevity",
-        "cpic-pharmacogenomics"
+        "cpic-pharmacogenomics",
+        "nutrigenetic-variant-panel"
       ],
       "priority": 1
     },
@@ -627,6 +628,39 @@
       ],
       "skills": [
         "cpic-pharmacogenomics"
+      ],
+      "priority": 2
+    },
+    {
+      "id": "nutrigenetics",
+      "label_zh": "饮食和基因",
+      "description_zh": "用基因检测原始数据看喝酒脸红、叶酸代谢和乳糖不耐这几个有依据的位点，给可以考虑的检查；不给补剂剂量。",
+      "data": [
+        "genotype"
+      ],
+      "triggers": [
+        "喝酒脸红",
+        "喝酒上脸",
+        "一喝酒就脸红",
+        "酒精脸红",
+        "乳糖不耐",
+        "喝奶拉肚子",
+        "喝牛奶拉肚子",
+        "喝奶腹泻",
+        "叶酸代谢",
+        "营养基因",
+        "饮食基因",
+        "nutrigen",
+        "aldh2",
+        "mthfr",
+        "rs671",
+        "rs1801133",
+        "rs4988235",
+        "re:(营养|饮食|吃什么|喝酒|酒量|叶酸|乳糖).{0,8}基因",
+        "re:基因.{0,8}(营养|饮食|吃什么|喝酒|酒量|叶酸|乳糖)"
+      ],
+      "skills": [
+        "nutrigenetic-variant-panel"
       ],
       "priority": 2
     }
