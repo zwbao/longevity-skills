@@ -211,9 +211,17 @@ python3 -m tools.lsk test --changed origin/main   # 只测相对 main 改动过�
 - `skills/digital-telomere-measurement-sequencing/` — 端粒长度的分布。
 - `skills/leukocyte-telomere-length/` — 已经 z 标准化的对数端粒。未标准化的比值留在原值。
 
+## 体脂与腰围
+
+- `skills/navy-circumference-body-fat/` — 用身高、颈围、腰围（女性加臀围）按美国海军围度方程估算体脂率，再算腰围身高比、腰臀比，并按国家标准看是否中心型肥胖。
+
 ## 心血管
 
 - `skills/china-par-ascvd-risk/` — 收缩压、血脂、腰围、年龄和几个是否项到齐时，按 China-PAR 算中国成人的 10 年心血管病风险，男女都算。
+
+## 肾脏
+
+- `skills/ckd-epi-2021-egfr/` — 血肌酐、年龄和性别算肾小球滤过率估计值（eGFR），有胱抑素 C 时用肌酐加胱抑素 C 方程，按 KDIGO 分 G1–G5；有尿白蛋白/肌酐比时再分 A1–A3。
 
 ## 只收录，不参与个人调度
 
