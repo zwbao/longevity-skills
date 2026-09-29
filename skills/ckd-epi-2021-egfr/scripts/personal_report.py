@@ -167,8 +167,10 @@ def meaning_lines(result: dict) -> list:
     g, a, used = result["g"], result["a"], result["egfr_used"]
     out = []
     if result["visit"] == VISIT_NONE:
-        if a == "A1":
+        if a == "A1" and g == "G1":
             out.append(f"这次 eGFR {used}，属于 {g}，尿白蛋白/肌酐比在 A1。两项都在正常范围，这是好消息。")
+        elif a == "A1":
+            out.append(f"这次 eGFR {used}，属于 {g}，尿白蛋白/肌酐比在 A1。两项都没有到需要就诊的切点，这是好消息。")
         else:
             out.append(f"这次 eGFR {used}，属于 {g}，没有到 60 以下。")
         if g == "G2":

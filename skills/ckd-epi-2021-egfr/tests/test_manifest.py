@@ -96,6 +96,19 @@ def test_creatinine_only_stages_on_egfr_cr(tmp_path: Path):
     assert "1.1.1.1" in report
 
 
+@pytest.mark.parametrize("scr,g,phrase", [(0.6, "G1", "两项都在正常范围"), (1.0, "G2", "没有到需要就诊的切点")])
+def test_both_halves_below_cutoffs_is_good_news(tmp_path: Path, scr, g, phrase):
+    # Table S11: man, 50, Scr 0.6 -> 118 (G1); man, 75, Scr 1 -> 79 (G2).
+    age = "50" if g == "G1" else "75"
+    code, result, report, _ = _run(tmp_path, [("Scr", str(scr), "mg/dL"), ("UACR", "10", "mg/g")], age=age)
+    assert code == 0
+    assert result["gfr_category"]["value"] == g
+    assert result["albuminuria_category"]["value"] == "A1"
+    assert result["doctor_visit"]["value"] == pr.VISIT_NONE
+    assert "好消息" in report and phrase in report
+    assert result["kdigo_checks_per_year"]["value"] is None
+
+
 def test_low_egfr_says_see_a_doctor_with_kdigo_retest(tmp_path: Path):
     # Table S11: woman, 75, Scr 1.5 -> 36 (G3b).
     code, result, report, _ = _run(tmp_path, [("Scr", "1.5", "mg/dL"), ("UACR", "12", "mg/g")], age="75", sex="female")
