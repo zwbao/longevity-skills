@@ -1,7 +1,7 @@
 """skill.json inputs match the script, and unit or range mistakes stop the readout.
 
-Before the kit, a BMI of 310 (a weight in the BMI row) passed the age-BMI
-sentence, text in the BMI row was dropped without a word, an age of 500 was
+Before the kit, a BMI of 310 (a weight in the BMI row) passed the Fig. 6c
+check, text in the BMI row was dropped without a word, an age of 500 was
 reported as outside the atlas, and a row named BMI instead of bmi was ignored.
 """
 
@@ -51,23 +51,23 @@ def test_manifest_matches_script():
     entry = MANIFEST["entry"]
     assert (entry["measurements_flag"], entry["age_flag"], entry["result_json"]) == ("--measurements", "--age", True)
     assert personal_report.has_header(",".join(entry["measurements_header"]))
-    assert [item["key"] for item in MANIFEST["outputs"]] == ["age_group", "age_over_45_and_bmi_30"]
+    assert [item["key"] for item in MANIFEST["outputs"]] == ["age_group", "age_over_45", "bmi_30_or_more"]
 
 
 @pytest.mark.parametrize(
-    "text, age, group, statement",
+    "text, age, group, over_45, bmi_30",
     [
-        (personal_report.SAMPLE_MEASUREMENTS, 50, "50多岁", "是"),
-        ("item,value\nbmi,24\n", 50, "50多岁", "否"),
-        ("item,value\nbmi,31\n", 40, "40多岁", "否"),
-        ("gene,value\nbmi,32\n", 62, "60多岁", "是"),
-        ("bmi,waist_cm\n30,90\n", 46, "40多岁", "是"),
-        ("item,value\nbmi,31\n", 75, None, None),
-        ("item,value\n", 35, "30多岁", None),
+        (personal_report.SAMPLE_MEASUREMENTS, 50, "50多岁", "是", "是"),
+        ("item,value\nbmi,24\n", 50, "50多岁", "是", "否"),
+        ("item,value\nbmi,31\n", 40, "40多岁", "否", "是"),
+        ("gene,value\nbmi,32\n", 62, "60多岁", "是", "是"),
+        ("bmi,waist_cm\n30,90\n", 46, "40多岁", "是", "是"),
+        ("item,value\nbmi,31\n", 75, None, None, None),
+        ("item,value\n", 35, "30多岁", "否", None),
     ],
     ids=["sample", "lean", "under-45", "gene-layout", "wide-row", "outside-atlas", "no-bmi"],
 )
-def test_documented_files_give_the_same_report(tmp_path: Path, text, age, group, statement):
+def test_documented_files_give_the_same_report(tmp_path: Path, text, age, group, over_45, bmi_30):
     measurements = tmp_path / "m.csv"
     measurements.write_text(text, encoding="utf-8")
     out = tmp_path / "out"
@@ -76,11 +76,13 @@ def test_documented_files_give_the_same_report(tmp_path: Path, text, age, group,
     assert report == _before(measurements, float(age))
     outputs = _result(out)
     assert outputs["age_group"]["value"] == group == personal_report.decade_label(float(age))
-    assert outputs["age_over_45_and_bmi_30"]["value"] == statement
-    if statement == "是":
-        assert "按这句写法，年龄和体质指数同时落在里面。" in report
-    elif statement == "否":
-        assert "按这句写法，没有同时落在里面。" in report
+    assert outputs["age_over_45"]["value"] == over_45
+    assert outputs["bmi_30_or_more"]["value"] == bmi_30
+    if group is not None:
+        assert "论文图 6c 把年龄和体质指数分别建模" in report
+        assert ("你的年龄大于 45 岁。" in report) == (over_45 == "是")
+    if bmi_30 is not None:
+        assert ("，至少 30。" in report) == (bmi_30 == "是")
     assert not (out / "problems.json").exists()
 
 
@@ -118,7 +120,7 @@ def test_wrong_or_missing_input_is_refused(tmp_path: Path, rows, age, reason):
     assert "这次按年龄把你放在" not in text and "## 方法算出的名单" not in text
     assert text.splitlines()[-1] == f"边界: {BOUNDARY}"
     assert json.loads((out / "problems.json").read_text(encoding="utf-8"))["problems"]
-    assert {key: item["value"] for key, item in _result(out).items()} == {"age_group": None, "age_over_45_and_bmi_30": None}
+    assert {key: item["value"] for key, item in _result(out).items()} == {"age_group": None, "age_over_45": None, "bmi_30_or_more": None}
 
 
 def test_a_good_run_clears_old_problems(tmp_path: Path):
