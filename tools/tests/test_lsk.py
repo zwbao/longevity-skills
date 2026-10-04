@@ -9,7 +9,7 @@ import pytest
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
 
-from tools.lsk import jsonschema_lite, readme, registry, units  # noqa: E402
+from tools.lsk import crossref, jsonschema_lite, readme, registry, units  # noqa: E402
 from tools.lsk.common import load_skillkit  # noqa: E402
 from tools.lsk.doi import normalize_doi  # noqa: E402
 
@@ -126,6 +126,27 @@ def test_registry_upsert_is_idempotent_on_normalized_doi():
     assert created and row["doi"] == "10.1038/s41586-1"
     again, created = registry.upsert(rows, {"doi": "10.1038/s41586-1", "tier": "A", "outcome": "skill", "skill": "x"})
     assert not created and len(rows) == 1 and again["tier"] == "A" and again["first_seen"] == row["first_seen"]
+
+
+def _dates(year, month=1):
+    return {"date-parts": [[year, month]]}
+
+
+def test_crossref_year_is_the_issue_year():
+    online_first = {"published-online": _dates(2023, 12), "journal-issue": {"issue": "1", "published-print": _dates(2024)}}
+    assert crossref.summarize(online_first)["year"] == 2024
+    print_dated = {"published-online": _dates(2021, 12), "published-print": _dates(2022)}
+    assert crossref.summarize(print_dated)["year"] == 2022
+    not_in_an_issue = {"published-online": _dates(2026, 8)}
+    assert crossref.summarize(not_in_an_issue)["year"] == 2026
+
+
+def test_crossref_author_text():
+    two = {"author": [{"family": "Zhang"}, {"family": "Gems"}]}
+    assert crossref.summarize(two)["authors"] == "Zhang 与 Gems"
+    assert crossref.author_text(["Seegren"]) == "Seegren"
+    assert crossref.author_text(["Ripa", "Andenoro", "Valenzano"]) == "Ripa 等"
+    assert crossref.author_text([]) == ""
 
 
 def test_readme_roundtrip():
