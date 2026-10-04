@@ -1393,9 +1393,10 @@
       "kind": "paper",
       "tier": "B",
       "species": [
-        "human"
+        "human",
+        "mouse"
       ],
-      "evidence": "cross_sectional",
+      "evidence": "animal",
       "domains": [
         "免疫与炎症"
       ],
@@ -1805,7 +1806,7 @@
         "human",
         "killifish"
       ],
-      "evidence": "cross_sectional",
+      "evidence": "animal",
       "domains": [
         "营养感应"
       ],
@@ -2369,7 +2370,7 @@
       "species": [
         "human"
       ],
-      "evidence": "cohort",
+      "evidence": "cross_sectional",
       "domains": [
         "脑、认知与痴呆"
       ],
@@ -2536,7 +2537,7 @@
       "species": [
         "human"
       ],
-      "evidence": "rct",
+      "evidence": "rct_secondary",
       "domains": [
         "甲基化"
       ],
@@ -3555,7 +3556,7 @@
       "species": [
         "human"
       ],
-      "evidence": "database",
+      "evidence": "consensus",
       "domains": [
         "用药与基因"
       ],
@@ -3836,7 +3837,7 @@
         "human",
         "mouse"
       ],
-      "evidence": "cohort",
+      "evidence": "animal",
       "domains": [
         "基质、软骨与纤维化"
       ],
@@ -5129,7 +5130,7 @@
       "species": [
         "human"
       ],
-      "evidence": "rct",
+      "evidence": "rct_secondary",
       "domains": [
         "临床年龄与可穿戴"
       ],
@@ -5294,9 +5295,11 @@
       "tier": "B",
       "species": [
         "human",
-        "multi_species"
+        "c_elegans",
+        "drosophila",
+        "other"
       ],
-      "evidence": "case_control",
+      "evidence": "animal",
       "domains": [
         "长寿基因"
       ],
@@ -7782,9 +7785,10 @@
       "kind": "paper",
       "tier": "B",
       "species": [
-        "human"
+        "human",
+        "mouse"
       ],
-      "evidence": "cross_sectional",
+      "evidence": "animal",
       "domains": [
         "免疫与炎症"
       ],
@@ -7818,12 +7822,12 @@
       "species": [
         "human"
       ],
-      "evidence": "review",
+      "evidence": "cross_sectional",
       "domains": [
         "长寿基因"
       ],
-      "blurb_zh": "这篇综述没有给出可核对的基因或变异名单。",
-      "description": "Checks whether a gene or variant the user names is stated by Bonnet et al., Nature Communications 2026 (doi:10.1038/s41467-026-68828-z). Use when the user mentions this review of sustainable progress in human longevity or regional life expectancy in Western Europe. The review names no gene or variant, so the matched list stays empty. Labs do not add names.",
+      "blurb_zh": "这项研究没有给出可核对的基因或变异名单。",
+      "description": "Checks whether a gene or variant the user names is stated by Bonnet et al., Nature Communications 2026 (doi:10.1038/s41467-026-68828-z). Use when the user mentions this study of sustainable progress in human longevity or regional life expectancy in Western Europe. The paper names no gene or variant, so the matched list stays empty. Labs do not add names.",
       "intents": [],
       "has_script": true,
       "entry": {
@@ -8297,7 +8301,7 @@
       "species": [
         "human"
       ],
-      "evidence": "cohort",
+      "evidence": "cross_sectional",
       "domains": [
         "免疫与炎症"
       ],
@@ -9143,7 +9147,7 @@
         "c_elegans",
         "mouse"
       ],
-      "evidence": "in_vitro",
+      "evidence": "animal",
       "domains": [
         "脑、认知与痴呆",
         "自噬"
@@ -10489,6 +10493,7 @@
       "species": [
         "human",
         "cell_line",
+        "mouse",
         "other"
       ],
       "evidence": "in_vitro",
@@ -11714,7 +11719,7 @@
         "cell_line",
         "mouse"
       ],
-      "evidence": "in_vitro",
+      "evidence": "animal",
       "domains": [
         "免疫与炎症"
       ],
@@ -12066,7 +12071,7 @@
         "cell_line",
         "mouse"
       ],
-      "evidence": "in_vitro",
+      "evidence": "animal",
       "domains": [
         "老年保护"
       ],
@@ -12099,7 +12104,7 @@
       "species": [
         "human"
       ],
-      "evidence": "rct",
+      "evidence": "rct_secondary",
       "domains": [
         "甲基化"
       ],
@@ -12477,7 +12482,7 @@
       "species": [
         "human"
       ],
-      "evidence": "cohort",
+      "evidence": "cross_sectional",
       "domains": [
         "免疫与炎症"
       ],
@@ -13097,9 +13102,10 @@
       "kind": "paper",
       "tier": "A",
       "species": [
-        "human"
+        "human",
+        "mouse"
       ],
-      "evidence": "cohort",
+      "evidence": "method",
       "domains": [
         "甲基化"
       ],
@@ -13163,9 +13169,11 @@
       "tier": "B",
       "species": [
         "human",
-        "cell_line"
+        "cell_line",
+        "c_elegans",
+        "mouse"
       ],
-      "evidence": "case_control",
+      "evidence": "animal",
       "domains": [
         "营养感应",
         "骨骼肌"
@@ -13196,7 +13204,9 @@
       "tier": "A",
       "species": [
         "human",
-        "cell_line"
+        "cell_line",
+        "mouse",
+        "c_elegans"
       ],
       "evidence": "cohort",
       "domains": [
