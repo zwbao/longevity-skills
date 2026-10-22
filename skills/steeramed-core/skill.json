@@ -10,19 +10,27 @@
   "domains": [
     "工具与证据库"
   ],
-  "blurb_zh": "个人甲基化报告。技能自行下载 GEO、STRING 和 STITCH，给出对齐假设。",
+  "blurb_zh": "个人全血甲基化报告：对照公开队列找出偏离的蛋白网络模块，并列出靶点与这些模块对齐的化合物假设；不是用药建议。",
   "intents": [
     "epigenetic_age"
   ],
   "triage": {
-    "reason_zh": "用个人全血甲基化对照GEO参照算模块差值和SA分，输出化合物对齐假设排序。",
+    "reason_zh": "用个人全血甲基化按预印本的模块差值和SA公式算出化合物对齐排序；预印本印了病人示例，但复现要整套GEO队列。",
     "reviewed": false
   },
   "paper": {
-    "source_id": "alphaxiv:2609.steeramed-biomedical-world-model-intervention",
-    "title_zh": "SteeraMed Core",
+    "doi": "10.32388/qrw86c.2",
+    "title": "SteeraMed: A Biomedical World Model for N-of-1 Intervention Reasoning Across Chronic Diseases and Aging",
+    "title_zh": "SteeraMed 甲基化干预对齐",
+    "journal": "Qeios（预印本）",
+    "year": 2026,
+    "authors": "Xiong",
+    "article_url": "https://www.qeios.com/read/QRW86C.2",
     "code_url": "https://github.com/DeepoMe/SteeraMed",
-    "summary_zh": "个人甲基化报告。技能自行下载 GEO、STRING 和 STITCH，按 SteeraMed 方法给出对齐假设，不给出开药或停药建议。",
+    "card_notes": [
+      "同一稿件的早期版本是 Preprints.org 预印本 doi:10.20944/preprints202605.1578.v1；本技能按 2026 年 9 月的 Qeios 第 2 版实现。预印本未经同行评审。"
+    ],
+    "summary_zh": "这篇未经同行评审的预印本用类风湿关节炎、乳腺癌、抑郁和衰老四个全血甲基化队列，把个人甲基化偏离汇总到蛋白互作网络模块，再按化合物靶点与模块的对齐程度给已知药物排序，回顾性地比随机更多地找回已知药物。个人报告只把你的全血甲基化按同样方法对照公开参照队列，列出偏离的模块和对齐的化合物假设，不给开药或停药建议。",
     "summary_status": "draft"
   },
   "entry": {
@@ -35,5 +43,47 @@
     "labs_flag": "--labs",
     "out_flag": "--out"
   },
-  "inputs_status": "none"
+  "inputs_status": "draft",
+  "inputs": [
+    {
+      "key": "beta",
+      "label_zh": "一个人的全血甲基化 β 值表（CSV 或 TSV，列是基因符号或 cg 探针）",
+      "required": true,
+      "from": "argument",
+      "flag": "--beta",
+      "note_zh": "450K、EPIC 或 EPICv2 探针会映射到启动子；β 值在 0 到 1 之间。IDAT 要先预处理。"
+    },
+    {
+      "key": "preset",
+      "label_zh": "参照队列（aging、ra、breast_cancer、depression）",
+      "required": false,
+      "from": "argument",
+      "flag": "--preset",
+      "note_zh": "默认 aging，对照 GSE40279 中 50 岁以下的人。"
+    },
+    {
+      "key": "age",
+      "label_zh": "实足年龄",
+      "unit": "a",
+      "range": [
+        18,
+        110
+      ],
+      "required": false,
+      "from": "profile",
+      "flag": "--age",
+      "note_zh": "疾病参照按同性别、年龄差 5 岁以内匹配对照时需要。"
+    },
+    {
+      "key": "sex",
+      "label_zh": "性别",
+      "required": false,
+      "from": "profile",
+      "flag": "--sex"
+    }
+  ],
+  "validation": {
+    "status": "draft",
+    "gap_zh": "预印本第3.7节和图6印了类风湿病人#303（GSM1052147）的四层证据链：67个扰动模块，戊酮可可碱排第1、重要度3等；但复现要下载整个GSE42861队列（354例、335对照）、STRING v12和STITCH v5，并在全部病例上做组水平的模块和特征筛选，测试里离线做不到，本次没有跑通这个例子。"
+  }
 }
