@@ -2,7 +2,7 @@
   "schema": "longevity-skill/1",
   "name": "ampk-gamma1-refeeding-longevity",
   "kind": "paper",
-  "tier": "A",
+  "tier": "B",
   "species": [
     "human",
     "killifish"
@@ -11,12 +11,12 @@
   "domains": [
     "营养感应"
   ],
-  "blurb_zh": "八个分项到齐时的平均分和分档。",
+  "blurb_zh": "八个多维预后指数分项点数的平均和分档；不从 PRKAG1 表达算任何个人分数。",
   "intents": [
     "frailty_mortality"
   ],
   "triage": {
-    "reason_zh": "论文以鳉鱼实验为主，但脚本只用人队列方法段，把八项预后指数点数求均值并分三档。",
+    "reason_zh": "论文主体是鳉鱼实验，人体部分只把多维预后指数当结局，没有给出PRKAG1换算个人分数的方法；脚本只把八个分项点数取平均。",
     "reviewed": false
   },
   "paper": {
