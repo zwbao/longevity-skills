@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Epigenetic frailty risk score from the 20 CpG coefficients in Li et al. Fig. 4.
+"""Epigenetic frailty risk score from the 20 CpG coefficients in the Results text of Li et al.
 
 Rows are read through skill.json by skillkit: a beta outside 0 to 1, a frailty
 index outside 0 to 1, a deficit count above 31 or 33, a unit that is not a beta,

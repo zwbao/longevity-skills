@@ -2,7 +2,7 @@ from __future__ import annotations
 
 BOUNDARY = "这是研究复现意义上的个人读出，不是治疗建议。不能据此开始或停止任何药物。名单里没有某个名字，不是停用的理由。体检不增删方法算出的名单。"
 
-# Fig. 4. eFRS = intercept + sum(coefficient * methylation beta).
+# Results text (eFRS equation). eFRS = intercept + sum(coefficient * methylation beta).
 # Methods call these explanatory variables methylation beta values.
 EFRS = (
     ("intercept", 0.204),
