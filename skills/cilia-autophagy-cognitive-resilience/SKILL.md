@@ -1,11 +1,11 @@
 ---
 name: cilia-autophagy-cognitive-resilience
 description: >-
-  Tier C index only (mouse study): do not use it to answer a person's own health question. Lists the
-  primary-cilium and autophagy proteins named in Rivagorda et al., Nature Aging 2025, including
-  GPR158, IFT20, IFT88, KIF3A and osteocalcin. It does not convert cilium length or osteocalcin into a
-  cognitive score, because that coefficient column is not in the paper. Use when the user mentions
-  this hippocampal cilia-autophagy axis or GPR158. Experimental treatments are not personal doses.
+  Tier C index only (mouse study): do not use it to answer a person's own health question. Rivagorda
+  et al., Nature Aging 2025: in mouse hippocampal neurons a primary cilia-autophagy axis, driven by
+  osteocalcin via GPR158, supports cognition in old mice. Holds GPR158, IFT20, IFT88, KIF3A,
+  osteocalcin and other named proteins. Use when someone asks about this study, this axis in mice, or
+  the listed proteins; not for a person's own measurements.
 ---
 
 # 海马神经元的纤毛与自噬
@@ -14,23 +14,18 @@ description: >-
 > **分级 C，只收录。** 这篇论文的主要证据来自小鼠。不要用它回答某个人自己的健康问题，也不要向用户索要测量、现用药或体检来运行它；脚本输出只是复现论文里的名单或数值，不是这个人的结果。
 <!-- /tier-banner -->
 
-名单是正文点名的纤毛–自噬轴成员。你交纤毛长度时，报告照录这个数，不把它换成认知分数，因为没有系数列。动物实验不写成用法。
+这项研究说明海马神经元的初级纤毛和自噬连在一起，血源性骨钙素要经过受体 GPR158 和纤毛核心蛋白才能带动自噬。恢复年老海马里的这根轴可以改善小鼠的认知读出。
 
-不要向用户要 GEO、STRING、PDF 或补充表。现用药对不上时写「不能据此停」。体检不增删名单。
+脚本复现论文名单：正文点名的纤毛–自噬轴成员。论文没有把纤毛长度或骨钙素换成认知分数的系数列，脚本也不编。动物实验处理不写成用法。不要向用户要 GEO、STRING、PDF 或补充表。
 
-## 命令
+## 命令（复现论文名单）
 
 Set `SKILL` to the directory that contains this file.
 
 ```bash
-python3 "$SKILL/scripts/personal_report.py" \
-  --measurements measurements.csv \
-  --medications meds.txt \
-  --labs checkup.csv \
-  --age 50 \
-  --out out
+python3 "$SKILL/scripts/personal_report.py" --out out
 ```
 
-纤毛长度字段名 `cilia_length_um`。
+研究者可用 `--measurements measurements.csv` 附上小鼠神经元的纤毛长度（字段名 `cilia_length_um`），报告只照录这个数。引用 `out/report.md` 时说明这是论文复现，包括最后一行 `边界:`。
 
 方法说明见 [references/claims.md](references/claims.md) 和 [references/contract.md](references/contract.md)。

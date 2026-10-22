@@ -3,7 +3,7 @@
 Splicing cutoffs are the two rules printed in the article, not a refit.
 """
 
-BOUNDARY = "这是研究复现意义上的个人读出，不是治疗建议。不能据此开始或停止任何药物。名单里没有某个名字，不是停用的理由。体检不增删方法算出的名单。"
+BOUNDARY = "这是论文复现，不是这个人的结果，也不是治疗建议。不能据此开始或停止任何药物。名单里没有某个名字，不是停用的理由。体检不增删方法算出的名单。"
 
 # Results: 117 DASEs in OA cartilage, delta PSI > 20% and FDR < 0.0001.
 PSI_MIN = 0.20

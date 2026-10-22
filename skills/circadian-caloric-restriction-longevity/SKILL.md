@@ -1,11 +1,11 @@
 ---
 name: circadian-caloric-restriction-longevity
 description: >-
-  Tier C index only (mouse study): do not use it to answer a person's own health question. Matches a
-  30 percent calorie cut, feeding phase, and feeding window to one arm in Acosta-Rodríguez et al. Use
-  when the user mentions circadian alignment of caloric restriction in male C57BL/6J mice or this
-  Science study. Mouse median lifespans are not written as a human lifespan. Medicines and checkup
-  labs do not edit the arm name.
+  Tier C index only (mouse study): do not use it to answer a person's own health question.
+  Acosta-Rodríguez et al., Science 2022: in male C57BL/6J mice on 30 percent caloric restriction,
+  night feeding plus a fasting window extended lifespan most. Holds the six feeding arms. Use when
+  someone asks about this study, circadian timing of caloric restriction in mice, or the listed arms;
+  not for a person's own measurements.
 ---
 
 # 限食时刻与寿命
@@ -14,20 +14,14 @@ description: >-
 > **分级 C，只收录。** 这篇论文的主要证据来自小鼠。不要用它回答某个人自己的健康问题，也不要向用户索要测量、现用药或体检来运行它；脚本输出只是复现论文里的名单或数值，不是这个人的结果。
 <!-- /tier-banner -->
 
-用户交热量限制百分比、进食相位和进食窗口小时，以及现用药和体检。不要向用户要 GEO、STRING 或 PDF。
+这项研究在雄性 C57BL/6J 小鼠里比较自由进食和五种三成热量限制，差别在进食落在白天、夜晚，还是铺满昼夜。同样少吃，夜晚进食再加一段禁食，寿命延长更多。
 
-报告开头是论文卡片。记录对上正文六组里的哪一组。各组小鼠的中位寿命不写成这个人的寿命。现用药对不上时保留「不能据此停」。体检不增删方法算出的名单。
+脚本复现论文的六组设计。各组小鼠的中位寿命是动物数据，不写成人的寿命，也不是给人的饮食方案。不要向用户要 GEO、STRING 或 PDF。
 
-## 命令
+## 命令（复现论文名单）
 
 ```bash
-python "$SKILL/scripts/personal_report.py" \
-  --medications meds.txt \
-  --labs checkup.csv \
-  --age 60 \
-  --measurements measures.txt \
-  --out out
+python "$SKILL/scripts/personal_report.py" --out out
 ```
 
-引用 `out/report.md`，包括 `边界:` 那一行。
-
+引用 `out/report.md` 时说明这是论文复现，包括 `边界:` 那一行。

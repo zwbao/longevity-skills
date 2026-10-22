@@ -2,10 +2,10 @@
 name: dermal-fibroblast-aging-cytometry
 description: >-
   Tier C index only (cultured cells study): do not use it to answer a person's own health question.
-  Labels passage 5 and passage 15 human dermal fibroblasts and applies the 0.50 confidence cutoff from
-  Song et al. Use when the user mentions nanosensor chemical cytometry or aging heterogeneity of
-  dermal fibroblasts. Deep-learning weights are not invented. Medicines and checkup labs do not edit
-  the phenotype list.
+  Song et al., Nature Communications 2025: nanosensor chemical cytometry reads size, shape, refractive
+  index and H2O2 efflux of cultured human dermal fibroblasts (passage 5 young, 15 aged). Holds those
+  references and the 0.50 confidence cutoff. Use when someone asks about this study or fibroblast
+  ageing in culture; not for a person's own measurements.
 ---
 
 # 真皮成纤维细胞的纳米传感器表型
@@ -14,20 +14,16 @@ description: >-
 > **分级 C，只收录。** 这篇论文的主要证据来自培养细胞。不要用它回答某个人自己的健康问题，也不要向用户索要测量、现用药或体检来运行它；脚本输出只是复现论文里的名单或数值，不是这个人的结果。
 <!-- /tier-banner -->
 
-用户交代次、检测置信度、细胞大小、偏心率、折射率和过氧化氢外流，以及现用药和体检。不要向用户要 GEO、STRING 或 PDF。
+这项细胞研究用近红外纳米传感器读出流动的人真皮成纤维细胞的大小、形状、折射率和过氧化氢外流。第 5 代当作年轻对照，第 15 代当作衰老参照。
 
-报告开头是论文卡片。只有第 5 代和第 15 代对上正文的两端参照。置信度要超过 0.50 才算有效检测。四个表型照录，不换成代次。现用药对不上时保留「不能据此停」。体检不增删方法算出的名单。
+脚本复现论文的参照：两个代次、0.50 的检测置信度阈值和四个表型名称。深度学习权重没有公开，脚本不编，也不把表型换成代次。不要向用户要 GEO、STRING 或 PDF。
 
-## 命令
+## 命令（复现论文名单）
 
 ```bash
-python "$SKILL/scripts/personal_report.py" \
-  --medications meds.txt \
-  --labs checkup.csv \
-  --age 60 \
-  --measurements measures.txt \
-  --out out
+python "$SKILL/scripts/personal_report.py" --out out
 ```
 
-引用 `out/report.md`，包括 `边界:` 那一行。
+研究者可以用 `--measurements` 传入自己培养细胞的代次、置信度和四个表型，对照论文的两端参照。
 
+引用 `out/report.md` 时说明这是论文复现，包括 `边界:` 那一行。

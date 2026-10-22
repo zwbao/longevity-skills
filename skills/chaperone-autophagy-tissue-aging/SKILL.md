@@ -1,12 +1,11 @@
 ---
 name: chaperone-autophagy-tissue-aging
 description: >-
-  Tier C index only (mouse study): do not use it to answer a person's own health question. Computes
-  the chaperone-mediated autophagy lysosome percentage as KDendra and LAMP1 double-positive puncta
-  divided by LAMP1 puncta, the ratio in Khawaja et al., Nature Aging 2025. It does not compute the
-  transcriptional CMA score, because cmascore_genes.xlsx has direction and weight but no per-gene mean
-  or standard deviation. Use when the user mentions this sex-specific CMA atlas, LAMP2A, or
-  KFERQ-Dendra. Checkup labs do not change the list.
+  Tier C index only (mouse study): do not use it to answer a person's own health question. Khawaja et
+  al., Nature Aging 2025: KFERQ-Dendra reporter mice mapped sex- and cell-type-specific CMA changes
+  across ageing tissues. Holds the tissue directions and the CMA-competent lysosome ratio. Use when
+  someone asks about this study, chaperone-mediated autophagy or LAMP2A in ageing mice, or the
+  tissues; not for a person's own measurements.
 ---
 
 # 组织里的伴侣介导自噬
@@ -15,23 +14,18 @@ description: >-
 > **分级 C，只收录。** 这篇论文的主要证据来自小鼠。不要用它回答某个人自己的健康问题，也不要向用户索要测量、现用药或体检来运行它；脚本输出只是复现论文里的名单或数值，不是这个人的结果。
 <!-- /tier-banner -->
 
-两种点计数都有时，报告计算有能力溶酶体的百分比。基因表有方向和权重，没有均值和标准差，所以不算转录分数。小鼠里的组织方向写在名单旁边，不是你的分数。
+这项研究用荧光报告小鼠，按组织、细胞类型和性别看衰老时的伴侣介导自噬（CMA）。
 
-不要向用户要 GEO、STRING、PDF 或补充表。现用药对不上时写「不能据此停」。体检不增删名单。
+脚本复现论文名单和比值算法：小鼠各组织的方向，以及 KDendra 与 LAMP1 双阳性点除以 LAMP1 点的有能力溶酶体百分比。基因表有方向和权重，没有均值和标准差，所以不算转录 CMA 分数。不要向用户要 GEO、STRING、PDF 或补充表。
 
-## 命令
+## 命令（复现论文名单）
 
 Set `SKILL` to the directory that contains this file.
 
 ```bash
-python3 "$SKILL/scripts/personal_report.py" \
-  --measurements measurements.csv \
-  --medications meds.txt \
-  --labs checkup.csv \
-  --age 50 \
-  --out out
+python3 "$SKILL/scripts/personal_report.py" --out out
 ```
 
-字段名 `kdendra_lamp1_puncta` 和 `lamp1_puncta`。
+研究者要复算自己的成像点计数时，可加 `--measurements measurements.csv`（字段名 `kdendra_lamp1_puncta` 和 `lamp1_puncta`）。引用 `out/report.md` 时说明这是论文复现，包括最后一行 `边界:`。
 
 方法说明见 [references/claims.md](references/claims.md) 和 [references/contract.md](references/contract.md)。
