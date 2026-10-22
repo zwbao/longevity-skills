@@ -32,6 +32,7 @@ These skills carry tables taken from the article or its supplementary informatio
 
 | Skill | Article |
 | --- | --- |
+| `principal-component-clinical-aging` | Principal component-based clinical aging clocks identify signatures of healthy aging and targets for clinical intervention. *Nature Aging* 2024. https://doi.org/10.1038/s43587-024-00646-8 (LinAge medians, MADs, weights and constants from Supplementary Table 7) |
 | `terpenoid-autophagy-sarcopenia` | Herbal terpenoids activate autophagy and mitophagy through modulation of bioenergetics and protect from metabolic stress, sarcopenia and epigenetic aging. *Nature Aging* 2025. https://doi.org/10.1038/s43587-025-00957-4 |
 | `replicative-senescence-proteome` | Quantitative proteomics reveals coordinated changes in the proteome during replicative senescence. *Nature Communications* 2026. https://doi.org/10.1038/s41467-026-77686-8 |
 | `naked-mole-queen-methylation-clock` | DNA methylation clocks tick in naked mole rats but queens age more slowly than nonbreeders. *Nature Aging* 2021. https://doi.org/10.1038/s43587-021-00152-1 |

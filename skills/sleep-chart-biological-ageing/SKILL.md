@@ -1,14 +1,14 @@
 ---
 name: sleep-chart-biological-ageing
 description: >-
-  Tier B lookup (human): what the paper reports about named entities, not a validated personal score.
-  The Nature 2026 sleep chart relates self-reported sleep duration to biological age gaps from
-  imaging, plasma proteomics and metabolomics models built in UK Biobank; those gaps cannot be
-  computed for an individual here. The script only places supplied sleep hours in the paper's short
-  (<6 h), normal (6–8 h) or long (>8 h) groups, which restates the input against the paper's exposure
-  categories, not a score. Use when the user gives sleep hours and asks where they sit in this chart.
-  The skill does not ask for the PDF or a cohort. It does not turn a short or long group into advice
-  to start or stop a medicine.
+  Tier B lookup (human): what the paper reports, or simple arithmetic on values you bring; not the
+  paper's model run on one person. The Nature 2026 sleep chart relates self-reported sleep duration to
+  biological age gaps from imaging, plasma proteomics and metabolomics models built in UK Biobank;
+  those gaps cannot be computed for an individual here. The script only places supplied sleep hours in
+  the paper's short (<6 h), normal (6–8 h) or long (>8 h) groups, which restates the input against the
+  paper's exposure categories, not a score. Use when the user gives sleep hours and asks where they
+  sit in this chart. The skill does not ask for the PDF or a cohort. It does not turn a short or long
+  group into advice to start or stop a medicine.
 ---
 
 # 睡眠时长分组

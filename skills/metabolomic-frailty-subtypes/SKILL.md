@@ -1,15 +1,15 @@
 ---
 name: metabolomic-frailty-subtypes
 description: >-
-  Tier B lookup (human): what the paper reports about named entities, not a validated personal score.
-  In Xiao et al., npj Digital Medicine 2025 the four frailty subtypes come from K-means clustering on
-  the first two principal components of eleven standardized NMR metabolites in frail participants; the
-  PCA loadings and cluster centres are not published, so a person cannot be assigned the way the paper
-  did. The script only finds which Table 2 subtype mean the eleven supplied Nightingale NMR
-  metabolites are nearest to, an approximation of its own, not the paper's classifier. Use when the
-  user mentions metabolomic frailty subtypes, GlycA, LGVF, HALF, LALF, HGVF, or this 11-metabolite
-  panel. Current medicines and checkup labs are context. The report does not say what to start or
-  stop.
+  Tier B lookup (human): what the paper reports, or simple arithmetic on values you bring; not the
+  paper's model run on one person. In Xiao et al., npj Digital Medicine 2025 the four frailty subtypes
+  come from K-means clustering on the first two principal components of eleven standardized NMR
+  metabolites in frail participants; the PCA loadings and cluster centres are not published, so a
+  person cannot be assigned the way the paper did. The script only finds which Table 2 subtype mean
+  the eleven supplied Nightingale NMR metabolites are nearest to, an approximation of its own, not the
+  paper's classifier. Use when the user mentions metabolomic frailty subtypes, GlycA, LGVF, HALF,
+  LALF, HGVF, or this 11-metabolite panel. Current medicines and checkup labs are context. The report
+  does not say what to start or stop.
 ---
 
 # 代谢衰弱亚型

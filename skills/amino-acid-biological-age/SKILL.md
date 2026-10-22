@@ -1,13 +1,13 @@
 ---
 name: amino-acid-biological-age
 description: >-
-  Tier B lookup (human): what the paper reports about named entities, not a validated personal score.
-  The amino-acid clock of Ding et al., Nature Communications 2026 (doi:10.1038/s41467-026-73371-y) is
-  a random forest whose trained model is not published (the code repository has only training code),
-  so the script cannot compute an amino-acid age or age gap. It only divides each of the eight
-  amino-acid concentrations of the simplified model by their sum, which are input features of that
-  model, not a score. Use when the user mentions AmiAge, an amino-acid age clock, or this paper.
-  Checkup labs do not change the amino-acid list.
+  Tier B lookup (human): what the paper reports, or simple arithmetic on values you bring; not the
+  paper's model run on one person. The amino-acid clock of Ding et al., Nature Communications 2026
+  (doi:10.1038/s41467-026-73371-y) is a random forest whose trained model is not published (the code
+  repository has only training code), so the script cannot compute an amino-acid age or age gap. It
+  only divides each of the eight amino-acid concentrations of the simplified model by their sum, which
+  are input features of that model, not a score. Use when the user mentions AmiAge, an amino-acid age
+  clock, or this paper. Checkup labs do not change the amino-acid list.
 ---
 
 # 氨基酸比例

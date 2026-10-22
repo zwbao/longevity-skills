@@ -1,13 +1,13 @@
 ---
 name: imaging-organ-aging-clock
 description: >-
-  Tier B lookup (human): what the paper reports about named entities, not a validated personal score.
-  The organ ages of the npj Digital Medicine 2026 imaging clock come from LASSO models on 1,777 UK
-  Biobank imaging-derived phenotypes across seven organs, which a person cannot obtain, so the script
-  cannot compute them. It only subtracts chronological age from organ predicted ages the user already
-  has, and lists the plasma proteins named in the main text. Use when the user mentions imaging organ
-  age, MRI organ clocks, or this UK Biobank imaging study. Current medicines and checkup labs do not
-  edit the protein list or the gaps.
+  Tier B lookup (human): what the paper reports, or simple arithmetic on values you bring; not the
+  paper's model run on one person. The organ ages of the npj Digital Medicine 2026 imaging clock come
+  from LASSO models on 1,777 UK Biobank imaging-derived phenotypes across seven organs, which a person
+  cannot obtain, so the script cannot compute them. It only subtracts chronological age from organ
+  predicted ages the user already has, and lists the plasma proteins named in the main text. Use when
+  the user mentions imaging organ age, MRI organ clocks, or this UK Biobank imaging study. Current
+  medicines and checkup labs do not edit the protein list or the gaps.
 ---
 
 # 影像器官年龄差

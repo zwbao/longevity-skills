@@ -75,13 +75,13 @@ python3 -m tools.lsk test --changed origin/main   # 只测相对 main 改动过�
 - `skills/accelerated-biological-aging-risk/` — 九项血液指标和实足年龄的表型年龄。
 - `skills/ageing-clocks-digital-twins/` — 同一时钟多次生物年龄的波动（只算差值，不算新的生物年龄）。（名单类）
 - `skills/aging-biomarker-framework/` — 把你已经算好的时钟预测年龄减去实足年龄（简单相减），再标出这个时钟在论文评测里的队列结果。（名单类）
-- `skills/biological-aging-generational-shifts/` — 年龄、出生年和已经算好的衰老测量。
+- `skills/biological-aging-generational-shifts/` — 你交来的 PhenoAge 减去年龄的未标准化差和出生年；不是论文的标准化年龄差。（名单类）
 - `skills/blood-protein-assessment/` — 研究用：把已在一批样本内秩逆正态变换、缩放好的血液蛋白量乘论文系数加总；单个人的化验值没法直接套，糖化血红蛋白只作对照。（名单类）
-- `skills/face-aging-rate-cancer/` — 两次面容年龄和间隔天数算出的面容老化速率。
+- `skills/face-aging-rate-cancer/` — 你交来的两次面容年龄之差除以相隔年数；不从照片算面容年龄。（名单类）
 - `skills/fasting-mimicking-diet/` — 两次已经算好的生物年龄相减（不从化验重算生物年龄）。（名单类）
 - `skills/life-cycle-biological-clock/` — 常规化验对照论文点名的时钟指标（不算生物年龄）。（名单类）
-- `skills/principal-component-clinical-aging/` — 并存病、可替宁、自评健康和尿白蛋白肌酐比。
-- `skills/sleep-chart-biological-ageing/` — 睡眠小时数的分组。
+- `skills/principal-component-clinical-aging/` — 用常规化验、血压和健康问卷算 LinAge 临床衰老年龄。
+- `skills/sleep-chart-biological-ageing/` — 睡眠小时数落在论文的短、正常还是长睡眠组（不算生物年龄差）。（名单类）
 - `skills/wearable-aging-clock/` — 把你已拿到的腕部脉搏波年龄减去实足年龄；不从脉搏波算年龄。（名单类）
 
 ## 甲基化
@@ -97,10 +97,10 @@ python3 -m tools.lsk test --changed origin/main   # 只测相对 main 改动过�
 
 ## 蛋白、代谢与器官年龄
 
-- `skills/amino-acid-biological-age/` — 氨基酸浓度的比例。
+- `skills/amino-acid-biological-age/` — 八种氨基酸各占总和的比例（不出氨基酸年龄）。（名单类）
 - `skills/genetic-architecture-biological-age/` — 把你已经算好的各器官预测年龄减去实足年龄（简单相减）；论文的器官年龄模型权重没有公开，这里不重算。（名单类）
 - `skills/longitudinal-serum-proteome-mapping/` — 血清蛋白的记录。（名单类）
-- `skills/multi-organ-metabolome-age/` — 代谢组器官预测年龄相对实足年龄。
+- `skills/multi-organ-metabolome-age/` — 你交来的器官代谢组预测年龄减实足年龄；不从代谢物算年龄。（名单类）
 - `skills/omicmage-biological-age-multiomics/` — 多组学测定里保留下来的特征。（名单类）
 - `skills/oral-microbiome-signatures/` — 已经算好的口腔微生物年龄残差。（名单类）
 - `skills/organ-aging-genetic-architecture/` — 点到的器官。这是遗传结构，不是上面的蛋白质年龄差。（名单类）
@@ -110,15 +110,15 @@ python3 -m tools.lsk test --changed origin/main   # 只测相对 main 改动过�
 - `skills/plasma-proteomics-brain-immune/` — 研究用：把已在一批样本内 z 分数化的血浆蛋白乘补充表系数得出器官预测年龄，或标出你交来的器官 z；单个人的化验值没法直接套。（名单类）
 - `skills/proteomic-aging-clock/` — 你已有的蛋白质年龄减去实足年龄，只做相减，不从蛋白量重算论文的时钟。（名单类）
 - `skills/proteomic-clocks-eye-aging/` — 已经算好的 ProAge 或 cProAge。（名单类）
-- `skills/structural-signature-plasma-proteins/` — 补体 C1q A 链、丛集蛋白或载脂蛋白 B 的结构可及性。
+- `skills/structural-signature-plasma-proteins/` — 照录你交来的三个肽段结构可及性；不做阿尔茨海默病分组。（名单类）
 
 ## 影像
 
 - `skills/biological-age-ct-cardiometabolic/` — 把腹部CT八项测量放在同性别、同年龄段存活者和死亡者的中位数旁边。（名单类）
 - `skills/divergent-white-matter-metabolic/` — 把你交来的预期白质和非典型白质 SUVR 相减；这两个值要用论文自建的脑区掩模从 PET 提取，论文没有给个人切点。（名单类）
 - `skills/hemispheric-brain-age/` — 左右脑磁共振测量的侧化指数（左减右除以左加右），不预测半球脑年龄。（名单类）
-- `skills/histological-aging-signatures/` — 组织切片的预测年龄相对实足年龄。
-- `skills/imaging-organ-aging-clock/` — 影像器官预测年龄相对实足年龄。
+- `skills/histological-aging-signatures/` — 你交来的组织预测年龄减实足年龄；不从切片算年龄。（名单类）
+- `skills/imaging-organ-aging-clock/` — 你已有的影像器官预测年龄减实足年龄（不重算器官年龄）。（名单类）
 - `skills/lensage-index-biological-age/` — 把你已拿到的晶状体年龄减去实足年龄，并对照论文提到的5、10、20年三条线；不分析照片。（名单类）
 - `skills/lung-parenchyma-aging-clock/` — 用你已经有的肺实质预测年龄和实足年龄相减得出残差；论文的时钟模型没有公开，这里不重算。（名单类）
 - `skills/mri-multi-organ-clocks/` — 你已有的某个器官磁共振预测年龄减去实足年龄，只做相减，不跑论文的器官模型。（名单类）
@@ -127,12 +127,12 @@ python3 -m tools.lsk test --changed origin/main   # 只测相对 main 改动过�
 ## 免疫与炎症
 
 - `skills/ageing-inflammatory-marker/` — 全血图一里的炎症基因，以及 MCU 和 MICU1。（名单类）
-- `skills/cd38-recent-thymic-emigrants/` — 年龄和转换后的初始细胞标志。
+- `skills/cd38-recent-thymic-emigrants/` — 初始T细胞的CD38、CXCR3、CD25门控（研究用流式数据）。（名单类）
 - `skills/hospital-infection-epilepsy-risk/` — 住院感染距今年数和部位，对照论文的群体比值比（查表，不算个人风险）。（名单类）
 - `skills/hsc-inflammatory-memory/` — 补充表九里按 MarkerScore 排在炎症记忆一侧的基因。（名单类）
 - `skills/immune-aging-clock-runx1/` — 已有单细胞测序结果时，按论文 Table S3 系数把亚群比例、分亚群表达或 TCR 指标代入；这些输入只有研究级单细胞数据才有。（名单类）
 - `skills/immune-mendelian-dementia/` — 痴呆研究里点名的用药类别。（名单类）
-- `skills/nicotinamide-riboside-airway-inflammation/` — 痰液白细胞介素-8 从基线到第六周的变化。
+- `skills/nicotinamide-riboside-airway-inflammation/` — 两次痰液白细胞介素-8之间的百分比变化（通用算术）。（名单类）
 - `skills/senescent-cells-gene-set/` — 一份基因表达表对照的衰老相关基因。（名单类）
 
 ## 脑、认知与痴呆
@@ -147,7 +147,7 @@ python3 -m tools.lsk test --changed origin/main   # 只测相对 main 改动过�
 - `skills/plasma-proteome-future-dementia/` — 四个血浆蛋白的数值。梯度提升树的权重没有印出。（名单类）
 - `skills/proteomic-apoe-alzheimers-signatures/` — e2 或 e4，以及蛋白符号。（名单类）
 - `skills/serum-proteomics-apoe-signatures/` — APOE 基因型，可带四个血清蛋白。（名单类）
-- `skills/ulk1-autophagy-alzheimers/` — 血清或脑脊液 ULK1 的基线和随访。
+- `skills/ulk1-autophagy-alzheimers/` — 两次血清或脑脊液 ULK1 之间的百分比变化（通用算术），并列出论文点名的化合物。（名单类）
 - `skills/vulnerable-brain-regions/` — 自己报告了的脆弱脑网络因素。（名单类）
 
 ## 衰弱与死亡风险
@@ -156,9 +156,9 @@ python3 -m tools.lsk test --changed origin/main   # 只测相对 main 改动过�
 - `skills/environmental-genetic-aging-mortality/` — 暴露回答。（名单类）
 - `skills/epigenetic-frailty-risk-score/` — 见「甲基化」。
 - `skills/genome-wide-proteomics-frailty/` — 已经算好的医院衰弱风险分。
-- `skills/metabolomic-frailty-subtypes/` — 十一个核磁共振代谢物对应的衰弱亚型。
+- `skills/metabolomic-frailty-subtypes/` — 十一项核磁代谢物离哪个已发表亚型均值最近（近似，不是论文的分型）。（名单类）
 - `skills/one-year-mortality-aging-marker/` — 年龄和性别。一年死亡概率的回归系数没有印出。（名单类）
-- `skills/plasma-protein-risk-score/` — 髋部骨折相关蛋白，可带足跟超声 BUA 和 SOS。
+- `skills/plasma-protein-risk-score/` — 按论文系数把你交来的标准化蛋白值加权求和，可算足跟超声骨密度；不是你的骨折风险。（名单类）
 - `skills/sleep-study-life-expectancy/` — 你已有的睡眠年龄估计减去实足年龄，只做相减，不跑论文的深度网络。（名单类）
 
 ## 线粒体
@@ -199,7 +199,7 @@ python3 -m tools.lsk test --changed origin/main   # 只测相对 main 改动过�
 
 ## 基质、软骨与纤维化
 
-- `skills/elastin-fragments-innate-aging/` — 弹性蛋白片段相对 1500 pg/ml 和 250–680 pg/ml 的分组。
+- `skills/elastin-fragments-innate-aging/` — 血清弹性蛋白片段是否落在论文比较的高组或正常组浓度区间。（名单类）
 - `skills/single-cell-somatic-mutational/` — 研究用：把单细胞测序得到的每个软骨细胞突变数按覆盖和灵敏度校正成突变负担；普通人拿不到这类数据。（名单类）
 
 ## 再生
@@ -216,7 +216,7 @@ python3 -m tools.lsk test --changed origin/main   # 只测相对 main 改动过�
 ## 端粒
 
 - `skills/digital-telomere-measurement-sequencing/` — 一批端粒长度的通用分布统计（不套论文的分类模型）。（名单类）
-- `skills/leukocyte-telomere-length/` — 已经 z 标准化的对数端粒。未标准化的比值留在原值。
+- `skills/leukocyte-telomere-length/` — 你交来的英国生物银行式 z 标准化端粒放进四分位档；自己测的 T/S 比值不能分档。（名单类）
 
 ## 体脂与腰围
 

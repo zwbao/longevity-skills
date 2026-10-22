@@ -1,12 +1,13 @@
 ---
 name: histological-aging-signatures
 description: >-
-  Tier B lookup (human): what the paper reports about named entities, not a validated personal score.
-  Subtracts chronological age from a tissue predicted age the user already has and prints the paper's
-  per-tissue mean absolute errors beside it, for the histological tissue clocks of Nature Medicine
-  2026. The slide models are not run, so no age is computed from a slide and the difference is not the
-  paper's clock. Use when the user brings a tissue predicted age and asks about these tissue clocks.
-  Does not turn an age gap into advice to start or stop a medicine.
+  Tier B lookup (human): what the paper reports, or simple arithmetic on values you bring; not the
+  paper's model run on one person. Subtracts chronological age from a tissue predicted age the user
+  already has and prints the paper's per-tissue mean absolute errors beside it, for the histological
+  tissue clocks of Nature Medicine 2026. The slide models are not run, so no age is computed from a
+  slide and the difference is not the paper's clock. Use when the user brings a tissue predicted age
+  and asks about these tissue clocks. Does not turn an age gap into advice to start or stop a
+  medicine.
 ---
 
 # 组织切片年龄差

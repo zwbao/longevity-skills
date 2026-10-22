@@ -1,13 +1,14 @@
 ---
 name: nicotinamide-riboside-airway-inflammation
 description: >-
-  Tier B lookup (human): what the paper reports about named entities, not a validated personal score.
-  Norheim et al., Nature Aging 2024 is a randomized placebo-controlled trial of nicotinamide riboside
-  in COPD; its result is a between-group difference in sputum interleukin-8 and it gives no method for
-  an individual. The script only does generic arithmetic: the percent change between a supplied
-  baseline and week-6 sputum IL-8. It does not copy the trial's between-group estimate into the
-  personal readout and does not recommend starting or stopping the supplement. Use when the user
-  mentions this COPD airway trial, nicotinamide riboside, or sputum IL-8. Checkup labs stay context.
+  Tier B lookup (human): what the paper reports, or simple arithmetic on values you bring; not the
+  paper's model run on one person. Norheim et al., Nature Aging 2024 is a randomized
+  placebo-controlled trial of nicotinamide riboside in COPD; its result is a between-group difference
+  in sputum interleukin-8 and it gives no method for an individual. The script only does generic
+  arithmetic: the percent change between a supplied baseline and week-6 sputum IL-8. It does not copy
+  the trial's between-group estimate into the personal readout and does not recommend starting or
+  stopping the supplement. Use when the user mentions this COPD airway trial, nicotinamide riboside,
+  or sputum IL-8. Checkup labs stay context.
 ---
 
 # 痰液白细胞介素的变化

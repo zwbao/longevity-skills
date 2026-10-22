@@ -1,14 +1,15 @@
 ---
 name: elastin-fragments-innate-aging
 description: >-
-  Tier B lookup (human, mouse): what the paper reports about named entities, not a validated personal
-  score. In Yi et al., Nature Aging 2025 the 1,500 pg/ml and 250–680 pg/ml limits only pick two
-  comparison groups out of a cohort (values between or below them belong to neither), and the main
-  evidence is in mice; the paper defines no personal score, and the assay is a research ELISA. The
-  script only says whether one supplied serum elastin-fragment concentration falls in the paper's high
-  or normal comparison range, and checks a peptide against the published sequences. Use when the user
-  mentions elastin fragments, the E-motif, or innate immune activation by matrix fragments. Medicines
-  and checkup labs stay context. The report does not say what to start or stop.
+  Tier B lookup (human, mouse): what the paper reports, or simple arithmetic on values you bring; not
+  the paper's model run on one person. In Yi et al., Nature Aging 2025 the 1,500 pg/ml and 250–680
+  pg/ml limits only pick two comparison groups out of a cohort (values between or below them belong to
+  neither), and the main evidence is in mice; the paper defines no personal score, and the assay is a
+  research ELISA. The script only says whether one supplied serum elastin-fragment concentration falls
+  in the paper's high or normal comparison range, and checks a peptide against the published
+  sequences. Use when the user mentions elastin fragments, the E-motif, or innate immune activation by
+  matrix fragments. Medicines and checkup labs stay context. The report does not say what to start or
+  stop.
 ---
 
 # 弹性蛋白片段

@@ -1,13 +1,14 @@
 ---
 name: plasma-protein-risk-score
 description: >-
-  Tier B lookup (human): what the paper reports about named entities, not a validated personal score.
-  Sums the published Cox, LASSO, and elastic-net protein betas (Nature Aging 2024 hip-fracture protein
-  score) over per-standard-deviation protein values the user supplies, and computes heel-ultrasound
-  bone density from BUA and SOS when both are given. The paper's protein values are log-transformed
-  and normalised within the study cohort on a SomaScan assay, so one person's own values are not on
-  that scale and the sum is not a validated personal risk. Use when the user asks about this
-  hip-fracture protein score. Does not turn the score into advice to start or stop a medicine.
+  Tier B lookup (human): what the paper reports, or simple arithmetic on values you bring; not the
+  paper's model run on one person. Sums the published Cox, LASSO, and elastic-net protein betas
+  (Nature Aging 2024 hip-fracture protein score) over per-standard-deviation protein values the user
+  supplies, and computes heel-ultrasound bone density from BUA and SOS when both are given. The
+  paper's protein values are log-transformed and normalised within the study cohort on a SomaScan
+  assay, so one person's own values are not on that scale and the sum is not a validated personal
+  risk. Use when the user asks about this hip-fracture protein score. Does not turn the score into
+  advice to start or stop a medicine.
 ---
 
 # 髋部骨折蛋白读出
