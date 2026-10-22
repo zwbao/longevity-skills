@@ -2,7 +2,7 @@
   "schema": "longevity-skill/1",
   "name": "biological-aging-generational-shifts",
   "kind": "paper",
-  "tier": "A",
+  "tier": "B",
   "species": [
     "human"
   ],
@@ -10,12 +10,12 @@
   "domains": [
     "临床年龄与可穿戴"
   ],
-  "blurb_zh": "年龄、出生年和已经算好的衰老测量。",
+  "blurb_zh": "你交来的 PhenoAge 减去年龄的未标准化差和出生年；不是论文的标准化年龄差。",
   "intents": [
     "biological_age"
   ],
   "triage": {
-    "reason_zh": "用已算好的PhenoAge减实足年龄得未标准化差值，并按论文两段出生年分组。",
+    "reason_zh": "论文用队列内标准化的PhenoAge等年龄差，个人只能交已算好的PhenoAge，脚本只做相减，不是论文的模型。",
     "reviewed": false
   },
   "paper": {
