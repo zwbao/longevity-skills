@@ -1,13 +1,13 @@
 ---
 name: structural-signature-plasma-proteins
 description: >-
-  Tier A draft: the paper's printed example is not reproduced yet, so treat the readout as
-  provisional. Writes a personal readout of plasma lysine accessibility for the C1QA, clusterin, and
-  ApoB peptides named by Son et al. Supplied peptide values are recorded without a class, because the
-  classifier weights are not printed. A supplied proteome-wide accessibility is compared with the
-  published group means. Use when the user mentions this structural signature of plasma proteins,
-  covalent protein profiling, or the three-protein Alzheimer panel. Current medicines and checkup labs
-  are context. The report does not say what to start or stop.
+  Tier B lookup (human): what the paper reports about named entities, not a validated personal score.
+  Records supplied lysine accessibility values for the C1QA, clusterin, and ApoB peptides named by Son
+  et al. (Nature Aging 2026) without a class, because the classifier weights are not published, and
+  compares a supplied proteome-wide accessibility with the printed group means. The input comes from a
+  research mass-spectrometry assay with no personal route. Use when the user mentions this structural
+  signature of plasma proteins, covalent protein profiling, or the three-protein Alzheimer panel. Not
+  a diagnosis; the report does not say what to start or stop.
 ---
 
 # 血浆蛋白的结构可及性
