@@ -2,7 +2,7 @@
   "schema": "longevity-skill/1",
   "name": "lung-parenchyma-aging-clock",
   "kind": "paper",
-  "tier": "A",
+  "tier": "B",
   "species": [
     "human"
   ],
@@ -10,12 +10,12 @@
   "domains": [
     "影像"
   ],
-  "blurb_zh": "肺实质预测年龄相对实足年龄。",
+  "blurb_zh": "用你已经有的肺实质预测年龄和实足年龄相减得出残差；论文的时钟模型没有公开，这里不重算。",
   "intents": [
     "biological_age"
   ],
   "triage": {
-    "reason_zh": "用已算好的肺实质预测年龄，按仓库定义算实足年龄减预测年龄的残差。",
+    "reason_zh": "肺实质时钟的训练模型没有随论文和代码发布，脚本只把用户交来的预测年龄与实足年龄相减。",
     "reviewed": false
   },
   "paper": {
