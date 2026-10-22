@@ -1,14 +1,14 @@
 ---
 name: life-cycle-biological-clock
 description: >-
-  Tier A draft: the paper's printed example is not reproduced yet, so treat the readout as
-  provisional. Reads one person's routine clinical indicators against the pediatric and adult
-  LifeClock drivers named in Wang et al., Nature Medicine 2025 (DOI 10.1038/s41591-025-04006-w). Use
-  when the user brings age plus checkup or EHR labs and asks about this full life-cycle biological
-  clock, LifeClock, or EHRFormer. It does not estimate biological age: the paper text and the
-  EHRFormer training repository do not contain the clock weights. If the user also supplies a
-  standardized age difference and is over 18 years, it places that difference in the paper's adult
-  bands of within 1 standard deviation or above 3.
+  Tier B lookup (human): what the paper reports about named entities, not a validated personal score.
+  Reads one person's routine clinical indicators against the pediatric and adult LifeClock drivers
+  named in Wang et al., Nature Medicine 2025 (DOI 10.1038/s41591-025-04006-w). Use when the user
+  brings age plus checkup or EHR labs and asks about this full life-cycle biological clock, LifeClock,
+  or EHRFormer. It does not estimate biological age: the paper text and the EHRFormer training
+  repository do not contain the clock weights. If the user also supplies a standardized age difference
+  and is over 18 years, it places that difference in the paper's adult bands of within 1 standard
+  deviation or above 3.
 ---
 
 # 临床时钟对照

@@ -2,7 +2,7 @@
   "schema": "longevity-skill/1",
   "name": "life-cycle-biological-clock",
   "kind": "paper",
-  "tier": "A",
+  "tier": "B",
   "species": [
     "human"
   ],
@@ -10,13 +10,13 @@
   "domains": [
     "临床年龄与可穿戴"
   ],
-  "blurb_zh": "年龄和常规检验对照临床时钟。",
+  "blurb_zh": "常规化验对照论文点名的时钟指标（不算生物年龄）。",
   "intents": [
     "biological_age",
     "lab_meaning"
   ],
   "triage": {
-    "reason_zh": "可把已算好的标准化年龄差按论文±1和>3个标准差分档；常规检验只对照点名指标。",
+    "reason_zh": "LifeClock的模型权重正文和代码库都没公开，个人算不出生物年龄；脚本只对照点名化验，并给外部年龄差分档。",
     "reviewed": false
   },
   "paper": {
