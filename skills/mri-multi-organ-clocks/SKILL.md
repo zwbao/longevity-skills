@@ -1,9 +1,10 @@
 ---
 name: mri-multi-organ-clocks
 description: >-
-  Tier A draft: the paper's printed example is not reproduced yet, so treat the readout as
-  provisional. Writes a personal uncorrected MRI organ age gap. It subtracts chronological age from a
-  supplied predicted age for seven organs. Use when the user mentions MRIBAG, MRI organ clocks, or a
+  Tier B lookup (human): what the paper reports about named entities, not a validated personal score.
+  It only subtracts chronological age from an organ MRI predicted age you already have (seven organs),
+  giving an uncorrected gap; the paper's organ models are not run, because they cannot be recomputed
+  from personal image measurements. Use when the user mentions MRIBAG, MRI organ clocks, or a
   multi-organ MRI biological age. Current medicines and checkup labs are context. The report does not
   say what to start or stop.
 ---
