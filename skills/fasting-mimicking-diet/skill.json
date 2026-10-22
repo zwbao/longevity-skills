@@ -2,7 +2,7 @@
   "schema": "longevity-skill/1",
   "name": "fasting-mimicking-diet",
   "kind": "paper",
-  "tier": "A",
+  "tier": "B",
   "species": [
     "human"
   ],
@@ -10,14 +10,14 @@
   "domains": [
     "临床年龄与可穿戴"
   ],
-  "blurb_zh": "两次已经算好的临床生物年龄之差。",
+  "blurb_zh": "两次已经算好的生物年龄相减（不从化验重算生物年龄）。",
   "intents": [
     "before_after",
     "intervention_evidence",
     "biological_age"
   ],
   "triage": {
-    "reason_zh": "用两次已算好的临床生物年龄相减，并套用补充说明里的变化方程。",
+    "reason_zh": "论文的KDM生物年龄要用的年龄差方差sBA²正文和补充都没印，个人算不出；脚本只把两次已算好的生物年龄相减。",
     "reviewed": false
   },
   "paper": {
