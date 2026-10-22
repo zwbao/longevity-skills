@@ -2,7 +2,7 @@
   "schema": "longevity-skill/1",
   "name": "single-cell-somatic-mutational",
   "kind": "paper",
-  "tier": "A",
+  "tier": "B",
   "species": [
     "human"
   ],
@@ -10,10 +10,10 @@
   "domains": [
     "基质、软骨与纤维化"
   ],
-  "blurb_zh": "每个软骨细胞的突变计数、覆盖和灵敏度。",
+  "blurb_zh": "研究用：把单细胞测序得到的每个软骨细胞突变数按覆盖和灵敏度校正成突变负担；普通人拿不到这类数据。",
   "intents": [],
   "triage": {
-    "reason_zh": "人软骨细胞单细胞测序，按论文公式用突变数、覆盖和灵敏度算每个细胞的突变负担。",
+    "reason_zh": "输入是软骨细胞单细胞全基因组测序得出的突变计数、覆盖和灵敏度，属研究专用数据，个人无法自行获得。",
     "reviewed": false
   },
   "paper": {

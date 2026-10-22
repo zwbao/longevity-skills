@@ -1,8 +1,8 @@
 ---
 name: navy-circumference-body-fat
 description: >-
-  Tier A draft: the paper's printed example is not reproduced yet, so treat the readout as
-  provisional. Estimates body-fat percentage from height, neck, waist and (for women) hip
+  Tier A personal readout: computes one person's value with the paper's printed method and reproduces
+  a printed example. Estimates body-fat percentage from height, neck, waist and (for women) hip
   circumference with the U.S. Navy equations of Hodgdon and Beckett (1984, body density in cm plus
   Siri), and grades abdominal fat with the waist-to-height ratio 0.5 boundary (Ashwell and Hsieh 2005;
   Browning et al. 2010), the WHO 2008 waist-to-hip ratio cut-offs and the Chinese central-obesity

@@ -2,7 +2,7 @@
   "schema": "longevity-skill/1",
   "name": "divergent-white-matter-metabolic",
   "kind": "paper",
-  "tier": "A",
+  "tier": "B",
   "species": [
     "human"
   ],
@@ -10,13 +10,13 @@
   "domains": [
     "影像"
   ],
-  "blurb_zh": "预期白质和非典型白质的 SUVR 之差。",
+  "blurb_zh": "把你交来的预期白质和非典型白质 SUVR 相减；这两个值要用论文自建的脑区掩模从 PET 提取，论文没有给个人切点。",
   "intents": [
     "imaging",
     "cognition_dementia"
   ],
   "triage": {
-    "reason_zh": "用个人FDG-PET预期白质与非典型白质SUVR按论文定义相减得出差值。",
+    "reason_zh": "两个白质SUVR要用论文自建掩模从FDG-PET提取，个人拿不到，论文也无个人切点；脚本只做两数相减。",
     "reviewed": false
   },
   "paper": {

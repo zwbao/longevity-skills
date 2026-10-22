@@ -39,5 +39,9 @@
     "labs_flag": "--labs",
     "out_flag": "--out"
   },
-  "inputs_status": "none"
+  "inputs_status": "none",
+  "validation": {
+    "status": "draft",
+    "gap_zh": "公式（Methods：S=Σm_k×系数，预测年龄=a×(S+截距)+c）和人类血液时钟405个位点系数（补充表6、作者GitHub仓库）都已公开，但正文、补充信息和仓库都没有印出任何一个人的甲基化值与对应预测年龄；仓库example_clock_analysis只有小鼠血液时钟样本的示例，人体样本的逐位点甲基化只在GEO原始数据里，且论文对缺失位点用同批其他样本均值填补，单人复现做不到。"
+  }
 }

@@ -197,3 +197,30 @@ def test_manifest_matches_script():
     assert MANIFEST["inputs_status"] == "verified"
     assert [o["key"] for o in MANIFEST["outputs"]] == ["body_fat_pct", "waist_height_ratio", "waist_height_category",
                                                       "waist_hip_ratio", "waist_hip_category", "central_obesity_cn"]
+
+
+def _men_cell(value_in: float, height_in: float) -> float:
+    neck = 15.0  # circumference value = abdomen II - neck (inches)
+    return pr.body_fat("male", (value_in + neck) * CM_PER_INCH, neck * CM_PER_INCH, height_in * CM_PER_INCH)
+
+
+def _women_cell(value_in: float, height_in: float) -> float:
+    neck, hip = 13.0, 38.0  # circumference value = abdomen I + hip - neck (inches)
+    return pr.body_fat("female", (value_in - hip + neck) * CM_PER_INCH, neck * CM_PER_INCH, height_in * CM_PER_INCH,
+                       hip * CM_PER_INCH)
+
+
+def test_paper_example_men_appendix_a():
+    # Report 84-11, Appendix A, p. 20 "PERCENT FAT ESTIMATION FOR MALES" (printed integers, so within 0.5).
+    printed = {(16.0, 65.0): 13, (20.0, 68.0): 20, (25.0, 69.5): 28, (30.0, 66.0): 37}
+    assert printed == MEN_TABLE_CELLS
+    for (value, height), fat in printed.items():
+        assert _men_cell(value, height) == pytest.approx(fat, abs=0.5)
+
+
+def test_paper_example_women_appendix_a():
+    # Report 84-29, Appendix A, p. 19 "PERCENT FAT ESTIMATION FOR FEMALES" (printed integers, so within 0.5).
+    printed = {(45.0, 60.0): 18, (50.0, 62.0): 24, (55.0, 59.0): 33}
+    assert printed == WOMEN_TABLE_CELLS
+    for (value, height), fat in printed.items():
+        assert _women_cell(value, height) == pytest.approx(fat, abs=0.5)

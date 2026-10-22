@@ -1,11 +1,12 @@
 ---
 name: lung-parenchyma-aging-clock
 description: >-
-  Tier A draft: the paper's printed example is not reproduced yet, so treat the readout as
-  provisional. Writes a personal readout of the lung-parenchyma age residual defined in the Tsankov
-  lab XGBoost code and Nature Communications 2026. Use when the user brings a predicted lung age,
-  chronological age, medicines, or checkup labs. The skill does not invent the booster weights. It
-  does not turn a residual into advice to start or stop a medicine.
+  Tier B lookup (human): what the paper reports about named entities, not a validated personal score.
+  Subtracts a lung-parenchyma predicted age the user already has from chronological age (plain
+  arithmetic), with context from Nature Communications 2026. The paper's XGBoost clock was not
+  released as a fitted model, so this does not compute the paper's clock. Use when the user brings a
+  predicted lung age, chronological age, medicines, or checkup labs. It does not turn a residual into
+  advice to start or stop a medicine.
 ---
 
 # 肺实质年龄残差

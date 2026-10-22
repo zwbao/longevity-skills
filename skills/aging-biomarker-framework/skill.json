@@ -2,7 +2,7 @@
   "schema": "longevity-skill/1",
   "name": "aging-biomarker-framework",
   "kind": "paper",
-  "tier": "A",
+  "tier": "B",
   "species": [
     "human"
   ],
@@ -10,13 +10,13 @@
   "domains": [
     "临床年龄与可穿戴"
   ],
-  "blurb_zh": "预测年龄相对实足年龄的偏差。",
+  "blurb_zh": "把你已经算好的时钟预测年龄减去实足年龄（简单相减），再标出这个时钟在论文评测里的队列结果。",
   "intents": [
     "biological_age",
     "epigenetic_age"
   ],
   "triage": {
-    "reason_zh": "用已算好的时钟预测年龄减实足年龄得出个人年龄偏差，并附论文队列结果。",
+    "reason_zh": "论文是对已有时钟的统一评测，不发布新的个人模型；脚本只把用户交来的预测年龄减实足年龄。",
     "reviewed": false
   },
   "paper": {
