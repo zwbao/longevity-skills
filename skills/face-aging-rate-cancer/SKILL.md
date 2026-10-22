@@ -1,13 +1,13 @@
 ---
 name: face-aging-rate-cancer
 description: >-
-  Tier A draft: the paper's printed example is not reproduced yet, so treat the readout as
-  provisional. Computes the Face Aging Rate as the change in FaceAge divided by the time between
-  photographs, using the definition in Haugg et al., Nature Communications 2026
-  (doi:10.1038/s41467-025-66758-w), then compares it with the printed interval cutoff (above 20, 10,
-  or 1). Use when the user mentions FAR, FaceAge, or serial face photographs in cancer care. FAHR
-  weights are not in the repository, so a photograph is not scored. The cohort hazard ratio for the
-  matching interval is not a personal hazard. Labs do not change the rate.
+  Tier B lookup (human): what the paper reports about named entities, not a validated personal score.
+  Divides the difference between two FaceAge values the user already has by the years between the
+  photographs (the Face Aging Rate definition in Haugg et al., Nature Communications 2026,
+  doi:10.1038/s41467-025-66758-w) and places it beside the printed interval cutoffs (above 20, 10, or
+  1). FaceAge itself is a deep-learning output that is not run here, so a photograph is not scored.
+  Use when the user mentions FAR, FaceAge, or serial face photographs in cancer care. The cohort
+  hazard ratio is not a personal hazard; labs do not change the rate.
 ---
 
 # 面容老化速率

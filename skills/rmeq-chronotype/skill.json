@@ -188,5 +188,9 @@
   "related_not_same": [
     "wearable-circadian-aging-biomarker",
     "circadian-frailty-older-adults"
-  ]
+  ],
+  "validation": {
+    "status": "draft",
+    "gap_zh": "Adan 与 Almirall 1991 是 Elsevier 订阅文章，没有 PMC 版本和补充材料；用浏览器打开 ScienceDirect 页面只得到人机验证，全文没有读到。题目组成、每题分值和五档切点取自注明出自本文的开放获取论文（Belfry 2020、Gooderick 2025、Hwang 2024、Danielsson 2019），原文是否印有逐题计分示例无法核对；测试只核对引述的 4–25 总分范围和各档分界。"
+  }
 }

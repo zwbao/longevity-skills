@@ -2,7 +2,7 @@
   "schema": "longevity-skill/1",
   "name": "face-aging-rate-cancer",
   "kind": "paper",
-  "tier": "A",
+  "tier": "B",
   "species": [
     "human"
   ],
@@ -10,13 +10,13 @@
   "domains": [
     "临床年龄与可穿戴"
   ],
-  "blurb_zh": "两次面容年龄和间隔天数算出的面容老化速率。",
+  "blurb_zh": "你交来的两次面容年龄之差除以相隔年数；不从照片算面容年龄。",
   "intents": [
     "before_after",
     "biological_age"
   ],
   "triage": {
-    "reason_zh": "用两次面容年龄之差除以间隔年数算个人面容老化速率，并对照分档界值。",
+    "reason_zh": "面容年龄来自深度学习照片模型，个人只能交别处算好的两次面容年龄，脚本只把差除以年数。",
     "reviewed": false
   },
   "paper": {
