@@ -2,7 +2,7 @@
   "schema": "longevity-skill/1",
   "name": "elastin-fragments-innate-aging",
   "kind": "paper",
-  "tier": "A",
+  "tier": "B",
   "species": [
     "human",
     "mouse"
@@ -11,12 +11,12 @@
   "domains": [
     "基质、软骨与纤维化"
   ],
-  "blurb_zh": "弹性蛋白片段相对 1500 pg/ml 和 250–680 pg/ml 的分组。",
+  "blurb_zh": "血清弹性蛋白片段是否落在论文比较的高组或正常组浓度区间。",
   "intents": [
     "immune_inflammation"
   ],
   "triage": {
-    "reason_zh": "用个人血清弹性蛋白片段浓度，按人群队列的1500和250–680 pg/ml界值分组。",
+    "reason_zh": "1500和250–680 pg/ml只是论文在队列里挑出的两组比较人群（中间和更低的人不归任何组），不是个人分档方法，检测也是研究用ELISA。",
     "reviewed": false
   },
   "paper": {
