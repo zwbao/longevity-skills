@@ -2,7 +2,7 @@
   "schema": "longevity-skill/1",
   "name": "leukocyte-telomere-length",
   "kind": "paper",
-  "tier": "A",
+  "tier": "B",
   "species": [
     "human"
   ],
@@ -10,12 +10,12 @@
   "domains": [
     "端粒"
   ],
-  "blurb_zh": "已经 z 标准化的对数端粒。未标准化的比值留在原值。",
+  "blurb_zh": "你交来的英国生物银行式 z 标准化端粒放进四分位档；自己测的 T/S 比值不能分档。",
   "intents": [
     "telomere"
   ],
   "triage": {
-    "reason_zh": "用个人z标准化对数端粒按表2切点分四档，并按表3年龄斜率换算年数。",
+    "reason_zh": "端粒值是按英国生物银行全体分布做的z标准化，论文没印对数T/S的均值和标准差，个人测得的端粒无法换算。",
     "reviewed": false
   },
   "paper": {

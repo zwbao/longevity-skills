@@ -1,12 +1,13 @@
 ---
 name: leukocyte-telomere-length
 description: >-
-  Tier A draft: the paper's printed example is not reproduced yet, so treat the readout as
-  provisional. Places one person's z-standardised log leukocyte telomere length into the four
-  quartiles printed by Codd et al., Nature Aging 2022. Use when the user mentions UK Biobank leukocyte
-  telomere length, LTL, or a z-standardised telomere value. A raw T/S ratio is recorded but not
-  binned, because the cohort mean and SD of the log ratio are not printed. Current medicines and
-  checkup labs are context. The report does not say what to start or stop.
+  Tier B lookup (human): what the paper reports about named entities, not a validated personal score.
+  Places a z-standardised log leukocyte telomere length the user already has into the UK Biobank
+  quartiles printed by Codd et al., Nature Aging 2022. The z-score is relative to the UK Biobank
+  distribution, whose log T/S mean and SD are not printed, so a person's own T/S ratio or kilobase
+  length cannot be put on this scale and is only recorded. Use when the user mentions UK Biobank
+  leukocyte telomere length, LTL, or a z-standardised telomere value. Medicines and checkup labs are
+  context; the report does not say what to start or stop.
 ---
 
 # 白细胞端粒
