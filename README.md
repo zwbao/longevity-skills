@@ -278,7 +278,7 @@ python3 -m tools.lsk test --changed origin/main   # 只测相对 main 改动过�
 - `skills/chromatin-rna-ageing-brain/` — 每个核的短程互作计数。
 - `skills/cilia-autophagy-cognitive-resilience/` — 纤毛–自噬轴上的蛋白，以及纤毛长度。
 - `skills/gdf11-neuronal-autophagy/` — 血清 GDF11 浓度。
-- `skills/mci-cognitive-signatures/` — 认知域读出。
+- `skills/mci-cognitive-signatures/` — 轻度认知障碍脑结构特征研究；模型权重未公开，只有论文卡片。
 - `skills/mitophagy-inducers-alzheimers/` — 正文点名的线粒体自噬诱导物。
 - `skills/neurogenic-aging-clocks/` — 细胞类型，可带月龄和已经算好的预测月龄。
 - `skills/neuron-aging-clocks/` — 线虫神经元名字。
@@ -298,7 +298,7 @@ python3 -m tools.lsk test --changed origin/main   # 只测相对 main 改动过�
 
 ### 营养感应
 
-- `skills/ampk-aldolase-aldometanib/` — 两次空腹血糖的差。
+- `skills/ampk-aldolase-aldometanib/` — 论文里两次空腹血糖做差的算法。
 - `skills/endothelial-cebpb-aep-nampt/` — 内皮 C/EBPβ–AEP–NAMPT 通路里点名的分子和方向。
 - `skills/hepassocin-ampk-liver-aging/` — 肝细胞因子 HPS 经 ANXA2–ERK–LKB1 激活 AMPK 的通路清单。
 - `skills/insulin-igf-pten-longevity/` — 是不是论文点名的 PTEN 替换。
