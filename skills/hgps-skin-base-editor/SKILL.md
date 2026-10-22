@@ -1,11 +1,11 @@
 ---
 name: hgps-skin-base-editor
 description: >-
-  Tier C index only (mouse study): do not use it to answer a person's own health question. Checks
-  whether an LMNA allele matches the c.1824 C to T progeria mutation corrected in mouse skin by
-  Whisenant et al. Use when the user mentions Hutchinson-Gilford progeria, progerin, or this Nature
-  Communications skin study. Editing percentages are not a personal skin score. Medicines and checkup
-  labs do not edit the allele call.
+  Tier C index only (mouse study): do not use it to answer a person's own health question. Whisenant
+  et al., Nature Communications 2022: transient adenine base editing corrects the LMNA c.1824C>T
+  progeria mutation in mouse skin, giving progerin-free keratinocyte clusters. Holds that target
+  allele. Use when someone asks about this study, progeria base editing in mice, or progerin; not for
+  a person's own genotype or measurements.
 ---
 
 # 早衰皮肤的碱基编辑
@@ -14,20 +14,14 @@ description: >-
 > **分级 C，只收录。** 这篇论文的主要证据来自小鼠。不要用它回答某个人自己的健康问题，也不要向用户索要测量、现用药或体检来运行它；脚本输出只是复现论文里的名单或数值，不是这个人的结果。
 <!-- /tier-banner -->
 
-用户交 LMNA 第 1824 位的等位记录、现用药和体检。不要向用户要 SRA、STRING 或 PDF。
+这项研究用短暂表达的腺嘌呤碱基编辑器，在早衰小鼠皮肤里校正 LMNA 第 1824 位的 C 到 T 点突变。校正之后，皮肤里出现不含 progerin 的角质形成细胞簇。
 
-报告开头是论文卡片。只核对是否对上正文要校正的那个突变。不把小鼠皮肤里的校正比例写成这个人的分数。现用药对不上时保留「不能据此停」。体检不增删方法算出的名单。
+脚本复现论文的靶点：要校正的那个等位。小鼠皮肤里的校正比例是实验结果，不写成任何人的皮肤分数。不要向用户要 SRA、STRING 或 PDF。
 
-## 命令
+## 命令（复现论文名单）
 
 ```bash
-python "$SKILL/scripts/personal_report.py" \
-  --medications meds.txt \
-  --labs checkup.csv \
-  --age 60 \
-  --measurements measures.txt \
-  --out out
+python "$SKILL/scripts/personal_report.py" --out out
 ```
 
-引用 `out/report.md`，包括 `边界:` 那一行。
-
+引用 `out/report.md` 时说明这是论文复现，包括 `边界:` 那一行。

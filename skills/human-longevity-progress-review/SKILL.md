@@ -1,11 +1,11 @@
 ---
 name: human-longevity-progress-review
 description: >-
-  Tier C index only (human study): do not use it to answer a person's own health question. Checks
-  whether a gene or variant the user names is stated by Bonnet et al., Nature Communications 2026
-  (doi:10.1038/s41467-026-68828-z). Use when the user mentions this study of sustainable progress in
-  human longevity or regional life expectancy in Western Europe. The paper names no gene or variant,
-  so the matched list stays empty. Labs do not add names.
+  Tier C index only (human study): do not use it to answer a person's own health question. Bonnet et
+  al., Nature Communications 2026: in Western European regions, life-expectancy gains in lagging
+  regions slowed after 2005, mainly from rising mortality at ages 55-74. It names no gene or variant,
+  so the list is empty. Use when someone asks about this study or regional life-expectancy trends; not
+  for a person's own health question.
 ---
 
 # 人类寿命进展里对得上的基因
@@ -14,21 +14,14 @@ description: >-
 > **分级 C，只收录。** 这篇论文的主要证据来自人。不要用它回答某个人自己的健康问题，也不要向用户索要测量、现用药或体检来运行它；脚本输出只是复现论文里的名单或数值，不是这个人的结果。
 <!-- /tier-banner -->
 
-用户交基因或变异名、现用药和体检。不要向用户要 GEO、STRING、PDF 或补充表。报告开头是论文卡片。这篇论文没有点名基因或变异，方法名单保持为空。
+这项研究分析西欧数百个地区近三十年的死亡数据，发现 2005 年后落后地区的预期寿命增长放缓、领先地区仍稳定增长，放缓主要与 55 到 74 岁人群的死亡率上升有关。
 
-现用药对不上时保留「不能据此停」。体检不增删方法算出的名单。
+这是人群层面的人口学研究，没有点名任何基因或变异，脚本复现出的名单是空的。不要向用户要 GEO、STRING、PDF 或补充表。方法说明见 [references/claims.md](references/claims.md)。
 
-## 命令
-
-Set `SKILL` to the directory that contains this file.
+## 命令（复现论文名单）
 
 ```bash
-python "$SKILL/scripts/personal_report.py" \
-  --measurements measurements.csv \
-  --medications meds.txt \
-  --labs checkup.csv \
-  --age 60 \
-  --out out/
+python "$SKILL/scripts/personal_report.py" --out out
 ```
 
-`measurements.csv` 用两列 `name,value`。方法说明见 [references/claims.md](references/claims.md)。
+引用 `out/report.md` 时说明这是论文复现，包括 `边界:` 那一行。

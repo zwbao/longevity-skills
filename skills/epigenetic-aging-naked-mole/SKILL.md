@@ -2,10 +2,10 @@
 name: epigenetic-aging-naked-mole
 description: >-
   Tier C index only (naked mole-rat study): do not use it to answer a person's own health question.
-  Reports relative age on the maximum-lifespan scale and, when all 26 blood CpG values are supplied,
-  methylation age from Supplementary Data 4 of Kerepesi et al. Use when the user mentions the naked
-  mole-rat epigenetic clock, NMR methylation age, or this Nature Communications study. Missing sites
-  are not filled with zero. Medicines and checkup labs do not edit the gene list.
+  Kerepesi et al., Nature Communications 2022: a blood methylation clock shows the demographically
+  non-ageing naked mole-rat still ages epigenetically. Holds the 26-CpG clock weights and maximum
+  lifespans for relative age. Use when someone asks about this study, naked mole-rat epigenetic
+  ageing, or the listed CpGs; not for a person's own measurements.
 ---
 
 # 裸鼹鼠血液时钟
@@ -14,19 +14,16 @@ description: >-
 > **分级 C，只收录。** 这篇论文的主要证据来自裸鼹鼠。不要用它回答某个人自己的健康问题，也不要向用户索要测量、现用药或体检来运行它；脚本输出只是复现论文里的名单或数值，不是这个人的结果。
 <!-- /tier-banner -->
 
-用户交实足年龄、物种、26 个血液位点的甲基化（0 到 1）、现用药和体检。不要向用户要 GEO、STRING 或 PDF。
+这项研究在裸鼹鼠血液里做了一套甲基化时钟（26 个位点，Supplementary Data 4 的 Clock1 权重），并把实足年龄除以最大寿命得到相对年龄。
 
-报告开头是论文卡片。有实足年龄时给出相对年龄。26 个位点到齐时，按 Supplementary Data 4 的 Clock1 权重计算甲基化年龄。缺位点不填补，不算甲基化年龄。现用药对不上时保留「不能据此停」。体检不增删方法算出的名单。
+脚本复现论文数值：时钟位点、截距和各物种的最大寿命。26 个位点到齐时才算甲基化年龄，缺位点不填补。这是裸鼹鼠的时钟，不能用在人身上。不要向用户要 GEO、STRING 或 PDF。
 
-## 命令
+## 命令（复现论文数值）
 
 ```bash
-python "$SKILL/scripts/personal_report.py" \
-  --medications meds.txt \
-  --labs checkup.csv \
-  --age 60 \
-  --measurements measures.txt \
-  --out out
+python "$SKILL/scripts/personal_report.py" --out out
 ```
 
-引用 `out/report.md`，包括 `边界:` 那一行。
+研究者可以用 `--measurements` 传入裸鼹鼠样本的 26 个位点甲基化（0 到 1）和 `--age` 实足年龄，复现论文的算法。
+
+引用 `out/report.md` 时说明这是论文复现，包括 `边界:` 那一行。
