@@ -2,7 +2,7 @@
   "schema": "longevity-skill/1",
   "name": "proteomic-aging-clock",
   "kind": "paper",
-  "tier": "A",
+  "tier": "B",
   "species": [
     "human"
   ],
@@ -10,12 +10,12 @@
   "domains": [
     "蛋白、代谢与器官年龄"
   ],
-  "blurb_zh": "蛋白质年龄相对实足年龄。",
+  "blurb_zh": "你已有的蛋白质年龄减去实足年龄，只做相减，不从蛋白量重算论文的时钟。",
   "intents": [
     "proteomic_organ_age"
   ],
   "triage": {
-    "reason_zh": "用已算好的蛋白质年龄减实足年龄得年龄差，并对照论文首尾5%均差。",
+    "reason_zh": "蛋白质年龄来自用奥林克血浆蛋白组训练的梯度提升模型，个人无法按印出的系数复算，脚本只做相减。",
     "reviewed": false
   },
   "paper": {
