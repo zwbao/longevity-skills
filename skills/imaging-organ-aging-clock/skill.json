@@ -2,7 +2,7 @@
   "schema": "longevity-skill/1",
   "name": "imaging-organ-aging-clock",
   "kind": "paper",
-  "tier": "A",
+  "tier": "B",
   "species": [
     "human"
   ],
@@ -10,13 +10,13 @@
   "domains": [
     "影像"
   ],
-  "blurb_zh": "影像器官预测年龄相对实足年龄。",
+  "blurb_zh": "你已有的影像器官预测年龄减实足年龄（不重算器官年龄）。",
   "intents": [
     "imaging",
     "biological_age"
   ],
   "triage": {
-    "reason_zh": "英国生物银行影像时钟，用已算好的器官预测年龄减实足年龄得出年龄差。",
+    "reason_zh": "器官年龄来自1777项英国生物银行影像指标的LASSO模型，个人拿不到这些指标；脚本只拿已算好的预测年龄减实足年龄。",
     "reviewed": false
   },
   "paper": {

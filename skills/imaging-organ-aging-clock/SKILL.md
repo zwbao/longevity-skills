@@ -1,15 +1,18 @@
 ---
 name: imaging-organ-aging-clock
 description: >-
-  Tier A draft: the paper's printed example is not reproduced yet, so treat the readout as
-  provisional. Computes imaging organ age gaps as predicted age minus chronological age for the seven
-  organs in the npj Digital Medicine clock, and lists the plasma proteins named in the main text. Use
-  when the user mentions imaging organ age, MRI organ clocks, or this UK Biobank imaging study. It
-  does not refit the LASSO. Current medicines and checkup labs do not edit the protein list or the
-  gaps.
+  Tier B lookup (human): what the paper reports about named entities, not a validated personal score.
+  The organ ages of the npj Digital Medicine 2026 imaging clock come from LASSO models on 1,777 UK
+  Biobank imaging-derived phenotypes across seven organs, which a person cannot obtain, so the script
+  cannot compute them. It only subtracts chronological age from organ predicted ages the user already
+  has, and lists the plasma proteins named in the main text. Use when the user mentions imaging organ
+  age, MRI organ clocks, or this UK Biobank imaging study. Current medicines and checkup labs do not
+  edit the protein list or the gaps.
 ---
 
 # 影像器官年龄差
+
+器官预测年龄要用英国生物银行的 1777 项影像指标和论文的 LASSO 模型算，这里不算它；脚本只把你已经拿到的预测年龄减去实足年龄。
 
 用户提供实足年龄、各器官已经算好的预测年龄、用药和体检。不要向用户要 UK Biobank、影像表型、GEO、STRING 或 PDF。
 
