@@ -1,12 +1,11 @@
 ---
 name: blood-based-dna-damage
 description: >-
-  Tier C index only (human study): do not use it to answer a person's own health question. Writes a
-  personal readout of the blood DNA-damage length bias from Sproviero et al., Nature Aging 2025. It
-  applies that paper's fold-change and adjusted-P cutoffs and compares median length of up- versus
-  down-regulated genes. Use when the user mentions this Parkinson's DNA damage signature, ALBATRO,
-  longer-transcript suppression, or PPMI visit 1 versus visit 8. Current medicines and checkup labs
-  are context. The report does not say what to start or stop.
+  Tier C index only (human study): do not use it to answer a person's own health question. Sproviero
+  et al., Nature Aging 2025: in Parkinson's disease blood (PPMI), a DNA-damage signature with
+  suppressed longer transcripts tracked progression. Holds its fold-change and adjusted-P cutoffs and
+  the length comparison. Use when someone asks about this study, transcript length bias in patient
+  blood, or the listed genes; not for a person's own measurements.
 ---
 
 # 血液转录本的长度偏倚
@@ -15,20 +14,18 @@ description: >-
 > **分级 C，只收录。** 这篇论文的主要证据来自人。不要用它回答某个人自己的健康问题，也不要向用户索要测量、现用药或体检来运行它；脚本输出只是复现论文里的名单或数值，不是这个人的结果。
 <!-- /tier-banner -->
 
-你交基因的倍数变化、校正显著性和长度。过了门槛的基因进入名单，报告比较上调和下调哪一侧更长。这些是基因符号，不是药。没有基因过门槛时，报告说明没有比较长度。
+这项研究随访了帕金森病队列的血液样本，看到修复通路失调和较长转录本被偏向性抑制的表达特征，并在独立队列和尸检脑组织里做了验证。
 
-不要向用户要 GEO 或 PDF。不要另造权重。现用药对不上时写「不能据此停」。体检不增删基因。
+脚本复现论文的筛选规则：按论文的倍数变化和校正显著性门槛筛出基因，比较上调与下调两侧的中位长度方向。这些是基因符号，不是药。不加总成分数，也不判断病情，不另造权重。不要向用户要 GEO 或 PDF。
 
-## 命令
+## 命令（复现论文名单）
 
 Set `SKILL` to the directory that contains this file.
 
 ```bash
-python "$SKILL/scripts/personal_report.py" \
-  --measurements measurements.csv \
-  --medications meds.txt \
-  --labs checkup.csv \
-  --out out
+python "$SKILL/scripts/personal_report.py" --out out
 ```
+
+研究者要用自己的差异表达表复算时，可加 `--measurements measurements.csv`（倍数变化、校正显著性和长度，格式见 contract）。引用 `out/report.md` 时说明这是论文复现，包括最后一行 `边界:`。
 
 方法说明见 [references/claims.md](references/claims.md) 和 [references/contract.md](references/contract.md)。

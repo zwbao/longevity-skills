@@ -1,11 +1,11 @@
 ---
 name: cd38-ovarian-aging
 description: >-
-  Tier C index only (mouse, human study): do not use it to answer a person's own health question.
-  Places a supplied age in the young or middle-aged windows printed for human follicular-fluid donors,
-  and attaches the organ direction for CD38 and NAD. Use when the user mentions ovarian CD38, 78c, or
-  doi:10.1038/s43587-023-00532-9. RNA-seq counts have no intercept, so no personal NAD score is
-  calculated. Labs do not add organs.
+  Tier C index only (mouse, human study): do not use it to answer a person's own health question. Yang
+  et al., Nature Aging 2024: in mice the ovary showed early CD38 rise and NAD+ decline, and CD38
+  inhibition (78c) changed ovarian readouts. Holds the organ directions and the age windows of human
+  follicular-fluid donors. Use when someone asks about this study, ovarian CD38 in mice, or 78c; not
+  for a person's own measurements.
 ---
 
 # 卵巢烟酰胺酶
@@ -14,21 +14,16 @@ description: >-
 > **分级 C，只收录。** 这篇论文的主要证据来自小鼠、人。不要用它回答某个人自己的健康问题，也不要向用户索要测量、现用药或体检来运行它；脚本输出只是复现论文里的名单或数值，不是这个人的结果。
 <!-- /tier-banner -->
 
-用户交年龄、点到的器官、现用药和体检。不要向用户要 SRA、GEO、STRING 或 PDF。报告开头是论文卡片。
+这项研究比较青年和中年小鼠的多个器官，发现卵巢更早出现 CD38 升高和 NAD+ 下降。在小鼠里抑制这种酶，卵巢的 NAD+ 和生育相关读数有变化。
 
-年龄只对照正文的两个窗。RNA-seq 表没有截距，所以不算个人 CD38 或 NAD 分数。现用药对不上时保留「不能据此停」。体检不增删方法算出的名单。
+脚本复现论文名单：人卵泡液供者的青年和中年两个年龄窗，以及各器官 CD38 和 NAD 的方向。RNA-seq 表没有截距，所以不算 CD38 或 NAD 分数。不要向用户要 SRA、GEO、STRING 或 PDF。
 
-## 命令
+## 命令（复现论文名单）
 
 Set `SKILL` to the directory that contains this file.
 
 ```bash
-python "$SKILL/scripts/personal_report.py" \
-  --measurements measurements.csv \
-  --medications meds.txt \
-  --labs checkup.csv \
-  --age 40 \
-  --out out/
+python "$SKILL/scripts/personal_report.py" --out out/
 ```
 
-`measurements.csv` 用两列 `name,value`。器官写 `ovary,named` 或 `肝,named`。方法说明见 [references/claims.md](references/claims.md)。
+引用 `out/report.md` 时说明这是论文复现，包括最后一行 `边界:`。方法说明见 [references/claims.md](references/claims.md)。

@@ -1,10 +1,11 @@
 ---
 name: aged-skin-il36-osteoarthritis
 description: >-
-  Tier C index only (mouse study): do not use it to answer a person's own health question. Records
-  IL-36Ra and the three IL-36 agonists, and notes spesolimab, from Chen et al. on aged skin and
-  osteoarthritis. Use when the user mentions IL-36, aged epidermis, or this Nature Communications
-  study. No joint score is invented. Medicines and checkup labs do not edit the name list.
+  Tier C index only (mouse study): do not use it to answer a person's own health question. Chen et
+  al., Nature Communications 2026: in mice, aged epidermis loses IL-36Ra and IL-36 agonists reach
+  serum and joints, worsening experimental osteoarthritis. Lists IL-36Ra, the three IL-36 agonists and
+  spesolimab. Use when someone asks about this study, IL-36 signalling in aged mouse skin and joints,
+  or the listed proteins; not for a person's own measurements.
 ---
 
 # 老化皮肤与关节炎症
@@ -13,20 +14,14 @@ description: >-
 > **分级 C，只收录。** 这篇论文的主要证据来自小鼠。不要用它回答某个人自己的健康问题，也不要向用户索要测量、现用药或体检来运行它；脚本输出只是复现论文里的名单或数值，不是这个人的结果。
 <!-- /tier-banner -->
 
-用户交 IL-36Ra、三种 IL-36 激动剂的测量、现用药和体检。不要向用户要 GEO、STRING 或 PDF。
+这项小鼠研究认为年老表皮里 IL-36Ra 减少，IL-36 激动剂更容易进入血清和关节。皮肤微针里用了 IL-36Ra 或 spesolimab。
 
-报告开头是论文卡片。给了数值就照录。没有把浓度换成关节分数的系数。现用药对不上时保留「不能据此停」。体检不增删方法算出的名单。
+脚本复现论文名单：IL-36Ra、三种 IL-36 激动剂和 spesolimab 这个名字。论文没有把浓度换成关节分数的系数，脚本也不编。不要向用户要 GEO、STRING 或 PDF。
 
-## 命令
+## 命令（复现论文名单）
 
 ```bash
-python "$SKILL/scripts/personal_report.py" \
-  --medications meds.txt \
-  --labs checkup.csv \
-  --age 60 \
-  --measurements measures.txt \
-  --out out
+python "$SKILL/scripts/personal_report.py" --out out
 ```
 
-引用 `out/report.md`，包括 `边界:` 那一行。
-
+引用 `out/report.md` 时说明这是论文复现，包括 `边界:` 那一行。

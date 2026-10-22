@@ -1,12 +1,11 @@
 ---
 name: aging-mouse-brain-atlas
 description: >-
-  Tier C index only (mouse study): do not use it to answer a person's own health question. Places one
-  sample's brain-region labels onto the mouse atlas in Hahn et al., Cell 2023 (DOI
-  10.1016/j.cell.2023.07.027). Use when the user brings dissected brain regions, or expression of the
-  genes the prose names with a direction, and asks about this aging mouse brain atlas or white-matter
-  vulnerability. The full 82-gene common aging signature is not listed in the main text, so this skill
-  does not score that signature.
+  Tier C index only (mouse study): do not use it to answer a person's own health question. Hahn et
+  al., Cell 2023: transcriptomics of 15 mouse brain regions found a common glial ageing signature,
+  with white matter ageing fastest. Holds the regions in the paper's order and prose-named genes with
+  a direction. Use when someone asks about this study, brain ageing in mice, or the listed regions and
+  genes; not for a person's own measurements.
 ---
 
 # 小鼠脑区
@@ -15,28 +14,20 @@ description: >-
 > **分级 C，只收录。** 这篇论文的主要证据来自小鼠。不要用它回答某个人自己的健康问题，也不要向用户索要测量、现用药或体检来运行它；脚本输出只是复现论文里的名单或数值，不是这个人的结果。
 <!-- /tier-banner -->
 
-用户交脑区名字、现用药和体检。不要向用户要 GEO、STRING 或 PDF。
+这项研究对不同年龄小鼠的多个脑区做时空转录组测序，发现全脑胶质细胞有一组共同的衰老基因特征，且白质里的胶质衰老比皮层更快，还比较了注射年轻血浆和饮食限制对各脑区的不同影响。
 
-名单包含你点名、且在这张小鼠脑区图上的位置。若给出正文写了方向的基因，也按方向列入，不算 82 基因的共同衰老分数。药名对不上时保留「不能据此停」。体检不增删方法算出的名单。
+脚本复现论文名单：15 个解剖脑区按正文叙述顺序列出并附原文描述，正文写了方向的基因按方向列出。顺序不是权重。82 基因的共同衰老特征正文没有列全，所以不算共同衰老分数。不要向用户要 GEO、STRING 或 PDF。
 
-## Command
+## 命令（复现论文名单）
 
 Set `SKILL` to the directory that contains this file.
 
 ```bash
-python3 "$SKILL/scripts/personal_report.py" \
-  --measurements MEASUREMENTS.csv \
-  --medications MEDS.txt \
-  --labs CHECKUP.csv \
-  --out out/
+python3 "$SKILL/scripts/personal_report.py" --out out/
 ```
 
-`MEASUREMENTS.csv` needs a `region` column, or a `gene` column for the prose-named genes. Names outside the 15 dissected regions, and genes without a printed direction, stay off the list.
+研究者要查小鼠样本的脑区或基因时，可加 `--measurements MEASUREMENTS.csv`（`region` 列，或 `gene` 列）。不在 15 个脑区里的名字、正文没写方向的基因不进名单。
 
-`--medications` is optional, one name per line. `--labs` is optional. Abnormal checkup rows are printed and do not add or remove names from the method list. A medicine that is not on that list keeps the sentence 不能据此停.
-
-## Report
-
-Copy `out/report.md`, including its final `边界:` line. The report may place the supplied regions in the paper's narrative order and repeat the published regional description. It may not give a common-aging score.
+引用 `out/report.md` 时说明这是论文复现，包括最后一行 `边界:`。
 
 Method notes: [references/contract.md](references/contract.md), [references/claims.md](references/claims.md). The command is also in [examples.md](examples.md).
