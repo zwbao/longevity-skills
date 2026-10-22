@@ -3,7 +3,7 @@
 Fig. 2 RPE1 bins and Fig. 3 promoter order. DEG rule is in the RNA-seq paragraph.
 """
 
-BOUNDARY = "这是研究复现意义上的个人读出，不是治疗建议。不能据此开始或停止任何药物。名单里没有某个名字，不是停用的理由。体检不增删方法算出的名单。"
+BOUNDARY = "这是论文复现，不是这个人的结果，也不是治疗建议。不能据此开始或停止任何药物。名单里没有某个名字，不是停用的理由。体检不增删方法算出的名单。"
 
 DEG_FDR = 0.05
 DEG_ABS_LOG_FOLD = 1.2

@@ -2,11 +2,10 @@
 name: paracrine-senescence-inflammation
 description: >-
   Tier C index only (human, cultured cells, mouse, other organisms study): do not use it to answer a
-  person's own health question. Lists the senescence and SASP genes named by Tsuji et al., Nature
-  Aging 2022, when those names are supplied. It does not compute a senescence score and does not turn
-  experimental senolytic doses into personal advice. Use when the user mentions paracrine senescence,
-  post-acute COVID inflammation, or this paper. Current medicines and checkup labs stay context. The
-  report does not say what to start or stop.
+  person's own health question. Tsuji et al., Nature Aging 2022: SARS-CoV-2-infected cells push
+  neighbouring cells into lasting senescence and inflammation, shown in cells, hamsters and mice.
+  Lists the senescence and SASP genes named in the text. Use when someone asks about this study,
+  post-infection paracrine senescence, or the listed genes; not for a person's own measurements.
 ---
 
 # 感染后的旁分泌衰老
@@ -15,23 +14,18 @@ description: >-
 > **分级 C，只收录。** 这篇论文的主要证据来自人、培养细胞、小鼠、其他生物。不要用它回答某个人自己的健康问题，也不要向用户索要测量、现用药或体检来运行它；脚本输出只是复现论文里的名单或数值，不是这个人的结果。
 <!-- /tier-banner -->
 
-你交正文点名的衰老和炎症标志，以及可选的年龄、现用药和体检。对上的名字会写上论文里的方向。没有系数，也不把实验剂量写成你的剂量。
+这项研究说明，被新冠病毒感染的细胞会让旁边没被感染的细胞进入衰老样状态，并持续放出炎症因子。病毒已经测不到之后，这种炎症样状态仍可以留在肺细胞里。
 
-不要向用户要 GEO、STRING、PDF 或补充表。现用药对不上时写「不能据此停」。体检不增删方法算出的名单。
+脚本复现正文点名的衰老和炎症标志（如 CDKN2A、IL32、CXCL14、MMP10、IL1B、IL8）及论文里的方向。没有系数，不算衰老分数；类器官、仓鼠和小鼠里的清除衰老细胞药物剂量是实验条件，不写成用法。不要向用户要 GEO、STRING、PDF 或补充表。
 
-## 命令
+## 命令（复现论文名单）
 
 Set `SKILL` to the directory that contains this file.
 
 ```bash
-python3 "$SKILL/scripts/personal_report.py" \
-  --measurements measurements.csv \
-  --medications meds.txt \
-  --labs checkup.csv \
-  --age 50 \
-  --out out
+python "$SKILL/scripts/personal_report.py" --out out
 ```
 
-`--measurements` 用 `name,value`。可以用 CDKN2A、IL32、CXCL14、MMP10、IL1B、IL8。
+引用 `out/report.md` 时说明这是论文复现，包括 `边界:` 那一行。
 
 方法说明见 [references/claims.md](references/claims.md) 和 [references/contract.md](references/contract.md)。
