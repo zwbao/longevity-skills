@@ -202,5 +202,6 @@ def test_effect_quote_must_name_marker_and_show_sign():
     assert datasets.sign_shown("HbA1c fell by 0.3%", -0.3)
     assert datasets.sign_shown("MD = −0.44 [−0.59, −0.29]", -0.44)
     assert not datasets.sign_shown("MD 0.44 (0.29 to 0.59)", -0.44)
+    assert datasets.sign_shown("HbA1c (-0.30% points; -0.63, 0.02)", -0.3)
     names = datasets.marker_names({"marker": "HbA1c"}, {"aliases": ["A1c"]})
     assert any(datasets.fold(item) in datasets.fold("glycated A1c was lower") for item in names)

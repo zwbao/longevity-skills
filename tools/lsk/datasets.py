@@ -113,8 +113,8 @@ def marker_names(row: Dict[str, Any], marker: Dict[str, Any]) -> List[str]:
 
 def sign_shown(quote: str, value: float) -> bool:
     text = fold(quote)
-    digits = re.sub(r"\.?0+$", "", f"{abs(value):f}") if "." in f"{abs(value):f}" else f"{abs(value):f}"
-    if re.search(rf"-\s?{re.escape(digits)}(?!\d)", text) or re.search(rf"-\s?{re.escape(str(abs(value)))}(?!\d)", text):
+    digits = f"{abs(value):.10f}".rstrip("0").rstrip(".")
+    if re.search(rf"-\s?{re.escape(digits)}(?:\.?0*)(?!\d)", text):
         return True
     return bool(_FALL.search(text))
 
