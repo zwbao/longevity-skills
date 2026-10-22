@@ -213,5 +213,74 @@
       "unit": "",
       "note_zh": "不需要特别就诊、建议就诊，或尽快就诊。"
     }
-  ]
+  ],
+  "validation": {
+    "status": "reproduced",
+    "examples": [
+      {
+        "locator": "Supplementary Appendix Table S11, panel a (Creatinine), NonBlack rows, p. 66",
+        "quote": "Age 50 years 75 years Creatinine (mg/dl) 0.6 1 1.5 2 0.6 1 1.5 2 | NonBlack men eGFRcr (AS) (new) 118 92 56 40 101 79 48 34 | women eGFRcr (AS) (new) 109 69 42 30 94 59 36 26",
+        "values": [
+          118,
+          92,
+          56,
+          40,
+          101,
+          79,
+          48,
+          34,
+          109,
+          69,
+          42,
+          30,
+          94,
+          59,
+          36,
+          26
+        ],
+        "tolerance": "±1 ml/min/1.73 m²：表中是整数，且由未取整的模型系数算出；表 2 印出的系数算出的 16 格与印出值差都小于 1。",
+        "test": "tests/test_manifest.py::test_paper_example_cr"
+      },
+      {
+        "locator": "Supplementary Appendix Table S11, panel b (Creatinine- Cystatin C equations), NonBlack rows, p. 67",
+        "quote": "Cys mg/L 1 NonBlack men eGFRcr-cys (AS) (new) 98 88 70 60 89 79 64 55 | women eGFRcr-cys (AS) (new) 92 74 59 51 84 67 54 46 | 1.5 NonBlack men eGFRcr-cys (AS) (new) 72 64 51 44 65 58 47 40 | women eGFRcr-cys (AS) (new) 67 54 43 37 61 49 39 33",
+        "values": [
+          98,
+          88,
+          70,
+          60,
+          89,
+          79,
+          64,
+          55,
+          92,
+          74,
+          59,
+          51,
+          84,
+          67,
+          54,
+          46,
+          72,
+          64,
+          51,
+          44,
+          65,
+          58,
+          47,
+          40,
+          67,
+          54,
+          43,
+          37,
+          61,
+          49,
+          39,
+          33
+        ],
+        "tolerance": "±1 ml/min/1.73 m²，理由同上。",
+        "test": "tests/test_manifest.py::test_paper_example_cr_cys"
+      }
+    ]
+  }
 }
