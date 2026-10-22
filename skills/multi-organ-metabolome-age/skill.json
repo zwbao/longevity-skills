@@ -2,7 +2,7 @@
   "schema": "longevity-skill/1",
   "name": "multi-organ-metabolome-age",
   "kind": "paper",
-  "tier": "A",
+  "tier": "B",
   "species": [
     "human"
   ],
@@ -10,13 +10,13 @@
   "domains": [
     "蛋白、代谢与器官年龄"
   ],
-  "blurb_zh": "代谢组器官预测年龄相对实足年龄。",
+  "blurb_zh": "你交来的器官代谢组预测年龄减实足年龄；不从代谢物算年龄。",
   "intents": [
     "metabolomic_age",
     "biological_age"
   ],
   "triage": {
-    "reason_zh": "用已算好的器官代谢组预测年龄减实足年龄，得出校正前的个人年龄差。",
+    "reason_zh": "器官代谢组年龄来自英国生物银行训练的模型和校正后年龄差，个人只能交已算好的预测年龄，脚本只做减法。",
     "reviewed": false
   },
   "paper": {
