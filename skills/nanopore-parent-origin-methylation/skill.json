@@ -2,7 +2,7 @@
   "schema": "longevity-skill/1",
   "name": "nanopore-parent-origin-methylation",
   "kind": "paper",
-  "tier": "A",
+  "tier": "B",
   "species": [
     "human"
   ],
@@ -10,12 +10,12 @@
   "domains": [
     "甲基化"
   ],
-  "blurb_zh": "甲基化年龄，或一个位点的父本与母本甲基化。",
+  "blurb_zh": "已标准化的甲基化套论文系数，或两数相减（个人原始甲基化比例做不出标准化）。",
   "intents": [
     "epigenetic_age"
   ],
   "triage": {
-    "reason_zh": "用补充数据3的套索系数和个人标准化甲基化算甲基化年龄，也可算父本减母本差。",
+    "reason_zh": "套索系数作用于按训练集标准化的甲基化，训练均值和标准差未公开，个人原始比例算不出；其余只是相减，论文也无个人示例。",
     "reviewed": false
   },
   "paper": {
