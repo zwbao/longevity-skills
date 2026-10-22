@@ -2,10 +2,10 @@
 name: selective-senolytic-platform
 description: >-
   Tier C index only (cultured cells, mouse study): do not use it to answer a person's own health
-  question. Computes the selectivity index as LC50 divided by IC50 from Magkouta et al., Nature Aging
-  2025, when both concentrations are supplied. Use when the user mentions mGL392, GL392, a Sudan Black
-  B senolytic micelle, or lipofuscin-directed dasatinib. Mouse milligram amounts are experimental. The
-  report does not say what to start or stop.
+  question. Magkouta et al., Nature Aging 2025: in cells and mice, a micelle-encapsulated Sudan Black
+  B analog linked to dasatinib (mGL392) targets lipofuscin in senescent cells. Holds the selectivity
+  index (LC50 over IC50). Use when someone asks about this study, lipofuscin-directed senolytics in
+  cells or mice, or mGL392; not for a person's own measurements.
 ---
 
 # 脂褐素导向的清除平台
@@ -14,22 +14,16 @@ description: >-
 > **分级 C，只收录。** 这篇论文的主要证据来自培养细胞、小鼠。不要用它回答某个人自己的健康问题，也不要向用户索要测量、现用药或体检来运行它；脚本输出只是复现论文里的名单或数值，不是这个人的结果。
 <!-- /tier-banner -->
 
-你交 IC50 和 LC50。两个都是正数时，报告写出选择性指数。补充笔记里的存活百分比不拿来拟合半数浓度。
+这项研究把苏丹黑 B 类似物和达沙替尼连在一起，再装进胶束，让衰老细胞里的脂褐素帮忙释放药物。选择性指数是半数杀伤非衰老细胞的浓度（LC50）除以半数减少衰老细胞的浓度（IC50）。
 
-不要向用户要 GEO、STRING、PDF 或补充表。每只小鼠的毫克数是实验用量。现用药对不上时写「不能据此停」。体检不增删名单。
+脚本复现这个比值。补充笔记里的存活百分比不拿来拟合半数浓度。每只小鼠的毫克数是实验用量，不是用法。不要向用户要 GEO、STRING、PDF 或补充表。
 
-## 命令
+## 命令（复现论文数值）
 
 Set `SKILL` to the directory that contains this file.
 
 ```bash
-python "$SKILL/scripts/personal_report.py" \
-  --measurements measurements.csv \
-  --medications meds.txt \
-  --labs checkup.csv \
-  --age 60 \
-  --out out
+python "$SKILL/scripts/personal_report.py" --out out
 ```
 
-`measurements.csv` 用 `name,value`，名字用 `ic50` 和 `lc50`。方法说明见 [references/claims.md](references/claims.md)。
-
+研究者可以用 `--measurements measurements.csv` 交细胞实验的半数浓度复现选择性指数，格式 `name,value`，名字用 `ic50` 和 `lc50`。方法说明见 [references/claims.md](references/claims.md)。引用 `out/report.md` 时说明这是论文复现，包括 `边界:` 那一行。

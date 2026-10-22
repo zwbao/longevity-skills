@@ -2,11 +2,10 @@
 name: mtdna-cell-level-selection
 description: >-
   Tier C index only (cultured cells study): do not use it to answer a person's own health question.
-  Places one missense mtDNA heteroplasmy against the about-56-percent model cut and the
-  about-60-percent lineage-dropout cut in Kotrys et al., Nature 2024. Use when the user mentions
-  SCI-LITE, cell-level mtDNA selection, m.11696G>A, or glucose versus galactose fitness. The
-  inverse-sigmoid location, depth, and pitch are not refit. Medicines and checkup labs stay context.
-  The report does not say what to start or stop.
+  Kotrys et al., Nature 2024 (SCI-LITE): in cultured cells, missense mtDNA heteroplasmy m.11696G>A is
+  selected against above about 56-60%, with direction set by sugar and oxygen. Use when someone asks
+  about this study, cell-level mtDNA selection in cultured cells, or these cut-offs; not for a
+  person's own measurements.
 ---
 
 # 细胞水平的线粒体选择
@@ -15,24 +14,20 @@ description: >-
 > **分级 C，只收录。** 这篇论文的主要证据来自培养细胞。不要用它回答某个人自己的健康问题，也不要向用户索要测量、现用药或体检来运行它；脚本输出只是复现论文里的名单或数值，不是这个人的结果。
 <!-- /tier-banner -->
 
-用户交错义或同义异质性、可选的 UMI、培养环境、现用药和体检。不要向用户要 FASTQ、GEO 或 PDF。
+这项研究用单细胞测序跟踪分裂细胞里的线粒体 DNA 异质性。错义变异 m.11696G>A 会按细胞适合度被选择，同义变异 m.11698C>T 更常被保留；适合度的方向取决于糖源和氧气，不是固定的好坏。
 
-错义异质性对照正文的两个切点：模型大约百分之五十六，图 4 谱系脱落大约百分之六十。同义 m.11698C>T 没有清除切点。UMI 少于 64 时，不把该细胞算进膝点之后的单细胞。半乳糖、葡萄糖、低氧和常氧只附上正文写的方向。
+脚本复现正文的两个切点（模型大约百分之五十六，图 4 谱系脱落大约百分之六十）、UMI 至少 64 的单细胞门槛，以及半乳糖、葡萄糖、低氧和常氧下正文写的方向。反 S 形模型不重拟合。不要向用户要 FASTQ、GEO 或 PDF。
 
-反 S 形模型不重拟合。现用药对不上时保留「不能据此停」。体检不增删方法算出的名单。
-
-## 命令
+## 命令（复现论文数值）
 
 Set `SKILL` to the directory that contains this file.
 
 ```bash
-python "$SKILL/scripts/personal_report.py" \
-  --measurements measurements.csv \
-  --medications meds.txt \
-  --labs checkup.csv \
-  --out out/
+python "$SKILL/scripts/personal_report.py" --out out
 ```
 
-`measurements.csv` 用两列 `name,value`。异质性不超过 1 时视为分数，大于 1 时视为百分数。`--medications` 每行一个名字。`--labs` 是 `项目,结果,单位`。
+研究者可以用 `--measurements` 传入自己细胞实验的异质性（`name,value`，不超过 1 视为分数，大于 1 视为百分数），复现论文切点的对照。
+
+引用 `out/report.md` 时说明这是论文复现，包括 `边界:` 那一行。
 
 方法说明见 [references/claims.md](references/claims.md)。

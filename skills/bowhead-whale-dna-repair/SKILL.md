@@ -2,10 +2,10 @@
 name: bowhead-whale-dna-repair
 description: >-
   Tier C index only (bowhead whale, cultured cells study): do not use it to answer a person's own
-  health question. Computes the NHEJ reporter frequency as GFP-positive over DsRed-positive counts and
-  lists the fibroblast transformation combinations from Firsanov et al., Nature 2025. Use when the
-  user mentions bowhead whale DNA repair, CIRBP, or this study. CIRBP abundance is not turned into a
-  score. Medicines and checkup labs stay context and do not change the list.
+  health question. Firsanov et al., Nature 2025: bowhead whale cells show improved double-strand break
+  repair, and the cold-inducible protein CIRBP raises end joining and recombination. Holds the NHEJ
+  reporter frequency (GFP over DsRed) and fibroblast transformation combinations. Use when someone
+  asks about this study, DNA repair in whale cells, or CIRBP; not for a person's own measurements.
 ---
 
 # 弓头鲸修复读出
@@ -14,22 +14,18 @@ description: >-
 > **分级 C，只收录。** 这篇论文的主要证据来自弓头鲸、培养细胞。不要用它回答某个人自己的健康问题，也不要向用户索要测量、现用药或体检来运行它；脚本输出只是复现论文里的名单或数值，不是这个人的结果。
 <!-- /tier-banner -->
 
-你交物种、GFP 阳性计数和 DsRed 阳性计数，也可以交现用药和体检。不要向用户要 GEO、STRING、PDF 或补充表。
+这项研究比较弓头鲸细胞的双链断裂修复，并指出冷诱导蛋白 CIRBP 能提高连接和重组。
 
-报告计算 Fig. 4 的连接频率，并照录这篇成纤维细胞实验的转化组合。CIRBP 没有系数列，不算分数。现用药对不上时保留「不能据此停」。体检不增删方法算出的名单。
+脚本复现论文的细胞实验：按 Fig. 4 用 GFP 阳性计数除以 DsRed 阳性计数算连接频率，并照录成纤维细胞实验的转化组合。CIRBP 没有系数列，不算分数。不要向用户要 GEO、STRING、PDF 或补充表。
 
-## 命令
+## 命令（复现论文名单）
 
 Set `SKILL` to the directory that contains this file.
 
 ```bash
-python3 "$SKILL/scripts/personal_report.py" \
-  --measurements measurements.csv \
-  --medications meds.txt \
-  --labs checkup.csv \
-  --out out
+python3 "$SKILL/scripts/personal_report.py" --out out
 ```
 
-`measurements.csv` 用 `name,value`。物种写 `human` 或 `bowhead`。连接频率用 `gfp` 和 `dsred`。
+研究者要复算自己的报告基因实验时，可加 `--measurements measurements.csv`（`name,value`；物种写 `human` 或 `bowhead`，计数用 `gfp` 和 `dsred`）。引用 `out/report.md` 时说明这是论文复现，包括最后一行 `边界:`。
 
 方法说明见 [references/claims.md](references/claims.md) 和 [references/contract.md](references/contract.md)。

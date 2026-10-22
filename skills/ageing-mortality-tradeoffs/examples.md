@@ -1,8 +1,4 @@
 ```bash
-python3 "$SKILL/scripts/personal_report.py" \
-  --measurements measurements.csv \
-  --medications meds.txt \
-  --labs checkup.csv \
-  --age 400 \
-  --out out
+# 复现论文名单（不需要任何个人数据）
+python3 "$SKILL/scripts/personal_report.py" --out out
 ```

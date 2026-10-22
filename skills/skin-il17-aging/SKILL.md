@@ -1,11 +1,11 @@
 ---
 name: skin-il17-aging
 description: >-
-  Tier C index only (mouse study): do not use it to answer a person's own health question. Places a
-  mouse age in weeks against the adult, aged, and neutralization windows, and lists Il17a, Il17f,
-  Il17ra, and Il17rc from Solá et al. Use when the user mentions lymphoid IL-17 signaling and skin
-  aging or this Nature Aging study. Expression is not turned into a skin-age score. Medicines and
-  checkup labs do not edit the gene list.
+  Tier C index only (mouse study): do not use it to answer a person's own health question. Solá et
+  al., Nature Aging 2023: in ageing mouse dermis, lymphoid cells shift to IL-17, and neutralizing
+  IL-17A/F delayed skin-ageing traits. Holds the study's week windows and Il17a, Il17f, Il17ra,
+  Il17rc. Use when someone asks about this study, IL-17 and skin ageing in mice, or the listed genes;
+  not for a person's own measurements.
 ---
 
 # 淋巴来源白介素与皮肤老化
@@ -14,20 +14,14 @@ description: >-
 > **分级 C，只收录。** 这篇论文的主要证据来自小鼠。不要用它回答某个人自己的健康问题，也不要向用户索要测量、现用药或体检来运行它；脚本输出只是复现论文里的名单或数值，不是这个人的结果。
 <!-- /tier-banner -->
 
-用户交小鼠周龄、四个白介素相关基因的测量、现用药和体检。人的实足年龄不换算成小鼠周龄。不要向用户要 GEO、STRING 或 PDF。
+这项研究在小鼠真皮里看到辅助性 T 细胞、γδ T 细胞和固有淋巴样细胞转向表达白介素 17。中和 IL-17A 和 IL-17F 之后，年老皮肤的一些性状被推迟。
 
-报告开头是论文卡片。周龄只对照正文写下的窗口。基因测量照录，没有系数就不判高低。现用药对不上时保留「不能据此停」。体检不增删方法算出的名单。
+脚本复现论文名单：正文写下的成年、老年和中和实验周龄窗口，以及四个基因。表达不换成皮肤年龄分数；人的实足年龄不换算成小鼠周龄。不要向用户要 GEO、STRING 或 PDF。
 
-## 命令
+## 命令（复现论文名单）
 
 ```bash
-python "$SKILL/scripts/personal_report.py" \
-  --medications meds.txt \
-  --labs checkup.csv \
-  --age 60 \
-  --measurements measures.txt \
-  --out out
+python "$SKILL/scripts/personal_report.py" --out out
 ```
 
-引用 `out/report.md`，包括 `边界:` 那一行。
-
+研究者可以用 `--age` 交小鼠周龄对照论文窗口，用 `--measurements measures.txt` 照录小鼠实验的基因测量（没有系数，不判高低）。引用 `out/report.md` 时说明这是论文复现，包括 `边界:` 那一行。

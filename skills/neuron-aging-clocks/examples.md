@@ -1,7 +1,4 @@
 ```bash
-python "$SKILL/scripts/personal_report.py" \
-  --neurons neurons.txt \
-  --medications meds.txt \
-  --labs checkup.csv \
-  --out out/
+# 复现论文名单，不需要任何个人数据
+python "$SKILL/scripts/personal_report.py" --out out
 ```

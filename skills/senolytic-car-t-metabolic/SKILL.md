@@ -1,11 +1,11 @@
 ---
 name: senolytic-car-t-metabolic
 description: >-
-  Tier C index only (mouse study): do not use it to answer a person's own health question. Applies the
-  dual-control P-value rule from Amor et al., Nature Aging 2024, to two supplied P values for uPAR CAR
-  T comparisons. Use when the user mentions senolytic CAR T cells, uPAR, m.uPAR-m.28z, or metabolic
-  readouts after those cells. Glucose tolerance area is not computed because the source data have no
-  area coefficient. The report does not say what to start or stop.
+  Tier C index only (mouse study): do not use it to answer a person's own health question. Amor et
+  al., Nature Aging 2024: in mice, uPAR-targeted senolytic CAR T cells (m.uPAR-m.28z) gave lasting
+  protection against age-related metabolic dysfunction. Holds the paper's dual-control P-value rule.
+  Use when someone asks about this study, senolytic CAR T cells and metabolism in mice, or uPAR; not
+  for a person's own measurements.
 ---
 
 # 尿激酶受体的嵌合抗原受体
@@ -14,22 +14,16 @@ description: >-
 > **分级 C，只收录。** 这篇论文的主要证据来自小鼠。不要用它回答某个人自己的健康问题，也不要向用户索要测量、现用药或体检来运行它；脚本输出只是复现论文里的名单或数值，不是这个人的结果。
 <!-- /tier-banner -->
 
-你交相对未转导 T 细胞和相对人 CD19 对照的两个 P 值。两个都低于论文写的阈值时，报告记为有差别；只有一个低于阈值时记为不确定。
+这项研究用针对尿激酶型纤溶酶原激活物受体（uPAR）的嵌合抗原受体 T 细胞，在小鼠里看衰老相关的代谢变化。一次输注和糖耐量试验都是小鼠实验，不是处方。
 
-不要向用户要 GEO、STRING、PDF 或补充表。细胞数和糖负荷是小鼠实验。现用药对不上时写「不能据此停」。体检不增删名单。
+脚本复现论文的双对照规则：相对未转导 T 细胞和相对人 CD19 对照的两个 P 值都低于论文阈值时记为有差别，只有一个低于阈值时记为不确定。糖耐量曲线下面积不算，因为原始数据没有面积系数。不要向用户要 GEO、STRING、PDF 或补充表。
 
-## 命令
+## 命令（复现论文数值）
 
 Set `SKILL` to the directory that contains this file.
 
 ```bash
-python "$SKILL/scripts/personal_report.py" \
-  --measurements measurements.csv \
-  --medications meds.txt \
-  --labs checkup.csv \
-  --age 60 \
-  --out out
+python "$SKILL/scripts/personal_report.py" --out out
 ```
 
-`measurements.csv` 用 `name,value`，名字用 `p_ut` 和 `p_h19`。方法说明见 [references/claims.md](references/claims.md)。
-
+研究者可以用 `--measurements measurements.csv`（`name,value`，名字用 `p_ut` 和 `p_h19`）交小鼠实验的两个 P 值复现这条规则。方法说明见 [references/claims.md](references/claims.md)。引用 `out/report.md` 时说明这是论文复现，包括 `边界:` 那一行。

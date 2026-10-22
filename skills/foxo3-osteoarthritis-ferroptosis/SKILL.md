@@ -2,10 +2,10 @@
 name: foxo3-osteoarthritis-ferroptosis
 description: >-
   Tier C index only (mouse, cultured cells study): do not use it to answer a person's own health
-  question. Matches gene names the user supplies to genes named by Zhao et al., Nature Communications
-  2025 (doi:10.1038/s41467-025-59883-z) for obesity-related osteoarthritis, including FOXO3, TP53, and
-  the ferroptosis suppressors they measured. Use when the user mentions this p53-FOXO3 osteoarthritis
-  paper. Does not invent a risk weight. Labs do not add genes.
+  question. Zhao et al., Nature Communications 2025: in mice and cells, obesity-related osteoarthritis
+  runs through p53-FOXO3 and osteoclast ferroptosis. Lists the genes they name, incl. FOXO3, TP53 and
+  the ferroptosis suppressors measured. Use when someone asks about this study, this mouse pathway, or
+  the listed genes; not for a person's own measurements.
 ---
 
 # 肥胖骨关节炎里点名的基因
@@ -14,21 +14,16 @@ description: >-
 > **分级 C，只收录。** 这篇论文的主要证据来自小鼠、培养细胞。不要用它回答某个人自己的健康问题，也不要向用户索要测量、现用药或体检来运行它；脚本输出只是复现论文里的名单或数值，不是这个人的结果。
 <!-- /tier-banner -->
 
-用户交基因名、现用药和体检。不要向用户要 GEO、STRING、PDF 或补充表。报告开头是论文卡片。这篇论文没有可乘的系数。
+这项研究在小鼠和细胞里看肥胖相关的骨关节炎，主线是 p53 与 FOXO3，以及破骨细胞铁死亡和间充质干细胞成脂。
 
-对上的基因写入方法名单。现用药对不上时保留「不能据此停」。体检不增删方法算出的名单。
+脚本复现论文里点名的基因名单，并照录正文写明的方向。这篇论文没有可乘的系数，脚本不编风险权重。不要向用户要 GEO、STRING、PDF 或补充表。
 
-## 命令
-
-Set `SKILL` to the directory that contains this file.
+## 命令（复现论文名单）
 
 ```bash
-python "$SKILL/scripts/personal_report.py" \
-  --measurements measurements.csv \
-  --medications meds.txt \
-  --labs checkup.csv \
-  --age 60 \
-  --out out/
+python "$SKILL/scripts/personal_report.py" --out out
 ```
 
-`measurements.csv` 用两列 `name,value`。基因名用正文里的符号。方法说明见 [references/claims.md](references/claims.md)。
+研究者可以用 `--measurements measurements.csv`（`name,value`，基因名用正文符号）核对某些基因是否在论文名单里。方法说明见 [references/claims.md](references/claims.md)。
+
+引用 `out/report.md` 时说明这是论文复现，包括 `边界:` 那一行。

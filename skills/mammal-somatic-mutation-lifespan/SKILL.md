@@ -2,10 +2,10 @@
 name: mammal-somatic-mutation-lifespan
 description: >-
   Tier C index only (many species study): do not use it to answer a person's own health question.
-  Divides one crypt's substitution count by age and looks up the species mean rate and Lifespan_80
-  from Cagan et al., Nature 2022. Use when the user mentions somatic mutation rates across mammals,
-  end-of-lifespan burden, or this intestinal-crypt study. The published slope is only applied to
-  substitutions. Medicines and checkup labs stay context.
+  Cagan et al., Nature 2022: across mammals, intestinal-crypt somatic substitution rates scale
+  inversely with lifespan. Holds each species' mean yearly rate, Lifespan_80 and the Fig. 3c slope
+  (substitutions only). Use when someone asks about this study, somatic mutation rates across mammals,
+  or the listed species; not for a person's own measurements.
 ---
 
 # 哺乳动物体细胞突变率
@@ -14,23 +14,16 @@ description: >-
 > **分级 C，只收录。** 这篇论文的主要证据来自多个物种。不要用它回答某个人自己的健康问题，也不要向用户索要测量、现用药或体检来运行它；脚本输出只是复现论文里的名单或数值，不是这个人的结果。
 <!-- /tier-banner -->
 
-你交物种、隐窝替换数和年龄，也可以交现用药和体检。不要向用户要 EGA、PDF 或补充表。
+这项研究比较多种哺乳动物肠道隐窝里的体细胞突变，年均替换率大致与寿命成反比。
 
-年替换率是替换数除以年龄。物种能对上时，报告 Supplementary Table 3 的年均替换率和 Table 6 的 Lifespan_80，并用 Fig. 3c 的斜率除以寿命。插入缺失不用这条斜率。现用药对不上时保留「不能据此停」。体检不增删方法算出的名单。
+脚本复现论文数值：Supplementary Table 3 的物种年均替换率、Table 6 的 Lifespan_80，以及 Fig. 3c 的斜率除以寿命。插入缺失不用这条斜率。不要向用户要 EGA、PDF 或补充表。
 
-## 命令
-
-Set `SKILL` to the directory that contains this file.
+## 命令（复现论文数值）
 
 ```bash
-python3 "$SKILL/scripts/personal_report.py" \
-  --measurements measurements.csv \
-  --medications meds.txt \
-  --labs checkup.csv \
-  --age 40 \
-  --out out
+python "$SKILL/scripts/personal_report.py" --out out
 ```
 
-`measurements.csv` 用 `name,value`。物种例如 `human`。替换数写 `substitution_burden`。
+研究者可以用 `--measurements`（`name,value`；`species` 写物种，`substitution_burden` 写一个隐窝的替换数，加 `--age`）复现年替换率的算法。方法说明见 [references/claims.md](references/claims.md) 和 [references/contract.md](references/contract.md)。
 
-方法说明见 [references/claims.md](references/claims.md) 和 [references/contract.md](references/contract.md)。
+引用 `out/report.md` 时说明这是论文复现，包括 `边界:` 那一行。

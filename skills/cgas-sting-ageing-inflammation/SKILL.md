@@ -1,12 +1,11 @@
 ---
 name: cgas-sting-ageing-inflammation
 description: >-
-  Tier C index only (mouse study): do not use it to answer a person's own health question. Applies the
-  Extended Data Fig. 10d gene cutoff from Gulen et al., Nature 2023, to one supplied gene table:
-  adjusted P at most 0.05 and log2 fold change at least 0.3. It does not turn mouse fold changes into
-  a personal cGAS-STING score. Use when the user mentions cGAS, STING, H-151, or this ageing-related
-  inflammation paper. Current medicines and checkup labs stay context. The report does not say what to
-  start or stop.
+  Tier C index only (mouse study): do not use it to answer a person's own health question. Gulen et
+  al., Nature 2023: cGAS-STING drives ageing-related inflammation and neurodegeneration in mice;
+  blocking STING with H-151 eased it in old mice. Holds the Extended Data Fig. 10d gene cutoff
+  (adjusted P ≤ 0.05, log2FC ≥ 0.3). Use when someone asks about this study, cGAS-STING in ageing
+  mice, or H-151; not for a person's own measurements.
 ---
 
 # 胞质核酸感受与老年炎症
@@ -15,23 +14,18 @@ description: >-
 > **分级 C，只收录。** 这篇论文的主要证据来自小鼠。不要用它回答某个人自己的健康问题，也不要向用户索要测量、现用药或体检来运行它；脚本输出只是复现论文里的名单或数值，不是这个人的结果。
 <!-- /tier-banner -->
 
-你交一张基因表，以及可选的年龄、现用药和体检。表里同时有基因、`avg_log2FC` 和 `p_val_adj` 时，报告按扩展数据图十的门槛列出基因。没有这两列时，报告写明缺列。不要把小鼠倍数当成权重。
+这项研究说明，细胞感受到自身 DNA 之后，会推动年老时的慢性炎症，并影响小鼠的脑。挡住这条通路后，老年小鼠多个器官的炎症减轻，体力和记忆测试也有改善。
 
-不要向用户要 GEO、STRING、PDF 或补充表。现用药对不上时写「不能据此停」。体检不增删方法算出的名单。
+脚本复现扩展数据图十的基因门槛（`p_val_adj` ≤ 0.05，`avg_log2FC` ≥ 0.3）。小鼠倍数不当成权重，不算 cGAS-STING 分数。不要向用户要 GEO、STRING、PDF 或补充表。
 
-## 命令
+## 命令（复现论文名单）
 
 Set `SKILL` to the directory that contains this file.
 
 ```bash
-python3 "$SKILL/scripts/personal_report.py" \
-  --measurements measurements.csv \
-  --medications meds.txt \
-  --labs checkup.csv \
-  --age 50 \
-  --out out
+python3 "$SKILL/scripts/personal_report.py" --out out
 ```
 
-`--measurements` 用 `gene,avg_log2FC,p_val_adj`。`--medications` 一行一个名字。`--labs` 是 `项目,结果,单位`。
+研究者要用自己的差异表达表套用这个门槛时，可加 `--measurements measurements.csv`（`gene,avg_log2FC,p_val_adj`）。引用 `out/report.md` 时说明这是论文复现，包括最后一行 `边界:`。
 
 方法说明见 [references/claims.md](references/claims.md) 和 [references/contract.md](references/contract.md)。

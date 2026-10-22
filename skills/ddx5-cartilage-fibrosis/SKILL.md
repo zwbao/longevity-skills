@@ -2,10 +2,10 @@
 name: ddx5-cartilage-fibrosis
 description: >-
   Tier C index only (mouse, cultured cells study): do not use it to answer a person's own health
-  question. Applies the published splicing and protein fold-change rules from the DDX5 osteoarthritis
-  paper to supplied delta PSI, FDR, and protein ratios. It does not invent gene weights. Use when the
-  user mentions DDX5, hyaline cartilage fibrosis, or osteoarthritis splicing of fibronectin. Medicines
-  and checkup labs stay context. The report does not say what to start or stop.
+  question. Liu et al., Nature Aging 2024: DDX5 falls in osteoarthritic cartilage, and its loss shifts
+  collagens toward fibrosis and alters fibronectin splicing (mice, cultured cells). Holds the
+  published delta PSI/FDR and 1.2-fold protein rules. Use when someone asks about this study, DDX5 in
+  cartilage fibrosis, or the listed genes; not for a person's own measurements.
 ---
 
 # 软骨纤维化解旋酶
@@ -14,23 +14,18 @@ description: >-
 > **分级 C，只收录。** 这篇论文的主要证据来自小鼠、培养细胞。不要用它回答某个人自己的健康问题，也不要向用户索要测量、现用药或体检来运行它；脚本输出只是复现论文里的名单或数值，不是这个人的结果。
 <!-- /tier-banner -->
 
-你交基因的 delta PSI 和 FDR，或蛋白质比值和蛋白质 FDR，以及可选的现用药、体检、年龄。不要向用户要 GEO、STRING、PDF 或补充表。
+这项研究发现骨关节炎软骨里 RNA 解旋酶 DDX5 下降。DDX5 不足时纤维化相关胶原上升、透明软骨胶原下降，并改变纤连蛋白和赖氨酸羟化酶转录本的剪接。
 
-报告开头是论文卡片。剪接用正文的两套规则分别判断。蛋白质用 1.2 倍和 FDR 规则。只有表达、没有这两列的基因不进入名单。图里没把符号写全的基因不编造。现用药对不上时保留「不能据此停」。体检不增删方法算出的名单。
+脚本复现论文的判定规则：剪接用正文的两套 delta PSI 和 FDR 规则，蛋白质用 1.2 倍和 FDR 规则。只有表达、没有这两列的基因不进名单；图里没写全的基因符号不编，也不造基因权重。不要向用户要 GEO、STRING、PDF 或补充表。
 
-## 命令
+## 命令（复现论文名单）
 
 Set `SKILL` to the directory that contains this file.
 
 ```bash
-python3 "$SKILL/scripts/personal_report.py" \
-  --measurements measurements.csv \
-  --medications meds.txt \
-  --labs checkup.csv \
-  --age 50 \
-  --out out
+python3 "$SKILL/scripts/personal_report.py" --out out
 ```
 
-`--measurements` 用 `name,value`。剪接写成 `基因_delta_psi` 和 `基因_fdr`。蛋白质写成 `基因_ratio` 和 `基因_protein_fdr`。`--medications` 一行一个名字。`--labs` 是 `项目,结果,单位`。
+研究者要用自己的剪接或蛋白组数据套用这些规则时，可加 `--measurements measurements.csv`（`name,value`；剪接写 `基因_delta_psi` 和 `基因_fdr`，蛋白质写 `基因_ratio` 和 `基因_protein_fdr`）。引用 `out/report.md` 时说明这是论文复现，包括最后一行 `边界:`。
 
 方法说明见 [references/claims.md](references/claims.md) 和 [references/contract.md](references/contract.md)。

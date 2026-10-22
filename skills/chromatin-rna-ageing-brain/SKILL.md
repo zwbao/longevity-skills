@@ -1,13 +1,11 @@
 ---
 name: chromatin-rna-ageing-brain
 description: >-
-  Tier C index only (human study): do not use it to answer a person's own health question. Scores one
-  donor's nuclei with the LCS-erosion score from Wen et al., Nature 2024 (DOI
-  10.1038/s41586-024-07239-w) when genomic-distance bins are supplied, and otherwise orders
-  short-range contact counts. Use when the user brings MUSIC nucleus counts from ageing human frontal
-  cortex and asks about multiplex chromatin and RNA interactions. The score is the midpoint of the bin
-  selected from the ten most frequent distance bins, and a nucleus is called eroded only above the
-  printed cutoff. The skill does not compute the SCALE transcriptomic age.
+  Tier C index only (human study): do not use it to answer a person's own health question. Wen et al.,
+  Nature 2024: single-nucleus MUSIC profiling of aged human frontal cortex found nuclei with fewer
+  short-range contacts look older and track Alzheimer's pathology. Holds the LCS-erosion score rule
+  and cutoff. Use when someone asks about this study, chromatin ageing in brain nuclei, or MUSIC data;
+  not for a person's own measurements.
 ---
 
 # 染色质互作
@@ -16,28 +14,18 @@ description: >-
 > **分级 C，只收录。** 这篇论文的主要证据来自人。不要用它回答某个人自己的健康问题，也不要向用户索要测量、现用药或体检来运行它；脚本输出只是复现论文里的名单或数值，不是这个人的结果。
 <!-- /tier-banner -->
 
-用户交每个核的短程互作计数、现用药和体检。不要向用户要 GEO、STRING 或 PDF。
+这项研究开发了在单个细胞核里同时读取多重染色质互作和基因表达的技术，用于老年捐献者的额叶皮层，发现短程互作较少的细胞核与更“老”的转录特征和阿尔茨海默病病理相关。
 
-有距离箱时，报告计算局部染色质结构侵蚀分数，并与正文的分界比较。只有短程计数时，按计数从少到多排列，不算该分数。药名对不上时保留「不能据此停」。体检不增删方法算出的名单。
+脚本复现论文的局部染色质结构侵蚀（LCS-erosion）分数：从最常见的十个距离箱中选箱取中点，只有高于正文分界的核才记为侵蚀。没有距离箱时只把短程互作计数从少到多排列。不把哪个核称为年老或患病，也不算 SCALE 转录组年龄。不要向用户要 GEO、STRING 或 PDF。
 
-## Command
+## 命令（复现论文数值）
 
 Set `SKILL` to the directory that contains this file.
 
 ```bash
-python3 "$SKILL/scripts/personal_report.py" \
-  --measurements MEASUREMENTS.csv \
-  --medications MEDS.txt \
-  --labs CHECKUP.csv \
-  --out out/
+python3 "$SKILL/scripts/personal_report.py" --out out/
 ```
 
-`MEASUREMENTS.csv` needs `nucleus_id`. Provide either `bin_start`, `bin_end`, and `frequency`, or `short_range_contacts`. Optional columns are `sex`, `xist_x_contacts`, and `rna_reads`.
-
-`--medications` is optional, one name per line. `--labs` is optional. Abnormal checkup rows are printed and do not add or remove names from the method list. A medicine that is not on that list keeps the sentence 不能据此停.
-
-## Report
-
-Copy `out/report.md`, including its final `边界:` line. With distance bins, the report gives the LCS-erosion score and whether it exceeds the printed cutoff. With only short-range counts, it orders those counts. For female nuclei above the RNA-read filter, it may show the supplied XIST–X count. It may not call a nucleus old or diseased.
+研究者要用自己的 MUSIC 核计数复算时，可加 `--measurements MEASUREMENTS.csv`（需要 `nucleus_id`，再给 `bin_start`、`bin_end`、`frequency` 或 `short_range_contacts`；可选 `sex`、`xist_x_contacts`、`rna_reads`）。引用 `out/report.md` 时说明这是论文复现，包括最后一行 `边界:`。
 
 Method notes: [references/contract.md](references/contract.md), [references/claims.md](references/claims.md). The command is also in [examples.md](examples.md).

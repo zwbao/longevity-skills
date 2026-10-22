@@ -1,11 +1,11 @@
 ---
 name: gompertz-celegans-decrepitude
 description: >-
-  Tier C index only (C. elegans study): do not use it to answer a person's own health question.
-  Computes relative healthspan and gerospan from two supplied durations, using the identity in the C.
-  elegans Gompertz paper. Use when the user mentions decrepitude, gerospan, or slowed Gompertzian
-  ageing in worms. Fitted alpha and beta are not in the opened source-data sheet, so no personal
-  mortality probability is scored. Medicines and checkup labs do not edit the spans.
+  Tier C index only (C. elegans study): do not use it to answer a person's own health question. Zhang
+  and Gems, Nature Communications 2026: in long-lived C. elegans, slowed Gompertzian ageing comes from
+  a longer decrepitude phase, not slower ageing. Holds the identity for relative healthspan and
+  gerospan. Use when someone asks about this study, or decrepitude and gerospan in worms; not for a
+  person's own measurements.
 ---
 
 # 衰弱期比例
@@ -14,21 +14,16 @@ description: >-
 > **分级 C，只收录。** 这篇论文的主要证据来自线虫。不要用它回答某个人自己的健康问题，也不要向用户索要测量、现用药或体检来运行它；脚本输出只是复现论文里的名单或数值，不是这个人的结果。
 <!-- /tier-banner -->
 
-用户交健康期天数、衰弱期天数、现用药和体检。有日龄时加 `--age`。不要向用户要 GEO、STRING、PDF 或补充表。
+这项研究在线虫里同时记录种群死亡和每条虫处于健康或衰弱的天数。寿命变长时，多出来的时间更多落在衰弱期，而不是把衰老速率简单地放慢。
 
-两段天数都给出时，报告按正文的恒等式计算相对比例。拟合的尺度参数和速率参数不在已打开的补充表列里，不算死亡概率。现用药对不上时保留「不能据此停」。体检不增删方法算出的名单。
+脚本复现论文的恒等式：给出健康期和衰弱期两段天数时算相对比例。拟合的尺度参数和速率参数不在已打开的补充表列里，脚本不算死亡概率。不要向用户要 GEO、STRING、PDF 或补充表。
 
-## 命令
-
-Set `SKILL` to the directory that contains this file.
+## 命令（复现论文数值）
 
 ```bash
-python3 "$SKILL/scripts/personal_report.py" \
-  --measurements measurements.csv \
-  --medications meds.txt \
-  --labs checkup.csv \
-  --age 20 \
-  --out out
+python "$SKILL/scripts/personal_report.py" --out out
 ```
 
-`--measurements` 用 `name,value`。健康期天数的名字是 `h_span_days`，衰弱期天数的名字是 `g_span_days`。`--medications` 一行一个名字。`--labs` 是 `项目,结果,单位`。把 `out/report.md` 整段交给用户，包括最后一行 `边界:`。
+研究者可以用 `--measurements`（`name,value`，`h_span_days` 和 `g_span_days`）传入线虫实验的两段天数来复现。
+
+引用 `out/report.md` 时说明这是论文复现，包括 `边界:` 那一行。

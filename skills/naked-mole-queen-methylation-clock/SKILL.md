@@ -2,10 +2,10 @@
 name: naked-mole-queen-methylation-clock
 description: >-
   Tier C index only (naked mole-rat study): do not use it to answer a person's own health question.
-  Computes a naked mole-rat methylation age from Supplementary Table 20 of Horvath et al., Nature
-  Aging 2022, when every weighted CpG beta is supplied. Use when the user mentions NMR queens, this
-  methylation clock, or HorvathMammalMethylChip40 in naked mole-rats. Missing sites are not filled
-  with zero. Queen status has no extra coefficient. Medicines and checkup labs stay context.
+  Horvath et al., Nature Aging 2022: methylation clocks tick in naked mole-rats, but queens age more
+  slowly than nonbreeders. Holds the Supplementary Table 20 clock coefficients by tissue. Use when
+  someone asks about this study, naked mole-rat methylation clocks, or these coefficients; not for a
+  person's own measurements.
 ---
 
 # 裸鼹鼠甲基化年龄
@@ -14,23 +14,20 @@ description: >-
 > **分级 C，只收录。** 这篇论文的主要证据来自裸鼹鼠。不要用它回答某个人自己的健康问题，也不要向用户索要测量、现用药或体检来运行它；脚本输出只是复现论文里的名单或数值，不是这个人的结果。
 <!-- /tier-banner -->
 
-你交组织、各位点 beta、物种和年龄，也可以交现用药和体检。不要向用户要 GEO、PDF 或补充表。
+这项研究为裸鼹鼠多个组织建立甲基化年龄模型，并比较繁殖雌性与非繁殖个体。
 
-组织对应的位点到齐时，按 Supplementary Table 20 的系数计算。缺位点不补 0。对数线性时钟按补充说明里的反函数，成熟年龄用代码片段里的 5 年。女王身份不另作加减。现用药对不上时保留「不能据此停」。体检不增删方法算出的名单。
+脚本复现 Supplementary Table 20 的时钟：组织对应的位点到齐时按系数计算，缺位点不补 0；对数线性时钟按补充说明里的反函数，成熟年龄用代码片段里的 5 年。女王身份没有单独的加减项。不要向用户要 GEO、PDF 或补充表。
 
-## 命令
+## 命令（复现论文数值）
 
 Set `SKILL` to the directory that contains this file.
 
 ```bash
-python3 "$SKILL/scripts/personal_report.py" \
-  --measurements measurements.csv \
-  --medications meds.txt \
-  --labs checkup.csv \
-  --age 10 \
-  --out out
+python "$SKILL/scripts/personal_report.py" --out out
 ```
 
-`measurements.csv` 用 `name,value`。组织写 `tissue`，例如 `blood`。每个位点一行，名字是 cg 编号，值是 0 到 1 的 beta。
+研究者可以用 `--measurements`（`name,value`：`tissue` 如 `blood`，每个 cg 位点一行，值是 0 到 1 的 beta）传入裸鼹鼠样本，复现论文的时钟算法。
+
+引用 `out/report.md` 时说明这是论文复现，包括 `边界:` 那一行。
 
 方法说明见 [references/claims.md](references/claims.md) 和 [references/contract.md](references/contract.md)。

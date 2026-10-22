@@ -1,11 +1,11 @@
 ---
 name: ramanomics-senescence
 description: >-
-  Tier C index only (mouse study): do not use it to answer a person's own health question. Looks up
-  user-supplied gene symbols in the published p21+ senescence DEG tables from Zhang et al., Nature
-  Aging 2026 (RamanOmics), frozen from Supplementary Data MOESM4. Use when the user mentions
-  RamanOmics, spatial Raman senescence, or this Nature Aging technical report. Raman spectra are not
-  scored from user files. Medicines and labs do not edit hits.
+  Tier C index only (mouse study): do not use it to answer a person's own health question. Zhang et
+  al., Nature Aging 2026 (RamanOmics): Raman imaging aligned with spatial transcriptomics maps
+  senescent cells in aging mouse tissue. Holds frozen p21+ senescence DEG subsets for skin and lung.
+  Use when someone asks about this study, spatial Raman senescence in mice, or the listed genes; not
+  for a person's own measurements.
 ---
 
 # RamanOmics 衰老差异基因查表
@@ -14,21 +14,18 @@ description: >-
 > **分级 C，只收录。** 这篇论文的主要证据来自小鼠。不要用它回答某个人自己的健康问题，也不要向用户索要测量、现用药或体检来运行它；脚本输出只是复现论文里的名单或数值，不是这个人的结果。
 <!-- /tier-banner -->
 
-用户交基因符号，以及可选年龄、现用药和体检。不要向用户要 Raman 原始图、SenNet 或补充 xlsx。技能自带从 MOESM4 `DEGs_Skin (sen)` / `DEGs_Lung (sen)` 冻结的 p21+ 老组织差异基因子集。
+这项研究把无标记 Raman 成像与单核/空间转录组对齐，刻画衰老组织里衰老细胞的振动—分子结构。
 
-报告写出命中基因的组织上下文与 avg_log2FC。这不是个人组织衰老诊断，也不能从用户交的光谱重算 1131–1135 cm⁻¹ 脂质峰。现用药对不上时保留「不能据此停」。体检不增删查表命中。
+技能自带从 MOESM4 `DEGs_Skin (sen)` / `DEGs_Lung (sen)` 冻结的 p21+ 老组织差异基因子集，脚本复现命中基因的组织上下文与 avg_log2FC。这不是组织衰老诊断，也不从光谱重算 1131–1135 cm⁻¹ 脂质峰。不要向用户要 Raman 原始图、SenNet 或补充 xlsx。
 
-## 命令
+## 命令（复现论文名单）
 
 Set `SKILL` to the directory that contains this file.
 
 ```bash
-python3 "$SKILL/scripts/personal_report.py" \
-  --measurements genes.csv \
-  --medications meds.txt \
-  --labs checkup.csv \
-  --age 60 \
-  --out out
+python "$SKILL/scripts/personal_report.py" --out out
 ```
 
-`genes.csv` 用 `name,value`（`symbol`/`gene`）或一列基因名。把 `out/report.md` 整段交给用户，包括最后一行 `边界:`。
+研究者可以用 `--measurements`（`name,value`，`symbol`/`gene`，或一列基因名）传入基因符号，在冻结的子集里查表。
+
+引用 `out/report.md` 时说明这是论文复现，包括 `边界:` 那一行。

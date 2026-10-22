@@ -1,11 +1,11 @@
 ---
 name: scepiage-single-cell-ageing
 description: >-
-  Tier C index only (mouse study): do not use it to answer a person's own health question. Predicts a
-  mouse blood epigenetic age with the scEpiAge rule: sum of log one minus absolute deviation against
-  the blood expected-methylation matrix, then the week at that maximum. Use when the user mentions
-  scEpiAge, single-cell methylation age, or this mouse blood clock. Fewer than five overlapping sites
-  yields no age. Current medicines and checkup labs do not change which sites enter the sum.
+  Tier C index only (mouse study): do not use it to answer a person's own health question. Bonder et
+  al., Nature Communications 2024: scEpiAge predicts mouse blood age in weeks from single-cell
+  methylation. Holds the expected-methylation matrix, backup sites and scoring rule. Use when someone
+  asks about this study, single-cell methylation age in mouse blood, or the listed CpG sites; not for
+  a person's own measurements.
 ---
 
 # 单细胞甲基化周龄
@@ -14,19 +14,14 @@ description: >-
 > **分级 C，只收录。** 这篇论文的主要证据来自小鼠。不要用它回答某个人自己的健康问题，也不要向用户索要测量、现用药或体检来运行它；脚本输出只是复现论文里的名单或数值，不是这个人的结果。
 <!-- /tier-banner -->
 
-用户交位点甲基化、现用药和体检。不要向用户要 GEO、STRING 或 PDF。血液期望矩阵已经在技能里。
+这项研究用单细胞甲基化位点的期望矩阵预测小鼠血液周龄。主位点缺失时，按备份表补一个已经给出的备份位点。血液期望矩阵已经在技能里。
 
-位点不够就没有周龄。主位点缺失时，只用仓库里对应的备份位点。现用药对不上时保留「不能据此停」。体检不增删方法算出的名单。
+脚本复现论文规则：对每个周龄求 log(1 − |观测 − 期望|) 之和，取最大处的周龄。重叠位点少于五个就没有周龄。这是小鼠血液时钟，不用于人。不要向用户要 GEO、STRING 或 PDF。
 
-## 命令
+## 命令（复现论文数值）
 
 ```bash
-python "$SKILL/scripts/personal_report.py" \
-  --medications meds.txt \
-  --labs checkup.csv \
-  --age 60 \
-  --measurements sites.tsv \
-  --out out
+python "$SKILL/scripts/personal_report.py" --out out
 ```
 
-`sites.tsv` 每行是 `染色体:位置 甲基化`。引用 `out/report.md`，包括 `边界:` 那一行。
+研究者可以用 `--measurements sites.tsv` 交小鼠单细胞甲基化数据复现周龄，每行是 `染色体:位置 甲基化`。引用 `out/report.md` 时说明这是论文复现，包括 `边界:` 那一行。

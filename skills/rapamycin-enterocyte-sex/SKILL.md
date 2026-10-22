@@ -2,11 +2,10 @@
 name: rapamycin-enterocyte-sex
 description: >-
   Tier C index only (fruit fly, mouse study): do not use it to answer a person's own health question.
-  Writes a personal readout of enterocyte size ratio and p62 over total protein from Regan et al.,
-  Nature Aging 2022, and records supplied enterocyte sex against that paper's autophagy direction. Use
-  when the user mentions enterocyte sexual identity, transformer, Bchs, H3/H4, or sex differences in
-  rapamycin autophagy. Fly and mouse doses are experimental. The report does not say what to start or
-  stop.
+  Regan et al., Nature Aging 2022: in flies and mice, enterocyte sexual identity sets gut autophagy
+  and the rapamycin response. Holds the enterocyte size and p62 ratios. Use when someone asks about
+  this study, sex differences in rapamycin autophagy in flies and mice, or transformer and Bchs; not
+  for a person's own measurements.
 ---
 
 # 肠细胞性别与雷帕霉素
@@ -15,22 +14,20 @@ description: >-
 > **分级 C，只收录。** 这篇论文的主要证据来自果蝇、小鼠。不要用它回答某个人自己的健康问题，也不要向用户索要测量、现用药或体检来运行它；脚本输出只是复现论文里的名单或数值，不是这个人的结果。
 <!-- /tier-banner -->
 
-你交对照和处理后的肠细胞面积、p62 和总蛋白，以及肠细胞性别。面积和蛋白都是正数时，报告写出比值。雌雄只用来照论文的方向写一句。
+这项研究比较雌雄肠细胞对雷帕霉素的自噬反应。雌性肠细胞的性别身份会改细胞大小，并经组蛋白和 Bchs 改变自噬；雄性肠细胞的基础自噬已经较高。
 
-不要向用户要 GEO、STRING、PDF 或补充表。果蝇浓度和小鼠剂量是实验条件。现用药对不上时写「不能据此停」。体检不增删名单。
+脚本复现论文的两个比值（处理比对照的肠细胞面积、p62 比总蛋白）和论文写的雌雄方向。果蝇浓度和小鼠剂量是实验条件，不是用法。不要向用户要 GEO、STRING、PDF 或补充表。
 
-## 命令
+## 命令（复现论文数值）
 
 Set `SKILL` to the directory that contains this file.
 
 ```bash
-python "$SKILL/scripts/personal_report.py" \
-  --measurements measurements.csv \
-  --medications meds.txt \
-  --labs checkup.csv \
-  --age 60 \
-  --out out
+python "$SKILL/scripts/personal_report.py" --out out
 ```
 
-`measurements.csv` 用 `name,value`。面积用 `control_area` 和 `treated_area`。方法说明见 [references/claims.md](references/claims.md)。
+研究者可以用 `--measurements`（`name,value`：`control_area`、`treated_area`、`p62`、`total_protein`、`sex`）传入自己的肠细胞实验数据，复现这两个比值。
 
+引用 `out/report.md` 时说明这是论文复现，包括 `边界:` 那一行。
+
+方法说明见 [references/claims.md](references/claims.md)。

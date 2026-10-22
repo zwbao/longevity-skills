@@ -1,11 +1,11 @@
 ---
 name: hepassocin-ampk-liver-aging
 description: >-
-  Tier C index only (mouse, human study): do not use it to answer a person's own health question.
-  Lists Hepassocin (HPS) → ANXA2-ERK-p90RSK-LKB1 → AMPK pathway claims from Yang et al., Signal
-  Transduction and Targeted Therapy 2026, and separates mouse/human observational findings from what
-  cannot be scored for one person. Use when the user mentions hepassocin, HPS/FGL1, liver senescence,
-  or this STTT paper. Medicines and checkup labs do not edit the method list.
+  Tier C index only (mouse, human study): do not use it to answer a person's own health question. Yang
+  et al., Signal Transduction and Targeted Therapy 2026: hepassocin (HPS/FGL1) activates AMPK via
+  ANXA2-ERK-p90RSK-LKB1, easing liver senescence and aiding regeneration, mainly in mice. Lists the
+  pathway nodes and mouse findings. Use when someone asks about this study, hepassocin in liver
+  ageing, or the listed nodes; not for a person's own measurements.
 ---
 
 # 肝促泌素与肝衰老通路读出
@@ -14,21 +14,14 @@ description: >-
 > **分级 C，只收录。** 这篇论文的主要证据来自小鼠、人。不要用它回答某个人自己的健康问题，也不要向用户索要测量、现用药或体检来运行它；脚本输出只是复现论文里的名单或数值，不是这个人的结果。
 <!-- /tier-banner -->
 
-用户交可选的 HPS/AMPK 标记、年龄、现用药和体检。不要向用户要 PDF、GEO 或补充表。已打开补充 docx（Tables S1–S3：患者信息、抗体、引物），没有个人 HPS 或肝再生分数的权重列。
+这项研究看肝促泌素 HPS 怎样在老龄肝脏里经 ANXA2-ERK-p90RSK-LKB1 到 AMPK 的通路减轻衰老表型并支持再生，主要证据来自小鼠。
 
-报告按正文列出通路节点与小鼠发现。这不是个人肝龄预测，也不构成用药依据。现用药对不上时保留「不能据此停」。体检不增删方法算出的名单。
+脚本复现论文名单：通路节点与小鼠发现。已打开的补充 docx（Tables S1–S3：患者信息、抗体、引物）里没有 HPS 或肝再生分数的权重列，脚本不编，也不预测肝龄。不要向用户要 PDF、GEO 或补充表。
 
-## 命令
-
-Set `SKILL` to the directory that contains this file.
+## 命令（复现论文名单）
 
 ```bash
-python3 "$SKILL/scripts/personal_report.py" \
-  --measurements measurements.csv \
-  --medications meds.txt \
-  --labs checkup.csv \
-  --age 70 \
-  --out out
+python "$SKILL/scripts/personal_report.py" --out out
 ```
 
-`measurements.csv` 用 `name,value`。可选键：`hps_level`、`ampk_activation`，取值用有或无。把 `out/report.md` 整段交给用户，包括最后一行 `边界:`。
+引用 `out/report.md` 时说明这是论文复现，包括 `边界:` 那一行。

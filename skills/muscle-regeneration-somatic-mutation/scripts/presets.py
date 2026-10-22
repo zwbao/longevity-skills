@@ -11,7 +11,7 @@ FULL_TEXT_READ = True
 MSM_VARIANT_N = 2127
 # Table caption: MutPred2 above 0.5 suggests pathogenicity.
 MUTPRED_HINT = 0.5
-BOUNDARY = "这是研究复现意义上的个人读出，不是治疗建议。不能据此开始或停止任何药物。名单里没有某个名字，不是停用的理由。体检不增删方法算出的名单。"
+BOUNDARY = "这是论文复现，不是这个人的结果，也不是治疗建议。不能据此开始或停止任何药物。名单里没有某个名字，不是停用的理由。体检不增删方法算出的名单。"
 
 # Gene, protein changes with MutPred2 above the caption cutoff, other protein changes.
 GENES = (

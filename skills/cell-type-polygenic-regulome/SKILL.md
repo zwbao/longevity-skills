@@ -1,12 +1,11 @@
 ---
 name: cell-type-polygenic-regulome
 description: >-
-  Tier C index only (human study): do not use it to answer a person's own health question. Writes a
-  personal readout of trait-associated regulon scores from Ma et al., Nature Aging 2026. It applies
-  the published TRS formula to supplied cell-type specificity and genetic relevance scores. Use when
-  the user mentions scMORE, eRegulons, polygenic single-cell regulomes, or this immune and aging GWAS
-  integration. Current medicines and checkup labs are context. The report does not say what to start
-  or stop.
+  Tier C index only (human study): do not use it to answer a person's own health question. Ma et al.,
+  Nature Aging 2026: scMORE combines single-cell multiomics with GWAS to find cell-type-specific
+  regulons for immune- and ageing-related diseases. Holds the published TRS formula. Use when someone
+  asks about this study, polygenic single-cell regulomes, scMORE or eRegulons; not for a person's own
+  measurements.
 ---
 
 # 细胞类型里的调控子
@@ -15,21 +14,18 @@ description: >-
 > **分级 C，只收录。** 这篇论文的主要证据来自人。不要用它回答某个人自己的健康问题，也不要向用户索要测量、现用药或体检来运行它；脚本输出只是复现论文里的名单或数值，不是这个人的结果。
 <!-- /tier-banner -->
 
-你交调控子的细胞类型特异性和遗传相关性。报告按公式算出得分，从高到低排列。两个分数缺一个时，报告说明没有算出得分。
+这项研究开发了一种把单细胞转录组、染色质开放性与全基因组关联结果整合的方法，找出与免疫和衰老相关疾病有关的细胞类型特异调控子，并在人中脑找到与帕金森病相关的衰老调控子。
 
-不要向用户要 GWAS 或 PDF。没有零分布，就不写经验 P 值。现用药对不上时写「不能据此停」。体检不增删调控子。
+脚本复现论文的性状关联得分（TRS）公式：用每个调控子的细胞类型特异性分和遗传相关性分算出得分并排序。两个分数缺一个就不算。没有零分布，就不写经验 P 值。不要向用户要 GWAS 或 PDF。
 
-## 命令
+## 命令（复现论文数值）
 
 Set `SKILL` to the directory that contains this file.
 
 ```bash
-python "$SKILL/scripts/personal_report.py" \
-  --measurements measurements.csv \
-  --medications meds.txt \
-  --labs checkup.csv \
-  --out out
+python "$SKILL/scripts/personal_report.py" --out out
 ```
 
-方法说明见 [references/claims.md](references/claims.md) 和 [references/contract.md](references/contract.md)。
+研究者要用自己的调控子分数复算时，可加 `--measurements measurements.csv`（格式见 contract）。引用 `out/report.md` 时说明这是论文复现，包括最后一行 `边界:`。
 
+方法说明见 [references/claims.md](references/claims.md) 和 [references/contract.md](references/contract.md)。

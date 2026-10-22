@@ -11,7 +11,7 @@ FULL_TEXT_READ = True
 CELL_N = 273923
 # Fig. 6a and Extended Data Fig. 10g,h. One-way FBR Sen Score.
 SENESCENT_LIKE_CUTOFF = 2412.562
-BOUNDARY = "这是研究复现意义上的个人读出，不是治疗建议。不能据此开始或停止任何药物。名单里没有某个名字，不是停用的理由。体检不增删方法算出的名单。"
+BOUNDARY = "这是论文复现，不是这个人的结果，也不是治疗建议。不能据此开始或停止任何药物。名单里没有某个名字，不是停用的理由。体检不增删方法算出的名单。"
 
 SCORE_NAMES = (
     "oneway fbr sen score",

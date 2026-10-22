@@ -2,11 +2,10 @@
 name: terpenoid-autophagy-sarcopenia
 description: >-
   Tier C index only (zebrafish, mouse, cultured cells study): do not use it to answer a person's own
-  health question. Lists thymol, carvacrol, their human conjugates, oregano oil, and the three
-  previously reported pilot molecules named in Civiletto et al., Nature Aging 2025. Supplementary
-  Table 2 ranks the natural-product screen, but those zebrafish log2 areas are not a personal score,
-  and the epigenetic clock weights are absent. Use when the user mentions this terpenoid autophagy
-  screen, thymol, or carvacrol. Experimental doses are not personal instructions.
+  health question. Civiletto et al., Nature Aging 2025: a zebrafish muscle screen found thymol and
+  carvacrol activate autophagy and mitophagy. Lists thymol, carvacrol, their conjugates, oregano oil
+  and three pilot molecules. Use when someone asks about this study, terpenoid autophagy in zebrafish
+  or mice, or the listed compounds; not for a person's own measurements.
 ---
 
 # 草本萜类与自噬
@@ -15,21 +14,16 @@ description: >-
 > **分级 C，只收录。** 这篇论文的主要证据来自斑马鱼、小鼠、培养细胞。不要用它回答某个人自己的健康问题，也不要向用户索要测量、现用药或体检来运行它；脚本输出只是复现论文里的名单或数值，不是这个人的结果。
 <!-- /tier-banner -->
 
-名单是正文点名的自噬激活物。补充表里的斑马鱼荧光面积不换成个人分数。表观遗传年龄缺位点权重列，所以不算。实验浓度不写成用法。
+这项研究在斑马鱼肌肉里筛食物来源的分子，点名百里香酚和香芹酚能促进自噬和线粒体自噬。小鼠实验还看到肌肉表现和表观遗传年龄的变化。
 
-不要向用户要 GEO、STRING、PDF 或补充表。现用药对不上时写「不能据此停」。体检不增删名单。
+脚本复现论文名单：正文点名的自噬激活物。Supplementary Table 2 里的斑马鱼荧光面积不换成分数。表观遗传年龄缺位点权重列，所以不算。实验浓度不是用法。不要向用户要 GEO、STRING、PDF 或补充表。
 
-## 命令
+## 命令（复现论文名单）
 
 Set `SKILL` to the directory that contains this file.
 
 ```bash
-python3 "$SKILL/scripts/personal_report.py" \
-  --measurements measurements.csv \
-  --medications meds.txt \
-  --labs checkup.csv \
-  --age 50 \
-  --out out
+python3 "$SKILL/scripts/personal_report.py" --out out
 ```
 
-方法说明见 [references/claims.md](references/claims.md) 和 [references/contract.md](references/contract.md)。
+方法说明见 [references/claims.md](references/claims.md) 和 [references/contract.md](references/contract.md)。引用 `out/report.md` 时说明这是论文复现，包括 `边界:` 那一行。
