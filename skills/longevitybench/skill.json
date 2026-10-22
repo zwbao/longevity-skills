@@ -26,7 +26,7 @@
     "year": 2026,
     "authors": "Zhavoronkov 等",
     "article_url": "https://doi.org/10.1016/j.cell.2026.08.026",
-    "summary_zh": "DrugAge 回顾性排序和 Longevity Claw 的标志物向量场顺序。名次和名单里没有的药都不是停用理由，体检不增删化合物。",
+    "summary_zh": "这个基准用 DrugAge 做化合物的回顾性排序，并给出 Longevity Claw 的标志物向量场顺序，证据主要来自动物寿命实验。脚本复现这两个排序，名次和名单里没有的药都不是停用理由。",
     "summary_status": "draft"
   },
   "entry": {

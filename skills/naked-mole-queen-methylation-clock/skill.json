@@ -34,7 +34,7 @@
       }
     ],
     "code_url": "https://media.springernature.com/original/springer-static/esm/art%3A10.1038%2Fs43587-021-00152-1/MediaObjects/43587_2021_152_MOESM1_ESM.pdf",
-    "summary_zh": "这项研究为裸鼹鼠多个组织建立甲基化年龄模型，并比较繁殖雌性与非繁殖个体。位点到齐时，个人报告用补充表的系数重算。女王身份没有单独的加减项。",
+    "summary_zh": "这项研究为裸鼹鼠多个组织建立甲基化年龄模型，并比较繁殖雌性与非繁殖个体。脚本在位点到齐时用补充表系数复现甲基化年龄，女王身份没有单独的加减项。",
     "summary_status": "draft"
   },
   "entry": {
