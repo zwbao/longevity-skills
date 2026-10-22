@@ -2,7 +2,7 @@
   "schema": "longevity-skill/1",
   "name": "nicotinamide-riboside-airway-inflammation",
   "kind": "paper",
-  "tier": "A",
+  "tier": "B",
   "species": [
     "human"
   ],
@@ -10,14 +10,14 @@
   "domains": [
     "免疫与炎症"
   ],
-  "blurb_zh": "痰液白细胞介素-8 从基线到第六周的变化。",
+  "blurb_zh": "两次痰液白细胞介素-8之间的百分比变化（通用算术）。",
   "intents": [
     "before_after",
     "intervention_evidence",
     "immune_inflammation"
   ],
   "triage": {
-    "reason_zh": "人体随机试验，用个人痰液IL-8基线和第六周两次测量算百分比变化。",
+    "reason_zh": "这是随机试验，结论是组间差，不给个人计算方法；脚本只把两次痰液IL-8算成百分比变化，是通用算术。",
     "reviewed": false
   },
   "paper": {
