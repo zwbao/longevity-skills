@@ -2,7 +2,7 @@
   "schema": "longevity-skill/1",
   "name": "semaglutide-epigenetic-aging-trial",
   "kind": "paper",
-  "tier": "A",
+  "tier": "B",
   "species": [
     "human"
   ],
@@ -10,14 +10,14 @@
   "domains": [
     "甲基化"
   ],
-  "blurb_zh": "同一时钟在基线和第 32 周的变化。",
+  "blurb_zh": "同一时钟第 32 周减基线（只做减法，旁边附论文组间差）。",
   "intents": [
     "before_after",
     "epigenetic_age",
     "intervention_evidence"
   ],
   "triage": {
-    "reason_zh": "司美格鲁肽随机试验，用个人同一时钟第32周减基线算出变化。",
+    "reason_zh": "随机试验的组间比较，输入是别的时钟已算好的数值，论文没有个人模型；脚本只做第32周减基线。",
     "reviewed": false
   },
   "paper": {
