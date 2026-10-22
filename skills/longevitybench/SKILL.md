@@ -2,12 +2,10 @@
 name: longevitybench
 description: >-
   Tier C index only (many species study): do not use it to answer a person's own health question.
-  Writes a personal readout of the Longevity Claw DrugAge ranking and its eight-intervention hallmark
-  vector field. It uses the frozen DrugAge table from that repository, scores compounds with the
-  repository formula, and lists the control-law order for an age. Use when the user mentions
-  LongevityBench, Longevity Claw, DrugAge, compound ranking, control-theory interventions, or which
-  intervention the model orders. Current medicines and checkup labs are context. The report does not
-  say what to start or stop.
+  Zhavoronkov et al., Cell 2026: an open benchmark and language models for AI in ageing biology. Holds
+  the Longevity Claw DrugAge compound ranking (frozen table) and its eight-intervention hallmark
+  vector-field order. Use when someone asks about LongevityBench, Longevity Claw, DrugAge ranking or
+  this model; not for a person's own medicines.
 ---
 
 # LongevityBench readout
@@ -16,37 +14,18 @@ description: >-
 > **分级 C，只收录。** 这篇论文的主要证据来自多个物种。不要用它回答某个人自己的健康问题，也不要向用户索要测量、现用药或体检来运行它；脚本输出只是复现论文里的名单或数值，不是这个人的结果。
 <!-- /tier-banner -->
 
-Produce one personal report. The user may supply an age, current medicines, and a checkup file. The compound table is already in this skill. Never ask the user for DrugAge, GEO, STRING, NHANES, or model weights.
+This skill reproduces two outputs from the Longevity Claw repository behind LongevityBench: a retrospective DrugAge ranking (compounds with at least two published experiments, scored with the repository formula on the frozen table) and the eight-intervention hallmark vector-field order. The evidence is mostly animal lifespan experiments across many species.
 
-The report is a retrospective ranking plus a vector-field order. It does not say which intervention to start or stop. Copy `out/report.md`, including its `边界:` line. A missing name or a low rank is not a reason to stop a medicine. Checkup values do not add or remove compounds.
+The ranking and the order are research outputs, not advice: a low rank or a missing name is not a reason to stop a medicine, and the control cost is not a clinical age. NHANES elastic-net age, the 353-CpG ridge and L-Qwen3.5-9B are not part of this command. Never ask for DrugAge, GEO, STRING, NHANES or model weights; the compound table is already in this skill (`data/drugage.csv`). Do not run `prepare_reference.py` unless someone asks to refresh the DrugAge file, and do not say a refresh ran if it did not.
 
-## Command
+Method notes: [references/claims.md](references/claims.md), [references/operations.md](references/operations.md).
 
-Set `SKILL` to the directory that contains this file.
+## Command (reproduces the repository output)
 
 ```bash
-python "$SKILL/scripts/personal_report.py" \
-  --medications MEDS.txt \
-  --labs CHECKUP.csv \
-  --age AGE \
-  --out out/
+python "$SKILL/scripts/personal_report.py" --out out
 ```
 
-`--age` defaults to 50, the age used by the repository's control-law entry point. `--medications` is optional, one name per line. `--labs` is optional: a table (`项目,结果,单位`) or plain text containing 谷丙转氨酶, 谷草转氨酶, 肌酐, 肾小球滤过率, 血红蛋白, or 血小板.
+`--age` defaults to 50, the age used by the repository's control-law entry point; pass another age only to reproduce the order the repository gives for that age.
 
-Chinese names such as 阿司匹林肠溶片, 二甲双胍, and 雷帕霉素 are matched to DrugAge display names. IDAT and PDF files are not read.
-
-Do not run `prepare_reference.py` unless the user asks to refresh the DrugAge file. The frozen snapshot is `data/drugage.csv`. If a refresh is not run, do not say that it was.
-
-## Report
-
-`out/report.md` is the whole user-facing product:
-
-- compounds with at least two published experiments, under readable names
-- whether current medicines appear on that list, and whether they appear in the eight-intervention field
-- the vector-field order for the given age
-- checkup values outside common adult bounds
-
-Do not add a sentence that tells the user to start or stop a medicine. The control cost is not a clinical age. NHANES elastic-net age, the 353-CpG ridge, and L-Qwen3.5-9B are not part of this command.
-
-Method notes: [references/claims.md](references/claims.md), [references/operations.md](references/operations.md). An example command is in [examples.md](examples.md).
+When quoting `out/report.md`, say it reproduces the paper, and keep its `边界:` line.

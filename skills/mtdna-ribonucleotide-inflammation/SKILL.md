@@ -2,10 +2,10 @@
 name: mtdna-ribonucleotide-inflammation
 description: >-
   Tier C index only (mouse, cultured cells study): do not use it to answer a person's own health
-  question. Matches one person's gene names to the interferon-stimulated genes printed on the heatmaps
-  in Bahat et al., Nature 2025. Use when the user mentions ribonucleotides in mtDNA, MGME1, YME1L, or
-  cGAS-STING senescence. It does not invent an expression weight or a nucleotide-ratio cutoff.
-  Medicines and checkup labs stay context. The report does not say what to start or stop.
+  question. Bahat et al., Nature 2025: in mice and cultured cells, ribonucleotides in mtDNA drive
+  cGAS-STING inflammation. Lists the interferon-stimulated genes printed on its heatmaps. Use when
+  someone asks about this study, mtDNA ribonucleotides and inflammation in mice and cells, or the
+  listed genes; not for a person's own measurements.
 ---
 
 # 线粒体核糖核苷酸与炎症
@@ -14,24 +14,20 @@ description: >-
 > **分级 C，只收录。** 这篇论文的主要证据来自小鼠、培养细胞。不要用它回答某个人自己的健康问题，也不要向用户索要测量、现用药或体检来运行它；脚本输出只是复现论文里的名单或数值，不是这个人的结果。
 <!-- /tier-banner -->
 
-用户交基因名和可选的核苷酸比值、现用药和体检。不要向用户要 INTERFEROME、PRIDE、GEO 或 PDF。
+核苷酸不平衡时，核糖核苷酸更容易嵌进线粒体 DNA，线粒体 DNA 碎片进入胞质后会带动 cGAS–STING 炎症。在衰老细胞里，外加脱氧核糖核苷可以压低这种炎症表型。
 
-只有正文热图上印出的干扰素刺激基因进入名单，数值照录，没有权重。核糖核苷酸与脱氧核糖核苷酸的比值没有个人切点。z 分数缺 log2 强度的均值和标准差。
+脚本复现正文热图上印出的干扰素刺激基因名单，数值照录，没有权重。核糖核苷酸与脱氧核糖核苷酸的比值论文没有给切点；z 分数缺 log2 强度的均值和标准差，所以都不算。不要向用户要 INTERFEROME、PRIDE、GEO 或 PDF。
 
-现用药对不上时保留「不能据此停」。体检不增删方法算出的名单。
-
-## 命令
+## 命令（复现论文名单）
 
 Set `SKILL` to the directory that contains this file.
 
 ```bash
-python "$SKILL/scripts/personal_report.py" \
-  --measurements measurements.csv \
-  --medications meds.txt \
-  --labs checkup.csv \
-  --out out/
+python "$SKILL/scripts/personal_report.py" --out out
 ```
 
-`measurements.csv` 用两列 `name,value`。`--medications` 每行一个名字。`--labs` 是 `项目,结果,单位`。
+研究者可以用 `--measurements`（`name,value`）传入基因名，查它们是否在论文的热图名单里。
+
+引用 `out/report.md` 时说明这是论文复现，包括 `边界:` 那一行。
 
 方法说明见 [references/claims.md](references/claims.md)。

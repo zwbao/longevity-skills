@@ -6,7 +6,7 @@ import csv
 from functools import lru_cache
 from pathlib import Path
 
-BOUNDARY = "这是研究复现意义上的个人读出，不是治疗建议。不能据此开始或停止任何药物。名单里没有某个名字，不是停用的理由。体检不增删方法算出的名单。"
+BOUNDARY = "这是论文复现，不是这个人的结果，也不是治疗建议。不能据此开始或停止任何药物。名单里没有某个名字，不是停用的理由。体检不增删方法算出的名单。"
 
 # Fig. 3c. Zero-intercept LME slope. Substitutions per genome, not indels.
 ELB_K = 3206.4

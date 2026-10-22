@@ -4,7 +4,7 @@ IAS symbols are Supplementary Data Table 2, one column, no weights.
 IFTA group labels are the IFTAGROUP column of Supplementary Data Table 3.
 """
 
-BOUNDARY = "这是研究复现意义上的个人读出，不是治疗建议。不能据此开始或停止任何药物。名单里没有某个名字，不是停用的理由。体检不增删方法算出的名单。"
+BOUNDARY = "这是论文复现，不是这个人的结果，也不是治疗建议。不能据此开始或停止任何药物。名单里没有某个名字，不是停用的理由。体检不增删方法算出的名单。"
 
 # Fig. 7 and the table use IFTA 0-1 versus 2-3. The table's IFTAGROUP words are below.
 IFTA_MILD = "ABSENT-MILD"

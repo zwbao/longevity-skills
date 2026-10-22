@@ -1,12 +1,11 @@
 ---
 name: insulin-igf-pten-longevity
 description: >-
-  Tier C index only (C. elegans study): do not use it to answer a person's own health question. Checks
-  whether a supplied amino-acid change matches DAF-18 C150Y (yh1, syb499) or human PTEN C105Y from
-  Park et al., Nature Communications 2021, and keeps C124S as the named phosphatase-dead control. It
-  does not convert the variant into a lifespan. Use when the user mentions daf-18(yh1), PTEN C105Y, or
-  insulin/IGF-1 signaling in C. elegans. Medicines and checkup labs do not edit the method list. The
-  report does not say what to start or stop.
+  Tier C index only (C. elegans study): do not use it to answer a person's own health question. Park
+  et al., Nature Communications 2021: in C. elegans with reduced insulin/IGF-1 signalling, DAF-18
+  C150Y (yh1) keeps longevity but eases fitness defects; human PTEN C105Y was assayed. Lists C150Y,
+  C105Y, yh2, yh3 and the C124S control. Use when someone asks about this study, daf-18/PTEN in worms,
+  or the listed variants; not for a person's own genotype.
 ---
 
 # 胰岛素通路里的磷酸酶变体
@@ -15,21 +14,16 @@ description: >-
 > **分级 C，只收录。** 这篇论文的主要证据来自线虫。不要用它回答某个人自己的健康问题，也不要向用户索要测量、现用药或体检来运行它；脚本输出只是复现论文里的名单或数值，不是这个人的结果。
 <!-- /tier-banner -->
 
-用户交一个氨基酸替换或等位基因名字、可选的年龄、现用药和体检。不要向用户要 GEO、STRING、PDF 或补充表。
+这项研究在胰岛素信号减弱的线虫里找到 DAF-18 的一个氨基酸替换（C150Y，等位 yh1、syb499），长寿还在，运动缺陷减轻。同位置的人源 PTEN 替换 C105Y 也在正文里做了酶活测定；C124S 是点名的无磷酸酶活性对照。
 
-报告只核对这个名字是不是正文点名的 C150Y、C105Y、C124S、yh2 或 yh3。对不上就照实写。没有替换时写明缺 variant。生存数据集里的数字不写成这个人的寿命。现用药对不上时保留「不能据此停」。体检不增删方法算出的名单。
+脚本复现论文名单：C150Y、C105Y、C124S、yh2、yh3。生存数据集里的数字是线虫结果，不换算成寿命。不要向用户要 GEO、STRING、PDF 或补充表。
 
-## 命令
+## 命令（复现论文名单）
 
 ```bash
-python3 "$SKILL/scripts/personal_report.py" \
-  --measurements measurements.csv \
-  --medications meds.txt \
-  --labs checkup.csv \
-  --age 70 \
-  --out out
+python "$SKILL/scripts/personal_report.py" --out out
 ```
 
-`measurements.csv` 用 `name,value`。替换放在 `variant`。
+研究者可以用 `--measurements measurements.csv`（`name,value`，替换放在 `variant`）核对某个替换是否在论文名单里。
 
-把 `out/report.md` 整段交给用户，包括最后一行 `边界:`。
+引用 `out/report.md` 时说明这是论文复现，包括 `边界:` 那一行。
