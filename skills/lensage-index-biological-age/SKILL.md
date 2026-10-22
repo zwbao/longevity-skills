@@ -1,16 +1,18 @@
 ---
 name: lensage-index-biological-age
 description: >-
-  Tier A draft: the paper's printed example is not reproduced yet, so treat the readout as
-  provisional. Computes the LensAge index as lens age minus chronological age, as defined by Li et
-  al., Nature Communications 2023, and compares that index with the printed fast-ager cutoffs of 5,
-  10, and 20 years. It does not run the unavailable InceptionV3 model. Use when the user mentions
-  LensAge or a lens photograph age minus chronological age. Medicines and checkup labs stay context.
+  Tier B lookup (human): what the paper reports about named entities, not a validated personal score.
+  Subtracts chronological age from a lens age the user already has, which is how Li et al., Nature
+  Communications 2023 define the LensAge index, and places the difference beside the 5, 10, and 20
+  year fast-ager lines the paper reports. The lens age itself comes from the paper's InceptionV3 photo
+  model, whose code is released only on request, so the script does not run it or check the lens age.
+  Use when the user mentions LensAge or a lens photograph age minus chronological age. Medicines and
+  checkup labs stay context.
 ---
 
 # 晶状体年龄指数
 
-你交已经得到的晶状体年龄和实足年龄。报告用前者减去后者，并对照大于 5 年、10 年和 20 年这三个快老化切点。两个数缺一个时，报告说明没有算出指数。
+论文的照片模型要向作者申请，这里不运行它。你交已经得到的晶状体年龄和实足年龄。报告用前者减去后者，并对照大于 5 年、10 年和 20 年这三个快老化切点。两个数缺一个时，报告说明没有算出指数。
 
 不要向用户要照片模型或 PDF。不要另造网络权重。现用药对不上时写「不能据此停」。体检不增删指数。
 
