@@ -1,0 +1,18 @@
+{
+  "name": "longevity-skills",
+  "description": "Longevity and ageing methods for agents: personal readouts that reproduce a paper's printed method (tier A), lookups of what papers report (tier B), an index of animal and cell studies (tier C), wrapped tools, and a cited evidence store. Every SKILL.md description starts with its tier.",
+  "author": {
+    "name": "zwbao"
+  },
+  "homepage": "https://github.com/zwbao/longevity-skills",
+  "repository": "https://github.com/zwbao/longevity-skills",
+  "license": "MIT",
+  "keywords": [
+    "longevity",
+    "ageing",
+    "biological age",
+    "geroscience",
+    "evidence"
+  ],
+  "version": "2026.43.0"
+}

@@ -12,15 +12,17 @@
 | `skills/<name>/skill.json` | 机器可读的清单：分级、物种、证据类型、意图、论文信息、入口脚本、每个输入的 LOINC、单位、可换算单位和合理范围、输出。schema 在 `schema/skill.schema.json`。 |
 | `catalog.json` | 全部技能的索引（由 `skill.json` 生成），加上意图定义和证据库计数。Agent 和 dsh-plugin-longpi 读这一个文件就够。 |
 | `intents.json` | 用户会怎么问（我的生物年龄、甲基化年龄、某个补剂有没有用……）对应到哪些技能。 |
-| `skills/longevity-evidence/data/claims.jsonl` | 从收录论文冻结名单里抽出的实体和论文对它的说法，按人群、动物、细胞标注。由 `longevity-evidence` 技能查询。 |
+| `skills/longevity-evidence/data/claims.jsonl` | 从收录论文冻结名单里抽出的实体和论文对它的说法，按人群、动物、细胞标注。`kind` 区分对这个实体的发现（finding）和论文名单里的一项（list_member）；只读到摘要的行标 `source.access: abstract_only`。由 `longevity-evidence` 技能查询，查询结果同时列出 `data/effects.jsonl` 里的试验平均效应。 |
 | `registry/papers.jsonl` | 每周流水线看过的每篇论文（DOI 已规范化、唯一），以及它的去向：技能、证据、只收录或拒收。也是文献索引。 |
 
 ## 分级
 
-- **A**：用这个人自己的测量，按论文印出的公式、系数或切点算出个人读出。
-- **B**：人群研究里点名的基因、蛋白、化合物或方向，个人报告只做查表。名单同时进证据库。
+- **A**：用这个人自己的测量，按论文印出的公式、系数或切点算出个人读出。每个 A 类技能在 `skill.json` 的 `validation` 里登记它复现了论文印出的哪个数字（原文、位置和断言它的测试）；还没复现的标为 `draft`，写明缺什么。
+- **B**：人群研究里点名的基因、蛋白、化合物或方向，个人报告只做查表；或者论文的模型没有公开，脚本只做简单算术。名单同时进证据库。
 - **C**：动物、细胞实验，或者输入只能是队列统计量。只收录，不参与个人问题的调度。
 - **tool**：包装已发布的程序或数据库，以及本仓库的证据库。
+
+每个 `SKILL.md` 的 description 第一句写明分级（例如 `Tier C index only (mouse study): …`），C 类正文开头另有一段「只收录」说明。这两处由 `lsk build` 按 `skill.json` 生成，只读 SKILL.md 的 Agent 也能看出哪些技能不能用来回答个人问题。
 
 ## 报告
 
@@ -39,11 +41,15 @@ python3 -m tools.lsk build        # 重新生成 catalog.json、下面的技能�
 python3 -m tools.lsk test --changed origin/main   # 只测相对 main 改动过的技能
 ```
 
-`data/` 里是个人助手用来判断干预效果的两张参考表，每个数字都带出处：`biological_variation.json` 是个体内生物变异（判断两次检查的变化是不是超出正常波动；每个数都来自期刊论文，`cvi_source.quote` 附印着这个数的原文，`lsk check` 核对数字都在引文里），`effects.jsonl` 是干预对指标的试验平均效应（附原文引文；`verified_by` 写明是人核对过，还是由脚本对照原文核对了引文和数字，`lsk check` 检查每个数都在引文里）。每周更新论文的自动化 agent 按 [docs/AGENT_PROMPT.md](docs/AGENT_PROMPT.md) 执行。
+`data/` 里是个人助手用来判断干预效果的两张参考表，每个数字都带出处：`biological_variation.json` 是个体内生物变异（判断两次检查的变化是不是超出正常波动；每个数都来自期刊论文，`cvi_source.quote` 附印着这个数的原文，`lsk check` 核对数字都在引文里），`effects.jsonl` 是干预对指标的试验平均效应（附原文引文；`verified_by` 写明是人核对过（`person`），还是由脚本对照原文引文核对了数字（`quote_match`，插件显示为「尚未人工复核」）。`lsk check` 要求引文是一段连续原文、包含效应值和置信区间、写出指标名，负的效应在引文里看得出是下降）。每周更新论文的自动化 agent 按 [docs/AGENT_PROMPT.md](docs/AGENT_PROMPT.md) 执行。
 
 `skillkit.py` 和 `paper_card.py` 的标准副本在 `tools/skillkit/`，各技能里是复制件，`lsk build` 负责同步，CI 检查不能漂移。新技能走 pull request：CI 重建生成文件、跑检查和全部测试，并在能读到 dsh-plugin-longpi 时跑调度回归。每周一发布一个版本（`VERSION`、tag `v<年>.<周>.<n>`）。
 
-本地使用时，把 `~/.cursor/skills/<name>` 指到本仓库里的对应目录，或者在别的 Agent 里直接读 `catalog.json`。不要写到 `~/.cursor/skills-cursor/`。
+## 安装
+
+- **Claude Code**：`/plugin marketplace add zwbao/longevity-skills`，再 `/plugin install longevity-skills@longevity-skills`。之后每次 `/plugin marketplace update` 拿到最新一周的版本。
+- **Cursor**：把 `~/.cursor/skills/<name>` 指到本仓库里的对应目录（不要写到 `~/.cursor/skills-cursor/`）。只想要个人读出时，只链接 `catalog.json` 里 `tier` 为 A 或 tool 的目录。
+- **其他 Agent**：读 `catalog.json`，按 `tier`、`validation_status` 和 `inputs` 选技能。
 
 ## 许可
 

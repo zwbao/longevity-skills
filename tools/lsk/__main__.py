@@ -23,7 +23,7 @@ import sys
 from typing import List
 
 from . import catalog, datasets, evidence, frontmatter, manifest, readme, registry, testrun, vendor
-from .common import CATALOG, README, dump_json, read_json, write_json
+from .common import CATALOG, PLUGIN, README, dump_json, read_json, write_json
 from .doi import normalize_doi
 
 
@@ -76,6 +76,8 @@ def cmd_check() -> int:
     status |= _report(datasets.check_effects(), "data/effects.jsonl")
     if not errors:
         status |= cmd_catalog(check=True)
+    if PLUGIN.exists():
+        status |= _report([] if read_json(PLUGIN) == plugin_manifest() else [".claude-plugin/plugin.json version differs from VERSION (run: python3 -m tools.lsk build)"], ".claude-plugin/plugin.json")
     status |= cmd_readme(check=True)
     return status
 
@@ -108,7 +110,16 @@ def cmd_build() -> int:
     print(f"SKILL.md tier lines updated: {len(rewritten)}")
     status = cmd_catalog(check=False)
     status |= cmd_readme(check=False)
+    if write_json(PLUGIN, plugin_manifest()):
+        print(".claude-plugin/plugin.json version written")
     return status
+
+
+def plugin_manifest() -> dict:
+    """The Claude Code plugin manifest carries the release version from VERSION."""
+    data = read_json(PLUGIN)
+    data["version"] = catalog.version()
+    return data
 
 
 def cmd_fmt() -> int:

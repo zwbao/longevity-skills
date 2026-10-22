@@ -1,0 +1,16 @@
+{
+  "name": "longevity-skills",
+  "owner": {
+    "name": "zwbao"
+  },
+  "metadata": {
+    "description": "Longevity and ageing skills for agents, rebuilt weekly from new papers."
+  },
+  "plugins": [
+    {
+      "name": "longevity-skills",
+      "source": "./",
+      "description": "Longevity and ageing methods for agents, updated weekly from new papers."
+    }
+  ]
+}
