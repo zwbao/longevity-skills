@@ -2,7 +2,7 @@
   "schema": "longevity-skill/1",
   "name": "amino-acid-biological-age",
   "kind": "paper",
-  "tier": "A",
+  "tier": "B",
   "species": [
     "human"
   ],
@@ -10,12 +10,12 @@
   "domains": [
     "蛋白、代谢与器官年龄"
   ],
-  "blurb_zh": "氨基酸浓度的比例。",
+  "blurb_zh": "八种氨基酸各占总和的比例（不出氨基酸年龄）。",
   "intents": [
     "metabolomic_age"
   ],
   "triage": {
-    "reason_zh": "用个人八种氨基酸浓度按简化模型算各自占总和的比例；随机森林权重未公布，不出年龄。",
+    "reason_zh": "氨基酸年龄是随机森林模型，论文和代码仓库都没有放出训练好的模型，个人算不出年龄。",
     "reviewed": false
   },
   "paper": {

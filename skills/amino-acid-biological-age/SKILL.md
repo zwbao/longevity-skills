@@ -1,15 +1,18 @@
 ---
 name: amino-acid-biological-age
 description: >-
-  Tier A draft: the paper's printed example is not reproduced yet, so treat the readout as
-  provisional. Divides each of the eight amino-acid concentrations in the simplified AmiAge model of
-  Ding et al., Nature Communications 2026 (doi:10.1038/s41467-026-73371-y), by the sum of those eight.
-  Use when the user mentions AmiAge, an amino-acid age clock, or this paper. The ratio is computed
-  only when all eight are present. Random-forest weights are not in the repository, so the report does
-  not print an age or an age gap. Checkup labs do not change the amino-acid list.
+  Tier B lookup (human): what the paper reports about named entities, not a validated personal score.
+  The amino-acid clock of Ding et al., Nature Communications 2026 (doi:10.1038/s41467-026-73371-y) is
+  a random forest whose trained model is not published (the code repository has only training code),
+  so the script cannot compute an amino-acid age or age gap. It only divides each of the eight
+  amino-acid concentrations of the simplified model by their sum, which are input features of that
+  model, not a score. Use when the user mentions AmiAge, an amino-acid age clock, or this paper.
+  Checkup labs do not change the amino-acid list.
 ---
 
 # 氨基酸比例
+
+论文的氨基酸年龄是随机森林模型，训练好的模型没有公开，所以这里算不出年龄，也没有年龄差。脚本只做一件事：把八种氨基酸各自除以八种之和。这些比例是模型的输入特征，不是评分。
 
 用户交氨基酸浓度、现用药和体检。不要向用户要随机森林权重或 PDF。生物年龄算不出来。
 
