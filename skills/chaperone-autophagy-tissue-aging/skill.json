@@ -33,7 +33,7 @@
       }
     ],
     "code_url": "https://github.com/amsegura/Khawaja_et_al_2024/blob/main/cmascore_genes.xlsx",
-    "summary_zh": "这项研究用荧光报告小鼠，按组织和细胞类型、并按性别，看衰老时的伴侣介导自噬。转录分数使用代码仓库里的基因方向和权重，再按参照细胞的均值和标准差做标准化。个人报告只在两种点计数都有时计算有能力溶酶体的百分比。",
+    "summary_zh": "这项研究用荧光报告小鼠，按组织、细胞类型和性别看衰老时的伴侣介导自噬。脚本复现论文由两种点计数得到有能力溶酶体百分比的算法。",
     "summary_status": "draft"
   },
   "entry": {
