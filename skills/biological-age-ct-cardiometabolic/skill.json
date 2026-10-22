@@ -2,7 +2,7 @@
   "schema": "longevity-skill/1",
   "name": "biological-age-ct-cardiometabolic",
   "kind": "paper",
-  "tier": "A",
+  "tier": "B",
   "species": [
     "human"
   ],
@@ -10,13 +10,13 @@
   "domains": [
     "影像"
   ],
-  "blurb_zh": "腹部影像测量、年龄和性别。",
+  "blurb_zh": "把腹部CT八项测量放在同性别、同年龄段存活者和死亡者的中位数旁边。",
   "intents": [
     "imaging",
     "frailty_mortality"
   ],
   "triage": {
-    "reason_zh": "人群队列，用个人腹部CT八项标志与表2同性别年龄段存活和死亡中位数比较，按IPA drop排序。",
+    "reason_zh": "CT生物年龄是带样条的Cox模型，系数没印、代码需申请，脚本只把个人数值与表2中位数对照。",
     "reviewed": false
   },
   "paper": {
@@ -27,7 +27,7 @@
     "year": 2025,
     "authors": "Pickhardt 等",
     "article_url": "https://doi.org/10.1038/s41467-025-56741-w",
-    "summary_zh": "这项研究用可解释的自动化人工智能，从大批成人的腹部CT量出肌肉、脂肪、主动脉钙化、骨密度和腹部实质器官，建成CT生物年龄模型，预测寿命优于只看人口学信息。个人报告只把你的八项CT标志与同性别、同年龄段存活者和死亡者的中位数比较，把更靠近死亡者中位数的项目按预测贡献排序，不估算生存概率，也不据此开始或停止用药。",
+    "summary_zh": "这项研究用可解释的自动化人工智能，从大批成人的腹部CT量出肌肉、脂肪、主动脉钙化、骨密度和腹部实质器官，建成CT生物年龄模型，预测寿命优于只看人口学信息。论文没有公开模型系数，个人报告只把你的八项CT标志放在同性别、同年龄段存活者和死亡者的中位数旁边，标出离哪个中位数更近，并按论文的贡献排序，不算CT生物年龄或生存概率。",
     "summary_status": "draft"
   },
   "entry": {

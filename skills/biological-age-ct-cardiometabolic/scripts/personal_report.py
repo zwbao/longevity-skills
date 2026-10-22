@@ -243,7 +243,7 @@ def render(list_lines: list[str], notes: list[str], meds: list[str], labs: list[
     elif not list_lines:
         intro = "这次没有标志比存活中位数更靠近死亡中位数，所以名单是空的。"
     else:
-        intro = "这次把更靠近死亡中位数的影像标志，按论文的贡献从大到小排列。更靠近存活中位数的项目不进入名单。没有计算生存概率。"
+        intro = "这次把更靠近死亡中位数的影像标志，按论文的贡献从大到小排列。更靠近存活中位数的项目不进入名单。“离哪个中位数更近”是本技能的简单对照，不是论文的模型；论文的模型系数没有公开，这里没有计算 CT 生物年龄或生存概率。"
     body = ["# 腹部影像生物标志", "", intro, ""]
     if notes:
         body.extend(notes)
