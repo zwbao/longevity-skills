@@ -2,7 +2,7 @@
   "schema": "longevity-skill/1",
   "name": "sleep-chart-biological-ageing",
   "kind": "paper",
-  "tier": "A",
+  "tier": "B",
   "species": [
     "human"
   ],
@@ -10,12 +10,12 @@
   "domains": [
     "临床年龄与可穿戴"
   ],
-  "blurb_zh": "睡眠小时数的分组。",
+  "blurb_zh": "睡眠小时数落在论文的短、正常还是长睡眠组（不算生物年龄差）。",
   "intents": [
     "wearable_sleep"
   ],
   "triage": {
-    "reason_zh": "用个人睡眠小时数按论文6和8小时切点分为短、正常、长三组。",
+    "reason_zh": "论文的生物年龄差要影像、血浆蛋白组和代谢组模型，个人算不出；脚本只按6和8小时把睡眠时长分组，等于复述输入。",
     "reviewed": false
   },
   "paper": {
