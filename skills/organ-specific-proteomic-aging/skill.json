@@ -2,7 +2,7 @@
   "schema": "longevity-skill/1",
   "name": "organ-specific-proteomic-aging",
   "kind": "paper",
-  "tier": "A",
+  "tier": "B",
   "species": [
     "human"
   ],
@@ -10,12 +10,12 @@
   "domains": [
     "蛋白、代谢与器官年龄"
   ],
-  "blurb_zh": "器官蛋白质的 z，可带出生到体检的天数。",
+  "blurb_zh": "给你已拿到的器官蛋白质年龄差z按论文的1.5个标准差分档，并核对蛋白是否在器官时钟名单里；不从蛋白算年龄。",
   "intents": [
     "proteomic_organ_age"
   ],
   "triage": {
-    "reason_zh": "对已算好的器官蛋白质年龄差z按论文±1.5标准差分档，并按天数换算年龄。",
+    "reason_zh": "器官蛋白质年龄差要用LightGBM时钟从奥林克蛋白组算出，补充表没有模型参数，脚本只给你已有的z按1.5标准差分档。",
     "reviewed": false
   },
   "paper": {
