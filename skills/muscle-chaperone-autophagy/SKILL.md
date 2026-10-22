@@ -2,11 +2,10 @@
 name: muscle-chaperone-autophagy
 description: >-
   Tier C index only (mouse, human study): do not use it to answer a person's own health question.
-  Records that a personal chaperone-mediated autophagy score is not computed for skeletal muscle.
-  Supplementary Fig. 1 names the network genes and does not give the weight or direction column used
-  in the Methods. Use when the user mentions CMA, LAMP2A, HSC70, or this Nature Metabolism muscle
-  myopathy paper. Medicines and checkup labs do not create a score. The report does not say what to
-  start or stop.
+  Santiago-Fernández et al., Nature Metabolism 2025: age-related loss of chaperone-mediated autophagy
+  in mouse skeletal muscle causes myopathy. Lists the CMA network genes (e.g. LAMP2A, HSC70); no
+  score. Use when someone asks about this study, CMA in muscle, or the listed genes; not for a
+  person's own measurements.
 ---
 
 # 骨骼肌分子伴侣自噬
@@ -15,19 +14,16 @@ description: >-
 > **分级 C，只收录。** 这篇论文的主要证据来自小鼠、人。不要用它回答某个人自己的健康问题，也不要向用户索要测量、现用药或体检来运行它；脚本输出只是复现论文里的名单或数值，不是这个人的结果。
 <!-- /tier-banner -->
 
-用户交测量、现用药、体检，以及可选的年龄。不要向用户要 GEO、STRING、PDF 或补充表。
+这项研究看伴侣介导的自噬怎样随饥饿、运动、损伤和年龄在骨骼肌里变化。肌肉里缺这条通路会带来进行性肌病，老年小鼠里把活性补回去能减轻一部分表型。
 
-报告开头是论文卡片。方法写每个网络组分的权重是 1 或 2、方向是正或负，补充图只列出基因名，所以这次不算分数。现用药对不上时保留「不能据此停」。体检不增删方法算出的名单。
+脚本复现补充图 1 列出的网络基因名单。方法写每个网络组分的权重是 1 或 2、方向是正或负，但补充图只列出基因名，所以不算分数。不要向用户要 GEO、STRING、PDF 或补充表。
 
-## 命令
+## 命令（复现论文名单）
+
+Set `SKILL` to the directory that contains this file.
 
 ```bash
-python "$SKILL/scripts/personal_report.py" \
-  --measurements measurements.csv \
-  --medications meds.txt \
-  --labs checkup.csv \
-  --age 60 \
-  --out out/
+python "$SKILL/scripts/personal_report.py" --out out
 ```
 
-`measurements.csv` 用 `name,value`，或一行一个论文里的项目名。`--medications` 一行一个名字。`--labs` 是 `项目,结果,单位`。引用 `out/report.md`，包括最后一行 `边界:`。
+引用 `out/report.md` 时说明这是论文复现，包括 `边界:` 那一行。
