@@ -1,18 +1,20 @@
 ---
 name: aging-biomarker-framework
 description: >-
-  Tier A draft: the paper's printed example is not reproduced yet, so treat the readout as
-  provisional. Computes age deviation for clocks the user already has and annotates them with the
-  Biolearn evaluation in Ying et al., Nature Aging 2025. Use when the user mentions Biolearn, GrimAge2
-  mortality, Horvath skin and blood R², or whether age prediction matches mortality prediction.
-  Current medicines and checkup labs are context. The report does not say what to start or stop.
+  Tier B lookup (human): what the paper reports about named entities, not a validated personal score.
+  Subtracts chronological age from clock predictions the user already has (plain arithmetic) and
+  annotates each clock with the Biolearn evaluation in Ying et al., Nature Aging 2025. The paper is a
+  benchmark of existing clocks and publishes no new personal model, so this is not the paper's method
+  applied to a person. Use when the user mentions Biolearn, GrimAge2 mortality, Horvath skin and blood
+  R², or whether age prediction matches mortality prediction. Current medicines and checkup labs are
+  context. The report does not say what to start or stop.
 ---
 
 # 衰老标志物对照
 
 用户交已经算好的预测年龄和实足年龄、现用药和体检。不要向用户要队列或系数文件。
 
-报告只做预测年龄减实足年龄。现用药对不上时保留「不能据此停」。体检不增删方法算出的名单。
+报告只做预测年龄减实足年龄这一步减法；论文本身是对已有时钟的统一评测，没有给个人新算法，所以这不是“论文的模型算出的结果”。现用药对不上时保留「不能据此停」。体检不增删方法算出的名单。
 
 ## 命令
 
