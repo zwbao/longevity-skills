@@ -1,11 +1,12 @@
 ---
 name: human-ovarian-aging-multiomics
 description: >-
-  Tier B lookup (human): what the paper reports about named entities, not a validated personal score.
-  Places a supplied age in the young or reproductively aged donor windows, and checks named cell
-  types, pathways, and genes against the printed directions and Supplementary Table 6. Use when the
-  user mentions ovarian single-nuclei multi-omics, CEBPD, mTOR, or doi:10.1038/s43587-024-00762-5.
-  That gene column has no weight or intercept, so no ovarian age is calculated. Labs do not add genes.
+  Tier B lookup (human): what the paper reports, or simple arithmetic on values you bring; not the
+  paper's model run on one person. Places a supplied age in the young or reproductively aged donor
+  windows, and checks named cell types, pathways, and genes against the printed directions and
+  Supplementary Table 6. Use when the user mentions ovarian single-nuclei multi-omics, CEBPD, mTOR, or
+  doi:10.1038/s43587-024-00762-5. That gene column has no weight or intercept, so no ovarian age is
+  calculated. Labs do not add genes.
 ---
 
 # 人卵巢单核多组学

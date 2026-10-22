@@ -1,15 +1,15 @@
 ---
 name: fasting-mimicking-diet
 description: >-
-  Tier B lookup (human): what the paper reports about named entities, not a validated personal score.
-  Subtracts two biological ages the user already has (computed elsewhere by the same method) and sets
-  the difference beside the trial's reported change. It cannot compute the paper's Klemera-Doubal
-  biological age: Supplementary Table 2 prints the seven slopes, intercepts and residuals, but the
-  age-gap variance s_BA^2 the equation needs is printed nowhere. When chronological age is supplied it
-  also shows the trial-cohort regression of change on baseline age from the authors' Zenodo note,
-  which is a group fit, not a personal model. Use when the user mentions a fasting-mimicking diet, FMD
-  biological age, or this kind of trial. Current medicines and checkup labs are context. The report
-  does not say what to start or stop.
+  Tier B lookup (human): what the paper reports, or simple arithmetic on values you bring; not the
+  paper's model run on one person. Subtracts two biological ages the user already has (computed
+  elsewhere by the same method) and sets the difference beside the trial's reported change. It cannot
+  compute the paper's Klemera-Doubal biological age: Supplementary Table 2 prints the seven slopes,
+  intercepts and residuals, but the age-gap variance s_BA^2 the equation needs is printed nowhere.
+  When chronological age is supplied it also shows the trial-cohort regression of change on baseline
+  age from the authors' Zenodo note, which is a group fit, not a personal model. Use when the user
+  mentions a fasting-mimicking diet, FMD biological age, or this kind of trial. Current medicines and
+  checkup labs are context. The report does not say what to start or stop.
 ---
 
 # 临床生物年龄的前后差

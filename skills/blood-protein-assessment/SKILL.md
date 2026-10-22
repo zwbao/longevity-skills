@@ -1,14 +1,10 @@
 ---
 name: blood-protein-assessment
 description: >-
-  Tier B lookup (human): what the paper reports about named entities, not a validated personal score.
-  Sums the published elastic-net coefficients of Gadd et al., Nature Aging 2024 times protein levels
-  the user supplies already transformed, for each outcome whose proteins are all present. The paper
-  rank-based inverse normalises proteins within its training and test sets, so one person's Olink
-  values cannot be put on that scale alone; this is a research recalculation, not a validated personal
-  score. Use when the user mentions ProteinScore, blood protein incident disease, or a UK Biobank
-  proteomic risk score. Current medicines and checkup labs are context. The report does not say what
-  to start or stop.
+  Tier B lookup (human): what the paper reports, or simple arithmetic on values you bring; not the
+  paper's model run on one person. Use when the user mentions ProteinScore, blood protein incident
+  disease, or a UK Biobank proteomic risk score. Current medicines and checkup labs are context. The
+  report does not say what to start or stop.
 ---
 
 # 血液蛋白与发病

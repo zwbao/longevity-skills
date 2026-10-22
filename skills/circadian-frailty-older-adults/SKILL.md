@@ -1,13 +1,13 @@
 ---
 name: circadian-frailty-older-adults
 description: >-
-  Tier B lookup (human): what the paper reports about named entities, not a validated personal score.
-  Computes relative amplitude, (M10−L5)/(M10+L5), and the 0 to 2 fatigue score from the two CES-D
-  items, both as defined in Cai et al., Nature Communications 2023. The paper reports per-SD hazard
-  ratios, not a personal risk equation, and does not print the sex-specific quintile cutoffs for the
-  frailty phenotype, so the script does not say whether someone is frail or estimate frailty risk. Use
-  when the user mentions circadian rest-activity rhythms and frailty in older adults or this study.
-  Medicines and checkup labs do not edit the list.
+  Tier B lookup (human): what the paper reports, or simple arithmetic on values you bring; not the
+  paper's model run on one person. Computes relative amplitude, (M10−L5)/(M10+L5), and the 0 to 2
+  fatigue score from the two CES-D items, both as defined in Cai et al., Nature Communications 2023.
+  The paper reports per-SD hazard ratios, not a personal risk equation, and does not print the
+  sex-specific quintile cutoffs for the frailty phenotype, so the script does not say whether someone
+  is frail or estimate frailty risk. Use when the user mentions circadian rest-activity rhythms and
+  frailty in older adults or this study. Medicines and checkup labs do not edit the list.
 ---
 
 # 昼夜活动与衰弱

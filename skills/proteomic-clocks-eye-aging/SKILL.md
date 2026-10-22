@@ -1,12 +1,12 @@
 ---
 name: proteomic-clocks-eye-aging
 description: >-
-  Tier B lookup (human): what the paper reports about named entities, not a validated personal score.
-  Records ProAge or cProAge predictions a person already has, using the eye-aging proteomic clocks in
-  Yang et al., npj Digital Medicine 2026 (DOI 10.1038/s41746-026-02805-0). Use when the user brings a
-  proteomic age and asks about eye aging, AREDs, ProAge, or cProAge. Acceleration is the residual from
-  regressing chronological age on proteomic age, and those regression coefficients are not printed, so
-  this skill does not compute it.
+  Tier B lookup (human): what the paper reports, or simple arithmetic on values you bring; not the
+  paper's model run on one person. Records ProAge or cProAge predictions a person already has, using
+  the eye-aging proteomic clocks in Yang et al., npj Digital Medicine 2026 (DOI
+  10.1038/s41746-026-02805-0). Use when the user brings a proteomic age and asks about eye aging,
+  AREDs, ProAge, or cProAge. Acceleration is the residual from regressing chronological age on
+  proteomic age, and those regression coefficients are not printed, so this skill does not compute it.
 ---
 
 # 眼衰老蛋白时钟

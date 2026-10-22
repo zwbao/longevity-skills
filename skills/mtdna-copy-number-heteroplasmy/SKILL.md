@@ -1,15 +1,15 @@
 ---
 name: mtdna-copy-number-heteroplasmy
 description: >-
-  Tier B lookup (human): what the paper reports about named entities, not a validated personal score.
-  Sorts one person's mtDNA variant fractions, copy number and contamination with the pipeline
-  quality-control cuts in Gupta et al., Nature 2023, and checks the ten pathogenic variants named in
-  Figure 3. These values come only from running a research whole-genome mtDNA pipeline, and the paper
-  is a genetic association study with no personal score, so this is a lookup against printed cuts, not
-  a personal risk. Use when the user mentions mtSwirl, blood mtDNA copy number, heteroplasmy after age
-  70, or chrM:302 length heteroplasmy. Adjusted copy number is not computed: the blood-composition
-  coefficients are not applied. Medicines and checkup labs stay context. The report does not say what
-  to start or stop.
+  Tier B lookup (human): what the paper reports, or simple arithmetic on values you bring; not the
+  paper's model run on one person. Sorts one person's mtDNA variant fractions, copy number and
+  contamination with the pipeline quality-control cuts in Gupta et al., Nature 2023, and checks the
+  ten pathogenic variants named in Figure 3. These values come only from running a research
+  whole-genome mtDNA pipeline, and the paper is a genetic association study with no personal score, so
+  this is a lookup against printed cuts, not a personal risk. Use when the user mentions mtSwirl,
+  blood mtDNA copy number, heteroplasmy after age 70, or chrM:302 length heteroplasmy. Adjusted copy
+  number is not computed: the blood-composition coefficients are not applied. Medicines and checkup
+  labs stay context. The report does not say what to start or stop.
 ---
 
 # 核基因与线粒体拷贝数

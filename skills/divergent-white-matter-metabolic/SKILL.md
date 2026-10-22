@@ -1,13 +1,10 @@
 ---
 name: divergent-white-matter-metabolic
 description: >-
-  Tier B lookup (human): what the paper reports about named entities, not a validated personal score.
-  Subtracts two white-matter FDG SUVR values the user supplies (expected minus atypical), the ranking
-  used in Zhang et al., Nature Communications 2026. The values need the paper's own voxel-wise masks
-  and PET pipeline, and the paper prints no personal cutoff, so this is arithmetic on research-derived
-  inputs, not a validated personal score. Use when the user mentions divergent white-matter
-  metabolism, EWM, AWM, or this FDG signature of cognitive decline. Current medicines and checkup labs
-  are context. The report does not say what to start or stop.
+  Tier B lookup (human): what the paper reports, or simple arithmetic on values you bring; not the
+  paper's model run on one person. Use when the user mentions divergent white-matter metabolism, EWM,
+  AWM, or this FDG signature of cognitive decline. Current medicines and checkup labs are context. The
+  report does not say what to start or stop.
 ---
 
 # 白质葡萄糖代谢的差值

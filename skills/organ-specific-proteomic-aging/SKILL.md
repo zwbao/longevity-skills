@@ -1,14 +1,14 @@
 ---
 name: organ-specific-proteomic-aging
 description: >-
-  Tier B lookup (human): what the paper reports about named entities, not a validated personal score.
-  Places a supplied organ proteomic age-gap z score against the paper's 1.5 standard-deviation rule
-  and matches supplied proteins to the published organ-clock lists. The z score must come from the
-  paper's LightGBM organ clocks run on Olink plasma proteomics; the supplementary tables do not hold
-  the model parameters, so the script does not compute any organ age from protein levels. Use when the
-  user mentions organ-specific proteomic aging clocks, ageotypes, or a UK Biobank organ proteomic
-  clock. Current medicines and checkup labs are context. The report does not say what to start or
-  stop.
+  Tier B lookup (human): what the paper reports, or simple arithmetic on values you bring; not the
+  paper's model run on one person. Places a supplied organ proteomic age-gap z score against the
+  paper's 1.5 standard-deviation rule and matches supplied proteins to the published organ-clock
+  lists. The z score must come from the paper's LightGBM organ clocks run on Olink plasma proteomics;
+  the supplementary tables do not hold the model parameters, so the script does not compute any organ
+  age from protein levels. Use when the user mentions organ-specific proteomic aging clocks,
+  ageotypes, or a UK Biobank organ proteomic clock. Current medicines and checkup labs are context.
+  The report does not say what to start or stop.
 ---
 
 # 器官蛋白质年龄差

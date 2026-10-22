@@ -1,15 +1,15 @@
 ---
 name: ageing-clocks-digital-twins
 description: >-
-  Tier B lookup (human): what the paper reports about named entities, not a validated personal score.
-  For biological ages that other clocks already produced, it computes the unscaled within-person
-  stability index described in Pusparum et al., npj Digital Medicine 2025 (DOI
-  10.1038/s41746-025-01911-9): the reciprocal of the mean absolute pairwise difference between time
-  points. It does not compute any clock; the paper publishes no new clock coefficients, does not print
-  its 0–1 scaling, and prints no per-person example to reproduce. Use when the user brings repeated
-  biological-age estimates and asks about this digital-twin clock comparison or the IAM Frontier
-  analysis. For the Skin and Blood clock, a supplied time in years is compared with the printed
-  technical-replicate limit of 2.56 years plus elapsed time.
+  Tier B lookup (human): what the paper reports, or simple arithmetic on values you bring; not the
+  paper's model run on one person. For biological ages that other clocks already produced, it computes
+  the unscaled within-person stability index described in Pusparum et al., npj Digital Medicine 2025
+  (DOI 10.1038/s41746-025-01911-9): the reciprocal of the mean absolute pairwise difference between
+  time points. It does not compute any clock; the paper publishes no new clock coefficients, does not
+  print its 0–1 scaling, and prints no per-person example to reproduce. Use when the user brings
+  repeated biological-age estimates and asks about this digital-twin clock comparison or the IAM
+  Frontier analysis. For the Skin and Blood clock, a supplied time in years is compared with the
+  printed technical-replicate limit of 2.56 years plus elapsed time.
 ---
 
 # 时钟稳定度

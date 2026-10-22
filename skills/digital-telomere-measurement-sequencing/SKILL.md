@@ -1,13 +1,13 @@
 ---
 name: digital-telomere-measurement-sequencing
 description: >-
-  Tier B lookup (human): what the paper reports about named entities, not a validated personal score.
-  Gives plain descriptive statistics (minimum, quartiles, median, mean, maximum) of the per-read
-  telomere lengths a person supplies, as measured by the digital telomere method of Sanchez et al.,
-  Nature Communications 2024. That is generic arithmetic, not the paper's model: the paper's
-  logistic-regression weights for telling healthy aging from telomere disease are not published. Use
-  when the user mentions Telometer, digital telomere measurement, or this nanopore telomere paper.
-  Medicines and checkup labs stay context.
+  Tier B lookup (human): what the paper reports, or simple arithmetic on values you bring; not the
+  paper's model run on one person. Gives plain descriptive statistics (minimum, quartiles, median,
+  mean, maximum) of the per-read telomere lengths a person supplies, as measured by the digital
+  telomere method of Sanchez et al., Nature Communications 2024. That is generic arithmetic, not the
+  paper's model: the paper's logistic-regression weights for telling healthy aging from telomere
+  disease are not published. Use when the user mentions Telometer, digital telomere measurement, or
+  this nanopore telomere paper. Medicines and checkup labs stay context.
 ---
 
 # 端粒长度分布

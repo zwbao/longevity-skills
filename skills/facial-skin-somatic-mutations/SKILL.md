@@ -1,11 +1,11 @@
 ---
 name: facial-skin-somatic-mutations
 description: >-
-  Tier B lookup (human): what the paper reports about named entities, not a validated personal score.
-  Checks whether NOTCH1, NOTCH2, NOTCH3, TP53, and FAT1 are marked in a call list from King et al. on
-  aging facial skin. Use when the user mentions somatic mutations in eyelid or facial epidermis, or
-  this Nature Genetics study. Country means are not written as a personal risk. Medicines and checkup
-  labs do not edit the gene list.
+  Tier B lookup (human): what the paper reports, or simple arithmetic on values you bring; not the
+  paper's model run on one person. Checks whether NOTCH1, NOTCH2, NOTCH3, TP53, and FAT1 are marked in
+  a call list from King et al. on aging facial skin. Use when the user mentions somatic mutations in
+  eyelid or facial epidermis, or this Nature Genetics study. Country means are not written as a
+  personal risk. Medicines and checkup labs do not edit the gene list.
 ---
 
 # 面部皮肤的体细胞突变

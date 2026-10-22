@@ -1,15 +1,15 @@
 ---
 name: plasma-proteomic-cellular-aging
 description: >-
-  Tier B lookup (human): what the paper reports about named entities, not a validated personal score.
-  Applies the SomaScan cell-type clock coefficients that Ding and colleagues released with their
-  Nature Medicine 2026 paper (cellage repository) to protein values the user supplies. The clocks
-  expect protein levels z-scored against a whole cohort; neither the paper nor the repository gives
-  reference means and standard deviations, so one person's own SomaScan file cannot be turned into
-  valid inputs, and the paper prints no per-person example. Without cohort-standardized values the
-  number is not the paper's cell-type age. Use when the user brings SomaScan protein z-scores, sex,
-  medicines, or checkup labs and asks about these cellular aging clocks. It does not turn a predicted
-  cell age into advice to start or stop a medicine.
+  Tier B lookup (human): what the paper reports, or simple arithmetic on values you bring; not the
+  paper's model run on one person. Applies the SomaScan cell-type clock coefficients that Ding and
+  colleagues released with their Nature Medicine 2026 paper (cellage repository) to protein values the
+  user supplies. The clocks expect protein levels z-scored against a whole cohort; neither the paper
+  nor the repository gives reference means and standard deviations, so one person's own SomaScan file
+  cannot be turned into valid inputs, and the paper prints no per-person example. Without
+  cohort-standardized values the number is not the paper's cell-type age. Use when the user brings
+  SomaScan protein z-scores, sex, medicines, or checkup labs and asks about these cellular aging
+  clocks. It does not turn a predicted cell age into advice to start or stop a medicine.
 ---
 
 # 细胞类型蛋白年龄

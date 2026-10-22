@@ -1,13 +1,14 @@
 ---
 name: semaglutide-epigenetic-aging-trial
 description: >-
-  Tier B lookup (human): what the paper reports about named entities, not a validated personal score.
-  Subtracts the baseline value from the week-32 value of a clock the user already has (PhenoAge,
-  GrimAge2, DunedinPACE and others, computed elsewhere) and sets the paper's between-arm difference
-  for that clock beside it, from the semaglutide HIV lipohypertrophy trial in Nature Communications
-  2026. The paper reports group comparisons and no personal model; the skill computes no clock. Use
-  when the user brings paired clock values, medicines, or checkup labs from that trial context. The
-  skill does not turn a clock change into advice to start or stop semaglutide.
+  Tier B lookup (human): what the paper reports, or simple arithmetic on values you bring; not the
+  paper's model run on one person. Subtracts the baseline value from the week-32 value of a clock the
+  user already has (PhenoAge, GrimAge2, DunedinPACE and others, computed elsewhere) and sets the
+  paper's between-arm difference for that clock beside it, from the semaglutide HIV lipohypertrophy
+  trial in Nature Communications 2026. The paper reports group comparisons and no personal model; the
+  skill computes no clock. Use when the user brings paired clock values, medicines, or checkup labs
+  from that trial context. The skill does not turn a clock change into advice to start or stop
+  semaglutide.
 ---
 
 # 表观遗传时钟变化

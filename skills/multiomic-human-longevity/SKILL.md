@@ -1,12 +1,12 @@
 ---
 name: multiomic-human-longevity
 description: >-
-  Tier B lookup (human): what the paper reports about named entities, not a validated personal score.
-  Matches gene names the user supplies to the high-confidence TWAS genes in Table 1 and the
-  colocalized drug-target genes in Table 2 of Mavromatis et al., Nature Communications 2023
-  (doi:10.1038/s41467-023-37729-w). Use when the user mentions this multi-omic epigenetic aging study,
-  TPMT, NHLRC1, or the multivariate longevity genes in that paper. Does not multiply TWAS Z or MR beta
-  into a personal score. Labs do not add genes.
+  Tier B lookup (human): what the paper reports, or simple arithmetic on values you bring; not the
+  paper's model run on one person. Matches gene names the user supplies to the high-confidence TWAS
+  genes in Table 1 and the colocalized drug-target genes in Table 2 of Mavromatis et al., Nature
+  Communications 2023 (doi:10.1038/s41467-023-37729-w). Use when the user mentions this multi-omic
+  epigenetic aging study, TPMT, NHLRC1, or the multivariate longevity genes in that paper. Does not
+  multiply TWAS Z or MR beta into a personal score. Labs do not add genes.
 ---
 
 # 多组学表观年龄里点名的基因

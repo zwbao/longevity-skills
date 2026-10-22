@@ -1,17 +1,18 @@
 ---
 name: cpic-pharmacogenomics
 description: >-
-  Tier B lookup (human): what the paper reports about named entities, not a validated personal score.
-  Reads a consumer genotype raw file (23andMe format; WeGene and other exports in the same four-column
-  format; AncestryDNA) and/or star-allele results from a clinical pharmacogenetic test, calls CPIC
-  diplotypes and phenotypes for CYP2C19, CYP2C9, SLCO1B1, ABCG2, TPMT, NUDT15, DPYD and CYP3A5, and
-  looks up the CPIC recommendation rows for 50 guideline drugs (clopidogrel, PPIs, statins, NSAIDs,
-  SSRIs, tricyclics, thiopurines, fluoropyrimidines, tacrolimus, phenytoin, warfarin, and CYP2D6/HLA
-  drugs when a clinical result is given). Each drug is worded as avoid/alternative, adjust or monitor,
-  standard, or no recommendation, never as a dose; anything but standard gets "用药前请把这份结果给开药的医生或药师看".
-  States that array data cannot call CYP2D6 (deletion, duplications, *36 hybrids), HLA, UGT1A1*28 or
-  CYP2B6. Use when the user asks about drug genes, 药物基因检测, 慢代谢, clopidogrel and CYP2C19, statins and
-  SLCO1B1, or shows a pill box together with a raw DNA file.
+  Tier B lookup (human): what the paper reports, or simple arithmetic on values you bring; not the
+  paper's model run on one person. Reads a consumer genotype raw file (23andMe format; WeGene and
+  other exports in the same four-column format; AncestryDNA) and/or star-allele results from a
+  clinical pharmacogenetic test, calls CPIC diplotypes and phenotypes for CYP2C19, CYP2C9, SLCO1B1,
+  ABCG2, TPMT, NUDT15, DPYD and CYP3A5, and looks up the CPIC recommendation rows for 50 guideline
+  drugs (clopidogrel, PPIs, statins, NSAIDs, SSRIs, tricyclics, thiopurines, fluoropyrimidines,
+  tacrolimus, phenytoin, warfarin, and CYP2D6/HLA drugs when a clinical result is given). Each drug is
+  worded as avoid/alternative, adjust or monitor, standard, or no recommendation, never as a dose;
+  anything but standard gets "用药前请把这份结果给开药的医生或药师看". States that array data cannot call CYP2D6
+  (deletion, duplications, *36 hybrids), HLA, UGT1A1*28 or CYP2B6. Use when the user asks about drug
+  genes, 药物基因检测, 慢代谢, clopidogrel and CYP2C19, statins and SLCO1B1, or shows a pill box together with
+  a raw DNA file.
 ---
 
 # 用药基因对照（CPIC）

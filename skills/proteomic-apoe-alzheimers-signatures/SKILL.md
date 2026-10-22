@@ -1,12 +1,12 @@
 ---
 name: proteomic-apoe-alzheimers-signatures
 description: >-
-  Tier B lookup (human): what the paper reports about named entities, not a validated personal score.
-  Ranks a person's protein symbols by the GNPC Model type 1 standardized betas for APOE2 or APOE4
-  versus ε3/ε3 from Lu et al., Nature Aging 2026 (doi:10.1038/s43587-026-01123-0). Use when the user
-  mentions APOE proteomic signatures, ε2, ε4, or this paper. Only proteins with FDR below 0.05 in the
-  paper's result tables are listed. Checkup labs do not add proteins, and the beta is not a personal
-  effect.
+  Tier B lookup (human): what the paper reports, or simple arithmetic on values you bring; not the
+  paper's model run on one person. Ranks a person's protein symbols by the GNPC Model type 1
+  standardized betas for APOE2 or APOE4 versus ε3/ε3 from Lu et al., Nature Aging 2026
+  (doi:10.1038/s43587-026-01123-0). Use when the user mentions APOE proteomic signatures, ε2, ε4, or
+  this paper. Only proteins with FDR below 0.05 in the paper's result tables are listed. Checkup labs
+  do not add proteins, and the beta is not a personal effect.
 ---
 
 # 载脂蛋白蛋白名单

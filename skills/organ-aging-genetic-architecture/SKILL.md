@@ -1,12 +1,13 @@
 ---
 name: organ-aging-genetic-architecture
 description: >-
-  Tier B lookup (human): what the paper reports about named entities, not a validated personal score.
-  Lists which of the 13 organs in Zhu et al., Nature Communications 2026
-  (doi:10.1038/s41467-025-67223-4) the user named, and attaches the Mendelian-randomization directions
-  printed in the abstract. Use when the user mentions this organ-aging GWAS, the 119 organ-aging loci,
-  or smoking initiation linked to lung, intestine, kidney, or stomach aging. Supplementary Data 3 has
-  feature weights and no intercept, so no organ age is printed. Labs do not add organs.
+  Tier B lookup (human): what the paper reports, or simple arithmetic on values you bring; not the
+  paper's model run on one person. Lists which of the 13 organs in Zhu et al., Nature Communications
+  2026 (doi:10.1038/s41467-025-67223-4) the user named, and attaches the Mendelian-randomization
+  directions printed in the abstract. Use when the user mentions this organ-aging GWAS, the 119
+  organ-aging loci, or smoking initiation linked to lung, intestine, kidney, or stomach aging.
+  Supplementary Data 3 has feature weights and no intercept, so no organ age is printed. Labs do not
+  add organs.
 ---
 
 # 器官衰老遗传结构

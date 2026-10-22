@@ -1,12 +1,12 @@
 ---
 name: senescent-cells-gene-set
 description: >-
-  Tier B lookup (human, mouse): what the paper reports about named entities, not a validated personal
-  score. Scores one gene-expression table against the SenMayo set of 125 genes from Saul et al.,
-  Nature Communications 2022. Matched symbols are written with readable gene names and the supplement
-  class. It does not invent gene weights. Use when the user mentions SenMayo, a senescence gene set,
-  or scoring expression against this senescence panel. Medicines and checkup labs stay context. The
-  report does not say what to start or stop.
+  Tier B lookup (human, mouse): what the paper reports, or simple arithmetic on values you bring; not
+  the paper's model run on one person. Scores one gene-expression table against the SenMayo set of 125
+  genes from Saul et al., Nature Communications 2022. Matched symbols are written with readable gene
+  names and the supplement class. It does not invent gene weights. Use when the user mentions SenMayo,
+  a senescence gene set, or scoring expression against this senescence panel. Medicines and checkup
+  labs stay context. The report does not say what to start or stop.
 ---
 
 # 衰老相关基因

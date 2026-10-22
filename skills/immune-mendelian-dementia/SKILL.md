@@ -1,12 +1,12 @@
 ---
 name: immune-mendelian-dementia
 description: >-
-  Tier B lookup (human): what the paper reports about named entities, not a validated personal score.
-  Writes a personal readout of medication categories from an immune Mendelian-randomization dementia
-  analysis. It checks whether current medicines are among the six studied classes and does not turn
-  the cohort hazard ratio into a personal score. Use when the user mentions dementia autoimmunity,
-  methotrexate and dementia, or this kind of triangulation. Checkup labs are context. The report does
-  not say what to start or stop.
+  Tier B lookup (human): what the paper reports, or simple arithmetic on values you bring; not the
+  paper's model run on one person. Writes a personal readout of medication categories from an immune
+  Mendelian-randomization dementia analysis. It checks whether current medicines are among the six
+  studied classes and does not turn the cohort hazard ratio into a personal score. Use when the user
+  mentions dementia autoimmunity, methotrexate and dementia, or this kind of triangulation. Checkup
+  labs are context. The report does not say what to start or stop.
 ---
 
 # 痴呆研究里的用药类别

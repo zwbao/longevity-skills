@@ -1,12 +1,12 @@
 ---
 name: blood-mtdna-mutation-accumulation
 description: >-
-  Tier B lookup (human): what the paper reports about named entities, not a validated personal score.
-  Classifies one mtDNA substitution against the age-60 inflection and the age-accumulating classes in
-  Gupta et al., Nature 2026, and checks the clonal-hematopoiesis genes named in the text. Use when the
-  user mentions age-related mtDNA mutations in blood, TERT, TCL1A, or cryptic clonal hematopoiesis.
-  Disease odds ratios are not computed. Medicines and checkup labs stay context. The report does not
-  say what to start or stop.
+  Tier B lookup (human): what the paper reports, or simple arithmetic on values you bring; not the
+  paper's model run on one person. Classifies one mtDNA substitution against the age-60 inflection and
+  the age-accumulating classes in Gupta et al., Nature 2026, and checks the clonal-hematopoiesis genes
+  named in the text. Use when the user mentions age-related mtDNA mutations in blood, TERT, TCL1A, or
+  cryptic clonal hematopoiesis. Disease odds ratios are not computed. Medicines and checkup labs stay
+  context. The report does not say what to start or stop.
 ---
 
 # 血液线粒体突变累积

@@ -1,14 +1,14 @@
 ---
 name: ampk-gamma1-refeeding-longevity
 description: >-
-  Tier B lookup (human, killifish): what the paper reports about named entities, not a validated
-  personal score. It only averages eight multidimensional prognostic index domain points you already
-  have (sum divided by eight) and names the band given in the methods of Ripa et al., Nature Aging
-  2023; the points themselves come from the separate MPI instrument, and the paper's finding (AMPK
-  gamma1 / PRKAG1, mostly from killifish) gives no personal formula, so PRKAG1 expression is not
-  turned into any score. Use when the user mentions AMPK gamma1, PRKAG1, refeeding, or this killifish
-  longevity paper. Medicines and checkup labs do not edit the method list. The report does not say
-  what to start or stop.
+  Tier B lookup (human, killifish): what the paper reports, or simple arithmetic on values you bring;
+  not the paper's model run on one person. It only averages eight multidimensional prognostic index
+  domain points you already have (sum divided by eight) and names the band given in the methods of
+  Ripa et al., Nature Aging 2023; the points themselves come from the separate MPI instrument, and the
+  paper's finding (AMPK gamma1 / PRKAG1, mostly from killifish) gives no personal formula, so PRKAG1
+  expression is not turned into any score. Use when the user mentions AMPK gamma1, PRKAG1, refeeding,
+  or this killifish longevity paper. Medicines and checkup labs do not edit the method list. The
+  report does not say what to start or stop.
 ---
 
 # 再喂食时的调节亚基与预后指数

@@ -1,16 +1,17 @@
 ---
 name: nutrigenetic-variant-panel
 description: >-
-  Tier B lookup (human): what the paper reports about named entities, not a validated personal score.
-  Reads three diet-related variants from a consumer genotype raw file (23andMe format; WeGene and
-  other exports in the same format; AncestryDNA): ALDH2 rs671 (alcohol flushing and oesophageal cancer
-  risk with drinking, Brooks et al. PLoS Med 2009), MTHFR rs1801133 C677T (homocysteine, Frosst et al.
-  1995, with the ACMG 2013 caution), and LCT rs4988235 -13910 (lactase persistence, Enattah et al.
-  2002, uninformative in East Asians). APOE rs429358/rs7412 is read only with --apoe and only for the
-  LDL-cholesterol direction (Bennet et al. JAMA 2007); the dementia interpretation is excluded and the
-  report points to a doctor or genetic counsellor. Actions are worded as tests to consider or things
-  to discuss with a doctor, never a supplement dose. Use when the user asks what their DNA says about
-  drinking, 喝酒脸红, folate/MTHFR, lactose intolerance, or diet genes.
+  Tier B lookup (human): what the paper reports, or simple arithmetic on values you bring; not the
+  paper's model run on one person. Reads three diet-related variants from a consumer genotype raw file
+  (23andMe format; WeGene and other exports in the same format; AncestryDNA): ALDH2 rs671 (alcohol
+  flushing and oesophageal cancer risk with drinking, Brooks et al. PLoS Med 2009), MTHFR rs1801133
+  C677T (homocysteine, Frosst et al. 1995, with the ACMG 2013 caution), and LCT rs4988235 -13910
+  (lactase persistence, Enattah et al. 2002, uninformative in East Asians). APOE rs429358/rs7412 is
+  read only with --apoe and only for the LDL-cholesterol direction (Bennet et al. JAMA 2007); the
+  dementia interpretation is excluded and the report points to a doctor or genetic counsellor. Actions
+  are worded as tests to consider or things to discuss with a doctor, never a supplement dose. Use
+  when the user asks what their DNA says about drinking, 喝酒脸红, folate/MTHFR, lactose intolerance, or
+  diet genes.
 ---
 
 # 饮食相关的基因位点

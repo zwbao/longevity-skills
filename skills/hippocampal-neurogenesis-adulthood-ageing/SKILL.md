@@ -1,14 +1,14 @@
 ---
 name: hippocampal-neurogenesis-adulthood-ageing
 description: >-
-  Tier B lookup (human): what the paper reports about named entities, not a validated personal score.
-  Checks a supplied age and episodic-memory comparison against the SuperAger enrollment definition
-  (age 80 or older, episodic memory at least that of 50 to 59 year olds) used in Disouky et al.,
-  Nature 2026. The paper's findings come from single-nucleus profiling of post-mortem hippocampus,
-  which no living person can measure, so this is a definition check, not a personal neurogenesis
-  estimate. Use when the user mentions hippocampal neurogenesis, SuperAgers, immature neurons, or this
-  Nature paper. Medicines and checkup labs do not change that check. The report does not say what to
-  start or stop.
+  Tier B lookup (human): what the paper reports, or simple arithmetic on values you bring; not the
+  paper's model run on one person. Checks a supplied age and episodic-memory comparison against the
+  SuperAger enrollment definition (age 80 or older, episodic memory at least that of 50 to 59 year
+  olds) used in Disouky et al., Nature 2026. The paper's findings come from single-nucleus profiling
+  of post-mortem hippocampus, which no living person can measure, so this is a definition check, not a
+  personal neurogenesis estimate. Use when the user mentions hippocampal neurogenesis, SuperAgers,
+  immature neurons, or this Nature paper. Medicines and checkup labs do not change that check. The
+  report does not say what to start or stop.
 ---
 
 # 情景记忆对照

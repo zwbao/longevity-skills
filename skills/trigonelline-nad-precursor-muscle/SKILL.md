@@ -1,12 +1,12 @@
 ---
 name: trigonelline-nad-precursor-muscle
 description: >-
-  Tier B lookup (human, cultured cells, C. elegans, mouse): what the paper reports about named
-  entities, not a validated personal score. Records a supplied serum trigonelline value and does not
-  convert the myotube EC50 or the mouse dose into a personal dose. Use when the user mentions
-  trigonelline, sarcopenia, NAD precursors, or this Nature Metabolism paper. A missing medicine is not
-  a reason to stop it. Labs do not edit the recorded value. The report does not say what to start or
-  stop.
+  Tier B lookup (human, cultured cells, C. elegans, mouse): what the paper reports, or simple
+  arithmetic on values you bring; not the paper's model run on one person. Records a supplied serum
+  trigonelline value and does not convert the myotube EC50 or the mouse dose into a personal dose. Use
+  when the user mentions trigonelline, sarcopenia, NAD precursors, or this Nature Metabolism paper. A
+  missing medicine is not a reason to stop it. Labs do not edit the recorded value. The report does
+  not say what to start or stop.
 ---
 
 # 葫芦巴碱记录

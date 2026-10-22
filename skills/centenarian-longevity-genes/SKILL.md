@@ -1,12 +1,13 @@
 ---
 name: centenarian-longevity-genes
 description: >-
-  Tier B lookup (human): what the paper reports about named entities, not a validated personal score.
-  Matches gene names the user supplies to centenarian loss-of-function genes named by Ying et al.,
-  Nature Communications 2024 (doi:10.1038/s41467-024-52967-2), including Supplementary Data 1 rows
-  that pass the paper's false-discovery threshold in centenarians and genes named in the text such as
-  RGP1, PCNX2, and ANO9. Use when the user mentions this centenarian burden study or those genes. Does
-  not score a mutation burden or assign UK Biobank validation. Labs do not add genes.
+  Tier B lookup (human): what the paper reports, or simple arithmetic on values you bring; not the
+  paper's model run on one person. Matches gene names the user supplies to centenarian
+  loss-of-function genes named by Ying et al., Nature Communications 2024
+  (doi:10.1038/s41467-024-52967-2), including Supplementary Data 1 rows that pass the paper's
+  false-discovery threshold in centenarians and genes named in the text such as RGP1, PCNX2, and ANO9.
+  Use when the user mentions this centenarian burden study or those genes. Does not score a mutation
+  burden or assign UK Biobank validation. Labs do not add genes.
 ---
 
 # 百岁人群里点名的长寿基因

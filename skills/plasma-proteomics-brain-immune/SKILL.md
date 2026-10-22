@@ -1,14 +1,10 @@
 ---
 name: plasma-proteomics-brain-immune
 description: >-
-  Tier B lookup (human): what the paper reports about named entities, not a validated personal score.
-  Applies the published linear coefficients of Oh et al., Nature Medicine 2025 to plasma protein
-  levels that were already z-scored within a study batch, and flags a supplied organ age-gap z beyond
-  1.5 standard deviations. The paper z-scores proteins across the whole sample and takes age gaps as
-  residuals of a cohort regression, so one person's Olink values cannot be scored alone; this is a
-  research recalculation, not a validated personal score. Use when the user mentions organ age, plasma
-  proteomic brain or immune aging, or a UK Biobank Olink organ clock. Current medicines and checkup
-  labs are context. The report does not say what to start or stop.
+  Tier B lookup (human): what the paper reports, or simple arithmetic on values you bring; not the
+  paper's model run on one person. Use when the user mentions organ age, plasma proteomic brain or
+  immune aging, or a UK Biobank Olink organ clock. Current medicines and checkup labs are context. The
+  report does not say what to start or stop.
 ---
 
 # 器官年龄差

@@ -1,11 +1,12 @@
 ---
 name: cerebrospinal-fluid-molecular-subtypes
 description: >-
-  Tier B lookup (human): what the paper reports about named entities, not a validated personal score.
-  Writes a personal readout of the five cerebrospinal-fluid proteomic Alzheimer subtypes from Tijms et
-  al., Nature Aging 2024. It keeps the published subtype counts and does not assign a subtype without
-  the factorization loadings. Use when the user mentions these CSF subtypes, TREM2 R47H enrichment in
-  subtype 1, or this paper. Medicines and checkup labs stay context.
+  Tier B lookup (human): what the paper reports, or simple arithmetic on values you bring; not the
+  paper's model run on one person. Writes a personal readout of the five cerebrospinal-fluid proteomic
+  Alzheimer subtypes from Tijms et al., Nature Aging 2024. It keeps the published subtype counts and
+  does not assign a subtype without the factorization loadings. Use when the user mentions these CSF
+  subtypes, TREM2 R47H enrichment in subtype 1, or this paper. Medicines and checkup labs stay
+  context.
 ---
 
 # 脑脊液里的阿尔茨海默病亚型

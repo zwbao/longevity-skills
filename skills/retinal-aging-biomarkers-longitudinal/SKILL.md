@@ -1,13 +1,13 @@
 ---
 name: retinal-aging-biomarkers-longitudinal
 description: >-
-  Tier B lookup (human): what the paper reports about named entities, not a validated personal score.
-  Subtracts chronological age from a retinal age the user already has, or from the expectation over
-  the 77 age-bin probabilities the model outputs, and places that gap beside the published 2.79-year
-  mean absolute error. The retinal age model from this npj Digital Medicine 2025 paper is released
-  only on request and its weights are not here, so the script does not run it or check the retinal
-  age. Use when the user mentions retinal age, RLDL, label distribution learning, or this paper. Labs
-  do not change the gap. The report does not say what to start or stop.
+  Tier B lookup (human): what the paper reports, or simple arithmetic on values you bring; not the
+  paper's model run on one person. Subtracts chronological age from a retinal age the user already
+  has, or from the expectation over the 77 age-bin probabilities the model outputs, and places that
+  gap beside the published 2.79-year mean absolute error. The retinal age model from this npj Digital
+  Medicine 2025 paper is released only on request and its weights are not here, so the script does not
+  run it or check the retinal age. Use when the user mentions retinal age, RLDL, label distribution
+  learning, or this paper. Labs do not change the gap. The report does not say what to start or stop.
 ---
 
 # 视网膜年龄差

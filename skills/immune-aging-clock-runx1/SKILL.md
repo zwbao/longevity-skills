@@ -1,14 +1,15 @@
 ---
 name: immune-aging-clock-runx1
 description: >-
-  Tier B lookup (human): what the paper reports about named entities, not a validated personal score.
-  Plugs supplied values into the published Table S3 coefficients of Ping et al., Immunity 2026 for
-  pAge, tAge or TCRAge; the inputs are the paper's own single-cell cluster proportions, per-cluster
-  log expression and TCR repertoire diversity metrics computed with the paper's pipeline, which a
-  person cannot obtain under the same definitions, and no printed example has been reproduced. Shows a
-  paper card with the article, DOI, and Table S3 links. Use when the user mentions that Immunity
-  study, immAge, an immune aging clock, or RUNX1 and T cell senescence. ptAge, immAge, and bulk-immAge
-  are not scored. Medicines and checkup labs do not create a target list.
+  Tier B lookup (human): what the paper reports, or simple arithmetic on values you bring; not the
+  paper's model run on one person. Plugs supplied values into the published Table S3 coefficients of
+  Ping et al., Immunity 2026 for pAge, tAge or TCRAge; the inputs are the paper's own single-cell
+  cluster proportions, per-cluster log expression and TCR repertoire diversity metrics computed with
+  the paper's pipeline, which a person cannot obtain under the same definitions, and no printed
+  example has been reproduced. Shows a paper card with the article, DOI, and Table S3 links. Use when
+  the user mentions that Immunity study, immAge, an immune aging clock, or RUNX1 and T cell
+  senescence. ptAge, immAge, and bulk-immAge are not scored. Medicines and checkup labs do not create
+  a target list.
 ---
 
 # 免疫衰老时钟

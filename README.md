@@ -73,64 +73,64 @@ python3 -m tools.lsk test --changed origin/main   # 只测相对 main 改动过�
 ## 临床年龄与可穿戴
 
 - `skills/accelerated-biological-aging-risk/` — 九项血液指标和实足年龄的表型年龄。
-- `skills/ageing-clocks-digital-twins/` — 已经算好的生物年龄的稳定度。
-- `skills/aging-biomarker-framework/` — 预测年龄相对实足年龄的偏差。
+- `skills/ageing-clocks-digital-twins/` — 同一时钟多次生物年龄的波动（只算差值，不算新的生物年龄）。（名单类）
+- `skills/aging-biomarker-framework/` — 把你已经算好的时钟预测年龄减去实足年龄（简单相减），再标出这个时钟在论文评测里的队列结果。（名单类）
 - `skills/biological-aging-generational-shifts/` — 年龄、出生年和已经算好的衰老测量。
-- `skills/blood-protein-assessment/` — 血液蛋白与发病，可带糖化血红蛋白。
+- `skills/blood-protein-assessment/` — 研究用：把已在一批样本内秩逆正态变换、缩放好的血液蛋白量乘论文系数加总；单个人的化验值没法直接套，糖化血红蛋白只作对照。（名单类）
 - `skills/face-aging-rate-cancer/` — 两次面容年龄和间隔天数算出的面容老化速率。
-- `skills/fasting-mimicking-diet/` — 两次已经算好的临床生物年龄之差。
-- `skills/life-cycle-biological-clock/` — 年龄和常规检验对照临床时钟。
+- `skills/fasting-mimicking-diet/` — 两次已经算好的生物年龄相减（不从化验重算生物年龄）。（名单类）
+- `skills/life-cycle-biological-clock/` — 常规化验对照论文点名的时钟指标（不算生物年龄）。（名单类）
 - `skills/principal-component-clinical-aging/` — 并存病、可替宁、自评健康和尿白蛋白肌酐比。
 - `skills/sleep-chart-biological-ageing/` — 睡眠小时数的分组。
-- `skills/wearable-aging-clock/` — 腕部脉搏波年龄相对实足年龄。
+- `skills/wearable-aging-clock/` — 把你已拿到的腕部脉搏波年龄减去实足年龄；不从脉搏波算年龄。（名单类）
 
 ## 甲基化
 
-- `skills/blood-epigenetic-intrinsic-capacity/` — 认知、行走、情绪、视力和听力的内在能力。
+- `skills/blood-epigenetic-intrinsic-capacity/` — 血液甲基化芯片的 91 个位点 β 值，按论文补充表 1 算甲基化内在能力（认知、行走、情绪、感官和活力的综合）。
 - `skills/calerie-methylation-clocks/` — 限食试验里的时钟数值。（名单类）
-- `skills/epigenetic-clock-reliability/` — 同一个时钟两次年龄的差。
+- `skills/epigenetic-clock-reliability/` — 同一个时钟两次年龄的差，只做相减，不计算论文的主成分时钟。（名单类）
 - `skills/epigenetic-frailty-risk-score/` — 甲基化数值，可带衰弱指数。
-- `skills/nanopore-parent-origin-methylation/` — 甲基化年龄，或一个位点的父本与母本甲基化。
+- `skills/nanopore-parent-origin-methylation/` — 已标准化的甲基化套论文系数，或两数相减（个人原始甲基化比例做不出标准化）。（名单类）
 - `skills/omniage-mitotic-clonal-hematopoiesis/` — 探针甲基化对应的干细胞分裂次数。
-- `skills/semaglutide-epigenetic-aging-trial/` — 同一时钟在基线和第 32 周的变化。
+- `skills/semaglutide-epigenetic-aging-trial/` — 同一时钟第 32 周减基线（只做减法，旁边附论文组间差）。（名单类）
 - `skills/time-seq-dna-methylation/` — 血液甲基化百分比。
 
 ## 蛋白、代谢与器官年龄
 
 - `skills/amino-acid-biological-age/` — 氨基酸浓度的比例。
-- `skills/genetic-architecture-biological-age/` — 各器官预测年龄相对实足年龄。
+- `skills/genetic-architecture-biological-age/` — 把你已经算好的各器官预测年龄减去实足年龄（简单相减）；论文的器官年龄模型权重没有公开，这里不重算。（名单类）
 - `skills/longitudinal-serum-proteome-mapping/` — 血清蛋白的记录。（名单类）
 - `skills/multi-organ-metabolome-age/` — 代谢组器官预测年龄相对实足年龄。
 - `skills/omicmage-biological-age-multiomics/` — 多组学测定里保留下来的特征。（名单类）
 - `skills/oral-microbiome-signatures/` — 已经算好的口腔微生物年龄残差。（名单类）
 - `skills/organ-aging-genetic-architecture/` — 点到的器官。这是遗传结构，不是上面的蛋白质年龄差。（名单类）
 - `skills/organ-aging-plasma-proteome/` — SomaScan 序列号是否齐套。（名单类）
-- `skills/organ-specific-proteomic-aging/` — 器官蛋白质的 z，可带出生到体检的天数。
-- `skills/plasma-proteomic-cellular-aging/` — SomaScan 蛋白和性别对应的细胞类型蛋白年龄。
-- `skills/plasma-proteomics-brain-immune/` — 各器官已经算好的 z。
-- `skills/proteomic-aging-clock/` — 蛋白质年龄相对实足年龄。
+- `skills/organ-specific-proteomic-aging/` — 给你已拿到的器官蛋白质年龄差z按论文的1.5个标准差分档，并核对蛋白是否在器官时钟名单里；不从蛋白算年龄。（名单类）
+- `skills/plasma-proteomic-cellular-aging/` — 已按队列标准化的 SomaScan 蛋白 z 分数套公开系数（个人单份数据做不出 z 分数）。（名单类）
+- `skills/plasma-proteomics-brain-immune/` — 研究用：把已在一批样本内 z 分数化的血浆蛋白乘补充表系数得出器官预测年龄，或标出你交来的器官 z；单个人的化验值没法直接套。（名单类）
+- `skills/proteomic-aging-clock/` — 你已有的蛋白质年龄减去实足年龄，只做相减，不从蛋白量重算论文的时钟。（名单类）
 - `skills/proteomic-clocks-eye-aging/` — 已经算好的 ProAge 或 cProAge。（名单类）
 - `skills/structural-signature-plasma-proteins/` — 补体 C1q A 链、丛集蛋白或载脂蛋白 B 的结构可及性。
 
 ## 影像
 
-- `skills/biological-age-ct-cardiometabolic/` — 腹部影像测量、年龄和性别。
-- `skills/divergent-white-matter-metabolic/` — 预期白质和非典型白质的 SUVR 之差。
-- `skills/hemispheric-brain-age/` — 左右测量的侧化。
+- `skills/biological-age-ct-cardiometabolic/` — 把腹部CT八项测量放在同性别、同年龄段存活者和死亡者的中位数旁边。（名单类）
+- `skills/divergent-white-matter-metabolic/` — 把你交来的预期白质和非典型白质 SUVR 相减；这两个值要用论文自建的脑区掩模从 PET 提取，论文没有给个人切点。（名单类）
+- `skills/hemispheric-brain-age/` — 左右脑磁共振测量的侧化指数（左减右除以左加右），不预测半球脑年龄。（名单类）
 - `skills/histological-aging-signatures/` — 组织切片的预测年龄相对实足年龄。
 - `skills/imaging-organ-aging-clock/` — 影像器官预测年龄相对实足年龄。
-- `skills/lensage-index-biological-age/` — 晶状体年龄相对实足年龄。
-- `skills/lung-parenchyma-aging-clock/` — 肺实质预测年龄相对实足年龄。
-- `skills/mri-multi-organ-clocks/` — 磁共振器官预测年龄相对实足年龄。
-- `skills/retinal-aging-biomarkers-longitudinal/` — 眼底照片（视网膜）的预测年龄或年龄箱概率。
+- `skills/lensage-index-biological-age/` — 把你已拿到的晶状体年龄减去实足年龄，并对照论文提到的5、10、20年三条线；不分析照片。（名单类）
+- `skills/lung-parenchyma-aging-clock/` — 用你已经有的肺实质预测年龄和实足年龄相减得出残差；论文的时钟模型没有公开，这里不重算。（名单类）
+- `skills/mri-multi-organ-clocks/` — 你已有的某个器官磁共振预测年龄减去实足年龄，只做相减，不跑论文的器官模型。（名单类）
+- `skills/retinal-aging-biomarkers-longitudinal/` — 把你已拿到的视网膜预测年龄（或模型给的年龄箱概率）减去实足年龄；不分析眼底照片。（名单类）
 
 ## 免疫与炎症
 
 - `skills/ageing-inflammatory-marker/` — 全血图一里的炎症基因，以及 MCU 和 MICU1。（名单类）
 - `skills/cd38-recent-thymic-emigrants/` — 年龄和转换后的初始细胞标志。
-- `skills/hospital-infection-epilepsy-risk/` — 感染距指数日的年数和部位。
+- `skills/hospital-infection-epilepsy-risk/` — 住院感染距今年数和部位，对照论文的群体比值比（查表，不算个人风险）。（名单类）
 - `skills/hsc-inflammatory-memory/` — 补充表九里按 MarkerScore 排在炎症记忆一侧的基因。（名单类）
-- `skills/immune-aging-clock-runx1/` — 细胞比例、对数表达或 TCR 指标。pAge、tAge 和 TCRAge 用 Table S3 的系数。
+- `skills/immune-aging-clock-runx1/` — 已有单细胞测序结果时，按论文 Table S3 系数把亚群比例、分亚群表达或 TCR 指标代入；这些输入只有研究级单细胞数据才有。（名单类）
 - `skills/immune-mendelian-dementia/` — 痴呆研究里点名的用药类别。（名单类）
 - `skills/nicotinamide-riboside-airway-inflammation/` — 痰液白细胞介素-8 从基线到第六周的变化。
 - `skills/senescent-cells-gene-set/` — 一份基因表达表对照的衰老相关基因。（名单类）
@@ -141,7 +141,7 @@ python3 -m tools.lsk test --changed origin/main   # 只测相对 main 改动过�
 - `skills/blood-metabolome-brain-health/` — 中年血液代谢物数值。（名单类）
 - `skills/cerebrospinal-fluid-molecular-subtypes/` — 脑脊液蛋白。分型载荷不在已读材料里时，报告停在蛋白读出。（名单类）
 - `skills/dissecting-genetic-proteomic-risk/` — 谵妄相关蛋白，以及两个 APOE 位点的基因型。（名单类）
-- `skills/hippocampal-neurogenesis-adulthood-ageing/` — 年龄，以及情景记忆是持平或更好、更差，还是未知。
+- `skills/hippocampal-neurogenesis-adulthood-ageing/` — 核对年龄和情景记忆比较是否合乎“记忆超常高龄者”的入组写法；不评估大脑。（名单类）
 - `skills/neurodegeneration-proteomics-biomarker/` — 神经退行相关血浆蛋白的符号和数值。（名单类）
 - `skills/plasma-proteome-dementia-biomarkers/` — 痴呆相关血浆蛋白的符号和数值。（名单类）
 - `skills/plasma-proteome-future-dementia/` — 四个血浆蛋白的数值。梯度提升树的权重没有印出。（名单类）
@@ -152,23 +152,23 @@ python3 -m tools.lsk test --changed origin/main   # 只测相对 main 改动过�
 
 ## 衰弱与死亡风险
 
-- `skills/circadian-frailty-older-adults/` — 由 M10 和 L5 计算的相对振幅，以及两道题相加的疲劳分。
+- `skills/circadian-frailty-older-adults/` — 用最活跃十小时和最不活跃五小时的活动量算相对振幅，并把两道疲劳题相加；不判断衰弱。（名单类）
 - `skills/environmental-genetic-aging-mortality/` — 暴露回答。（名单类）
 - `skills/epigenetic-frailty-risk-score/` — 见「甲基化」。
 - `skills/genome-wide-proteomics-frailty/` — 已经算好的医院衰弱风险分。
 - `skills/metabolomic-frailty-subtypes/` — 十一个核磁共振代谢物对应的衰弱亚型。
 - `skills/one-year-mortality-aging-marker/` — 年龄和性别。一年死亡概率的回归系数没有印出。（名单类）
 - `skills/plasma-protein-risk-score/` — 髋部骨折相关蛋白，可带足跟超声 BUA 和 SOS。
-- `skills/sleep-study-life-expectancy/` — 年龄估计减实足年龄。
+- `skills/sleep-study-life-expectancy/` — 你已有的睡眠年龄估计减去实足年龄，只做相减，不跑论文的深度网络。（名单类）
 
 ## 线粒体
 
 - `skills/blood-mtdna-mutation-accumulation/` — 60 岁以后的重链替换类型，以及正文点名的克隆性造血基因。（名单类）
-- `skills/mtdna-copy-number-heteroplasmy/` — 异质性质控分档、覆盖度、拷贝数、污染和 70 岁切点。
+- `skills/mtdna-copy-number-heteroplasmy/` — 把你已有的线粒体变异异质性、拷贝数和污染比例按论文的质控切点分档；不算校正拷贝数或风险。（名单类）
 
 ## 营养感应
 
-- `skills/ampk-gamma1-refeeding-longevity/` — 八个分项到齐时的平均分和分档。
+- `skills/ampk-gamma1-refeeding-longevity/` — 八个多维预后指数分项点数的平均和分档；不从 PRKAG1 表达算任何个人分数。（名单类）
 - `skills/trigonelline-nad-precursor-muscle/` — 血清葫芦巴碱。（名单类）
 
 ## 自噬
@@ -185,7 +185,7 @@ python3 -m tools.lsk test --changed origin/main   # 只测相对 main 改动过�
 - `skills/human-ovarian-aging-foxp1/` — 18–28、36–39 或 47–49 岁，以及细胞标志和 FOXP1。（名单类）
 - `skills/human-ovarian-aging-multiomics/` — 23–29 或 49–54 岁，细胞比例方向，以及补充表六的基因列。（名单类）
 - `skills/ovarian-ageing-cancer-mutation/` — 正文写出的绝经年龄差，以及 PALB2 和 PNPLA8 在补充表里的 Beta。（名单类）
-- `skills/testis-transcriptomic-atlas-lifespan/` — 年龄，可带体质指数，对照睾丸衰老阶段。
+- `skills/testis-transcriptomic-atlas-lifespan/` — 按年龄（可带体质指数）对照睾丸图谱的衰老阶段，只查表，不算分。（名单类）
 
 ## 皮肤
 
@@ -200,7 +200,7 @@ python3 -m tools.lsk test --changed origin/main   # 只测相对 main 改动过�
 ## 基质、软骨与纤维化
 
 - `skills/elastin-fragments-innate-aging/` — 弹性蛋白片段相对 1500 pg/ml 和 250–680 pg/ml 的分组。
-- `skills/single-cell-somatic-mutational/` — 每个软骨细胞的突变计数、覆盖和灵敏度。
+- `skills/single-cell-somatic-mutational/` — 研究用：把单细胞测序得到的每个软骨细胞突变数按覆盖和灵敏度校正成突变负担；普通人拿不到这类数据。（名单类）
 
 ## 再生
 
@@ -215,7 +215,7 @@ python3 -m tools.lsk test --changed origin/main   # 只测相对 main 改动过�
 
 ## 端粒
 
-- `skills/digital-telomere-measurement-sequencing/` — 端粒长度的分布。
+- `skills/digital-telomere-measurement-sequencing/` — 一批端粒长度的通用分布统计（不套论文的分类模型）。（名单类）
 - `skills/leukocyte-telomere-length/` — 已经 z 标准化的对数端粒。未标准化的比值留在原值。
 
 ## 体脂与腰围

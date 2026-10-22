@@ -1,12 +1,12 @@
 ---
 name: longitudinal-serum-proteome-mapping
 description: >-
-  Tier B lookup (human): what the paper reports about named entities, not a validated personal score.
-  Records serum proteins the user supplied when they match the named disease-associated proteins or
-  the ageing-model accessions, and does not recompute the proteomic healthy ageing score. Use when the
-  user mentions PHAS, the longitudinal serum proteome, GNHS ageing proteins, or this Nature Metabolism
-  paper. Current medicines and checkup labs do not edit that list. The report does not say what to
-  start or stop.
+  Tier B lookup (human): what the paper reports, or simple arithmetic on values you bring; not the
+  paper's model run on one person. Records serum proteins the user supplied when they match the named
+  disease-associated proteins or the ageing-model accessions, and does not recompute the proteomic
+  healthy ageing score. Use when the user mentions PHAS, the longitudinal serum proteome, GNHS ageing
+  proteins, or this Nature Metabolism paper. Current medicines and checkup labs do not edit that list.
+  The report does not say what to start or stop.
 ---
 
 # 血清蛋白记录

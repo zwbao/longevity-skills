@@ -1,11 +1,12 @@
 ---
 name: plasma-proteome-dementia-biomarkers
 description: >-
-  Tier B lookup (human): what the paper reports about named entities, not a validated personal score.
-  Matches one person's protein symbols to the dementia plasma markers named with a direction in
-  Bellomo et al., Nature Aging 2026 (doi:10.1038/s43587-026-01162-7). Use when the user mentions
-  bPRIDE, GFAP, ITGAV, or differential dementia proteomics. Logistic coefficients stay in
-  Supplementary Table 6, so they are not applied. Checkup labs do not add proteins.
+  Tier B lookup (human): what the paper reports, or simple arithmetic on values you bring; not the
+  paper's model run on one person. Matches one person's protein symbols to the dementia plasma markers
+  named with a direction in Bellomo et al., Nature Aging 2026 (doi:10.1038/s43587-026-01162-7). Use
+  when the user mentions bPRIDE, GFAP, ITGAV, or differential dementia proteomics. Logistic
+  coefficients stay in Supplementary Table 6, so they are not applied. Checkup labs do not add
+  proteins.
 ---
 
 # 痴呆血浆蛋白

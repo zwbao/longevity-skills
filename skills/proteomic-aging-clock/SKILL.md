@@ -1,12 +1,12 @@
 ---
 name: proteomic-aging-clock
 description: >-
-  Tier B lookup (human): what the paper reports about named entities, not a validated personal score.
-  It only subtracts chronological age from a proteomic age you already have and matches gene symbols
-  to the published 204-protein list; the paper's LightGBM clock is not recomputed from protein levels.
-  Use when the user mentions ProtAge, ProtAgeGap, a proteomic aging clock, or the UK Biobank Olink
-  clock. Current medicines and checkup labs are context. The report does not say what to start or
-  stop.
+  Tier B lookup (human): what the paper reports, or simple arithmetic on values you bring; not the
+  paper's model run on one person. It only subtracts chronological age from a proteomic age you
+  already have and matches gene symbols to the published 204-protein list; the paper's LightGBM clock
+  is not recomputed from protein levels. Use when the user mentions ProtAge, ProtAgeGap, a proteomic
+  aging clock, or the UK Biobank Olink clock. Current medicines and checkup labs are context. The
+  report does not say what to start or stop.
 ---
 
 # 蛋白质年龄差

@@ -1,15 +1,15 @@
 ---
 name: biological-age-ct-cardiometabolic
 description: >-
-  Tier B lookup (human): what the paper reports about named entities, not a validated personal score.
-  Places one person's abdominal CT cardiometabolic biomarkers next to the Table 2 median values of
-  people who survived or died within five years of CT, from Pickhardt et al., Nature Communications
-  2025 (doi:10.1038/s41467-025-56741-w). The paper's CT biological age model (Cox with splines) has no
-  published coefficients, so the script does not compute it. Use when the user mentions CT biological
-  age, CTBA, muscle density, aortic calcium, or this paper. The report lists biomarkers nearer the
-  died-within-five-years median, ordered by Table 1 IPA drop; "nearer" is a plain distance check by
-  this skill, not the paper's model. It does not estimate survival or say which medicine to start or
-  stop.
+  Tier B lookup (human): what the paper reports, or simple arithmetic on values you bring; not the
+  paper's model run on one person. Places one person's abdominal CT cardiometabolic biomarkers next to
+  the Table 2 median values of people who survived or died within five years of CT, from Pickhardt et
+  al., Nature Communications 2025 (doi:10.1038/s41467-025-56741-w). The paper's CT biological age
+  model (Cox with splines) has no published coefficients, so the script does not compute it. Use when
+  the user mentions CT biological age, CTBA, muscle density, aortic calcium, or this paper. The report
+  lists biomarkers nearer the died-within-five-years median, ordered by Table 1 IPA drop; "nearer" is
+  a plain distance check by this skill, not the paper's model. It does not estimate survival or say
+  which medicine to start or stop.
 ---
 
 # 腹部影像生物标志

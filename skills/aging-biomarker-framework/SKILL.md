@@ -1,13 +1,13 @@
 ---
 name: aging-biomarker-framework
 description: >-
-  Tier B lookup (human): what the paper reports about named entities, not a validated personal score.
-  Subtracts chronological age from clock predictions the user already has (plain arithmetic) and
-  annotates each clock with the Biolearn evaluation in Ying et al., Nature Aging 2025. The paper is a
-  benchmark of existing clocks and publishes no new personal model, so this is not the paper's method
-  applied to a person. Use when the user mentions Biolearn, GrimAge2 mortality, Horvath skin and blood
-  R², or whether age prediction matches mortality prediction. Current medicines and checkup labs are
-  context. The report does not say what to start or stop.
+  Tier B lookup (human): what the paper reports, or simple arithmetic on values you bring; not the
+  paper's model run on one person. Subtracts chronological age from clock predictions the user already
+  has (plain arithmetic) and annotates each clock with the Biolearn evaluation in Ying et al., Nature
+  Aging 2025. The paper is a benchmark of existing clocks and publishes no new personal model, so this
+  is not the paper's method applied to a person. Use when the user mentions Biolearn, GrimAge2
+  mortality, Horvath skin and blood R², or whether age prediction matches mortality prediction.
+  Current medicines and checkup labs are context. The report does not say what to start or stop.
 ---
 
 # 衰老标志物对照

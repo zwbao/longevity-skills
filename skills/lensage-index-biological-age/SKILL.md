@@ -1,13 +1,13 @@
 ---
 name: lensage-index-biological-age
 description: >-
-  Tier B lookup (human): what the paper reports about named entities, not a validated personal score.
-  Subtracts chronological age from a lens age the user already has, which is how Li et al., Nature
-  Communications 2023 define the LensAge index, and places the difference beside the 5, 10, and 20
-  year fast-ager lines the paper reports. The lens age itself comes from the paper's InceptionV3 photo
-  model, whose code is released only on request, so the script does not run it or check the lens age.
-  Use when the user mentions LensAge or a lens photograph age minus chronological age. Medicines and
-  checkup labs stay context.
+  Tier B lookup (human): what the paper reports, or simple arithmetic on values you bring; not the
+  paper's model run on one person. Subtracts chronological age from a lens age the user already has,
+  which is how Li et al., Nature Communications 2023 define the LensAge index, and places the
+  difference beside the 5, 10, and 20 year fast-ager lines the paper reports. The lens age itself
+  comes from the paper's InceptionV3 photo model, whose code is released only on request, so the
+  script does not run it or check the lens age. Use when the user mentions LensAge or a lens
+  photograph age minus chronological age. Medicines and checkup labs stay context.
 ---
 
 # 晶状体年龄指数

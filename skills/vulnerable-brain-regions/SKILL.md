@@ -1,12 +1,12 @@
 ---
 name: vulnerable-brain-regions
 description: >-
-  Tier B lookup (human): what the paper reports about named entities, not a validated personal score.
-  Lists the twelve modifiable factors from Table 3 of the vulnerable-brain-network paper and marks
-  which ones the user reported. Use when the user mentions LIFO brain regions, modifiable dementia
-  risk factors, diabetes, nitrogen dioxide, or alcohol intake in Manuello and Cox, Nature
-  Communications 2024. Current medicines and checkup labs are context. The report does not say what to
-  start or stop.
+  Tier B lookup (human): what the paper reports, or simple arithmetic on values you bring; not the
+  paper's model run on one person. Lists the twelve modifiable factors from Table 3 of the
+  vulnerable-brain-network paper and marks which ones the user reported. Use when the user mentions
+  LIFO brain regions, modifiable dementia risk factors, diabetes, nitrogen dioxide, or alcohol intake
+  in Manuello and Cox, Nature Communications 2024. Current medicines and checkup labs are context. The
+  report does not say what to start or stop.
 ---
 
 # 脆弱脑网络因素

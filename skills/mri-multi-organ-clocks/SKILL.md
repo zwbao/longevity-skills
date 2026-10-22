@@ -1,12 +1,12 @@
 ---
 name: mri-multi-organ-clocks
 description: >-
-  Tier B lookup (human): what the paper reports about named entities, not a validated personal score.
-  It only subtracts chronological age from an organ MRI predicted age you already have (seven organs),
-  giving an uncorrected gap; the paper's organ models are not run, because they cannot be recomputed
-  from personal image measurements. Use when the user mentions MRIBAG, MRI organ clocks, or a
-  multi-organ MRI biological age. Current medicines and checkup labs are context. The report does not
-  say what to start or stop.
+  Tier B lookup (human): what the paper reports, or simple arithmetic on values you bring; not the
+  paper's model run on one person. It only subtracts chronological age from an organ MRI predicted age
+  you already have (seven organs), giving an uncorrected gap; the paper's organ models are not run,
+  because they cannot be recomputed from personal image measurements. Use when the user mentions
+  MRIBAG, MRI organ clocks, or a multi-organ MRI biological age. Current medicines and checkup labs
+  are context. The report does not say what to start or stop.
 ---
 
 # 磁共振器官年龄差

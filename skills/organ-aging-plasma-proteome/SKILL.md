@@ -1,11 +1,11 @@
 ---
 name: organ-aging-plasma-proteome
 description: >-
-  Tier B lookup (human): what the paper reports about named entities, not a validated personal score.
-  Checks whether one SomaScan profile contains every organ-enriched protein required by the Oh et al.
-  Nature 2023 organ-age models (DOI 10.1038/s41586-023-06802-1). Use when the user brings SeqIds and
-  asks about plasma organ aging or organage. LASSO weights stay in the organage pickles and are not
-  copied here, so this skill does not emit an organ age.
+  Tier B lookup (human): what the paper reports, or simple arithmetic on values you bring; not the
+  paper's model run on one person. Checks whether one SomaScan profile contains every organ-enriched
+  protein required by the Oh et al. Nature 2023 organ-age models (DOI 10.1038/s41586-023-06802-1). Use
+  when the user brings SeqIds and asks about plasma organ aging or organage. LASSO weights stay in the
+  organage pickles and are not copied here, so this skill does not emit an organ age.
 ---
 
 # 器官蛋白齐套

@@ -1,11 +1,11 @@
 ---
 name: calerie-methylation-clocks
 description: >-
-  Tier B lookup (human): what the paper reports about named entities, not a validated personal score.
-  Places one person's DunedinPACE, PC PhenoAge, and PC GrimAge values next to the published CALERIE
-  caloric-restriction effects. Use when the user mentions CALERIE, DunedinPACE in that trial, Waziry,
-  or Belsky, Nature Aging 2023. Current medicines and checkup labs are context. The report does not
-  say what to start or stop.
+  Tier B lookup (human): what the paper reports, or simple arithmetic on values you bring; not the
+  paper's model run on one person. Places one person's DunedinPACE, PC PhenoAge, and PC GrimAge values
+  next to the published CALERIE caloric-restriction effects. Use when the user mentions CALERIE,
+  DunedinPACE in that trial, Waziry, or Belsky, Nature Aging 2023. Current medicines and checkup labs
+  are context. The report does not say what to start or stop.
 ---
 
 # 限食试验时钟

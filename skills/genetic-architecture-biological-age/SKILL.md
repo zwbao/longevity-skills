@@ -1,12 +1,13 @@
 ---
 name: genetic-architecture-biological-age
 description: >-
-  Tier B lookup (human): what the paper reports about named entities, not a validated personal score.
-  Subtracts chronological age from organ predicted ages the user already has (plain arithmetic), using
-  the nine organ systems of Wen et al., Nature Aging 2024. The paper's support-vector models and
-  weights are not published, so this is not the paper's model applied to a person. Use when the user
-  mentions this paper, organ biological age gap, or the nine-organ GWAS. Current medicines and checkup
-  labs do not add or remove organs. The report does not say what to start or stop.
+  Tier B lookup (human): what the paper reports, or simple arithmetic on values you bring; not the
+  paper's model run on one person. Subtracts chronological age from organ predicted ages the user
+  already has (plain arithmetic), using the nine organ systems of Wen et al., Nature Aging 2024. The
+  paper's support-vector models and weights are not published, so this is not the paper's model
+  applied to a person. Use when the user mentions this paper, organ biological age gap, or the
+  nine-organ GWAS. Current medicines and checkup labs do not add or remove organs. The report does not
+  say what to start or stop.
 ---
 
 # 器官年龄差

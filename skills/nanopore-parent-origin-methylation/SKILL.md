@@ -1,15 +1,16 @@
 ---
 name: nanopore-parent-origin-methylation
 description: >-
-  Tier B lookup (human): what the paper reports about named entities, not a validated personal score.
-  Applies the published lasso coefficients of the nanopore methylation clock (Supplementary Data 3) to
-  methylation values the user supplies already standardized, and otherwise only subtracts numbers:
-  methylation age minus chronological age, or paternal minus maternal methylation at a site. The
-  coefficients act on values standardized with the training cohort's means and standard deviations,
-  which are not published, so a person's own raw methylation proportions cannot be turned into the
-  paper's methylation age, and the paper prints no per-person example. Use when the user brings
-  methylation measurements, medicines, or checkup labs for this parent-of-origin methylation clock. It
-  does not turn the result into advice to start or stop a medicine.
+  Tier B lookup (human): what the paper reports, or simple arithmetic on values you bring; not the
+  paper's model run on one person. Applies the published lasso coefficients of the nanopore
+  methylation clock (Supplementary Data 3) to methylation values the user supplies already
+  standardized, and otherwise only subtracts numbers: methylation age minus chronological age, or
+  paternal minus maternal methylation at a site. The coefficients act on values standardized with the
+  training cohort's means and standard deviations, which are not published, so a person's own raw
+  methylation proportions cannot be turned into the paper's methylation age, and the paper prints no
+  per-person example. Use when the user brings methylation measurements, medicines, or checkup labs
+  for this parent-of-origin methylation clock. It does not turn the result into advice to start or
+  stop a medicine.
 ---
 
 # 印记位点甲基化读出
