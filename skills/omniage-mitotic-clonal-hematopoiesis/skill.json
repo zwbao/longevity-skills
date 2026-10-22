@@ -37,5 +37,9 @@
     "labs_flag": "--labs",
     "out_flag": "--out"
   },
-  "inputs_status": "none"
+  "inputs_status": "none",
+  "validation": {
+    "status": "draft",
+    "gap_zh": "epiTOC2 的公式和 163 个探针系数来自论文随附的 OmniAge 官方代码（github.com/Duzhaozhen/OmniAge）。已查正文、补充信息 PDF（补充图 1–2 只以散点图显示与原始软件完全相关）和补充数据 1–9（只有各队列的相关系数和 Cox 回归结果），都没有印出任何一个样本的 epiTOC2 tnsc 或 irS 数值，无法用论文印出的例子复现；现有测试只与 OmniAgePy 的输出交叉核对。163 个探针输入无法逐项写进 inputs，未声明。"
+  }
 }
