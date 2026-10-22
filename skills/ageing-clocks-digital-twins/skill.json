@@ -2,7 +2,7 @@
   "schema": "longevity-skill/1",
   "name": "ageing-clocks-digital-twins",
   "kind": "paper",
-  "tier": "A",
+  "tier": "B",
   "species": [
     "human"
   ],
@@ -10,13 +10,13 @@
   "domains": [
     "临床年龄与可穿戴"
   ],
-  "blurb_zh": "已经算好的生物年龄的稳定度。",
+  "blurb_zh": "同一时钟多次生物年龄的波动（只算差值，不算新的生物年龄）。",
   "intents": [
     "before_after",
     "epigenetic_age"
   ],
   "triage": {
-    "reason_zh": "用个人同一时钟多次生物年龄算两两绝对差均值的倒数稳定度，并对照2.56年技术重复限。",
+    "reason_zh": "输入是别的时钟已算好的生物年龄，论文未印出0到1缩放方法也没有个人示例，脚本只算两两差均值的倒数。",
     "reviewed": false
   },
   "paper": {

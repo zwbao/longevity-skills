@@ -2,7 +2,7 @@
   "schema": "longevity-skill/1",
   "name": "plasma-proteomic-cellular-aging",
   "kind": "paper",
-  "tier": "A",
+  "tier": "B",
   "species": [
     "human"
   ],
@@ -10,12 +10,12 @@
   "domains": [
     "蛋白、代谢与器官年龄"
   ],
-  "blurb_zh": "SomaScan 蛋白和性别对应的细胞类型蛋白年龄。",
+  "blurb_zh": "已按队列标准化的 SomaScan 蛋白 z 分数套公开系数（个人单份数据做不出 z 分数）。",
   "intents": [
     "proteomic_organ_age"
   ],
   "triage": {
-    "reason_zh": "用个人SomaScan蛋白z分数和性别按公开系数表算细胞类型预测年龄。",
+    "reason_zh": "系数虽已公开，但输入须是按整个队列做的蛋白z分数，论文和代码都没给参考均值标准差，个人单份数据算不出；也无印出示例。",
     "reviewed": false
   },
   "paper": {

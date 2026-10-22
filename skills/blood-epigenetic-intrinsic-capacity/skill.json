@@ -10,33 +10,1151 @@
   "domains": [
     "甲基化"
   ],
-  "blurb_zh": "认知、行走、情绪、视力和听力的内在能力。",
+  "blurb_zh": "血液甲基化芯片的 91 个位点 β 值，按论文补充表 1 算甲基化内在能力（认知、行走、情绪、感官和活力的综合）。",
   "intents": [
     "epigenetic_age",
     "frailty_mortality"
   ],
   "triage": {
-    "reason_zh": "91个CpG到齐时按补充表系数和截距算出个人甲基化内在能力分数。",
+    "reason_zh": "91个CpG的β值按补充表1的弹性网系数和截距算出个人甲基化内在能力分数。",
     "reviewed": false
   },
   "paper": {
     "doi": "10.1038/s43587-025-00883-5",
     "title": "A blood-based epigenetic clock for intrinsic capacity predicts mortality and is associated with clinical, immunological and lifestyle factors",
-    "title_zh": "内在能力",
+    "title_zh": "基于血液的内在能力表观遗传时钟可预测死亡，并与临床、免疫和生活方式因素相关",
     "journal": "Nature Aging",
     "year": 2025,
     "authors": "Fuentealba 等",
     "article_url": "https://doi.org/10.1038/s43587-025-00883-5",
-    "summary_zh": "这项研究以认知、行动、心理、感官和活力五方面的临床评估衡量内在能力，用血液DNA甲基化建成预测它的时钟，并在弗雷明汉心脏研究中发现它预测全因死亡强于前两代表观遗传时钟。个人报告只在甲基化位点交齐时按补充表的系数和截距算甲基化内在能力，只有临床分数时给出四项按满分缩放的平均并注明这不是论文的内在能力，也不做死亡预测。",
+    "supplements": [
+      {
+        "label": "补充表 1–8（含 91 个位点系数和截距）",
+        "url": "https://static-content.springer.com/esm/art%3A10.1038%2Fs43587-025-00883-5/MediaObjects/43587_2025_883_MOESM2_ESM.xlsx"
+      }
+    ],
+    "summary_zh": "这项研究以认知、行动、心理、感官和活力五方面的临床评估衡量人的内在能力，用血液DNA甲基化建成预测它的时钟，并在弗雷明汉心脏研究中发现它预测全因死亡强于前两代表观遗传时钟。个人报告只在91个甲基化位点的β值交齐时，按补充表1的系数和截距算甲基化内在能力，不做死亡预测。",
     "summary_status": "draft"
   },
   "entry": {
     "script": "scripts/personal_report.py",
     "measurements_flag": "--measurements",
+    "measurements_header": [
+      "item",
+      "value",
+      "unit"
+    ],
     "age_flag": "--age",
     "medications_flag": "--medications",
     "labs_flag": "--labs",
-    "out_flag": "--out"
+    "out_flag": "--out",
+    "result_json": true
   },
-  "inputs_status": "none"
+  "inputs_status": "verified",
+  "inputs": [
+    {
+      "key": "cg06846752",
+      "label_zh": "cg06846752",
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "这里要 Illumina EPIC 芯片的甲基化 β 值，在 0 到 1 之间。百分比（0–100）或 M 值不能直接用。"
+    },
+    {
+      "key": "cg19916364",
+      "label_zh": "cg19916364",
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "这里要 Illumina EPIC 芯片的甲基化 β 值，在 0 到 1 之间。百分比（0–100）或 M 值不能直接用。"
+    },
+    {
+      "key": "cg05781609",
+      "label_zh": "cg05781609",
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "这里要 Illumina EPIC 芯片的甲基化 β 值，在 0 到 1 之间。百分比（0–100）或 M 值不能直接用。"
+    },
+    {
+      "key": "cg15726426",
+      "label_zh": "cg15726426",
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "这里要 Illumina EPIC 芯片的甲基化 β 值，在 0 到 1 之间。百分比（0–100）或 M 值不能直接用。"
+    },
+    {
+      "key": "cg10389771",
+      "label_zh": "cg10389771",
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "这里要 Illumina EPIC 芯片的甲基化 β 值，在 0 到 1 之间。百分比（0–100）或 M 值不能直接用。"
+    },
+    {
+      "key": "cg16269733",
+      "label_zh": "cg16269733",
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "这里要 Illumina EPIC 芯片的甲基化 β 值，在 0 到 1 之间。百分比（0–100）或 M 值不能直接用。"
+    },
+    {
+      "key": "cg03890680",
+      "label_zh": "cg03890680",
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "这里要 Illumina EPIC 芯片的甲基化 β 值，在 0 到 1 之间。百分比（0–100）或 M 值不能直接用。"
+    },
+    {
+      "key": "cg16052388",
+      "label_zh": "cg16052388",
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "这里要 Illumina EPIC 芯片的甲基化 β 值，在 0 到 1 之间。百分比（0–100）或 M 值不能直接用。"
+    },
+    {
+      "key": "cg13022624",
+      "label_zh": "cg13022624",
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "这里要 Illumina EPIC 芯片的甲基化 β 值，在 0 到 1 之间。百分比（0–100）或 M 值不能直接用。"
+    },
+    {
+      "key": "cg12387232",
+      "label_zh": "cg12387232",
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "这里要 Illumina EPIC 芯片的甲基化 β 值，在 0 到 1 之间。百分比（0–100）或 M 值不能直接用。"
+    },
+    {
+      "key": "cg11176990",
+      "label_zh": "cg11176990",
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "这里要 Illumina EPIC 芯片的甲基化 β 值，在 0 到 1 之间。百分比（0–100）或 M 值不能直接用。"
+    },
+    {
+      "key": "cg22158769",
+      "label_zh": "cg22158769",
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "这里要 Illumina EPIC 芯片的甲基化 β 值，在 0 到 1 之间。百分比（0–100）或 M 值不能直接用。"
+    },
+    {
+      "key": "cg00740914",
+      "label_zh": "cg00740914",
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "这里要 Illumina EPIC 芯片的甲基化 β 值，在 0 到 1 之间。百分比（0–100）或 M 值不能直接用。"
+    },
+    {
+      "key": "cg11807280",
+      "label_zh": "cg11807280",
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "这里要 Illumina EPIC 芯片的甲基化 β 值，在 0 到 1 之间。百分比（0–100）或 M 值不能直接用。"
+    },
+    {
+      "key": "cg07337544",
+      "label_zh": "cg07337544",
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "这里要 Illumina EPIC 芯片的甲基化 β 值，在 0 到 1 之间。百分比（0–100）或 M 值不能直接用。"
+    },
+    {
+      "key": "cg00528640",
+      "label_zh": "cg00528640",
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "这里要 Illumina EPIC 芯片的甲基化 β 值，在 0 到 1 之间。百分比（0–100）或 M 值不能直接用。"
+    },
+    {
+      "key": "cg22454769",
+      "label_zh": "cg22454769",
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "这里要 Illumina EPIC 芯片的甲基化 β 值，在 0 到 1 之间。百分比（0–100）或 M 值不能直接用。"
+    },
+    {
+      "key": "cg19074170",
+      "label_zh": "cg19074170",
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "这里要 Illumina EPIC 芯片的甲基化 β 值，在 0 到 1 之间。百分比（0–100）或 M 值不能直接用。"
+    },
+    {
+      "key": "cg17165841",
+      "label_zh": "cg17165841",
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "这里要 Illumina EPIC 芯片的甲基化 β 值，在 0 到 1 之间。百分比（0–100）或 M 值不能直接用。"
+    },
+    {
+      "key": "cg14435073",
+      "label_zh": "cg14435073",
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "这里要 Illumina EPIC 芯片的甲基化 β 值，在 0 到 1 之间。百分比（0–100）或 M 值不能直接用。"
+    },
+    {
+      "key": "cg00870633",
+      "label_zh": "cg00870633",
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "这里要 Illumina EPIC 芯片的甲基化 β 值，在 0 到 1 之间。百分比（0–100）或 M 值不能直接用。"
+    },
+    {
+      "key": "cg12340144",
+      "label_zh": "cg12340144",
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "这里要 Illumina EPIC 芯片的甲基化 β 值，在 0 到 1 之间。百分比（0–100）或 M 值不能直接用。"
+    },
+    {
+      "key": "cg03607117",
+      "label_zh": "cg03607117",
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "这里要 Illumina EPIC 芯片的甲基化 β 值，在 0 到 1 之间。百分比（0–100）或 M 值不能直接用。"
+    },
+    {
+      "key": "cg07144720",
+      "label_zh": "cg07144720",
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "这里要 Illumina EPIC 芯片的甲基化 β 值，在 0 到 1 之间。百分比（0–100）或 M 值不能直接用。"
+    },
+    {
+      "key": "cg25265234",
+      "label_zh": "cg25265234",
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "这里要 Illumina EPIC 芯片的甲基化 β 值，在 0 到 1 之间。百分比（0–100）或 M 值不能直接用。"
+    },
+    {
+      "key": "cg27182476",
+      "label_zh": "cg27182476",
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "这里要 Illumina EPIC 芯片的甲基化 β 值，在 0 到 1 之间。百分比（0–100）或 M 值不能直接用。"
+    },
+    {
+      "key": "cg24850932",
+      "label_zh": "cg24850932",
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "这里要 Illumina EPIC 芯片的甲基化 β 值，在 0 到 1 之间。百分比（0–100）或 M 值不能直接用。"
+    },
+    {
+      "key": "cg03915012",
+      "label_zh": "cg03915012",
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "这里要 Illumina EPIC 芯片的甲基化 β 值，在 0 到 1 之间。百分比（0–100）或 M 值不能直接用。"
+    },
+    {
+      "key": "cg03799405",
+      "label_zh": "cg03799405",
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "这里要 Illumina EPIC 芯片的甲基化 β 值，在 0 到 1 之间。百分比（0–100）或 M 值不能直接用。"
+    },
+    {
+      "key": "cg25144207",
+      "label_zh": "cg25144207",
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "这里要 Illumina EPIC 芯片的甲基化 β 值，在 0 到 1 之间。百分比（0–100）或 M 值不能直接用。"
+    },
+    {
+      "key": "cg03194122",
+      "label_zh": "cg03194122",
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "这里要 Illumina EPIC 芯片的甲基化 β 值，在 0 到 1 之间。百分比（0–100）或 M 值不能直接用。"
+    },
+    {
+      "key": "cg25993931",
+      "label_zh": "cg25993931",
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "这里要 Illumina EPIC 芯片的甲基化 β 值，在 0 到 1 之间。百分比（0–100）或 M 值不能直接用。"
+    },
+    {
+      "key": "cg02891686",
+      "label_zh": "cg02891686",
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "这里要 Illumina EPIC 芯片的甲基化 β 值，在 0 到 1 之间。百分比（0–100）或 M 值不能直接用。"
+    },
+    {
+      "key": "cg10183150",
+      "label_zh": "cg10183150",
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "这里要 Illumina EPIC 芯片的甲基化 β 值，在 0 到 1 之间。百分比（0–100）或 M 值不能直接用。"
+    },
+    {
+      "key": "cg14071179",
+      "label_zh": "cg14071179",
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "这里要 Illumina EPIC 芯片的甲基化 β 值，在 0 到 1 之间。百分比（0–100）或 M 值不能直接用。"
+    },
+    {
+      "key": "cg14874742",
+      "label_zh": "cg14874742",
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "这里要 Illumina EPIC 芯片的甲基化 β 值，在 0 到 1 之间。百分比（0–100）或 M 值不能直接用。"
+    },
+    {
+      "key": "cg02204637",
+      "label_zh": "cg02204637",
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "这里要 Illumina EPIC 芯片的甲基化 β 值，在 0 到 1 之间。百分比（0–100）或 M 值不能直接用。"
+    },
+    {
+      "key": "cg19206146",
+      "label_zh": "cg19206146",
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "这里要 Illumina EPIC 芯片的甲基化 β 值，在 0 到 1 之间。百分比（0–100）或 M 值不能直接用。"
+    },
+    {
+      "key": "cg19398269",
+      "label_zh": "cg19398269",
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "这里要 Illumina EPIC 芯片的甲基化 β 值，在 0 到 1 之间。百分比（0–100）或 M 值不能直接用。"
+    },
+    {
+      "key": "cg26910594",
+      "label_zh": "cg26910594",
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "这里要 Illumina EPIC 芯片的甲基化 β 值，在 0 到 1 之间。百分比（0–100）或 M 值不能直接用。"
+    },
+    {
+      "key": "cg16113650",
+      "label_zh": "cg16113650",
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "这里要 Illumina EPIC 芯片的甲基化 β 值，在 0 到 1 之间。百分比（0–100）或 M 值不能直接用。"
+    },
+    {
+      "key": "cg23760574",
+      "label_zh": "cg23760574",
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "这里要 Illumina EPIC 芯片的甲基化 β 值，在 0 到 1 之间。百分比（0–100）或 M 值不能直接用。"
+    },
+    {
+      "key": "cg25278663",
+      "label_zh": "cg25278663",
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "这里要 Illumina EPIC 芯片的甲基化 β 值，在 0 到 1 之间。百分比（0–100）或 M 值不能直接用。"
+    },
+    {
+      "key": "cg13903548",
+      "label_zh": "cg13903548",
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "这里要 Illumina EPIC 芯片的甲基化 β 值，在 0 到 1 之间。百分比（0–100）或 M 值不能直接用。"
+    },
+    {
+      "key": "cg21429551",
+      "label_zh": "cg21429551",
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "这里要 Illumina EPIC 芯片的甲基化 β 值，在 0 到 1 之间。百分比（0–100）或 M 值不能直接用。"
+    },
+    {
+      "key": "cg21449170",
+      "label_zh": "cg21449170",
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "这里要 Illumina EPIC 芯片的甲基化 β 值，在 0 到 1 之间。百分比（0–100）或 M 值不能直接用。"
+    },
+    {
+      "key": "cg07955995",
+      "label_zh": "cg07955995",
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "这里要 Illumina EPIC 芯片的甲基化 β 值，在 0 到 1 之间。百分比（0–100）或 M 值不能直接用。"
+    },
+    {
+      "key": "cg12526474",
+      "label_zh": "cg12526474",
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "这里要 Illumina EPIC 芯片的甲基化 β 值，在 0 到 1 之间。百分比（0–100）或 M 值不能直接用。"
+    },
+    {
+      "key": "cg09015433",
+      "label_zh": "cg09015433",
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "这里要 Illumina EPIC 芯片的甲基化 β 值，在 0 到 1 之间。百分比（0–100）或 M 值不能直接用。"
+    },
+    {
+      "key": "cg17131553",
+      "label_zh": "cg17131553",
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "这里要 Illumina EPIC 芯片的甲基化 β 值，在 0 到 1 之间。百分比（0–100）或 M 值不能直接用。"
+    },
+    {
+      "key": "cg07691793",
+      "label_zh": "cg07691793",
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "这里要 Illumina EPIC 芯片的甲基化 β 值，在 0 到 1 之间。百分比（0–100）或 M 值不能直接用。"
+    },
+    {
+      "key": "cg25653947",
+      "label_zh": "cg25653947",
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "这里要 Illumina EPIC 芯片的甲基化 β 值，在 0 到 1 之间。百分比（0–100）或 M 值不能直接用。"
+    },
+    {
+      "key": "cg11172629",
+      "label_zh": "cg11172629",
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "这里要 Illumina EPIC 芯片的甲基化 β 值，在 0 到 1 之间。百分比（0–100）或 M 值不能直接用。"
+    },
+    {
+      "key": "cg18240400",
+      "label_zh": "cg18240400",
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "这里要 Illumina EPIC 芯片的甲基化 β 值，在 0 到 1 之间。百分比（0–100）或 M 值不能直接用。"
+    },
+    {
+      "key": "cg19939077",
+      "label_zh": "cg19939077",
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "这里要 Illumina EPIC 芯片的甲基化 β 值，在 0 到 1 之间。百分比（0–100）或 M 值不能直接用。"
+    },
+    {
+      "key": "cg26579838",
+      "label_zh": "cg26579838",
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "这里要 Illumina EPIC 芯片的甲基化 β 值，在 0 到 1 之间。百分比（0–100）或 M 值不能直接用。"
+    },
+    {
+      "key": "cg19158754",
+      "label_zh": "cg19158754",
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "这里要 Illumina EPIC 芯片的甲基化 β 值，在 0 到 1 之间。百分比（0–100）或 M 值不能直接用。"
+    },
+    {
+      "key": "cg18231614",
+      "label_zh": "cg18231614",
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "这里要 Illumina EPIC 芯片的甲基化 β 值，在 0 到 1 之间。百分比（0–100）或 M 值不能直接用。"
+    },
+    {
+      "key": "cg21990700",
+      "label_zh": "cg21990700",
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "这里要 Illumina EPIC 芯片的甲基化 β 值，在 0 到 1 之间。百分比（0–100）或 M 值不能直接用。"
+    },
+    {
+      "key": "cg15996644",
+      "label_zh": "cg15996644",
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "这里要 Illumina EPIC 芯片的甲基化 β 值，在 0 到 1 之间。百分比（0–100）或 M 值不能直接用。"
+    },
+    {
+      "key": "cg25161889",
+      "label_zh": "cg25161889",
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "这里要 Illumina EPIC 芯片的甲基化 β 值，在 0 到 1 之间。百分比（0–100）或 M 值不能直接用。"
+    },
+    {
+      "key": "cg06647068",
+      "label_zh": "cg06647068",
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "这里要 Illumina EPIC 芯片的甲基化 β 值，在 0 到 1 之间。百分比（0–100）或 M 值不能直接用。"
+    },
+    {
+      "key": "cg15125438",
+      "label_zh": "cg15125438",
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "这里要 Illumina EPIC 芯片的甲基化 β 值，在 0 到 1 之间。百分比（0–100）或 M 值不能直接用。"
+    },
+    {
+      "key": "cg06648759",
+      "label_zh": "cg06648759",
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "这里要 Illumina EPIC 芯片的甲基化 β 值，在 0 到 1 之间。百分比（0–100）或 M 值不能直接用。"
+    },
+    {
+      "key": "cg23118561",
+      "label_zh": "cg23118561",
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "这里要 Illumina EPIC 芯片的甲基化 β 值，在 0 到 1 之间。百分比（0–100）或 M 值不能直接用。"
+    },
+    {
+      "key": "cg22720431",
+      "label_zh": "cg22720431",
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "这里要 Illumina EPIC 芯片的甲基化 β 值，在 0 到 1 之间。百分比（0–100）或 M 值不能直接用。"
+    },
+    {
+      "key": "cg03808001",
+      "label_zh": "cg03808001",
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "这里要 Illumina EPIC 芯片的甲基化 β 值，在 0 到 1 之间。百分比（0–100）或 M 值不能直接用。"
+    },
+    {
+      "key": "cg16188984",
+      "label_zh": "cg16188984",
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "这里要 Illumina EPIC 芯片的甲基化 β 值，在 0 到 1 之间。百分比（0–100）或 M 值不能直接用。"
+    },
+    {
+      "key": "cg03035871",
+      "label_zh": "cg03035871",
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "这里要 Illumina EPIC 芯片的甲基化 β 值，在 0 到 1 之间。百分比（0–100）或 M 值不能直接用。"
+    },
+    {
+      "key": "cg02018089",
+      "label_zh": "cg02018089",
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "这里要 Illumina EPIC 芯片的甲基化 β 值，在 0 到 1 之间。百分比（0–100）或 M 值不能直接用。"
+    },
+    {
+      "key": "cg14299483",
+      "label_zh": "cg14299483",
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "这里要 Illumina EPIC 芯片的甲基化 β 值，在 0 到 1 之间。百分比（0–100）或 M 值不能直接用。"
+    },
+    {
+      "key": "cg01763090",
+      "label_zh": "cg01763090",
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "这里要 Illumina EPIC 芯片的甲基化 β 值，在 0 到 1 之间。百分比（0–100）或 M 值不能直接用。"
+    },
+    {
+      "key": "cg23479586",
+      "label_zh": "cg23479586",
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "这里要 Illumina EPIC 芯片的甲基化 β 值，在 0 到 1 之间。百分比（0–100）或 M 值不能直接用。"
+    },
+    {
+      "key": "cg20809087",
+      "label_zh": "cg20809087",
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "这里要 Illumina EPIC 芯片的甲基化 β 值，在 0 到 1 之间。百分比（0–100）或 M 值不能直接用。"
+    },
+    {
+      "key": "cg02010347",
+      "label_zh": "cg02010347",
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "这里要 Illumina EPIC 芯片的甲基化 β 值，在 0 到 1 之间。百分比（0–100）或 M 值不能直接用。"
+    },
+    {
+      "key": "cg16480692",
+      "label_zh": "cg16480692",
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "这里要 Illumina EPIC 芯片的甲基化 β 值，在 0 到 1 之间。百分比（0–100）或 M 值不能直接用。"
+    },
+    {
+      "key": "cg06470626",
+      "label_zh": "cg06470626",
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "这里要 Illumina EPIC 芯片的甲基化 β 值，在 0 到 1 之间。百分比（0–100）或 M 值不能直接用。"
+    },
+    {
+      "key": "cg07285209",
+      "label_zh": "cg07285209",
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "这里要 Illumina EPIC 芯片的甲基化 β 值，在 0 到 1 之间。百分比（0–100）或 M 值不能直接用。"
+    },
+    {
+      "key": "cg03890691",
+      "label_zh": "cg03890691",
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "这里要 Illumina EPIC 芯片的甲基化 β 值，在 0 到 1 之间。百分比（0–100）或 M 值不能直接用。"
+    },
+    {
+      "key": "cg18693704",
+      "label_zh": "cg18693704",
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "这里要 Illumina EPIC 芯片的甲基化 β 值，在 0 到 1 之间。百分比（0–100）或 M 值不能直接用。"
+    },
+    {
+      "key": "cg06959205",
+      "label_zh": "cg06959205",
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "这里要 Illumina EPIC 芯片的甲基化 β 值，在 0 到 1 之间。百分比（0–100）或 M 值不能直接用。"
+    },
+    {
+      "key": "cg03832440",
+      "label_zh": "cg03832440",
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "这里要 Illumina EPIC 芯片的甲基化 β 值，在 0 到 1 之间。百分比（0–100）或 M 值不能直接用。"
+    },
+    {
+      "key": "cg18026225",
+      "label_zh": "cg18026225",
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "这里要 Illumina EPIC 芯片的甲基化 β 值，在 0 到 1 之间。百分比（0–100）或 M 值不能直接用。"
+    },
+    {
+      "key": "cg00002749",
+      "label_zh": "cg00002749",
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "这里要 Illumina EPIC 芯片的甲基化 β 值，在 0 到 1 之间。百分比（0–100）或 M 值不能直接用。"
+    },
+    {
+      "key": "cg22353329",
+      "label_zh": "cg22353329",
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "这里要 Illumina EPIC 芯片的甲基化 β 值，在 0 到 1 之间。百分比（0–100）或 M 值不能直接用。"
+    },
+    {
+      "key": "cg12989560",
+      "label_zh": "cg12989560",
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "这里要 Illumina EPIC 芯片的甲基化 β 值，在 0 到 1 之间。百分比（0–100）或 M 值不能直接用。"
+    },
+    {
+      "key": "cg13383153",
+      "label_zh": "cg13383153",
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "这里要 Illumina EPIC 芯片的甲基化 β 值，在 0 到 1 之间。百分比（0–100）或 M 值不能直接用。"
+    },
+    {
+      "key": "cg00539386",
+      "label_zh": "cg00539386",
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "这里要 Illumina EPIC 芯片的甲基化 β 值，在 0 到 1 之间。百分比（0–100）或 M 值不能直接用。"
+    },
+    {
+      "key": "cg25970491",
+      "label_zh": "cg25970491",
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "这里要 Illumina EPIC 芯片的甲基化 β 值，在 0 到 1 之间。百分比（0–100）或 M 值不能直接用。"
+    },
+    {
+      "key": "cg16722536",
+      "label_zh": "cg16722536",
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "这里要 Illumina EPIC 芯片的甲基化 β 值，在 0 到 1 之间。百分比（0–100）或 M 值不能直接用。"
+    },
+    {
+      "key": "cg13003054",
+      "label_zh": "cg13003054",
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "这里要 Illumina EPIC 芯片的甲基化 β 值，在 0 到 1 之间。百分比（0–100）或 M 值不能直接用。"
+    }
+  ],
+  "outputs": [
+    {
+      "key": "dnam_ic",
+      "label_zh": "甲基化内在能力（DNAm IC）",
+      "unit": "1",
+      "note_zh": "补充表1截距加91个位点系数乘β值；论文的内在能力在0到1之间，越高越好。"
+    }
+  ],
+  "validation": {
+    "status": "draft",
+    "gap_zh": "论文正文、方法、扩展数据图和补充表1至8都没有印出任何个人的β值与对应甲基化内在能力，作者GitHub仓库（msfuentealba/IC_clock）只有读私有队列文件的作图代码和图，也没有示例数据或预测值，所以无法复现一个印出的例子；系数与补充表1逐项核对一致。"
+  }
 }

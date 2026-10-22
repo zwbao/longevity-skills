@@ -1,11 +1,12 @@
 ---
 name: testis-transcriptomic-atlas-lifespan
 description: >-
-  Tier A draft: the paper's printed example is not reproduced yet, so treat the readout as
-  provisional. Places one adult's age and body-mass index against the two somatic aging waves in the
-  human testis atlas of Cui et al., Nature Aging 2025. It does not run the notebook XGBoost grid. Use
-  when the user mentions this testicular aging atlas, peritubular priming, or the age-BMI fertility
-  note. Medicines and labs stay context.
+  Tier B lookup (human): what the paper reports about named entities, not a validated personal score.
+  Looks up where one adult's age and body-mass index fall against the two somatic aging waves in the
+  human testis atlas of Cui et al., Nature Aging 2025. It computes no score: the atlas describes
+  cell-type changes across age groups, and the paper gives no model a person could run on their own
+  measurements. Use when the user mentions this testicular aging atlas, peritubular priming, or the
+  age-BMI fertility note. Medicines and labs stay context.
 ---
 
 # 睾丸衰老阶段
