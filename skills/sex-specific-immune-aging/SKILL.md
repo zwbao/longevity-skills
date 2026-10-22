@@ -1,12 +1,11 @@
 ---
 name: sex-specific-immune-aging
 description: >-
-  Tier C index only (human study): do not use it to answer a person's own health question. States that
-  one person's sex-stratified PBMC single-cell age is not computed. The supplement is a PDF, and the
-  GitHub and Zenodo archives do not save the multilayer perceptron. Use when the user mentions
-  sex-specific nonlinear immune aging, sex-aware aging features, or a PBMC single-cell aging clock.
-  Current medicines and checkup labs do not create a method list. The report does not say what to
-  start or stop.
+  Tier C index only (human study): do not use it to answer a person's own health question. Park et
+  al., Nature Communications 2026: human PBMC single-cell data show sex-specific, nonlinear immune
+  ageing; the multilayer-perceptron age predictor is not saved in the archives, so no age is computed.
+  Use when someone asks about this study, sex-specific immune ageing in human PBMCs, or its features;
+  not for a person's own measurements.
 ---
 
 # 单细胞免疫衰老轨迹
@@ -15,22 +14,16 @@ description: >-
 > **分级 C，只收录。** 这篇论文的主要证据来自人。不要用它回答某个人自己的健康问题，也不要向用户索要测量、现用药或体检来运行它；脚本输出只是复现论文里的名单或数值，不是这个人的结果。
 <!-- /tier-banner -->
 
-用户可以交外周血单个核细胞单细胞表达、性别、现用药和体检。不要向用户要 GEO、STRING 或 PDF。
+这项研究按性别看外周血单个核细胞随年龄的变化，并用多层感知机预测年龄。补充材料是说明文件，不是权重表；GitHub 和 Zenodo 压缩包也没有保存训练好的网络，所以脚本不算预测年龄。
 
-报告开头是论文卡片。补充材料是说明文件，不是权重表。仓库和 Zenodo 压缩包也没有保存多层感知机，这次不算预测年龄。现用药对不上时保留「不能据此停」。体检不增删方法算出的名单。
+脚本复现论文卡片和「这次算不了」的理由，不给任何人算免疫年龄。不要向用户要 GEO、STRING 或 PDF。
 
-## 命令
+## 命令（复现论文卡片）
 
 Set `SKILL` to the directory that contains this file.
 
 ```bash
-python "$SKILL/scripts/personal_report.py" \
-  --measurements MEAS.csv \
-  --medications MEDS.txt \
-  --labs CHECKUP.csv \
-  --out out/
+python "$SKILL/scripts/personal_report.py" --out out/
 ```
 
-`MEAS.csv` columns are `name,value`. Values are echoed and not scored. `--medications` is one name per line. `--labs` is optional (`项目,结果,单位`). IDAT and PDF files are not read.
-
-引用 `out/report.md`，包括 `边界:` 那一行。方法说明见 [references/claims.md](references/claims.md)。
+IDAT 和 PDF 不读。引用 `out/report.md` 时说明这是论文复现，包括 `边界:` 那一行。方法说明见 [references/claims.md](references/claims.md)。

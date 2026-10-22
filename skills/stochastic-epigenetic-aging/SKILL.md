@@ -1,11 +1,11 @@
 ---
 name: stochastic-epigenetic-aging
 description: >-
-  Tier C index only (human study): do not use it to answer a person's own health question. Computes
-  the paper's RR2 ratio and CpG switch probability for the stochastic component of epigenetic clocks.
-  Use when the user mentions stochastic epigenetic aging, Tong, Teschendorff, Nature Aging 2024, or
-  what fraction of Horvath, Zhang, or PhenoAge could be stochastic. Current medicines and checkup labs
-  are context. The report does not say what to start or stop.
+  Tier C index only (human study): do not use it to answer a person's own health question. Tong et
+  al., Nature Aging 2024: simulated stochastic methylation drift explains much of the accuracy of
+  clocks such as Horvath, Zhang and PhenoAge in blood cohorts. Holds the RR2 ratio and CpG
+  switch-probability formulas. Use when someone asks about this study, stochastic epigenetic ageing,
+  or the listed clocks; not for a person's own measurements.
 ---
 
 # 表观遗传随机成分
@@ -14,11 +14,11 @@ description: >-
 > **分级 C，只收录。** 这篇论文的主要证据来自人。不要用它回答某个人自己的健康问题，也不要向用户索要测量、现用药或体检来运行它；脚本输出只是复现论文里的名单或数值，不是这个人的结果。
 <!-- /tier-banner -->
 
-用户可以交时钟名字、两个决定系数、一个效应大小、现用药和体检。不要向用户要二十五个队列或参考矩阵。
+这项研究先用免疫细胞的甲基化数据搭出随机变化的模拟模型，再在多个队列的血样上估计几种甲基化时钟的准确度里有多大一部分可以由随机过程解释。
 
-报告只做两个决定系数的除法，以及论文公式下的位点切换概率。没有这两个数时不算比例。现用药对不上时保留「不能据此停」。体检不增删方法算出的名单。
+脚本复现论文的两个公式：两个决定系数的比值（RR2），以及按已发表伽马算出的位点切换概率。随机比例不是任何人的年龄加速。不要向用户要二十五个队列或参考矩阵。
 
-## 命令
+## 命令（复现论文数值）
 
 Set `SKILL` to the directory that contains this file.
 
@@ -28,9 +28,7 @@ python "$SKILL/scripts/personal_report.py" \
   --r2-stochastic 0.50 \
   --r2-clock 0.80 \
   --effect-size 0.05 \
-  --medications meds.txt \
-  --labs checkup.csv \
   --out out/
 ```
 
-方法说明见 [references/claims.md](references/claims.md)。
+命令里的数值只是演示公式的输入，换成论文表里的决定系数即可复现对应时钟的比例。方法说明见 [references/claims.md](references/claims.md)。引用 `out/report.md` 时说明这是论文复现，包括 `边界:` 那一行。

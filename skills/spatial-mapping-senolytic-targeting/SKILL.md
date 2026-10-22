@@ -1,12 +1,11 @@
 ---
 name: spatial-mapping-senolytic-targeting
 description: >-
-  Tier C index only (mouse study): do not use it to answer a person's own health question. Writes a
-  personal readout of senescent and disease-associated microglia markers from Carver et al., Nature
-  Aging 2026. It computes a log2 ratio between supplied GAL3-positive and GAL3-negative expression for
-  the genes named in that paper. Use when the user mentions SenBrain, GAL3 microglia, white-matter
-  senolytics, venetoclax, or AP20187 in aged brain. Current medicines and checkup labs are context.
-  The report does not say what to start or stop.
+  Tier C index only (mouse study): do not use it to answer a person's own health question. Carver et
+  al., Nature Aging 2026: aged mouse brain white matter holds senescent, disease-associated microglia
+  that senolytics reduced. Holds the named marker genes and a GAL3-positive over negative log2 ratio.
+  Use when someone asks about this study, white-matter microglia in aged mice, or the listed genes;
+  not for a person's own measurements.
 ---
 
 # 白质里的衰老小胶质细胞
@@ -15,21 +14,16 @@ description: >-
 > **分级 C，只收录。** 这篇论文的主要证据来自小鼠。不要用它回答某个人自己的健康问题，也不要向用户索要测量、现用药或体检来运行它；脚本输出只是复现论文里的名单或数值，不是这个人的结果。
 <!-- /tier-banner -->
 
-你交 GAL3 阳性和阴性细胞的表达。成对且为正数时，报告写出 log2 倍数。维奈克拉和 AP20187 的剂量是论文里小鼠实验的结果，不是给人的用法。没有成对表达时，报告说明没有算出倍数。
+这项研究在自然衰老的小鼠脑中做空间基因表达分析，发现海马旁白质尤其是海马伞聚集着一群同时带有衰老标志和疾病相关特征的小胶质细胞，清除衰老细胞的干预能让小鼠白质里的这群细胞减少。
 
-不要向用户要 GEO 或 PDF。不要把小鼠剂量写成给人的用法。现用药对不上时写「不能据此停」。体检不增删名单。
+脚本复现论文名单：正文点名的标志基因。维奈克拉和 AP20187 的剂量是小鼠实验条件，不是给人的用法。不要向用户要 GEO 或 PDF。
 
-## 命令
+## 命令（复现论文名单）
 
 Set `SKILL` to the directory that contains this file.
 
 ```bash
-python "$SKILL/scripts/personal_report.py" \
-  --measurements measurements.csv \
-  --medications meds.txt \
-  --labs checkup.csv \
-  --out out
+python "$SKILL/scripts/personal_report.py" --out out
 ```
 
-方法说明见 [references/claims.md](references/claims.md) 和 [references/contract.md](references/contract.md)。
-
+研究者可以用 `--measurements measurements.csv` 交小鼠 GAL3 阳性和阴性细胞的表达，成对且为正数时报告写出 log2 倍数。方法说明见 [references/claims.md](references/claims.md) 和 [references/contract.md](references/contract.md)。引用 `out/report.md` 时说明这是论文复现。
