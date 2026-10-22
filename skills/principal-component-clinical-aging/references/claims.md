@@ -6,7 +6,7 @@
 
 ## 代码实际计算
 
-论文写代码在 Supplementary Information 的 R 压缩包里，JSON 没有给出 GitHub。本技能没有假装那个压缩包在本地。脚本计算 Methods 里写全了的四件东西：可替宁分档、并存病计数除以 22、自评健康指数，以及用户给出的 HUQ050 编码。它不把就诊次数重编码，因为正文没有印出编码表。它不计算 LinAge 或 PCAge 的岁数，因为 β、hpc、h0、MRDT 和健康簇的中位数、MAD 不在读到的正文里。
+论文的代码和参数在补充材料里（CC BY 4.0）：`linAge_Paras.csv` 是补充表 7 的机读版，`linAge.R` 是计算脚本，`linAge_Example.xls` 是逐项算例，另有带 LinAge 结果的 NHANES 数据矩阵。本技能把 61 个参数的男女中位数、MAD、权重和 C1、β0 抄进 `scripts/presets.py`，按 `linAge.R` 的做法算 LinAge：C 反应蛋白和 NT-proBNP 取对数，可替宁分 0–3 档，LDL 用 TC − TG/5 − HDL，问卷缺答按「没有」，只算 40–84 岁；缺的化验项按 Methods 记为 0 并报告。它复现作者算例和数据矩阵里的 LinAge 到 1e-9 岁（见 contract.md）。它不算 PCAge。
 
 ## 同名的另一个项目
 

@@ -2,7 +2,7 @@
   "schema": "longevity-skill/1",
   "name": "cd38-recent-thymic-emigrants",
   "kind": "paper",
-  "tier": "A",
+  "tier": "B",
   "species": [
     "human"
   ],
@@ -10,12 +10,12 @@
   "domains": [
     "免疫与炎症"
   ],
-  "blurb_zh": "年龄和转换后的初始细胞标志。",
+  "blurb_zh": "初始T细胞的CD38、CXCR3、CD25门控（研究用流式数据）。",
   "intents": [
     "immune_inflammation"
   ],
   "triage": {
-    "reason_zh": "用方法仓库阈值给个人初始T细胞的CXCR3、CD38、CD25表达分门，并归入年龄组。",
+    "reason_zh": "输入是研究用光谱流式里转换后的初始T细胞荧光强度，门控阈值只适用于原实验的仪器和转换，个人化验拿不到。",
     "reviewed": false
   },
   "paper": {

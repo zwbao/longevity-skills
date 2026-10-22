@@ -2,7 +2,7 @@
   "schema": "longevity-skill/1",
   "name": "ulk1-autophagy-alzheimers",
   "kind": "paper",
-  "tier": "A",
+  "tier": "B",
   "species": [
     "human",
     "cell_line",
@@ -14,13 +14,13 @@
     "脑、认知与痴呆",
     "自噬"
   ],
-  "blurb_zh": "血清或脑脊液 ULK1 的基线和随访。",
+  "blurb_zh": "两次血清或脑脊液 ULK1 之间的百分比变化（通用算术），并列出论文点名的化合物。",
   "intents": [
     "cognition_dementia",
     "before_after"
   ],
   "triage": {
-    "reason_zh": "用个人ULK1基线与随访算变化百分比，并对照论文四年下降幅度。",
+    "reason_zh": "论文报告的是队列里ULK1随衰老和阿尔茨海默病下降及小鼠实验，没有个人计算方法；脚本只算两次ULK1的百分比变化，检测也是研究用。",
     "reviewed": false
   },
   "paper": {

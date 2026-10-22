@@ -10,24 +10,42 @@
   "domains": [
     "临床年龄与可穿戴"
   ],
-  "blurb_zh": "并存病、可替宁、自评健康和尿白蛋白肌酐比。",
+  "blurb_zh": "用常规化验、血压和健康问卷算 LinAge 临床衰老年龄。",
   "intents": [
     "biological_age"
   ],
   "triage": {
-    "reason_zh": "用论文方法段公式算可替宁分档、22项并存病指数和自评健康指数。",
+    "reason_zh": "补充表7和R代码公布了LinAge全部61个参数的中位数、MAD和权重，补充表格还给了逐人算例，常规化验加问卷即可算。",
     "reviewed": false
   },
   "paper": {
     "doi": "10.1038/s43587-024-00646-8",
     "title": "Principal component-based clinical aging clocks identify signatures of healthy aging and targets for clinical intervention",
-    "title_zh": "临床指数",
+    "title_zh": "LinAge 临床衰老时钟",
     "journal": "Nature Aging",
     "year": 2024,
     "authors": "Fong 等",
     "article_url": "https://doi.org/10.1038/s43587-024-00646-8",
-    "summary_zh": "这项研究把主成分分析用到全国营养调查的临床指标上，找出区分健康与不健康老化轨迹的成分，建成临床衰老时钟，又把同样做法搬到一项限食研究里重新训练。个人报告只算正文写全的吸烟分档、并存病指数、自评健康指数和就医使用编码，不给出时钟的岁数，因为那些权重在补充表里。",
-    "summary_status": "draft"
+    "summary_zh": "这项研究把主成分分析用到美国全国营养调查的临床指标上，找出区分健康与不健康老化轨迹的成分，建成预测死亡的临床衰老时钟，并给出可以直接用常规化验算的线性版 LinAge。个人报告用论文补充材料公布的 61 个参数的中位数、离散度和权重算出你的 LinAge 岁数和它与实足年龄的差，缺的项按论文的办法记为零并写明。",
+    "summary_status": "draft",
+    "supplements": [
+      {
+        "label": "补充表 7 的参数文件（linAge_Paras.csv）",
+        "url": "https://static-content.springer.com/esm/art%3A10.1038%2Fs43587-024-00646-8/MediaObjects/43587_2024_646_MOESM11_ESM.csv"
+      },
+      {
+        "label": "LinAge 计算 R 脚本（linAge.R）",
+        "url": "https://static-content.springer.com/esm/art%3A10.1038%2Fs43587-024-00646-8/MediaObjects/43587_2024_646_MOESM12_ESM.r"
+      },
+      {
+        "label": "LinAge 算例表格（linAge_Example.xls）",
+        "url": "https://static-content.springer.com/esm/art%3A10.1038%2Fs43587-024-00646-8/MediaObjects/43587_2024_646_MOESM6_ESM.xls"
+      },
+      {
+        "label": "带 LinAge 结果的 NHANES 数据矩阵（MOESM9）",
+        "url": "https://static-content.springer.com/esm/art%3A10.1038%2Fs43587-024-00646-8/MediaObjects/43587_2024_646_MOESM9_ESM.csv"
+      }
+    ]
   },
   "entry": {
     "script": "scripts/personal_report.py",
@@ -38,6 +56,7 @@
       "unit"
     ],
     "age_flag": "--age",
+    "sex_flag": "--sex",
     "medications_flag": "--medications",
     "labs_flag": "--labs",
     "out_flag": "--out",
@@ -46,329 +65,220 @@
   "inputs_status": "verified",
   "inputs": [
     {
-      "key": "hypertension",
-      "label_zh": "高血压",
-      "unit": "score",
-      "range": [
-        0,
-        1
-      ],
-      "required": false,
-      "from": "measurements",
-      "group": "comorbidity",
-      "note_zh": "有这种并存病写 1，没有写 0。"
-    },
-    {
-      "key": "diabetes_mellitus",
-      "label_zh": "糖尿病",
+      "key": "pulse_per_min",
+      "label_zh": "脉搏",
       "aliases": [
-        "diabetes mellitus"
+        "pulse",
+        "heart rate",
+        "心率",
+        "PR"
       ],
-      "unit": "score",
+      "unit": "/min",
       "range": [
-        0,
-        1
+        30,
+        220
       ],
       "required": false,
       "from": "measurements",
-      "group": "comorbidity",
-      "note_zh": "有这种并存病写 1，没有写 0。"
+      "group": "linage_lab",
+      "note_zh": "LinAge 参数 BPXPLS。"
     },
     {
-      "key": "renal_impairment",
-      "label_zh": "肾功能损害",
+      "key": "sbp_mmhg",
+      "label_zh": "收缩压",
       "aliases": [
-        "renal impairment"
+        "SBP",
+        "systolic blood pressure",
+        "高压"
       ],
-      "unit": "score",
+      "unit": "mmHg",
+      "accept": {
+        "kPa": 7.500617
+      },
       "range": [
-        0,
-        1
+        60,
+        260
       ],
       "required": false,
       "from": "measurements",
-      "group": "comorbidity",
-      "note_zh": "有这种并存病写 1，没有写 0。"
+      "group": "linage_lab",
+      "note_zh": "LinAge 参数 BPXSAR。"
     },
     {
-      "key": "asthma",
-      "label_zh": "哮喘",
-      "unit": "score",
-      "range": [
-        0,
-        1
-      ],
-      "required": false,
-      "from": "measurements",
-      "group": "comorbidity",
-      "note_zh": "有这种并存病写 1，没有写 0。"
-    },
-    {
-      "key": "anemia",
-      "label_zh": "贫血",
-      "unit": "score",
-      "range": [
-        0,
-        1
-      ],
-      "required": false,
-      "from": "measurements",
-      "group": "comorbidity",
-      "note_zh": "有这种并存病写 1，没有写 0。"
-    },
-    {
-      "key": "arthritis",
-      "label_zh": "关节炎",
-      "unit": "score",
-      "range": [
-        0,
-        1
-      ],
-      "required": false,
-      "from": "measurements",
-      "group": "comorbidity",
-      "note_zh": "有这种并存病写 1，没有写 0。"
-    },
-    {
-      "key": "coronary_heart_disease",
-      "label_zh": "冠心病",
+      "key": "dbp_mmhg",
+      "label_zh": "舒张压",
       "aliases": [
-        "coronary heart disease"
+        "DBP",
+        "diastolic blood pressure",
+        "低压"
       ],
-      "unit": "score",
+      "unit": "mmHg",
+      "accept": {
+        "kPa": 7.500617
+      },
       "range": [
-        0,
-        1
+        30,
+        160
       ],
       "required": false,
       "from": "measurements",
-      "group": "comorbidity",
-      "note_zh": "有这种并存病写 1，没有写 0。"
+      "group": "linage_lab",
+      "note_zh": "LinAge 参数 BPXDAR。"
     },
     {
-      "key": "angina",
-      "label_zh": "心绞痛",
-      "unit": "score",
-      "range": [
-        0,
-        1
-      ],
-      "required": false,
-      "from": "measurements",
-      "group": "comorbidity",
-      "note_zh": "有这种并存病写 1，没有写 0。"
-    },
-    {
-      "key": "previous_myocardial_infarction",
-      "label_zh": "既往心肌梗死",
+      "key": "bmi_kg_m2",
+      "label_zh": "体重指数",
       "aliases": [
-        "previous myocardial infarction"
+        "BMI",
+        "body mass index",
+        "身体质量指数"
       ],
-      "unit": "score",
+      "unit": "kg/m^2",
       "range": [
-        0,
-        1
+        12,
+        70
       ],
       "required": false,
       "from": "measurements",
-      "group": "comorbidity",
-      "note_zh": "有这种并存病写 1，没有写 0。"
+      "group": "linage_lab",
+      "note_zh": "LinAge 参数 BMXBMI。"
     },
     {
-      "key": "previous_stroke",
-      "label_zh": "既往卒中",
+      "key": "iron_umol_l",
+      "label_zh": "血清铁",
       "aliases": [
-        "previous stroke"
+        "iron",
+        "serum iron",
+        "Fe",
+        "铁"
       ],
-      "unit": "score",
+      "unit": "umol/L",
+      "accept": {
+        "ug/dL": 0.17907
+      },
+      "molar_mass": 55.845,
       "range": [
-        0,
-        1
+        1,
+        80
       ],
+      "unit_required": true,
       "required": false,
       "from": "measurements",
-      "group": "comorbidity",
-      "note_zh": "有这种并存病写 1，没有写 0。"
+      "group": "linage_lab",
+      "note_zh": "LinAge 参数 LBDIRNSI。常见 µmol/L 和 µg/dL 两种单位，数值都可能落在合理范围里，所以要写单位。"
     },
     {
-      "key": "emphysema",
-      "label_zh": "肺气肿",
-      "unit": "score",
-      "range": [
-        0,
-        1
-      ],
-      "required": false,
-      "from": "measurements",
-      "group": "comorbidity",
-      "note_zh": "有这种并存病写 1，没有写 0。"
-    },
-    {
-      "key": "thyroid_disease",
-      "label_zh": "甲状腺疾病",
+      "key": "tibc_umol_l",
+      "label_zh": "总铁结合力",
       "aliases": [
-        "thyroid disease"
+        "TIBC",
+        "total iron binding capacity"
       ],
-      "unit": "score",
+      "unit": "umol/L",
+      "accept": {
+        "ug/dL": 0.17907
+      },
+      "molar_mass": 55.845,
       "range": [
-        0,
-        1
+        20,
+        140
       ],
       "required": false,
       "from": "measurements",
-      "group": "comorbidity",
-      "note_zh": "有这种并存病写 1，没有写 0。"
+      "group": "linage_lab",
+      "note_zh": "LinAge 参数 LBDTIBSI。"
     },
     {
-      "key": "obesity",
-      "label_zh": "肥胖",
-      "unit": "score",
-      "range": [
-        0,
-        1
-      ],
-      "required": false,
-      "from": "measurements",
-      "group": "comorbidity",
-      "note_zh": "有这种并存病写 1，没有写 0。"
-    },
-    {
-      "key": "chronic_bronchitis",
-      "label_zh": "慢性支气管炎",
+      "key": "tsat_pct",
+      "label_zh": "转铁蛋白饱和度",
       "aliases": [
-        "chronic bronchitis"
+        "TSAT",
+        "transferrin saturation",
+        "铁饱和度"
       ],
-      "unit": "score",
+      "unit": "%",
+      "accept": {
+        "1": 100
+      },
       "range": [
-        0,
-        1
+        1,
+        100
       ],
       "required": false,
       "from": "measurements",
-      "group": "comorbidity",
-      "note_zh": "有这种并存病写 1，没有写 0。"
+      "group": "linage_lab",
+      "note_zh": "LinAge 参数 LBXPCT。"
     },
     {
-      "key": "liver_disease",
-      "label_zh": "肝病",
+      "key": "ferritin_ug_l",
+      "label_zh": "铁蛋白",
       "aliases": [
-        "liver disease"
+        "ferritin",
+        "serum ferritin",
+        "血清铁蛋白",
+        "FER"
       ],
-      "unit": "score",
+      "unit": "ug/L",
+      "accept": {
+        "ng/mL": 1
+      },
       "range": [
-        0,
-        1
+        1,
+        5000
       ],
       "required": false,
       "from": "measurements",
-      "group": "comorbidity",
-      "note_zh": "有这种并存病写 1，没有写 0。"
+      "group": "linage_lab",
+      "note_zh": "LinAge 参数 LBDFERSI。"
     },
     {
-      "key": "malignancy",
-      "label_zh": "恶性肿瘤",
-      "unit": "score",
-      "range": [
-        0,
-        1
-      ],
-      "required": false,
-      "from": "measurements",
-      "group": "comorbidity",
-      "note_zh": "有这种并存病写 1，没有写 0。"
-    },
-    {
-      "key": "osteoporosis",
-      "label_zh": "骨质疏松",
-      "unit": "score",
-      "range": [
-        0,
-        1
-      ],
-      "required": false,
-      "from": "measurements",
-      "group": "comorbidity",
-      "note_zh": "有这种并存病写 1，没有写 0。"
-    },
-    {
-      "key": "previous_hip_fracture",
-      "label_zh": "既往髋部骨折",
+      "key": "folate_nmol_l",
+      "label_zh": "血清叶酸",
       "aliases": [
-        "previous hip fracture"
+        "folate",
+        "serum folate",
+        "叶酸",
+        "FOL"
       ],
-      "unit": "score",
+      "unit": "nmol/L",
+      "accept": {
+        "ng/mL": 2.2655
+      },
+      "molar_mass": 441.4,
       "range": [
-        0,
-        1
+        2,
+        150
       ],
+      "unit_required": true,
       "required": false,
       "from": "measurements",
-      "group": "comorbidity",
-      "note_zh": "有这种并存病写 1，没有写 0。"
+      "group": "linage_lab",
+      "note_zh": "LinAge 参数 LBDFOLSI。常见 nmol/L 和 ng/mL 两种单位，数值都可能落在合理范围里，所以要写单位。"
     },
     {
-      "key": "previous_wrist_fracture",
-      "label_zh": "既往腕部骨折",
+      "key": "b12_pmol_l",
+      "label_zh": "维生素B12",
       "aliases": [
-        "previous wrist fracture"
+        "vitamin B12",
+        "B12",
+        "VitB12",
+        "维生素 B12",
+        "cobalamin"
       ],
-      "unit": "score",
+      "unit": "pmol/L",
+      "accept": {
+        "pg/mL": 0.7378
+      },
+      "molar_mass": 1355.37,
       "range": [
-        0,
-        1
+        40,
+        2000
       ],
+      "unit_required": true,
       "required": false,
       "from": "measurements",
-      "group": "comorbidity",
-      "note_zh": "有这种并存病写 1，没有写 0。"
-    },
-    {
-      "key": "previous_spine_fracture",
-      "label_zh": "既往脊柱骨折",
-      "aliases": [
-        "previous spine fracture"
-      ],
-      "unit": "score",
-      "range": [
-        0,
-        1
-      ],
-      "required": false,
-      "from": "measurements",
-      "group": "comorbidity",
-      "note_zh": "有这种并存病写 1，没有写 0。"
-    },
-    {
-      "key": "cognitive_impairment",
-      "label_zh": "认知损害",
-      "aliases": [
-        "cognitive impairment"
-      ],
-      "unit": "score",
-      "range": [
-        0,
-        1
-      ],
-      "required": false,
-      "from": "measurements",
-      "group": "comorbidity",
-      "note_zh": "有这种并存病写 1，没有写 0。"
-    },
-    {
-      "key": "overnight_hospitalization",
-      "label_zh": "过夜住院",
-      "aliases": [
-        "overnight hospitalization"
-      ],
-      "unit": "score",
-      "range": [
-        0,
-        1
-      ],
-      "required": false,
-      "from": "measurements",
-      "group": "comorbidity",
-      "note_zh": "有这种并存病写 1，没有写 0。"
+      "group": "linage_lab",
+      "note_zh": "LinAge 参数 LBDB12SI。常见 pmol/L 和 pg/mL 两种单位，数值都可能落在合理范围里，所以要写单位。"
     },
     {
       "key": "cotinine_ng_ml",
@@ -388,7 +298,966 @@
       ],
       "required": false,
       "from": "measurements",
-      "note_zh": "要血清可替宁，不是尿可替宁。"
+      "group": "linage_lab",
+      "note_zh": "LinAge 参数 LBXCOT。按 <10、10–<100、100–<200、≥200 ng/mL 分成 0–3 档再进公式；没有这一项时按 0 档（不吸烟）计。要血清可替宁，不是尿可替宁。"
+    },
+    {
+      "key": "tc_mmol_l",
+      "label_zh": "总胆固醇",
+      "aliases": [
+        "TC",
+        "CHOL",
+        "total cholesterol",
+        "胆固醇"
+      ],
+      "unit": "mmol/L",
+      "accept": {
+        "mg/dL": 0.02586
+      },
+      "molar_mass": 386.65,
+      "range": [
+        1.5,
+        15
+      ],
+      "required": false,
+      "from": "measurements",
+      "group": "linage_lab",
+      "note_zh": "LinAge 参数 LBDTCSI。"
+    },
+    {
+      "key": "hdl_mmol_l",
+      "label_zh": "高密度脂蛋白胆固醇",
+      "aliases": [
+        "HDL",
+        "HDL-C",
+        "high-density lipoprotein",
+        "高密度脂蛋白"
+      ],
+      "unit": "mmol/L",
+      "accept": {
+        "mg/dL": 0.02586
+      },
+      "molar_mass": 386.65,
+      "range": [
+        0.2,
+        5
+      ],
+      "required": false,
+      "from": "measurements",
+      "group": "linage_lab",
+      "note_zh": "LinAge 参数 LBDHDLSI。"
+    },
+    {
+      "key": "wbc_10e9_l",
+      "label_zh": "白细胞计数",
+      "aliases": [
+        "WBC",
+        "white blood cell count",
+        "白细胞"
+      ],
+      "unit": "10^9/L",
+      "accept": {
+        "10^3/uL": 1
+      },
+      "range": [
+        0.5,
+        100
+      ],
+      "required": false,
+      "from": "measurements",
+      "group": "linage_lab",
+      "note_zh": "LinAge 参数 LBXWBCSI。"
+    },
+    {
+      "key": "lymph_pct",
+      "label_zh": "淋巴细胞百分比",
+      "aliases": [
+        "LYMPH%",
+        "LY%",
+        "lymphocyte percent",
+        "淋巴细胞%"
+      ],
+      "unit": "%",
+      "range": [
+        0,
+        100
+      ],
+      "required": false,
+      "from": "measurements",
+      "group": "linage_lab",
+      "note_zh": "LinAge 参数 LBXLYPCT。"
+    },
+    {
+      "key": "mono_pct",
+      "label_zh": "单核细胞百分比",
+      "aliases": [
+        "MONO%",
+        "MO%",
+        "monocyte percent",
+        "单核细胞%"
+      ],
+      "unit": "%",
+      "range": [
+        0,
+        100
+      ],
+      "required": false,
+      "from": "measurements",
+      "group": "linage_lab",
+      "note_zh": "LinAge 参数 LBXMOPCT。"
+    },
+    {
+      "key": "neut_pct",
+      "label_zh": "中性粒细胞百分比",
+      "aliases": [
+        "NEUT%",
+        "NE%",
+        "neutrophil percent",
+        "中性粒细胞%"
+      ],
+      "unit": "%",
+      "range": [
+        0,
+        100
+      ],
+      "required": false,
+      "from": "measurements",
+      "group": "linage_lab",
+      "note_zh": "LinAge 参数 LBXNEPCT。"
+    },
+    {
+      "key": "eos_pct",
+      "label_zh": "嗜酸性粒细胞百分比",
+      "aliases": [
+        "EO%",
+        "EOS%",
+        "eosinophil percent",
+        "嗜酸性粒细胞%"
+      ],
+      "unit": "%",
+      "range": [
+        0,
+        100
+      ],
+      "required": false,
+      "from": "measurements",
+      "group": "linage_lab",
+      "note_zh": "LinAge 参数 LBXEOPCT。"
+    },
+    {
+      "key": "baso_pct",
+      "label_zh": "嗜碱性粒细胞百分比",
+      "aliases": [
+        "BASO%",
+        "BA%",
+        "basophil percent",
+        "嗜碱性粒细胞%"
+      ],
+      "unit": "%",
+      "range": [
+        0,
+        100
+      ],
+      "required": false,
+      "from": "measurements",
+      "group": "linage_lab",
+      "note_zh": "LinAge 参数 LBXBAPCT。"
+    },
+    {
+      "key": "lymph_10e9_l",
+      "label_zh": "淋巴细胞绝对值",
+      "aliases": [
+        "LYMPH#",
+        "LY#",
+        "lymphocyte number",
+        "淋巴细胞计数"
+      ],
+      "unit": "10^9/L",
+      "accept": {
+        "10^3/uL": 1,
+        "/uL": 0.001
+      },
+      "range": [
+        0.05,
+        50
+      ],
+      "required": false,
+      "from": "measurements",
+      "group": "linage_lab",
+      "note_zh": "LinAge 参数 LBDLYMNO。"
+    },
+    {
+      "key": "mono_10e9_l",
+      "label_zh": "单核细胞绝对值",
+      "aliases": [
+        "MONO#",
+        "MO#",
+        "monocyte number",
+        "单核细胞计数"
+      ],
+      "unit": "10^9/L",
+      "accept": {
+        "10^3/uL": 1,
+        "/uL": 0.001
+      },
+      "range": [
+        0,
+        10
+      ],
+      "required": false,
+      "from": "measurements",
+      "group": "linage_lab",
+      "note_zh": "LinAge 参数 LBDMONO。"
+    },
+    {
+      "key": "neut_10e9_l",
+      "label_zh": "中性粒细胞绝对值",
+      "aliases": [
+        "NEUT#",
+        "NE#",
+        "neutrophil number",
+        "中性粒细胞计数"
+      ],
+      "unit": "10^9/L",
+      "accept": {
+        "10^3/uL": 1,
+        "/uL": 0.001
+      },
+      "range": [
+        0,
+        60
+      ],
+      "required": false,
+      "from": "measurements",
+      "group": "linage_lab",
+      "note_zh": "LinAge 参数 LBDNENO。"
+    },
+    {
+      "key": "baso_10e9_l",
+      "label_zh": "嗜碱性粒细胞绝对值",
+      "aliases": [
+        "BASO#",
+        "BA#",
+        "basophil number",
+        "嗜碱性粒细胞计数"
+      ],
+      "unit": "10^9/L",
+      "accept": {
+        "10^3/uL": 1,
+        "/uL": 0.001
+      },
+      "range": [
+        0,
+        5
+      ],
+      "required": false,
+      "from": "measurements",
+      "group": "linage_lab",
+      "note_zh": "LinAge 参数 LBDBANO。"
+    },
+    {
+      "key": "rbc_10e12_l",
+      "label_zh": "红细胞计数",
+      "aliases": [
+        "RBC",
+        "red blood cell count",
+        "红细胞"
+      ],
+      "unit": "10^12/L",
+      "accept": {
+        "10^6/uL": 1
+      },
+      "range": [
+        1,
+        9
+      ],
+      "required": false,
+      "from": "measurements",
+      "group": "linage_lab",
+      "note_zh": "LinAge 参数 LBXRBCSI。"
+    },
+    {
+      "key": "hgb_g_dl",
+      "label_zh": "血红蛋白",
+      "aliases": [
+        "HGB",
+        "Hb",
+        "hemoglobin",
+        "haemoglobin"
+      ],
+      "unit": "g/dL",
+      "accept": {
+        "g/L": 0.1
+      },
+      "range": [
+        3,
+        25
+      ],
+      "required": false,
+      "from": "measurements",
+      "group": "linage_lab",
+      "note_zh": "LinAge 参数 LBXHGB。"
+    },
+    {
+      "key": "hct_pct",
+      "label_zh": "红细胞压积",
+      "aliases": [
+        "HCT",
+        "hematocrit",
+        "红细胞比容"
+      ],
+      "unit": "%",
+      "accept": {
+        "1": 100
+      },
+      "range": [
+        10,
+        75
+      ],
+      "required": false,
+      "from": "measurements",
+      "group": "linage_lab",
+      "note_zh": "LinAge 参数 LBXHCT。"
+    },
+    {
+      "key": "mcv_fl",
+      "label_zh": "平均红细胞体积",
+      "aliases": [
+        "MCV",
+        "mean cell volume"
+      ],
+      "unit": "fL",
+      "range": [
+        50,
+        150
+      ],
+      "required": false,
+      "from": "measurements",
+      "group": "linage_lab",
+      "note_zh": "LinAge 参数 LBXMCVSI。"
+    },
+    {
+      "key": "mch_pg",
+      "label_zh": "平均红细胞血红蛋白含量",
+      "aliases": [
+        "MCH",
+        "mean cell hemoglobin"
+      ],
+      "unit": "pg",
+      "range": [
+        10,
+        50
+      ],
+      "required": false,
+      "from": "measurements",
+      "group": "linage_lab",
+      "note_zh": "LinAge 参数 LBXMCHSI。"
+    },
+    {
+      "key": "mchc_g_dl",
+      "label_zh": "平均红细胞血红蛋白浓度",
+      "aliases": [
+        "MCHC",
+        "mean cell hemoglobin concentration"
+      ],
+      "unit": "g/dL",
+      "accept": {
+        "g/L": 0.1
+      },
+      "range": [
+        20,
+        45
+      ],
+      "required": false,
+      "from": "measurements",
+      "group": "linage_lab",
+      "note_zh": "LinAge 参数 LBXMC。"
+    },
+    {
+      "key": "rdw_pct",
+      "label_zh": "红细胞分布宽度",
+      "aliases": [
+        "RDW",
+        "RDW-CV",
+        "red cell distribution width"
+      ],
+      "unit": "%",
+      "range": [
+        8,
+        35
+      ],
+      "required": false,
+      "from": "measurements",
+      "group": "linage_lab",
+      "note_zh": "LinAge 参数 LBXRDW。要 RDW-CV（%），不是 RDW-SD（fL）。"
+    },
+    {
+      "key": "plt_10e9_l",
+      "label_zh": "血小板计数",
+      "aliases": [
+        "PLT",
+        "platelet count",
+        "血小板"
+      ],
+      "unit": "10^9/L",
+      "accept": {
+        "10^3/uL": 1
+      },
+      "range": [
+        5,
+        1500
+      ],
+      "required": false,
+      "from": "measurements",
+      "group": "linage_lab",
+      "note_zh": "LinAge 参数 LBXPLTSI。"
+    },
+    {
+      "key": "mpv_fl",
+      "label_zh": "平均血小板体积",
+      "aliases": [
+        "MPV",
+        "mean platelet volume"
+      ],
+      "unit": "fL",
+      "range": [
+        4,
+        20
+      ],
+      "required": false,
+      "from": "measurements",
+      "group": "linage_lab",
+      "note_zh": "LinAge 参数 LBXMPSI。"
+    },
+    {
+      "key": "crp_mg_dl",
+      "label_zh": "C反应蛋白",
+      "aliases": [
+        "CRP",
+        "hs-CRP",
+        "hscrp",
+        "C-反应蛋白",
+        "超敏C反应蛋白",
+        "超敏CRP",
+        "C-reactive protein"
+      ],
+      "loinc": [
+        "30522-7",
+        "1988-5"
+      ],
+      "unit": "mg/dL",
+      "accept": {
+        "mg/L": 0.1
+      },
+      "range": [
+        0.001,
+        50
+      ],
+      "unit_required": true,
+      "required": false,
+      "from": "measurements",
+      "group": "linage_lab",
+      "note_zh": "LinAge 参数 LBXCRP。取自然对数后进公式。国内化验单上的 CRP 和超敏 CRP 多用 mg/L，数值除以 10 才是 mg/dL。"
+    },
+    {
+      "key": "fibrinogen_g_l",
+      "label_zh": "纤维蛋白原",
+      "aliases": [
+        "fibrinogen",
+        "FIB",
+        "Fbg"
+      ],
+      "unit": "g/L",
+      "accept": {
+        "mg/dL": 0.01
+      },
+      "range": [
+        0.5,
+        12
+      ],
+      "required": false,
+      "from": "measurements",
+      "group": "linage_lab",
+      "note_zh": "LinAge 参数 LBDFBSI。"
+    },
+    {
+      "key": "hba1c_pct",
+      "label_zh": "糖化血红蛋白",
+      "aliases": [
+        "HbA1c",
+        "A1C",
+        "glycohemoglobin",
+        "糖化血红蛋白A1c"
+      ],
+      "unit": "%",
+      "range": [
+        3,
+        20
+      ],
+      "required": false,
+      "from": "measurements",
+      "group": "linage_lab",
+      "note_zh": "LinAge 参数 LBXGH。要 NGSP 的百分数，不是 mmol/mol。"
+    },
+    {
+      "key": "ntprobnp_pg_ml",
+      "label_zh": "N端脑钠肽前体",
+      "aliases": [
+        "NT-proBNP",
+        "NTproBNP",
+        "N-terminal pro-brain natriuretic peptide",
+        "氨基末端脑钠肽前体"
+      ],
+      "unit": "pg/mL",
+      "accept": {
+        "ng/L": 1
+      },
+      "range": [
+        1,
+        100000
+      ],
+      "required": false,
+      "from": "measurements",
+      "group": "linage_lab",
+      "note_zh": "LinAge 参数 SSBNP。取自然对数后进公式。"
+    },
+    {
+      "key": "albumin_g_l",
+      "label_zh": "白蛋白",
+      "aliases": [
+        "albumin",
+        "ALB",
+        "血清白蛋白"
+      ],
+      "loinc": [
+        "1751-7"
+      ],
+      "unit": "g/L",
+      "accept": {
+        "g/dL": 10
+      },
+      "range": [
+        15,
+        65
+      ],
+      "required": false,
+      "from": "measurements",
+      "group": "linage_lab",
+      "note_zh": "LinAge 参数 LBDSALSI。"
+    },
+    {
+      "key": "alt_u_l",
+      "label_zh": "丙氨酸氨基转移酶",
+      "aliases": [
+        "ALT",
+        "GPT",
+        "谷丙转氨酶",
+        "alanine aminotransferase"
+      ],
+      "unit": "U/L",
+      "accept": {
+        "ukat/L": 60
+      },
+      "range": [
+        1,
+        3000
+      ],
+      "required": false,
+      "from": "measurements",
+      "group": "linage_lab",
+      "note_zh": "LinAge 参数 LBXSATSI。"
+    },
+    {
+      "key": "ast_u_l",
+      "label_zh": "天门冬氨酸氨基转移酶",
+      "aliases": [
+        "AST",
+        "GOT",
+        "谷草转氨酶",
+        "天冬氨酸氨基转移酶",
+        "aspartate aminotransferase"
+      ],
+      "unit": "U/L",
+      "accept": {
+        "ukat/L": 60
+      },
+      "range": [
+        1,
+        3000
+      ],
+      "required": false,
+      "from": "measurements",
+      "group": "linage_lab",
+      "note_zh": "LinAge 参数 LBXSASSI。"
+    },
+    {
+      "key": "alp_u_l",
+      "label_zh": "碱性磷酸酶",
+      "aliases": [
+        "ALP",
+        "AKP",
+        "alkaline phosphatase"
+      ],
+      "unit": "U/L",
+      "accept": {
+        "ukat/L": 60
+      },
+      "range": [
+        5,
+        3000
+      ],
+      "required": false,
+      "from": "measurements",
+      "group": "linage_lab",
+      "note_zh": "LinAge 参数 LBXSAPSI。"
+    },
+    {
+      "key": "urea_mmol_l",
+      "label_zh": "尿素",
+      "aliases": [
+        "BUN",
+        "urea",
+        "尿素氮",
+        "blood urea nitrogen"
+      ],
+      "unit": "mmol/L",
+      "accept": {
+        "mg/dL": 0.357
+      },
+      "molar_mass": 28.0134,
+      "range": [
+        0.5,
+        60
+      ],
+      "unit_required": true,
+      "required": false,
+      "from": "measurements",
+      "group": "linage_lab",
+      "note_zh": "LinAge 参数 LBDSBUSI。国内化验单的尿素用 mmol/L，直接填；写 mg/dL 时按尿素氮（BUN）换算，尿素的 mg/dL 不能这样换。"
+    },
+    {
+      "key": "calcium_mmol_l",
+      "label_zh": "血钙",
+      "aliases": [
+        "calcium",
+        "Ca",
+        "钙",
+        "总钙"
+      ],
+      "unit": "mmol/L",
+      "accept": {
+        "mg/dL": 0.2495
+      },
+      "molar_mass": 40.078,
+      "range": [
+        1,
+        4
+      ],
+      "required": false,
+      "from": "measurements",
+      "group": "linage_lab",
+      "note_zh": "LinAge 参数 LBDSCASI。"
+    },
+    {
+      "key": "bicarbonate_mmol_l",
+      "label_zh": "碳酸氢根",
+      "aliases": [
+        "bicarbonate",
+        "HCO3",
+        "CO2",
+        "TCO2",
+        "总二氧化碳",
+        "二氧化碳结合力"
+      ],
+      "unit": "mmol/L",
+      "range": [
+        5,
+        50
+      ],
+      "required": false,
+      "from": "measurements",
+      "group": "linage_lab",
+      "note_zh": "LinAge 参数 LBXSC3SI。"
+    },
+    {
+      "key": "ggt_u_l",
+      "label_zh": "γ-谷氨酰转移酶",
+      "aliases": [
+        "GGT",
+        "γ-GT",
+        "谷氨酰转肽酶",
+        "gamma glutamyl transferase"
+      ],
+      "unit": "U/L",
+      "accept": {
+        "ukat/L": 60
+      },
+      "range": [
+        1,
+        3000
+      ],
+      "required": false,
+      "from": "measurements",
+      "group": "linage_lab",
+      "note_zh": "LinAge 参数 LBXSGTSI。"
+    },
+    {
+      "key": "glucose_mmol_l",
+      "label_zh": "血糖",
+      "aliases": [
+        "glucose",
+        "GLU",
+        "葡萄糖"
+      ],
+      "unit": "mmol/L",
+      "accept": {
+        "mg/dL": 0.0555
+      },
+      "molar_mass": 180.16,
+      "range": [
+        1.5,
+        40
+      ],
+      "required": false,
+      "from": "measurements",
+      "group": "linage_lab",
+      "note_zh": "LinAge 参数 LBDSGLSI。"
+    },
+    {
+      "key": "ldh_u_l",
+      "label_zh": "乳酸脱氢酶",
+      "aliases": [
+        "LDH",
+        "LD",
+        "lactate dehydrogenase"
+      ],
+      "unit": "U/L",
+      "accept": {
+        "ukat/L": 60
+      },
+      "range": [
+        30,
+        5000
+      ],
+      "required": false,
+      "from": "measurements",
+      "group": "linage_lab",
+      "note_zh": "LinAge 参数 LBXSLDSI。"
+    },
+    {
+      "key": "phosphorus_mmol_l",
+      "label_zh": "血磷",
+      "aliases": [
+        "phosphorus",
+        "PHOS",
+        "无机磷",
+        "磷"
+      ],
+      "unit": "mmol/L",
+      "accept": {
+        "mg/dL": 0.3229
+      },
+      "molar_mass": 30.974,
+      "range": [
+        0.2,
+        4
+      ],
+      "unit_required": true,
+      "required": false,
+      "from": "measurements",
+      "group": "linage_lab",
+      "note_zh": "LinAge 参数 LBDSPHSI。常见 mmol/L 和 mg/dL 两种单位，数值都可能落在合理范围里，所以要写单位。"
+    },
+    {
+      "key": "tbil_umol_l",
+      "label_zh": "总胆红素",
+      "aliases": [
+        "TBIL",
+        "TBil",
+        "total bilirubin",
+        "bilirubin"
+      ],
+      "unit": "umol/L",
+      "accept": {
+        "mg/dL": 17.1
+      },
+      "molar_mass": 584.66,
+      "range": [
+        1,
+        600
+      ],
+      "unit_required": true,
+      "required": false,
+      "from": "measurements",
+      "group": "linage_lab",
+      "note_zh": "LinAge 参数 LBDSTBSI。常见 µmol/L 和 mg/dL 两种单位，数值都可能落在合理范围里，所以要写单位。"
+    },
+    {
+      "key": "total_protein_g_l",
+      "label_zh": "总蛋白",
+      "aliases": [
+        "TP",
+        "total protein"
+      ],
+      "unit": "g/L",
+      "accept": {
+        "g/dL": 10
+      },
+      "range": [
+        30,
+        120
+      ],
+      "required": false,
+      "from": "measurements",
+      "group": "linage_lab",
+      "note_zh": "LinAge 参数 LBDSTPSI。"
+    },
+    {
+      "key": "tg_mmol_l",
+      "label_zh": "甘油三酯",
+      "aliases": [
+        "TG",
+        "triglycerides",
+        "三酰甘油"
+      ],
+      "unit": "mmol/L",
+      "accept": {
+        "mg/dL": 0.01129
+      },
+      "molar_mass": 885.7,
+      "range": [
+        0.1,
+        50
+      ],
+      "unit_required": true,
+      "required": false,
+      "from": "measurements",
+      "group": "linage_lab",
+      "note_zh": "LinAge 参数 LBDSTRSI。常见 mmol/L 和 mg/dL 两种单位，数值都可能落在合理范围里，所以要写单位。"
+    },
+    {
+      "key": "uric_acid_umol_l",
+      "label_zh": "尿酸",
+      "aliases": [
+        "uric acid",
+        "UA"
+      ],
+      "unit": "umol/L",
+      "accept": {
+        "mg/dL": 59.48
+      },
+      "molar_mass": 168.11,
+      "range": [
+        50,
+        1500
+      ],
+      "required": false,
+      "from": "measurements",
+      "group": "linage_lab",
+      "note_zh": "LinAge 参数 LBDSUASI。"
+    },
+    {
+      "key": "creatinine_umol_l",
+      "label_zh": "肌酐",
+      "aliases": [
+        "creatinine",
+        "CREA",
+        "Cr",
+        "Scr",
+        "血肌酐"
+      ],
+      "loinc": [
+        "14682-9",
+        "2160-0"
+      ],
+      "unit": "umol/L",
+      "accept": {
+        "mg/dL": 88.4
+      },
+      "molar_mass": 113.12,
+      "range": [
+        15,
+        2000
+      ],
+      "required": false,
+      "from": "measurements",
+      "group": "linage_lab",
+      "note_zh": "LinAge 参数 LBDSCRSI。"
+    },
+    {
+      "key": "sodium_mmol_l",
+      "label_zh": "血钠",
+      "aliases": [
+        "sodium",
+        "Na",
+        "钠"
+      ],
+      "unit": "mmol/L",
+      "range": [
+        100,
+        180
+      ],
+      "required": false,
+      "from": "measurements",
+      "group": "linage_lab",
+      "note_zh": "LinAge 参数 LBXSNASI。"
+    },
+    {
+      "key": "potassium_mmol_l",
+      "label_zh": "血钾",
+      "aliases": [
+        "potassium",
+        "K",
+        "钾"
+      ],
+      "unit": "mmol/L",
+      "range": [
+        1.5,
+        9
+      ],
+      "required": false,
+      "from": "measurements",
+      "group": "linage_lab",
+      "note_zh": "LinAge 参数 LBXSKSI。"
+    },
+    {
+      "key": "chloride_mmol_l",
+      "label_zh": "血氯",
+      "aliases": [
+        "chloride",
+        "Cl",
+        "氯"
+      ],
+      "unit": "mmol/L",
+      "range": [
+        60,
+        150
+      ],
+      "required": false,
+      "from": "measurements",
+      "group": "linage_lab",
+      "note_zh": "LinAge 参数 LBXSCLSI。"
+    },
+    {
+      "key": "globulin_g_l",
+      "label_zh": "球蛋白",
+      "aliases": [
+        "globulin",
+        "GLB",
+        "GLOB"
+      ],
+      "unit": "g/L",
+      "accept": {
+        "g/dL": 10
+      },
+      "range": [
+        10,
+        80
+      ],
+      "required": false,
+      "from": "measurements",
+      "group": "linage_lab",
+      "note_zh": "LinAge 参数 LBDSGBSI。"
     },
     {
       "key": "acr_mg_g",
@@ -411,7 +1280,333 @@
       "unit_required": true,
       "required": false,
       "from": "measurements",
-      "note_zh": "国内和欧洲的化验单常用 mg/mmol，乘 8.84 才是 mg/g；两种单位的数都常落在合理范围里，所以名字不是 acr_mg_g 时要写单位。"
+      "note_zh": "LinAge 参数 crAlbRat。国内和欧洲的化验单常用 mg/mmol，乘 8.84 才是 mg/g；两种单位的数都常落在合理范围里，所以名字不是 acr_mg_g 时要写单位。",
+      "group": "linage_lab"
+    },
+    {
+      "key": "hypertension",
+      "label_zh": "高血压",
+      "unit": "score",
+      "range": [
+        0,
+        1
+      ],
+      "required": false,
+      "from": "measurements",
+      "group": "comorbidity",
+      "note_zh": "对应 NHANES BPQ020 医生说过有高血压。有写 1，没有写 0；没写的按没有计，和论文代码一样。"
+    },
+    {
+      "key": "diabetes_mellitus",
+      "label_zh": "糖尿病",
+      "aliases": [
+        "diabetes mellitus"
+      ],
+      "unit": "score",
+      "range": [
+        0,
+        1
+      ],
+      "required": false,
+      "from": "measurements",
+      "group": "comorbidity",
+      "note_zh": "对应 NHANES DIQ010 医生说过有糖尿病，包括临界糖尿病。有写 1，没有写 0；没写的按没有计，和论文代码一样。"
+    },
+    {
+      "key": "renal_impairment",
+      "label_zh": "肾功能损害",
+      "aliases": [
+        "renal impairment"
+      ],
+      "unit": "score",
+      "range": [
+        0,
+        1
+      ],
+      "required": false,
+      "from": "measurements",
+      "group": "comorbidity",
+      "note_zh": "对应 NHANES KIQ020 医生说过肾功能弱或衰竭（不算肾结石、膀胱感染、尿失禁）。有写 1，没有写 0；没写的按没有计，和论文代码一样。"
+    },
+    {
+      "key": "asthma",
+      "label_zh": "哮喘",
+      "unit": "score",
+      "range": [
+        0,
+        1
+      ],
+      "required": false,
+      "from": "measurements",
+      "group": "comorbidity",
+      "note_zh": "对应 NHANES MCQ010 医生说过有哮喘。有写 1，没有写 0；没写的按没有计，和论文代码一样。"
+    },
+    {
+      "key": "anemia",
+      "label_zh": "贫血",
+      "unit": "score",
+      "range": [
+        0,
+        1
+      ],
+      "required": false,
+      "from": "measurements",
+      "group": "comorbidity",
+      "note_zh": "对应 NHANES MCQ053 最近三个月在治疗贫血（含饮食、铁剂、输血）。有写 1，没有写 0；没写的按没有计，和论文代码一样。"
+    },
+    {
+      "key": "arthritis",
+      "label_zh": "关节炎",
+      "unit": "score",
+      "range": [
+        0,
+        1
+      ],
+      "required": false,
+      "from": "measurements",
+      "group": "comorbidity",
+      "note_zh": "对应 NHANES MCQ160A 医生说过有关节炎。有写 1，没有写 0；没写的按没有计，和论文代码一样。"
+    },
+    {
+      "key": "coronary_heart_disease",
+      "label_zh": "冠心病",
+      "aliases": [
+        "coronary heart disease"
+      ],
+      "unit": "score",
+      "range": [
+        0,
+        1
+      ],
+      "required": false,
+      "from": "measurements",
+      "group": "comorbidity",
+      "note_zh": "对应 NHANES MCQ160C 医生说过有冠心病。有写 1，没有写 0；没写的按没有计，和论文代码一样。"
+    },
+    {
+      "key": "angina",
+      "label_zh": "心绞痛",
+      "unit": "score",
+      "range": [
+        0,
+        1
+      ],
+      "required": false,
+      "from": "measurements",
+      "group": "comorbidity",
+      "note_zh": "对应 NHANES MCQ160D 医生说过有心绞痛。有写 1，没有写 0；没写的按没有计，和论文代码一样。"
+    },
+    {
+      "key": "previous_myocardial_infarction",
+      "label_zh": "既往心肌梗死",
+      "aliases": [
+        "previous myocardial infarction"
+      ],
+      "unit": "score",
+      "range": [
+        0,
+        1
+      ],
+      "required": false,
+      "from": "measurements",
+      "group": "comorbidity",
+      "note_zh": "对应 NHANES MCQ160E 医生说过心脏病发作。有写 1，没有写 0；没写的按没有计，和论文代码一样。"
+    },
+    {
+      "key": "previous_stroke",
+      "label_zh": "既往卒中",
+      "aliases": [
+        "previous stroke"
+      ],
+      "unit": "score",
+      "range": [
+        0,
+        1
+      ],
+      "required": false,
+      "from": "measurements",
+      "group": "comorbidity",
+      "note_zh": "对应 NHANES MCQ160F 医生说过中风。有写 1，没有写 0；没写的按没有计，和论文代码一样。"
+    },
+    {
+      "key": "emphysema",
+      "label_zh": "肺气肿",
+      "unit": "score",
+      "range": [
+        0,
+        1
+      ],
+      "required": false,
+      "from": "measurements",
+      "group": "comorbidity",
+      "note_zh": "对应 NHANES MCQ160G 医生说过有肺气肿。有写 1，没有写 0；没写的按没有计，和论文代码一样。"
+    },
+    {
+      "key": "thyroid_disease",
+      "label_zh": "甲状腺疾病",
+      "aliases": [
+        "thyroid disease"
+      ],
+      "unit": "score",
+      "range": [
+        0,
+        1
+      ],
+      "required": false,
+      "from": "measurements",
+      "group": "comorbidity",
+      "note_zh": "对应 NHANES MCQ160I 医生说过有甲状腺疾病。有写 1，没有写 0；没写的按没有计，和论文代码一样。"
+    },
+    {
+      "key": "obesity",
+      "label_zh": "肥胖",
+      "unit": "score",
+      "range": [
+        0,
+        1
+      ],
+      "required": false,
+      "from": "measurements",
+      "group": "comorbidity",
+      "note_zh": "对应 NHANES MCQ160J 医生说过超重。有写 1，没有写 0；没写的按没有计，和论文代码一样。"
+    },
+    {
+      "key": "chronic_bronchitis",
+      "label_zh": "慢性支气管炎",
+      "aliases": [
+        "chronic bronchitis"
+      ],
+      "unit": "score",
+      "range": [
+        0,
+        1
+      ],
+      "required": false,
+      "from": "measurements",
+      "group": "comorbidity",
+      "note_zh": "对应 NHANES MCQ160K 医生说过有慢性支气管炎。有写 1，没有写 0；没写的按没有计，和论文代码一样。"
+    },
+    {
+      "key": "liver_disease",
+      "label_zh": "肝病",
+      "aliases": [
+        "liver disease"
+      ],
+      "unit": "score",
+      "range": [
+        0,
+        1
+      ],
+      "required": false,
+      "from": "measurements",
+      "group": "comorbidity",
+      "note_zh": "对应 NHANES MCQ160L 医生说过有任何肝病。有写 1，没有写 0；没写的按没有计，和论文代码一样。"
+    },
+    {
+      "key": "malignancy",
+      "label_zh": "恶性肿瘤",
+      "unit": "score",
+      "range": [
+        0,
+        1
+      ],
+      "required": false,
+      "from": "measurements",
+      "group": "comorbidity",
+      "note_zh": "对应 NHANES MCQ220 医生说过有癌症或恶性肿瘤。有写 1，没有写 0；没写的按没有计，和论文代码一样。"
+    },
+    {
+      "key": "previous_hip_fracture",
+      "label_zh": "既往髋部骨折",
+      "aliases": [
+        "previous hip fracture"
+      ],
+      "unit": "score",
+      "range": [
+        0,
+        1
+      ],
+      "required": false,
+      "from": "measurements",
+      "group": "comorbidity",
+      "note_zh": "对应 NHANES OSQ010A 髋部骨折过。有写 1，没有写 0；没写的按没有计，和论文代码一样。"
+    },
+    {
+      "key": "previous_wrist_fracture",
+      "label_zh": "既往腕部骨折",
+      "aliases": [
+        "previous wrist fracture"
+      ],
+      "unit": "score",
+      "range": [
+        0,
+        1
+      ],
+      "required": false,
+      "from": "measurements",
+      "group": "comorbidity",
+      "note_zh": "对应 NHANES OSQ010B 腕部骨折过。有写 1，没有写 0；没写的按没有计，和论文代码一样。"
+    },
+    {
+      "key": "previous_spine_fracture",
+      "label_zh": "既往脊柱骨折",
+      "aliases": [
+        "previous spine fracture"
+      ],
+      "unit": "score",
+      "range": [
+        0,
+        1
+      ],
+      "required": false,
+      "from": "measurements",
+      "group": "comorbidity",
+      "note_zh": "对应 NHANES OSQ010C 脊柱骨折过。有写 1，没有写 0；没写的按没有计，和论文代码一样。"
+    },
+    {
+      "key": "osteoporosis",
+      "label_zh": "骨质疏松",
+      "unit": "score",
+      "range": [
+        0,
+        1
+      ],
+      "required": false,
+      "from": "measurements",
+      "group": "comorbidity",
+      "note_zh": "对应 NHANES OSQ060 医生说过有骨质疏松。有写 1，没有写 0；没写的按没有计，和论文代码一样。"
+    },
+    {
+      "key": "cognitive_impairment",
+      "label_zh": "认知损害",
+      "aliases": [
+        "cognitive impairment"
+      ],
+      "unit": "score",
+      "range": [
+        0,
+        1
+      ],
+      "required": false,
+      "from": "measurements",
+      "group": "comorbidity",
+      "note_zh": "对应 NHANES PFQ056 因记忆困难或阵发糊涂而在生活中受限。有写 1，没有写 0；没写的按没有计，和论文代码一样。"
+    },
+    {
+      "key": "overnight_hospitalization",
+      "label_zh": "过夜住院",
+      "aliases": [
+        "overnight hospitalization"
+      ],
+      "unit": "score",
+      "range": [
+        0,
+        1
+      ],
+      "required": false,
+      "from": "measurements",
+      "group": "comorbidity",
+      "note_zh": "对应 NHANES HUQ070 过去一年住院过夜。有写 1，没有写 0；没写的按没有计，和论文代码一样。"
     },
     {
       "key": "fair_general_health",
@@ -424,7 +1619,7 @@
       "required": false,
       "from": "measurements",
       "group": "self_health",
-      "note_zh": "是写 1，不是写 0；四项都给了才算自评健康指数。"
+      "note_zh": "HUQ010：总体健康自评为「一般」写 1，否则写 0。没写的按 0 计，和论文代码一样。"
     },
     {
       "key": "poor_general_health",
@@ -437,7 +1632,7 @@
       "required": false,
       "from": "measurements",
       "group": "self_health",
-      "note_zh": "是写 1，不是写 0；四项都给了才算自评健康指数。"
+      "note_zh": "HUQ010：总体健康自评为「差」写 1，否则写 0。没写的按 0 计，和论文代码一样。"
     },
     {
       "key": "better_current_health",
@@ -450,7 +1645,7 @@
       "required": false,
       "from": "measurements",
       "group": "self_health",
-      "note_zh": "是写 1，不是写 0；四项都给了才算自评健康指数。"
+      "note_zh": "HUQ020：和一年前比现在更好写 1，否则写 0。没写的按 0 计，和论文代码一样。"
     },
     {
       "key": "worse_current_health",
@@ -463,18 +1658,42 @@
       "required": false,
       "from": "measurements",
       "group": "self_health",
-      "note_zh": "是写 1，不是写 0；四项都给了才算自评健康指数。"
+      "note_zh": "HUQ020：和一年前比现在更差写 1，否则写 0。没写的按 0 计，和论文代码一样。"
     },
     {
       "key": "huq050",
-      "label_zh": "就医使用指数（HUQ050 编码）",
+      "label_zh": "就医使用编码（HUQ050）",
       "aliases": [
         "healthcare_use",
-        "就医使用指数"
+        "就医使用指数",
+        "HUQ050"
+      ],
+      "range": [
+        0,
+        5
       ],
       "required": false,
       "from": "measurements",
-      "note_zh": "照录 NHANES HUQ050 的编码，不是就诊次数；本技能不再换算，单位列留空。"
+      "group": "healthcare_use",
+      "note_zh": "NHANES HUQ050 的编码：过去一年看医生 0 次写 0，1 次写 1，2–3 次写 2，4–9 次写 3，10–12 次写 4，13 次及以上写 5（不算住院过夜）。也可以改填就诊次数。"
+    },
+    {
+      "key": "healthcare_visits_past_year",
+      "label_zh": "过去一年看医生的次数",
+      "aliases": [
+        "healthcare visits",
+        "就诊次数",
+        "看医生次数",
+        "门诊次数"
+      ],
+      "range": [
+        0,
+        400
+      ],
+      "required": false,
+      "from": "measurements",
+      "group": "healthcare_use",
+      "note_zh": "门诊、急诊、上门等看医生或其他医务人员的次数，不算住院过夜；按 NHANES HUQ050 的分档换成 0–5 的编码。"
     },
     {
       "key": "age",
@@ -484,35 +1703,113 @@
         18,
         110
       ],
-      "required": false,
+      "required": true,
       "from": "profile",
       "flag": "--age",
-      "note_zh": "不进入任何计算。"
+      "note_zh": "LinAge 只在 40–84 岁训练，这个范围外不算。"
+    },
+    {
+      "key": "sex",
+      "label_zh": "性别",
+      "required": true,
+      "from": "profile",
+      "flag": "--sex",
+      "note_zh": "男女各用一套中位数、MAD 和权重。"
     }
   ],
   "outputs": [
     {
+      "key": "linage_years",
+      "label_zh": "LinAge 临床年龄",
+      "unit": "a",
+      "note_zh": "实足年龄加上下面的年龄差。"
+    },
+    {
+      "key": "linage_delta_years",
+      "label_zh": "LinAge 年龄差",
+      "unit": "a",
+      "note_zh": "C1 + β0 × 实足年龄（月）+ Σ βi × 标准化参数；正数表示比同龄人老。"
+    },
+    {
+      "key": "missing_count",
+      "label_zh": "缺项数",
+      "unit": "1",
+      "note_zh": "61 个参数里没有给出、按 0 计的个数。"
+    },
+    {
+      "key": "missing_weight_years",
+      "label_zh": "缺项权重之和",
+      "unit": "a",
+      "note_zh": "缺项权重绝对值之和；论文说每个缺项带来的误差约为它的权重。"
+    },
+    {
       "key": "comorbidity_index",
       "label_zh": "并存病指数",
       "unit": "1",
-      "note_zh": "点到的并存病数除以 22；一种都没点到时为空。"
-    },
-    {
-      "key": "smoking_score",
-      "label_zh": "可替宁吸烟分档",
-      "unit": "score",
-      "note_zh": "血清可替宁 <10 ng/mL 为 0，<100 为 1，<200 为 2，其余为 3。"
+      "note_zh": "22 项里答「有」的个数除以 22。"
     },
     {
       "key": "self_health_index",
       "label_zh": "自评健康指数",
       "unit": "score",
-      "note_zh": "((fair×2)+(poor×4))×(1−better×0.5+worse)，四项都给了才算。"
+      "note_zh": "((一般×2)+(差×4))×(1−更好×0.5+更差)。"
     },
     {
-      "key": "acr_at_least_30",
-      "label_zh": "尿白蛋白肌酐比是否达到 30 mg/g",
-      "note_zh": "达到或没有达到；没有尿白蛋白肌酐比时为空。"
+      "key": "healthcare_use_code",
+      "label_zh": "就医使用编码",
+      "unit": "score",
+      "note_zh": "HUQ050 编码 0–5。"
+    },
+    {
+      "key": "smoking_score",
+      "label_zh": "可替宁吸烟分档",
+      "unit": "score",
+      "note_zh": "0–3；没有可替宁时为空。"
+    },
+    {
+      "key": "ldl_mmol_l",
+      "label_zh": "计算的低密度脂蛋白胆固醇",
+      "unit": "mmol/L",
+      "note_zh": "按论文代码 TC − TG/5 − HDL（mmol/L）；三项缺一时为空。"
     }
-  ]
+  ],
+  "validation": {
+    "status": "reproduced",
+    "examples": [
+      {
+        "locator": "Supplementary file linAge_Example.xls (MOESM6), sheet example_males, NHANES IV SEQN 10",
+        "quote": "chronAge (in years) 43.1666 | chronAge (in months) 517.9992 | C1 + chronAge*beta0 -2.0193853600000002 | sum(beta_i*para_i) 7.389850952344081 | C1 + beta_0*chronAge + sum(beta_i*para_i) 5.370465592344081 | .=> DeltaAge for subject (in years) 5.370465592344081 | .=> bioAge for subject (in years) 48.537065592344085",
+        "values": [
+          43.1666,
+          7.389850952344081,
+          5.370465592344081,
+          48.537065592344085
+        ],
+        "tolerance": "1e-9 years; the spreadsheet prints full double precision",
+        "test": "tests/test_manifest.py::test_paper_example_male_seqn10_spreadsheet"
+      },
+      {
+        "locator": "Supplementary data matrix with LinAge (MOESM9), row SEQN 10 (male, chronAge in whole years as linAge.R uses it)",
+        "quote": "\"fs1Score\",\"fs2Score\",\"fs3Score\",\"crAlbRat\",\"LDLV\",\"chronAge\",\"delAge\",\"linAge\" ... 0.0909090909090909,0,3,3.97850648787598,2.2152,43,5.40705095234407,48.4070509523441",
+        "values": [
+          43,
+          5.40705095234407,
+          48.4070509523441
+        ],
+        "tolerance": "1e-9 years; the CSV prints 15 significant digits",
+        "test": "tests/test_manifest.py::test_paper_example_male_seqn10_matrix"
+      },
+      {
+        "locator": "Supplementary data matrix with LinAge (MOESM9), row SEQN 24 (female; sex from MOESM10 RIAGENDR = 2)",
+        "quote": "\"fs1Score\",\"fs2Score\",\"fs3Score\",\"crAlbRat\",\"LDLV\",\"chronAge\",\"delAge\",\"linAge\" ... 0.227272727272727,1,2,6.44030770298765,2.7706,53,3.91880108714463,56.9188010871446",
+        "values": [
+          53,
+          3.91880108714463,
+          56.9188010871446
+        ],
+        "tolerance": "1e-9 years; the CSV prints 15 significant digits",
+        "test": "tests/test_manifest.py::test_paper_example_female_seqn24_matrix"
+      }
+    ]
+  }
 }

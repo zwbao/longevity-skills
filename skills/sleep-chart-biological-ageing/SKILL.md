@@ -1,14 +1,19 @@
 ---
 name: sleep-chart-biological-ageing
 description: >-
-  Tier A draft: the paper's printed example is not reproduced yet, so treat the readout as
-  provisional. Writes a personal readout of the sleep-duration bins used with 23 biological age gaps
-  in the Nature 2026 sleep chart. Use when the user gives sleep hours, medicines, or checkup labs and
-  asks where those hours sit in this chart. The skill does not ask for the PDF or a cohort. It does
-  not turn a short or long bin into advice to start or stop a medicine.
+  Tier B lookup (human): what the paper reports about named entities, not a validated personal score.
+  The Nature 2026 sleep chart relates self-reported sleep duration to biological age gaps from
+  imaging, plasma proteomics and metabolomics models built in UK Biobank; those gaps cannot be
+  computed for an individual here. The script only places supplied sleep hours in the paper's short
+  (<6 h), normal (6–8 h) or long (>8 h) groups, which restates the input against the paper's exposure
+  categories, not a score. Use when the user gives sleep hours and asks where they sit in this chart.
+  The skill does not ask for the PDF or a cohort. It does not turn a short or long group into advice
+  to start or stop a medicine.
 ---
 
 # 睡眠时长分组
+
+论文的结论建立在影像、蛋白组和代谢组算出的生物年龄差上，这里不算它们；脚本只把你的睡眠小时数放进论文的三组，不是评分。
 
 用户交自己的睡眠小时数、现用药和体检。不要向用户要 GEO、STRING 或 PDF。
 
