@@ -63,7 +63,8 @@ def check_effects() -> List[str]:
     if not EFFECTS.exists():
         return []
     schema = read_json(SCHEMA / "effect.schema.json")
-    markers = {row.get("key") for row in load_biovar().get("markers", [])}
+    biovar = {row.get("key"): row for row in load_biovar().get("markers", [])}
+    markers = set(biovar)
     errors: List[str] = []
     seen: Dict[str, int] = {}
     for index, row in enumerate(read_jsonl(EFFECTS), start=1):
@@ -87,7 +88,35 @@ def check_effects() -> List[str]:
         missing = numbers_missing_from_quote(row)
         if missing:
             errors.append(f"{where}: the quote does not contain {', '.join(str(item) for item in missing)}; copy the numbers exactly as printed")
+        quote = str(row.get("quote", ""))
+        if "\u2026" in quote or "..." in quote:
+            errors.append(f"{where}: the quote is cut with an ellipsis; copy one continuous span")
+        names = marker_names(row, biovar.get(key) or {})
+        if quote and not any(fold(item) in fold(quote) for item in names if item):
+            errors.append(f"{where}: the quote never names the marker ({', '.join(item for item in names if item)}); quote the span that says which measure moved")
+        if isinstance(value, (int, float)) and value < 0 and not sign_shown(quote, value):
+            errors.append(f"{where}: effect {value} is negative but the quote shows neither a minus sign on it nor a word for a fall")
     return errors
+
+
+_DASHES = str.maketrans({"\u2212": "-", "\u2013": "-", "\u2010": "-", "\u2011": "-", "\u00b7": "."})
+_FALL = re.compile(r"reduc|decreas|lower|declin|fell|fall|drop|loss|less|slow|降低|下降|减少|减慢|减轻|改善", re.I)
+
+
+def fold(text: str) -> str:
+    return re.sub(r"\s+", " ", str(text).translate(_DASHES)).casefold()
+
+
+def marker_names(row: Dict[str, Any], marker: Dict[str, Any]) -> List[str]:
+    return [row.get("marker", ""), row.get("marker_zh", ""), marker.get("label_zh", ""), *marker.get("aliases", [])] + list(row.get("marker_terms") or [])
+
+
+def sign_shown(quote: str, value: float) -> bool:
+    text = fold(quote)
+    digits = re.sub(r"\.?0+$", "", f"{abs(value):f}") if "." in f"{abs(value):f}" else f"{abs(value):f}"
+    if re.search(rf"-\s?{re.escape(digits)}(?!\d)", text) or re.search(rf"-\s?{re.escape(str(abs(value)))}(?!\d)", text):
+        return True
+    return bool(_FALL.search(text))
 
 
 _NUMBER = re.compile(r"\d+(?:\.\d+)?")

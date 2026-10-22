@@ -1,11 +1,11 @@
 ---
 name: lung-parenchyma-aging-clock
 description: >-
-  Writes a personal readout of the lung-parenchyma age residual defined in
-  the Tsankov lab XGBoost code and Nature Communications 2026. Use when the
-  user brings a predicted lung age, chronological age, medicines, or checkup
-  labs. The skill does not invent the booster weights. It does not turn a
-  residual into advice to start or stop a medicine.
+  Tier A draft: the paper's printed example is not reproduced yet, so treat the readout as
+  provisional. Writes a personal readout of the lung-parenchyma age residual defined in the Tsankov
+  lab XGBoost code and Nature Communications 2026. Use when the user brings a predicted lung age,
+  chronological age, medicines, or checkup labs. The skill does not invent the booster weights. It
+  does not turn a residual into advice to start or stop a medicine.
 ---
 
 # 肺实质年龄残差

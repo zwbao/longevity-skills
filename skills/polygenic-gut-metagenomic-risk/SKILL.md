@@ -1,7 +1,12 @@
 ---
 name: polygenic-gut-metagenomic-risk
 description: >-
-  Reads one person's age, polygenic score, and gut-microbiome score against the clinical factors used for coronary disease, type 2 diabetes, Alzheimer disease, or prostate cancer in Liu et al., Nature Aging 2024. It does not turn those inputs into a personal probability, because the Cox coefficients are not in the paper or the script. Use when the user mentions integrated polygenic and gut microbiome risk for these diseases. Labs do not add factors.
+  Tier B lookup (human): what the paper reports about named entities, not a validated personal score.
+  Reads one person's age, polygenic score, and gut-microbiome score against the clinical factors used
+  for coronary disease, type 2 diabetes, Alzheimer disease, or prostate cancer in Liu et al., Nature
+  Aging 2024. It does not turn those inputs into a personal probability, because the Cox coefficients
+  are not in the paper or the script. Use when the user mentions integrated polygenic and gut
+  microbiome risk for these diseases. Labs do not add factors.
 ---
 
 # 多基因与肠道菌群

@@ -1,12 +1,12 @@
 ---
 name: immune-aging-clock-runx1
 description: >-
-  Writes a personal pAge, tAge, or TCRAge from Ping et al., Immunity 2026,
-  using published Table S3 coefficients, and shows a paper card with the
-  article, DOI, and Table S3 links. Use when the user mentions that Immunity
-  study, immAge, an immune aging clock, or RUNX1 and T cell senescence.
-  ptAge, immAge, and bulk-immAge are not scored. Medicines and checkup labs
-  do not create a target list.
+  Tier A draft: the paper's printed example is not reproduced yet, so treat the readout as
+  provisional. Writes a personal pAge, tAge, or TCRAge from Ping et al., Immunity 2026, using
+  published Table S3 coefficients, and shows a paper card with the article, DOI, and Table S3 links.
+  Use when the user mentions that Immunity study, immAge, an immune aging clock, or RUNX1 and T cell
+  senescence. ptAge, immAge, and bulk-immAge are not scored. Medicines and checkup labs do not create
+  a target list.
 ---
 
 # 免疫衰老时钟

@@ -1,7 +1,12 @@
 ---
 name: blood-epigenetic-intrinsic-capacity
 description: >-
-  Writes a personal intrinsic-capacity readout from blood methylation. It applies the published CpG coefficients and intercept when every site is supplied, and it keeps a rescaled clinical average separate from that methylation score. Use when the user mentions the IC clock, DNAm intrinsic capacity, or a blood epigenetic intrinsic-capacity clock. Current medicines and checkup labs are context. The report does not say what to start or stop.
+  Tier A draft: the paper's printed example is not reproduced yet, so treat the readout as
+  provisional. Writes a personal intrinsic-capacity readout from blood methylation. It applies the
+  published CpG coefficients and intercept when every site is supplied, and it keeps a rescaled
+  clinical average separate from that methylation score. Use when the user mentions the IC clock, DNAm
+  intrinsic capacity, or a blood epigenetic intrinsic-capacity clock. Current medicines and checkup
+  labs are context. The report does not say what to start or stop.
 ---
 
 # 内在能力

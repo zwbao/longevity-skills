@@ -1,13 +1,13 @@
 ---
 name: steeramed-core
 description: >-
-  Writes a personal methylation report. It downloads the GEO reference cohort,
-  STRING, and STITCH by itself, then scores one person's 450k, EPIC, or EPICv2
-  methylation against that reference, including current medicines and checkup
-  labs. Use when the user mentions SteeraMed, their methylation data, a
-  personal health report, checkup labs plus methylation, or which compounds
-  align with their blood methylation. Do not use for SteeraMed-bench, Guney
-  network proximity, or the 332-module atlas.
+  Tier A draft: the paper's printed example is not reproduced yet, so treat the readout as
+  provisional. Writes a personal methylation report. It downloads the GEO reference cohort, STRING,
+  and STITCH by itself, then scores one person's 450k, EPIC, or EPICv2 methylation against that
+  reference, including current medicines and checkup labs. Use when the user mentions SteeraMed, their
+  methylation data, a personal health report, checkup labs plus methylation, or which compounds align
+  with their blood methylation. Do not use for SteeraMed-bench, Guney network proximity, or the
+  332-module atlas.
 ---
 
 # SteeraMed Core

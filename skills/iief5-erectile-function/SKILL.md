@@ -1,11 +1,13 @@
 ---
 name: iief5-erectile-function
 description: >-
-  Scores the IIEF-5 (Sexual Health Inventory for Men; Rosen et al. 1999) for one man: five item scores of 1 to 5
-  over the past 6 months, total 5 to 25, and the published severity band (none 22-25, mild 17-21, mild to
-  moderate 12-16, moderate 8-11, severe 5-7). A score of 21 or less is referred to a urologist with a
-  cardiovascular risk check. Men who attempted intercourse only. Use for 勃起, 阳痿, 性功能, ED, IIEF-5 or SHIM.
-  Item wording is copyrighted (Pfizer, distributed by Mapi Research Trust) and is not reproduced.
+  Tier A draft: the paper's printed example is not reproduced yet, so treat the readout as
+  provisional. Scores the IIEF-5 (Sexual Health Inventory for Men; Rosen et al. 1999) for one man:
+  five item scores of 1 to 5 over the past 6 months, total 5 to 25, and the published severity band
+  (none 22-25, mild 17-21, mild to moderate 12-16, moderate 8-11, severe 5-7). A score of 21 or less
+  is referred to a urologist with a cardiovascular risk check. Men who attempted intercourse only. Use
+  for 勃起, 阳痿, 性功能, ED, IIEF-5 or SHIM. Item wording is copyrighted (Pfizer, distributed by Mapi
+  Research Trust) and is not reproduced.
 ---
 
 # IIEF-5 勃起功能问卷

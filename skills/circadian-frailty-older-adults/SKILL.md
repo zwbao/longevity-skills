@@ -1,7 +1,11 @@
 ---
 name: circadian-frailty-older-adults
 description: >-
-  Computes relative amplitude from M10 and L5, and a 0 to 2 fatigue score from the two CES-D items in Cai et al. Use when the user mentions circadian rest-activity rhythms and frailty in older adults or this Nature Communications study. Sex-specific quintile cutoffs are not invented. Medicines and checkup labs do not edit the list.
+  Tier A draft: the paper's printed example is not reproduced yet, so treat the readout as
+  provisional. Computes relative amplitude from M10 and L5, and a 0 to 2 fatigue score from the two
+  CES-D items in Cai et al. Use when the user mentions circadian rest-activity rhythms and frailty in
+  older adults or this Nature Communications study. Sex-specific quintile cutoffs are not invented.
+  Medicines and checkup labs do not edit the list.
 ---
 
 # 昼夜活动与衰弱

@@ -1,11 +1,11 @@
 ---
 name: one-year-mortality-aging-marker
 description: >-
-  States that one-year mortality is not scored from a supplied age and
-  sex, because the baseline coefficients and the recurrent-network
-  weights are not in the PDF. Use when the user mentions the Finnish
-  one-year mortality model, FinRegistry, or this Nature Aging paper.
-  Medicines and checkup labs do not create a risk.
+  Tier B lookup (human): what the paper reports about named entities, not a validated personal score.
+  States that one-year mortality is not scored from a supplied age and sex, because the baseline
+  coefficients and the recurrent-network weights are not in the PDF. Use when the user mentions the
+  Finnish one-year mortality model, FinRegistry, or this Nature Aging paper. Medicines and checkup
+  labs do not create a risk.
 ---
 
 # 一年死亡标记

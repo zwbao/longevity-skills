@@ -1,7 +1,12 @@
 ---
 name: plasma-proteomics-brain-immune
 description: >-
-  Writes a personal organ-age readout from plasma proteins. It applies the published linear coefficients to z-scored protein levels, and the 1.5 standard-deviation rule when a z-scored organ gap is supplied. Use when the user mentions organ age, plasma proteomic brain or immune aging, or a UK Biobank Olink organ clock. Current medicines and checkup labs are context. The report does not say what to start or stop.
+  Tier A draft: the paper's printed example is not reproduced yet, so treat the readout as
+  provisional. Writes a personal organ-age readout from plasma proteins. It applies the published
+  linear coefficients to z-scored protein levels, and the 1.5 standard-deviation rule when a z-scored
+  organ gap is supplied. Use when the user mentions organ age, plasma proteomic brain or immune aging,
+  or a UK Biobank Olink organ clock. Current medicines and checkup labs are context. The report does
+  not say what to start or stop.
 ---
 
 # 器官年龄差

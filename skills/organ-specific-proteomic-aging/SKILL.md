@@ -1,7 +1,12 @@
 ---
 name: organ-specific-proteomic-aging
 description: >-
-  Writes a personal readout of organ-specific proteomic age gaps. It matches supplied proteins to the published organ-clock lists and applies the 1.5 standard-deviation rule to a supplied z score. Use when the user mentions organ-specific proteomic aging clocks, ageotypes, or a UK Biobank organ proteomic clock. Current medicines and checkup labs are context. The report does not say what to start or stop.
+  Tier A draft: the paper's printed example is not reproduced yet, so treat the readout as
+  provisional. Writes a personal readout of organ-specific proteomic age gaps. It matches supplied
+  proteins to the published organ-clock lists and applies the 1.5 standard-deviation rule to a
+  supplied z score. Use when the user mentions organ-specific proteomic aging clocks, ageotypes, or a
+  UK Biobank organ proteomic clock. Current medicines and checkup labs are context. The report does
+  not say what to start or stop.
 ---
 
 # 器官蛋白质年龄差

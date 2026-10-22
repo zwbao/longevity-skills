@@ -1,7 +1,12 @@
 ---
 name: amino-acid-biological-age
 description: >-
-  Divides each of the eight amino-acid concentrations in the simplified AmiAge model of Ding et al., Nature Communications 2026 (doi:10.1038/s41467-026-73371-y), by the sum of those eight. Use when the user mentions AmiAge, an amino-acid age clock, or this paper. The ratio is computed only when all eight are present. Random-forest weights are not in the repository, so the report does not print an age or an age gap. Checkup labs do not change the amino-acid list.
+  Tier A draft: the paper's printed example is not reproduced yet, so treat the readout as
+  provisional. Divides each of the eight amino-acid concentrations in the simplified AmiAge model of
+  Ding et al., Nature Communications 2026 (doi:10.1038/s41467-026-73371-y), by the sum of those eight.
+  Use when the user mentions AmiAge, an amino-acid age clock, or this paper. The ratio is computed
+  only when all eight are present. Random-forest weights are not in the repository, so the report does
+  not print an age or an age gap. Checkup labs do not change the amino-acid list.
 ---
 
 # 氨基酸比例

@@ -1,7 +1,12 @@
 ---
 name: biomarker-panels-proteomic-profiling
 description: >-
-  Matches one person's protein names to the cerebral small-vessel disease panels named in the main text of Hristovska et al., Nature Aging 2026 (doi:10.1038/s43587-026-01081-7). Use when the user mentions cSVD proteomics, white-matter lesions, MMP12, or this paper. Directions are the ones printed in the results text. The sample R code does not contain the fitted coefficients, and checkup labs do not add proteins.
+  Tier B lookup (human): what the paper reports about named entities, not a validated personal score.
+  Matches one person's protein names to the cerebral small-vessel disease panels named in the main
+  text of Hristovska et al., Nature Aging 2026 (doi:10.1038/s43587-026-01081-7). Use when the user
+  mentions cSVD proteomics, white-matter lesions, MMP12, or this paper. Directions are the ones
+  printed in the results text. The sample R code does not contain the fitted coefficients, and checkup
+  labs do not add proteins.
 ---
 
 # 脑小血管病蛋白

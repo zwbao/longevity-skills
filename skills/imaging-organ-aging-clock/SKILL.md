@@ -1,7 +1,12 @@
 ---
 name: imaging-organ-aging-clock
 description: >-
-  Computes imaging organ age gaps as predicted age minus chronological age for the seven organs in the npj Digital Medicine clock, and lists the plasma proteins named in the main text. Use when the user mentions imaging organ age, MRI organ clocks, or this UK Biobank imaging study. It does not refit the LASSO. Current medicines and checkup labs do not edit the protein list or the gaps.
+  Tier A draft: the paper's printed example is not reproduced yet, so treat the readout as
+  provisional. Computes imaging organ age gaps as predicted age minus chronological age for the seven
+  organs in the npj Digital Medicine clock, and lists the plasma proteins named in the main text. Use
+  when the user mentions imaging organ age, MRI organ clocks, or this UK Biobank imaging study. It
+  does not refit the LASSO. Current medicines and checkup labs do not edit the protein list or the
+  gaps.
 ---
 
 # 影像器官年龄差

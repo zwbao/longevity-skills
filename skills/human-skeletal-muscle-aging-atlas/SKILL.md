@@ -1,12 +1,12 @@
 ---
 name: human-skeletal-muscle-aging-atlas
 description: >-
-  Lists which skeletal-muscle cell states from Kedlian et al., Nature Aging
-  2024, the user named, and attaches the age direction written in the main
-  text. Use when the user mentions the human skeletal muscle aging atlas,
-  TNF-positive muscle stem cells, ICAM1-positive muscle stem cells, or
-  fast-twitch fiber loss. Supplementary Table 3 has cohort log2fc and no
-  intercept, so no personal score is printed. Labs do not add names.
+  Tier B lookup (human): what the paper reports about named entities, not a validated personal score.
+  Lists which skeletal-muscle cell states from Kedlian et al., Nature Aging 2024, the user named, and
+  attaches the age direction written in the main text. Use when the user mentions the human skeletal
+  muscle aging atlas, TNF-positive muscle stem cells, ICAM1-positive muscle stem cells, or fast-twitch
+  fiber loss. Supplementary Table 3 has cohort log2fc and no intercept, so no personal score is
+  printed. Labs do not add names.
 ---
 
 # 人类骨骼肌衰老图谱

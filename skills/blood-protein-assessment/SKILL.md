@@ -1,7 +1,11 @@
 ---
 name: blood-protein-assessment
 description: >-
-  Writes a personal protein-score readout. It sums the published elastic-net coefficients times supplied scaled protein levels for each outcome whose proteins are all present. Use when the user mentions ProteinScore, blood protein incident disease, or a UK Biobank proteomic risk score. Current medicines and checkup labs are context. The report does not say what to start or stop.
+  Tier A draft: the paper's printed example is not reproduced yet, so treat the readout as
+  provisional. Writes a personal protein-score readout. It sums the published elastic-net coefficients
+  times supplied scaled protein levels for each outcome whose proteins are all present. Use when the
+  user mentions ProteinScore, blood protein incident disease, or a UK Biobank proteomic risk score.
+  Current medicines and checkup labs are context. The report does not say what to start or stop.
 ---
 
 # 血液蛋白与发病

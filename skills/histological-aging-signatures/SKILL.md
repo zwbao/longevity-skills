@@ -1,11 +1,11 @@
 ---
 name: histological-aging-signatures
 description: >-
-  Writes a personal readout of histological tissue-clock age gaps from
-  Nature Medicine 2026. Use when the user brings a tissue predicted age,
-  chronological age, medicines, or checkup labs for these tissue clocks.
-  The skill does not invent slide-model weights. It does not turn an age
-  gap into advice to start or stop a medicine.
+  Tier A draft: the paper's printed example is not reproduced yet, so treat the readout as
+  provisional. Writes a personal readout of histological tissue-clock age gaps from Nature Medicine
+  2026. Use when the user brings a tissue predicted age, chronological age, medicines, or checkup labs
+  for these tissue clocks. The skill does not invent slide-model weights. It does not turn an age gap
+  into advice to start or stop a medicine.
 ---
 
 # 组织切片年龄差

@@ -1,9 +1,11 @@
 ---
 name: china-par-ascvd-risk
 description: >-
-  China-PAR 10-year atherosclerotic cardiovascular disease risk for Chinese adults (Yang et al., Circulation 2016),
-  from systolic blood pressure, total and HDL cholesterol, waist, age, sex and yes/no factors, for men and women.
-  Use for 心血管风险, 10年风险, China-PAR, or what-if goals for blood pressure and lipids.
+  Tier A draft: the paper's printed example is not reproduced yet, so treat the readout as
+  provisional. China-PAR 10-year atherosclerotic cardiovascular disease risk for Chinese adults (Yang
+  et al., Circulation 2016), from systolic blood pressure, total and HDL cholesterol, waist, age, sex
+  and yes/no factors, for men and women. Use for 心血管风险, 10年风险, China-PAR, or what-if goals for blood
+  pressure and lipids.
 ---
 
 # China-PAR 10 年心血管病风险

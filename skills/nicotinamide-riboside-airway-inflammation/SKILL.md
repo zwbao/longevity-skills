@@ -1,7 +1,12 @@
 ---
 name: nicotinamide-riboside-airway-inflammation
 description: >-
-  Computes one person's sputum interleukin-8 percent change from baseline to week 6, the primary outcome of the nicotinamide riboside airway trial in Norheim et al., Nature Aging 2024. It does not copy the trial's between-group estimate into the personal readout and does not recommend starting or stopping the supplement. Use when the user mentions this COPD airway trial, nicotinamide riboside, or sputum IL-8. Checkup labs stay context.
+  Tier A draft: the paper's printed example is not reproduced yet, so treat the readout as
+  provisional. Computes one person's sputum interleukin-8 percent change from baseline to week 6, the
+  primary outcome of the nicotinamide riboside airway trial in Norheim et al., Nature Aging 2024. It
+  does not copy the trial's between-group estimate into the personal readout and does not recommend
+  starting or stopping the supplement. Use when the user mentions this COPD airway trial, nicotinamide
+  riboside, or sputum IL-8. Checkup labs stay context.
 ---
 
 # 痰液白细胞介素的变化

@@ -1,7 +1,12 @@
 ---
 name: environmental-genetic-aging-mortality
 description: >-
-  Annotates supplied exposome answers onto the eight exposures whose final cluster-model hazard-ratio bounds are stated in the UK Biobank exposome study. Use when the user mentions exposome aging, environmental architecture of mortality, or this Nature Medicine paper. Drug names stay off that exposure list. Checkup labs do not add or remove exposures. The report does not say what to start or stop.
+  Tier B lookup (human): what the paper reports about named entities, not a validated personal score.
+  Annotates supplied exposome answers onto the eight exposures whose final cluster-model hazard-ratio
+  bounds are stated in the UK Biobank exposome study. Use when the user mentions exposome aging,
+  environmental architecture of mortality, or this Nature Medicine paper. Drug names stay off that
+  exposure list. Checkup labs do not add or remove exposures. The report does not say what to start or
+  stop.
 ---
 
 # 暴露对照

@@ -1,11 +1,11 @@
 ---
 name: metabolomic-frailty-subtypes
 description: >-
-  Assigns one person's eleven Nightingale NMR metabolites to the nearest
-  frailty-subtype mean in Table 2 of Xiao et al., npj Digital Medicine 2025.
-  Use when the user mentions metabolomic frailty subtypes, GlycA, LGVF, HALF,
-  LALF, HGVF, or this 11-metabolite panel. Current medicines and checkup labs
-  are context. The report does not say what to start or stop.
+  Tier A draft: the paper's printed example is not reproduced yet, so treat the readout as
+  provisional. Assigns one person's eleven Nightingale NMR metabolites to the nearest frailty-subtype
+  mean in Table 2 of Xiao et al., npj Digital Medicine 2025. Use when the user mentions metabolomic
+  frailty subtypes, GlycA, LGVF, HALF, LALF, HGVF, or this 11-metabolite panel. Current medicines and
+  checkup labs are context. The report does not say what to start or stop.
 ---
 
 # 代谢衰弱亚型

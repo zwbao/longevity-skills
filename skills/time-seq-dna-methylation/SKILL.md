@@ -1,7 +1,11 @@
 ---
 name: time-seq-dna-methylation
 description: >-
-  Scores methylation percentages with the TIME-seq human blood clock coefficients from the Griffin et al. repository, using predicted age = a * (weighted sum + intercept) + c. Use when the user mentions TIME-seq, a targeted methylation clock, or this Nature Aging paper. Missing CpGs are not mean-imputed. Current medicines and checkup labs do not change the CpG list or the age.
+  Tier A draft: the paper's printed example is not reproduced yet, so treat the readout as
+  provisional. Scores methylation percentages with the TIME-seq human blood clock coefficients from
+  the Griffin et al. repository, using predicted age = a * (weighted sum + intercept) + c. Use when
+  the user mentions TIME-seq, a targeted methylation clock, or this Nature Aging paper. Missing CpGs
+  are not mean-imputed. Current medicines and checkup labs do not change the CpG list or the age.
 ---
 
 # 血液甲基化年龄

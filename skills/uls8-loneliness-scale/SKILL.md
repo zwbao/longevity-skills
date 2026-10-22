@@ -1,10 +1,12 @@
 ---
 name: uls8-loneliness-scale
 description: >-
-  Scores the ULS-8 short-form UCLA Loneliness Scale (Hays and DiMatteo 1987) for one person: eight answers
-  coded 1 to 4, items 3 and 6 reverse-scored, total 8 to 32, higher means lonelier. Gives the score without a
-  category, because no published cut-point was found. Use when the user mentions loneliness, feeling isolated,
-  孤独, 寂寞, 没人说话, or the UCLA loneliness scale. Item wording is copyrighted and is not reproduced.
+  Tier A draft: the paper's printed example is not reproduced yet, so treat the readout as
+  provisional. Scores the ULS-8 short-form UCLA Loneliness Scale (Hays and DiMatteo 1987) for one
+  person: eight answers coded 1 to 4, items 3 and 6 reverse-scored, total 8 to 32, higher means
+  lonelier. Gives the score without a category, because no published cut-point was found. Use when the
+  user mentions loneliness, feeling isolated, 孤独, 寂寞, 没人说话, or the UCLA loneliness scale. Item wording
+  is copyrighted and is not reproduced.
 ---
 
 # ULS-8 孤独感量表

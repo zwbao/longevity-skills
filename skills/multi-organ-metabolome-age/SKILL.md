@@ -1,7 +1,11 @@
 ---
 name: multi-organ-metabolome-age
 description: >-
-  Writes a personal uncorrected metabolomic age gap. It subtracts chronological age from a supplied predicted age for five organ systems. Use when the user mentions MetBAG, multi-organ metabolome biological age, or a Nightingale metabolome clock. Current medicines and checkup labs are context. The report does not say what to start or stop.
+  Tier A draft: the paper's printed example is not reproduced yet, so treat the readout as
+  provisional. Writes a personal uncorrected metabolomic age gap. It subtracts chronological age from
+  a supplied predicted age for five organ systems. Use when the user mentions MetBAG, multi-organ
+  metabolome biological age, or a Nightingale metabolome clock. Current medicines and checkup labs are
+  context. The report does not say what to start or stop.
 ---
 
 # 代谢组器官年龄差

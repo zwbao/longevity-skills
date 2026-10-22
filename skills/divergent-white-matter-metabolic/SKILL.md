@@ -1,7 +1,12 @@
 ---
 name: divergent-white-matter-metabolic
 description: >-
-  Writes a personal readout of the expected-minus-atypical white-matter FDG difference from Zhang et al., Nature Communications 2026. It subtracts the two supplied SUVR values using that paper's definition. Use when the user mentions divergent white-matter metabolism, EWM, AWM, or this FDG signature of cognitive decline. Current medicines and checkup labs are context. The report does not say what to start or stop.
+  Tier A draft: the paper's printed example is not reproduced yet, so treat the readout as
+  provisional. Writes a personal readout of the expected-minus-atypical white-matter FDG difference
+  from Zhang et al., Nature Communications 2026. It subtracts the two supplied SUVR values using that
+  paper's definition. Use when the user mentions divergent white-matter metabolism, EWM, AWM, or this
+  FDG signature of cognitive decline. Current medicines and checkup labs are context. The report does
+  not say what to start or stop.
 ---
 
 # 白质葡萄糖代谢的差值

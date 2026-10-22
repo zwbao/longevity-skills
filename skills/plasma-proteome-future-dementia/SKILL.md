@@ -1,7 +1,12 @@
 ---
 name: plasma-proteome-future-dementia
 description: >-
-  Records plasma GFAP, NEFL, GDF15, and LTBP2 when the user supplies them, for the Guo et al. Nature Aging 2024 dementia profile. The protein risk score is a LightGBM model whose weights are not printed, so no risk score is calculated. Use when the user mentions this plasma proteomic dementia profile or those four proteins. Current medicines and checkup labs are context. The report does not say what to start or stop.
+  Tier B lookup (human): what the paper reports about named entities, not a validated personal score.
+  Records plasma GFAP, NEFL, GDF15, and LTBP2 when the user supplies them, for the Guo et al. Nature
+  Aging 2024 dementia profile. The protein risk score is a LightGBM model whose weights are not
+  printed, so no risk score is calculated. Use when the user mentions this plasma proteomic dementia
+  profile or those four proteins. Current medicines and checkup labs are context. The report does not
+  say what to start or stop.
 ---
 
 # 痴呆相关的四个血浆蛋白

@@ -1,12 +1,11 @@
 ---
 name: wearable-aging-clock
 description: >-
-  Writes a personal readout of the wearable PpgAge gap from the Apple Heart
-  and Movement Study analysis in Nature Communications 2025. Use when the
-  user brings a PpgAge, chronological age, medicines, or checkup labs and
-  asks about this wrist PPG aging clock. The skill does not ask for the
-  PDF or the AHMS cohort. It does not turn an age gap into a reason to
-  start or stop a medicine.
+  Tier A draft: the paper's printed example is not reproduced yet, so treat the readout as
+  provisional. Writes a personal readout of the wearable PpgAge gap from the Apple Heart and Movement
+  Study analysis in Nature Communications 2025. Use when the user brings a PpgAge, chronological age,
+  medicines, or checkup labs and asks about this wrist PPG aging clock. The skill does not ask for the
+  PDF or the AHMS cohort. It does not turn an age gap into a reason to start or stop a medicine.
 ---
 
 # 腕部脉搏波年龄差

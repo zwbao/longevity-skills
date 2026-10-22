@@ -1,13 +1,12 @@
 ---
 name: nanopore-parent-origin-methylation
 description: >-
-  Writes a personal nanopore methylation age from published lasso
-  coefficients when standardized methylation is supplied, and also reports
-  methylation-age error and parent-of-origin differences when those values
-  are supplied. Use when the user brings methylation measurements,
-  medicines, or checkup labs for this parent-of-origin methylation clock.
-  The skill does not rescale raw methylation proportions. It does not turn
-  the result into advice to start or stop a medicine.
+  Tier A draft: the paper's printed example is not reproduced yet, so treat the readout as
+  provisional. Writes a personal nanopore methylation age from published lasso coefficients when
+  standardized methylation is supplied, and also reports methylation-age error and parent-of-origin
+  differences when those values are supplied. Use when the user brings methylation measurements,
+  medicines, or checkup labs for this parent-of-origin methylation clock. The skill does not rescale
+  raw methylation proportions. It does not turn the result into advice to start or stop a medicine.
 ---
 
 # 印记位点甲基化读出

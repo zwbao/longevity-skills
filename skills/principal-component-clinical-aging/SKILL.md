@@ -1,7 +1,12 @@
 ---
 name: principal-component-clinical-aging
 description: >-
-  Computes the cotinine bins, 22-item comorbidity index, and self-health index printed in the Methods of Fong et al., the principal-component clinical aging clocks. Use when the user mentions PCAge, LinAge, CALinAge, or this NHANES clinical clock. LinAge years are not calculated, because Supplementary Table 7 weights are not in the main text. Current medicines and checkup labs do not edit the comorbidity list.
+  Tier A draft: the paper's printed example is not reproduced yet, so treat the readout as
+  provisional. Computes the cotinine bins, 22-item comorbidity index, and self-health index printed in
+  the Methods of Fong et al., the principal-component clinical aging clocks. Use when the user
+  mentions PCAge, LinAge, CALinAge, or this NHANES clinical clock. LinAge years are not calculated,
+  because Supplementary Table 7 weights are not in the main text. Current medicines and checkup labs
+  do not edit the comorbidity list.
 ---
 
 # 临床指数

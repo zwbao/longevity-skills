@@ -1,11 +1,11 @@
 ---
 name: plasma-proteomic-cellular-aging
 description: >-
-  Writes a personal readout of the SomaScan cell-type aging clocks from Ding
-  and colleagues, Nature Medicine 2026. Use when the user brings SomaScan
-  protein z-scores, sex, medicines, or checkup labs and asks about these
-  cellular aging clocks. The skill uses the published coefficient table. It
-  does not turn a predicted cell age into advice to start or stop a medicine.
+  Tier A draft: the paper's printed example is not reproduced yet, so treat the readout as
+  provisional. Writes a personal readout of the SomaScan cell-type aging clocks from Ding and
+  colleagues, Nature Medicine 2026. Use when the user brings SomaScan protein z-scores, sex,
+  medicines, or checkup labs and asks about these cellular aging clocks. The skill uses the published
+  coefficient table. It does not turn a predicted cell age into advice to start or stop a medicine.
 ---
 
 # 细胞类型蛋白年龄

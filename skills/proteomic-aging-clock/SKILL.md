@@ -1,7 +1,11 @@
 ---
 name: proteomic-aging-clock
 description: >-
-  Writes a personal proteomic age gap. It subtracts chronological age from a supplied proteomic age and matches gene symbols to the published 204-protein names. Use when the user mentions ProtAge, ProtAgeGap, a proteomic aging clock, or the UK Biobank Olink clock. Current medicines and checkup labs are context. The report does not say what to start or stop.
+  Tier A draft: the paper's printed example is not reproduced yet, so treat the readout as
+  provisional. Writes a personal proteomic age gap. It subtracts chronological age from a supplied
+  proteomic age and matches gene symbols to the published 204-protein names. Use when the user
+  mentions ProtAge, ProtAgeGap, a proteomic aging clock, or the UK Biobank Olink clock. Current
+  medicines and checkup labs are context. The report does not say what to start or stop.
 ---
 
 # 蛋白质年龄差

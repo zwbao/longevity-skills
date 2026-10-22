@@ -1,7 +1,11 @@
 ---
 name: wearable-circadian-aging-biomarker
 description: >-
-  Computes CosinorAge from MESOR, amplitude, acrophase, and chronological age using the pooled equation in Supplementary Table 1 of Shim et al. Use when the user mentions CosinorAge, wearable accelerometry, or this npj Digital Medicine study. Missing inputs are not filled with zero. Sex-specific inversion constants are not invented. Medicines and checkup labs do not edit the age.
+  Tier A draft: the paper's printed example is not reproduced yet, so treat the readout as
+  provisional. Computes CosinorAge from MESOR, amplitude, acrophase, and chronological age using the
+  pooled equation in Supplementary Table 1 of Shim et al. Use when the user mentions CosinorAge,
+  wearable accelerometry, or this npj Digital Medicine study. Missing inputs are not filled with zero.
+  Sex-specific inversion constants are not invented. Medicines and checkup labs do not edit the age.
 ---
 
 # 可穿戴加速度的昼夜年龄

@@ -11,7 +11,8 @@
     "claim_zh",
     "species",
     "evidence",
-    "source"
+    "source",
+    "direction"
   ],
   "additionalProperties": false,
   "properties": {
@@ -61,8 +62,6 @@
       "enum": [
         "up",
         "down",
-        "increase",
-        "decrease",
         "extends_lifespan",
         "shortens_lifespan",
         "protective",
@@ -71,7 +70,8 @@
         "marker",
         "no_effect",
         "named"
-      ]
+      ],
+      "description": "up/down: the entity is higher or lower in the stated context (older age, the disease, after the intervention). named: listed without a direction."
     },
     "context_zh": {
       "type": "string"
@@ -143,8 +143,22 @@
           "type": "integer",
           "minimum": 1900,
           "maximum": 2100
+        },
+        "access": {
+          "enum": [
+            "fulltext",
+            "abstract_only"
+          ],
+          "description": "What was read. abstract_only when the full text and supplements could not be opened; the locator then says 摘要."
         }
       }
+    },
+    "kind": {
+      "enum": [
+        "finding",
+        "list_member"
+      ],
+      "description": "finding: a statement about this entity. list_member: one entry of a list the paper prints (a clock's CpG genes, a supplementary table of hits); rows of one list share the same claim_zh and the query shows them as one line."
     }
   }
 }

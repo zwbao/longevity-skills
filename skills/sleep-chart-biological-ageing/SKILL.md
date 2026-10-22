@@ -1,11 +1,11 @@
 ---
 name: sleep-chart-biological-ageing
 description: >-
-  Writes a personal readout of the sleep-duration bins used with 23
-  biological age gaps in the Nature 2026 sleep chart. Use when the user
-  gives sleep hours, medicines, or checkup labs and asks where those hours
-  sit in this chart. The skill does not ask for the PDF or a cohort. It
-  does not turn a short or long bin into advice to start or stop a medicine.
+  Tier A draft: the paper's printed example is not reproduced yet, so treat the readout as
+  provisional. Writes a personal readout of the sleep-duration bins used with 23 biological age gaps
+  in the Nature 2026 sleep chart. Use when the user gives sleep hours, medicines, or checkup labs and
+  asks where those hours sit in this chart. The skill does not ask for the PDF or a cohort. It does
+  not turn a short or long bin into advice to start or stop a medicine.
 ---
 
 # 睡眠时长分组

@@ -1,11 +1,11 @@
 ---
 name: aging-biomarker-framework
 description: >-
-  Computes age deviation for clocks the user already has and annotates them
-  with the Biolearn evaluation in Ying et al., Nature Aging 2025. Use when the
-  user mentions Biolearn, GrimAge2 mortality, Horvath skin and blood R², or
-  whether age prediction matches mortality prediction. Current medicines and
-  checkup labs are context. The report does not say what to start or stop.
+  Tier A draft: the paper's printed example is not reproduced yet, so treat the readout as
+  provisional. Computes age deviation for clocks the user already has and annotates them with the
+  Biolearn evaluation in Ying et al., Nature Aging 2025. Use when the user mentions Biolearn, GrimAge2
+  mortality, Horvath skin and blood R², or whether age prediction matches mortality prediction.
+  Current medicines and checkup labs are context. The report does not say what to start or stop.
 ---
 
 # 衰老标志物对照

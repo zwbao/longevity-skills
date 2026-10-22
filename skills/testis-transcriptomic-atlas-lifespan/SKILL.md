@@ -1,7 +1,11 @@
 ---
 name: testis-transcriptomic-atlas-lifespan
 description: >-
-  Places one adult's age and body-mass index against the two somatic aging waves in the human testis atlas of Cui et al., Nature Aging 2025. It does not run the notebook XGBoost grid. Use when the user mentions this testicular aging atlas, peritubular priming, or the age-BMI fertility note. Medicines and labs stay context.
+  Tier A draft: the paper's printed example is not reproduced yet, so treat the readout as
+  provisional. Places one adult's age and body-mass index against the two somatic aging waves in the
+  human testis atlas of Cui et al., Nature Aging 2025. It does not run the notebook XGBoost grid. Use
+  when the user mentions this testicular aging atlas, peritubular priming, or the age-BMI fertility
+  note. Medicines and labs stay context.
 ---
 
 # 睾丸衰老阶段

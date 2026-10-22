@@ -1,7 +1,12 @@
 ---
 name: ulk1-autophagy-alzheimers
 description: >-
-  Writes a personal readout of serum and CSF ULK1 percent change from Pan et al., Nature Aging 2026. It compares a supplied baseline and follow-up with the published four-year declines and lists the four ULK1 compounds named in that paper. Use when the user mentions ULK1, autophagy or mitophagy in Alzheimer disease, Rac-BL-918, or LYN-1604. Current medicines and checkup labs are context. The report does not say what to start or stop.
+  Tier A draft: the paper's printed example is not reproduced yet, so treat the readout as
+  provisional. Writes a personal readout of serum and CSF ULK1 percent change from Pan et al., Nature
+  Aging 2026. It compares a supplied baseline and follow-up with the published four-year declines and
+  lists the four ULK1 compounds named in that paper. Use when the user mentions ULK1, autophagy or
+  mitophagy in Alzheimer disease, Rac-BL-918, or LYN-1604. Current medicines and checkup labs are
+  context. The report does not say what to start or stop.
 ---
 
 # 血清和脑脊液里的自噬激酶

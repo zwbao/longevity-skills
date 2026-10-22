@@ -1,7 +1,12 @@
 ---
 name: single-cell-somatic-mutational
 description: >-
-  Writes a personal readout of chondrocyte somatic mutation burden from Ren et al., Nature Aging 2025. It applies that paper's coverage and sensitivity formula and keeps the published yearly slopes beside the result. Use when the user mentions somatic mutations in chondrocytes, osteoarthritis cartilage, or this single-cell whole-genome study. Current medicines and checkup labs are context. The report does not say what to start or stop.
+  Tier A draft: the paper's printed example is not reproduced yet, so treat the readout as
+  provisional. Writes a personal readout of chondrocyte somatic mutation burden from Ren et al.,
+  Nature Aging 2025. It applies that paper's coverage and sensitivity formula and keeps the published
+  yearly slopes beside the result. Use when the user mentions somatic mutations in chondrocytes,
+  osteoarthritis cartilage, or this single-cell whole-genome study. Current medicines and checkup labs
+  are context. The report does not say what to start or stop.
 ---
 
 # 软骨细胞里的体细胞突变

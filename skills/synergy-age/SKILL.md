@@ -1,10 +1,9 @@
 ---
 name: synergy-age
 description: >-
-  Queries SynergyAge for model-organism genetic lifespan effects and
-  synergistic or antagonistic interactions between those interventions. Use
-  when the user mentions SynergyAge, epistasis, genetic synergy, or combined
-  gene interventions that change lifespan. Interaction labels are experimental
+  Tool. Queries SynergyAge for model-organism genetic lifespan effects and synergistic or antagonistic
+  interactions between those interventions. Use when the user mentions SynergyAge, epistasis, genetic
+  synergy, or combined gene interventions that change lifespan. Interaction labels are experimental
   comparisons, not a reason to start or stop a human treatment.
 ---
 

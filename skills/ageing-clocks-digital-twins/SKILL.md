@@ -1,7 +1,13 @@
 ---
 name: ageing-clocks-digital-twins
 description: >-
-  Computes the within-person biological-age stability index from Pusparum et al., npj Digital Medicine 2025 (DOI 10.1038/s41746-025-01911-9), for clocks that person already has. Use when the user brings repeated biological-age estimates and asks about this digital-twin clock comparison or the IAM Frontier analysis. This paper does not publish new clock coefficients, so the skill does not refit PhenoAge, GrimAge, or DunedinPACE. For the Skin and Blood clock, a supplied time in years is compared with the printed technical-replicate limit of 2.56 years plus elapsed time.
+  Tier A draft: the paper's printed example is not reproduced yet, so treat the readout as
+  provisional. Computes the within-person biological-age stability index from Pusparum et al., npj
+  Digital Medicine 2025 (DOI 10.1038/s41746-025-01911-9), for clocks that person already has. Use when
+  the user brings repeated biological-age estimates and asks about this digital-twin clock comparison
+  or the IAM Frontier analysis. This paper does not publish new clock coefficients, so the skill does
+  not refit PhenoAge, GrimAge, or DunedinPACE. For the Skin and Blood clock, a supplied time in years
+  is compared with the printed technical-replicate limit of 2.56 years plus elapsed time.
 ---
 
 # 时钟稳定度

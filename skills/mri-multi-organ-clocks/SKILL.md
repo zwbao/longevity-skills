@@ -1,7 +1,11 @@
 ---
 name: mri-multi-organ-clocks
 description: >-
-  Writes a personal uncorrected MRI organ age gap. It subtracts chronological age from a supplied predicted age for seven organs. Use when the user mentions MRIBAG, MRI organ clocks, or a multi-organ MRI biological age. Current medicines and checkup labs are context. The report does not say what to start or stop.
+  Tier A draft: the paper's printed example is not reproduced yet, so treat the readout as
+  provisional. Writes a personal uncorrected MRI organ age gap. It subtracts chronological age from a
+  supplied predicted age for seven organs. Use when the user mentions MRIBAG, MRI organ clocks, or a
+  multi-organ MRI biological age. Current medicines and checkup labs are context. The report does not
+  say what to start or stop.
 ---
 
 # 磁共振器官年龄差

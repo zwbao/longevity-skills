@@ -1,7 +1,11 @@
 ---
 name: hippocampal-neurogenesis-adulthood-ageing
 description: >-
-  Checks a supplied age and episodic-memory note against the SuperAger definition in the human hippocampal neurogenesis study. Use when the user mentions hippocampal neurogenesis, SuperAgers, immature neurons, or this Nature paper. Medicines and checkup labs do not change that check. The report does not say what to start or stop.
+  Tier A draft: the paper's printed example is not reproduced yet, so treat the readout as
+  provisional. Checks a supplied age and episodic-memory note against the SuperAger definition in the
+  human hippocampal neurogenesis study. Use when the user mentions hippocampal neurogenesis,
+  SuperAgers, immature neurons, or this Nature paper. Medicines and checkup labs do not change that
+  check. The report does not say what to start or stop.
 ---
 
 # 情景记忆对照

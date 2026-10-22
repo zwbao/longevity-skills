@@ -6,10 +6,16 @@ never inferred. The longevity-evidence skill queries this file.
 
 from __future__ import annotations
 
+import re
+from collections import Counter
 from typing import Any, Dict, List
 
 from . import jsonschema_lite
 from .common import EVIDENCE, SCHEMA, read_json, read_jsonl
+
+
+LIST_MIN = 3
+ABSTRACT = re.compile(r"摘要|abstract", re.I)
 
 
 def load() -> List[Dict[str, Any]]:
@@ -20,7 +26,9 @@ def check(manifests: Dict[str, Dict[str, Any]]) -> List[str]:
     schema = read_json(SCHEMA / "claim.schema.json")
     errors: List[str] = []
     seen: Dict[str, int] = {}
-    for index, row in enumerate(load(), start=1):
+    rows = load()
+    shared = Counter((row.get("source", {}).get("doi") or row.get("source", {}).get("skill"), row.get("claim_zh")) for row in rows if isinstance(row, dict))
+    for index, row in enumerate(rows, start=1):
         where = f"skills/longevity-evidence/data/claims.jsonl:{index}"
         for message in jsonschema_lite.validate(row, schema):
             errors.append(f"{where}: {message}")
@@ -41,6 +49,13 @@ def check(manifests: Dict[str, Dict[str, Any]]) -> List[str]:
         paper_doi = (manifests[skill].get("paper") or {}).get("doi")
         if source.get("doi") and paper_doi and source["doi"] != paper_doi:
             errors.append(f"{where}: source.doi {source['doi']} is not {skill}'s paper ({paper_doi})")
+        group = shared[(source.get("doi") or skill, row.get("claim_zh"))]
+        if group >= LIST_MIN and row.get("kind") != "list_member":
+            errors.append(f"{where}: {group} rows of this paper share one claim_zh; mark them kind list_member")
+        if row.get("kind") == "list_member" and group < 2:
+            errors.append(f"{where}: kind list_member but no other row of this paper shares its claim_zh")
+        if ABSTRACT.search(source.get("locator", "")) and source.get("access") != "abstract_only":
+            errors.append(f"{where}: the locator cites the abstract; read the full text, or set source.access abstract_only when it cannot be opened")
         species = set(row.get("species", []))
         skill_species = set(manifests[skill].get("species", []))
         if species == {"human"} and "human" not in skill_species:

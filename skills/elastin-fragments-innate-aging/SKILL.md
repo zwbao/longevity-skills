@@ -1,12 +1,12 @@
 ---
 name: elastin-fragments-innate-aging
 description: >-
-  Assigns one serum elastin-fragment concentration to the high or normal group
-  using the published picogram cutoffs, and checks a peptide against the
-  published sequences. It does not fit an age regression and does not invent
-  weights. Use when the user mentions elastin fragments, the E-motif, or
-  innate immune activation by matrix fragments. Medicines and checkup labs
-  stay context. The report does not say what to start or stop.
+  Tier A draft: the paper's printed example is not reproduced yet, so treat the readout as
+  provisional. Assigns one serum elastin-fragment concentration to the high or normal group using the
+  published picogram cutoffs, and checks a peptide against the published sequences. It does not fit an
+  age regression and does not invent weights. Use when the user mentions elastin fragments, the
+  E-motif, or innate immune activation by matrix fragments. Medicines and checkup labs stay context.
+  The report does not say what to start or stop.
 ---
 
 # 弹性蛋白片段

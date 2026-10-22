@@ -1,7 +1,12 @@
 ---
 name: fasting-mimicking-diet
 description: >-
-  Writes a personal clinical biological-age change for a fasting-mimicking diet readout. It subtracts two supplied biological ages and, when chronological age is also supplied, applies the published change equation. Use when the user mentions a fasting-mimicking diet, FMD biological age, or this kind of trial. Current medicines and checkup labs are context. The report does not say what to start or stop.
+  Tier A draft: the paper's printed example is not reproduced yet, so treat the readout as
+  provisional. Writes a personal clinical biological-age change for a fasting-mimicking diet readout.
+  It subtracts two supplied biological ages and, when chronological age is also supplied, applies the
+  published change equation. Use when the user mentions a fasting-mimicking diet, FMD biological age,
+  or this kind of trial. Current medicines and checkup labs are context. The report does not say what
+  to start or stop.
 ---
 
 # 临床生物年龄的前后差

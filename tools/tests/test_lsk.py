@@ -165,3 +165,42 @@ def test_readme_roundtrip():
     spliced = readme.splice(text, rendered)
     assert spliced.startswith("# T") and readme.BEGIN in spliced
     assert readme.splice(spliced, rendered) == spliced
+
+
+def test_tier_line_and_banner_are_idempotent():
+    from tools.lsk import frontmatter
+    text = "---\nname: x\ndescription: >-\n  Reads one list. Use when asked.\n---\n\n# Title\n\nBody.\n"
+    data = {"tier": "C", "species": ["mouse", "c_elegans"]}
+    once = frontmatter.render(text, data)
+    assert "Tier C index only (mouse, C. elegans study)" in once
+    assert frontmatter.BANNER_START in once and "小鼠、线虫" in once
+    assert frontmatter.render(once, data) == once
+    promoted = frontmatter.render(once, {"tier": "A", "species": ["human"], "validation": {"status": "reproduced"}})
+    assert "Tier C" not in promoted and frontmatter.BANNER_START not in promoted
+    assert promoted.count("Reads one list.") == 1
+
+
+def test_validation_needs_printed_numbers_in_quote_and_test(tmp_path):
+    from tools.lsk import manifest
+    skill = tmp_path / "demo"
+    (skill / "tests").mkdir(parents=True)
+    (skill / "tests" / "test_manifest.py").write_text("def test_paper_example():\n    assert round(1.0, 1) == 4.7\n", encoding="utf-8")
+    base = {"tier": "A", "inputs_status": "verified", "inputs": [{"key": "x"}]}
+    good = dict(base, validation={"status": "reproduced", "examples": [
+        {"locator": "Table 2", "quote": "risk 4.7%", "values": [4.7], "test": "tests/test_manifest.py::test_paper_example"}]})
+    assert manifest._check_validation(skill, good) == []
+    wrong = dict(base, validation={"status": "reproduced", "examples": [
+        {"locator": "Table 2", "quote": "risk 4.9%", "values": [5.1], "test": "tests/test_manifest.py::test_other"}]})
+    problems = " ".join(manifest._check_validation(skill, wrong))
+    assert "quote does not contain 5.1" in problems and "no test test_other" in problems and "does not assert 5.1" in problems
+    assert manifest._check_validation(skill, dict(base, validation={"status": "draft"}))
+    assert manifest._check_validation(skill, {"tier": "A"})
+
+
+def test_effect_quote_must_name_marker_and_show_sign():
+    from tools.lsk import datasets
+    assert datasets.sign_shown("HbA1c fell by 0.3%", -0.3)
+    assert datasets.sign_shown("MD = −0.44 [−0.59, −0.29]", -0.44)
+    assert not datasets.sign_shown("MD 0.44 (0.29 to 0.59)", -0.44)
+    names = datasets.marker_names({"marker": "HbA1c"}, {"aliases": ["A1c"]})
+    assert any(datasets.fold(item) in datasets.fold("glycated A1c was lower") for item in names)

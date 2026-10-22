@@ -1,13 +1,12 @@
 ---
 name: ampk-gamma1-refeeding-longevity
 description: >-
-  Computes the multidimensional prognostic index as the sum of eight supplied
-  domain points divided by eight, using the bins in Ripa et al., Nature Aging
-  2023. It does not turn a PRKAG1 expression value into that index, because the
-  paper does not print the slope or intercept. Use when the user mentions AMPK
-  gamma1, PRKAG1, refeeding, or this killifish longevity paper. Medicines and
-  checkup labs do not edit the method list. The report does not say what to
-  start or stop.
+  Tier A draft: the paper's printed example is not reproduced yet, so treat the readout as
+  provisional. Computes the multidimensional prognostic index as the sum of eight supplied domain
+  points divided by eight, using the bins in Ripa et al., Nature Aging 2023. It does not turn a PRKAG1
+  expression value into that index, because the paper does not print the slope or intercept. Use when
+  the user mentions AMPK gamma1, PRKAG1, refeeding, or this killifish longevity paper. Medicines and
+  checkup labs do not edit the method list. The report does not say what to start or stop.
 ---
 
 # 再喂食时的调节亚基与预后指数

@@ -1,7 +1,11 @@
 ---
 name: cd38-recent-thymic-emigrants
 description: >-
-  Gates supplied naive CD4 and CD8 marker values with the cytometry thresholds from the method repository, and places a supplied age in the printed age bins. Use when the user mentions CD38 recent thymic emigrants, naive T-cell aging, or this Immunity paper. Medicines and checkup labs do not change the gate list. The report does not say what to start or stop.
+  Tier A draft: the paper's printed example is not reproduced yet, so treat the readout as
+  provisional. Gates supplied naive CD4 and CD8 marker values with the cytometry thresholds from the
+  method repository, and places a supplied age in the printed age bins. Use when the user mentions
+  CD38 recent thymic emigrants, naive T-cell aging, or this Immunity paper. Medicines and checkup labs
+  do not change the gate list. The report does not say what to start or stop.
 ---
 
 # 初始细胞分档

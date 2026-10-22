@@ -1,7 +1,12 @@
 ---
 name: omicmage-biological-age-multiomics
 description: >-
-  Matches one person's assay names to the OMICmAge features retained in Figure 4 of Chen et al., Nature Aging 2026 (doi:10.1038/s43587-026-01073-7), and counts the All of Us inputs named for rebuilding EMRAge. Use when the user mentions OMICmAge, EMRAge, or DNAmEMRAge. Supplementary Table 3 coefficients are not in the PDF or the GitHub scripts, so the report does not print a personal age. Medicines and checkup labs do not edit that feature list.
+  Tier B lookup (human): what the paper reports about named entities, not a validated personal score.
+  Matches one person's assay names to the OMICmAge features retained in Figure 4 of Chen et al.,
+  Nature Aging 2026 (doi:10.1038/s43587-026-01073-7), and counts the All of Us inputs named for
+  rebuilding EMRAge. Use when the user mentions OMICmAge, EMRAge, or DNAmEMRAge. Supplementary Table 3
+  coefficients are not in the PDF or the GitHub scripts, so the report does not print a personal age.
+  Medicines and checkup labs do not edit that feature list.
 ---
 
 # 多组学保留特征

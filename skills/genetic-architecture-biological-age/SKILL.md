@@ -1,13 +1,12 @@
 ---
 name: genetic-architecture-biological-age
 description: >-
-  Computes the biological age gap for nine organ systems as defined by Wen et
-  al. 2024: support-vector predicted age minus chronological age, only when the
-  user already supplies a predicted age. Use when the user mentions this paper,
-  organ biological age gap, or the nine-organ GWAS. The skill does not fit the
-  support-vector model and does not invent weights. Current medicines and
-  checkup labs do not add or remove organs. The report does not say what to
-  start or stop.
+  Tier A draft: the paper's printed example is not reproduced yet, so treat the readout as
+  provisional. Computes the biological age gap for nine organ systems as defined by Wen et al. 2024:
+  support-vector predicted age minus chronological age, only when the user already supplies a
+  predicted age. Use when the user mentions this paper, organ biological age gap, or the nine-organ
+  GWAS. The skill does not fit the support-vector model and does not invent weights. Current medicines
+  and checkup labs do not add or remove organs. The report does not say what to start or stop.
 ---
 
 # 器官年龄差

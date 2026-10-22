@@ -1,7 +1,11 @@
 ---
 name: lensage-index-biological-age
 description: >-
-  Computes the LensAge index as lens age minus chronological age, as defined by Li et al., Nature Communications 2023, and compares that index with the printed fast-ager cutoffs of 5, 10, and 20 years. It does not run the unavailable InceptionV3 model. Use when the user mentions LensAge or a lens photograph age minus chronological age. Medicines and checkup labs stay context.
+  Tier A draft: the paper's printed example is not reproduced yet, so treat the readout as
+  provisional. Computes the LensAge index as lens age minus chronological age, as defined by Li et
+  al., Nature Communications 2023, and compares that index with the printed fast-ager cutoffs of 5,
+  10, and 20 years. It does not run the unavailable InceptionV3 model. Use when the user mentions
+  LensAge or a lens photograph age minus chronological age. Medicines and checkup labs stay context.
 ---
 
 # 晶状体年龄指数

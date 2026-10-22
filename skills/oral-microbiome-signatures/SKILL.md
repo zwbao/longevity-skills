@@ -1,7 +1,11 @@
 ---
 name: oral-microbiome-signatures
 description: >-
-  Writes a personal oral microbiome aging readout. It reports a supplied residual and matches genus names to the published age-associated list. Use when the user mentions the OMAA Score, an oral microbiome aging clock, or an oral rinse biological age. Current medicines and checkup labs are context. The report does not say what to start or stop.
+  Tier B lookup (human): what the paper reports about named entities, not a validated personal score.
+  Writes a personal oral microbiome aging readout. It reports a supplied residual and matches genus
+  names to the published age-associated list. Use when the user mentions the OMAA Score, an oral
+  microbiome aging clock, or an oral rinse biological age. Current medicines and checkup labs are
+  context. The report does not say what to start or stop.
 ---
 
 # 口腔微生物年龄加速

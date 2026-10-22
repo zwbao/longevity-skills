@@ -1,7 +1,12 @@
 ---
 name: retinal-aging-biomarkers-longitudinal
 description: >-
-  Computes a retinal age gap from a supplied retinal age or from the repository's bin expectation, then places that gap beside the published error band. Use when the user mentions retinal age, RLDL, label distribution learning, or this npj Digital Medicine paper. Checkpoint weights are not in the clone. Labs do not change the gap. The report does not say what to start or stop.
+  Tier A draft: the paper's printed example is not reproduced yet, so treat the readout as
+  provisional. Computes a retinal age gap from a supplied retinal age or from the repository's bin
+  expectation, then places that gap beside the published error band. Use when the user mentions
+  retinal age, RLDL, label distribution learning, or this npj Digital Medicine paper. Checkpoint
+  weights are not in the clone. Labs do not change the gap. The report does not say what to start or
+  stop.
 ---
 
 # 视网膜年龄差

@@ -1,13 +1,12 @@
 ---
 name: mtdna-copy-number-heteroplasmy
 description: >-
-  Classifies one person's mtDNA variant fractions with the quality-control
-  cuts in Gupta et al., Nature 2023, and checks the ten pathogenic variants
-  named in Figure 3. Use when the user mentions mtSwirl, blood mtDNA copy
-  number, heteroplasmy after age 70, or chrM:302 length heteroplasmy. Adjusted
-  copy number is not computed: the blood-composition coefficients are not
-  applied. Medicines and checkup labs stay context. The report does not say
-  what to start or stop.
+  Tier A draft: the paper's printed example is not reproduced yet, so treat the readout as
+  provisional. Classifies one person's mtDNA variant fractions with the quality-control cuts in Gupta
+  et al., Nature 2023, and checks the ten pathogenic variants named in Figure 3. Use when the user
+  mentions mtSwirl, blood mtDNA copy number, heteroplasmy after age 70, or chrM:302 length
+  heteroplasmy. Adjusted copy number is not computed: the blood-composition coefficients are not
+  applied. Medicines and checkup labs stay context. The report does not say what to start or stop.
 ---
 
 # 核基因与线粒体拷贝数

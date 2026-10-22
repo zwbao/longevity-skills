@@ -1,13 +1,12 @@
 ---
 name: plasma-protein-risk-score
 description: >-
-  Writes a personal hip-fracture plasma protein risk score from published
-  Cox, LASSO, and elastic-net betas, and heel-ultrasound bone density when
-  both ultrasound readings are supplied. Use when the user brings
-  per-standard-deviation plasma proteins, heel ultrasound, medicines, or
-  checkup labs and asks about this hip-fracture protein score. The skill
-  does not ask for a reference cohort. It does not turn the score into
-  advice to start or stop a medicine.
+  Tier A draft: the paper's printed example is not reproduced yet, so treat the readout as
+  provisional. Writes a personal hip-fracture plasma protein risk score from published Cox, LASSO, and
+  elastic-net betas, and heel-ultrasound bone density when both ultrasound readings are supplied. Use
+  when the user brings per-standard-deviation plasma proteins, heel ultrasound, medicines, or checkup
+  labs and asks about this hip-fracture protein score. The skill does not ask for a reference cohort.
+  It does not turn the score into advice to start or stop a medicine.
 ---
 
 # 髋部骨折蛋白读出

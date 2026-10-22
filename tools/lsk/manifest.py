@@ -7,6 +7,7 @@ factors, verified inputs, and the vendored skillkit copy.
 
 from __future__ import annotations
 
+import re
 from collections import OrderedDict
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple
@@ -17,7 +18,7 @@ from .doi import normalize_doi
 
 KEY_ORDER = [
     "$schema", "schema", "name", "kind", "tier", "species", "evidence", "domains", "blurb_zh", "intents",
-    "triage", "paper", "tool", "entry", "population", "inputs_status", "inputs", "outputs", "related_not_same", "data_files",
+    "triage", "paper", "tool", "entry", "population", "inputs_status", "inputs", "outputs", "related_not_same", "data_files", "validation",
 ]
 PAPER_ORDER = [
     "doi", "source_id", "title", "title_zh", "journal", "year", "authors", "article_url", "supplements",
@@ -130,6 +131,7 @@ def check_one(skill_dir: Path, manifest: Dict[str, Any], schema: Dict[str, Any],
     elif default_script.exists():
         errors.append(f"{name}: scripts/personal_report.py exists but entry is missing")
     errors += _check_inputs(skill_dir, manifest, table)
+    errors += _check_validation(skill_dir, manifest)
     outputs = [item["key"] for item in manifest.get("outputs", [])]
     if len(outputs) != len(set(outputs)):
         errors.append(f"{name}: duplicate output keys")
@@ -183,6 +185,45 @@ def _check_inputs(skill_dir: Path, manifest: Dict[str, Any], table: Dict[str, Di
             errors.append(f"{name}: verified inputs need scripts/skillkit.py")
         elif vendored.read_bytes() != KIT_SOURCE.read_bytes():
             errors.append(f"{name}: scripts/skillkit.py differs from tools/skillkit/skillkit.py (run: python3 -m tools.lsk kit sync)")
+    return errors
+
+
+def _check_validation(skill_dir: Path, manifest: Dict[str, Any]) -> List[str]:
+    """Tier A must say how it was checked against the paper, and a reproduced claim must hold."""
+    from .datasets import numbers_missing
+
+    name = skill_dir.name
+    block = manifest.get("validation")
+    if manifest["tier"] != "A":
+        return [f"{name}: validation is only for tier A"] if block else []
+    if not block:
+        return [f"{name}: tier A needs a validation block (reproduced with a printed example, or draft with gap_zh)"]
+    errors: List[str] = []
+    if block["status"] == "draft":
+        if not block.get("gap_zh"):
+            errors.append(f"{name}: a draft validation needs gap_zh (what is missing, where it was looked for)")
+        return errors
+    examples = block.get("examples") or []
+    if not examples:
+        errors.append(f"{name}: validation reproduced needs at least one printed example")
+    if manifest.get("inputs_status") != "verified" or not manifest.get("inputs"):
+        errors.append(f"{name}: a reproduced tier A skill declares its inputs (inputs_status verified)")
+    for number, example in enumerate(examples, start=1):
+        where = f"{name}: validation example {number}"
+        missing = numbers_missing(example["quote"], example["values"])
+        if missing:
+            errors.append(f"{where}: quote does not contain {', '.join(str(item) for item in missing)}; copy the printed text")
+        test_file, _, test_name = example["test"].partition("::")
+        path = skill_dir / test_file
+        if not path.exists():
+            errors.append(f"{where}: {test_file} does not exist")
+            continue
+        source = path.read_text(encoding="utf-8")
+        if not re.search(rf"^\s*def {re.escape(test_name)}\(", source, flags=re.M):
+            errors.append(f"{where}: {test_file} has no test {test_name}")
+        absent = numbers_missing(source, example["values"])
+        if absent:
+            errors.append(f"{where}: {test_file} does not assert {', '.join(str(item) for item in absent)}")
     return errors
 
 

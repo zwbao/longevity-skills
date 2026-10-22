@@ -1,7 +1,11 @@
 ---
 name: digital-telomere-measurement-sequencing
 description: >-
-  Summarizes one person's telomere lengths the way digital telomere measurement reports them in Sanchez et al., Nature Communications 2024. It does not apply the unpublished logistic-regression weights. Use when the user mentions Telometer, digital telomere measurement, or this nanopore telomere paper. Medicines and checkup labs stay context.
+  Tier A draft: the paper's printed example is not reproduced yet, so treat the readout as
+  provisional. Summarizes one person's telomere lengths the way digital telomere measurement reports
+  them in Sanchez et al., Nature Communications 2024. It does not apply the unpublished
+  logistic-regression weights. Use when the user mentions Telometer, digital telomere measurement, or
+  this nanopore telomere paper. Medicines and checkup labs stay context.
 ---
 
 # 端粒长度分布

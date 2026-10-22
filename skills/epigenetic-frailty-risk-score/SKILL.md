@@ -1,7 +1,11 @@
 ---
 name: epigenetic-frailty-risk-score
 description: >-
-  Computes the epigenetic frailty risk score from the 20 CpG coefficients printed in Li et al. Figure 4. Use when the user mentions eFRS, an epigenetic frailty score, or this ESTHER and KORA methylation study. Beta values stay on the 0 to 1 scale. Current medicines and checkup labs do not change the CpG list or the score.
+  Tier A draft: the paper's printed example is not reproduced yet, so treat the readout as
+  provisional. Computes the epigenetic frailty risk score from the 20 CpG coefficients printed in Li
+  et al. Figure 4. Use when the user mentions eFRS, an epigenetic frailty score, or this ESTHER and
+  KORA methylation study. Beta values stay on the 0 to 1 scale. Current medicines and checkup labs do
+  not change the CpG list or the score.
 ---
 
 # 衰弱风险分

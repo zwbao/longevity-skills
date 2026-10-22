@@ -1,13 +1,13 @@
 ---
 name: biological-age-ct-cardiometabolic
 description: >-
-  Compares one person's abdominal CT cardiometabolic biomarkers with the
-  published five-year survival medians from Pickhardt et al., Nature
-  Communications 2025 (doi:10.1038/s41467-025-56741-w). Use when the user
-  mentions CT biological age, CTBA, muscle density, aortic calcium, or this
-  paper. The report ranks biomarkers by Table 1 IPA drop only when the value
-  sits closer to the Table 2 died-within-five-years median. It does not
-  estimate survival or say which medicine to start or stop.
+  Tier A draft: the paper's printed example is not reproduced yet, so treat the readout as
+  provisional. Compares one person's abdominal CT cardiometabolic biomarkers with the published
+  five-year survival medians from Pickhardt et al., Nature Communications 2025
+  (doi:10.1038/s41467-025-56741-w). Use when the user mentions CT biological age, CTBA, muscle
+  density, aortic calcium, or this paper. The report ranks biomarkers by Table 1 IPA drop only when
+  the value sits closer to the Table 2 died-within-five-years median. It does not estimate survival or
+  say which medicine to start or stop.
 ---
 
 # 腹部影像生物标志

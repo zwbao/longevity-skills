@@ -1,11 +1,13 @@
 ---
 name: rmeq-chronotype
 description: >-
-  Scores the reduced Morningness-Eveningness Questionnaire (rMEQ; Adan and Almirall 1991) for one person: five
-  items taken from MEQ items 1, 7, 10, 18 and 19, total 4 to 25, and the published five chronotype categories
-  (definitely evening 4-7, moderately evening 8-11, neither 12-17, moderately morning 18-21, definitely morning
-  22-25). Use for 晨型, 夜型, 夜猫子, chronotype or morningness. Does not estimate melatonin onset or prescribe
-  sleep schedules. Item wording is copyrighted and is not reproduced.
+  Tier A draft: the paper's printed example is not reproduced yet, so treat the readout as
+  provisional. Scores the reduced Morningness-Eveningness Questionnaire (rMEQ; Adan and Almirall 1991)
+  for one person: five items taken from MEQ items 1, 7, 10, 18 and 19, total 4 to 25, and the
+  published five chronotype categories (definitely evening 4-7, moderately evening 8-11, neither
+  12-17, moderately morning 18-21, definitely morning 22-25). Use for 晨型, 夜型, 夜猫子, chronotype or
+  morningness. Does not estimate melatonin onset or prescribe sleep schedules. Item wording is
+  copyrighted and is not reproduced.
 ---
 
 # rMEQ 晨型夜型问卷

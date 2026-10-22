@@ -1,11 +1,13 @@
 ---
 name: ckd-epi-2021-egfr
 description: >-
-  Computes estimated glomerular filtration rate (eGFR) from serum creatinine, age and sex with the CKD-EPI 2021
-  race-free equation (Inker et al., NEJM 2021), and with the 2021 creatinine-cystatin C equation when cystatin C is
-  given; stages it with KDIGO 2024 GFR categories G1-G5 and, when a urine albumin-to-creatinine ratio is given,
-  albuminuria categories A1-A3. Says plainly when to see a doctor and how KDIGO frames retesting. Use for 肾功能,
-  肾小球滤过率, eGFR, 肌酐, 胱抑素C, 尿白蛋白/肌酐比, 慢性肾脏病分期. Does not track trends.
+  Tier A draft: the paper's printed example is not reproduced yet, so treat the readout as
+  provisional. Computes estimated glomerular filtration rate (eGFR) from serum creatinine, age and sex
+  with the CKD-EPI 2021 race-free equation (Inker et al., NEJM 2021), and with the 2021
+  creatinine-cystatin C equation when cystatin C is given; stages it with KDIGO 2024 GFR categories
+  G1-G5 and, when a urine albumin-to-creatinine ratio is given, albuminuria categories A1-A3. Says
+  plainly when to see a doctor and how KDIGO frames retesting. Use for 肾功能, 肾小球滤过率, eGFR, 肌酐, 胱抑素C,
+  尿白蛋白/肌酐比, 慢性肾脏病分期. Does not track trends.
 ---
 
 # 肾小球滤过率估计值（eGFR）和 KDIGO 分档

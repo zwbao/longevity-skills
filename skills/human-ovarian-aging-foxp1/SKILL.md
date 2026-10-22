@@ -1,7 +1,11 @@
 ---
 name: human-ovarian-aging-foxp1
 description: >-
-  Places a supplied age in the young, middle, or older groups printed for this ovarian atlas, and lists cell types or FOXP1 when the user names them. Use when the user mentions human ovarian spatial transcriptomics, FOXP1, CDKN1A, or doi:10.1038/s43587-024-00607-1. Marker tables have log fold changes and no intercept, so no transcriptomic age is calculated. Labs do not add cell types.
+  Tier B lookup (human): what the paper reports about named entities, not a validated personal score.
+  Places a supplied age in the young, middle, or older groups printed for this ovarian atlas, and
+  lists cell types or FOXP1 when the user names them. Use when the user mentions human ovarian spatial
+  transcriptomics, FOXP1, CDKN1A, or doi:10.1038/s43587-024-00607-1. Marker tables have log fold
+  changes and no intercept, so no transcriptomic age is calculated. Labs do not add cell types.
 ---
 
 # 人卵巢时空转录组

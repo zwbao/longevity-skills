@@ -1,11 +1,11 @@
 ---
 name: semaglutide-epigenetic-aging-trial
 description: >-
-  Writes a personal readout of week-32 minus baseline epigenetic clock
-  changes from the semaglutide HIV lipohypertrophy trial in Nature
-  Communications 2026. Use when the user brings paired clock values,
-  medicines, or checkup labs from that trial context. The skill does not
-  turn a clock change into advice to start or stop semaglutide.
+  Tier A draft: the paper's printed example is not reproduced yet, so treat the readout as
+  provisional. Writes a personal readout of week-32 minus baseline epigenetic clock changes from the
+  semaglutide HIV lipohypertrophy trial in Nature Communications 2026. Use when the user brings paired
+  clock values, medicines, or checkup labs from that trial context. The skill does not turn a clock
+  change into advice to start or stop semaglutide.
 ---
 
 # 表观遗传时钟变化
