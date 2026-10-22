@@ -2,7 +2,7 @@
   "schema": "longevity-skill/1",
   "name": "circadian-frailty-older-adults",
   "kind": "paper",
-  "tier": "A",
+  "tier": "B",
   "species": [
     "human"
   ],
@@ -11,13 +11,13 @@
     "衰弱与死亡风险",
     "昼夜节律"
   ],
-  "blurb_zh": "由 M10 和 L5 计算的相对振幅，以及两道题相加的疲劳分。",
+  "blurb_zh": "用最活跃十小时和最不活跃五小时的活动量算相对振幅，并把两道疲劳题相加；不判断衰弱。",
   "intents": [
     "wearable_sleep",
     "frailty_mortality"
   ],
   "triage": {
-    "reason_zh": "用个人M10和L5按论文公式算相对振幅，并按两道CES-D题算疲劳分。",
+    "reason_zh": "论文只报告节律指标每变化一个标准差的衰弱风险比，衰弱表型的性别五分位切点没印，脚本只算相对振幅和疲劳分。",
     "reviewed": false
   },
   "paper": {
@@ -39,7 +39,7 @@
       "[MOESM4 源数据](https://media.springernature.com/original/springer-static/esm/art%3A10.1038%2Fs41467-023-42727-z/MediaObjects/41467_2023_42727_MOESM4_ESM.xlsx) 已打开，里面没有五分位切点。MOESM1 是报告清单，MOESM3 是审稿意见，也都没有切点。",
       "[代码](https://github.com/pliphd/Actigraphy)"
     ],
-    "summary_zh": "这项研究在老年队列里把休息–活动节律和后来的衰弱联系起来。衰弱沿用五项身体表型，至少三项才算衰弱。个人报告只计算相对振幅和两道疲劳题。",
+    "summary_zh": "这项研究在一千多名老人的队列里，发现休息–活动节律更弱、更不稳定、更零碎的人后来更容易衰弱，衰弱也加重得更快。论文没有给个人算衰弱风险的方程，也没印衰弱表型的切点，个人报告只按论文的定义算相对振幅和两道疲劳题的分，不判断是否衰弱。",
     "summary_status": "draft"
   },
   "entry": {
