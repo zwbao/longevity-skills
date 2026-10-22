@@ -2,7 +2,7 @@
   "schema": "longevity-skill/1",
   "name": "metabolomic-frailty-subtypes",
   "kind": "paper",
-  "tier": "A",
+  "tier": "B",
   "species": [
     "human"
   ],
@@ -10,13 +10,13 @@
   "domains": [
     "衰弱与死亡风险"
   ],
-  "blurb_zh": "十一个核磁共振代谢物对应的衰弱亚型。",
+  "blurb_zh": "十一项核磁代谢物离哪个已发表亚型均值最近（近似，不是论文的分型）。",
   "intents": [
     "metabolomic_age",
     "frailty_mortality"
   ],
   "triage": {
-    "reason_zh": "用十一个核磁代谢物按表二均值和标准差算距离，判定个人最近的衰弱亚型。",
+    "reason_zh": "亚型是对衰弱者十一项代谢物做主成分后在PC1、PC2上K均值聚类得到的，主成分载荷和聚类中心都没有公布；脚本按表二均值找最近亚型只是近似。",
     "reviewed": false
   },
   "paper": {
