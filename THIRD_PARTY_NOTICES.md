@@ -78,9 +78,6 @@ These skills hold model coefficients, cut points or gene lists printed in articl
 | `epigenetic-age-single-cells` | Profiling epigenetic age in single cells. *Nature Aging* 2021. https://doi.org/10.1038/s43587-021-00134-3 | no open licence (subscription or unstated) |
 | `china-par-ascvd-risk` | Predicting the 10-Year Risks of Atherosclerotic Cardiovascular Disease in Chinese Population: The China-PAR Project (Prediction for ASCVD Risk in China). *Circulation* 2016. https://doi.org/10.1161/circulationaha.116.022367 | no open licence (subscription or unstated) |
 | `chaperone-autophagy-tissue-aging` | Sex-specific and cell-type-specific changes in chaperone-mediated autophagy across tissues during aging. *Nature Aging* 2025. https://doi.org/10.1038/s43587-024-00799-6 | CC BY-NC-ND 4.0 |
-| `uls8-loneliness-scale` | A Short-Form Measure of Loneliness. *Journal of Personality Assessment* 1987. https://doi.org/10.1207/s15327752jpa5101_6 | no open licence (subscription or unstated) |
-| `iief5-erectile-function` | Development and evaluation of an abridged, 5-item version of the International Index of Erectile Function (IIEF-5) as a diagnostic tool for erectile dysfunction. *International Journal of Impotence Research* 1999. https://doi.org/10.1038/sj.ijir.3900472 | no open licence (subscription or unstated) |
-| `rmeq-chronotype` | Horne & Östberg morningness-eveningness questionnaire: A reduced scale. *Personality and Individual Differences* 1991. https://doi.org/10.1016/0191-8869(91)90110-w | no open licence (subscription or unstated) |
 | `ckd-epi-2021-egfr` | New Creatinine- and Cystatin C–Based Equations to Estimate GFR without Race. *New England Journal of Medicine* 2021. https://doi.org/10.1056/nejmoa2102953 (equation coefficients from Table 2 and Table S10; worked values from Table S11) | no open licence (NEJM terms of use) |
 | `ckd-epi-2021-egfr` | KDIGO 2024 Clinical Practice Guideline for the Evaluation and Management of Chronic Kidney Disease. *Kidney International* 2024. https://doi.org/10.1016/j.kint.2023.10.018 (GFR and albuminuria cut points, monitoring frequencies and referral thresholds; practice points paraphrased) | CC BY-NC-ND 4.0 |
 | `navy-circumference-body-fat` | Waist circumference and waist–hip ratio: report of a WHO expert consultation, Geneva, 8–11 December 2008. World Health Organization, 2011. ISBN 978 92 4 150149 1 (Annex Table A1 waist–hip ratio cut-offs) | © World Health Organization, all rights reserved |
@@ -97,9 +94,6 @@ These skills hold only a questionnaire's scoring rules (item score ranges, rever
 
 | Skill | Instrument and rights holder | Ported from |
 | --- | --- | --- |
-| `uls8-loneliness-scale` | ULS-8. The items come from the Revised UCLA Loneliness Scale (Russell, Peplau and Cutrona, *J Pers Soc Psychol* 1980). | VitaClaw `social-health-tracker` |
-| `iief5-erectile-function` | IIEF-5 (Sexual Health Inventory for Men). Copyright Pfizer Inc., distributed by [Mapi Research Trust](https://eprovide.mapi-trust.org/instruments/international-index-of-erectile-function); it may not be copied, retyped, translated or modified without their written permission. | VitaClaw `sexual-health-analyzer` |
-| `rmeq-chronotype` | rMEQ: items 1, 7, 10, 18 and 19 of the Horne–Östberg Morningness–Eveningness Questionnaire, copyright © 1976 Gordon and Breach Science Publishers. | VitaClaw `circadian-rhythm-optimizer` |
 
 [VitaClaw](https://github.com/vitaclaw/vitaclaw) is MIT licensed according to its README, and the skills ported from it are prose only. No VitaClaw code or text is included; the scoring was rebuilt from the sources above.
 

@@ -194,7 +194,6 @@ python3 -m tools.lsk test --changed origin/main   # 只测相对 main 改动过�
 ## 昼夜节律
 
 - `skills/circadian-frailty-older-adults/` — 见「衰弱与死亡风险」。
-- `skills/rmeq-chronotype/` — 晨型夜型问卷简版 rMEQ 的 5 道题相加（4–25 分），按发表的五档分出明确夜型、中度夜型、中间型、中度晨型、明确晨型。
 - `skills/wearable-circadian-aging-biomarker/` — MESOR、振幅、峰值相位和年龄到齐时的 CosinorAge。缺一项就不算。
 
 ## 基质、软骨与纤维化
@@ -229,14 +228,6 @@ python3 -m tools.lsk test --changed origin/main   # 只测相对 main 改动过�
 ## 用药与基因
 
 - `skills/cpic-pharmacogenomics/` — 基因检测原始数据里的药物代谢基因，对照 CPIC 用药指南看哪些药要先问医生。（名单类）
-
-## 男性性功能
-
-- `skills/iief5-erectile-function/` — 勃起功能问卷 IIEF-5 的 5 道题相加（5–25 分），按发表的五档分出无、轻、轻到中、中、重。21 分及以下提示去看医生并查心血管风险。
-
-## 社交与孤独
-
-- `skills/uls8-loneliness-scale/` — 孤独感简式量表 ULS-8 的 8 道题，按原量表规则（第 3、6 题反向）加成 8–32 分的孤独分。没有公认切点，只给分数。
 
 ## 肾脏
 

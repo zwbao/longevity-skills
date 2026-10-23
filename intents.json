@@ -198,17 +198,14 @@
         "晚睡晚起",
         "chronotype",
         "morningness",
-        "eveningness",
-        "meq",
-        "rmeq"
+        "eveningness"
       ],
       "skills": [
         "wearable-circadian-aging-biomarker",
         "circadian-frailty-older-adults",
         "sleep-chart-biological-ageing",
         "wearable-aging-clock",
-        "sleep-study-life-expectancy",
-        "rmeq-chronotype"
+        "sleep-study-life-expectancy"
       ],
       "priority": 1
     },
@@ -753,65 +750,6 @@
         "nutrigenetic-variant-panel"
       ],
       "priority": 2
-    },
-    {
-      "id": "loneliness_social",
-      "label_zh": "孤独和社交",
-      "description_zh": "用孤独感量表给出自评孤独分，并给出可以做的社交小步骤。",
-      "data": [
-        "questionnaire"
-      ],
-      "triggers": [
-        "孤独",
-        "寂寞",
-        "孤单",
-        "没人说话",
-        "没人陪",
-        "一个人住",
-        "独居",
-        "空巢",
-        "社交",
-        "朋友少",
-        "没朋友",
-        "被冷落",
-        "隔绝",
-        "loneliness",
-        "lonely",
-        "social isolation",
-        "ucla",
-        "uls-8"
-      ],
-      "skills": [
-        "uls8-loneliness-scale"
-      ],
-      "priority": 1
-    },
-    {
-      "id": "sexual_health",
-      "label_zh": "男性性功能",
-      "description_zh": "用勃起功能问卷 IIEF-5 给出分数和已发表的分档，并提示何时看医生、做心血管风险检查。",
-      "data": [
-        "questionnaire"
-      ],
-      "triggers": [
-        "勃起",
-        "阳痿",
-        "性功能",
-        "性生活",
-        "硬不起来",
-        "举不起来",
-        "不够硬",
-        "男科",
-        "iief",
-        "shim",
-        "erectile",
-        "impotence",
-        "re:(?<![A-Za-z])ED(?![A-Za-z])"
-      ],
-      "skills": [
-        "iief5-erectile-function"
-      ],
-      "priority": 1
     }
   ]
 }
