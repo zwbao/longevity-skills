@@ -12,7 +12,7 @@
 | `skills/<name>/skill.json` | 机器可读的清单：分级、物种、证据类型、意图、论文信息、入口脚本、每个输入的 LOINC、单位、可换算单位和合理范围、输出。schema 在 `schema/skill.schema.json`。 |
 | `catalog.json` | 全部技能的索引（由 `skill.json` 生成），加上意图定义和证据库计数。Agent 和 dsh-plugin-longpi 读这一个文件就够。 |
 | `intents.json` | 用户会怎么问（我的生物年龄、甲基化年龄、某个补剂有没有用……）对应到哪些技能。 |
-| `skills/longevity-evidence/data/claims.jsonl` | 从收录论文冻结名单里抽出的实体和论文对它的说法，按人群、动物、细胞标注。`kind` 区分对这个实体的发现（finding）和论文名单里的一项（list_member）；只读到摘要的行标 `source.access: abstract_only`。由 `longevity-evidence` 技能查询，查询结果同时列出 `data/effects.jsonl` 里的试验平均效应。 |
+| `skills/longevity-evidence/data/claims.jsonl` | 从收录论文冻结名单里抽出的实体和论文对它的说法，按人群、动物、细胞标注。`kind` 区分对这个实体的发现（finding）和论文名单里的一项（list_member）；每行都来自全文（`source.access: fulltext`），全文打不开的论文不收。由 `longevity-evidence` 技能查询，查询结果同时列出 `data/effects.jsonl` 里的试验平均效应。 |
 | `registry/papers.jsonl` | 每周流水线看过的每篇论文（DOI 已规范化、唯一），以及它的去向：技能、证据、只收录或拒收。也是文献索引。 |
 
 ## 分级

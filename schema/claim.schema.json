@@ -146,10 +146,9 @@
         },
         "access": {
           "enum": [
-            "fulltext",
-            "abstract_only"
+            "fulltext"
           ],
-          "description": "What was read. abstract_only when the full text and supplements could not be opened; the locator then says 摘要."
+          "description": "What was read: always the full text. A paper whose full text cannot be opened adds no rows."
         }
       }
     },

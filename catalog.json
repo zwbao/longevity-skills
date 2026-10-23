@@ -9,8 +9,8 @@
       "C": 73,
       "tool": 8
     },
-    "claims": 4842,
-    "claim_entities": 4415
+    "claims": 4791,
+    "claim_entities": 4372
   },
   "intents": [
     {
@@ -13154,8 +13154,8 @@
           "unit_required": true,
           "required": false,
           "from": "measurements",
-          "group": "linage_lab",
-          "note_zh": "LinAge 参数 crAlbRat。国内和欧洲的化验单常用 mg/mmol，乘 8.84 才是 mg/g；两种单位的数都常落在合理范围里，所以名字不是 acr_mg_g 时要写单位。"
+          "note_zh": "LinAge 参数 crAlbRat。国内和欧洲的化验单常用 mg/mmol，乘 8.84 才是 mg/g；两种单位的数都常落在合理范围里，所以名字不是 acr_mg_g 时要写单位。",
+          "group": "linage_lab"
         },
         {
           "key": "hypertension",

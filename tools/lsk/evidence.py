@@ -54,8 +54,8 @@ def check(manifests: Dict[str, Dict[str, Any]]) -> List[str]:
             errors.append(f"{where}: {group} rows of this paper share one claim_zh; mark them kind list_member")
         if row.get("kind") == "list_member" and group < 2:
             errors.append(f"{where}: kind list_member but no other row of this paper shares its claim_zh")
-        if ABSTRACT.search(source.get("locator", "")) and source.get("access") != "abstract_only":
-            errors.append(f"{where}: the locator cites the abstract; read the full text, or set source.access abstract_only when it cannot be opened")
+        if ABSTRACT.search(source.get("locator", "")):
+            errors.append(f"{where}: the locator cites the abstract; rows come only from the full text, and a paper that cannot be opened adds none")
         species = set(row.get("species", []))
         skill_species = set(manifests[skill].get("species", []))
         if species == {"human"} and "human" not in skill_species:

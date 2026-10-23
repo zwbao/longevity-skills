@@ -51,7 +51,7 @@ PubMed E-utilities（有 `NCBI_API_KEY` 就带上），检索最近 7 天入库�
 - 主题：`aging[tiab] OR ageing[tiab] OR longevity[tiab] OR lifespan[tiab] OR "life span"[tiab] OR "biological age"[tiab] OR "epigenetic clock"[tiab] OR "aging clock"[tiab] OR "ageing clock"[tiab] OR senescence[tiab] OR senescent[tiab] OR senolytic*[tiab] OR geroscience[tiab] OR frailty[tiab] OR centenarian*[tiab] OR "healthy aging"[tiab] OR rejuvenation[tiab]`
 - 期刊（[ta]）：Nature、Science、Cell、Nat Aging、Nat Commun、Nat Med、Nat Metab、Nat Genet、Nat Biotechnol、Nat Biomed Eng、Nat Immunol、Cell Metab、Cell Stem Cell、Cell Rep Med、Immunity、Brain、Sci Adv、Sci Transl Med、Signal Transduct Target Ther、NPJ Digit Med、NPJ Aging、Aging Cell、Geroscience、Lancet Healthy Longev、J Gerontol A Biol Sci Med Sci、Genome Med、Nat Cardiovasc Res，以及临床和人群研究的主要期刊：N Engl J Med、Lancet、JAMA、BMJ、Proc Natl Acad Sci U S A、Elife、Mol Cell、Circulation、Am J Clin Nutr、JAMA Netw Open、JAMA Intern Med、JAMA Neurol、JAMA Cardiol、Lancet Public Health、Lancet Diabetes Endocrinol、Lancet Neurol、Lancet Digit Health、Lancet Glob Health、Lancet Respir Med、Lancet Psychiatry、Lancet Reg Health Eur、Lancet Reg Health West Pac、EClinicalMedicine、EBioMedicine（以 longpi-pipeline 的 `DEFAULT_JOURNALS` 为准）。
 - 预印本（可选）：medRxiv 同样的主题词。预印本做出的 A 类技能一律 `validation.status: draft`，`reason_zh` 写明「预印本」。
-- 回访：每月第一周，把过去 6 个月里理由写着「系数未见」「补充材料未公开」「代码未发布」的 B、C 和 pending 论文重新打开一次，补充材料或代码已经公开的按 3.4 重新分级。
+- 回访：每月第一周，把过去 6 个月里理由写着「系数未见」「补充材料未公开」「代码未发布」「全文打不开」的 B、C 和 pending 论文重新打开一次，补充材料、代码或全文已经能读的按 3.4 重新分级。
 
 每篇取 DOI、标题、期刊、年份、发表类型、MeSH、摘要。
 
@@ -67,11 +67,12 @@ python3 -m tools.lsk doi "https://doi.org/10.1038/S41586-026-01234-5."   # → 1
 
 ### 3.4 分级
 
-先用规则初筛，再逐篇读摘要复核（规则只看发表类型、MeSH 和用词，A 会偏多）：
+先用规则初筛，再逐篇打开全文复核（规则只看发表类型、MeSH 和用词，A 会偏多）：
 
+- **全文打不开的论文不收录。** 出版社页面、PubMed Central / Europe PMC、作者接收稿、OpenAlex 或 Unpaywall 列出的开放副本都试过仍然只能读到摘要（订阅墙、人机验证、链接失效）的，不做技能、不抽证据、不判 C，一律登记 pending，`reason_zh` 写「全文打不开」和试过的途径，月度回访再试。同一研究的预印本不等于论文本身。不用 Sci-Hub 之类的盗版来源。
 - 新闻、评论、社论、勘误、没有 DOI：拒收（rejected）。
 - 标题写明动物、主要证据是动物或细胞、综述：C。
-- 人群研究，而且能用个人自己的测量按论文印出的公式、系数或切点算出一个数、分档、差或比：A。系数必须印在正文或补充材料里。**只看摘要不能排除 A**：判 B 之前必须打开全文和每一份补充材料（含代码仓库），`reason_zh` 写明在哪里找过、缺的是什么（例如「正文、补充表 1–6 和 GitHub 仓库都没有树模型」）。只读到摘要、全文打不开的，判 pending，不判 B。
+- 人群研究，而且能用个人自己的测量按论文印出的公式、系数或切点算出一个数、分档、差或比：A。系数必须印在正文或补充材料里。**只看摘要不能排除 A**：判 B 之前必须打开全文和每一份补充材料（含代码仓库），`reason_zh` 写明在哪里找过、缺的是什么（例如「正文、补充表 1–6 和 GitHub 仓库都没有树模型」）。
 - 人群研究但个人只能查表（点名的基因、蛋白、化合物、干预、方向），或者是干预的随机试验、荟萃分析：B。
 - 看不出来的：pending，不生成任何东西。
 
@@ -124,7 +125,7 @@ python3 -m tools.lsk test --changed origin/main
 
 所有 B 类论文放在一个分支 `pipeline/<周>/evidence`：
 
-- 往 `skills/longevity-evidence/data/claims.jsonl` 追加条目（schema：`schema/claim.schema.json`）。只抄论文正文、表格、补充材料里点名的实体，最多 200 条；`claim_zh` 一句中文，不写建议用语、剂量和数字；`source.locator` 写明表号或段落，`source.access` 写 `fulltext`。全文打不开、只能读摘要时写 `access: abstract_only`、`locator: 摘要`，下个月回访时补全。`direction` 只用 up、down 和 schema 里的其他取值（不用 increase/decrease）；没有方向写 `named`。同一篇论文里 3 条以上共用同一句 `claim_zh` 的（名单里的各项）标 `kind: list_member`，其余标 `finding`。
+- 往 `skills/longevity-evidence/data/claims.jsonl` 追加条目（schema：`schema/claim.schema.json`）。只抄论文正文、表格、补充材料里点名的实体，最多 200 条；`claim_zh` 一句中文，不写建议用语、剂量和数字；`source.locator` 写明表号或段落，`source.access` 写 `fulltext`。全文打不开的论文一条也不写（见 3.4），不能拿摘要凑。`direction` 只用 up、down 和 schema 里的其他取值（不用 increase/decrease）；没有方向写 `named`。同一篇论文里 3 条以上共用同一句 `claim_zh` 的（名单里的各项）标 `kind: list_member`，其余标 `finding`。
 - 随机试验或荟萃分析报告了某个干预对某个可测指标的平均效应和置信区间时，再往 `data/effects.jsonl` 追加（schema：`schema/effect.schema.json`）：
   - 数值照论文印出的抄，不换单位、不换算。`effect.kind`：同单位或百分比用 `mean_difference` / `percent_change`；按暴露单位（每减 1 kg）用 `per_unit` 并写 `per`；Cohen's d 或 SMD 用 `standardized`；按年的用 `rate`。
   - `quote` 是含这些数字的最短原文片段（400 字符以内）；`population` 用中文一句话；`marker_key` 用 `data/biological_variation.json` 里已有的键。

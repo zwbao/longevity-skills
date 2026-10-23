@@ -205,3 +205,16 @@ def test_effect_quote_must_name_marker_and_show_sign():
     assert datasets.sign_shown("HbA1c (-0.30% points; -0.63, 0.02)", -0.3)
     names = datasets.marker_names({"marker": "HbA1c"}, {"aliases": ["A1c"]})
     assert any(datasets.fold(item) in datasets.fold("glycated A1c was lower") for item in names)
+
+
+def test_claims_come_only_from_the_full_text(monkeypatch):
+    from tools.lsk import evidence
+    manifests = {"longevity-evidence": {"paper": {}, "species": ["human"]}}
+    row = {"id": "longevity-evidence:10.1000-x-apoe", "entity": "APOE", "entity_type": "gene", "claim_zh": "论文报告 APOE 与寿命相关。",
+           "direction": "associated", "species": ["human"], "evidence": "cohort",
+           "source": {"skill": "longevity-evidence", "doi": "10.1000/x", "title": "T", "locator": "摘要", "access": "abstract_only"}}
+    monkeypatch.setattr(evidence, "load", lambda: [row])
+    errors = evidence.check(manifests)
+    assert any("abstract" in error for error in errors), errors
+    row["source"].update(locator="Table 2", access="fulltext")
+    assert evidence.check(manifests) == []
