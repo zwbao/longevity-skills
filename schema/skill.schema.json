@@ -156,7 +156,7 @@
       }
     },
     "validation": {
-      "description": "How the personal readout was checked against the paper. Required for tier A. reproduced: at least one number the paper prints (a worked example, a table of predicted values, per-term scores) is reproduced by a named test; the quote holds the printed text and the test file holds the same numbers. draft: not reproduced yet; gap_zh says what is missing and where it was looked for.",
+      "description": "How the personal readout was checked. Required for tier A. reproduced: at least one number the paper prints (a worked example, a table of predicted values, per-term scores) is reproduced by a named test; the quote holds the printed text and the test file holds the same numbers. reproduced_secondary: the paper prints no worked example, and the readout agrees case by case with at least two independent implementations, or reproduces a population summary statistic the paper (or the same group's follow-up) prints; each check is a comparison with its source (implementation name and version or commit, or the paper locator and quote) and a named test. It is shown as 已与独立实现核对, never as a reproduction of the paper. draft: not reproduced yet; gap_zh says what is missing and where it was looked for.",
       "type": "object",
       "additionalProperties": false,
       "required": [
@@ -166,6 +166,7 @@
         "status": {
           "enum": [
             "reproduced",
+            "reproduced_secondary",
             "draft"
           ]
         },
@@ -203,6 +204,61 @@
               "tolerance": {
                 "type": "string",
                 "description": "How close the test requires, and why (rounding in the paper)."
+              },
+              "test": {
+                "type": "string",
+                "pattern": "^tests/[^:]+\\.py::[A-Za-z_][A-Za-z0-9_]*$"
+              }
+            }
+          }
+        },
+        "comparisons": {
+          "type": "array",
+          "description": "reproduced_secondary only: the checks against independent implementations or printed population summaries.",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "kind",
+              "source",
+              "locator",
+              "values",
+              "test"
+            ],
+            "properties": {
+              "kind": {
+                "enum": [
+                  "implementation",
+                  "population_summary"
+                ]
+              },
+              "source": {
+                "type": "string",
+                "minLength": 5,
+                "description": "implementation: package or program, its version and commit or file hash (e.g. pyaging 0.5.7, PyPI wheel sha256 ...). population_summary: the paper (DOI) that prints the statistic, and the public data the test recomputes it on."
+              },
+              "locator": {
+                "type": "string",
+                "minLength": 2,
+                "description": "implementation: the function or file that computes it (e.g. pyaging.models.PhenoAge). population_summary: where the paper prints it."
+              },
+              "quote": {
+                "type": "string",
+                "minLength": 5,
+                "maxLength": 600,
+                "description": "population_summary: the printed text, verbatim, containing every value."
+              },
+              "values": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "number"
+                },
+                "description": "implementation: its outputs for the test cases. population_summary: the printed numbers. The test file holds the same numbers."
+              },
+              "tolerance": {
+                "type": "string",
+                "description": "How close the test requires, and why."
               },
               "test": {
                 "type": "string",

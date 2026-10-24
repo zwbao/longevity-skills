@@ -24,6 +24,7 @@ SPECIES_EN = {
 
 _TAG = re.compile(
     r"^(?:Tier A personal readout:.*?reproduces a printed example\."
+    r"|Tier A personal readout, checked against .*?: the paper prints no worked example, so no printed result was reproduced\."
     r"|Tier A draft:.*?treat the readout as provisional\."
     r"|Tier B lookup \(.*?\): .*?(?:not a validated personal score|not the paper's model run on one person)\."
     r"|Tier C index only \(.*?\): .*?a person's own health question\."
@@ -45,6 +46,13 @@ def tag(manifest: Dict[str, Any]) -> str:
         status = (manifest.get("validation") or {}).get("status")
         if status == "reproduced":
             return "Tier A personal readout: computes one person's value with the paper's printed method and reproduces a printed example."
+        if status == "reproduced_secondary":
+            kinds = {item["kind"] for item in manifest["validation"].get("comparisons", [])}
+            against = " and ".join(text for kind, text in (("implementation", "independent implementations"),
+                                                           ("population_summary", "a population summary the paper prints"))
+                                   if kind in kinds)
+            return (f"Tier A personal readout, checked against {against}: "
+                    "the paper prints no worked example, so no printed result was reproduced.")
         return "Tier A draft: the paper's printed example is not reproduced yet, so treat the readout as provisional."
     if tier == "B":
         return f"Tier B lookup ({species}): what the paper reports, or simple arithmetic on values you bring; not the paper's model run on one person."
