@@ -499,6 +499,11 @@
         "levers_json": {
           "type": "boolean",
           "description": "The script writes out/levers.json (schema longevity-levers/1): per-input sensitivities at the current values and, with targets, per-input levers."
+        },
+        "cpic_text_flag": {
+          "type": "string",
+          "pattern": "^--[a-z0-9-]+$",
+          "description": "Boolean flag (no value) that makes the script also print CPIC recommendation text verbatim and write out/cpic_recommendations.json (schema cpic-recommendations/1)."
         }
       }
     },
