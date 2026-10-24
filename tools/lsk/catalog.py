@@ -12,6 +12,7 @@ from collections import Counter
 from typing import Any, Dict, List
 
 from .common import EVIDENCE, INTENTS, SKILLS, VERSION_FILE, read_json, read_jsonl
+from .manifest import VALIDATION_LABEL_ZH
 
 CATALOG_SCHEMA = "longevity-catalog/1"
 
@@ -56,6 +57,7 @@ def skill_entry(name: str, data: Dict[str, Any]) -> Dict[str, Any]:
     }
     if data.get("validation"):
         entry["validation_status"] = data["validation"]["status"]
+        entry["validation_label_zh"] = VALIDATION_LABEL_ZH[data["validation"]["status"]]
     if data.get("entry"):
         entry["entry"] = data["entry"]
     if data.get("population"):

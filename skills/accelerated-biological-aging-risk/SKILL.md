@@ -1,16 +1,16 @@
 ---
 name: accelerated-biological-aging-risk
 description: >-
-  Tier A draft: the paper's printed example is not reproduced yet, so treat the readout as
-  provisional. Computes one person's phenotypic age and its difference from chronological age from
-  nine blood chemistries, using the Levine 2018 PhenoAge coefficients in the BioAge package
-  (orig=TRUE). The paper card cites that calculator. Gao et al. 2023 uses phenotypic age for
-  depression and anxiety and does not publish these coefficients; its questionnaire, body-mass,
-  alcohol, activity, systolic-pressure, and childhood-adversity cutoffs apply only when those
-  measurements are supplied. States that KDM biological age and the cohort residual acceleration are
-  not computed. Use when the user mentions KDM-BA, PhenoAge acceleration, or biological age with
-  depression and anxiety in UK Biobank. Current medicines and checkup labs do not change the biomarker
-  list or the phenotypic age. The report does not say what to start or stop.
+  Tier A personal readout, checked against independent implementations: the paper prints no worked
+  example, so no printed result was reproduced. Computes one person's phenotypic age and its
+  difference from chronological age from nine blood chemistries, using the Levine 2018 PhenoAge
+  coefficients in the BioAge package (orig=TRUE). The paper card cites that calculator. Gao et al.
+  2023 uses phenotypic age for depression and anxiety and does not publish these coefficients; its
+  questionnaire, body-mass, alcohol, activity, systolic-pressure, and childhood-adversity cutoffs
+  apply only when those measurements are supplied. States that KDM biological age and the cohort
+  residual acceleration are not computed. Use when the user mentions KDM-BA, PhenoAge acceleration, or
+  biological age with depression and anxiety in UK Biobank. Current medicines and checkup labs do not
+  change the biomarker list or the phenotypic age. The report does not say what to start or stop.
 ---
 
 # 表型年龄

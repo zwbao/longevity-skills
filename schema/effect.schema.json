@@ -164,7 +164,7 @@
         "person",
         "quote_match"
       ],
-      "description": "Who checked the numbers: a person against the paper, or a script that matched the verbatim quote against the source text and checked every number of the effect appears in it. Required when verified is true."
+      "description": "Who checked the numbers: a person against the paper, or a script that matched the verbatim quote against the source text and checked every number of the effect appears in it. Required when verified is true. Only a human reviewer sets person (with verified_by_name and verified_on); automated agents always write quote_match."
     },
     "marker_terms": {
       "type": "array",
@@ -173,6 +173,52 @@
         "minLength": 2
       },
       "description": "Words the quote uses for the marker when they differ from marker, marker_zh and the biological-variation aliases (e.g. \"HbA1c\" written as \"glycated haemoglobin\")."
+    },
+    "verified_on": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+      "description": "Date (YYYY-MM-DD) a person checked the row against the paper. Required with verified_by: person."
+    },
+    "verified_by_name": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Name of the person who checked the row against the paper. Required with verified_by: person, absent otherwise."
+    },
+    "tau_pct": {
+      "type": "number",
+      "exclusiveMinimum": 0,
+      "description": "Between-person standard deviation of the true response, in % of baseline, as reported (or computed from what is reported) in tau_source. Absent when no source reports it; the response predictor then uses its documented default (|average effect|) and says so."
+    },
+    "tau_source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "doi",
+        "quote",
+        "locator"
+      ],
+      "properties": {
+        "doi": {
+          "type": "string",
+          "pattern": "^10\\.\\d{4,9}/\\S+$"
+        },
+        "quote": {
+          "type": "string",
+          "minLength": 10,
+          "maxLength": 400,
+          "description": "Continuous verbatim span that reports the between-person variability."
+        },
+        "locator": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Table, figure or paragraph."
+        },
+        "note": {
+          "type": "string",
+          "description": "How tau_pct was obtained from the quoted numbers, when it is not printed as such."
+        }
+      },
+      "description": "Source of tau_pct; required when tau_pct is set."
     }
   }
 }

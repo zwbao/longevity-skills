@@ -39,7 +39,8 @@
     "script": "scripts/personal_report.py",
     "medications_flag": "--medications",
     "out_flag": "--out",
-    "result_json": true
+    "result_json": true,
+    "cpic_text_flag": "--include-cpic-text"
   },
   "inputs_status": "verified",
   "inputs": [
@@ -129,6 +130,13 @@
       "source_url": "https://api.cpicpgx.org/v1/",
       "license": "CC0-1.0",
       "sha256": "60372f3f9cbe8bddddfb02d7419ffe85a6239b12b1606569360411d7e23dedff",
+      "redistributable": "yes"
+    },
+    {
+      "path": "data/cpic_recommendation_text.json",
+      "source_url": "https://api.cpicpgx.org/v1/recommendation",
+      "license": "CC0-1.0",
+      "sha256": "89ea180f9c8cf5defa0e087b0554ad009e409151878dfcb736d25f538e49d9eb",
       "redistributable": "yes"
     }
   ]

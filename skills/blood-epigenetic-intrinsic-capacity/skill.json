@@ -1154,7 +1154,39 @@
     }
   ],
   "validation": {
-    "status": "draft",
-    "gap_zh": "论文正文、方法、扩展数据图和补充表1至8都没有印出任何个人的β值与对应甲基化内在能力，作者GitHub仓库（msfuentealba/IC_clock）只有读私有队列文件的作图代码和图，也没有示例数据或预测值，所以无法复现一个印出的例子；系数与补充表1逐项核对一致。"
+    "status": "reproduced_secondary",
+    "comparisons": [
+      {
+        "kind": "implementation",
+        "source": "pyaging 0.5.7 (PyPI; clock dnamic, Hugging Face pyaging/dnamic revision 9a759c230c18b8f70295f41712ac27113051fe6b)",
+        "locator": "pyaging.models.DNAmIC via pyaging.pred.predict_age(adata, [\"dnamic\"])",
+        "values": [
+          0.8157202524545778,
+          0.815052964745074,
+          0.8572023600256281,
+          0.7708922588054927,
+          0.7644544938943706,
+          0.7970354955806753
+        ],
+        "tolerance": "1e-6 以内；6 个合成样本（随机 β 值，不是真人），实际最大差 3.4e-09（pyaging 权重精度较低）",
+        "test": "tests/test_validation.py::test_matches_pyaging_dnamic"
+      },
+      {
+        "kind": "implementation",
+        "source": "FALCONAge (bhagesh-h/FALCONAge, commit 86db10d0c287518f7cb2dfcfc1a6d3470cb0b5af, GPL-3; registry/data/coefficients/dnamic.csv SHA-256 3f5185ef80c7e1ced842a1f4ef209b7089bb06f1a8602845ba5ac28cc1e23e37)",
+        "locator": "python/src/falconage/registry/data/clocks.yaml 的 dnamic：dnamic.csv 线性模型加 postprocess add 0.7852837523517947",
+        "values": [
+          0.815720249367011,
+          0.8150529633193165,
+          0.8572023572088348,
+          0.7708922566191162,
+          0.7644544904729916,
+          0.7970354932575899
+        ],
+        "tolerance": "1e-6 以内；同样 6 个合成样本，实际最大差 1.1e-16",
+        "test": "tests/test_validation.py::test_matches_falconage_dnamic"
+      }
+    ],
+    "gap_zh": "论文正文、方法、扩展数据图和补充表1至8都没有印出任何个人的β值与对应甲基化内在能力，作者GitHub仓库（msfuentealba/IC_clock）也没有示例数据或预测值，所以不是复现论文的例子，而是与 pyaging 和 FALCONAge 两个独立实现逐例核对。本次没有找到能用公开数据重算的论文人群汇总量，没有用这一类证据。"
   }
 }

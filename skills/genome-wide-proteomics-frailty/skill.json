@@ -430,7 +430,7 @@
       "note_zh": "有这个诊断写 1，没有写 0；名称列也可以写更细的编码（如 F00.1）。"
     },
     {
-      "key": "Z51",
+      "key": "Z50",
       "label_zh": "康复操作",
       "aliases": [
         "Care involving use of rehabilitation procedures"
@@ -1831,7 +1831,47 @@
     }
   ],
   "validation": {
-    "status": "draft",
-    "gap_zh": "补充表18印了全部109个ICD-10编码权重（与脚本核对一致，合计173.2），方法段印了<5、5–15、>15三档切点；但正文、补充表1–19和原始出处Gilbert 2018（柳叶刀，PMC5946808）都没有印出某个人的编码与对应总分的计算示例，所以没有可复现的个人示例值。"
+    "status": "reproduced_secondary",
+    "comparisons": [
+      {
+        "kind": "implementation",
+        "source": "comorbidipy 0.8.0 (PyPI, MIT; wheel SHA-256 ac280f660ff934c2cd8538896ce6be2f55c5e45a181e7f60c4906c2d7da5ed89)",
+        "locator": "comorbidipy.calculators.hfrs.hfrs",
+        "values": [
+          6.3,
+          11.0,
+          12.7,
+          11.4,
+          8.4,
+          7.4,
+          2.6,
+          7.0
+        ],
+        "tolerance": "1e-9 以内（一位小数权重求和）；8 份合成诊断清单（不是真人）。comorbidipy 把同一三位码组下的不同细码各算一次，HFRS 每组只算一次，所以只比没有重复组的清单",
+        "test": "tests/test_validation.py::test_matches_comorbidipy_hfrs"
+      },
+      {
+        "kind": "implementation",
+        "source": "m4 (hannesill/m4, commit 5f6688a2a98e9146731ed4d4c88d595ba7e71bf8, MIT)",
+        "locator": "src/m4/skills/clinical/hfrs/scripts/calculate_hfrs.py::calculate_hfrs(codes, icd_version=10)",
+        "values": [
+          6.3,
+          11.0,
+          12.7,
+          11.4,
+          8.4,
+          7.4,
+          2.6,
+          7.0,
+          4.8,
+          8.1,
+          11.2,
+          15.7
+        ],
+        "tolerance": "1e-9 以内；12 份合成诊断清单，含 4 份同组重复细码",
+        "test": "tests/test_validation.py::test_matches_m4_calculate_hfrs"
+      }
+    ],
+    "gap_zh": "补充表18印了全部109个ICD-10编码权重，方法段印了<5、5–15、>15三档切点；但正文、补充表1–19和原始出处Gilbert 2018（柳叶刀，PMC5946808）都没有印出某个人的编码与对应总分，所以不是复现论文的例子，而是与 comorbidipy 和 m4 两个独立实现逐例核对。核对中发现补充表18第24行把“Care involving use of rehabilitation procedures”印成 Z51；ICD-10 里这个名称是 Z50，Gilbert 2018 附录表也印 Z50、权重 2.1，两个独立实现同样用 Z50，所以脚本改用 Z50。"
   }
 }
