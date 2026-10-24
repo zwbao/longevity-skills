@@ -4,10 +4,13 @@
  "z_trend": 2.576,
  "default_cva_rule_zh": "化验机构没有给出分析变异（CVA）时，按 EFLM 期望分析性能取 CVA = 0.5 × CVI（Sandberg 等，CCLM 2024;62:1483-9）。血压和体重的变异已包含测量误差，CVA 取 0。",
  "sources_note_zh": [
-  "化验项目的个体内变异（CVI）都来自期刊论文，每一行的 cvi_source.quote 是原文里印着这个数的句子或表格行：EuBIVAS 汇总报告（Carobene 等，CCLM 2022）和它的原始论文（肌酐、酶类），EFLM 生物变异工作组发表的血液学 meta 分析（Coskun 等，CCLM 2020）和 HbA1c meta 分析（Ricós 等，Adv Lab Med 2020，CC BY 4.0），以及 25(OH)D 研究（Cavalier 等，Nutrients 2021，CC BY 4.0）。lsk check 会检查每个数都出现在引文里。",
+  "化验项目的个体内变异（CVI）都来自期刊论文，每一行的 cvi_source.quote 是原文里印着这个数的句子或表格行：EuBIVAS 汇总报告（Carobene 等，CCLM 2022）和它的原始论文（肌酐、酶类），EFLM 生物变异工作组发表的血液学 meta 分析（Coskun 等，CCLM 2020）和 HbA1c meta 分析（Ricós 等，Adv Lab Med 2020，CC BY 4.0），25(OH)D 研究（Cavalier 等，Nutrients 2021，CC BY 4.0），以及同型半胱氨酸（Corte 与 Venta，Ann Transl Med 2020，CC BY-NC-ND 4.0）。lsk check 会检查每个数都出现在引文里。",
   "本表不收录 EFLM 生物变异数据库（biologicalvariation.eu）里的数值：该数据库的条款限制未经许可的再发布。",
   "淋巴细胞百分比和 RDW-CV 没有找到可核对的个体内变异估计（已发表的是淋巴细胞绝对计数和 RDW-SD；淋巴细胞绝对计数单列为 lymph_abs），所以不在表里；表型年龄的噪声带因此不含这两项，是下限。",
-  "血压和体重来自同行评审研究，测量误差已经包含在内，见各行来源。"
+  "血压、体重、静息心率和体脂率来自同行评审研究，测量误差已经包含在内，见各行来源。",
+  "eGFR 不单列：没有找到直接发表的 eGFR 个体内变异估计（已有的 meta 分析是从肌酐的个体内变异推算 eGFR 的 RCV）。eGFR 的变化请看肌酐（creatinine 行）。",
+  "以下指标检索过、没有找到可引用的期刊全文数值，暂不收录：铁蛋白（找到的研究没有开放全文）；腰围（开放全文只有同一次测量的技术重复误差，没有隔天、隔周的个体内变异）；HRV RMSSD（可穿戴研究报告的是对数 RMSSD 的变异系数，不能直接用于本表按原始值计算的 RCV）。",
+  "Lp(a) 不进本表：它主要由遗传决定，见监测规则。"
  ],
  "markers": [
   {
@@ -1149,6 +1152,73 @@
    },
    "verified": true,
    "caveat_zh": "TSH 一天之内也有起伏（夜间较高），两次最好在同一时段抽血。"
+  },
+  {
+   "key": "resting_hr",
+   "label_zh": "静息心率",
+   "loinc": [
+    "40443-4"
+   ],
+   "aliases": [
+    "RHR",
+    "resting heart rate",
+    "静息心率",
+    "夜间心率",
+    "睡眠心率",
+    "安静心率"
+   ],
+   "unit": "bpm",
+   "cvi_pct": 6.0,
+   "cva_pct": 0,
+   "log_normal": false,
+   "better": "lower",
+   "min_retest_days": null,
+   "cvi_source": {
+    "title": "Nuuttila OP, Kyröläinen H, Kokkonen VP, Uusitalo A. Morning versus nocturnal heart rate and heart rate variability responses to intensified training in recreational runners. Sports Med Open 2024;10:120",
+    "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11541970/",
+    "doi": "10.1186/s40798-024-00779-5",
+    "note": "24 healthy recreational runners; heart rate recorded every night with a wrist PPG watch (Polar Vantage V2) over a 3-week baseline of usual training. The value is the within-participant CV of the whole-night average HR (SleepFull), given as mean ± SD across participants with the range; no confidence interval. The letters after the SD mark significant differences from other segments. The quote is the SleepFull entry of the Table 1 'Within participant baseline CV % (range)' column for HR (bpm); the morning supine chest-strap value in the same cell is 6.8.",
+    "quote": "6.0 ± 2.1be (3.7–11.3)",
+    "quote_location": "Table 1, HR (bpm), SleepFull, 'Within participant baseline CV % (range)'",
+    "license": "CC BY 4.0"
+   },
+   "population": "24 名规律训练的健康跑者，手表每晚记录整夜平均心率，3 周；单晚数值，设备误差已含在内。",
+   "verified": true,
+   "caveat_zh": "这是可穿戴设备单晚整夜平均心率的日间波动；比较时最好各取一周平均。生病、喝酒、晚睡和大强度训练后的那几晚心率会明显偏高。"
+  },
+  {
+   "key": "body_fat_pct",
+   "label_zh": "体脂率",
+   "loinc": [
+    "41982-0"
+   ],
+   "aliases": [
+    "BF%",
+    "PBF",
+    "body fat",
+    "body fat percentage",
+    "体脂率",
+    "体脂百分比",
+    "体脂肪率"
+   ],
+   "unit": "%",
+   "cvi_pct": 5.19,
+   "cva_pct": 0,
+   "log_normal": false,
+   "better": "range",
+   "min_retest_days": null,
+   "cvi_source": {
+    "title": "Stein-Brüggemann D, Schultz L, Kiefer KM, Fürst J, Reer R, Schröder J. Are body composition estimates affected by the menstrual cycle in females with or without hormonal contraception? A case-control study. Eur J Sport Sci 2025;25(5):e12283",
+    "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12009753/",
+    "doi": "10.1002/ejsc.12283",
+    "note": "Healthy adults 18-33 y (18 men, 17 women with and 19 without hormonal contraception), four visits over about 4 weeks at the same hour, body fat % by bioimpedance (seca mBCA), air-displacement plethysmography and skinfolds. CV% = SD/mean x 100 per person over the four visits, averaged per group; no confidence interval. The quote is the Table 2 BF% bioimpedance row for men (t1-t4 mean and SD, CV%, SEM, ANOVA statistics). Bioimpedance CV in women was 2.20 (with contraception) and 2.12 (without); the larger value for men is used for everyone.",
+    "quote": "BIA | Males | 14.7 a | 5.1 | 14.3 | 5.4 | 14.4 | 4.9 | 14.4 | 4.9 | 5.19 | 0.31 | 0.624 | 0.603 | 0.035 | 0.526 | 0.788 | 0.02",
+    "quote_location": "Table 2, BF%, BIA, Males row",
+    "license": "CC BY 4.0"
+   },
+   "population": "18–33 岁健康成人，4 周内 4 次生物电阻抗测量；测量误差已含在内。",
+   "verified": true,
+   "caveat_zh": "体脂率的变化用“百分比的百分比”计算（例如 20% 降到 18% 是下降 10%）。这个数来自小样本年轻人、医用级生物电阻抗；家用体脂秤的误差更大，饮水、进食和运动后测量都会让读数偏移，最好清晨空腹、同一台秤测。"
   }
  ]
 }
