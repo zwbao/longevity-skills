@@ -73,6 +73,7 @@ def cmd_check() -> int:
     status |= _report(vendor.check(), "vendored files")
     status |= _report(vendor.check_cards(), "paper cards")
     status |= _report(datasets.check_biovar(), "data/biological_variation.json")
+    status |= _report(datasets.check_readout_noise(), "data/readout_noise.json")
     status |= _report(datasets.check_effects(), "data/effects.jsonl")
     if not errors:
         status |= cmd_catalog(check=True)

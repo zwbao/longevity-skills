@@ -1,6 +1,7 @@
 {
  "schema": "longevity-biovar/1",
  "z": 1.96,
+ "z_trend": 2.576,
  "default_cva_rule_zh": "化验机构没有给出分析变异（CVA）时，按 EFLM 期望分析性能取 CVA = 0.5 × CVI（Sandberg 等，CCLM 2024;62:1483-9）。血压和体重的变异已包含测量误差，CVA 取 0。",
  "sources_note_zh": [
   "化验项目的个体内变异（CVI）都来自期刊论文，每一行的 cvi_source.quote 是原文里印着这个数的句子或表格行：EuBIVAS 汇总报告（Carobene 等，CCLM 2022）和它的原始论文（肌酐、酶类），EFLM 生物变异工作组发表的血液学 meta 分析（Coskun 等，CCLM 2020）和 HbA1c meta 分析（Ricós 等，Adv Lab Med 2020，CC BY 4.0），以及 25(OH)D 研究（Cavalier 等，Nutrients 2021，CC BY 4.0）。lsk check 会检查每个数都出现在引文里。",
@@ -841,6 +842,313 @@
    },
    "population": "清晨空腹体重；测量误差已含在内。",
    "verified": true
+  },
+  {
+   "key": "alt",
+   "label_zh": "丙氨酸氨基转移酶",
+   "loinc": [
+    "1742-6"
+   ],
+   "aliases": [
+    "ALT",
+    "GPT",
+    "ALT/GPT",
+    "丙氨酸氨基转移酶(ALT)",
+    "谷丙转氨酶",
+    "丙氨酸转氨酶"
+   ],
+   "unit": "U/L",
+   "cvi_pct": 9.3,
+   "cvi_ci_pct": [
+    8.7,
+    10.0
+   ],
+   "cva_pct": null,
+   "log_normal": false,
+   "better": "lower",
+   "min_retest_days": null,
+   "cvi_source": {
+    "title": "Carobene A et al. The European Biological Variation Study (EuBIVAS): a summary report. Clin Chem Lab Med 2022;60(4):505-17",
+    "url": "https://doi.org/10.1515/cclm-2021-0370",
+    "doi": "10.1515/cclm-2021-0370",
+    "note": "EuBIVAS: 91 healthy adults (21-69 y) at 6 European centres, fasting samples weekly for 10 weeks, each person's samples run in duplicate in one run; CVI by CV-ANOVA with 95% CI. The quote is the Table 2 row (measurand, n (M/F), results, mean, CVA, CVI, CVG). ALT: 88 people, mean 22.3 U/L. Participants with liver disease or raised CK/ALT were excluded (paper, Results).",
+    "quote": "1 | ALT, U/L | 88 (36/52) | 1,566 | 22.3 (21.8–22.7) | 6.7 (6.4–7.1) | 9.3 (8.7–10.0) | 28.0 (24.7–33.9)",
+    "quote_location": "Table 2 row 1 (p. 509)",
+    "license": "free to read at the publisher, no Creative Commons licence"
+   },
+   "verified": true
+  },
+  {
+   "key": "ast",
+   "label_zh": "天门冬氨酸氨基转移酶",
+   "loinc": [
+    "1920-8"
+   ],
+   "aliases": [
+    "AST",
+    "GOT",
+    "AST/GOT",
+    "天门冬氨酸氨基转移酶(AST)",
+    "天冬氨酸氨基转移酶",
+    "谷草转氨酶"
+   ],
+   "unit": "U/L",
+   "cvi_pct": 9.5,
+   "cvi_ci_pct": [
+    9.0,
+    10.2
+   ],
+   "cva_pct": null,
+   "log_normal": false,
+   "better": "lower",
+   "min_retest_days": null,
+   "cvi_source": {
+    "title": "Carobene A et al. The European Biological Variation Study (EuBIVAS): a summary report. Clin Chem Lab Med 2022;60(4):505-17",
+    "url": "https://doi.org/10.1515/cclm-2021-0370",
+    "doi": "10.1515/cclm-2021-0370",
+    "note": "EuBIVAS: 91 healthy adults (21-69 y) at 6 European centres, fasting samples weekly for 10 weeks, each person's samples run in duplicate in one run; CVI by CV-ANOVA with 95% CI. The quote is the Table 2 row (measurand, n (M/F), results, mean, CVA, CVI, CVG). AST: 90 people, mean 20.9 U/L.",
+    "quote": "2 | AST, U/L | 90 (38/52) | 1,655 | 20.9 (20.6–21.2) | 5.5 (5.2–5.8) | 9.5 (9.0–10.2) | 20.3 (17.7–24.2)",
+    "quote_location": "Table 2 row 2 (p. 509)",
+    "license": "free to read at the publisher, no Creative Commons licence"
+   },
+   "verified": true,
+   "caveat_zh": "剧烈运动后 AST 会从肌肉里升高；复测前两三天避免大强度训练。"
+  },
+  {
+   "key": "ggt",
+   "label_zh": "γ-谷氨酰转移酶",
+   "loinc": [
+    "2324-2"
+   ],
+   "aliases": [
+    "GGT",
+    "γ-GT",
+    "GGT/γ-GT",
+    "γ-谷氨酰转移酶(GGT)",
+    "谷氨酰转肽酶",
+    "γ-谷氨酰转肽酶",
+    "r-谷氨酰转移酶"
+   ],
+   "unit": "U/L",
+   "cvi_pct": 8.9,
+   "cvi_ci_pct": [
+    8.1,
+    9.7
+   ],
+   "cva_pct": null,
+   "log_normal": false,
+   "better": "lower",
+   "min_retest_days": null,
+   "cvi_source": {
+    "title": "Carobene A et al. The European Biological Variation Study (EuBIVAS): a summary report. Clin Chem Lab Med 2022;60(4):505-17",
+    "url": "https://doi.org/10.1515/cclm-2021-0370",
+    "doi": "10.1515/cclm-2021-0370",
+    "note": "EuBIVAS: 91 healthy adults (21-69 y) at 6 European centres, fasting samples weekly for 10 weeks, each person's samples run in duplicate in one run; CVI by CV-ANOVA with 95% CI. The quote is the Table 2 row (measurand, n (M/F), results, mean, CVA, CVI, CVG). GGT: 87 people, mean 13.8 U/L.",
+    "quote": "3 | GGT, U/L | 87 (34/49) | 1,586 | 13.8 (13.4–14.1) | 8.7 (8.3–9.2) | 8.9 (8.1–9.7) | 45.1 (38.9–54.2)",
+    "quote_location": "Table 2 row 3 (p. 509)",
+    "license": "free to read at the publisher, no Creative Commons licence"
+   },
+   "verified": true,
+   "caveat_zh": "这个数来自 GGT 正常、平均 13.8 U/L 的健康人；饮酒会让 GGT 明显升高，复测前几天的饮酒情况要和上次一致。"
+  },
+  {
+   "key": "urate",
+   "label_zh": "尿酸",
+   "loinc": [
+    "14933-6",
+    "3084-1"
+   ],
+   "aliases": [
+    "UA",
+    "URIC",
+    "uric acid",
+    "尿酸(UA)",
+    "血尿酸",
+    "血清尿酸"
+   ],
+   "unit": "umol/L",
+   "cvi_pct": 8.32,
+   "cvi_ci_pct": [
+    7.9,
+    8.8
+   ],
+   "cva_pct": null,
+   "log_normal": false,
+   "better": "lower",
+   "min_retest_days": null,
+   "convert": {
+    "mg/dL": 59.48
+   },
+   "cvi_source": {
+    "title": "Carobene A et al. The European Biological Variation Study (EuBIVAS): a summary report. Clin Chem Lab Med 2022;60(4):505-17",
+    "url": "https://doi.org/10.1515/cclm-2021-0370",
+    "doi": "10.1515/cclm-2021-0370",
+    "note": "EuBIVAS: 91 healthy adults (21-69 y) at 6 European centres, fasting samples weekly for 10 weeks, each person's samples run in duplicate in one run; CVI by CV-ANOVA with 95% CI. The quote is the Table 2 row (measurand, n (M/F), results, mean, CVA, CVI, CVG). Uric acid: 91 people, mean 286.1 umol/L. Conversion: uric acid molar mass 168.11 g/mol (PubChem CID 1175), so 1 mg/dL = 59.48 umol/L.",
+    "quote": "23 | UA, μmol/L | 91 (38/53) | 1,687 | 286.1 (282.5–290.3) | 0.86 (0.82–0.90) | 8.32 (7.9–8.8) | 23.6 (20.4–27.5)",
+    "quote_location": "Table 2 row 23 (p. 509)",
+    "license": "free to read at the publisher, no Creative Commons licence"
+   },
+   "verified": true
+  },
+  {
+   "key": "apob",
+   "label_zh": "载脂蛋白B",
+   "loinc": [
+    "1884-6"
+   ],
+   "aliases": [
+    "ApoB",
+    "Apo B",
+    "APOB",
+    "apolipoprotein B",
+    "载脂蛋白B(ApoB)",
+    "载脂蛋白B100",
+    "载脂蛋白B-100"
+   ],
+   "unit": "g/L",
+   "cvi_pct": 6.7,
+   "cvi_ci_pct": [
+    6.4,
+    7.0
+   ],
+   "cva_pct": null,
+   "log_normal": false,
+   "better": "lower",
+   "min_retest_days": null,
+   "convert": {
+    "mg/dL": 0.01
+   },
+   "cvi_source": {
+    "title": "Carobene A et al. The European Biological Variation Study (EuBIVAS): a summary report. Clin Chem Lab Med 2022;60(4):505-17",
+    "url": "https://doi.org/10.1515/cclm-2021-0370",
+    "doi": "10.1515/cclm-2021-0370",
+    "note": "EuBIVAS: 91 healthy adults (21-69 y) at 6 European centres, fasting samples weekly for 10 weeks, each person's samples run in duplicate in one run; CVI by CV-ANOVA with 95% CI. The quote is the Table 2 row (measurand, n (M/F), results, mean, CVA, CVI, CVG). ApoB: 90 people, mean 1.75 umol/L. Table 2 prints ApoB in umol/L; a CV is unitless, so the CVI holds for g/L and mg/dL.",
+    "quote": "48 | ApoB, μmol/L | 90 (38/52) | 1,669 | 1.75 (1.73–1.78) | 1.5 (1.4–1.6) | 6.7 (6.4–7.0) | 25.9 (22.7–30.9)",
+    "quote_location": "Table 2 row 48 (p. 510)",
+    "license": "free to read at the publisher, no Creative Commons licence"
+   },
+   "verified": true
+  },
+  {
+   "key": "hcy",
+   "label_zh": "同型半胱氨酸",
+   "loinc": [
+    "13965-9"
+   ],
+   "aliases": [
+    "Hcy",
+    "HCY",
+    "tHcy",
+    "homocysteine",
+    "同型半胱氨酸(Hcy)",
+    "血同型半胱氨酸",
+    "血浆同型半胱氨酸"
+   ],
+   "unit": "umol/L",
+   "cvi_pct": 8.8,
+   "cvi_ci_pct": [
+    7.1,
+    10.4
+   ],
+   "cva_pct": null,
+   "log_normal": false,
+   "better": "lower",
+   "min_retest_days": null,
+   "cvi_source": {
+    "title": "Corte Z, Venta R. Biological variation of metabolic cardiovascular risk factors in haemodialysis patients and healthy individuals. Ann Transl Med 2020;8(6):281",
+    "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7186598/",
+    "doi": "10.21037/atm.2020.03.26",
+    "note": "11 healthy volunteers (8 women, 3 men, 21-50 y) in Spain, fasting plasma once a week for 5 weeks, total homocysteine by RP-HPLC; CVI by CV-ANOVA. The quote is the Table 3 'CVI, % (95% CI)' row; its columns are, in order, healthy-subject CRP, tHcy, B12 and folate, so the second value is plasma total homocysteine. The table header prints the tHcy unit as mmol/L, but the median (10.0) is in umol/L; a CV is unitless either way.",
+    "quote": "CVI, % (95% CI) | 41.0 (31.4–50.6) | 8.8 (7.1–10.4) | 7.7 (6.2–9.1) | 13.3 (10.7–15.9)",
+    "quote_location": "Table 3, row 'CVI, % (95% CI)', healthy subjects, tHcy column",
+    "license": "CC BY-NC-ND 4.0"
+   },
+   "population": "11 名健康成人，每周一次、共 5 周，空腹血浆。",
+   "verified": true,
+   "caveat_zh": "这个数来自只有 11 个健康人、5 周的小研究，置信区间较宽；补充叶酸、B12 期间同型半胱氨酸本身会下降，那是干预效果，不是波动。"
+  },
+  {
+   "key": "insulin",
+   "label_zh": "空腹胰岛素",
+   "loinc": [
+    "20448-7"
+   ],
+   "aliases": [
+    "INS",
+    "FINS",
+    "insulin",
+    "fasting insulin",
+    "胰岛素",
+    "空腹胰岛素(FINS)",
+    "空腹血清胰岛素"
+   ],
+   "unit": "mU/L",
+   "cvi_pct": 25.3,
+   "cvi_ci_pct": [
+    24.0,
+    26.6
+   ],
+   "cva_pct": null,
+   "log_normal": true,
+   "better": "lower",
+   "min_retest_days": null,
+   "convert": {
+    "uIU/mL": 1,
+    "mIU/L": 1,
+    "uU/mL": 1
+   },
+   "cvi_source": {
+    "title": "Carobene A et al. The European Biological Variation Study (EuBIVAS): a summary report. Clin Chem Lab Med 2022;60(4):505-17",
+    "url": "https://doi.org/10.1515/cclm-2021-0370",
+    "doi": "10.1515/cclm-2021-0370",
+    "note": "EuBIVAS: 91 healthy adults (21-69 y) at 6 European centres, fasting samples weekly for 10 weeks, each person's samples run in duplicate in one run; CVI by CV-ANOVA with 95% CI. The quote is the Table 2 row (measurand, n (M/F), results, mean, CVA, CVI, CVG). Insulin: 90 people, mean 7.65 mU/L, fasting serum. 1 uIU/mL = 1 mU/L. No pmol/L conversion is declared, because the factor depends on the assay calibration.",
+    "quote": "58 | INS, mU/L | 90 (38/52) | 1,717 | 7.65 (7.47–7.83) | 3.1 (3.0–3.2) | 25.3 (24.0–26.6) | 33.4 (28.1–39.5)",
+    "quote_location": "Table 2 row 58 (p. 510)",
+    "license": "free to read at the publisher, no Creative Commons licence"
+   },
+   "verified": true,
+   "caveat_zh": "空腹胰岛素本身波动很大（同一个人每周之间约 25%），单次变化要很大才算数；两次都要空腹 8 小时以上、早上抽血。"
+  },
+  {
+   "key": "tsh",
+   "label_zh": "促甲状腺激素",
+   "loinc": [
+    "3016-3"
+   ],
+   "aliases": [
+    "TSH",
+    "hTSH",
+    "sTSH",
+    "thyrotropin",
+    "促甲状腺激素(TSH)",
+    "促甲状腺素",
+    "超敏促甲状腺激素"
+   ],
+   "unit": "mIU/L",
+   "cvi_pct": 18.9,
+   "cvi_ci_pct": [
+    17.5,
+    20.5
+   ],
+   "cva_pct": null,
+   "log_normal": true,
+   "better": "range",
+   "min_retest_days": null,
+   "convert": {
+    "uIU/mL": 1,
+    "mU/L": 1
+   },
+   "cvi_source": {
+    "title": "Carobene A et al. The European Biological Variation Study (EuBIVAS): a summary report. Clin Chem Lab Med 2022;60(4):505-17",
+    "url": "https://doi.org/10.1515/cclm-2021-0370",
+    "doi": "10.1515/cclm-2021-0370",
+    "note": "EuBIVAS: 91 healthy adults (21-69 y) at 6 European centres, fasting samples weekly for 10 weeks, each person's samples run in duplicate in one run; CVI by CV-ANOVA with 95% CI. The quote is the Table 2 row (measurand, n (M/F), results, mean, CVA, CVI, CVG). TSH: 85 people, mean 2.20 mIU/L. 1 uIU/mL = 1 mIU/L.",
+    "quote": "59 | TSH, mIU/L | 85 (38/47) | 1,568 | 2.20 (2.14–2.25) | 1.46 (1.39–1.54) | 18.9 (17.5–20.5) | 35.9 (28.9–48.0)",
+    "quote_location": "Table 2 row 59 (p. 510)",
+    "license": "free to read at the publisher, no Creative Commons licence"
+   },
+   "verified": true,
+   "caveat_zh": "TSH 一天之内也有起伏（夜间较高），两次最好在同一时段抽血。"
   }
  ]
 }

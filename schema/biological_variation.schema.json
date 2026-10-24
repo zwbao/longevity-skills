@@ -20,6 +20,11 @@
       "exclusiveMinimum": 0,
       "description": "Two-sided z for the reference change value (1.96 = 95%)."
     },
+    "z_trend": {
+      "type": "number",
+      "exclusiveMinimum": 0,
+      "description": "Two-sided z for the weighted least-squares slope test over three or more results (trend). Readers default to 2.576 (99%) when the field is missing."
+    },
     "default_cva_rule_zh": {
       "type": "string",
       "minLength": 4
@@ -199,6 +204,15 @@
           "type": "string",
           "minLength": 4,
           "description": "What a reader should know before relying on this row."
+        },
+        "long_term_cvi_pct": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "maximum": 200,
+          "description": "Within-person variation over a year or more, when a journal article reports it. The trend test uses it in place of cvi_pct. Requires long_term_source with a quote that prints this number."
+        },
+        "long_term_source": {
+          "$ref": "#/$defs/source"
         }
       }
     }
