@@ -421,7 +421,7 @@ def cpic_text_records(calls: Dict[str, GeneCall], tables, text) -> List[Dict[str
                     "lookup": record["lookupkey"],
                     "classification": record["classification"],
                     "category": row["category"],
-                    "drugrecommendation": record["drugrecommendation"],
+                    "recommendation": record["drugrecommendation"],
                     "implications": record["implications"],
                     "comments": record["comments"],
                     "basis_kind": "cpic",
@@ -445,7 +445,7 @@ def cpic_text_section(records: List[Dict[str, object]], text) -> List[str]:
             "",
             f"- **{record['drug_zh']}**（{record['drug']}）{('，' + where) if where else ''}，按 {record['genes_used']}",
             f"  - CPIC 推荐 #{record['recommendation_id']}（第 {record['version']} 版），对应 {lookup}，推荐强度 {record['classification']}",
-            f"  - Recommendation: {_plain(record['drugrecommendation'])}",
+            f"  - Recommendation: {_plain(record['recommendation'])}",
         ]
         for gene, implication in sorted((record["implications"] or {}).items()):
             if _plain(implication).casefold() != "n/a":
@@ -514,11 +514,15 @@ def write_report(out_dir: Path, genotype: Optional[Path], diplotypes: Optional[P
         return path
     cpic_text = load_text() if include_cpic_text else None
     text = render(calls, array_calls, facts, load_lines(medications), drugs or [], tables, cpic_text)
-    if cpic_text is not None:
-        write_cpic_text(out_dir, cpic_text_records(calls, tables, cpic_text), cpic_text)
     path = out_dir / "report.md"
     path.write_text(_with_paper_card(text), encoding="utf-8")
-    skillkit.write_result(out_dir, manifest, outputs(calls, tables))
+    result = skillkit.write_result(out_dir, manifest, outputs(calls, tables))
+    if cpic_text is not None:
+        records = cpic_text_records(calls, tables, cpic_text)
+        write_cpic_text(out_dir, records, cpic_text)
+        payload = json.loads(result.read_text(encoding="utf-8"))
+        payload["cpic_recommendations"] = records
+        result.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     return path
 
 

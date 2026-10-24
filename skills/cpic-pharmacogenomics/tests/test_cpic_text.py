@@ -57,7 +57,9 @@ def test_flag_prints_cpic_text_verbatim_and_writes_json(tmp_path):
     assert len(simva) == 1
     item = simva[0]
     assert item["recommendation_id"] == 8481447 and item["version"] == 1
-    assert item["drugrecommendation"] == SIMVASTATIN_8481447
+    assert item["recommendation"] == SIMVASTATIN_8481447
+    result = json.loads((out / "result.json").read_text(encoding="utf-8"))
+    assert result["cpic_recommendations"] == payload["results"]
     assert item["basis_kind"] == "cpic" and item["category"] == "avoid" and item["classification"] == "Strong"
     assert item["lookup"] == {"SLCO1B1": "Decreased Function"}
     tables = load_tables()
@@ -71,6 +73,7 @@ def test_without_flag_report_is_unchanged(tmp_path):
     assert "## CPIC 原文推荐" not in plain
     assert SIMVASTATIN_8481447[:40] not in plain
     assert not (out / "cpic_recommendations.json").exists()
+    assert "cpic_recommendations" not in json.loads((out / "result.json").read_text(encoding="utf-8"))
     with_text, _ = _run(tmp_path, True)
     before = with_text.split("## CPIC 原文推荐（照录，英文）", 1)[0]
     assert before == plain.split("## 数据来源", 1)[0]
