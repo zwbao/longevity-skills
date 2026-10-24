@@ -1,0 +1,161 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/zwbao/longevity-skills/schema/readout_noise.schema.json",
+  "title": "data/readout_noise.json",
+  "description": "Measurement noise of computed readouts (epigenetic clocks and other method outputs) from technical replicates or short-interval test-retest samples. A change between two readouts counts as beyond measurement noise only when |delta| > z * sqrt(2) * sd_abs; that says nothing about whether the biology changed. Every number comes from a journal article with a DOI, and source.quote holds the sentence or table row that prints it; `lsk check` confirms sd_abs or icc appears in the quote.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "z",
+    "readouts"
+  ],
+  "properties": {
+    "schema": {
+      "const": "longevity-readout-noise/1"
+    },
+    "z": {
+      "type": "number",
+      "exclusiveMinimum": 0,
+      "description": "Two-sided z for the noise band (1.96 = 95%)."
+    },
+    "rule_zh": {
+      "type": "string",
+      "minLength": 4
+    },
+    "sources_note_zh": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 4
+      }
+    },
+    "readouts": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/readout"
+      }
+    }
+  },
+  "$defs": {
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "title",
+        "url",
+        "doi",
+        "quote",
+        "quote_location"
+      ],
+      "properties": {
+        "title": {
+          "type": "string",
+          "minLength": 3
+        },
+        "url": {
+          "type": "string",
+          "pattern": "^https?://"
+        },
+        "doi": {
+          "type": "string",
+          "pattern": "^10\\.\\d{4,9}/\\S+$"
+        },
+        "note": {
+          "type": "string"
+        },
+        "quote": {
+          "type": "string",
+          "minLength": 10,
+          "description": "Verbatim sentence or table row from the source that prints sd_abs or icc."
+        },
+        "quote_location": {
+          "type": "string"
+        },
+        "license": {
+          "type": "string"
+        }
+      }
+    },
+    "readout": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "key",
+        "match",
+        "unit",
+        "noise_kind",
+        "tissue",
+        "platform",
+        "source",
+        "verified"
+      ],
+      "properties": {
+        "key": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_]*$"
+        },
+        "label_zh": {
+          "type": "string",
+          "minLength": 1
+        },
+        "match": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "description": "Readout ids and names this row applies to (epiage.horvath, Horvath)."
+        },
+        "unit": {
+          "type": "string"
+        },
+        "noise_kind": {
+          "enum": [
+            "technical_replicate",
+            "test_retest"
+          ]
+        },
+        "sd_abs": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "description": "Standard deviation of one readout around its true value, in the readout's unit."
+        },
+        "icc": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "statistic": {
+          "type": "string",
+          "description": "What the printed number is and how sd_abs was taken from it."
+        },
+        "tissue": {
+          "type": "string"
+        },
+        "platform": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "n": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "source": {
+          "$ref": "#/$defs/source"
+        },
+        "verified": {
+          "type": "boolean"
+        },
+        "caveat_zh": {
+          "type": "string",
+          "minLength": 4
+        }
+      }
+    }
+  }
+}

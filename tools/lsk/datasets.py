@@ -1,6 +1,7 @@
 """data/: shared reference tables the personal harness reads.
 
 biological_variation.json  within-person variation per marker (reference change value)
+readout_noise.json         technical-replicate noise of computed readouts (epigenetic clocks)
 effects.jsonl              average intervention effects from trials and meta-analyses
 
 Both hold medical constants, so every row names its source and says whether it
@@ -19,6 +20,7 @@ from .common import ROOT, SCHEMA, read_json, read_jsonl
 
 BIOVAR = ROOT / "data" / "biological_variation.json"
 EFFECTS = ROOT / "data" / "effects.jsonl"
+READOUT_NOISE = ROOT / "data" / "readout_noise.json"
 
 
 def check_biovar() -> List[str]:
@@ -52,6 +54,49 @@ def check_biovar() -> List[str]:
                 missing = numbers_missing(source["quote"], [row.get("cvi_pct")] + list(row.get("cvi_ci_pct") or []))
                 if missing:
                     errors.append(f"data/biological_variation.json: {key} quote does not contain {', '.join(str(item) for item in missing)}; copy the numbers exactly as printed")
+        if "long_term_cvi_pct" in row:
+            long_term = row.get("long_term_source") if isinstance(row.get("long_term_source"), dict) else {}
+            if not long_term.get("doi") or not long_term.get("quote"):
+                errors.append(f"data/biological_variation.json: {key} has long_term_cvi_pct but no long_term_source with a DOI and a quote")
+            elif numbers_missing(long_term["quote"], [row["long_term_cvi_pct"]]):
+                errors.append(f"data/biological_variation.json: {key} long_term_source quote does not contain {row['long_term_cvi_pct']}; copy the number exactly as printed")
+            if "biologicalvariation.eu" in str(long_term.get("url", "")):
+                errors.append(f"data/biological_variation.json: {key} long_term_source cites the EFLM database; use a journal article")
+        elif "long_term_source" in row:
+            errors.append(f"data/biological_variation.json: {key} has long_term_source but no long_term_cvi_pct")
+    return errors
+
+
+def check_readout_noise() -> List[str]:
+    if not READOUT_NOISE.exists():
+        return []
+    where = "data/readout_noise.json"
+    schema = read_json(SCHEMA / "readout_noise.schema.json")
+    data = read_json(READOUT_NOISE)
+    errors = [f"{where}{message}" for message in jsonschema_lite.validate(data, schema)]
+    seen: Dict[str, str] = {}
+    keys: List[str] = []
+    for row in data.get("readouts", []) if isinstance(data, dict) else []:
+        if not isinstance(row, dict):
+            continue
+        key = row.get("key", "")
+        if key in keys:
+            errors.append(f"{where}: duplicate readout key {key}")
+        keys.append(key)
+        for name in [key] + list(row.get("match") or []):
+            if fold(name) in seen and seen[fold(name)] != key:
+                errors.append(f"{where}: {name} names both {seen[fold(name)]} and {key}")
+            seen[fold(name)] = key
+        source = row.get("source", {}) if isinstance(row.get("source"), dict) else {}
+        wanted = [row[name] for name in ("sd_abs", "icc") if isinstance(row.get(name), (int, float))]
+        if not wanted:
+            errors.append(f"{where}: {key} gives neither sd_abs nor icc")
+        missing = numbers_missing(source.get("quote", ""), wanted)
+        if missing:
+            errors.append(f"{where}: {key} quote does not contain {', '.join(str(item) for item in missing)}; copy the numbers exactly as printed")
+        quote = str(source.get("quote", ""))
+        if "\u2026" in quote or "..." in quote:
+            errors.append(f"{where}: {key} quote is cut with an ellipsis; copy one continuous span")
     return errors
 
 
