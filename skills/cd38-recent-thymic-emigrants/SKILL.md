@@ -1,10 +1,20 @@
 ---
 name: cd38-recent-thymic-emigrants
 description: >-
-  Gates supplied naive CD4 and CD8 marker values with the cytometry thresholds from the method repository, and places a supplied age in the printed age bins. Use when the user mentions CD38 recent thymic emigrants, naive T-cell aging, or this Immunity paper. Medicines and checkup labs do not change the gate list. The report does not say what to start or stop.
+  Tier B lookup (human): what the paper reports, or simple arithmetic on values you bring; not the
+  paper's model run on one person. Bohacova et al., Immunity 2024 is a single-cell and spectral
+  cytometry study; its gates work on transformed fluorescence intensities from the authors' own panel
+  and instrument, which a person cannot get from a clinical lab, and no personal score is defined. The
+  script only gates supplied transformed CXCR3, CD38 and CD25 values of naive CD4 and CD8 T cells with
+  the thresholds in the method repository, and places a supplied age in the paper's age groups. Use
+  when the user mentions CD38 recent thymic emigrants, naive T-cell aging, or this Immunity paper.
+  Medicines and checkup labs do not change the gate list. The report does not say what to start or
+  stop.
 ---
 
 # 初始细胞分档
+
+这是研究数据的门控，不是个人化验评分：阈值是原实验仪器和数据转换下的数，换一家实验室的流式结果不能直接套用。
 
 用户交现用药、体检、年龄，以及转换后的标志物表达。不要向用户要 GEO、STRING 或 PDF。
 

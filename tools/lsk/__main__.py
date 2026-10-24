@@ -4,6 +4,7 @@
     python3 -m tools.lsk test [NAME ...]       # skill tests, one process per skill
     python3 -m tools.lsk test --changed [BASE] # only skills changed since BASE (default origin/main)
     python3 -m tools.lsk build                 # regenerate catalog.json, README list, legacy registry, vendored files
+    python3 -m tools.lsk check-skill NAME ...  # one skill's manifest, validation and tier line (for parallel work)
     python3 -m tools.lsk catalog [--check]
     python3 -m tools.lsk readme [--check]
     python3 -m tools.lsk registry [--check] [--write-legacy] [--sync]
@@ -21,8 +22,8 @@ import json
 import sys
 from typing import List
 
-from . import catalog, datasets, evidence, manifest, readme, registry, testrun, vendor
-from .common import CATALOG, README, dump_json, read_json, write_json
+from . import catalog, datasets, evidence, frontmatter, manifest, readme, registry, testrun, vendor
+from .common import CATALOG, PLUGIN, README, dump_json, read_json, write_json
 from .doi import normalize_doi
 
 
@@ -68,13 +69,36 @@ def cmd_check() -> int:
     status = _report(errors, "skill.json")
     status |= _report(registry.check(manifests) + registry.check_legacy(), "registry")
     status |= _report(evidence.check(manifests), "skills/longevity-evidence/data/claims.jsonl")
+    status |= _report(frontmatter.check(manifest.load_all()), "SKILL.md tier lines")
     status |= _report(vendor.check(), "vendored files")
     status |= _report(vendor.check_cards(), "paper cards")
     status |= _report(datasets.check_biovar(), "data/biological_variation.json")
     status |= _report(datasets.check_effects(), "data/effects.jsonl")
     if not errors:
         status |= cmd_catalog(check=True)
+    if PLUGIN.exists():
+        status |= _report([] if read_json(PLUGIN) == plugin_manifest() else [".claude-plugin/plugin.json version differs from VERSION (run: python3 -m tools.lsk build)"], ".claude-plugin/plugin.json")
     status |= cmd_readme(check=True)
+    return status
+
+
+def cmd_check_skill(names: List[str]) -> int:
+    from .common import SCHEMA, SKILLS
+    from . import units
+    schema = read_json(SCHEMA / "skill.schema.json")
+    intents, table = manifest.intent_ids(), units.load_table()
+    all_names = [path.name for path in manifest.skill_dirs()]
+    status = 0
+    for name in names:
+        skill_dir = SKILLS / name
+        data = manifest.load(skill_dir)
+        if data is None:
+            status |= _report([f"{name}: no skill.json"], name)
+            continue
+        errors = manifest.check_one(skill_dir, data, schema, intents, all_names, table)
+        if not errors:
+            errors = frontmatter.check({name: data})
+        status |= _report(errors, name)
     return status
 
 
@@ -82,9 +106,20 @@ def cmd_build() -> int:
     changed = vendor.sync()
     print(f"vendored files updated: {len(changed)}")
     registry.write_legacy()
+    rewritten = frontmatter.sync(manifest.load_all())
+    print(f"SKILL.md tier lines updated: {len(rewritten)}")
     status = cmd_catalog(check=False)
     status |= cmd_readme(check=False)
+    if write_json(PLUGIN, plugin_manifest()):
+        print(".claude-plugin/plugin.json version written")
     return status
+
+
+def plugin_manifest() -> dict:
+    """The Claude Code plugin manifest carries the release version from VERSION."""
+    data = read_json(PLUGIN)
+    data["version"] = catalog.version()
+    return data
 
 
 def cmd_fmt() -> int:
@@ -103,6 +138,8 @@ def main(argv: List[str] = None) -> int:
     parser = argparse.ArgumentParser(prog="python3 -m tools.lsk", description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     sub = parser.add_subparsers(dest="command", required=True)
     sub.add_parser("check")
+    one = sub.add_parser("check-skill")
+    one.add_argument("names", nargs="+")
     test = sub.add_parser("test")
     test.add_argument("names", nargs="*")
     test.add_argument("--changed", nargs="?", const="origin/main", default=None, metavar="BASE",
@@ -138,6 +175,8 @@ def main(argv: List[str] = None) -> int:
 
     if args.command == "check":
         return cmd_check()
+    if args.command == "check-skill":
+        return cmd_check_skill(args.names)
     if args.command == "test":
         if args.changed is not None:
             names, tools_changed = testrun.changed_skills(args.changed)

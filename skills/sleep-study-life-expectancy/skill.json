@@ -2,7 +2,7 @@
   "schema": "longevity-skill/1",
   "name": "sleep-study-life-expectancy",
   "kind": "paper",
-  "tier": "A",
+  "tier": "B",
   "species": [
     "human"
   ],
@@ -10,13 +10,13 @@
   "domains": [
     "衰弱与死亡风险"
   ],
-  "blurb_zh": "年龄估计减实足年龄。",
+  "blurb_zh": "你已有的睡眠年龄估计减去实足年龄，只做相减，不跑论文的深度网络。",
   "intents": [
     "wearable_sleep",
     "frailty_mortality"
   ],
   "triage": {
-    "reason_zh": "输入已算好的多导睡眠图年龄估计和实足年龄，按论文定义相减得年龄差。",
+    "reason_zh": "睡眠年龄来自深度网络，网络权重没有印在论文里，脚本只把用户交来的年龄估计减去实足年龄。",
     "reviewed": false
   },
   "paper": {

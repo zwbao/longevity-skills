@@ -1,10 +1,10 @@
 ---
 name: ai4l
 description: >-
-  Writes or discusses a Forever Healthy AI4L evidence review of a health or
-  longevity intervention. Use when the user asks for an AI4L evidence review,
-  an audited intervention review, or an evidence-first conversation about
-  whether an intervention works. A finished review is not a prescription.
+  Tool. Writes or discusses a Forever Healthy AI4L evidence review of a health or longevity
+  intervention. Use when the user asks for an AI4L evidence review, an audited intervention review, or
+  an evidence-first conversation about whether an intervention works. A finished review is not a
+  prescription.
 ---
 
 # AI4L

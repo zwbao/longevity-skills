@@ -2,7 +2,7 @@
   "schema": "longevity-skill/1",
   "name": "testis-transcriptomic-atlas-lifespan",
   "kind": "paper",
-  "tier": "A",
+  "tier": "B",
   "species": [
     "human"
   ],
@@ -10,10 +10,10 @@
   "domains": [
     "卵巢与生殖"
   ],
-  "blurb_zh": "年龄，可带体质指数，对照睾丸衰老阶段。",
+  "blurb_zh": "按年龄（可带体质指数）对照睾丸图谱的衰老阶段，只查表，不算分。",
   "intents": [],
   "triage": {
-    "reason_zh": "人睾丸图谱，按年龄归入十年组，并按论文年龄大于45且BMI至少30的切点标注。",
+    "reason_zh": "单细胞图谱只有群体层面的年龄段变化，没有用个人测量算数的模型；脚本只按年龄归组并查表引用。",
     "reviewed": false
   },
   "paper": {

@@ -1,10 +1,9 @@
 ---
 name: evipedia
 description: >-
-  Reads Forever Healthy evipedia.ai evidence reviews of health and longevity
-  interventions. Use when the user asks what the evidence says about an
-  intervention, names Evipedia, or asks which reviews were published or
-  revised. A review conclusion is not a prescription.
+  Tool. Reads Forever Healthy evipedia.ai evidence reviews of health and longevity interventions. Use
+  when the user asks what the evidence says about an intervention, names Evipedia, or asks which
+  reviews were published or revised. A review conclusion is not a prescription.
 ---
 
 # Evipedia

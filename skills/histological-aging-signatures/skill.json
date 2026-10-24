@@ -2,7 +2,7 @@
   "schema": "longevity-skill/1",
   "name": "histological-aging-signatures",
   "kind": "paper",
-  "tier": "A",
+  "tier": "B",
   "species": [
     "human"
   ],
@@ -10,13 +10,13 @@
   "domains": [
     "影像"
   ],
-  "blurb_zh": "组织切片的预测年龄相对实足年龄。",
+  "blurb_zh": "你交来的组织预测年龄减实足年龄；不从切片算年龄。",
   "intents": [
     "imaging",
     "biological_age"
   ],
   "triage": {
-    "reason_zh": "输入已算好的组织切片预测年龄和实足年龄，按论文定义算年龄差。",
+    "reason_zh": "组织时钟是深度学习切片模型，个人只能交别处算好的组织预测年龄，脚本只做减法，不跑论文模型。",
     "reviewed": false
   },
   "paper": {

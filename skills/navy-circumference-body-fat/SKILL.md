@@ -1,11 +1,13 @@
 ---
 name: navy-circumference-body-fat
 description: >-
-  Estimates body-fat percentage from height, neck, waist and (for women) hip circumference with the U.S. Navy
-  equations of Hodgdon and Beckett (1984, body density in cm plus Siri), and grades abdominal fat with the
-  waist-to-height ratio 0.5 boundary (Ashwell and Hsieh 2005; Browning et al. 2010), the WHO 2008 waist-to-hip ratio
-  cut-offs and the Chinese central-obesity waist cut-offs of WS/T 428-2013. Use for 体脂率, 腰围, 腰臀比, 腰围身高比,
-  中心型肥胖, 腹型肥胖, 啤酒肚. States that the Navy equations come from U.S. military personnel. Does not track weight.
+  Tier A personal readout: computes one person's value with the paper's printed method and reproduces
+  a printed example. Estimates body-fat percentage from height, neck, waist and (for women) hip
+  circumference with the U.S. Navy equations of Hodgdon and Beckett (1984, body density in cm plus
+  Siri), and grades abdominal fat with the waist-to-height ratio 0.5 boundary (Ashwell and Hsieh 2005;
+  Browning et al. 2010), the WHO 2008 waist-to-hip ratio cut-offs and the Chinese central-obesity
+  waist cut-offs of WS/T 428-2013. Use for 体脂率, 腰围, 腰臀比, 腰围身高比, 中心型肥胖, 腹型肥胖, 啤酒肚. States that the Navy
+  equations come from U.S. military personnel. Does not track weight.
 ---
 
 # 体脂率（海军围度方程）和腰围分档

@@ -1,7 +1,11 @@
 ---
 name: tcell-age-molecular-reprogramming
 description: >-
-  Matches supplied gene and subset names to age-related T cell markers named by Thomson et al., Nature Immunology 2023 (doi:10.1038/s41590-023-01641-8), including the pediatric MNP-2 signature. Does not invent frequency weights. Use when the user mentions TEA-seq, MNP-2, SOX4, or TOX in this T cell aging study.
+  Tier B lookup (human): what the paper reports, or simple arithmetic on values you bring; not the
+  paper's model run on one person. Matches supplied gene and subset names to age-related T cell
+  markers named by Thomson et al., Nature Immunology 2023 (doi:10.1038/s41590-023-01641-8), including
+  the pediatric MNP-2 signature. Does not invent frequency weights. Use when the user mentions
+  TEA-seq, MNP-2, SOX4, or TOX in this T cell aging study.
 ---
 
 # T细胞年龄分子重编程

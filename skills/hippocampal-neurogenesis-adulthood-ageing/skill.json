@@ -2,7 +2,7 @@
   "schema": "longevity-skill/1",
   "name": "hippocampal-neurogenesis-adulthood-ageing",
   "kind": "paper",
-  "tier": "A",
+  "tier": "B",
   "species": [
     "human"
   ],
@@ -10,12 +10,12 @@
   "domains": [
     "脑、认知与痴呆"
   ],
-  "blurb_zh": "年龄，以及情景记忆是持平或更好、更差，还是未知。",
+  "blurb_zh": "核对年龄和情景记忆比较是否合乎“记忆超常高龄者”的入组写法；不评估大脑。",
   "intents": [
     "cognition_dementia"
   ],
   "triage": {
-    "reason_zh": "人脑死后研究，用个人年龄和情景记忆比较，按论文SuperAger定义判断是否符合。",
+    "reason_zh": "死后脑组织单细胞研究，个人测不了海马神经发生；脚本只按入组定义核对年龄和自报的记忆比较。",
     "reviewed": false
   },
   "paper": {

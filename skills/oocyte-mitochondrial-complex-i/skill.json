@@ -4,6 +4,7 @@
   "kind": "paper",
   "tier": "C",
   "species": [
+    "human",
     "other"
   ],
   "evidence": "in_vitro",

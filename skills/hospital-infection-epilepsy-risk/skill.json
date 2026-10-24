@@ -2,7 +2,7 @@
   "schema": "longevity-skill/1",
   "name": "hospital-infection-epilepsy-risk",
   "kind": "paper",
-  "tier": "A",
+  "tier": "B",
   "species": [
     "human"
   ],
@@ -10,10 +10,10 @@
   "domains": [
     "免疫与炎症"
   ],
-  "blurb_zh": "感染距指数日的年数和部位。",
+  "blurb_zh": "住院感染距今年数和部位，对照论文的群体比值比（查表，不算个人风险）。",
   "intents": [],
   "triage": {
-    "reason_zh": "按个人感染距今年数落入论文时间窗，引用该窗的队列比值比。",
+    "reason_zh": "巢式病例对照，论文只给分时间窗和部位的群体比值比，没有个人风险方程；脚本按年数查表引用。",
     "reviewed": false
   },
   "paper": {

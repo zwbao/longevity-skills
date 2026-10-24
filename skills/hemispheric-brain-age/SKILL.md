@@ -1,11 +1,13 @@
 ---
 name: hemispheric-brain-age
 description: >-
-  Computes the laterality index (left minus right) divided by (left plus right)
-  from Korbmacher et al., Nature Communications 2024. Use when the user mentions
-  hemispheric brain age, brain asymmetry, or left and right MRI measures from
-  that UK Biobank study. Current medicines and checkup labs are context. The
-  report does not say what to start or stop.
+  Tier B lookup (human): what the paper reports, or simple arithmetic on values you bring; not the
+  paper's model run on one person. It only computes the generic laterality index (left minus right)
+  divided by (left plus right) from left and right MRI measures you already have, as defined in
+  Korbmacher et al., Nature Communications 2024; the paper's hemispheric brain age models are not run
+  because their weights are not published. Use when the user mentions hemispheric brain age, brain
+  asymmetry, or left and right MRI measures from that UK Biobank study. Current medicines and checkup
+  labs are context. The report does not say what to start or stop.
 ---
 
 # 半球侧化

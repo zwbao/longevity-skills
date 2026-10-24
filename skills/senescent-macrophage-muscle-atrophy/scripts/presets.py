@@ -10,7 +10,7 @@ FULL_TEXT_READ = True
 OA_PATIENT_N = 15
 # Fig. 8 scheme. Mouse experiment, not a personal dose.
 MOUSE_COQ10_UG_PER_G = 10
-BOUNDARY = "这是研究复现意义上的个人读出，不是治疗建议。不能据此开始或停止任何药物。名单里没有某个名字，不是停用的理由。体检不增删方法算出的名单。"
+BOUNDARY = "这是论文复现，不是这个人的结果，也不是治疗建议。不能据此开始或停止任何药物。名单里没有某个名字，不是停用的理由。体检不增删方法算出的名单。"
 
 COMPOUNDS = (
     ("辅酶Q10", ("辅酶q10", "coq10", "coenzyme q10", "ubiquinone", "ubiquinol")),

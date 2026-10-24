@@ -2,7 +2,7 @@
   "schema": "longevity-skill/1",
   "name": "mri-multi-organ-clocks",
   "kind": "paper",
-  "tier": "A",
+  "tier": "B",
   "species": [
     "human"
   ],
@@ -10,13 +10,13 @@
   "domains": [
     "影像"
   ],
-  "blurb_zh": "磁共振器官预测年龄相对实足年龄。",
+  "blurb_zh": "你已有的某个器官磁共振预测年龄减去实足年龄，只做相减，不跑论文的器官模型。",
   "intents": [
     "imaging",
     "biological_age"
   ],
   "triage": {
-    "reason_zh": "用已算好的器官磁共振预测年龄减实足年龄，得出个人校正前的器官年龄差。",
+    "reason_zh": "论文的器官磁共振年龄模型无法由个人影像测量复算，脚本只把用户交来的预测年龄减去实足年龄。",
     "reviewed": false
   },
   "paper": {

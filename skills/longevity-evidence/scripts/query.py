@@ -23,6 +23,7 @@ import skillkit
 
 HERE = Path(__file__).resolve().parent.parent
 CLAIMS = HERE / "data" / "claims.jsonl"
+EFFECTS = HERE.parent.parent / "data" / "effects.jsonl"
 TITLE = "证据查询"
 BOUNDARY = (
     "这是已收录论文对这些对象的原话整理，不是用药、补剂或饮食建议。"
@@ -43,6 +44,7 @@ TYPE_ZH = {
 DESIGN_ZH = {
     "rct": "随机对照试验", "cohort": "队列研究", "case_control": "病例对照", "cross_sectional": "横断面研究",
     "animal": "动物实验", "in_vitro": "细胞实验", "review": "综述", "method": "方法研究", "database": "数据库",
+    "meta-analysis": "荟萃分析", "meta_analysis": "荟萃分析", "rct_secondary": "随机试验的二次分析",
 }
 MAX_ROWS_PER_BUCKET = 12
 # Within human studies, trials first, then prospective cohorts, then weaker designs.
@@ -81,6 +83,32 @@ def search(rows: Sequence[Dict[str, Any]], query: str) -> List[Dict[str, Any]]:
     return [row for row in rows if any(wanted in fold(name) for name in names_of(row) if len(fold(name)) >= 3)]
 
 
+def search_effects(rows: Sequence[Dict[str, Any]], query: str) -> List[Dict[str, Any]]:
+    """Trial rows whose intervention, Chinese name or keywords equal or contain the query."""
+    wanted = fold(query)
+    if len(wanted) < 2:
+        return []
+    found = []
+    for row in rows:
+        names = [row.get("intervention_zh", ""), *row.get("keywords", [])]
+        folded = [fold(name) for name in names if name]
+        if any(name == wanted for name in folded) or (len(wanted) >= 3 and any(wanted in name for name in folded)):
+            found.append(row)
+    return found
+
+
+def effect_line(row: Dict[str, Any]) -> str:
+    effect = row.get("effect", {})
+    ci = effect.get("ci")
+    span = f"（95% CI {ci[0]} 至 {ci[1]}）" if isinstance(ci, list) and len(ci) == 2 else ""
+    unit = f" {effect['unit']}" if effect.get("unit") else ""
+    checked = "已人工核对" if row.get("verified_by") == "person" else "数字已对照原文引文，尚未人工复核"
+    weeks = f"，{row['duration_weeks']} 周" if row.get("duration_weeks") else ""
+    return (f"- **{row.get('intervention_zh') or row.get('intervention')} → {row.get('marker_zh') or row.get('marker')}**："
+            f"平均 {effect.get('value')}{unit}{span}{weeks}；{row.get('population', '')}；{DESIGN_ZH.get(row.get('design', ''), row.get('design', ''))}，"
+            f"[DOI](https://doi.org/{row.get('doi', '')})。{checked}。")
+
+
 def bucket(row: Dict[str, Any]) -> str:
     species = set(row.get("species", []))
     design = row.get("evidence", "")
@@ -113,6 +141,8 @@ def row_line(row: Dict[str, Any]) -> str:
     name = row.get("entity_zh") or row["entity"]
     if row.get("entity_zh") and row["entity_zh"] != row["entity"]:
         name = f"{row['entity_zh']}（{row['entity']}）"
+    if row.get("kind") == "list_member":
+        name += "（名单成员）"
     kind = TYPE_ZH.get(row.get("entity_type", "other"), "其他")
     design = DESIGN_ZH.get(row.get("evidence", ""), "")
     source = row.get("source", {})
@@ -123,12 +153,21 @@ def row_line(row: Dict[str, Any]) -> str:
 
 
 def render(queries: List[str], found: Dict[str, List[Dict[str, Any]]], medications: List[str],
-           med_found: Dict[str, List[Dict[str, Any]]], total: int, skills: int) -> str:
+           med_found: Dict[str, List[Dict[str, Any]]], total: int, skills: int,
+           effects: Optional[Dict[str, List[Dict[str, Any]]]] = None) -> str:
+    effects = effects or {}
     lines = [f"# {TITLE}", "", "## 证据库", "",
              f"证据库收录 {total} 条说法，来自本仓库 {skills} 个技能的论文。每条照录论文点名的对象和方向，不是综述结论，也不是效果大小。", ""]
     for query in queries:
         rows = found.get(query, [])
         lines += [f"## 查询：{query}", ""]
+        trials = effects.get(query, [])
+        if trials:
+            lines += [f"### 试验和荟萃分析的平均效应（{len(trials)} 条）", ""]
+            lines += [effect_line(row) for row in trials]
+            lines += ["", "平均效应是一组人的平均，不是这个人会得到的变化，也不是用法。", ""]
+        if not rows and trials:
+            continue
         if not rows:
             lines += [f"证据库里没有「{query}」。没有收录不等于没有研究，也不说明它安全或无效。"
                       "可以再查 Evipedia 的证据综述（`skills/evipedia/`）或按 AI4L 协议写综述（`skills/ai4l/`）。", ""]
@@ -152,6 +191,8 @@ def render(queries: List[str], found: Dict[str, List[Dict[str, Any]]], medicatio
                 lines += [f"### {label}（{len(items)} 条：{breakdown}；按证据强度排列）", ""]
             else:
                 lines += [f"### {label}（{len(items)} 条）", ""]
+            # Statements about the entity come before memberships in a printed list.
+            items.sort(key=lambda row: row.get("kind") == "list_member")
             lines += [row_line(row) for row in items[:MAX_ROWS_PER_BUCKET]]
             if len(items) > MAX_ROWS_PER_BUCKET:
                 lines.append(f"- 另有 {len(items) - MAX_ROWS_PER_BUCKET} 条同类说法没有列出。")
@@ -174,14 +215,17 @@ def load_lines(path: Optional[Path]) -> List[str]:
             if line.strip() and not line.startswith("#")]
 
 
-def run(queries: List[str], medications: List[str], out_dir: Path, claims_path: Path = CLAIMS) -> int:
+def run(queries: List[str], medications: List[str], out_dir: Path, claims_path: Path = CLAIMS,
+        effects_path: Path = EFFECTS) -> int:
     rows = load_claims(claims_path)
+    trial_rows = load_claims(effects_path)
     found = OrderedDict((query, search(rows, query)) for query in queries)
+    effects = {query: search_effects(trial_rows, query) for query in queries}
     med_found = {name: search(rows, name) for name in medications}
     skills = len({row.get("source", {}).get("skill") for row in rows})
     out_dir.mkdir(parents=True, exist_ok=True)
     report = out_dir / "report.md"
-    report.write_text(render(queries, found, medications, med_found, len(rows), skills), encoding="utf-8")
+    report.write_text(render(queries, found, medications, med_found, len(rows), skills, effects), encoding="utf-8")
     matched = [row for group in found.values() for row in group]
     skillkit.write_result(out_dir, skillkit.load_manifest(__file__), {
         "match_count": len(matched),

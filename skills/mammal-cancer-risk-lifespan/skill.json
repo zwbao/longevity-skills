@@ -33,7 +33,7 @@
       }
     ],
     "code_url": "https://github.com/OrsolyaVincze/VinczeEtal2021Nature/blob/main/data.csv",
-    "summary_zh": "这项研究整理动物园哺乳动物的癌症相关死亡，并按物种比较死亡比例。个人报告查已公布的物种比例，或按肿瘤相关死亡数除以有病理记录的死亡数。",
+    "summary_zh": "这项研究整理动物园哺乳动物的癌症相关死亡，并按物种比较死亡比例。脚本复现论文公布的物种比例，以及肿瘤相关死亡数除以有病理记录死亡数的算法。",
     "summary_status": "draft"
   },
   "entry": {

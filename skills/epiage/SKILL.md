@@ -1,16 +1,13 @@
 ---
 name: epiage
 description: >-
-  Computes 25 DNA-methylation aging clocks and markers (GrimAge V1/V2, Horvath,
-  Hannum, PhenoAge, DunedinPACE, DNAmTL, stochastic and Ying clocks) and 12
-  exposome and health scores (McCartney smoking, alcohol, BMI, cholesterol,
-  education) from one human whole-blood β-value file, offline, with
-  gangchen/epiage-skill. Use when the user has a blood methylation export
-  (WeGene, EPIC, 450K, MSA, or SeSAMe betas.csv), mentions IDAT, 甲基化年龄,
-  表观遗传时钟, GrimAge, DunedinPACE or DNAmTL, or asks for their epigenetic age.
-  Prefer pyaging for non-blood tissue, AltumAge, PC clocks, or transcriptomic
-  clocks. Clock outputs are model estimates, not a reason to start or stop a
-  treatment.
+  Tool. Computes 25 DNA-methylation aging clocks and markers (GrimAge V1/V2, Horvath, Hannum,
+  PhenoAge, DunedinPACE, DNAmTL, stochastic and Ying clocks) and 12 exposome and health scores
+  (McCartney smoking, alcohol, BMI, cholesterol, education) from one human whole-blood β-value file,
+  offline, with gangchen/epiage-skill. Use when the user has a blood methylation export (WeGene, EPIC,
+  450K, MSA, or SeSAMe betas.csv), mentions IDAT, 甲基化年龄, 表观遗传时钟, GrimAge, DunedinPACE or DNAmTL, or
+  asks for their epigenetic age. Prefer pyaging for non-blood tissue, AltumAge, PC clocks, or
+  transcriptomic clocks. Clock outputs are model estimates, not a reason to start or stop a treatment.
 ---
 
 # epiage

@@ -1,8 +1,6 @@
 ```bash
-python3 "$SKILL/scripts/personal_report.py" \
-  --measurements measurements.csv \
-  --medications meds.txt \
-  --labs checkup.csv \
-  --age 50 \
-  --out out
+# 复现论文名单（不需要任何个人数据）
+python "$SKILL/scripts/personal_report.py" --out out
 ```
+
+研究者复现检出限时加 `--measurements measurements.csv`（`A414` 或 `A652`，`背景均值`，`背景标准差`）。

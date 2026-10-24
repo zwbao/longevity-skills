@@ -2,7 +2,7 @@
   "schema": "longevity-skill/1",
   "name": "genetic-architecture-biological-age",
   "kind": "paper",
-  "tier": "A",
+  "tier": "B",
   "species": [
     "human"
   ],
@@ -10,13 +10,13 @@
   "domains": [
     "蛋白、代谢与器官年龄"
   ],
-  "blurb_zh": "各器官预测年龄相对实足年龄。",
+  "blurb_zh": "把你已经算好的各器官预测年龄减去实足年龄（简单相减）；论文的器官年龄模型权重没有公开，这里不重算。",
   "intents": [
     "biological_age",
     "imaging"
   ],
   "triage": {
-    "reason_zh": "英国生物银行九器官研究，用已算好的器官预测年龄减实足年龄得出个人年龄差。",
+    "reason_zh": "九器官支持向量模型的权重没有发表，脚本只把用户交来的器官预测年龄减实足年龄，不是论文模型。",
     "reviewed": false
   },
   "paper": {

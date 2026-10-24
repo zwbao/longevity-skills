@@ -33,7 +33,7 @@
         "url": "https://static-content.springer.com/esm/art%3A10.1038%2Fs41467-022-27959-9/MediaObjects/41467_2022_27959_MOESM6_ESM.xlsx"
       }
     ],
-    "summary_zh": "这项研究在裸鼹鼠血液里做了一套甲基化时钟。位点到齐时，个人报告用补充表里的权重计算甲基化年龄。缺位点不填补。实足年龄另外除以最大寿命，得到相对年龄。",
+    "summary_zh": "这项研究在裸鼹鼠血液里建立了一套甲基化时钟。脚本用补充表里的权重复现甲基化年龄的计算，缺位点不填补，并按最大寿命换算相对年龄。",
     "summary_status": "draft"
   },
   "entry": {

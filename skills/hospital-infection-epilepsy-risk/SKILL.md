@@ -1,7 +1,12 @@
 ---
 name: hospital-infection-epilepsy-risk
 description: >-
-  Looks up the published odds ratios for hospital-treated infection and later-life epilepsy from Zhuang et al., Nature Aging 2025 (doi:10.1038/s43587-025-01005-x). Use when the user mentions infection history, late-onset epilepsy, or this nested case-control study. The readout quotes Figure 1 and the results text for the stated window or site. It does not multiply ratios into a personal probability, and checkup labs do not add exposures.
+  Tier B lookup (human): what the paper reports, or simple arithmetic on values you bring; not the
+  paper's model run on one person. Looks up the published odds ratios for hospital-treated infection
+  and later-life epilepsy from Zhuang et al., Nature Aging 2025 (doi:10.1038/s43587-025-01005-x). Use
+  when the user mentions infection history, late-onset epilepsy, or this nested case-control study.
+  The readout quotes Figure 1 and the results text for the stated window or site. It does not multiply
+  ratios into a personal probability, and checkup labs do not add exposures.
 ---
 
 # 感染与晚年癫痫

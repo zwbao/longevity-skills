@@ -1,14 +1,20 @@
 ---
 name: circadian-frailty-older-adults
 description: >-
-  Computes relative amplitude from M10 and L5, and a 0 to 2 fatigue score from the two CES-D items in Cai et al. Use when the user mentions circadian rest-activity rhythms and frailty in older adults or this Nature Communications study. Sex-specific quintile cutoffs are not invented. Medicines and checkup labs do not edit the list.
+  Tier B lookup (human): what the paper reports, or simple arithmetic on values you bring; not the
+  paper's model run on one person. Computes relative amplitude, (M10−L5)/(M10+L5), and the 0 to 2
+  fatigue score from the two CES-D items, both as defined in Cai et al., Nature Communications 2023.
+  The paper reports per-SD hazard ratios, not a personal risk equation, and does not print the
+  sex-specific quintile cutoffs for the frailty phenotype, so the script does not say whether someone
+  is frail or estimate frailty risk. Use when the user mentions circadian rest-activity rhythms and
+  frailty in older adults or this study. Medicines and checkup labs do not edit the list.
 ---
 
 # 昼夜活动与衰弱
 
 用户交最活跃十小时和最不活跃五小时的活动计数、两条疲劳问答，以及现用药和体检。不要向用户要 Rush 数据、STRING 或 PDF。
 
-报告开头是论文卡片。相对振幅按 (M10−L5)/(M10+L5) 计算。疲劳分是两道题的和，每题「是」记 1 分。握力、步速、体质指数和活动小时不套五分位。现用药对不上时保留「不能据此停」。体检不增删方法算出的名单。
+报告开头是论文卡片。论文没有个人衰弱风险方程，衰弱表型的五分位切点也没印，所以报告不判断是否衰弱。相对振幅按 (M10−L5)/(M10+L5) 计算。疲劳分是两道题的和，每题「是」记 1 分。握力、步速、体质指数和活动小时不套五分位。现用药对不上时保留「不能据此停」。体检不增删方法算出的名单。
 
 ## 命令
 

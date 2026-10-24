@@ -1,15 +1,20 @@
 ---
 name: elastin-fragments-innate-aging
 description: >-
-  Assigns one serum elastin-fragment concentration to the high or normal group
-  using the published picogram cutoffs, and checks a peptide against the
-  published sequences. It does not fit an age regression and does not invent
-  weights. Use when the user mentions elastin fragments, the E-motif, or
-  innate immune activation by matrix fragments. Medicines and checkup labs
-  stay context. The report does not say what to start or stop.
+  Tier B lookup (human, mouse): what the paper reports, or simple arithmetic on values you bring; not
+  the paper's model run on one person. In Yi et al., Nature Aging 2025 the 1,500 pg/ml and 250–680
+  pg/ml limits only pick two comparison groups out of a cohort (values between or below them belong to
+  neither), and the main evidence is in mice; the paper defines no personal score, and the assay is a
+  research ELISA. The script only says whether one supplied serum elastin-fragment concentration falls
+  in the paper's high or normal comparison range, and checks a peptide against the published
+  sequences. Use when the user mentions elastin fragments, the E-motif, or innate immune activation by
+  matrix fragments. Medicines and checkup labs stay context. The report does not say what to start or
+  stop.
 ---
 
 # 弹性蛋白片段
+
+论文的两个浓度区间只是队列里用来比较的两组人，中间和更低的人不属于任何一组；这不是个人风险分档，检测也是研究用的 ELISA。
 
 你交血清弹性蛋白片段浓度（pg/ml），以及可选的肽序列、其他基质碎片、现用药、体检、年龄。不要向用户要 GEO、STRING、PDF 或补充表。
 

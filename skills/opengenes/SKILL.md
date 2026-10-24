@@ -1,11 +1,10 @@
 ---
 name: opengenes
 description: >-
-  Queries the OpenGenes database for lifespan-change experiments, hallmarks of
-  aging, gene criteria, and human longevity-variant associations. Use when the
-  user mentions OpenGenes, a gene's aging evidence, model-organism lifespan
-  interventions, or hallmarks tied to a gene. Model-organism effects are not
-  a reason to start or stop a human treatment.
+  Tool. Queries the OpenGenes database for lifespan-change experiments, hallmarks of aging, gene
+  criteria, and human longevity-variant associations. Use when the user mentions OpenGenes, a gene's
+  aging evidence, model-organism lifespan interventions, or hallmarks tied to a gene. Model-organism
+  effects are not a reason to start or stop a human treatment.
 ---
 
 # OpenGenes

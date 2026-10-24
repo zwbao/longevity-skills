@@ -3,70 +3,37 @@ from pathlib import Path
 
 SCRIPTS = Path(__file__).resolve().parents[1] / "scripts"
 sys.path.insert(0, str(SCRIPTS))
+sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 import personal_report
-from presets import comorbidity_index, self_health_index, smoking_score
-from presets import BOUNDARY
+from presets import BOUNDARY, huq050_from_visits, self_health_index, smoking_score
+from test_manifest import SEQN24, _csv
 
 
-def _list_section(text: str) -> str:
-    start = text.index("## 方法算出的名单")
-    end = text.index("## 体检")
-    return text[start:end]
-
-
-def test_boundary_medicine_and_labs(tmp_path: Path):
+def test_report_keeps_boundary_and_does_not_advise(tmp_path: Path):
     meds = tmp_path / "meds.txt"
-    meds.write_text("不存在的药\n", encoding="utf-8")
+    meds.write_text("阿托伐他汀\n", encoding="utf-8")
     labs = tmp_path / "labs.csv"
     labs.write_text("项目,结果,单位\n谷丙转氨酶,80,U/L\n", encoding="utf-8")
-    out = personal_report.report(tmp_path / "out", 60, meds, labs, None)
-    text = out.read_text(encoding="utf-8")
+    out = tmp_path / "out"
+    code = personal_report.main(["--measurements", str(_csv(tmp_path / "m.csv", SEQN24)), "--age", "53", "--sex", "女",
+                                 "--medications", str(meds), "--labs", str(labs), "--out", str(out)])
+    assert code == 0
+    text = (out / "report.md").read_text(encoding="utf-8")
     assert text.rstrip().splitlines()[-1] == f"边界: {BOUNDARY}"
-    assert "不能据此停" in text
-    assert "谷丙转氨酶 80" in text
-    assert "该开始" not in text
-    assert "建议停" not in text
-    bare = personal_report.report(tmp_path / "bare", 60, meds, None, None)
-    assert _list_section(text) == _list_section(bare.read_text(encoding="utf-8"))
+    assert "## 论文卡片" in text
+    assert "56.9 岁" in text
+    assert "阿托伐他汀：LinAge 不读用药。不能据此停。" in text
+    assert "谷丙转氨酶,80,U/L" in text
+    for phrase in ("建议停", "建议服用", "应该开始"):
+        assert phrase not in text
 
 
-def test_published_indices():
-    assert smoking_score(9.9) == (0, "不吸烟")
-    assert smoking_score(10)[0] == 1
-    assert smoking_score(100)[0] == 2
-    assert smoking_score(200)[0] == 3
+def test_methods_formulas():
+    # Methods: self-health index = ((fair x 2) + (poor x 4)) x (1 - better x 0.5 + worse).
     assert self_health_index(0, 1, 0, 1) == 8
-    index, present = comorbidity_index(["高血压", "糖尿病", "不在二十二项里"])
-    assert present == ["hypertension", "diabetes mellitus"]
-    assert index == 2 / 22
-    from presets import (
-        ASCVD_AUC_20Y,
-        CHRONAGE_AUC_20Y,
-        COMORBIDITIES,
-        LINAGE_AUC_20Y,
-        PCAGE_AUC_20Y,
-    )
-    assert len(COMORBIDITIES) == 22
-    assert PCAGE_AUC_20Y == 0.8643
-    assert LINAGE_AUC_20Y == 0.8655
-    assert ASCVD_AUC_20Y == 0.7594
-    assert CHRONAGE_AUC_20Y == 0.8289
-
-
-def test_medicine_does_not_add_a_comorbidity(tmp_path: Path):
-    meas = tmp_path / "m.txt"
-    meas.write_text("comorbidity=hypertension\ncotinine_ng_ml=10\n", encoding="utf-8")
-    meds = tmp_path / "meds.txt"
-    meds.write_text("高血压\n不存在的药\n", encoding="utf-8")
-    text = personal_report.report(tmp_path / "out", 60, meds, None, meas).read_text(encoding="utf-8")
-    assert "- 高血压" in text
-    assert "不能据此停" in text
-    assert "并存病指数" in text
-    assert "LinAge" not in text
-    huq = tmp_path / "huq.txt"
-    huq.write_text("huq050=4\n", encoding="utf-8")
-    huq_text = personal_report.report(tmp_path / "huq", 60, None, None, huq).read_text(encoding="utf-8")
-    assert "就医使用指数：4" in huq_text
-    title = text.splitlines()[0]
-    assert not any(ch.isdigit() for ch in title)
+    assert self_health_index(1, 0, 1, 0) == 1
+    # linAge.R digiCot(): <10, 10-<100, 100-<200, >=200.
+    assert [smoking_score(x) for x in (9.9, 10, 99.9, 100, 199.9, 200)] == [0, 1, 1, 2, 2, 3]
+    # NHANES 1999-2000 HUQ050 codes: 0, 1, 2-3, 4-9, 10-12, 13+.
+    assert [huq050_from_visits(n) for n in (0, 1, 2, 3, 4, 9, 10, 12, 13, 40)] == [0, 1, 2, 2, 3, 3, 4, 4, 5, 5]

@@ -1,12 +1,12 @@
 ---
 name: sleep-study-life-expectancy
 description: >-
-  Subtracts chronological age from a supplied polysomnogram age estimate,
-  which is the age-estimate error defined in the sleep-study paper. Use
-  when the user mentions PSG age, age estimate error, or life expectancy
-  from a sleep study. Network weights are not in the PDF, so no personal
-  mortality probability is scored. Medicines and checkup labs do not edit
-  the difference.
+  Tier B lookup (human): what the paper reports, or simple arithmetic on values you bring; not the
+  paper's model run on one person. It only subtracts chronological age from a polysomnogram age
+  estimate you already have (the paper's age-estimate error); the paper's deep network is not run
+  because its weights are not published in the paper. Use when the user mentions PSG age, age estimate
+  error, or life expectancy from a sleep study. No personal mortality probability is scored. Medicines
+  and checkup labs do not edit the difference.
 ---
 
 # 睡眠年龄差

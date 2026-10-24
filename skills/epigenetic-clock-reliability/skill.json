@@ -2,7 +2,7 @@
   "schema": "longevity-skill/1",
   "name": "epigenetic-clock-reliability",
   "kind": "paper",
-  "tier": "A",
+  "tier": "B",
   "species": [
     "human"
   ],
@@ -10,13 +10,13 @@
   "domains": [
     "甲基化"
   ],
-  "blurb_zh": "同一个时钟两次年龄的差。",
+  "blurb_zh": "同一个时钟两次年龄的差，只做相减，不计算论文的主成分时钟。",
   "intents": [
     "epigenetic_age",
     "before_after"
   ],
   "triage": {
-    "reason_zh": "用同一时钟两次甲基化年龄算绝对差，并与论文技术重复的中位差并列。",
+    "reason_zh": "主成分时钟要从全部CpG数据计算，脚本只算用户交来的两次时钟年龄之差，不复算论文的方法。",
     "reviewed": false
   },
   "paper": {

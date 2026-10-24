@@ -1,13 +1,13 @@
 ---
 name: dissecting-genetic-proteomic-risk
 description: >-
-  Lists the 109 plasma proteins that passed the Bonferroni threshold in Figure
-  5a of Raptis et al. 2026 and, when supplied, shows one person's protein
-  levels and unphased APOE genotypes beside that fixed list. Use when the user
-  mentions this delirium GWAS, deliriumGen, incident-delirium proteins, or
-  APOE ε4 and delirium. Current medicines and checkup labs do not add or
-  remove proteins. The report does not say what to start or stop. LASSO
-  weights are not in the method repository and are not invented.
+  Tier B lookup (human): what the paper reports, or simple arithmetic on values you bring; not the
+  paper's model run on one person. Lists the 109 plasma proteins that passed the Bonferroni threshold
+  in Figure 5a of Raptis et al. 2026 and, when supplied, shows one person's protein levels and
+  unphased APOE genotypes beside that fixed list. Use when the user mentions this delirium GWAS,
+  deliriumGen, incident-delirium proteins, or APOE ε4 and delirium. Current medicines and checkup labs
+  do not add or remove proteins. The report does not say what to start or stop. LASSO weights are not
+  in the method repository and are not invented.
 ---
 
 # 谵妄相关蛋白

@@ -154,6 +154,68 @@
       "items": {
         "$ref": "#/$defs/data_file"
       }
+    },
+    "validation": {
+      "description": "How the personal readout was checked against the paper. Required for tier A. reproduced: at least one number the paper prints (a worked example, a table of predicted values, per-term scores) is reproduced by a named test; the quote holds the printed text and the test file holds the same numbers. draft: not reproduced yet; gap_zh says what is missing and where it was looked for.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "reproduced",
+            "draft"
+          ]
+        },
+        "examples": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "locator",
+              "quote",
+              "values",
+              "test"
+            ],
+            "properties": {
+              "locator": {
+                "type": "string",
+                "minLength": 2,
+                "description": "Where the paper prints it: Table 2, Supplementary Table 1, Results paragraph 3, worked example in Methods."
+              },
+              "quote": {
+                "type": "string",
+                "minLength": 5,
+                "maxLength": 600,
+                "description": "The printed text or table cells, verbatim, containing every value."
+              },
+              "values": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "number"
+                },
+                "description": "The printed numbers the test asserts."
+              },
+              "tolerance": {
+                "type": "string",
+                "description": "How close the test requires, and why (rounding in the paper)."
+              },
+              "test": {
+                "type": "string",
+                "pattern": "^tests/[^:]+\\.py::[A-Za-z_][A-Za-z0-9_]*$"
+              }
+            }
+          }
+        },
+        "gap_zh": {
+          "type": "string",
+          "minLength": 5
+        }
+      }
     }
   },
   "$defs": {
@@ -302,14 +364,18 @@
     "population": {
       "type": "object",
       "description": "Who the equation was fit on. Callers warn when the person is outside age_years even if an input range still accepts the value.",
-      "required": ["age_years"],
+      "required": [
+        "age_years"
+      ],
       "additionalProperties": false,
       "properties": {
         "age_years": {
           "type": "array",
           "minItems": 2,
           "maxItems": 2,
-          "items": {"type": "number"},
+          "items": {
+            "type": "number"
+          },
           "description": "Inclusive derivation ages in years, low then high."
         },
         "note_zh": {

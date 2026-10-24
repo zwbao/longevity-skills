@@ -1,14 +1,22 @@
 ---
 name: ageing-clocks-digital-twins
 description: >-
-  Computes the within-person biological-age stability index from Pusparum et al., npj Digital Medicine 2025 (DOI 10.1038/s41746-025-01911-9), for clocks that person already has. Use when the user brings repeated biological-age estimates and asks about this digital-twin clock comparison or the IAM Frontier analysis. This paper does not publish new clock coefficients, so the skill does not refit PhenoAge, GrimAge, or DunedinPACE. For the Skin and Blood clock, a supplied time in years is compared with the printed technical-replicate limit of 2.56 years plus elapsed time.
+  Tier B lookup (human): what the paper reports, or simple arithmetic on values you bring; not the
+  paper's model run on one person. For biological ages that other clocks already produced, it computes
+  the unscaled within-person stability index described in Pusparum et al., npj Digital Medicine 2025
+  (DOI 10.1038/s41746-025-01911-9): the reciprocal of the mean absolute pairwise difference between
+  time points. It does not compute any clock; the paper publishes no new clock coefficients, does not
+  print its 0–1 scaling, and prints no per-person example to reproduce. Use when the user brings
+  repeated biological-age estimates and asks about this digital-twin clock comparison or the IAM
+  Frontier analysis. For the Skin and Blood clock, a supplied time in years is compared with the
+  printed technical-replicate limit of 2.56 years plus elapsed time.
 ---
 
 # 时钟稳定度
 
 用户交已经算好的生物年龄、现用药和体检。不要向用户要 GEO、STRING 或 PDF。
 
-同一时钟至少两个时间点时，报告算未缩放的稳定度。对不上的时钟不进名单。药名对不上时保留「不能据此停」。体检不增删方法算出的名单。
+同一时钟至少两个时间点时，报告只把你交来的数相减：算两两绝对差均值的倒数，即论文稳定度的未缩放形式。论文没有写出缩放到 0–1 的方法，也没有印出个人示例，所以这个数不能和论文图里的稳定度直接比较；它也不重新计算任何时钟。对不上的时钟不进名单。药名对不上时保留「不能据此停」。体检不增删方法算出的名单。
 
 ## Command
 

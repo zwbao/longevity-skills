@@ -1,7 +1,14 @@
 ---
 name: biological-aging-generational-shifts
 description: >-
-  Places one person's birth year and supplied aging measures beside the cohort contrasts in Tian et al., Nature Medicine 2026 (DOI 10.1038/s41591-026-04448-w). Use when the user brings age, birth year, and optional PhenoAge or organ-aging gaps and asks about early-onset cancer and generational biological aging. The skill does not compute PhenoAge and does not turn hazard ratios into a personal risk.
+  Tier B lookup (human): what the paper reports, or simple arithmetic on values you bring; not the
+  paper's model run on one person. Subtracts chronological age from a PhenoAge the user already has
+  and records birth year and any supplied organ-aging gaps beside the cohort contrasts in Tian et al.,
+  Nature Medicine 2026 (DOI 10.1038/s41591-026-04448-w). The paper's measure is a cohort-standardized
+  age gap that one person cannot reproduce, so this difference is not the paper's metric. Use when the
+  user brings age, birth year, and optional PhenoAge or organ-aging gaps and asks about early-onset
+  cancer and generational biological aging. Does not compute PhenoAge and does not turn hazard ratios
+  into a personal risk.
 ---
 
 # 衰老测量对照

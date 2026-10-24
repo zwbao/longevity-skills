@@ -2,7 +2,7 @@
   "schema": "longevity-skill/1",
   "name": "hemispheric-brain-age",
   "kind": "paper",
-  "tier": "A",
+  "tier": "B",
   "species": [
     "human"
   ],
@@ -10,12 +10,12 @@
   "domains": [
     "影像"
   ],
-  "blurb_zh": "左右测量的侧化。",
+  "blurb_zh": "左右脑磁共振测量的侧化指数（左减右除以左加右），不预测半球脑年龄。",
   "intents": [
     "imaging"
   ],
   "triage": {
-    "reason_zh": "用个人左右脑影像测量按论文式(1)算侧化指数，不预测脑年龄。",
+    "reason_zh": "论文的半球脑年龄模型权重未发表，脚本只用研究级磁共振左右分区测量算通用侧化指数。",
     "reviewed": false
   },
   "paper": {

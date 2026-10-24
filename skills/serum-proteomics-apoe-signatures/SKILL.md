@@ -1,7 +1,11 @@
 ---
 name: serum-proteomics-apoe-signatures
 description: >-
-  Reads APOE genotype and the four serum proteins named by Frick et al., Nature Aging 2024, and states the published APOE-dependent direction. It does not invent hazard ratios. Use when the user mentions these APOE-dependent serum proteins or this AGES proteomics paper. Medicines and checkup labs stay context.
+  Tier B lookup (human): what the paper reports, or simple arithmetic on values you bring; not the
+  paper's model run on one person. Reads APOE genotype and the four serum proteins named by Frick et
+  al., Nature Aging 2024, and states the published APOE-dependent direction. It does not invent hazard
+  ratios. Use when the user mentions these APOE-dependent serum proteins or this AGES proteomics
+  paper. Medicines and checkup labs stay context.
 ---
 
 # 载脂蛋白相关的血清蛋白

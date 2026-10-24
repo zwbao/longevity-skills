@@ -2,7 +2,7 @@
   "schema": "longevity-skill/1",
   "name": "immune-aging-clock-runx1",
   "kind": "paper",
-  "tier": "A",
+  "tier": "B",
   "species": [
     "human"
   ],
@@ -10,12 +10,12 @@
   "domains": [
     "免疫与炎症"
   ],
-  "blurb_zh": "细胞比例、对数表达或 TCR 指标。pAge、tAge 和 TCRAge 用 Table S3 的系数。",
+  "blurb_zh": "已有单细胞测序结果时，按论文 Table S3 系数把亚群比例、分亚群表达或 TCR 指标代入；这些输入只有研究级单细胞数据才有。",
   "intents": [
     "immune_inflammation"
   ],
   "triage": {
-    "reason_zh": "用Table S3系数对个人细胞比例、对数表达或TCR指标做点积算出免疫年龄。",
+    "reason_zh": "时钟输入是论文自己单细胞聚类得到的亚群比例、分亚群表达和TCR库多样性指标，个人无法按同一定义测得。",
     "reviewed": false
   },
   "paper": {

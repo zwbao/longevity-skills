@@ -8,4 +8,4 @@ Fuentealba 等，Nature Aging（2025），doi:10.1038/s43587-025-00883-5。全�
 | 代码实际算 | `msfuentealba/IC_clock` 的 `code/figure*.R` 读 INSPIRE-T 和 Framingham 的私人文件，用 `sum(x * model$coefficient)` 加截距画图。系数对象不在仓库里。CellPlot 只被方法部分用来画 GO 图。 |
 | 同名的另一套 | Horvath、Hannum、PhenoAge、GrimAge 是文中对照的时钟，不是这 91 个 CpG。 |
 
-这次核对：Supplementary Table 1 有截距 0.7852837523517947 和 91 个 CpG 系数。临床分数先做队列 z 分数再做极差归一，均值和极差没有印成可抄的数字。位点到齐时个人报告算的是甲基化线性组合。
+这次核对：Supplementary Table 1 有截距 0.7852837523517947 和 91 个 CpG 系数。临床分数先做队列 z 分数再做极差归一，均值和极差没有印成可抄的数字。位点到齐时个人报告算的是甲基化线性组合；临床分数的缩放平均不是论文的内在能力，技能不再计算它。

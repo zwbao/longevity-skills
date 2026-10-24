@@ -1,14 +1,20 @@
 ---
 name: retinal-aging-biomarkers-longitudinal
 description: >-
-  Computes a retinal age gap from a supplied retinal age or from the repository's bin expectation, then places that gap beside the published error band. Use when the user mentions retinal age, RLDL, label distribution learning, or this npj Digital Medicine paper. Checkpoint weights are not in the clone. Labs do not change the gap. The report does not say what to start or stop.
+  Tier B lookup (human): what the paper reports, or simple arithmetic on values you bring; not the
+  paper's model run on one person. Subtracts chronological age from a retinal age the user already
+  has, or from the expectation over the 77 age-bin probabilities the model outputs, and places that
+  gap beside the published 2.79-year mean absolute error. The retinal age model from this npj Digital
+  Medicine 2025 paper is released only on request and its weights are not here, so the script does not
+  run it or check the retinal age. Use when the user mentions retinal age, RLDL, label distribution
+  learning, or this paper. Labs do not change the gap. The report does not say what to start or stop.
 ---
 
 # 视网膜年龄差
 
 用户交现用药、体检、实足年龄，以及视网膜预测年龄或年龄箱概率。不要向用户要 GEO、STRING 或 PDF。
 
-两项年龄都有时，报告用视网膜年龄减去实足年龄。缺一项时名单是空的。药名对不上时保留「不能据此停」。体检不增删方法算出的名单。
+论文的视网膜年龄模型要向作者申请，这里不运行它。两项年龄都有时，报告用视网膜年龄减去实足年龄。缺一项时名单是空的。药名对不上时保留「不能据此停」。体检不增删方法算出的名单。
 
 ## Command
 

@@ -1,10 +1,9 @@
 ---
 name: pyaging
 description: >-
-  Runs published biological aging clocks on a user-supplied feature matrix
-  with pyaging. Use when the user mentions pyaging, Horvath, Hannum,
-  DunedinPACE, GrimAge, PhenoAge, AltumAge, or asks for a clock prediction
-  from methylation, expression, chromatin, or blood-chemistry values. Clock
+  Tool. Runs published biological aging clocks on a user-supplied feature matrix with pyaging. Use
+  when the user mentions pyaging, Horvath, Hannum, DunedinPACE, GrimAge, PhenoAge, AltumAge, or asks
+  for a clock prediction from methylation, expression, chromatin, or blood-chemistry values. Clock
   outputs are model estimates, not a reason to start or stop a treatment.
 ---
 

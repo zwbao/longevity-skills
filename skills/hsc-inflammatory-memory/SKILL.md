@@ -1,12 +1,12 @@
 ---
 name: hsc-inflammatory-memory
 description: >-
-  Lists supplied genes that fall in the HSC inflammatory-memory markers ranked
-  by MarkerScore in Supplementary Table 9 of Zeng et al., Nature 2026. It does
-  not compute the scanpy score or the modified Intermountain risk score. Use
-  when the user mentions HSC inflammatory memory, HSC-iM, or this haematopoietic
-  stem-cell paper. Current medicines and checkup labs stay context. The report
-  does not say what to start or stop.
+  Tier B lookup (human, mouse): what the paper reports, or simple arithmetic on values you bring; not
+  the paper's model run on one person. Lists supplied genes that fall in the HSC inflammatory-memory
+  markers ranked by MarkerScore in Supplementary Table 9 of Zeng et al., Nature 2026. It does not
+  compute the scanpy score or the modified Intermountain risk score. Use when the user mentions HSC
+  inflammatory memory, HSC-iM, or this haematopoietic stem-cell paper. Current medicines and checkup
+  labs stay context. The report does not say what to start or stop.
 ---
 
 # 造血干细胞的炎症记忆

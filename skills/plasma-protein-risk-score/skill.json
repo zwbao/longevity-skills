@@ -2,7 +2,7 @@
   "schema": "longevity-skill/1",
   "name": "plasma-protein-risk-score",
   "kind": "paper",
-  "tier": "A",
+  "tier": "B",
   "species": [
     "human"
   ],
@@ -10,12 +10,12 @@
   "domains": [
     "衰弱与死亡风险"
   ],
-  "blurb_zh": "髋部骨折相关蛋白，可带足跟超声 BUA 和 SOS。",
+  "blurb_zh": "按论文系数把你交来的标准化蛋白值加权求和，可算足跟超声骨密度；不是你的骨折风险。",
   "intents": [
     "frailty_mortality"
   ],
   "triage": {
-    "reason_zh": "用补充表系数对个人标准化血浆蛋白算髋部骨折风险分，并按公式算超声骨密度。",
+    "reason_zh": "蛋白输入是研究队列内对数转换并标准化的适配体测量，个人拿不到同一尺度的值，分数无法按论文复现到个人。",
     "reviewed": false
   },
   "paper": {

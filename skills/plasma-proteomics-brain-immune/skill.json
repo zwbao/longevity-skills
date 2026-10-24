@@ -2,7 +2,7 @@
   "schema": "longevity-skill/1",
   "name": "plasma-proteomics-brain-immune",
   "kind": "paper",
-  "tier": "A",
+  "tier": "B",
   "species": [
     "human"
   ],
@@ -10,13 +10,13 @@
   "domains": [
     "蛋白、代谢与器官年龄"
   ],
-  "blurb_zh": "各器官已经算好的 z。",
+  "blurb_zh": "研究用：把已在一批样本内 z 分数化的血浆蛋白乘补充表系数得出器官预测年龄，或标出你交来的器官 z；单个人的化验值没法直接套。",
   "intents": [
     "proteomic_organ_age",
     "cognition_dementia"
   ],
   "triage": {
-    "reason_zh": "用补充表三的LASSO系数和截距由个人蛋白z算器官年龄，并按±1.5标准差分档。",
+    "reason_zh": "系数要乘在同一批样本内z分数化的Olink蛋白上，年龄差按队列回归求残差，单个人无法自行算出。",
     "reviewed": false
   },
   "paper": {

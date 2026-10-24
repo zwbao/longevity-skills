@@ -1,11 +1,11 @@
 ---
 name: foxo-oser1-oxidative-lifespan
 description: >-
-  Matches OSER1 and rsIDs the user supplies to Supplementary Tables 5 and 6
-  of Song et al., Nature Communications 2024
-  (doi:10.1038/s41467-024-51542-z). Use when the user mentions OSER1,
-  FOXO-regulated oxidative-stress lifespan, or those human longevity SNPs.
-  Does not multiply odds ratios. Labs do not add variants.
+  Tier B lookup (human, C. elegans, fruit fly, other organisms): what the paper reports, or simple
+  arithmetic on values you bring; not the paper's model run on one person. Matches OSER1 and rsIDs the
+  user supplies to Supplementary Tables 5 and 6 of Song et al., Nature Communications 2024
+  (doi:10.1038/s41467-024-51542-z). Use when the user mentions OSER1, FOXO-regulated oxidative-stress
+  lifespan, or those human longevity SNPs. Does not multiply odds ratios. Labs do not add variants.
 ---
 
 # 氧化应激响应蛋白的长寿变异

@@ -36,7 +36,7 @@
       "打开过补充 PDF（Figs. S1–S12，Tables S1–S7）。里面是小鼠衰弱评分、药代相关表和试剂表，没有个人 NAD+ 权重列。",
       "论文没有给出独立代码仓库。scRNA-seq 在 ArrayExpress E-MTAB-17006。"
     ],
-    "summary_zh": "这项研究看血管内皮里的 C/EBPβ 怎样带动 AEP，AEP 又怎样在 N136 切割 NAMPT，从而拉低 NAD+ 并推动血管与全身衰老表型。个人报告按正文列出通路节点和小鼠里的遗传、药理发现，不预测你的 NAD+，也不写该开什么药。",
+    "summary_zh": "这项小鼠研究看血管内皮里的 C/EBPβ 怎样带动 AEP，AEP 又怎样在 N136 切割 NAMPT，从而拉低 NAD+ 并推动血管与全身衰老表型。脚本复现论文点名的通路节点和小鼠里的遗传、药理发现，不预测 NAD+。",
     "summary_status": "draft"
   },
   "entry": {

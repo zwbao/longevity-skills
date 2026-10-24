@@ -1,7 +1,10 @@
 ---
 name: plasma-proteomics-brain-immune
 description: >-
-  Writes a personal organ-age readout from plasma proteins. It applies the published linear coefficients to z-scored protein levels, and the 1.5 standard-deviation rule when a z-scored organ gap is supplied. Use when the user mentions organ age, plasma proteomic brain or immune aging, or a UK Biobank Olink organ clock. Current medicines and checkup labs are context. The report does not say what to start or stop.
+  Tier B lookup (human): what the paper reports, or simple arithmetic on values you bring; not the
+  paper's model run on one person. Use when the user mentions organ age, plasma proteomic brain or
+  immune aging, or a UK Biobank Olink organ clock. Current medicines and checkup labs are context. The
+  report does not say what to start or stop.
 ---
 
 # 器官年龄差
@@ -22,4 +25,4 @@ python "$SKILL/scripts/personal_report.py" \
   --age 50 \
   --out out
 ```
-`--measurements` 可以是 `item,value` 的蛋白 z 分数，或 `organ,z`。器官可用英文或中文。蛋白量要已经是 z 分数。没有交齐一个模型的全部非零蛋白，就不报那个器官的预测年龄。
+`--measurements` 可以是 `item,value` 的蛋白 z 分数，或 `organ,z`。器官可用英文或中文。蛋白量要已经是 z 分数。论文和官方教程是在同一批样本内做 z 分数、再按整批样本的回归算年龄差，单个人的一份化验结果没法自己做这一步。没有交齐一个模型的全部非零蛋白，就不报那个器官的预测年龄。

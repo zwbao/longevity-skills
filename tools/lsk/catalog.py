@@ -54,6 +54,8 @@ def skill_entry(name: str, data: Dict[str, Any]) -> Dict[str, Any]:
         "intents": data.get("intents", []),
         "has_script": bool(data.get("entry")),
     }
+    if data.get("validation"):
+        entry["validation_status"] = data["validation"]["status"]
     if data.get("entry"):
         entry["entry"] = data["entry"]
     if data.get("population"):

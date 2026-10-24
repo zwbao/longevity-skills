@@ -2,7 +2,7 @@
   "schema": "longevity-skill/1",
   "name": "blood-protein-assessment",
   "kind": "paper",
-  "tier": "A",
+  "tier": "B",
   "species": [
     "human"
   ],
@@ -10,13 +10,13 @@
   "domains": [
     "临床年龄与可穿戴"
   ],
-  "blurb_zh": "血液蛋白与发病，可带糖化血红蛋白。",
+  "blurb_zh": "研究用：把已在一批样本内秩逆正态变换、缩放好的血液蛋白量乘论文系数加总；单个人的化验值没法直接套，糖化血红蛋白只作对照。",
   "intents": [
     "frailty_mortality",
     "cognition_dementia"
   ],
   "triage": {
-    "reason_zh": "用补充表弹性网系数乘个人缩放蛋白量，算各结局蛋白分数线性预测值。",
+    "reason_zh": "弹性网系数要乘在训练或测试集内秩逆正态变换后的蛋白量上，单个人的蛋白检测值无法单独换算。",
     "reviewed": false
   },
   "paper": {

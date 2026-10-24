@@ -1,7 +1,12 @@
 ---
 name: blood-metabolome-brain-health
 description: >-
-  Writes a personal readout of the fourteen cognition-linked blood metabolites from Ahmad et al., Nature Aging 2026. It keeps that published list and the three model-1 mean differences that are printed in the paper. Use when the user mentions this midlife blood metabolome, ergothioneine and cognition, or the Rotterdam Study metabolite signature. Current medicines and checkup labs are context. The report does not say what to start or stop.
+  Tier B lookup (human): what the paper reports, or simple arithmetic on values you bring; not the
+  paper's model run on one person. Writes a personal readout of the fourteen cognition-linked blood
+  metabolites from Ahmad et al., Nature Aging 2026. It keeps that published list and the three model-1
+  mean differences that are printed in the paper. Use when the user mentions this midlife blood
+  metabolome, ergothioneine and cognition, or the Rotterdam Study metabolite signature. Current
+  medicines and checkup labs are context. The report does not say what to start or stop.
 ---
 
 # 中年血液代谢与认知

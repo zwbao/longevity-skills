@@ -2,7 +2,7 @@
   "schema": "longevity-skill/1",
   "name": "digital-telomere-measurement-sequencing",
   "kind": "paper",
-  "tier": "A",
+  "tier": "B",
   "species": [
     "human"
   ],
@@ -10,12 +10,12 @@
   "domains": [
     "端粒"
   ],
-  "blurb_zh": "端粒长度的分布。",
+  "blurb_zh": "一批端粒长度的通用分布统计（不套论文的分类模型）。",
   "intents": [
     "telomere"
   ],
   "triage": {
-    "reason_zh": "用个人多条端粒长度算最小值、四分位、中位数、均值和最大值。",
+    "reason_zh": "论文区分健康与端粒病的逻辑回归权重没有公开；脚本只对你交的端粒长度做最小值、四分位、均值等通用统计。",
     "reviewed": false
   },
   "paper": {

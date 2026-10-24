@@ -2,7 +2,7 @@
   "schema": "longevity-skill/1",
   "name": "structural-signature-plasma-proteins",
   "kind": "paper",
-  "tier": "A",
+  "tier": "B",
   "species": [
     "human"
   ],
@@ -10,12 +10,12 @@
   "domains": [
     "蛋白、代谢与器官年龄"
   ],
-  "blurb_zh": "补体 C1q A 链、丛集蛋白或载脂蛋白 B 的结构可及性。",
+  "blurb_zh": "照录你交来的三个肽段结构可及性；不做阿尔茨海默病分组。",
   "intents": [
     "cognition_dementia"
   ],
   "triage": {
-    "reason_zh": "人血浆病例对照，用个人整体赖氨酸可及性对照健康、MCI、AD组均值，取最近一组。",
+    "reason_zh": "肽段可及性是研究用的共价标记质谱测量，分类器权重没有公开，个人既拿不到输入也算不出分组。",
     "reviewed": false
   },
   "paper": {

@@ -17,7 +17,7 @@
 | [O] | WHO. Waist circumference and waist–hip ratio: report of a WHO expert consultation, Geneva, 8–11 December 2008（2011 年出版，ISBN 978 92 4 150149 1） | 附录表 A1 腰臀比切点；第 5.2 节测量方法 | © WHO，只摘切点 |
 | [C] | WS/T 428—2013《成人体重判定》，国家卫生和计划生育委员会 2013-04-18 发布、2013-10-01 实施（全国标准信息公共服务平台显示现行） | 表 2 中心型肥胖分类；3.4 腰围定义；适用 18 岁及以上 | 推荐性卫生行业标准，只摘切点 |
 
-报告原文都是扫描件，下面的引文是对照页面图像抄的。
+报告原文都是扫描件，下面的引文是对照页面图像抄的。两份报告是 1984 年的海军技术报告，没有 DOI，用 DTIC 登记号（ADA143890、ADA146456）作 `source_id`；DTIC 站点维护时可从 Internet Archive 存档的 apps.dtic.mil/sti/pdfs/ 两份 PDF 核对。
 
 ## 方程（照印出的数）
 

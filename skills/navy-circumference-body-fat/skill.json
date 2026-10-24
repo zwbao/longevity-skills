@@ -237,5 +237,47 @@
       "label_zh": "中心型肥胖分类（WS/T 428-2013 表 2）",
       "unit": ""
     }
-  ]
+  ],
+  "validation": {
+    "status": "reproduced",
+    "examples": [
+      {
+        "locator": "Report No. 84-11 (DTIC ADA143890), Appendix A p. 20, PERCENT FAT ESTIMATION FOR MALES",
+        "quote": "PERCENT FAT ESTIMATION FOR MALES. Height (inches) columns, Circumference Value* rows; *Circumference Value = abdomen II circumference - neck circumference (in inches). Row 16.0:, column 65.0: 13. Row 20.0:, column 68.0: 20. Row 25.0:, column 69.5: 28. Row 30.0:, column 66.0: 37.",
+        "values": [
+          16.0,
+          65.0,
+          13,
+          20.0,
+          68.0,
+          20,
+          25.0,
+          69.5,
+          28,
+          30.0,
+          66.0,
+          37
+        ],
+        "tolerance": "表中印整数百分比；按印出的厘米方程（英寸×2.54）加 Siri 公式算，与表值相差 ≤0.5",
+        "test": "tests/test_manifest.py::test_paper_example_men_appendix_a"
+      },
+      {
+        "locator": "Report No. 84-29 (DTIC ADA146456), Appendix A p. 19, PERCENT FAT ESTIMATION FOR FEMALES",
+        "quote": "PERCENT FAT ESTIMATION FOR FEMALES. Height (inches) columns, Circumference Value* rows; *Circumference Value = abdomen I + hip - neck circumferences (in inches). Row 45.0:, column 60.0: 18. Row 50.0:, column 62.0: 24. Row 55.0:, column 59.0: 33.",
+        "values": [
+          45.0,
+          60.0,
+          18,
+          50.0,
+          62.0,
+          24,
+          55.0,
+          59.0,
+          33
+        ],
+        "tolerance": "表中印整数百分比；15%–40% 段按印出的厘米方程加 Siri 公式算，与表值相差 ≤0.5（更瘦一端表值系统性低于方程，见 references/contract.md）",
+        "test": "tests/test_manifest.py::test_paper_example_women_appendix_a"
+      }
+    ]
+  }
 }

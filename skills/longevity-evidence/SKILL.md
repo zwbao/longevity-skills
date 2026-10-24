@@ -1,13 +1,12 @@
 ---
 name: longevity-evidence
 description: >-
-  Looks up what the papers collected in longevity-skills state about a drug,
-  supplement, diet, gene, protein or other named entity, grouped into human
-  studies, animal experiments and cell experiments, with a citation for every
-  row. Use when the user asks whether something works for aging (NMN,
-  metformin, rapamycin, fasting), what research says about a gene or variant,
-  or what the collected papers say about a medicine they take. It never gives
-  a dose and never turns an animal result into a human instruction.
+  Tool. Looks up what the papers collected in longevity-skills state about a drug, supplement, diet,
+  gene, protein or other named entity, grouped into human studies, animal experiments and cell
+  experiments, with a citation for every row. Use when the user asks whether something works for aging
+  (NMN, metformin, rapamycin, fasting), what research says about a gene or variant, or what the
+  collected papers say about a medicine they take. It never gives a dose and never turns an animal
+  result into a human instruction.
 ---
 
 # 证据查询

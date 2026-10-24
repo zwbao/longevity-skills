@@ -95,7 +95,7 @@ def assess(age, values, bad):
         items.append(("疲劳分", "这次没有算。"))
         missing.append("疲劳分缺一道题。两道题是「做事费力」和「提不起劲」，答「是」记 1。")
     else:
-        computed.append(f"疲劳分是 {score}。范围是 0 到 2。")
+        computed.append(f"疲劳分是 {score}。范围是 0 到 2，这是论文连续衰弱分里疲劳一项的记法。论文的衰弱表型里，两题任一答「是」就算疲劳这一项符合。")
         items.append(("疲劳分", f"{score}。"))
     items.append(("衰弱表型", "这次没有算。"))
     missing.append("衰弱表型需要五项里至少三项。握力、八英尺步时、体质指数和每周活动小时缺性别特异的最低五分位切点。已打开的 MOESM4 没有这些列。MOESM1 已打开，14 页，是报告清单，没有切点。MOESM3 已打开，22 页，是审稿意见，也没有五分位切点。")

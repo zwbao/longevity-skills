@@ -1,11 +1,12 @@
 ---
 name: ageing-inflammatory-marker
 description: >-
-  Lists MCU, MICU1, and the whole-blood inflammatory genes named in Fig. 1 of
-  Seegren et al., Nature Aging 2023. It does not fit an age regression and does
-  not invent slopes or intercepts. Use when the user mentions inflammaging, MCU,
-  MICU1, or this macrophage calcium paper. Current medicines and checkup labs
-  stay context. The report does not say what to start or stop.
+  Tier B lookup (human, mouse): what the paper reports, or simple arithmetic on values you bring; not
+  the paper's model run on one person. Lists MCU, MICU1, and the whole-blood inflammatory genes named
+  in Fig. 1 of Seegren et al., Nature Aging 2023. It does not fit an age regression and does not
+  invent slopes or intercepts. Use when the user mentions inflammaging, MCU, MICU1, or this macrophage
+  calcium paper. Current medicines and checkup labs stay context. The report does not say what to
+  start or stop.
 ---
 
 # 衰老相关的炎症标志

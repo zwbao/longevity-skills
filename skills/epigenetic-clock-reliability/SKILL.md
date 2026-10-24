@@ -1,7 +1,13 @@
 ---
 name: epigenetic-clock-reliability
 description: >-
-  Writes a personal readout of epigenetic-clock replicate disagreement from Higgins-Chen et al., Nature Aging 2022. It reports the absolute difference between two supplied clock ages and places it next to the published replicate deviations. Use when the user mentions PC clocks, epigenetic clock reliability, or technical replicates of DNA methylation age. Current medicines and checkup labs are context. The report does not say what to start or stop.
+  Tier B lookup (human): what the paper reports, or simple arithmetic on values you bring; not the
+  paper's model run on one person. Based on Higgins-Chen et al., Nature Aging 2022. It only reports
+  the absolute difference between two clock ages you already have and places it next to the published
+  replicate deviations; it does not compute the paper's principal-component (PC) clocks, which need
+  full CpG data. Use when the user mentions PC clocks, epigenetic clock reliability, or technical
+  replicates of DNA methylation age. Current medicines and checkup labs are context. The report does
+  not say what to start or stop.
 ---
 
 # 两次甲基化年龄的差

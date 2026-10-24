@@ -12,6 +12,8 @@ import os
 import re
 import subprocess
 import sys
+import shutil
+import tempfile
 import time
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
@@ -43,13 +45,18 @@ def run_one(skill_dir: Path, python: str, timeout: int) -> Dict[str, object]:
     if missing:
         return {"skill": skill_dir.name, "status": "skipped", "detail": "missing " + ", ".join(missing), "seconds": 0.0}
     env = {**os.environ, "PYTHONDONTWRITEBYTECODE": "1"}
+    # Each process gets its own pytest temp root; parallel runs racing on the
+    # shared pytest-current symlink made a passing skill fail now and then.
+    basetemp = tempfile.mkdtemp(prefix=f"lsk-{skill_dir.name}-")
     try:
         result = subprocess.run(
-            [python, "-m", "pytest", "-q", "--no-header", "-p", "no:cacheprovider", "tests"],
+            [python, "-m", "pytest", "-q", "--no-header", "-p", "no:cacheprovider", f"--basetemp={basetemp}", "tests"],
             cwd=skill_dir, capture_output=True, text=True, timeout=timeout, env=env,
         )
     except subprocess.TimeoutExpired:
         return {"skill": skill_dir.name, "status": "failed", "detail": f"timed out after {timeout}s", "seconds": float(timeout)}
+    finally:
+        shutil.rmtree(basetemp, ignore_errors=True)
     tail = (result.stdout + result.stderr).strip().splitlines()
     passed = re.search(r"(\d+) passed", tail[-1] if tail else "")
     return {

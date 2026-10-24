@@ -1,7 +1,12 @@
 ---
 name: neurodegeneration-proteomics-biomarker
 description: >-
-  Matches one plasma protein panel to proteins named with a direction in the GNPC vignette of Imam et al., Nature Medicine 2025 (DOI 10.1038/s41591-025-03834-0). Use when the user brings plasma proteins and asks about this neurodegeneration proteomics consortium or its AD, FTD, or APOE findings. It repeats printed directions, including proteins elevated in AD plasma such as ACHE. Effect sizes are not copied because the prose does not print them.
+  Tier B lookup (human): what the paper reports, or simple arithmetic on values you bring; not the
+  paper's model run on one person. Matches one plasma protein panel to proteins named with a direction
+  in the GNPC vignette of Imam et al., Nature Medicine 2025 (DOI 10.1038/s41591-025-03834-0). Use when
+  the user brings plasma proteins and asks about this neurodegeneration proteomics consortium or its
+  AD, FTD, or APOE findings. It repeats printed directions, including proteins elevated in AD plasma
+  such as ACHE. Effect sizes are not copied because the prose does not print them.
 ---
 
 # 神经退行蛋白

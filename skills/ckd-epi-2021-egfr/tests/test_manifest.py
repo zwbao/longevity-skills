@@ -215,3 +215,34 @@ def test_manifest_matches_script():
     assert MANIFEST["inputs_status"] == "verified"
     assert [o["key"] for o in MANIFEST["outputs"]] == ["egfr_cr", "egfr_cr_cys", "gfr_category", "gfr_category_equation",
                                                       "albuminuria_category", "kdigo_checks_per_year", "doctor_visit"]
+
+
+# Literal copies of Inker et al. 2021, Supplementary Appendix Table S11 (non-Black rows, "(AS) (new)"),
+# creatinine 0.6, 1, 1.5, 2 mg/dL. Printed as whole numbers from unrounded model coefficients, so the
+# tolerance is 1 ml/min/1.73 m2 (see the module docstring).
+def test_paper_example_cr():
+    printed = {
+        ("male", 50): (118, 92, 56, 40),
+        ("male", 75): (101, 79, 48, 34),
+        ("female", 50): (109, 69, 42, 30),
+        ("female", 75): (94, 59, 36, 26),
+    }
+    for (sex, age), row in printed.items():
+        for scr, value in zip((0.6, 1, 1.5, 2), row):
+            assert pr.egfr_cr(scr, age, sex) == pytest.approx(value, abs=1.0), (sex, age, scr)
+
+
+def test_paper_example_cr_cys():
+    printed = {
+        (1, "male", 50): (98, 88, 70, 60),
+        (1, "male", 75): (89, 79, 64, 55),
+        (1, "female", 50): (92, 74, 59, 51),
+        (1, "female", 75): (84, 67, 54, 46),
+        (1.5, "male", 50): (72, 64, 51, 44),
+        (1.5, "male", 75): (65, 58, 47, 40),
+        (1.5, "female", 50): (67, 54, 43, 37),
+        (1.5, "female", 75): (61, 49, 39, 33),
+    }
+    for (cys, sex, age), row in printed.items():
+        for scr, value in zip((0.6, 1, 1.5, 2), row):
+            assert pr.egfr_cr_cys(scr, cys, age, sex) == pytest.approx(value, abs=1.0), (cys, sex, age, scr)

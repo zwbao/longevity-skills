@@ -1,7 +1,14 @@
 ---
 name: omniage-mitotic-clonal-hematopoiesis
 description: >-
-  Computes the epiTOC2 total number of stem-cell divisions from CpG beta values using the formula and coefficients in Duzhaozhen/OmniAge. Use when the user mentions OmniAge, epiTOC2, mitotic age, or Du et al., Nature Communications 2026 (doi:10.1038/s41467-026-76038-w). Probes absent from the file or given as blank or NA are left out of the mean, as OmniAgePy's EpiTOC2 does (OmniAgeR instead stops on an NA). A beta outside 0 to 1, a probe listed twice, or a value that is not a number stops the run with exit code 3. The report does not assign a clonal-hematopoiesis probability, and checkup labs do not change the value.
+  Tier A draft: the paper's printed example is not reproduced yet, so treat the readout as
+  provisional. Computes the epiTOC2 total number of stem-cell divisions from CpG beta values using the
+  formula and coefficients in Duzhaozhen/OmniAge. Use when the user mentions OmniAge, epiTOC2, mitotic
+  age, or Du et al., Nature Communications 2026 (doi:10.1038/s41467-026-76038-w). Probes absent from
+  the file or given as blank or NA are left out of the mean, as OmniAgePy's EpiTOC2 does (OmniAgeR
+  instead stops on an NA). A beta outside 0 to 1, a probe listed twice, or a value that is not a
+  number stops the run with exit code 3. The report does not assign a clonal-hematopoiesis
+  probability, and checkup labs do not change the value.
 ---
 
 # 干细胞分裂次数

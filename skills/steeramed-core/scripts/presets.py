@@ -1,7 +1,7 @@
 """Disease presets for SteeraMed Core.
 
-Constants follow the 2026-09-21 alphaXiv manuscript
-(2609.steeramed-biomedical-world-model-intervention) and the thresholds
+Constants follow the SteeraMed manuscript (Qeios preprint v2,
+doi:10.32388/qrw86c.2) and the thresholds
 recorded in DeepoMe/SteeraMed steeramed_core/core/config.py.
 
 The manuscript does not apply SEMO_TOP_CHEM_PER_PPI or MAX_SEMO_PAIRS.

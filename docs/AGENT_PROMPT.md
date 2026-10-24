@@ -46,10 +46,12 @@ python3 -m tools.lsk check        # 开工前必须是干净的；不干净先�
 
 ### 3.2 检索
 
-PubMed E-utilities（有 `NCBI_API_KEY` 就带上），检索最近 7 天入库（`datetype=edat`）的文章，最多 60 篇：
+PubMed E-utilities（有 `NCBI_API_KEY` 就带上），检索最近 7 天入库（`datetype=edat`）的全部文章，翻页取完，不设篇数上限；周报里写出命中总数和实际取回数，两者必须相等：
 
 - 主题：`aging[tiab] OR ageing[tiab] OR longevity[tiab] OR lifespan[tiab] OR "life span"[tiab] OR "biological age"[tiab] OR "epigenetic clock"[tiab] OR "aging clock"[tiab] OR "ageing clock"[tiab] OR senescence[tiab] OR senescent[tiab] OR senolytic*[tiab] OR geroscience[tiab] OR frailty[tiab] OR centenarian*[tiab] OR "healthy aging"[tiab] OR rejuvenation[tiab]`
-- 期刊（[ta]）：Nature、Science、Cell、Nat Aging、Nat Commun、Nat Med、Nat Metab、Nat Genet、Nat Biotechnol、Nat Biomed Eng、Nat Immunol、Cell Metab、Cell Stem Cell、Cell Rep Med、Immunity、Brain、Sci Adv、Sci Transl Med、Signal Transduct Target Ther、NPJ Digit Med、NPJ Aging、Aging Cell、Geroscience、Lancet Healthy Longev、J Gerontol A Biol Sci Med Sci、Genome Med、Nat Cardiovasc Res
+- 期刊（[ta]）：Nature、Science、Cell、Nat Aging、Nat Commun、Nat Med、Nat Metab、Nat Genet、Nat Biotechnol、Nat Biomed Eng、Nat Immunol、Cell Metab、Cell Stem Cell、Cell Rep Med、Immunity、Brain、Sci Adv、Sci Transl Med、Signal Transduct Target Ther、NPJ Digit Med、NPJ Aging、Aging Cell、Geroscience、Lancet Healthy Longev、J Gerontol A Biol Sci Med Sci、Genome Med、Nat Cardiovasc Res，以及临床和人群研究的主要期刊：N Engl J Med、Lancet、JAMA、BMJ、Proc Natl Acad Sci U S A、Elife、Mol Cell、Circulation、Am J Clin Nutr、JAMA Netw Open、JAMA Intern Med、JAMA Neurol、JAMA Cardiol、Lancet Public Health、Lancet Diabetes Endocrinol、Lancet Neurol、Lancet Digit Health、Lancet Glob Health、Lancet Respir Med、Lancet Psychiatry、Lancet Reg Health Eur、Lancet Reg Health West Pac、EClinicalMedicine、EBioMedicine（以 longpi-pipeline 的 `DEFAULT_JOURNALS` 为准）。
+- 预印本（可选）：medRxiv 同样的主题词。预印本做出的 A 类技能一律 `validation.status: draft`，`reason_zh` 写明「预印本」。
+- 回访：每月第一周，把过去 6 个月里理由写着「系数未见」「补充材料未公开」「代码未发布」「全文打不开」的 B、C 和 pending 论文重新打开一次，补充材料、代码或全文已经能读的按 3.4 重新分级。
 
 每篇取 DOI、标题、期刊、年份、发表类型、MeSH、摘要。
 
@@ -65,11 +67,12 @@ python3 -m tools.lsk doi "https://doi.org/10.1038/S41586-026-01234-5."   # → 1
 
 ### 3.4 分级
 
-先用规则初筛，再逐篇读摘要复核（规则只看发表类型、MeSH 和用词，A 会偏多）：
+先用规则初筛，再逐篇打开全文复核（规则只看发表类型、MeSH 和用词，A 会偏多）：
 
+- **全文打不开的论文不收录。** 出版社页面、PubMed Central / Europe PMC、作者接收稿、OpenAlex 或 Unpaywall 列出的开放副本都试过仍然只能读到摘要（订阅墙、人机验证、链接失效）的，不做技能、不抽证据、不判 C，一律登记 pending，`reason_zh` 写「全文打不开」和试过的途径，月度回访再试。同一研究的预印本不等于论文本身。不用 Sci-Hub 之类的盗版来源。
 - 新闻、评论、社论、勘误、没有 DOI：拒收（rejected）。
 - 标题写明动物、主要证据是动物或细胞、综述：C。
-- 人群研究，而且能用个人自己的测量按论文印出的公式、系数或切点算出一个数、分档、差或比：A。系数必须印在正文或补充材料里；摘要暗示模型没公开的，判 B。
+- 人群研究，而且能用个人自己的测量按论文印出的公式、系数或切点算出一个数、分档、差或比：A。系数必须印在正文或补充材料里。**只看摘要不能排除 A**：判 B 之前必须打开全文和每一份补充材料（含代码仓库），`reason_zh` 写明在哪里找过、缺的是什么（例如「正文、补充表 1–6 和 GitHub 仓库都没有树模型」）。
 - 人群研究但个人只能查表（点名的基因、蛋白、化合物、干预、方向），或者是干预的随机试验、荟萃分析：B。
 - 看不出来的：pending，不生成任何东西。
 
@@ -104,8 +107,9 @@ python3 -m tools.lsk doi "https://doi.org/10.1038/S41586-026-01234-5."   # → 1
    - `outputs`：报告算出的每个数或分档。
    - 方法是一个人可以对着定目标的模型（风险方程、输入可改变的时钟）时，接受 `--targets` 并写 `out/levers.json`，`entry` 加 `targets_flag` 和 `levers_json: true`，照表型年龄技能写。
 6. **脚本**：用 `skillkit` 按 `skill.json` 读输入；输入缺失或单位不对时写 `out/problems.json` 并以退出码 3 结束；成功时用 `skillkit.write_result` 写 `out/result.json`。报告是中文，开头是论文卡片，保留一句“边界”，不给剂量，不说开始或停用任何药物。
-7. **测试**：`tests/test_manifest.py` 至少覆盖：清单和脚本用的输入一致；复现论文示例值；错单位和缺值被拒（退出码 3）。
-8. 登记和检查（全部通过才算完成）：
+7. **测试和验证登记**：`tests/test_manifest.py` 至少覆盖：清单和脚本用的输入一致；复现论文示例值；错单位和缺值被拒（退出码 3）。期望值只能是论文印出的数字，**不能拿脚本自己的输出当期望值**。在 `skill.json` 写 `validation`：复现了就是 `{"status": "reproduced", "examples": [{"locator": "表 2", "quote": "<印着这些数的原文>", "values": [...], "tolerance": "<四舍五入时写>", "test": "tests/test_manifest.py::<测试名>"}]}`，`lsk check` 核对引文和测试文件里都有这些数；没找到可复现的例子就写 `{"status": "draft", "gap_zh": "<缺什么、在哪里找过>"}`。论文的模型权重没有公开、脚本只能做差、比、百分比变化或回显输入的，不是 A，判 B。
+8. **SKILL.md 的 description**：第一句是 `lsk build` 按分级生成的（例如 `Tier A personal readout: …`），不要手改；从第二句开始写这个方法算什么、什么时候用。
+9. 登记和检查（全部通过才算完成）：
 
 ```bash
 python3 -m tools.lsk upsert-paper --doi <DOI> --tier A --outcome skill --skill <方法名> --title "<标题>" --journal "<期刊>" --year <年> --reason "<一句话>"
@@ -121,11 +125,12 @@ python3 -m tools.lsk test --changed origin/main
 
 所有 B 类论文放在一个分支 `pipeline/<周>/evidence`：
 
-- 往 `skills/longevity-evidence/data/claims.jsonl` 追加条目（schema：`schema/claim.schema.json`）。只抄论文正文、表格、补充材料里点名的实体，最多 200 条；`claim_zh` 一句中文，不写建议用语、剂量和数字；`source` 写明表号或“正文”。
+- 往 `skills/longevity-evidence/data/claims.jsonl` 追加条目（schema：`schema/claim.schema.json`）。只抄论文正文、表格、补充材料里点名的实体，最多 200 条；`claim_zh` 一句中文，不写建议用语、剂量和数字；`source.locator` 写明表号或段落，`source.access` 写 `fulltext`。全文打不开的论文一条也不写（见 3.4），不能拿摘要凑。`direction` 只用 up、down 和 schema 里的其他取值（不用 increase/decrease）；没有方向写 `named`。同一篇论文里 3 条以上共用同一句 `claim_zh` 的（名单里的各项）标 `kind: list_member`，其余标 `finding`。
 - 随机试验或荟萃分析报告了某个干预对某个可测指标的平均效应和置信区间时，再往 `data/effects.jsonl` 追加（schema：`schema/effect.schema.json`）：
   - 数值照论文印出的抄，不换单位、不换算。`effect.kind`：同单位或百分比用 `mean_difference` / `percent_change`；按暴露单位（每减 1 kg）用 `per_unit` 并写 `per`；Cohen's d 或 SMD 用 `standardized`；按年的用 `rate`。
   - `quote` 是含这些数字的最短原文片段（400 字符以内）；`population` 用中文一句话；`marker_key` 用 `data/biological_variation.json` 里已有的键。
-  - `verified` 一律写 `false`，不写 `verified_by`。由人对照原文核对后改成 `verified: true, verified_by: "person"`；插件只把 `verified: true` 的行当作对照。`lsk check` 会检查 `effect` 里的每个数（不计正负号）都出现在 `quote` 里，所以引文必须包含这些数字。
+  - `quote` 是一段连续原文（不能用省略号拼接），包含效应值和置信区间两端，写出指标名（论文的叫法和 `marker`、`marker_zh`、个体变异表的别名都不同时，把论文的叫法加进 `marker_terms`）；效应为负时，引文里要看得出是下降（负号或「降低」类的词）。`lsk check` 逐项检查。
+  - 你对照全文核对过、`lsk check` 通过的行写 `verified: true, verified_by: "quote_match"`，插件会显示为「数字已由脚本对照原文引文核对，尚未人工复核」。核对不了的写 `verified: false`，不写 `verified_by`。`verified_by: "person"` 只能由人核对后改，自动化 agent 永远不写。
 - 登记：`python3 -m tools.lsk upsert-paper --doi <DOI> --tier B --outcome evidence --title … --journal … --year … --reason …`
 - 检查：`python3 -m tools.lsk check`。
 
@@ -141,7 +146,7 @@ python3 -m tools.lsk upsert-paper --doi <DOI> --tier rejected --outcome rejected
 
 ### 3.8 提交和 pull request
 
-- 只提交这篇论文相关的文件：A 类是 `skills/<方法名>/` 和 `registry/papers.jsonl`；B 类是 `claims.jsonl`、`data/effects.jsonl`、`registry/papers.jsonl`；C 类只有 `registry/papers.jsonl`。`catalog.json`、README 列表、`skills/_registry/` 由 CI 重建，不用提交，提交了也会被重建。
+- 只提交这篇论文相关的文件：A 类是 `skills/<方法名>/` 和 `registry/papers.jsonl`；B 类是 `claims.jsonl`、`data/effects.jsonl`、`registry/papers.jsonl`；C 类只有 `registry/papers.jsonl`。走 PR 时 `catalog.json`、README 列表、`skills/_registry/`、`.claude-plugin/plugin.json` 和 SKILL.md 的分级句由 CI 重建，分支里可以不带；直推 main 时先跑 `lsk build`，把这些生成文件一起提交，保证 main 上 `lsk check` 通过。
 - 提交说明写为什么，例如 `Add <方法名> from <DOI>`，正文一句分级理由。不改 git 配置，不 amend，不提交密钥。
 - `git push -u origin <分支>`，然后 `gh pr create --base main --label pipeline --title … --body …`（仓库里还没有 `pipeline` 标签时先 `gh label create pipeline`，或去掉 `--label`）。描述里写：论文和链接；分级和理由；个人需要的数据（data_type、accessibility）；产品合同三句话（用户提供什么、技能自己取什么、报告能说什么）；打开过的补充表；本地检查结果。检查没全过时开草稿 PR（`--draft`）并贴出失败输出。
 - **项目 owner agent 在本地 `lsk check`（及 A 类相关测试）通过后可以直接推 `main`；也可用 pull request 提交便于审阅的批次。** A 类若走 PR，由人核对分级、系数出处、单位和范围后合并；B 类新增效应量需人核对并把 `verified` 改成 `true` 后才对插件生效；C 类在检查通过后可直接上 main 或经 PR 合并。自动化 weekly agent 默认仍可开 PR；owner 授权时可直推。
@@ -149,7 +154,7 @@ python3 -m tools.lsk upsert-paper --doi <DOI> --tier rejected --outcome rejected
 
 ### 3.9 周报
 
-最后输出一份 Markdown：本周检索到几篇、去重后几篇；每篇的分级、data_type、理由；开了哪些 PR（链接、状态、检查是否通过）；哪些论文待定以及原因；需要人看的地方（草稿 PR、`draft` 技能、新增的未核对效应量）。
+最后输出一份 Markdown。第一行是本周的核心指标：**新增 A 类技能几个（其中普通人能跑的、accessibility 为 high 的几个）、A 类 draft 几个**，以及判 B 的论文里有几篇是因为补充材料里没有系数。然后写：本周命中几篇、取回几篇（必须相等）、去重后几篇；每篇的分级、data_type、理由；开了哪些 PR（链接、状态、检查是否通过）；哪些论文待定以及原因；需要人看的地方（草稿 PR、`draft` 技能、新增的未核对效应量）。
 
 ## 4. 硬性规则
 

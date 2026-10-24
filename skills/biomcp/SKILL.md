@@ -1,6 +1,10 @@
 ---
 name: biomcp
-description: Search and retrieve biomedical data - genes, variants, clinical trials, diagnostic tests, articles, drugs, diseases, pathways, proteins, adverse events, pharmacogenomics, and phenotype-disease matching. Use for gene function, variant pathogenicity, trials, diagnostics, drug safety, pathway context, disease workups, and literature evidence.
+description: >-
+  Tool. Search and retrieve biomedical data - genes, variants, clinical trials, diagnostic tests,
+  articles, drugs, diseases, pathways, proteins, adverse events, pharmacogenomics, and
+  phenotype-disease matching. Use for gene function, variant pathogenicity, trials, diagnostics, drug
+  safety, pathway context, disease workups, and literature evidence.
 ---
 
 # BioMCP CLI

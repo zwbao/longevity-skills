@@ -6,7 +6,7 @@ Methods later writes 3724 for the same library. MOESM3 has pairwise similarities
 Code is not in a public repository.
 """
 
-BOUNDARY = "这是研究复现意义上的个人读出，不是治疗建议。不能据此开始或停止任何药物。名单里没有某个名字，不是停用的理由。体检不增删方法算出的名单。"
+BOUNDARY = "这是论文复现，不是这个人的结果，也不是治疗建议。不能据此开始或停止任何药物。名单里没有某个名字，不是停用的理由。体检不增删方法算出的名单。"
 
 TITLE = "# 线粒体自噬诱导物的名单"
 

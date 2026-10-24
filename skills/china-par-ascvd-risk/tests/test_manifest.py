@@ -192,3 +192,23 @@ def test_manifest():
     assert keys[:4] == ["sbp_mmhg", "tc_mg_dl", "hdl_mg_dl", "waist_cm"]
     optional = {item["key"] for item in MANIFEST["inputs"] if not item["required"]}
     assert {"urban", "family_history"} <= optional
+
+
+# Table 2 of the paper, printed: "Age, y / Men / Women: 40 2.2 2.4; 50 5.4 5.4; 60 11.0 10.1; 70 19.6 17.1".
+# Ages 40, 50 and 70 were not used to derive any constant (60 is the Supplemental Table 1 example).
+PAPER_TABLE2 = [(40, 2.2, 2.4), (50, 5.4, 5.4), (60, 11.0, 10.1), (70, 19.6, 17.1)]
+
+
+def test_paper_example_table2():
+    for age, men, women in PAPER_TABLE2:
+        assert personal_report.risk_men(_men_sum(age)) == pytest.approx(men, rel=0.02), age
+        assert personal_report.risk_women(_women_sum(age)) == pytest.approx(women, rel=0.02), age
+
+
+def test_paper_example_supplemental_table1():
+    # Supplemental Table 1: men individual sum 142.04, mean 140.68, risk 11.0; women 119.22, 117.26, 10.1.
+    assert _men_sum(60) == pytest.approx(142.04, abs=0.015)
+    assert personal_report.risk_men(142.04) == pytest.approx(11.0, abs=0.1)
+    assert MEAN_MEN == 140.68 and MEAN_WOMEN == 117.26
+    assert _women_sum(60) == pytest.approx(119.22, abs=0.01)
+    assert personal_report.risk_women(119.22) == pytest.approx(10.1, abs=0.05)

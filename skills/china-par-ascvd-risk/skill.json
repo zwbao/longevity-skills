@@ -240,5 +240,43 @@
       "label_zh": "风险分层（2019 中国指南）",
       "unit": ""
     }
-  ]
+  ],
+  "validation": {
+    "status": "reproduced",
+    "examples": [
+      {
+        "locator": "Table 2 (main text, p1433)",
+        "quote": "Table 2. Age- and Sex-Specific 10-Year ASCVD Risk Predicted by a Specific Example* ... Age, y Men Women 40 2.2 2.4 50 5.4 5.4 60 11.0 10.1 70 19.6 17.1",
+        "values": [
+          40,
+          2.2,
+          2.4,
+          50,
+          5.4,
+          60,
+          11.0,
+          10.1,
+          70,
+          19.6,
+          17.1
+        ],
+        "tolerance": "相对误差 2% 以内：系数只印到两位小数，男性连续项系数与女性基线生存率按 references/contract.md 由补充表 1 反推；40、50、70 岁没有参与任何推导。",
+        "test": "tests/test_manifest.py::test_paper_example_table2"
+      },
+      {
+        "locator": "Supplemental Table 1",
+        "quote": "Individual sum N/A N/A 142.04 N/A N/A 119.22 Mean (coefficient × value) N/A N/A 140.68 N/A N/A 117.26 Baseline survival N/A N/A 0.97 N/A N/A 0.99 Estimated 10-year risk (%) N/A N/A 11.0 N/A N/A 10.1",
+        "values": [
+          142.04,
+          119.22,
+          140.68,
+          117.26,
+          11.0,
+          10.1
+        ],
+        "tolerance": "个人得分绝对误差 0.015 以内，风险 0.1 个百分点以内（印出值四舍五入）；这一例参与了常数推导，独立核对见表 2。",
+        "test": "tests/test_manifest.py::test_paper_example_supplemental_table1"
+      }
+    ]
+  }
 }

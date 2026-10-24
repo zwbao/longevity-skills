@@ -1,7 +1,11 @@
 ---
 name: ovarian-ageing-cancer-mutation
 description: >-
-  Reports age-at-menopause shifts for rare-variant carrier classes the user names. Use when the user mentions ovarian ageing, de novo mutation rates, SAMHD1, ZNF518A, PALB2, or doi:10.1038/s41586-024-07931-x. Main-text years are used when printed; PALB2 and PNPLA8 use the winsorized BOLT beta in Supplementary Table 2. Labs do not change the gene list.
+  Tier B lookup (human): what the paper reports, or simple arithmetic on values you bring; not the
+  paper's model run on one person. Reports age-at-menopause shifts for rare-variant carrier classes
+  the user names. Use when the user mentions ovarian ageing, de novo mutation rates, SAMHD1, ZNF518A,
+  PALB2, or doi:10.1038/s41586-024-07931-x. Main-text years are used when printed; PALB2 and PNPLA8
+  use the winsorized BOLT beta in Supplementary Table 2. Labs do not change the gene list.
 ---
 
 # 卵巢衰老与癌症突变
