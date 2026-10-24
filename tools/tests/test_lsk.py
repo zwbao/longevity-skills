@@ -218,3 +218,133 @@ def test_claims_come_only_from_the_full_text(monkeypatch):
     assert any("abstract" in error for error in errors), errors
     row["source"].update(locator="Table 2", access="fulltext")
     assert evidence.check(manifests) == []
+
+
+def _secondary_skill(tmp_path):
+    skill = tmp_path / "demo"
+    (skill / "tests").mkdir(parents=True)
+    (skill / "tests" / "test_validation.py").write_text(
+        "def test_impl_a():\n    assert 50.475252 > 0\n\n\ndef test_impl_b():\n    assert 39.8804215 > 0\n\n\n"
+        "def test_summary():\n    assert 0.94 > 0\n", encoding="utf-8")
+    return skill
+
+
+def _comparison(kind, source, values, test, quote=None):
+    item = {"kind": kind, "source": source, "locator": "f()", "values": values, "test": f"tests/test_validation.py::{test}"}
+    if quote:
+        item["quote"] = quote
+    return item
+
+
+def test_reproduced_secondary_needs_two_implementations_or_a_printed_summary(tmp_path):
+    from tools.lsk import manifest
+    skill = _secondary_skill(tmp_path)
+    base = {"tier": "A", "inputs_status": "verified", "inputs": [{"key": "x"}]}
+    impl_a = _comparison("implementation", "pyaging 0.5.7", [50.475252], "test_impl_a")
+    impl_b = _comparison("implementation", "BioAge commit b1f9fc0", [39.8804215], "test_impl_b")
+    two = dict(base, validation={"status": "reproduced_secondary", "comparisons": [impl_a, impl_b]})
+    assert manifest._check_validation(skill, two) == []
+    one = dict(base, validation={"status": "reproduced_secondary", "comparisons": [impl_a]})
+    assert "at least two independent implementations" in " ".join(manifest._check_validation(skill, one))
+    same_source = dict(base, validation={"status": "reproduced_secondary", "comparisons": [impl_a, dict(impl_b, source="pyaging 0.5.6")]})
+    assert "at least two independent implementations" in " ".join(manifest._check_validation(skill, same_source))
+    summary = _comparison("population_summary", "Levine 2018 (doi:10.18632/aging.101414), NHANES IV", [0.94], "test_summary",
+                          quote="phenotypic age is correlated with chronological age at r=0.94")
+    assert manifest._check_validation(skill, dict(base, validation={"status": "reproduced_secondary", "comparisons": [summary]})) == []
+    no_quote = dict(summary)
+    no_quote.pop("quote")
+    assert "needs the printed quote" in " ".join(manifest._check_validation(
+        skill, dict(base, validation={"status": "reproduced_secondary", "comparisons": [no_quote]})))
+    unversioned = dict(impl_b, source="BioAge")
+    problems = " ".join(manifest._check_validation(skill, dict(base, validation={"status": "reproduced_secondary", "comparisons": [impl_a, unversioned]})))
+    assert "names its version or commit" in problems
+    wrong_value = dict(impl_b, values=[39.9])
+    assert "does not assert 39.9" in " ".join(manifest._check_validation(
+        skill, dict(base, validation={"status": "reproduced_secondary", "comparisons": [impl_a, wrong_value]})))
+    undeclared = {"tier": "A", "validation": {"status": "reproduced_secondary", "comparisons": [impl_a, impl_b]}}
+    assert "declares its inputs" in " ".join(manifest._check_validation(skill, undeclared))
+    assert "comparisons belong to reproduced_secondary" in " ".join(manifest._check_validation(
+        skill, dict(base, validation={"status": "reproduced", "examples": [], "comparisons": [impl_a]})))
+
+
+def test_tier_a_status_is_one_of_three_and_draft_needs_gap(tmp_path):
+    from tools.lsk import manifest
+    skill = _secondary_skill(tmp_path)
+    assert manifest.VALIDATION_STATUSES == ("reproduced", "reproduced_secondary", "draft")
+    assert "is not one of" in " ".join(manifest._check_validation(skill, {"tier": "A", "validation": {"status": "verified"}}))
+    assert "needs gap_zh" in " ".join(manifest._check_validation(skill, {"tier": "A", "validation": {"status": "draft"}}))
+    schema = json.loads((ROOT / "schema" / "skill.schema.json").read_text(encoding="utf-8"))
+    assert schema["properties"]["validation"]["properties"]["status"]["enum"] == list(manifest.VALIDATION_STATUSES)
+
+
+def test_reproduced_secondary_wording_never_claims_the_paper_was_reproduced():
+    from tools.lsk import catalog, frontmatter, manifest
+    data = {"tier": "A", "species": ["human"], "validation": {"status": "reproduced_secondary", "comparisons": [{"kind": "implementation"}]}}
+    line = frontmatter.tag(data)
+    assert "checked against independent implementations" in line
+    assert "reproduces" not in line and "no printed result was reproduced" in line
+    summary = frontmatter.tag({**data, "validation": {"status": "reproduced_secondary", "comparisons": [{"kind": "population_summary"}]}})
+    assert "population summary the paper prints" in summary and "independent implementations" not in summary
+    text = "---\nname: x\ndescription: >-\n  Computes one value. Use when asked.\n---\n\n# Title\n"
+    once = frontmatter.render(text, data)
+    assert frontmatter.render(once, data) == once
+    assert frontmatter.render(once, {"tier": "A", "species": ["human"], "validation": {"status": "draft"}}).count("Computes one value.") == 1
+    assert manifest.VALIDATION_LABEL_ZH["reproduced_secondary"] == "已与独立实现核对"
+    built = json.loads((ROOT / "catalog.json").read_text(encoding="utf-8"))
+    for entry in built["skills"]:
+        if entry["tier"] == "A":
+            assert entry["validation_label_zh"] == manifest.VALIDATION_LABEL_ZH[entry["validation_status"]]
+    assert catalog.VALIDATION_LABEL_ZH is manifest.VALIDATION_LABEL_ZH
+
+
+def test_promoted_skills_are_reproduced_secondary():
+    built = {entry["name"]: entry for entry in json.loads((ROOT / "catalog.json").read_text(encoding="utf-8"))["skills"]}
+    for name in ("accelerated-biological-aging-risk", "blood-epigenetic-intrinsic-capacity", "genome-wide-proteomics-frailty"):
+        assert built[name]["validation_status"] == "reproduced_secondary", name
+        assert built[name]["validation_label_zh"] == "已与独立实现核对"
+
+
+def _dispatch_repos(tmp_path, coach_text, methods_text):
+    coach = tmp_path / "coach"
+    doc = coach / "skills" / "longevity-coach" / "hosts" / "standalone.md"
+    doc.parent.mkdir(parents=True)
+    doc.write_text(coach_text, encoding="utf-8")
+    analyst = tmp_path / "analyst"
+    methods = analyst / "skills" / "longevity-analyst" / "scripts" / "lalib" / "methods.py"
+    methods.parent.mkdir(parents=True)
+    methods.write_text(methods_text, encoding="utf-8")
+    return coach, analyst
+
+
+def test_dispatch_check_names_the_skill(tmp_path, monkeypatch):
+    from tools.lsk import dispatch
+    manifests = {
+        "ckd-epi-2021-egfr": {"tier": "A", "validation": {"status": "reproduced"}},
+        "steeramed-core": {"tier": "A", "validation": {"status": "draft"}},
+        "cpic-pharmacogenomics": {"tier": "B"},
+    }
+    coach, analyst = _dispatch_repos(
+        tmp_path,
+        "# 方法\n\n常用方法举例：肾功能（`ckd-epi-2021-egfr`）、孤独感（`uls8-loneliness-scale`）。\n\n"
+        "也可以用 `steeramed-core` 看用药。\n\n甲基化（`steeramed-core`，仍在验证）。\n",
+        'AUTO_TIERS = {"A", "tool"}\nGENOTYPE_ADAPTER_SKILLS = frozenset({"cpic-pharmacogenomics", "nutrigenetic-variant-panel"})\n',
+    )
+    monkeypatch.setenv("LONGEVITY_COACH_DIR", str(coach))
+    monkeypatch.setenv("LONGEVITY_ANALYST_DIR", str(analyst))
+    errors, skipped = dispatch.check(manifests)
+    assert skipped == []
+    text = "\n".join(errors)
+    assert "'uls8-loneliness-scale', which is not in catalog.json" in text
+    assert "GENOTYPE_ADAPTER_SKILLS names 'nutrigenetic-variant-panel'" in text
+    assert "standalone.md:5: steeramed-core is a tier A draft" in text
+    assert "standalone.md:7" not in text and "ckd-epi" not in text and "'cpic-pharmacogenomics'" not in text
+    assert len(errors) == 3
+
+
+def test_dispatch_check_is_skipped_without_the_repositories(tmp_path, monkeypatch):
+    from tools.lsk import dispatch
+    monkeypatch.setenv("LONGEVITY_COACH_DIR", str(tmp_path / "none"))
+    monkeypatch.setenv("LONGEVITY_ANALYST_DIR", str(tmp_path / "none"))
+    errors, skipped = dispatch.check({})
+    assert errors == [] and len(skipped) == 2
+    assert dispatch.whitelists("X_SKILLS = ['a', 'b']\nY = {'c'}\nZ_SKILLS: tuple = ('d',)\n") == {"X_SKILLS": ["a", "b"], "Z_SKILLS": ["d"]}
