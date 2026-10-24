@@ -29,6 +29,9 @@ INPUT_ORDER = [
     "output_of", "group", "note_zh",
 ]
 PROFILE_KEYS = {"age", "sex"}
+VALIDATION_STATUSES = ("reproduced", "reproduced_secondary", "draft")
+# How LongPi and reports name each status. reproduced_secondary is never shown as a reproduction of the paper.
+VALIDATION_LABEL_ZH = {"reproduced": "已复现论文", "reproduced_secondary": "已与独立实现核对", "draft": "仍在验证"}
 
 
 def ordered(manifest: Dict[str, Any]) -> "OrderedDict[str, Any]":
@@ -199,31 +202,65 @@ def _check_validation(skill_dir: Path, manifest: Dict[str, Any]) -> List[str]:
     if not block:
         return [f"{name}: tier A needs a validation block (reproduced with a printed example, or draft with gap_zh)"]
     errors: List[str] = []
-    if block["status"] == "draft":
+    status = block["status"]
+    if status not in VALIDATION_STATUSES:
+        return [f"{name}: validation status {status!r} is not one of {', '.join(VALIDATION_STATUSES)}"]
+    if status == "draft":
         if not block.get("gap_zh"):
             errors.append(f"{name}: a draft validation needs gap_zh (what is missing, where it was looked for)")
         return errors
-    examples = block.get("examples") or []
-    if not examples:
-        errors.append(f"{name}: validation reproduced needs at least one printed example")
     if manifest.get("inputs_status") != "verified" or not manifest.get("inputs"):
-        errors.append(f"{name}: a reproduced tier A skill declares its inputs (inputs_status verified)")
+        errors.append(f"{name}: a {status} tier A skill declares its inputs (inputs_status verified)")
+    examples = block.get("examples") or []
+    comparisons = block.get("comparisons") or []
+    if status == "reproduced" and not examples:
+        errors.append(f"{name}: validation reproduced needs at least one printed example")
+    if status == "reproduced_secondary":
+        implementations = {item["source"].split()[0].casefold() for item in comparisons if item["kind"] == "implementation"}
+        summaries = [item for item in comparisons if item["kind"] == "population_summary"]
+        if len(implementations) < 2 and not summaries:
+            errors.append(f"{name}: reproduced_secondary needs comparisons with at least two independent implementations "
+                          "(distinct sources) or a population summary the paper prints")
+        if examples:
+            errors.append(f"{name}: reproduced_secondary means no printed example was reproduced; use reproduced when one is")
+    elif comparisons:
+        errors.append(f"{name}: comparisons belong to reproduced_secondary")
     for number, example in enumerate(examples, start=1):
         where = f"{name}: validation example {number}"
         missing = numbers_missing(example["quote"], example["values"])
         if missing:
             errors.append(f"{where}: quote does not contain {', '.join(str(item) for item in missing)}; copy the printed text")
-        test_file, _, test_name = example["test"].partition("::")
-        path = skill_dir / test_file
-        if not path.exists():
-            errors.append(f"{where}: {test_file} does not exist")
-            continue
-        source = path.read_text(encoding="utf-8")
-        if not re.search(rf"^\s*def {re.escape(test_name)}\(", source, flags=re.M):
-            errors.append(f"{where}: {test_file} has no test {test_name}")
-        absent = numbers_missing(source, example["values"])
-        if absent:
-            errors.append(f"{where}: {test_file} does not assert {', '.join(str(item) for item in absent)}")
+        errors += _check_named_test(skill_dir, where, example)
+    for number, item in enumerate(comparisons, start=1):
+        where = f"{name}: validation comparison {number}"
+        if item["kind"] == "implementation" and not re.search(r"\d+\.\d+|\b[0-9a-f]{7,40}\b", item["source"]):
+            errors.append(f"{where}: an implementation source names its version or commit")
+        if item["kind"] == "population_summary":
+            if not item.get("quote"):
+                errors.append(f"{where}: a population summary needs the printed quote")
+            else:
+                missing = numbers_missing(item["quote"], item["values"])
+                if missing:
+                    errors.append(f"{where}: quote does not contain {', '.join(str(value) for value in missing)}; copy the printed text")
+        errors += _check_named_test(skill_dir, where, item)
+    return errors
+
+
+def _check_named_test(skill_dir: Path, where: str, item: Dict[str, Any]) -> List[str]:
+    """The named test exists and its file holds every value it claims to assert."""
+    from .datasets import numbers_missing
+
+    test_file, _, test_name = item["test"].partition("::")
+    path = skill_dir / test_file
+    if not path.exists():
+        return [f"{where}: {test_file} does not exist"]
+    errors: List[str] = []
+    source = path.read_text(encoding="utf-8")
+    if not re.search(rf"^\s*def {re.escape(test_name)}\(", source, flags=re.M):
+        errors.append(f"{where}: {test_file} has no test {test_name}")
+    absent = numbers_missing(source, item["values"])
+    if absent:
+        errors.append(f"{where}: {test_file} does not assert {', '.join(str(value) for value in absent)}")
     return errors
 
 

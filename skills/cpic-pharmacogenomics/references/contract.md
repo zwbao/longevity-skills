@@ -11,3 +11,9 @@
 ## 数据快照
 
 `data/cpic_tables.json` 由 `python3 scripts/build_cpic_tables.py --raw DIR --fetch --accessed YYYY-MM-DD` 生成，`skill.json` 的 `data_files` 记着它的 sha256。更新快照后要重跑测试、更新 sha256，并检查 `tests/test_calls.py` 里的类别规则是否仍然覆盖所有推荐原文。
+
+## CPIC 原文推荐（`--include-cpic-text`）
+
+`data/cpic_recommendation_text.json` 由 `python3 scripts/build_cpic_tables.py --text` 生成（2026-10-24 从 api.cpicpgx.org 读取）：快照里每一行推荐，按 CPIC 推荐编号取回 CPIC 的原始记录（`drugrecommendation`、`implications`、`comments`、`classification`、`version`），不做任何改动。读取时核对过全部 1,791 行：CPIC 原文去掉多余空白后与快照里的推荐文字逐字相同，版本、强度和对应表型也相同；测试每次都再核对一遍。
+
+不加这个参数时报告和以前完全一样，不写剂量。加了以后，报告另附一节「CPIC 原文推荐（照录，英文）」，每个对上的药照录 CPIC 原文（含剂量调整的写法），标为 CPIC 指南，写明推荐编号和版本，不翻译、不改写，只把换行并成空格；同时写 `out/cpic_recommendations.json`（`cpic-recommendations/1`），并把同样的行放进 `result.json` 顶层的 `cpic_recommendations`（`recommendation` 是 CPIC 的 drugrecommendation 原文），每行一个 CPIC 推荐，带原始文字和 `basis_kind: cpic`，供分析师生成标签为 CPIC 的用药条目。

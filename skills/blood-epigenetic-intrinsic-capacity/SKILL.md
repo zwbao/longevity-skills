@@ -1,12 +1,13 @@
 ---
 name: blood-epigenetic-intrinsic-capacity
 description: >-
-  Tier A draft: the paper's printed example is not reproduced yet, so treat the readout as
-  provisional. Computes the blood DNA-methylation intrinsic-capacity score (DNAm IC) of Fuentealba et
-  al., Nature Aging 2025, from a person's beta values at the 91 CpGs, using the intercept and
-  elastic-net coefficients printed in Supplementary Table 1. Every site must be supplied. Use when the
-  user mentions the IC clock, DNAm intrinsic capacity, or a blood epigenetic intrinsic-capacity clock.
-  Current medicines and checkup labs are context. The report does not say what to start or stop.
+  Tier A personal readout, checked against independent implementations: the paper prints no worked
+  example, so no printed result was reproduced. Computes the blood DNA-methylation intrinsic-capacity
+  score (DNAm IC) of Fuentealba et al., Nature Aging 2025, from a person's beta values at the 91 CpGs,
+  using the intercept and elastic-net coefficients printed in Supplementary Table 1. Every site must
+  be supplied. Use when the user mentions the IC clock, DNAm intrinsic capacity, or a blood epigenetic
+  intrinsic-capacity clock. Current medicines and checkup labs are context. The report does not say
+  what to start or stop.
 ---
 
 # 甲基化内在能力

@@ -4,6 +4,7 @@
 Not run at report time. The report reads the snapshot only.
 
     python3 build_cpic_tables.py --raw RAW_DIR [--fetch] [--accessed YYYY-MM-DD]
+    python3 build_cpic_tables.py --text [--accessed YYYY-MM-DD]
 
 --fetch downloads the CPIC tables into RAW_DIR first (api.cpicpgx.org,
 PostgREST). Without it the JSON files already in RAW_DIR are used. CPIC curated
@@ -12,8 +13,12 @@ content is CC0 1.0 (see ../data/LICENSE-CPIC.md).
 The snapshot keeps CPIC's own words (allele function, phenotype lookup keys,
 recommendation text, classification strength, row id and version) and adds one
 field per recommendation row: a category from category_for() below. The
-category is how the report words the row; the CPIC text itself, which contains
-doses, is never printed.
+category is how the report words the row. The CPIC text, which contains
+doses, is printed only with personal_report.py --include-cpic-text.
+
+--text fetches, for every recommendation row in the snapshot, CPIC's record as
+the API returns it (drugrecommendation, implications, comments, classification,
+version) into ../data/cpic_recommendation_text.json. Nothing in it is edited.
 """
 
 from __future__ import annotations
@@ -35,6 +40,9 @@ from presets import ARRAY_PANEL, DRUGS, GUIDELINE_DOI, GUIDELINE_IDS, SKIP_POPUL
 
 API = "https://api.cpicpgx.org/v1/"
 OUT = HERE.parent / "data" / "cpic_tables.json"
+TEXT_OUT = HERE.parent / "data" / "cpic_recommendation_text.json"
+TEXT_FIELDS = ("id", "version", "guidelineid", "drugid", "population", "lookupkey", "classification",
+               "drugrecommendation", "implications", "comments")
 
 # Genes whose CPIC allele function table is kept for --diplotypes input.
 CLINICAL_GENES = ["CYP2C19", "CYP2C9", "CYP2D6", "TPMT", "NUDT15", "DPYD", "CYP3A5", "SLCO1B1", "ABCG2"]
@@ -271,13 +279,47 @@ def build(raw: Path, accessed: str) -> Dict[str, Any]:
     }
 
 
+def fetch_text(tables_path: Path, accessed: str) -> Dict[str, Any]:
+    """CPIC's own record for every recommendation row in the snapshot, unedited."""
+    tables = json.loads(tables_path.read_text(encoding="utf-8"))
+    ids = sorted({row["id"] for entry in tables["drugs"].values() for row in entry["rows"]})
+    records: Dict[str, Any] = {}
+    for start in range(0, len(ids), 60):
+        chunk = ",".join(str(item) for item in ids[start:start + 60])
+        for item in _get(f"recommendation?id=in.({chunk})"):
+            records[str(item["id"])] = {field: item.get(field) for field in TEXT_FIELDS}
+    missing = [item for item in ids if str(item) not in records]
+    if missing:
+        raise SystemExit(f"CPIC returned no record for {missing}")
+    change_log = _get("change_log?order=date.desc&limit=1")
+    return {
+        "schema": "cpic-recommendation-text/1",
+        "source": {
+            "api": API,
+            "accessed": accessed,
+            "latest_change_log": change_log[0]["date"] if change_log else None,
+            "license": tables["source"]["license"],
+            "attribution": tables["source"]["attribution"],
+        },
+        "recommendations": dict(sorted(records.items(), key=lambda pair: int(pair[0]))),
+    }
+
+
 def main(argv: Optional[List[str]] = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument("--raw", type=Path, required=True)
+    parser.add_argument("--raw", type=Path)
     parser.add_argument("--fetch", action="store_true")
+    parser.add_argument("--text", action="store_true", help="fetch CPIC's recommendation records into data/cpic_recommendation_text.json")
     parser.add_argument("--accessed", default=time.strftime("%Y-%m-%d"))
     parser.add_argument("--out", type=Path, default=OUT)
     args = parser.parse_args(argv)
+    if args.text:
+        data = fetch_text(OUT, args.accessed)
+        TEXT_OUT.write_text(json.dumps(data, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
+        print(f"wrote {TEXT_OUT} ({len(data['recommendations'])} recommendations)")
+        return 0
+    if args.raw is None:
+        parser.error("--raw is required unless --text")
     if args.fetch:
         fetch(args.raw)
     data = build(args.raw, args.accessed)

@@ -321,7 +321,46 @@
     }
   ],
   "validation": {
-    "status": "draft",
-    "gap_zh": "表型年龄的系数、常数 141.50225、−0.00553、0.090165 和 γ=0.0076927 都印在 Levine 等 2018 补充材料（Supplementary Methods 与补充表 S1）和正文表 1，脚本照此计算；但正文、补充材料 PDF（s001）和三个补充数据文件（s002 CpG 权重、s003、s004）都没有印出任何个人输入对应的表型年龄示例值。也查了同组 Liu 等 PLoS Med 2018（PMC6312200）正文，只有“50 岁的人表型年龄 55 岁”这类说明，没有可复现的输入和结果。现有测试的期望值来自 BioAge 包 phenoage_calc 的输出，不是论文印出的数。"
+    "status": "reproduced_secondary",
+    "comparisons": [
+      {
+        "kind": "implementation",
+        "source": "BioAge (dayoonkwon/BioAge, commit b1f9fc02f086cd4aa74185f2335ab1366082e7fe, version 0.1.0, GPL-3): phenoage0 stored in data/NHANES3.rda (SHA-256 c1b940fc9614add6effaa3ea6d189677c5cd8532f46be79284dce695ae3e0b92)",
+        "locator": "R/phenoage_calc.R, orig = TRUE; column phenoage0 of NHANES3 (CRP entered as lncrp = log(1 + crp))",
+        "values": [
+          39.8804215,
+          49.13248253,
+          29.27231108,
+          32.53121607,
+          27.56731106,
+          75.62082723,
+          24.19145663,
+          53.86461496,
+          81.84046351,
+          63.16938939,
+          61.37922301,
+          55.28870703
+        ],
+        "tolerance": "0.01 岁以内（计划要求）；12 行是 8,924 行里每隔 743 行取一行，脚本 log1p 模式在全部 8,924 行上的最大差 6.1e-08 岁",
+        "test": "tests/test_validation.py::test_matches_bioage_phenoage0_on_nhanes3"
+      },
+      {
+        "kind": "implementation",
+        "source": "FALCONAge (bhagesh-h/FALCONAge, commit 86db10d0c287518f7cb2dfcfc1a6d3470cb0b5af, GPL-3)",
+        "locator": "python/src/falconage/models/clinical.py::phenoage(crp_transform=\"log\", coefficients=\"bioage\")",
+        "values": [
+          50.475252,
+          32.926277,
+          8.580437,
+          88.447796,
+          48.995517,
+          12.748544,
+          74.164352
+        ],
+        "tolerance": "0.01 岁以内；7 个合成输入（不是真人），实际最大差 3.4e-06 岁",
+        "test": "tests/test_validation.py::test_matches_falconage_phenoage"
+      }
+    ],
+    "gap_zh": "论文没有印出任何个人输入对应的表型年龄示例值（正文、补充材料 s001 和三个补充数据文件都查过），所以不是复现论文的例子，而是和两个独立实现逐例核对。论文印出的人群汇总量是“NHANES IV（n=6,209）里表型年龄与实足年龄的相关 r=0.94”（正文结果部分），但没有写清这 6,209 人的入选条件；用 NHANES 1999–2002 年 20 岁以上九项齐全的 8,263 人按同一公式算得 r=0.915，对不上，所以这一条没有用作证据。另一个公开实现 pyaging 0.5.7 用的是论文表 1 四位小数的系数，与本脚本（BioAge 未四舍五入的系数）相差约 0.07 岁，不作为核对依据。"
   }
 }

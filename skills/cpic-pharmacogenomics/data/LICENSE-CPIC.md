@@ -1,4 +1,4 @@
-<!-- Copied from https://github.com/cpicpgx/cpic-data/blob/main/LICENSE.md on 2026-09-29. It applies to data/cpic_tables.json. -->
+<!-- Copied from https://github.com/cpicpgx/cpic-data/blob/main/LICENSE.md on 2026-09-29. It applies to data/cpic_tables.json and data/cpic_recommendation_text.json. -->
 
 # Licensing and terms of use for CPIC content
 

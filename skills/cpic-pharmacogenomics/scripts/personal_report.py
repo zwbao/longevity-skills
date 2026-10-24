@@ -4,12 +4,16 @@
 Reads a 23andMe-style raw file (and/or star-allele results from a clinical
 test), calls CPIC diplotypes and phenotypes for the genes an array can type,
 and looks up the CPIC recommendation rows for the covered drugs. The report
-words each row as one of four categories and never prints a dose.
+words each row as one of four categories and never prints a dose, unless
+--include-cpic-text asks for CPIC's own recommendation text: then every row a
+result rests on is also printed verbatim (dose wording included, labelled
+CPIC) and written to out/cpic_recommendations.json.
 """
 
 from __future__ import annotations
 
 import argparse
+import json
 import re
 import sys
 import unicodedata
@@ -47,6 +51,8 @@ from presets import (
 )
 
 TITLE = "用药基因对照（CPIC）"
+TEXT_DATA = Path(__file__).resolve().parent.parent / "data" / "cpic_recommendation_text.json"
+TEXT_SCHEMA = "cpic-recommendations/1"
 STRENGTH_ZH = {"Strong": "强", "Moderate": "中等", "Optional": "可选", "No Recommendation": "无", "n/a": "无"}
 OUTPUT_GENES = ["CYP2C19", "CYP2C9", "CYP2D6", "SLCO1B1", "ABCG2", "TPMT", "NUDT15", "DPYD", "CYP3A5"]
 FORM_SUFFIXES = (
@@ -311,7 +317,7 @@ def medication_section(medications: List[str], results: Dict[str, DrugResult], c
     return lines
 
 
-def render(calls, array_calls, facts, medications: List[str], asked: List[str], tables) -> str:
+def render(calls, array_calls, facts, medications: List[str], asked: List[str], tables, cpic_text=None) -> str:
     results = {result.drug: result for result in all_drug_results(tables, calls)}
     groups: Dict[str, List[str]] = {"discuss": [], "standard": [], "none": [], "needs_test": []}
     for drug, result in results.items():
@@ -368,6 +374,8 @@ def render(calls, array_calls, facts, medications: List[str], asked: List[str], 
     lines += ["", "## 芯片数据判断不了的", ""]
     for gene, text in NOT_FROM_ARRAY.items():
         lines.append(f"- **{gene}**：{text}")
+    if cpic_text is not None:
+        lines += ["", *cpic_text_section(cpic_text_records(calls, tables, cpic_text), cpic_text)]
     source_meta = tables["source"]
     lines += [
         "",
@@ -379,6 +387,80 @@ def render(calls, array_calls, facts, medications: List[str], asked: List[str], 
         f"边界: {BOUNDARY}",
     ]
     return "\n".join(lines) + "\n"
+
+
+def load_text() -> Dict[str, object]:
+    return json.loads(TEXT_DATA.read_text(encoding="utf-8"))
+
+
+def _plain(text: Optional[str]) -> str:
+    """CPIC's words with line breaks folded to spaces, so a quote stays one Markdown line."""
+    return " ".join((text or "").split())
+
+
+def cpic_text_records(calls: Dict[str, GeneCall], tables, text) -> List[Dict[str, object]]:
+    """Every CPIC row a drug result rests on, with CPIC's record unedited."""
+    records: List[Dict[str, object]] = []
+    for result in all_drug_results(tables, calls):
+        if result.status != "ok":
+            continue
+        entry = tables["drugs"][result.drug]
+        for branch in result.branches:
+            for row in branch.rows:
+                record = text["recommendations"][str(row["id"])]
+                records.append({
+                    "drug": result.drug,
+                    "drug_zh": drug_zh(result.drug),
+                    "genes_used": genes_used(result, calls, entry),
+                    "population": branch.population,
+                    "guideline": entry["guideline"],
+                    "guideline_doi": entry["guideline_doi"],
+                    "guideline_url": entry["guideline_url"],
+                    "recommendation_id": record["id"],
+                    "version": record["version"],
+                    "lookup": record["lookupkey"],
+                    "classification": record["classification"],
+                    "category": row["category"],
+                    "recommendation": record["drugrecommendation"],
+                    "implications": record["implications"],
+                    "comments": record["comments"],
+                    "basis_kind": "cpic",
+                })
+    return records
+
+
+def cpic_text_section(records: List[Dict[str, object]], text) -> List[str]:
+    source = text["source"]
+    lines = [
+        "## CPIC 原文推荐（照录，英文）",
+        "",
+        "以下是 CPIC 指南对你这些结果的原话，包括剂量调整的写法，一字未改（只把换行并成空格）。"
+        "标签：CPIC 指南。用不用药、用多少，请医生或药师结合病情决定；正在用的药不要自己停或改量。",
+        f"来源：CPIC 数据库（{source['api']}，{source['accessed']} 读取，CC0）。每条写明 CPIC 推荐编号和版本。",
+    ]
+    for record in records:
+        where = POPULATION_ZH.get(record["population"], record["population"])
+        lookup = "；".join(f"{gene}: {value}" for gene, value in sorted(record["lookup"].items()))
+        lines += [
+            "",
+            f"- **{record['drug_zh']}**（{record['drug']}）{('，' + where) if where else ''}，按 {record['genes_used']}",
+            f"  - CPIC 推荐 #{record['recommendation_id']}（第 {record['version']} 版），对应 {lookup}，推荐强度 {record['classification']}",
+            f"  - Recommendation: {_plain(record['recommendation'])}",
+        ]
+        for gene, implication in sorted((record["implications"] or {}).items()):
+            if _plain(implication).casefold() != "n/a":
+                lines.append(f"  - Implications ({gene}): {_plain(implication)}")
+        if record["comments"] and _plain(record["comments"]).casefold() != "n/a":
+            lines.append(f"  - Comments: {_plain(record['comments'])}")
+        lines.append(f"  - 指南：{record['guideline']}（doi:{record['guideline_doi']}）")
+    return lines
+
+
+def write_cpic_text(out_dir: Path, records: List[Dict[str, object]], text) -> Path:
+    path = out_dir / "cpic_recommendations.json"
+    payload = {"schema": TEXT_SCHEMA, "source": text["source"], "results": records}
+    path.write_text(json.dumps(payload, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
+    return path
 
 
 def _with_paper_card(text):
@@ -416,11 +498,12 @@ def outputs(calls: Dict[str, GeneCall], tables) -> Dict[str, Optional[str]]:
 
 
 def write_report(out_dir: Path, genotype: Optional[Path], diplotypes: Optional[Path] = None,
-                 medications: Optional[Path] = None, drugs: Optional[List[str]] = None) -> Path:
+                 medications: Optional[Path] = None, drugs: Optional[List[str]] = None,
+                 include_cpic_text: bool = False) -> Path:
     out_dir.mkdir(parents=True, exist_ok=True)
-    stale = out_dir / "problems.json"
-    if stale.exists():
-        stale.unlink()
+    for stale in (out_dir / "problems.json", out_dir / "cpic_recommendations.json"):
+        if stale.exists():
+            stale.unlink()
     manifest = skillkit.load_manifest(__file__)
     tables = load_tables()
     calls, array_calls, problems, facts = collect(genotype, diplotypes)
@@ -429,10 +512,17 @@ def write_report(out_dir: Path, genotype: Optional[Path], diplotypes: Optional[P
         path.write_text(_with_paper_card(path.read_text(encoding="utf-8")), encoding="utf-8")
         skillkit.write_result(out_dir, manifest, {spec["key"]: None for spec in manifest["outputs"]})
         return path
-    text = render(calls, array_calls, facts, load_lines(medications), drugs or [], tables)
+    cpic_text = load_text() if include_cpic_text else None
+    text = render(calls, array_calls, facts, load_lines(medications), drugs or [], tables, cpic_text)
     path = out_dir / "report.md"
     path.write_text(_with_paper_card(text), encoding="utf-8")
-    skillkit.write_result(out_dir, manifest, outputs(calls, tables))
+    result = skillkit.write_result(out_dir, manifest, outputs(calls, tables))
+    if cpic_text is not None:
+        records = cpic_text_records(calls, tables, cpic_text)
+        write_cpic_text(out_dir, records, cpic_text)
+        payload = json.loads(result.read_text(encoding="utf-8"))
+        payload["cpic_recommendations"] = records
+        result.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     return path
 
 
@@ -442,9 +532,11 @@ def main(argv: Optional[List[str]] = None) -> int:
     parser.add_argument("--diplotypes", type=Path, help="clinical results, one gene per line, e.g. 'CYP2D6 *1/*10'")
     parser.add_argument("--drug", action="append", default=[], help="a medicine name to look up first (repeatable)")
     parser.add_argument("--medications", type=Path, help="current medicines, one per line")
+    parser.add_argument("--include-cpic-text", action="store_true",
+                        help="also print CPIC's recommendation text verbatim (dose wording included) and write out/cpic_recommendations.json")
     parser.add_argument("--out", type=Path, required=True)
     args = parser.parse_args(argv)
-    path = write_report(args.out, args.genotype, args.diplotypes, args.medications, args.drug)
+    path = write_report(args.out, args.genotype, args.diplotypes, args.medications, args.drug, args.include_cpic_text)
     sys.stdout.write(str(path) + "\n")
     if (args.out / "problems.json").exists():
         return skillkit.EXIT_INPUT_PROBLEM
