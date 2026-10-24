@@ -218,3 +218,51 @@ def test_claims_come_only_from_the_full_text(monkeypatch):
     assert any("abstract" in error for error in errors), errors
     row["source"].update(locator="Table 2", access="fulltext")
     assert evidence.check(manifests) == []
+
+
+def _biovar_row(**extra):
+    row = {"key": "demo", "label_zh": "示例", "loinc": [], "unit": "U/L", "cvi_pct": 9.3, "cvi_ci_pct": [8.7, 10.0], "better": "lower",
+           "log_normal": False, "verified": True,
+           "cvi_source": {"title": "Demo", "url": "https://doi.org/10.1000/x", "doi": "10.1000/x", "quote": "1 | ALT, U/L | 9.3 (8.7–10.0)"}}
+    row.update(extra)
+    return row
+
+
+def test_biovar_long_term_cvi_needs_its_own_quoted_source(tmp_path, monkeypatch):
+    from tools.lsk import datasets
+    path = tmp_path / "biological_variation.json"
+    monkeypatch.setattr(datasets, "BIOVAR", path)
+
+    def check(row):
+        path.write_text(json.dumps({"schema": "longevity-biovar/1", "z": 1.96, "z_trend": 2.576, "default_cva_rule_zh": "CVA = 0.5 × CVI", "markers": [row]}), encoding="utf-8")
+        return datasets.check_biovar()
+
+    assert check(_biovar_row()) == []
+    assert any("no long_term_source" in error for error in check(_biovar_row(long_term_cvi_pct=14.2)))
+    source = {"title": "Long", "url": "https://doi.org/10.1000/y", "doi": "10.1000/y", "quote": "over 3 years the within-person CV was 14.0%"}
+    assert any("does not contain 14.2" in error for error in check(_biovar_row(long_term_cvi_pct=14.2, long_term_source=source)))
+    source["quote"] = "over 3 years the within-person CV was 14.2%"
+    assert check(_biovar_row(long_term_cvi_pct=14.2, long_term_source=source)) == []
+    assert any("no long_term_cvi_pct" in error for error in check(_biovar_row(long_term_source=source)))
+
+
+def test_readout_noise_number_must_be_in_quote(tmp_path, monkeypatch):
+    from tools.lsk import datasets
+    path = tmp_path / "readout_noise.json"
+    monkeypatch.setattr(datasets, "READOUT_NOISE", path)
+    row = {"key": "horvath", "match": ["epiage.horvath", "Horvath"], "unit": "岁", "noise_kind": "technical_replicate", "sd_abs": 1.8,
+           "tissue": "whole_blood", "platform": ["450k"], "verified": True,
+           "source": {"title": "Demo", "url": "https://doi.org/10.1000/x", "doi": "10.1000/x", "quote": "replicate SD was 1.8 years", "quote_location": "Results"}}
+
+    def check(*rows):
+        path.write_text(json.dumps({"schema": "longevity-readout-noise/1", "z": 1.96, "readouts": list(rows)}), encoding="utf-8")
+        return datasets.check_readout_noise()
+
+    assert check(row) == []
+    assert any("does not contain 2.5" in error for error in check(dict(row, sd_abs=2.5)))
+    assert any("neither sd_abs nor icc" in error for error in check({k: v for k, v in row.items() if k != "sd_abs"}))
+    assert any("ellipsis" in error for error in check(dict(row, source=dict(row["source"], quote="replicate ... SD was 1.8 years"))))
+    other = dict(row, key="hannum", match=["Horvath"])
+    assert any("names both" in error for error in check(row, other))
+    assert any("duplicate readout key" in error for error in check(row, dict(row)))
+    assert any("noise_kind" in error for error in check(dict(row, noise_kind="guess")))
