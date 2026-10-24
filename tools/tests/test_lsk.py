@@ -228,6 +228,15 @@ def _biovar_row(**extra):
     return row
 
 
+def _effect_row(**extra):
+    row = {"id": "x-sbp", "intervention": "Salt reduction", "intervention_zh": "减盐", "category": "diet", "marker": "Systolic blood pressure",
+           "marker_zh": "收缩压", "effect": {"kind": "mean_difference", "value": -4.18, "unit": "mmHg", "ci": [-5.18, -3.18]},
+           "population": "成人", "design": "meta-analysis", "doi": "10.1136/bmj.f1325",
+           "quote": "systolic blood pressure fell by -4.18 mm Hg (95% CI -5.18 to -3.18)", "verified": True, "verified_by": "quote_match"}
+    row.update(extra)
+    return row
+
+
 def test_biovar_long_term_cvi_needs_its_own_quoted_source(tmp_path, monkeypatch):
     from tools.lsk import datasets
     path = tmp_path / "biological_variation.json"
@@ -266,3 +275,39 @@ def test_readout_noise_number_must_be_in_quote(tmp_path, monkeypatch):
     assert any("names both" in error for error in check(row, other))
     assert any("duplicate readout key" in error for error in check(row, dict(row)))
     assert any("noise_kind" in error for error in check(dict(row, noise_kind="guess")))
+
+
+def _check_effect_rows(monkeypatch, tmp_path, rows):
+    from tools.lsk import datasets
+    path = tmp_path / "effects.jsonl"
+    path.write_text("".join(json.dumps(row, ensure_ascii=False) + "\n" for row in rows), encoding="utf-8")
+    monkeypatch.setattr(datasets, "EFFECTS", path)
+    return datasets.check_effects()
+
+
+def test_effect_person_review_names_reviewer_and_date(monkeypatch, tmp_path):
+    assert _check_effect_rows(monkeypatch, tmp_path, [_effect_row()]) == []
+    errors = " ".join(_check_effect_rows(monkeypatch, tmp_path, [_effect_row(verified_by="person")]))
+    assert "verified_by_name" in errors
+    good = _effect_row(verified_by="person", verified_by_name="Reviewer A", verified_on="2026-11-02")
+    assert _check_effect_rows(monkeypatch, tmp_path, [good]) == []
+    errors = " ".join(_check_effect_rows(monkeypatch, tmp_path, [_effect_row(verified_by_name="Reviewer A", verified_on="2026-11-02")]))
+    assert "belong to a person review" in errors
+    assert _check_effect_rows(monkeypatch, tmp_path, [_effect_row(verified_by="person", verified_by_name="A", verified_on="2 Nov 2026")])
+
+
+def test_effect_tau_needs_its_own_source(monkeypatch, tmp_path):
+    errors = " ".join(_check_effect_rows(monkeypatch, tmp_path, [_effect_row(tau_pct=3.0)]))
+    assert "tau_source" in errors
+    source = {"doi": "10.1000/x", "quote": "the SD of the individual response was 5 mmHg", "locator": "Table 3"}
+    assert _check_effect_rows(monkeypatch, tmp_path, [_effect_row(tau_pct=3.0, tau_source=source)]) == []
+    assert _check_effect_rows(monkeypatch, tmp_path, [_effect_row(tau_source=source)])
+    assert _check_effect_rows(monkeypatch, tmp_path, [_effect_row(tau_pct=-1, tau_source=source)])
+    assert _check_effect_rows(monkeypatch, tmp_path, [_effect_row(tau_pct=3.0, tau_source={"doi": "10.1000/x"})])
+
+
+def test_effect_review_share_is_printed_not_enforced(monkeypatch, tmp_path):
+    from tools.lsk import datasets
+    rows = [_effect_row(id=f"r{i}") for i in range(3)] + [_effect_row(id="r3", verified_by="person", verified_by_name="A", verified_on="2026-11-02")]
+    assert _check_effect_rows(monkeypatch, tmp_path, rows) == []
+    assert datasets.effects_review_share() == "data/effects.jsonl: 1 of 4 rows checked by a person (25%), 3 by quote match only"
