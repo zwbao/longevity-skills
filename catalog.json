@@ -2281,14 +2281,14 @@
         "甲基化"
       ],
       "blurb_zh": "血液甲基化芯片的 91 个位点 β 值，按论文补充表 1 算甲基化内在能力（认知、行走、情绪、感官和活力的综合）。",
-      "description": "Tier A draft: the paper's printed example is not reproduced yet, so treat the readout as provisional. Computes the blood DNA-methylation intrinsic-capacity score (DNAm IC) of Fuentealba et al., Nature Aging 2025, from a person's beta values at the 91 CpGs, using the intercept and elastic-net coefficients printed in Supplementary Table 1. Every site must be supplied. Use when the user mentions the IC clock, DNAm intrinsic capacity, or a blood epigenetic intrinsic-capacity clock. Current medicines and checkup labs are context. The report does not say what to start or stop.",
+      "description": "Tier A personal readout, checked against independent implementations: the paper prints no worked example, so no printed result was reproduced. Computes the blood DNA-methylation intrinsic-capacity score (DNAm IC) of Fuentealba et al., Nature Aging 2025, from a person's beta values at the 91 CpGs, using the intercept and elastic-net coefficients printed in Supplementary Table 1. Every site must be supplied. Use when the user mentions the IC clock, DNAm intrinsic capacity, or a blood epigenetic intrinsic-capacity clock. Current medicines and checkup labs are context. The report does not say what to start or stop.",
       "intents": [
         "epigenetic_age",
         "frailty_mortality"
       ],
       "has_script": true,
-      "validation_status": "draft",
-      "validation_label_zh": "仍在验证",
+      "validation_status": "reproduced_secondary",
+      "validation_label_zh": "已与独立实现核对",
       "entry": {
         "script": "scripts/personal_report.py",
         "measurements_flag": "--measurements",
@@ -6497,13 +6497,13 @@
         "衰弱与死亡风险"
       ],
       "blurb_zh": "已经算好的医院衰弱风险分。",
-      "description": "Tier A draft: the paper's printed example is not reproduced yet, so treat the readout as provisional. Writes a personal Hospital Frailty Risk Score by summing published ICD-10 condition weights, then places that sum in a low, intermediate, or high bin. Use when the user brings diagnosis codes or an already computed score, medicines, or checkup labs and asks about this hospital frailty score. The skill does not ask for a reference cohort. It does not turn the bin into advice to start or stop a medicine.",
+      "description": "Tier A personal readout, checked against independent implementations: the paper prints no worked example, so no printed result was reproduced. Writes a personal Hospital Frailty Risk Score by summing published ICD-10 condition weights, then places that sum in a low, intermediate, or high bin. Use when the user brings diagnosis codes or an already computed score, medicines, or checkup labs and asks about this hospital frailty score. The skill does not ask for a reference cohort. It does not turn the bin into advice to start or stop a medicine.",
       "intents": [
         "frailty_mortality"
       ],
       "has_script": true,
-      "validation_status": "draft",
-      "validation_label_zh": "仍在验证",
+      "validation_status": "reproduced_secondary",
+      "validation_label_zh": "已与独立实现核对",
       "entry": {
         "script": "scripts/personal_report.py",
         "measurements_flag": "--measurements",
@@ -6905,7 +6905,7 @@
           "note_zh": "有这个诊断写 1，没有写 0；名称列也可以写更细的编码（如 F00.1）。"
         },
         {
-          "key": "Z51",
+          "key": "Z50",
           "label_zh": "康复操作",
           "aliases": [
             "Care involving use of rehabilitation procedures"
