@@ -96,7 +96,24 @@ def check_effects() -> List[str]:
             errors.append(f"{where}: the quote never names the marker ({', '.join(item for item in names if item)}); quote the span that says which measure moved")
         if isinstance(value, (int, float)) and value < 0 and not sign_shown(quote, value):
             errors.append(f"{where}: effect {value} is negative but the quote shows neither a minus sign on it nor a word for a fall")
+        if row.get("verified_by") == "person" and not (row.get("verified_by_name") and row.get("verified_on")):
+            errors.append(f"{where}: a person review names the reviewer and the date (verified_by_name, verified_on)")
+        if row.get("verified_by") != "person" and (row.get("verified_by_name") or row.get("verified_on")):
+            errors.append(f"{where}: verified_by_name and verified_on belong to a person review (verified_by: person)")
+        if "tau_pct" in row and not row.get("tau_source"):
+            errors.append(f"{where}: tau_pct needs its own tau_source (doi, quote, locator)")
+        if "tau_source" in row and "tau_pct" not in row:
+            errors.append(f"{where}: tau_source without tau_pct")
     return errors
+
+
+def effects_review_share() -> str:
+    """One line for `lsk check`: how many effect rows a person has checked against the paper."""
+    rows = [row for row in read_jsonl(EFFECTS) if isinstance(row, dict)] if EFFECTS.exists() else []
+    person = sum(1 for row in rows if row.get("verified_by") == "person")
+    script = sum(1 for row in rows if row.get("verified_by") == "quote_match")
+    share = f"{100 * person / len(rows):.0f}%" if rows else "n/a"
+    return f"data/effects.jsonl: {person} of {len(rows)} rows checked by a person ({share}), {script} by quote match only"
 
 
 _DASHES = str.maketrans({"\u2212": "-", "\u2013": "-", "\u2010": "-", "\u2011": "-", "\u00b7": "."})

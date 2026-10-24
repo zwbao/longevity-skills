@@ -74,6 +74,7 @@ def cmd_check() -> int:
     status |= _report(vendor.check_cards(), "paper cards")
     status |= _report(datasets.check_biovar(), "data/biological_variation.json")
     status |= _report(datasets.check_effects(), "data/effects.jsonl")
+    print(datasets.effects_review_share())
     if not errors:
         status |= cmd_catalog(check=True)
     if PLUGIN.exists():
