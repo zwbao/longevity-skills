@@ -2,9 +2,9 @@
   "schema": "longevity-catalog/1",
   "version": "2026.43.0",
   "counts": {
-    "skills": 176,
+    "skills": 177,
     "tiers": {
-      "A": 12,
+      "A": 13,
       "B": 83,
       "C": 73,
       "tool": 8
@@ -554,7 +554,8 @@
         "circadian-frailty-older-adults",
         "genome-wide-proteomics-frailty",
         "sleep-study-life-expectancy",
-        "one-year-mortality-aging-marker"
+        "one-year-mortality-aging-marker",
+        "calf-circumference-decline-falls"
       ],
       "priority": 0
     },
@@ -3609,6 +3610,159 @@
         "title_zh": "限食试验时钟",
         "journal": "Nature Aging",
         "year": 2023
+      }
+    },
+    {
+      "name": "calf-circumference-decline-falls",
+      "kind": "paper",
+      "tier": "A",
+      "species": [
+        "human"
+      ],
+      "evidence": "cohort",
+      "domains": [
+        "跌倒与肌肉"
+      ],
+      "blurb_zh": "用前后两次自己量的小腿围算绝对和相对减少量，按论文切点分档，给出中国老人队列里该档与小腿围没减少者相比的跌倒比值比。",
+      "description": "Tier A draft: the paper's printed example is not reproduced yet, so treat the readout as provisional. Groups the change between two of one person's own calf circumference measurements with the cut points of Zhang et al. (JAMA Network Open 2026, Chinese Longitudinal Healthy Longevity Survey 2018-2021, adults aged 60 and over) and reports the printed odds ratios of incident falls for that group versus no decrease (Tables 2-4, fully adjusted). Use for 小腿围, 小腿围变细, 腿变细, 跌倒风险, 肌少症筛查, 老人跌倒. States that the odds ratios are population associations over about 3 years, not a personal fall probability, and does not diagnose sarcopenia.",
+      "intents": [
+        "frailty_mortality"
+      ],
+      "has_script": true,
+      "validation_status": "draft",
+      "entry": {
+        "script": "scripts/personal_report.py",
+        "measurements_flag": "--measurements",
+        "measurements_header": [
+          "item",
+          "value",
+          "unit"
+        ],
+        "age_flag": "--age",
+        "sex_flag": "--sex",
+        "out_flag": "--out",
+        "result_json": true
+      },
+      "population": {
+        "age_years": [
+          60,
+          120
+        ],
+        "note_zh": "论文人群是中国 60 岁及以上社区老人，平均 79.66 岁，两次测量间隔中位 3.07 年（四分位 2.91–3.17 年）。间隔明显不是约 3 年、或不到 60 岁时，分档和比值比都不一定适用。"
+      },
+      "inputs_status": "verified",
+      "inputs": [
+        {
+          "key": "calf_baseline_cm",
+          "label_zh": "基线小腿围（第一次）",
+          "aliases": [
+            "calf baseline",
+            "baseline calf circumference",
+            "calf circumference baseline",
+            "calf_1",
+            "基线小腿围",
+            "第一次小腿围",
+            "小腿围(基线)"
+          ],
+          "unit": "cm",
+          "accept": {
+            "mm": 0.1,
+            "in": 2.54
+          },
+          "range": [
+            15,
+            50
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "坐位、双脚平放、膝约 90°，量右小腿最粗处，精确到 0.1 cm（论文方法）。论文把小于 15 cm 或大于 50 cm 当作异常值。"
+        },
+        {
+          "key": "calf_followup_cm",
+          "label_zh": "随访小腿围（第二次）",
+          "aliases": [
+            "calf followup",
+            "calf follow-up",
+            "follow-up calf circumference",
+            "calf circumference follow-up",
+            "calf_2",
+            "随访小腿围",
+            "第二次小腿围",
+            "小腿围(随访)"
+          ],
+          "unit": "cm",
+          "accept": {
+            "mm": 0.1,
+            "in": 2.54
+          },
+          "range": [
+            15,
+            50
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "和第一次同一条腿、同样姿势量。论文两次间隔约 3 年。"
+        },
+        {
+          "key": "sex",
+          "label_zh": "性别",
+          "required": false,
+          "from": "profile",
+          "flag": "--sex",
+          "note_zh": "给了性别时，另外列出表 4 该性别的比值比。"
+        },
+        {
+          "key": "age",
+          "label_zh": "实足年龄",
+          "unit": "a",
+          "range": [
+            18,
+            120
+          ],
+          "required": false,
+          "from": "profile",
+          "flag": "--age",
+          "note_zh": "给了年龄时，另外列出表 4 不到 80 岁或 80 岁及以上的比值比；不到 60 岁会提示不在论文人群内。"
+        }
+      ],
+      "outputs": [
+        {
+          "key": "calf_change_cm",
+          "label_zh": "小腿围绝对变化（随访减基线）",
+          "unit": "cm"
+        },
+        {
+          "key": "calf_change_pct",
+          "label_zh": "小腿围相对变化",
+          "unit": "%"
+        },
+        {
+          "key": "absolute_category",
+          "label_zh": "绝对减少分档（论文方法）",
+          "unit": ""
+        },
+        {
+          "key": "absolute_or",
+          "label_zh": "该绝对分档的跌倒比值比（表 2 模型 4，参照没有减少）",
+          "unit": "1"
+        },
+        {
+          "key": "relative_category",
+          "label_zh": "相对减少分档（论文方法）",
+          "unit": ""
+        },
+        {
+          "key": "relative_or",
+          "label_zh": "该相对分档的跌倒比值比（表 3 模型 4，参照没有减少）",
+          "unit": "1"
+        }
+      ],
+      "paper": {
+        "doi": "10.1001/jamanetworkopen.2026.40127",
+        "title": "Longitudinal Change in Calf Circumference and Incident Falls in Older Adults",
+        "title_zh": "老年人小腿围的纵向变化与新发跌倒",
+        "journal": "JAMA Network Open",
+        "year": 2026
       }
     },
     {

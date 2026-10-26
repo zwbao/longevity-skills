@@ -1,0 +1,175 @@
+{
+  "schema": "longevity-skill/1",
+  "name": "calf-circumference-decline-falls",
+  "kind": "paper",
+  "tier": "A",
+  "species": [
+    "human"
+  ],
+  "evidence": "cohort",
+  "domains": [
+    "跌倒与肌肉"
+  ],
+  "blurb_zh": "用前后两次自己量的小腿围算绝对和相对减少量，按论文切点分档，给出中国老人队列里该档与小腿围没减少者相比的跌倒比值比。",
+  "intents": [
+    "frailty_mortality"
+  ],
+  "triage": {
+    "reason_zh": "两次小腿围按论文印出的切点分档，查回表2–4的跌倒比值比；论文没印个人算例，验证保持草稿。",
+    "reviewed": false
+  },
+  "paper": {
+    "doi": "10.1001/jamanetworkopen.2026.40127",
+    "title": "Longitudinal Change in Calf Circumference and Incident Falls in Older Adults",
+    "title_zh": "老年人小腿围的纵向变化与新发跌倒",
+    "journal": "JAMA Network Open",
+    "year": 2026,
+    "authors": "Zhang 等",
+    "article_url": "https://doi.org/10.1001/jamanetworkopen.2026.40127",
+    "supplements": [
+      {
+        "label": "Supplement 1（eTables 和 eFigures）",
+        "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC13695073/"
+      }
+    ],
+    "card_notes": [
+      "数据来自中国老年健康影响因素跟踪调查（CLHLS）2018 和 2021 两轮，7068 名 60 岁及以上社区老人，平均 79.66 岁，女性 54.26%，中位随访 3.07 年，1671 人（23.64%）报告新发跌倒。",
+      "测量：坐位，双脚平放，膝关节约 90°，量右小腿，精确到 0.1 cm。绝对变化 = 随访小腿围 − 基线小腿围；相对变化 = 绝对变化 ÷ 基线 × 100。绝对减少分档：没有减少、不到 3 cm、3 到不到 5 cm、5 cm 及以上；相对减少分档：没有减少、不到 10%、10% 到不到 20%、20% 及以上。没有减少（含增加）是参照组。小腿围小于 15 cm 或大于 50 cm 被当作异常值剔除。",
+      "比值比来自逆概率加权的 logistic 回归模型 4（表 2、表 3），调整了年龄、性别、基线小腿围、跌倒史、社会人口学、生活方式、日常活动能力、认知、抑郁和六种慢病；分性别、分年龄（不到 80 岁、80 岁及以上）的比值比来自表 4。",
+      "跌倒是 2021 年面访时自报的过去一年跌倒。论文局限：自报回忆偏差，小腿围分不清肌肉、皮下脂肪和水肿，跌倒和小腿围变化在同一时段发生、不能排除反向因果。"
+    ],
+    "summary_zh": "这项中国老年队列研究比较了社区老人三年间小腿围的绝对和相对减少量与随后自报跌倒的关系，小腿围减少越多，跌倒的比值比越高。个人报告只把你两次自己量的小腿围按论文切点分档，并给出该档在论文人群中相对小腿围没减少者的比值比，不估算个人跌倒概率，也不做诊断。",
+    "summary_status": "draft"
+  },
+  "entry": {
+    "script": "scripts/personal_report.py",
+    "measurements_flag": "--measurements",
+    "measurements_header": [
+      "item",
+      "value",
+      "unit"
+    ],
+    "age_flag": "--age",
+    "sex_flag": "--sex",
+    "out_flag": "--out",
+    "result_json": true
+  },
+  "population": {
+    "age_years": [
+      60,
+      120
+    ],
+    "note_zh": "论文人群是中国 60 岁及以上社区老人，平均 79.66 岁，两次测量间隔中位 3.07 年（四分位 2.91–3.17 年）。间隔明显不是约 3 年、或不到 60 岁时，分档和比值比都不一定适用。"
+  },
+  "inputs_status": "verified",
+  "inputs": [
+    {
+      "key": "calf_baseline_cm",
+      "label_zh": "基线小腿围（第一次）",
+      "aliases": [
+        "calf baseline",
+        "baseline calf circumference",
+        "calf circumference baseline",
+        "calf_1",
+        "基线小腿围",
+        "第一次小腿围",
+        "小腿围(基线)"
+      ],
+      "unit": "cm",
+      "accept": {
+        "mm": 0.1,
+        "in": 2.54
+      },
+      "range": [
+        15,
+        50
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "坐位、双脚平放、膝约 90°，量右小腿最粗处，精确到 0.1 cm（论文方法）。论文把小于 15 cm 或大于 50 cm 当作异常值。"
+    },
+    {
+      "key": "calf_followup_cm",
+      "label_zh": "随访小腿围（第二次）",
+      "aliases": [
+        "calf followup",
+        "calf follow-up",
+        "follow-up calf circumference",
+        "calf circumference follow-up",
+        "calf_2",
+        "随访小腿围",
+        "第二次小腿围",
+        "小腿围(随访)"
+      ],
+      "unit": "cm",
+      "accept": {
+        "mm": 0.1,
+        "in": 2.54
+      },
+      "range": [
+        15,
+        50
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "和第一次同一条腿、同样姿势量。论文两次间隔约 3 年。"
+    },
+    {
+      "key": "sex",
+      "label_zh": "性别",
+      "required": false,
+      "from": "profile",
+      "flag": "--sex",
+      "note_zh": "给了性别时，另外列出表 4 该性别的比值比。"
+    },
+    {
+      "key": "age",
+      "label_zh": "实足年龄",
+      "unit": "a",
+      "range": [
+        18,
+        120
+      ],
+      "required": false,
+      "from": "profile",
+      "flag": "--age",
+      "note_zh": "给了年龄时，另外列出表 4 不到 80 岁或 80 岁及以上的比值比；不到 60 岁会提示不在论文人群内。"
+    }
+  ],
+  "outputs": [
+    {
+      "key": "calf_change_cm",
+      "label_zh": "小腿围绝对变化（随访减基线）",
+      "unit": "cm"
+    },
+    {
+      "key": "calf_change_pct",
+      "label_zh": "小腿围相对变化",
+      "unit": "%"
+    },
+    {
+      "key": "absolute_category",
+      "label_zh": "绝对减少分档（论文方法）",
+      "unit": ""
+    },
+    {
+      "key": "absolute_or",
+      "label_zh": "该绝对分档的跌倒比值比（表 2 模型 4，参照没有减少）",
+      "unit": "1"
+    },
+    {
+      "key": "relative_category",
+      "label_zh": "相对减少分档（论文方法）",
+      "unit": ""
+    },
+    {
+      "key": "relative_or",
+      "label_zh": "该相对分档的跌倒比值比（表 3 模型 4，参照没有减少）",
+      "unit": "1"
+    }
+  ],
+  "validation": {
+    "status": "draft",
+    "gap_zh": "论文表 2–4 印出了各分档的比值比和切点，测试只核对分档查表与印出的数一致；正文和表格没有印出任何个人两次小腿围对应结果的算例，Supplement 1 本周未能下载，所以不算复现。"
+  }
+}

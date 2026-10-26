@@ -233,6 +233,10 @@ python3 -m tools.lsk test --changed origin/main   # 只测相对 main 改动过�
 
 - `skills/ckd-epi-2021-egfr/` — 血肌酐、年龄和性别算肾小球滤过率估计值（eGFR），有胱抑素 C 时用肌酐加胱抑素 C 方程，按 KDIGO 分 G1–G5；有尿白蛋白/肌酐比时再分 A1–A3。
 
+## 跌倒与肌肉
+
+- `skills/calf-circumference-decline-falls/` — 用前后两次自己量的小腿围算绝对和相对减少量，按论文切点分档，给出中国老人队列里该档与小腿围没减少者相比的跌倒比值比。
+
 ## 饮食与基因
 
 - `skills/nutrigenetic-variant-panel/` — 基因检测原始数据里和喝酒、叶酸、喝奶有关的三个位点，按要求再看 APOE 与血脂。（名单类）
