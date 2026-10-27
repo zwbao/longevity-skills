@@ -3632,6 +3632,7 @@
       ],
       "has_script": true,
       "validation_status": "draft",
+      "validation_label_zh": "仍在验证",
       "entry": {
         "script": "scripts/personal_report.py",
         "measurements_flag": "--measurements",
