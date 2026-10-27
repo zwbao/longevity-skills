@@ -1,6 +1,7 @@
 """Hospital Frailty Risk Score weights from Supplementary Table 18.
 
-doi:10.1038/s43587-025-00925-y. Each code is counted once.
+doi:10.1038/s43587-025-00925-y. Each code is counted once. One code is
+corrected to the original HFRS table (Gilbert et al., Lancet 2018): see Z50.
 """
 
 from __future__ import annotations
@@ -39,7 +40,9 @@ HFRS_ITEMS = (
     ('M25', 2.3, '其他关节疾患', 'Other joint disorders, not elsewhere classified'),
     ('E86', 2.3, '血容量不足', 'Volume depletion'),
     ('R54', 2.2, '衰老', 'Senility'),
-    ('Z51', 2.1, '康复操作', 'Care involving use of rehabilitation procedures'),
+    # Supplementary Table 18 prints code Z51 beside this description. In ICD-10 the description is Z50, and the
+    # source the table copies (Gilbert et al., Lancet 2018, appendix table, PMC5946808) prints Z50 with weight 2.1.
+    ('Z50', 2.1, '康复操作', 'Care involving use of rehabilitation procedures'),
     ('F03', 2.1, '未特指的痴呆', 'Unspecified dementia'),
     ('W18', 2.1, '同一平面的其他跌倒', 'Other fall on same level'),
     ('Z75', 2.0, '与医疗设施和其他卫生保健有关的问题', 'Problems related to medical facilities and other health care'),

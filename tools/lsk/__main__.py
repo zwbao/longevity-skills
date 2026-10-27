@@ -22,7 +22,7 @@ import json
 import sys
 from typing import List
 
-from . import catalog, datasets, evidence, frontmatter, manifest, readme, registry, testrun, vendor
+from . import catalog, datasets, dispatch, evidence, frontmatter, manifest, readme, registry, testrun, vendor
 from .common import CATALOG, PLUGIN, README, dump_json, read_json, write_json
 from .doi import normalize_doi
 
@@ -73,7 +73,11 @@ def cmd_check() -> int:
     status |= _report(vendor.check(), "vendored files")
     status |= _report(vendor.check_cards(), "paper cards")
     status |= _report(datasets.check_biovar(), "data/biological_variation.json")
+    status |= _report(datasets.check_readout_noise(), "data/readout_noise.json")
     status |= _report(datasets.check_effects(), "data/effects.jsonl")
+    print(datasets.effects_review_share())
+    dispatch_errors, skipped = dispatch.check(manifests)
+    status |= _report(dispatch_errors, "dispatch (coach 常用方法, analyst whitelists)" + (f" [{'; '.join(skipped)}]" if skipped else ""))
     if not errors:
         status |= cmd_catalog(check=True)
     if PLUGIN.exists():

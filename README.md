@@ -2,7 +2,7 @@
 
 长寿与抗衰相关 Agent Skills 的集合，也是面向 Agent 的长寿方法库。每个 skill 单独一个目录，放在 `skills/<name>/`，目录名是方法名。原始论文和 PDF 不在这个仓库里。
 
-仓库自己的代码、技能说明和工具用 [MIT](LICENSE) 许可；从论文和上游项目带进来的文件和数据保留各自的许可，见 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)。个人读出是模型估计，不是诊断，也不是用药建议。
+仓库自己的代码、技能说明和工具用 [MIT](LICENSE) 许可；从论文和上游项目带进来的文件和数据保留各自的许可，见 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)。每条个人读出都标明它属于哪一类、来源是什么，见下面「标签」一节。
 
 ## 这个仓库给 Agent 提供什么
 
@@ -15,9 +15,32 @@
 | `skills/longevity-evidence/data/claims.jsonl` | 从收录论文冻结名单里抽出的实体和论文对它的说法，按人群、动物、细胞标注。`kind` 区分对这个实体的发现（finding）和论文名单里的一项（list_member）；每行都来自全文（`source.access: fulltext`），全文打不开的论文不收。由 `longevity-evidence` 技能查询，查询结果同时列出 `data/effects.jsonl` 里的试验平均效应。 |
 | `registry/papers.jsonl` | 每周流水线看过的每篇论文（DOI 已规范化、唯一），以及它的去向：技能、证据、只收录或拒收。也是文献索引。 |
 
+## 标签
+
+个人助手（LongPi 的教练和分析师）把每一条输出标成下面一类，写明来源；没有标签、没有来源的内容不输出：
+
+| 标签 | 是什么 | 本仓库里的例子 |
+| --- | --- | --- |
+| 测量 | 化验、家庭测量，原样转述 | 技能报告里照抄的体检行 |
+| 已发表模型 | 按论文的公式、系数或切点算出的读数 | A 类技能，例如表型年龄、eGFR、China-PAR |
+| 按《指南名》的标准 | 诊断性结论，只按指南写明的标准 | 由分析师按指南规则生成，本仓库不出 |
+| 《指南名》推荐 | 用药建议，照录指南原文 | 由分析师按指南规则生成，本仓库不出 |
+| CPIC 指南 | 用药基因结果，照录 CPIC 原文推荐（含剂量调整的写法） | `cpic-pharmacogenomics` 加 `--include-cpic-text` |
+| 统计模型估计 | 个人反应预测，写明模型的假设和区间 | 用 `data/effects.jsonl` 的试验平均效应 |
+| AI 判断 | 没有以上来源、由模型推理给出的内容，置信度只能是低或很低，和其他类别分开写 | — |
+
+诊断性结论、用药建议（含剂量）和个人反应预测，只能作为带标签、带来源的条目输出。剂量只照录指南或 CPIC 原文，否则标为 AI 判断。急症先拨打 120。
+
+技能自己的报告不下诊断，也不替人决定开始、停止或更换药物：B 类查表、C 类只收录，都不是这个人的结论；`cpic-pharmacogenomics` 只照录 CPIC 原文，由医生或药师决定怎么用。
+
 ## 分级
 
-- **A**：用这个人自己的测量，按论文印出的公式、系数或切点算出个人读出。每个 A 类技能在 `skill.json` 的 `validation` 里登记它复现了论文印出的哪个数字（原文、位置和断言它的测试）；还没复现的标为 `draft`，写明缺什么。
+- **A**：用这个人自己的测量，按论文印出的公式、系数或切点算出个人读出。每个 A 类技能在 `skill.json` 的 `validation` 里登记怎么核对过，`validation.status` 只有三种：
+  - `reproduced`（显示为「已复现论文」）：复现了论文印出的数字，登记原文、位置和断言它的测试；
+  - `reproduced_secondary`（显示为「已与独立实现核对」）：论文没有印出示例值，已与至少两个独立实现逐例对上，或与论文印出的人群汇总量对上，登记每个实现的版本或提交号、比对的数和测试；不能说成复现了论文；
+  - `draft`（显示为「仍在验证」）：还没核对上，`gap_zh` 写明缺什么、在哪里找过。
+
+  `catalog.json` 的 `validation_label_zh` 就是上面括号里的显示用语。
 - **B**：人群研究里点名的基因、蛋白、化合物或方向，个人报告只做查表；或者论文的模型没有公开，脚本只做简单算术。名单同时进证据库。
 - **C**：动物、细胞实验，或者输入只能是队列统计量。只收录，不参与个人问题的调度。
 - **tool**：包装已发布的程序或数据库，以及本仓库的证据库。
@@ -35,7 +58,7 @@
 ## 维护
 
 ```bash
-python3 -m tools.lsk check        # 所有一致性检查（CI 同款）
+python3 -m tools.lsk check        # 所有一致性检查（CI 同款）；能读到教练和分析师仓库时（LONGEVITY_COACH_DIR、LONGEVITY_ANALYST_DIR，或同级目录）也核对它们点名的技能
 python3 -m tools.lsk test         # 每个技能的测试，一个技能一个进程
 python3 -m tools.lsk build        # 重新生成 catalog.json、下面的技能列表、旧格式注册表和各技能里的共享文件
 python3 -m tools.lsk test --changed origin/main   # 只测相对 main 改动过的技能
@@ -49,7 +72,7 @@ python3 -m tools.lsk test --changed origin/main   # 只测相对 main 改动过�
 
 - **Claude Code**：`/plugin marketplace add zwbao/longevity-skills`，再 `/plugin install longevity-skills@longevity-skills`。之后每次 `/plugin marketplace update` 拿到最新一周的版本。
 - **Cursor**：把 `~/.cursor/skills/<name>` 指到本仓库里的对应目录（不要写到 `~/.cursor/skills-cursor/`）。只想要个人读出时，只链接 `catalog.json` 里 `tier` 为 A 或 tool 的目录。
-- **其他 Agent**：读 `catalog.json`，按 `tier`、`validation_status` 和 `inputs` 选技能。
+- **其他 Agent**：读 `catalog.json`，按 `tier`、`validation_status`（显示时用 `validation_label_zh`）和 `inputs` 选技能。
 
 ## 许可
 

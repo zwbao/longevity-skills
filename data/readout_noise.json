@@ -1,0 +1,185 @@
+{
+ "schema": "longevity-readout-noise/1",
+ "z": 1.96,
+ "rule_zh": "两次读数之差超过 z × √2 × sd_abs，才算超出测量误差。这只说明差别大于同一份样本重复测量的误差，不等于身体真的变了；只有 icc、没有 sd_abs 的读数不做这个判断。",
+ "sources_note_zh": [
+  "每个数都来自期刊论文原文，source.quote 是印着这个数的句子或表格行；lsk check 核对数字在引文里。",
+  "Horvath、Hannum 的 sd_abs 来自同一个人的技术重复（Garma 等，Genome Med 2024），样本很少；另一项研究（Higgins-Chen 等，Nat Aging 2022，36 对全血技术重复）报告 Horvath 时钟重复之间的中位差 1.8 岁、最大 4.8 岁，比这里的噪声带宽，所以这里的噪声带是下限。",
+  "随机时钟（StocH、StocZ）没有找到印着技术重复数字的论文，不收录。"
+ ],
+ "readouts": [
+  {
+   "key": "horvath",
+   "label_zh": "Horvath 多组织表观年龄",
+   "match": [
+    "epiage.horvath",
+    "Horvath",
+    "Horvath1",
+    "HorvathAge",
+    "horvath2013"
+   ],
+   "unit": "岁",
+   "noise_kind": "technical_replicate",
+   "sd_abs": 1.26,
+   "statistic": "SD of mean-centred epigenetic age acceleration across technical replicates (sigma_noise), complete Horvath model.",
+   "tissue": "whole_blood",
+   "platform": [],
+   "n": 1,
+   "source": {
+    "title": "Garma LD, Quintela-Fandino M. Applicability of epigenetic age models to next-generation methylation arrays. Genome Med 2024;16:116",
+    "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11460231/",
+    "doi": "10.1186/s13073-024-01387-4",
+    "license": "CC BY-NC-ND 4.0",
+    "note": "Technical replicates in GSE247197 (Koncevičius et al., Aging Cell 2024): blood from one 52-year-old man sampled every 3 h for 72 h, with technical replicates. sigma_noise is the SD of age-acceleration values after subtracting each replicate set's mean (Results, 'Variation of epigenetic age predictions'). Complete models (all CpGs, column C) are used. The array of that dataset is not stated in this paper. The same value is the HorvathC cell of the Table 1 row 'Koncevičius et al | sigma_noise (years)'.",
+    "quote": "The predictions of our general model had the lowest σnoise (0.78 years), whereas Horvath’s model had the highest, reaching 1.26 years (Fig. 5B, Table 1).",
+    "quote_location": "Results, section on technical and intra-subject variation; Table 1"
+   },
+   "verified": true,
+   "caveat_zh": "只来自一个人的技术重复，样本很少；36 对全血技术重复的研究里，重复之间的中位差是 1.8 岁、最大 4.8 岁（Higgins-Chen 等，2022）。这个噪声带是下限，宁可多说“看不出”。"
+  },
+  {
+   "key": "hannum",
+   "label_zh": "Hannum 表观年龄",
+   "match": [
+    "epiage.hannum",
+    "Hannum",
+    "HannumAge"
+   ],
+   "unit": "岁",
+   "noise_kind": "technical_replicate",
+   "sd_abs": 1.18,
+   "statistic": "SD of mean-centred epigenetic age acceleration across technical replicates (sigma_noise), complete Hannum model.",
+   "tissue": "whole_blood",
+   "platform": [],
+   "n": 1,
+   "source": {
+    "title": "Garma LD, Quintela-Fandino M. Applicability of epigenetic age models to next-generation methylation arrays. Genome Med 2024;16:116",
+    "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11460231/",
+    "doi": "10.1186/s13073-024-01387-4",
+    "license": "CC BY-NC-ND 4.0",
+    "note": "Technical replicates in GSE247197 (Koncevičius et al., Aging Cell 2024): blood from one 52-year-old man sampled every 3 h for 72 h, with technical replicates. sigma_noise is the SD of age-acceleration values after subtracting each replicate set's mean (Results, 'Variation of epigenetic age predictions'). Complete models (all CpGs, column C) are used. The array of that dataset is not stated in this paper. The quote is the Table 1 row; its columns are HannumC, HannumT, HorvathC, HorvathT, PhenoAgeC, PhenoAgeT, cAgeC, cAgeT, general model, combined model, so the first value (1.18) is the complete Hannum model.",
+    "quote": "Koncevičius et al | σnoise (years) | 1.18 | 1.01 | 1.26 | 1.19 | 1.13 | 1.09 | 0.78 | 0.86 | 0.46 | 0.50",
+    "quote_location": "Table 1 row 'Koncevičius et al, σnoise (years)', column HannumC"
+   },
+   "verified": true,
+   "caveat_zh": "只来自一个人的技术重复，样本很少；这个噪声带是下限。"
+  },
+  {
+   "key": "lin",
+   "label_zh": "Lin 表观年龄",
+   "match": [
+    "epiage.lin",
+    "Lin",
+    "LinAge"
+   ],
+   "unit": "岁",
+   "noise_kind": "technical_replicate",
+   "icc": 0.93,
+   "statistic": "ICC(2,1) absolute agreement of the clock value between technical replicates, median over 101 preprocessing pipelines.",
+   "tissue": "whole_blood",
+   "platform": [
+    "EPIC"
+   ],
+   "n": 146,
+   "source": {
+    "title": "Ori APS, Lu AT, Horvath S, Ophoff RA. Significant variation in the performance of DNA methylation predictors across data preprocessing and normalization strategies. Genome Biol 2022;23:225",
+    "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC9590227/",
+    "doi": "10.1186/s13059-022-02793-w",
+    "license": "CC BY 4.0",
+    "note": "Jackson Heart Study: 146 pairs of technical replicates on the EPIC array in blood ('identical DNA samples that were assayed twice at independent time points'). ICC from a two-way random-effects model, absolute agreement, on the predictor value (not age-residualised); the quote is the Table 1 row (name, phenotype, array, probes, median, min, max ICC across 101 preprocessing pipelines); icc is the median.",
+    "quote": "LinAge [10] | Chronological age | 450 K | 99 | 0.930 | 0.878 | 0.939",
+    "quote_location": "Table 1 row LinAge"
+   },
+   "verified": true,
+   "caveat_zh": "这是技术重复的一致性（ICC），算在年龄跨度很大的人群上，所以看起来很高；它不能直接换算成“差多少岁以内算测量误差”，这一行只说明这个时钟能重复，不用于判断两次结果的变化。"
+  },
+  {
+   "key": "vidalbralo",
+   "label_zh": "Vidal-Bralo 表观年龄",
+   "match": [
+    "epiage.vidalbralo",
+    "Vidal-Bralo",
+    "VidalBralo",
+    "VidalBraloAge"
+   ],
+   "unit": "岁",
+   "noise_kind": "technical_replicate",
+   "icc": 0.945,
+   "statistic": "ICC(2,1) absolute agreement of the clock value between technical replicates, median over 101 preprocessing pipelines.",
+   "tissue": "whole_blood",
+   "platform": [
+    "EPIC"
+   ],
+   "n": 146,
+   "source": {
+    "title": "Ori APS, Lu AT, Horvath S, Ophoff RA. Significant variation in the performance of DNA methylation predictors across data preprocessing and normalization strategies. Genome Biol 2022;23:225",
+    "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC9590227/",
+    "doi": "10.1186/s13059-022-02793-w",
+    "license": "CC BY 4.0",
+    "note": "Jackson Heart Study: 146 pairs of technical replicates on the EPIC array in blood ('identical DNA samples that were assayed twice at independent time points'). ICC from a two-way random-effects model, absolute agreement, on the predictor value (not age-residualised); the quote is the Table 1 row (name, phenotype, array, probes, median, min, max ICC across 101 preprocessing pipelines); icc is the median.",
+    "quote": "VidalBraloAge [13] | Chronological age | 27 K | 8 | 0.945 | 0.922 | 0.952",
+    "quote_location": "Table 1 row VidalBraloAge"
+   },
+   "verified": true,
+   "caveat_zh": "这是技术重复的一致性（ICC），算在年龄跨度很大的人群上，所以看起来很高；它不能直接换算成“差多少岁以内算测量误差”，这一行只说明这个时钟能重复，不用于判断两次结果的变化。"
+  },
+  {
+   "key": "zhang",
+   "label_zh": "Zhang 表观年龄",
+   "match": [
+    "epiage.zhang",
+    "Zhang",
+    "ZhangAge"
+   ],
+   "unit": "岁",
+   "noise_kind": "technical_replicate",
+   "icc": 0.991,
+   "statistic": "ICC(2,1) absolute agreement of the clock value between technical replicates, median over 101 preprocessing pipelines.",
+   "tissue": "whole_blood",
+   "platform": [
+    "EPIC"
+   ],
+   "n": 146,
+   "source": {
+    "title": "Ori APS, Lu AT, Horvath S, Ophoff RA. Significant variation in the performance of DNA methylation predictors across data preprocessing and normalization strategies. Genome Biol 2022;23:225",
+    "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC9590227/",
+    "doi": "10.1186/s13059-022-02793-w",
+    "license": "CC BY 4.0",
+    "note": "Jackson Heart Study: 146 pairs of technical replicates on the EPIC array in blood ('identical DNA samples that were assayed twice at independent time points'). ICC from a two-way random-effects model, absolute agreement, on the predictor value (not age-residualised); the quote is the Table 1 row (name, phenotype, array, probes, median, min, max ICC across 101 preprocessing pipelines); icc is the median.",
+    "quote": "ZhangAge [8] | Chronological age | EPIC/450 K | 514 | 0.991 | 0.987 | 0.992",
+    "quote_location": "Table 1 row ZhangAge"
+   },
+   "verified": true,
+   "caveat_zh": "这是技术重复的一致性（ICC），算在年龄跨度很大的人群上，所以看起来很高；它不能直接换算成“差多少岁以内算测量误差”，这一行只说明这个时钟能重复，不用于判断两次结果的变化。原文没有说明 ZhangAge 是弹性网络版还是 BLUP 版。"
+  },
+  {
+   "key": "epitoc1",
+   "label_zh": "epiTOC1 有丝分裂时钟",
+   "match": [
+    "epiage.epitoc1",
+    "epiTOC",
+    "epiTOC1"
+   ],
+   "unit": "分",
+   "noise_kind": "technical_replicate",
+   "icc": 0.911,
+   "statistic": "ICC(2,1) absolute agreement of the clock value between technical replicates, median over 101 preprocessing pipelines.",
+   "tissue": "whole_blood",
+   "platform": [
+    "EPIC"
+   ],
+   "n": 146,
+   "source": {
+    "title": "Ori APS, Lu AT, Horvath S, Ophoff RA. Significant variation in the performance of DNA methylation predictors across data preprocessing and normalization strategies. Genome Biol 2022;23:225",
+    "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC9590227/",
+    "doi": "10.1186/s13059-022-02793-w",
+    "license": "CC BY 4.0",
+    "note": "Jackson Heart Study: 146 pairs of technical replicates on the EPIC array in blood ('identical DNA samples that were assayed twice at independent time points'). ICC from a two-way random-effects model, absolute agreement, on the predictor value (not age-residualised); the quote is the Table 1 row (name, phenotype, array, probes, median, min, max ICC across 101 preprocessing pipelines); icc is the median.",
+    "quote": "epiTOC [18] | Mitotic divisions | 450 K | 385 | 0.911 | 0.498 | 0.962",
+    "quote_location": "Table 1 row epiTOC"
+   },
+   "verified": true,
+   "caveat_zh": "这是技术重复的一致性（ICC），算在年龄跨度很大的人群上，所以看起来很高；它不能直接换算成“差多少岁以内算测量误差”，这一行只说明这个时钟能重复，不用于判断两次结果的变化。epiTOC1 的读数是有丝分裂次数分数，不是年龄。"
+  }
+ ]
+}

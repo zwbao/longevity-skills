@@ -1,12 +1,12 @@
 ---
 name: genome-wide-proteomics-frailty
 description: >-
-  Tier A draft: the paper's printed example is not reproduced yet, so treat the readout as
-  provisional. Writes a personal Hospital Frailty Risk Score by summing published ICD-10 condition
-  weights, then places that sum in a low, intermediate, or high bin. Use when the user brings
-  diagnosis codes or an already computed score, medicines, or checkup labs and asks about this
-  hospital frailty score. The skill does not ask for a reference cohort. It does not turn the bin into
-  advice to start or stop a medicine.
+  Tier A personal readout, checked against independent implementations: the paper prints no worked
+  example, so no printed result was reproduced. Writes a personal Hospital Frailty Risk Score by
+  summing published ICD-10 condition weights, then places that sum in a low, intermediate, or high
+  bin. Use when the user brings diagnosis codes or an already computed score, medicines, or checkup
+  labs and asks about this hospital frailty score. The skill does not ask for a reference cohort. It
+  does not turn the bin into advice to start or stop a medicine.
 ---
 
 # 医院衰弱风险分组
