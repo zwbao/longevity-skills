@@ -13,7 +13,7 @@ import sys
 import traceback
 from typing import Any, Callable, Dict, List, Optional
 
-from . import evidence, methods, noise, panel, reference
+from . import compare, evidence, methods, noise, panel, reference
 from .library import Library, LKError
 from .run import run as run_method
 
@@ -85,6 +85,18 @@ TOOLS: List[Dict[str, Any]] = [
          "sex": {"type": "string", "enum": ["male", "female"]},
          "bands": {"type": "string", "description": "age bands to report probabilities for, e.g. '18-30, 30-45, 45-60, 60-75, 75+' "
                                                     "(a shared edge belongs to the higher band); default decades"}}}},
+    {"name": "compare_age",
+     "description": "Which of two plasma proteomic (Olink NPX) or blood methylation (CpG beta/M) profiles looks older. "
+                    "Votes over every protein or CpG both profiles have, using its direction of change with age in a "
+                    "published cohort (proteins: China Kadoorie Biobank, Iona 2025; CpGs: Generation Scotland, McCartney "
+                    "2020), weighted by association strength. Needs no reference means; both profiles must come from the "
+                    "same platform. Gives A/B and a weighted share, not an age. Pass panel_text (e.g. 'ELN (A: 0.31, B: -0.12); ...' "
+                    "or two 'Participant A/B' blocks) or profile_a and profile_b.",
+     "inputSchema": {"type": "object", "properties": {
+         "panel_text": {"type": "string"},
+         "profile_a": {"type": "object", "additionalProperties": {"type": "number"}},
+         "profile_b": {"type": "object", "additionalProperties": {"type": "number"}},
+         "modality": {"type": "string", "enum": ["proteomics", "methylation"]}}}},
     {"name": "query_evidence",
      "description": "What the papers collected in this library state about drugs, supplements, diets, genes or proteins: "
                     "grouped into human studies, animal and cell experiments, each row with DOI and location; plus "
@@ -214,6 +226,8 @@ def call(lib: Library, name: str, args: Dict[str, Any]) -> Dict[str, Any]:
                           include_report=args.get("include_report") is True)
     if name == "estimate_age":
         return reference.estimate_from_payload(lib, {k: args.get(k) for k in ("panel_text", "measurements", "sex", "bands")})
+    if name == "compare_age":
+        return compare.compare_from_payload(lib, {k: args.get(k) for k in ("panel_text", "profile_a", "profile_b", "modality")})
     if name == "query_evidence":
         limit = _int(args["limit"], "limit") if args.get("limit") is not None else 12
         return evidence.query(lib, _str_list(args.get("entities"), "entities"), limit=limit)

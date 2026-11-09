@@ -139,7 +139,8 @@ def detect(lib: Library, text: str) -> Dict[str, Any]:
         people.append({"label": person["label"], "age": person["age"], "sex": person["sex"],
                        "rows": len(person["rows"]), "complete_methods": complete,
                        "age_reference_items": len(ref_items) if person["sex"] and len(ref_items) >= 3 else 0})
-    return {"people": people, **lib.stamp()}
+    from .compare import looks_pairwise_omics
+    return {"people": people, "pairwise_omics": looks_pairwise_omics(text), **lib.stamp()}
 
 
 def hook_context(result: Dict[str, Any]) -> Optional[str]:
@@ -157,6 +158,10 @@ def hook_context(result: Dict[str, Any]) -> Optional[str]:
             f"{m['name']} [{m['paper'] or 'paper in read_method'}] -> {', '.join(m['outputs'][:8]) or 'see read_method'}"
             for m in p["complete_methods"][:6])
         lines.append(f"- {who} ({p['rows']} values read): {methods_text}.")
+    if result.get("pairwise_omics"):
+        lines.append("- The prompt compares two proteomic or methylation profiles -> MCP tool compare_age (panel_text = the "
+                     "prompt's data, copied as is) votes over every protein/CpG with its direction of change with age in a "
+                     "published cohort (no age estimate; independent check about 87-91% correct on public benchmark pairs).")
     if not lines:
         return None
     return ("longevity plugin: the prompt contains measurements that published methods in the longevity library can "
