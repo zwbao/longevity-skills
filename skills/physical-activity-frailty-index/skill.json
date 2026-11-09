@@ -1,0 +1,1327 @@
+{
+  "schema": "longevity-skill/1",
+  "name": "physical-activity-frailty-index",
+  "kind": "paper",
+  "tier": "A",
+  "species": [
+    "human"
+  ],
+  "evidence": "cross_sectional",
+  "domains": [
+    "衰弱与运动"
+  ],
+  "blurb_zh": "用每周高、中、低强度活动分钟数算论文的加权总活动量并分档，用 48 项问卷和四项化验算衰弱指数，再查回中国老人队列里该档的衰弱分数差和 10 年死亡风险比。",
+  "intents": [
+    "frailty_mortality"
+  ],
+  "triage": {
+    "reason_zh": "论文印出总活动量公式、0/1–149/150–299/≥300 分钟分档、48 项衰弱指数清单和计分、各分档的 β 与风险比，个人问卷和体检可算；论文没印个人算例，验证保持草稿。",
+    "reviewed": false
+  },
+  "paper": {
+    "doi": "10.1007/s11357-026-02480-9",
+    "title": "Dose–response effects of physical activity intensity and duration on frailty phenotype, frailty index, and survival: representative evidence from a 10-year national cohort of chinese older adults",
+    "title_zh": "体力活动强度与时长对衰弱表型、衰弱指数和生存的剂量反应关系：来自中国老人 10 年全国队列的代表性证据",
+    "journal": "GeroScience",
+    "year": 2026,
+    "authors": "Ji",
+    "article_url": "https://link.springer.com/article/10.1007/s11357-026-02480-9",
+    "supplements": [
+      {
+        "label": "Supplementary file 1（补充表 1、2：Cox 风险比）",
+        "url": "https://static-content.springer.com/esm/art%3A10.1007%2Fs11357-026-02480-9/MediaObjects/11357_2026_2480_MOESM1_ESM.docx"
+      }
+    ],
+    "card_notes": [
+      "数据来自中国健康与养老追踪调查（CHARLS）2011 年基线的 60 岁及以上老人，随访到 2020 年；衰弱表型分析 2231 人（随访中 859 人死亡），衰弱指数分析 2330 人（正文另一处写 2230 人，903 人死亡）。",
+      "总活动量 = 2×高强度 + 中等强度 + 0.5×低强度（分钟/周），作者说明这是按强度加权的近似，不是正式的 MET 分钟。分档 0、1–149、150–299、≥300 分钟/周；≥150 分钟/周算达到 WHO 指南。",
+      "衰弱指数 = 表 2 的 48 项缺陷分之和 ÷ 48；≤0.10 健康，0.10–0.21 衰弱前期，>0.21 衰弱。衰弱表型 5 项里握力、步速、体力活动按队列内性别最低 20% 计分，论文没印出这些切点。",
+      "β 来自线性回归（调整年龄、性别、婚姻、教育、居住地，模型 3 再加吸烟、饮酒）；风险比来自 Cox 模型，补充表 1 的 F 组与 B 组、补充表 2 的 G 组与 C 组数值完全相同，原文如此。"
+    ],
+    "summary_zh": "这项研究用中国健康与养老追踪调查的 60 岁及以上老人数据发现，每周体力活动越多，衰弱表型分数和衰弱指数越低，活动多的人 10 年全因死亡风险也较低，但这些是观察到的关联，不能证明因果。个人报告只按论文公式算你的加权总活动量和分档、用 48 项问卷和化验算衰弱指数、算出衰弱表型里能算的两项，并查回该分档在论文人群里的分数差和风险比，不估算个人死亡概率，也不做诊断。",
+    "summary_status": "draft"
+  },
+  "entry": {
+    "script": "scripts/personal_report.py",
+    "measurements_flag": "--measurements",
+    "measurements_header": [
+      "item",
+      "value",
+      "unit"
+    ],
+    "age_flag": "--age",
+    "sex_flag": "--sex",
+    "out_flag": "--out",
+    "result_json": true
+  },
+  "population": {
+    "age_years": [
+      60,
+      120
+    ],
+    "note_zh": "论文人群是 CHARLS 2011 年基线的中国 60 岁及以上社区老人。不到 60 岁、或不是中国老年人群时，分档对应的 β 和风险比不一定适用。"
+  },
+  "inputs_status": "verified",
+  "validation": {
+    "status": "draft",
+    "gap_zh": "论文正文、表 1–5、图 6–9 和补充表 1–2 都没有印出某个人的活动分钟数、衰弱指数或衰弱表型的算例，所以没有可复现的个人示例；测试只核对公式、分档切点、48 项计分和查表数与印出的一致。衰弱表型的握力、步速、体力活动三项需要队列内最低 20% 的切点，正文、表 1 和补充材料都没有印出，只能算 BMI 和耐力两项。"
+  },
+  "inputs": [
+    {
+      "key": "hpa_min_per_week",
+      "label_zh": "每周高强度活动分钟数",
+      "aliases": [
+        "HPA",
+        "high-intensity PA",
+        "vigorous activity",
+        "vigorous PA",
+        "高强度活动",
+        "高强度体力活动",
+        "剧烈活动",
+        "每周剧烈活动"
+      ],
+      "unit": "min",
+      "accept": {
+        "h": 60
+      },
+      "range": [
+        0,
+        10080
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "一周里高强度活动的总分钟数（每次连续至少 10 分钟才算，论文用 CHARLS 问卷 DA051–DA055 的同一口径）。没有就填 0。也接受小时（h）。"
+    },
+    {
+      "key": "mpa_min_per_week",
+      "label_zh": "每周中等强度活动分钟数",
+      "aliases": [
+        "MPA",
+        "moderate-intensity PA",
+        "moderate activity",
+        "moderate PA",
+        "中等强度活动",
+        "中等强度体力活动",
+        "中等活动"
+      ],
+      "unit": "min",
+      "accept": {
+        "h": 60
+      },
+      "range": [
+        0,
+        10080
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "一周里中等强度活动的总分钟数（每次连续至少 10 分钟才算，论文用 CHARLS 问卷 DA051–DA055 的同一口径）。没有就填 0。也接受小时（h）。"
+    },
+    {
+      "key": "lpa_min_per_week",
+      "label_zh": "每周低强度活动分钟数",
+      "aliases": [
+        "LPA",
+        "low-intensity PA",
+        "light activity",
+        "light PA",
+        "walking",
+        "低强度活动",
+        "低强度体力活动",
+        "轻度活动",
+        "散步"
+      ],
+      "unit": "min",
+      "accept": {
+        "h": 60
+      },
+      "range": [
+        0,
+        10080
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "一周里低强度活动的总分钟数（每次连续至少 10 分钟才算，论文用 CHARLS 问卷 DA051–DA055 的同一口径）。没有就填 0。也接受小时（h）。"
+    },
+    {
+      "key": "weight_kg",
+      "label_zh": "体重",
+      "aliases": [
+        "weight",
+        "body weight",
+        "体重",
+        "体重(kg)"
+      ],
+      "loinc": [
+        "29463-7"
+      ],
+      "unit": "kg",
+      "accept": {
+        "g": 0.001,
+        "lb": 0.45359237
+      },
+      "range": [
+        25,
+        250
+      ],
+      "required": false,
+      "from": "measurements",
+      "note_zh": "和身高一起算 BMI（FI 第 12 项、衰弱表型的 BMI 项）。"
+    },
+    {
+      "key": "height_cm",
+      "label_zh": "身高",
+      "aliases": [
+        "height",
+        "body height",
+        "身高",
+        "身高(cm)"
+      ],
+      "loinc": [
+        "8302-2"
+      ],
+      "unit": "cm",
+      "accept": {
+        "m": 100,
+        "mm": 0.1,
+        "in": 2.54
+      },
+      "range": [
+        100,
+        220
+      ],
+      "required": false,
+      "from": "measurements"
+    },
+    {
+      "key": "fi01_bathing",
+      "label_zh": "洗澡有困难",
+      "aliases": [
+        "洗澡有困难",
+        "Bathing",
+        "FI item 1",
+        "FI1",
+        "衰弱指数第1项",
+        "db011"
+      ],
+      "unit": "1",
+      "range": [
+        1,
+        4
+      ],
+      "required": false,
+      "from": "measurements",
+      "group": "frailty_index_questionnaire",
+      "note_zh": "衰弱指数第 1 项，填答案代码：1 = 没有困难；2 = 有困难但仍能完成；3 = 有困难，需要帮助；4 = 无法完成。"
+    },
+    {
+      "key": "fi02_dressing",
+      "label_zh": "穿衣有困难",
+      "aliases": [
+        "穿衣有困难",
+        "Dressing",
+        "FI item 2",
+        "FI2",
+        "衰弱指数第2项",
+        "db010"
+      ],
+      "unit": "1",
+      "range": [
+        1,
+        4
+      ],
+      "required": false,
+      "from": "measurements",
+      "group": "frailty_index_questionnaire",
+      "note_zh": "衰弱指数第 2 项，填答案代码：1 = 没有困难；2 = 有困难但仍能完成；3 = 有困难，需要帮助；4 = 无法完成。"
+    },
+    {
+      "key": "fi03_toileting",
+      "label_zh": "上厕所有困难",
+      "aliases": [
+        "上厕所有困难",
+        "Use of toilet",
+        "FI item 3",
+        "FI3",
+        "衰弱指数第3项",
+        "db014"
+      ],
+      "unit": "1",
+      "range": [
+        1,
+        4
+      ],
+      "required": false,
+      "from": "measurements",
+      "group": "frailty_index_questionnaire",
+      "note_zh": "衰弱指数第 3 项，填答案代码：1 = 没有困难；2 = 有困难但仍能完成；3 = 有困难，需要帮助；4 = 无法完成。"
+    },
+    {
+      "key": "fi04_transferring",
+      "label_zh": "上下床有困难",
+      "aliases": [
+        "上下床有困难",
+        "Transferring",
+        "FI item 4",
+        "FI4",
+        "衰弱指数第4项",
+        "db013"
+      ],
+      "unit": "1",
+      "range": [
+        1,
+        4
+      ],
+      "required": false,
+      "from": "measurements",
+      "group": "frailty_index_questionnaire",
+      "note_zh": "衰弱指数第 4 项，填答案代码：1 = 没有困难；2 = 有困难但仍能完成；3 = 有困难，需要帮助；4 = 无法完成。"
+    },
+    {
+      "key": "fi05_continence",
+      "label_zh": "控制大小便有困难",
+      "aliases": [
+        "控制大小便有困难",
+        "Continence",
+        "FI item 5",
+        "FI5",
+        "衰弱指数第5项",
+        "db015"
+      ],
+      "unit": "1",
+      "range": [
+        1,
+        4
+      ],
+      "required": false,
+      "from": "measurements",
+      "group": "frailty_index_questionnaire",
+      "note_zh": "衰弱指数第 5 项，填答案代码：1 = 没有困难；2 = 有困难但仍能完成；3 = 有困难，需要帮助；4 = 无法完成。"
+    },
+    {
+      "key": "fi06_eating",
+      "label_zh": "吃饭有困难",
+      "aliases": [
+        "吃饭有困难",
+        "Eating",
+        "FI item 6",
+        "FI6",
+        "衰弱指数第6项",
+        "db012"
+      ],
+      "unit": "1",
+      "range": [
+        1,
+        4
+      ],
+      "required": false,
+      "from": "measurements",
+      "group": "frailty_index_questionnaire",
+      "note_zh": "衰弱指数第 6 项，填答案代码：1 = 没有困难；2 = 有困难但仍能完成；3 = 有困难，需要帮助；4 = 无法完成。"
+    },
+    {
+      "key": "fi07_cooking",
+      "label_zh": "做饭有困难",
+      "aliases": [
+        "做饭有困难",
+        "Cooking",
+        "FI item 7",
+        "FI7",
+        "衰弱指数第7项",
+        "db017"
+      ],
+      "unit": "1",
+      "range": [
+        1,
+        4
+      ],
+      "required": false,
+      "from": "measurements",
+      "group": "frailty_index_questionnaire",
+      "note_zh": "衰弱指数第 7 项，填答案代码：1 = 没有困难；2 = 有困难但仍能完成；3 = 有困难，需要帮助；4 = 无法完成。"
+    },
+    {
+      "key": "fi08_shopping",
+      "label_zh": "买东西有困难",
+      "aliases": [
+        "买东西有困难",
+        "Shopping",
+        "FI item 8",
+        "FI8",
+        "衰弱指数第8项",
+        "db018"
+      ],
+      "unit": "1",
+      "range": [
+        1,
+        4
+      ],
+      "required": false,
+      "from": "measurements",
+      "group": "frailty_index_questionnaire",
+      "note_zh": "衰弱指数第 8 项，填答案代码：1 = 没有困难；2 = 有困难但仍能完成；3 = 有困难，需要帮助；4 = 无法完成。"
+    },
+    {
+      "key": "fi09_housework",
+      "label_zh": "做家务有困难",
+      "aliases": [
+        "做家务有困难",
+        "Doing household",
+        "FI item 9",
+        "FI9",
+        "衰弱指数第9项",
+        "db016"
+      ],
+      "unit": "1",
+      "range": [
+        1,
+        4
+      ],
+      "required": false,
+      "from": "measurements",
+      "group": "frailty_index_questionnaire",
+      "note_zh": "衰弱指数第 9 项，填答案代码：1 = 没有困难；2 = 有困难但仍能完成；3 = 有困难，需要帮助；4 = 无法完成。"
+    },
+    {
+      "key": "fi10_taking_medicine",
+      "label_zh": "自己吃药有困难",
+      "aliases": [
+        "自己吃药有困难",
+        "Taking medicine",
+        "FI item 10",
+        "FI10",
+        "衰弱指数第10项",
+        "db020"
+      ],
+      "unit": "1",
+      "range": [
+        1,
+        4
+      ],
+      "required": false,
+      "from": "measurements",
+      "group": "frailty_index_questionnaire",
+      "note_zh": "衰弱指数第 10 项，填答案代码：1 = 没有困难；2 = 有困难但仍能完成；3 = 有困难，需要帮助；4 = 无法完成。"
+    },
+    {
+      "key": "fi11_managing_money",
+      "label_zh": "管钱有困难",
+      "aliases": [
+        "管钱有困难",
+        "Managing money",
+        "FI item 11",
+        "FI11",
+        "衰弱指数第11项",
+        "db019"
+      ],
+      "unit": "1",
+      "range": [
+        1,
+        4
+      ],
+      "required": false,
+      "from": "measurements",
+      "group": "frailty_index_questionnaire",
+      "note_zh": "衰弱指数第 11 项，填答案代码：1 = 没有困难；2 = 有困难但仍能完成；3 = 有困难，需要帮助；4 = 无法完成。"
+    },
+    {
+      "key": "fi13_lift_5kg",
+      "label_zh": "提起 5 公斤重物有困难",
+      "aliases": [
+        "提起 5 公斤重物有困难",
+        "Lift a weight of 5 kg",
+        "FI item 13",
+        "FI13",
+        "衰弱指数第13项",
+        "db008"
+      ],
+      "unit": "1",
+      "range": [
+        1,
+        4
+      ],
+      "required": false,
+      "from": "measurements",
+      "group": "frailty_index_questionnaire",
+      "note_zh": "衰弱指数第 13 项，填答案代码：1 = 没有困难；2 = 有困难但仍能完成；3 = 有困难，需要帮助；4 = 无法完成。"
+    },
+    {
+      "key": "fi14_walk_1km",
+      "label_zh": "走 1 公里有困难",
+      "aliases": [
+        "走 1 公里有困难",
+        "Walking 1 km",
+        "FI item 14",
+        "FI14",
+        "衰弱指数第14项",
+        "db002"
+      ],
+      "unit": "1",
+      "range": [
+        1,
+        4
+      ],
+      "required": false,
+      "from": "measurements",
+      "group": "frailty_index_questionnaire",
+      "note_zh": "衰弱指数第 14 项，填答案代码：1 = 没有困难；2 = 有困难但仍能完成；3 = 有困难，需要帮助；4 = 无法完成。"
+    },
+    {
+      "key": "fi15_stoop_kneel_crouch",
+      "label_zh": "弯腰、屈膝或下蹲有困难",
+      "aliases": [
+        "弯腰、屈膝或下蹲有困难",
+        "Stooping, kneeling, or crouching",
+        "FI item 15",
+        "FI15",
+        "衰弱指数第15项",
+        "db006"
+      ],
+      "unit": "1",
+      "range": [
+        1,
+        4
+      ],
+      "required": false,
+      "from": "measurements",
+      "group": "frailty_index_questionnaire",
+      "note_zh": "衰弱指数第 15 项，填答案代码：1 = 没有困难；2 = 有困难但仍能完成；3 = 有困难，需要帮助；4 = 无法完成。"
+    },
+    {
+      "key": "fi16_stand_from_chair",
+      "label_zh": "坐久后从椅子上站起来有困难",
+      "aliases": [
+        "坐久后从椅子上站起来有困难",
+        "Able to stand up from sitting",
+        "FI item 16",
+        "FI16",
+        "衰弱指数第16项",
+        "db004"
+      ],
+      "unit": "1",
+      "range": [
+        1,
+        4
+      ],
+      "required": false,
+      "from": "measurements",
+      "group": "frailty_index_questionnaire",
+      "note_zh": "衰弱指数第 16 项，填答案代码：1 = 没有困难；2 = 有困难但仍能完成；3 = 有困难，需要帮助；4 = 无法完成。"
+    },
+    {
+      "key": "fi17_pick_up_coin",
+      "label_zh": "从桌上拿起一枚硬币有困难",
+      "aliases": [
+        "从桌上拿起一枚硬币有困难",
+        "Able to pick up a coin from a table",
+        "FI item 17",
+        "FI17",
+        "衰弱指数第17项",
+        "db009"
+      ],
+      "unit": "1",
+      "range": [
+        1,
+        4
+      ],
+      "required": false,
+      "from": "measurements",
+      "group": "frailty_index_questionnaire",
+      "note_zh": "衰弱指数第 17 项，填答案代码：1 = 没有困难；2 = 有困难但仍能完成；3 = 有困难，需要帮助；4 = 无法完成。"
+    },
+    {
+      "key": "fi18_jog_1km",
+      "label_zh": "跑或慢跑 1 公里有困难",
+      "aliases": [
+        "跑或慢跑 1 公里有困难",
+        "Running or jogging about 1 km",
+        "FI item 18",
+        "FI18",
+        "衰弱指数第18项",
+        "db001"
+      ],
+      "unit": "1",
+      "range": [
+        1,
+        4
+      ],
+      "required": false,
+      "from": "measurements",
+      "group": "frailty_index_questionnaire",
+      "note_zh": "衰弱指数第 18 项，填答案代码：1 = 没有困难；2 = 有困难但仍能完成；3 = 有困难，需要帮助；4 = 无法完成。"
+    },
+    {
+      "key": "fi19_reach_arms",
+      "label_zh": "手臂向上伸展有困难",
+      "aliases": [
+        "手臂向上伸展有困难",
+        "Reaching or extend arms",
+        "FI item 19",
+        "FI19",
+        "衰弱指数第19项",
+        "db007"
+      ],
+      "unit": "1",
+      "range": [
+        1,
+        4
+      ],
+      "required": false,
+      "from": "measurements",
+      "group": "frailty_index_questionnaire",
+      "note_zh": "衰弱指数第 19 项，填答案代码：1 = 没有困难；2 = 有困难但仍能完成；3 = 有困难，需要帮助；4 = 无法完成。"
+    },
+    {
+      "key": "fi20_climb_stairs",
+      "label_zh": "不休息连续爬几层楼有困难",
+      "aliases": [
+        "不休息连续爬几层楼有困难",
+        "Climbing several flights of stairs without resting",
+        "FI item 20",
+        "FI20",
+        "衰弱指数第20项",
+        "db005"
+      ],
+      "unit": "1",
+      "range": [
+        1,
+        4
+      ],
+      "required": false,
+      "from": "measurements",
+      "group": "frailty_index_questionnaire",
+      "note_zh": "衰弱指数第 20 项，填答案代码：1 = 没有困难；2 = 有困难但仍能完成；3 = 有困难，需要帮助；4 = 无法完成。"
+    },
+    {
+      "key": "fi21_chronic_lung_disease",
+      "label_zh": "慢性肺病（慢性支气管炎、肺气肿）",
+      "aliases": [
+        "慢性肺病（慢性支气管炎、肺气肿）",
+        "Chronic lung diseases",
+        "FI item 21",
+        "FI21",
+        "衰弱指数第21项",
+        "da007_5"
+      ],
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "required": false,
+      "from": "measurements",
+      "group": "frailty_index_questionnaire",
+      "note_zh": "衰弱指数第 21 项，填答案代码：0 = 没有；1 = 医生诊断过。"
+    },
+    {
+      "key": "fi22_asthma",
+      "label_zh": "哮喘",
+      "aliases": [
+        "哮喘",
+        "Asthma",
+        "FI item 22",
+        "FI22",
+        "衰弱指数第22项",
+        "da007_14"
+      ],
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "required": false,
+      "from": "measurements",
+      "group": "frailty_index_questionnaire",
+      "note_zh": "衰弱指数第 22 项，填答案代码：0 = 没有；1 = 医生诊断过。"
+    },
+    {
+      "key": "fi23_cancer",
+      "label_zh": "癌症",
+      "aliases": [
+        "癌症",
+        "Cancer",
+        "FI item 23",
+        "FI23",
+        "衰弱指数第23项",
+        "da007_4"
+      ],
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "required": false,
+      "from": "measurements",
+      "group": "frailty_index_questionnaire",
+      "note_zh": "衰弱指数第 23 项，填答案代码：0 = 没有；1 = 医生诊断过。"
+    },
+    {
+      "key": "fi24_arthritis",
+      "label_zh": "关节炎或风湿病",
+      "aliases": [
+        "关节炎或风湿病",
+        "Arthritis or Rheumatism",
+        "FI item 24",
+        "FI24",
+        "衰弱指数第24项",
+        "da007_13"
+      ],
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "required": false,
+      "from": "measurements",
+      "group": "frailty_index_questionnaire",
+      "note_zh": "衰弱指数第 24 项，填答案代码：0 = 没有；1 = 医生诊断过。"
+    },
+    {
+      "key": "fi25_peptic_ulcer",
+      "label_zh": "胃或十二指肠溃疡",
+      "aliases": [
+        "胃或十二指肠溃疡",
+        "Gastric or duodenal ulcer",
+        "FI item 25",
+        "FI25",
+        "衰弱指数第25项",
+        "da007_10"
+      ],
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "required": false,
+      "from": "measurements",
+      "group": "frailty_index_questionnaire",
+      "note_zh": "衰弱指数第 25 项，填答案代码：0 = 没有；1 = 医生诊断过。"
+    },
+    {
+      "key": "fi26_kidney_disease",
+      "label_zh": "肾脏疾病",
+      "aliases": [
+        "肾脏疾病",
+        "Kidney disease",
+        "FI item 26",
+        "FI26",
+        "衰弱指数第26项",
+        "da007_9"
+      ],
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "required": false,
+      "from": "measurements",
+      "group": "frailty_index_questionnaire",
+      "note_zh": "衰弱指数第 26 项，填答案代码：0 = 没有；1 = 医生诊断过。"
+    },
+    {
+      "key": "fi27_hypertension",
+      "label_zh": "高血压",
+      "aliases": [
+        "高血压",
+        "Hypertension",
+        "FI item 27",
+        "FI27",
+        "衰弱指数第27项",
+        "da007_1"
+      ],
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "required": false,
+      "from": "measurements",
+      "group": "frailty_index_questionnaire",
+      "note_zh": "衰弱指数第 27 项，填答案代码：0 = 没有；1 = 医生诊断过。"
+    },
+    {
+      "key": "fi28_dyslipidemia",
+      "label_zh": "血脂异常",
+      "aliases": [
+        "血脂异常",
+        "Dyslipidemia",
+        "FI item 28",
+        "FI28",
+        "衰弱指数第28项",
+        "da007_2"
+      ],
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "required": false,
+      "from": "measurements",
+      "group": "frailty_index_questionnaire",
+      "note_zh": "衰弱指数第 28 项，填答案代码：0 = 没有；1 = 医生诊断过。"
+    },
+    {
+      "key": "fi29_diabetes",
+      "label_zh": "糖尿病或血糖升高",
+      "aliases": [
+        "糖尿病或血糖升高",
+        "Diabetes",
+        "FI item 29",
+        "FI29",
+        "衰弱指数第29项",
+        "da007_3"
+      ],
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "required": false,
+      "from": "measurements",
+      "group": "frailty_index_questionnaire",
+      "note_zh": "衰弱指数第 29 项，填答案代码：0 = 没有；1 = 医生诊断过。"
+    },
+    {
+      "key": "fi30_heart_disease",
+      "label_zh": "心脏病",
+      "aliases": [
+        "心脏病",
+        "Heart Disease",
+        "FI item 30",
+        "FI30",
+        "衰弱指数第30项",
+        "da007_7"
+      ],
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "required": false,
+      "from": "measurements",
+      "group": "frailty_index_questionnaire",
+      "note_zh": "衰弱指数第 30 项，填答案代码：0 = 没有；1 = 医生诊断过。"
+    },
+    {
+      "key": "fi31_psychiatric_problem",
+      "label_zh": "情感、神经或精神方面问题",
+      "aliases": [
+        "情感、神经或精神方面问题",
+        "Emotional, nervous, or psychiatric problems",
+        "FI item 31",
+        "FI31",
+        "衰弱指数第31项",
+        "da007_11"
+      ],
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "required": false,
+      "from": "measurements",
+      "group": "frailty_index_questionnaire",
+      "note_zh": "衰弱指数第 31 项，填答案代码：0 = 没有；1 = 医生诊断过。"
+    },
+    {
+      "key": "fi32_stroke",
+      "label_zh": "中风",
+      "aliases": [
+        "中风",
+        "Stroke",
+        "FI item 32",
+        "FI32",
+        "衰弱指数第32项",
+        "da007_8"
+      ],
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "required": false,
+      "from": "measurements",
+      "group": "frailty_index_questionnaire",
+      "note_zh": "衰弱指数第 32 项，填答案代码：0 = 没有；1 = 医生诊断过。"
+    },
+    {
+      "key": "fi33_liver_disease",
+      "label_zh": "肝脏疾病",
+      "aliases": [
+        "肝脏疾病",
+        "Liver disease",
+        "FI item 33",
+        "FI33",
+        "衰弱指数第33项",
+        "da007_6"
+      ],
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "required": false,
+      "from": "measurements",
+      "group": "frailty_index_questionnaire",
+      "note_zh": "衰弱指数第 33 项，填答案代码：0 = 没有；1 = 医生诊断过。"
+    },
+    {
+      "key": "fi34_memory_disease",
+      "label_zh": "记忆相关疾病",
+      "aliases": [
+        "记忆相关疾病",
+        "Memory related disease",
+        "FI item 34",
+        "FI34",
+        "衰弱指数第34项",
+        "da007_12"
+      ],
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "required": false,
+      "from": "measurements",
+      "group": "frailty_index_questionnaire",
+      "note_zh": "衰弱指数第 34 项，填答案代码：0 = 没有；1 = 医生诊断过。"
+    },
+    {
+      "key": "fi35_felt_depressed",
+      "label_zh": "过去一周感到情绪低落",
+      "aliases": [
+        "过去一周感到情绪低落",
+        "Feeling depressed",
+        "FI item 35",
+        "FI35",
+        "衰弱指数第35项",
+        "dc011"
+      ],
+      "unit": "1",
+      "range": [
+        1,
+        4
+      ],
+      "required": false,
+      "from": "measurements",
+      "group": "frailty_index_questionnaire",
+      "note_zh": "衰弱指数第 35 项，填答案代码：过去一周：1 = 很少或没有（不到 1 天）；2 = 1–2 天；3 = 3–4 天；4 = 大多数时间（5–7 天）。"
+    },
+    {
+      "key": "fi36_felt_fearful",
+      "label_zh": "过去一周感到害怕",
+      "aliases": [
+        "过去一周感到害怕",
+        "Feeling fearful",
+        "FI item 36",
+        "FI36",
+        "衰弱指数第36项",
+        "dc014"
+      ],
+      "unit": "1",
+      "range": [
+        1,
+        4
+      ],
+      "required": false,
+      "from": "measurements",
+      "group": "frailty_index_questionnaire",
+      "note_zh": "衰弱指数第 36 项，填答案代码：过去一周：1 = 很少或没有（不到 1 天）；2 = 1–2 天；3 = 3–4 天；4 = 大多数时间（5–7 天）。"
+    },
+    {
+      "key": "fi37_could_not_get_going",
+      "label_zh": "过去一周觉得无法继续生活",
+      "aliases": [
+        "过去一周觉得无法继续生活",
+        "Feeling unable to continue living",
+        "FI item 37",
+        "FI37",
+        "衰弱指数第37项",
+        "dc018"
+      ],
+      "unit": "1",
+      "range": [
+        1,
+        4
+      ],
+      "required": false,
+      "from": "measurements",
+      "group": "frailty_index_questionnaire",
+      "note_zh": "衰弱指数第 37 项，填答案代码：过去一周：1 = 很少或没有（不到 1 天）；2 = 1–2 天；3 = 3–4 天；4 = 大多数时间（5–7 天）。"
+    },
+    {
+      "key": "fi38_felt_happy",
+      "label_zh": "过去一周感到愉快",
+      "aliases": [
+        "过去一周感到愉快",
+        "Feeling happy",
+        "FI item 38",
+        "FI38",
+        "衰弱指数第38项",
+        "dc016"
+      ],
+      "unit": "1",
+      "range": [
+        1,
+        4
+      ],
+      "required": false,
+      "from": "measurements",
+      "group": "frailty_index_questionnaire",
+      "note_zh": "衰弱指数第 38 项，填答案代码：过去一周：1 = 很少或没有（不到 1 天）；2 = 1–2 天；3 = 3–4 天；4 = 大多数时间（5–7 天）。"
+    },
+    {
+      "key": "fi39_felt_hopeful",
+      "label_zh": "过去一周对未来充满希望",
+      "aliases": [
+        "过去一周对未来充满希望",
+        "Feeling hopeful about the future",
+        "FI item 39",
+        "FI39",
+        "衰弱指数第39项"
+      ],
+      "unit": "1",
+      "range": [
+        1,
+        4
+      ],
+      "required": false,
+      "from": "measurements",
+      "group": "frailty_index_questionnaire",
+      "note_zh": "衰弱指数第 39 项，填答案代码：过去一周：1 = 很少或没有（不到 1 天）；2 = 1–2 天；3 = 3–4 天；4 = 大多数时间（5–7 天）。"
+    },
+    {
+      "key": "fi40_poor_sleep",
+      "label_zh": "过去一周睡不好",
+      "aliases": [
+        "过去一周睡不好",
+        "Poor sleep quality",
+        "FI item 40",
+        "FI40",
+        "衰弱指数第40项",
+        "dc015"
+      ],
+      "unit": "1",
+      "range": [
+        1,
+        4
+      ],
+      "required": false,
+      "from": "measurements",
+      "group": "frailty_index_questionnaire",
+      "note_zh": "衰弱指数第 40 项，填答案代码：过去一周：1 = 很少或没有（不到 1 天）；2 = 1–2 天；3 = 3–4 天；4 = 大多数时间（5–7 天）。"
+    },
+    {
+      "key": "fi41_felt_lonely",
+      "label_zh": "过去一周感到孤独",
+      "aliases": [
+        "过去一周感到孤独",
+        "Feeling lonely",
+        "FI item 41",
+        "FI41",
+        "衰弱指数第41项"
+      ],
+      "unit": "1",
+      "range": [
+        1,
+        4
+      ],
+      "required": false,
+      "from": "measurements",
+      "group": "frailty_index_questionnaire",
+      "note_zh": "衰弱指数第 41 项，填答案代码：过去一周：1 = 很少或没有（不到 1 天）；2 = 1–2 天；3 = 3–4 天；4 = 大多数时间（5–7 天）。"
+    },
+    {
+      "key": "fi42_everything_effort",
+      "label_zh": "过去一周觉得做什么都很费劲",
+      "aliases": [
+        "过去一周觉得做什么都很费劲",
+        "Feeling that doing things is very effortful",
+        "FI item 42",
+        "FI42",
+        "衰弱指数第42项",
+        "dc012"
+      ],
+      "unit": "1",
+      "range": [
+        1,
+        4
+      ],
+      "required": false,
+      "from": "measurements",
+      "group": "frailty_index_questionnaire",
+      "note_zh": "衰弱指数第 42 项，填答案代码：过去一周：1 = 很少或没有（不到 1 天）；2 = 1–2 天；3 = 3–4 天；4 = 大多数时间（5–7 天）。"
+    },
+    {
+      "key": "fi43_self_rated_health",
+      "label_zh": "自评健康",
+      "aliases": [
+        "自评健康",
+        "Self-rated health",
+        "FI item 43",
+        "FI43",
+        "衰弱指数第43项",
+        "da002"
+      ],
+      "unit": "1",
+      "range": [
+        1,
+        5
+      ],
+      "required": false,
+      "from": "measurements",
+      "group": "frailty_index_questionnaire",
+      "note_zh": "衰弱指数第 43 项，填答案代码：1 = 很好；2 = 好；3 = 一般；4 = 不好；5 = 很不好。"
+    },
+    {
+      "key": "fi44_life_satisfaction",
+      "label_zh": "生活满意度",
+      "aliases": [
+        "生活满意度",
+        "Life satisfaction",
+        "FI item 44",
+        "FI44",
+        "衰弱指数第44项",
+        "dc028"
+      ],
+      "unit": "1",
+      "range": [
+        1,
+        5
+      ],
+      "required": false,
+      "from": "measurements",
+      "group": "frailty_index_questionnaire",
+      "note_zh": "衰弱指数第 44 项，填答案代码：1 = 非常满意；2 = 满意；3 = 一般；4 = 不满意；5 = 非常不满意。"
+    },
+    {
+      "key": "hba1c_pct",
+      "label_zh": "糖化血红蛋白",
+      "aliases": [
+        "HbA1c",
+        "glycohemoglobin",
+        "glycated hemoglobin",
+        "A1c",
+        "糖化血红蛋白",
+        "糖化血红蛋白(HbA1c)",
+        "GHb"
+      ],
+      "loinc": [
+        "4548-4"
+      ],
+      "unit": "%",
+      "range": [
+        3,
+        20
+      ],
+      "required": false,
+      "from": "measurements",
+      "note_zh": "NGSP 百分比。化验单只给 mmol/mol（IFCC）时请换成 %。衰弱指数第 45 项：大于 5.7% 计 1。"
+    },
+    {
+      "key": "hemoglobin_g_dl",
+      "label_zh": "血红蛋白",
+      "aliases": [
+        "hemoglobin",
+        "haemoglobin",
+        "Hb",
+        "HGB",
+        "血红蛋白",
+        "血红蛋白(HGB)",
+        "血红蛋白浓度"
+      ],
+      "loinc": [
+        "718-7"
+      ],
+      "unit": "g/dL",
+      "accept": {
+        "g/L": 0.1
+      },
+      "range": [
+        3,
+        25
+      ],
+      "required": false,
+      "from": "measurements",
+      "note_zh": "国内化验单多用 g/L，数值除以 10 是 g/dL。衰弱指数第 46 项：男 13.5–18、女 12–16 g/dL 计 0，其余计 1，需要给出性别。"
+    },
+    {
+      "key": "crp_mg_l",
+      "label_zh": "C反应蛋白",
+      "aliases": [
+        "CRP",
+        "hs-CRP",
+        "hsCRP",
+        "C-reactive protein",
+        "C反应蛋白",
+        "C-反应蛋白",
+        "超敏C反应蛋白",
+        "超敏CRP"
+      ],
+      "loinc": [
+        "1988-5",
+        "30522-7"
+      ],
+      "unit": "mg/L",
+      "accept": {
+        "mg/dL": 10
+      },
+      "range": [
+        0.01,
+        500
+      ],
+      "unit_required": true,
+      "required": false,
+      "from": "measurements",
+      "note_zh": "衰弱指数第 47 项：大于 3.0 mg/L 计 1。mg/dL 乘 10 是 mg/L。"
+    },
+    {
+      "key": "creatinine_mg_dl",
+      "label_zh": "血肌酐",
+      "aliases": [
+        "creatinine",
+        "serum creatinine",
+        "Scr",
+        "Cr",
+        "CREA",
+        "肌酐",
+        "血肌酐",
+        "血清肌酐",
+        "肌酐(CREA)"
+      ],
+      "loinc": [
+        "2160-0"
+      ],
+      "unit": "mg/dL",
+      "accept": {
+        "umol/L": 0.011312
+      },
+      "molar_mass": 113.12,
+      "range": [
+        0.1,
+        25
+      ],
+      "unit_required": true,
+      "required": false,
+      "from": "measurements",
+      "note_zh": "衰弱指数第 48 项：大于 1.0 mg/dL 计 1。国内化验单多用 µmol/L，除以 88.4 是 mg/dL。"
+    },
+    {
+      "key": "sex",
+      "label_zh": "性别",
+      "required": false,
+      "from": "profile",
+      "flag": "--sex",
+      "note_zh": "血红蛋白一项（第 46 项）按性别用不同正常范围；不给性别时这一项算缺。"
+    },
+    {
+      "key": "age",
+      "label_zh": "实足年龄",
+      "unit": "a",
+      "range": [
+        18,
+        120
+      ],
+      "required": false,
+      "from": "profile",
+      "flag": "--age",
+      "note_zh": "论文人群是 60 岁及以上；不到 60 岁会提示不在论文人群内。"
+    }
+  ],
+  "outputs": [
+    {
+      "key": "total_pa_min_per_week",
+      "label_zh": "总活动量（2×高强度 + 中等 + 0.5×低强度）",
+      "unit": "min"
+    },
+    {
+      "key": "total_pa_category",
+      "label_zh": "总活动量分档",
+      "unit": ""
+    },
+    {
+      "key": "total_pa_meets_150",
+      "label_zh": "总活动量是否达到每周 150 分钟",
+      "unit": ""
+    },
+    {
+      "key": "hpa_category",
+      "label_zh": "高强度活动分档",
+      "unit": ""
+    },
+    {
+      "key": "mpa_category",
+      "label_zh": "中等强度活动分档",
+      "unit": ""
+    },
+    {
+      "key": "lpa_category",
+      "label_zh": "低强度活动分档",
+      "unit": ""
+    },
+    {
+      "key": "fp_beta_total_pa_category",
+      "label_zh": "论文图 6：该总活动量分档相对 0 分钟/周的衰弱表型分数 β",
+      "unit": "1"
+    },
+    {
+      "key": "fi_beta_total_pa_category",
+      "label_zh": "论文图 7：该总活动量分档相对 0 分钟/周的衰弱指数 β",
+      "unit": "1"
+    },
+    {
+      "key": "hr_total_pa_category_fp_cohort",
+      "label_zh": "补充表 1B：该总活动量分档相对 0 分钟/周的 10 年全因死亡风险比",
+      "unit": "1"
+    },
+    {
+      "key": "hr_total_pa_category_fi_cohort",
+      "label_zh": "补充表 2B：该总活动量分档相对 0 分钟/周的 10 年全因死亡风险比",
+      "unit": "1"
+    },
+    {
+      "key": "bmi_kg_m2",
+      "label_zh": "体质指数",
+      "unit": "kg/m^2"
+    },
+    {
+      "key": "fi_items_answered",
+      "label_zh": "衰弱指数 48 项里已答的项数",
+      "unit": "1"
+    },
+    {
+      "key": "fi_deficit_sum",
+      "label_zh": "已答各项缺陷分之和",
+      "unit": "1"
+    },
+    {
+      "key": "frailty_index",
+      "label_zh": "衰弱指数（48 项齐全时）",
+      "unit": "1"
+    },
+    {
+      "key": "frailty_index_min",
+      "label_zh": "衰弱指数可能的最小值（缺项按 0）",
+      "unit": "1"
+    },
+    {
+      "key": "frailty_index_max",
+      "label_zh": "衰弱指数可能的最大值（缺项按 1）",
+      "unit": "1"
+    },
+    {
+      "key": "frailty_index_category",
+      "label_zh": "衰弱指数分档（健康 / 衰弱前期 / 衰弱）",
+      "unit": ""
+    },
+    {
+      "key": "fp_known_points",
+      "label_zh": "衰弱表型里能算的两项（BMI、耐力）得分",
+      "unit": "1"
+    },
+    {
+      "key": "fp_status",
+      "label_zh": "衰弱表型能下的结论",
+      "unit": ""
+    }
+  ]
+}
