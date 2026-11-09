@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import importlib.util
+import re
 import sys
 from collections import OrderedDict
 from typing import Any, Dict, List, Optional
@@ -110,6 +111,16 @@ def query(lib: Library, entities: List[str], limit: int = 12, medications: Optio
         if effects:
             entry["trial_effects"] = [_effect(q, r) for r in effects]
             entry["trial_effects_note_zh"] = "平均效应是一组人的平均，不是这个人会得到的变化，也不是用法。"
+        # A specific form (维生素D3, vitamin K2, omega-3) with no human row: also show rows under the broader name,
+        # labelled as such, so a cohort on "vitamin D supplementation" is not missed for "vitamin D3".
+        stem = re.sub(r"(?<=[A-Za-z])[-\s]?\d$", "", name.strip())  # D3, K2, omega-3; never B12
+        if not groups["human"] and stem != name.strip() and len(stem) >= 2:
+            seen = {id(r) for r in rows}
+            broader = [r for r in q.search(claims, stem) if id(r) not in seen and q.bucket(r) == "human"]
+            if broader:
+                entry["broader_name"] = {
+                    "query": stem, "label_zh": f"名称更宽的人群研究（按「{stem}」检索，不专指{name}）",
+                    "rows": [_row(lib, q, r) for r in broader[:limit]], "not_shown": max(0, len(broader) - limit)}
         if not rows and not effects:
             entry["note_zh"] = f"证据库里没有「{name}」。没有收录不等于没有研究，也不说明它安全或无效。"
         elif rows and not groups["human"]:

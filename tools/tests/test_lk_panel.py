@@ -87,3 +87,29 @@ def test_hook_speaks_only_when_a_method_applies(monkeypatch, capsys):
     assert capsys.readouterr().out == ""
     monkeypatch.setattr(sys, "stdin", io.StringIO("not json at all {"))
     assert main(["--library", str(ROOT), "detect", "--hook"]) == 0, "a hook never fails the prompt"
+
+
+def _cli(capsys, *argv):
+    main(["--library", str(ROOT), *argv])
+    return json.loads(capsys.readouterr().out)
+
+
+def test_change_accepts_english_marker_names(capsys):
+    english = _cli(capsys, "change", "--marker", "Glycohemoglobin (%)", "--before", "5.9", "--after", "6.3")
+    chinese = _cli(capsys, "change", "--marker", "糖化血红蛋白", "--before", "5.9", "--after", "6.3")
+    assert english["verdict"] == chinese["verdict"] != "no_noise_model"
+    assert english["band_pct"] == chinese["band_pct"]
+
+
+def test_trend_first_to_last_uses_the_retest_interval(capsys):
+    out = _cli(capsys, "trend", "--marker", "糖化血红蛋白", "--series", "2026-06-10:6.2", "2026-08-05:6.0", "2026-10-01:5.8")
+    assert out["baseline_vs_latest"]["verdict"] == "too_close"
+    assert out["summary_verdict"] == "not_judged", "no comparison passed the interval rule, so nothing is judged"
+
+
+def test_specific_form_also_shows_broader_human_rows_labelled(capsys):
+    out = _cli(capsys, "evidence", "维生素D3")["results"][0]
+    if out["counts"]["human"] == 0 and "broader_name" in out:
+        assert out["broader_name"]["query"] == "维生素D" and "不专指" in out["broader_name"]["label_zh"]
+    b12 = _cli(capsys, "evidence", "维生素B12")["results"][0]
+    assert "broader_name" not in b12, "a two-digit form (B12) is never cut: 维生素B1 is a different vitamin"

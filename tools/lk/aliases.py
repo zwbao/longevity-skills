@@ -36,7 +36,7 @@ ANALYTES: Dict[str, Dict[str, List[str]]] = {
     "hematocrit": {"en": ["hematocrit", "haematocrit", "hct"], "lib": ["hct", "hematocrit", "红细胞比容", "hct_pct"]},
     "platelets": {"en": ["platelet count", "platelets", "plt"], "lib": ["plt", "platelet count", "血小板", "血小板计数", "plt_10e9_l"]},
     "mch": {"en": ["mean cell hemoglobin", "mean corpuscular hemoglobin", "mch"], "lib": ["mch", "mean cell hemoglobin", "mch_pg"]},
-    "mchc": {"en": ["mean cell hemoglobin concentration", "mean corpuscular hemoglobin concentration", "mchc"], "lib": ["mchc", "mchc_g_dl"]},
+    "mchc": {"en": ["mean cell hemoglobin concentration", "mean corpuscular hemoglobin concentration", "mchc", "mean cell hgb conc"], "lib": ["mchc", "mchc_g_dl"]},
     "neutrophil_pct": {"en": ["segmented neutrophils percent", "neutrophils percent", "neutrophil percent", "neutrophils", "neutrophil %"],
                        "lib": ["neut%", "ne%", "neutrophil percent", "中性粒细胞%", "neut_pct"]},
     "monocyte_pct": {"en": ["monocyte percent", "monocytes percent", "monocytes", "monocyte %"], "lib": ["mono%", "mo%", "monocyte percent", "单核细胞%", "mono_pct"]},
@@ -78,9 +78,9 @@ ANALYTES: Dict[str, Dict[str, List[str]]] = {
     "cotinine": {"en": ["cotinine", "serum cotinine"], "lib": ["cotinine", "serum cotinine", "可替宁", "cotinine_ng_ml"]},
     "uacr": {"en": ["urine albumin creatinine ratio", "urine albumin-to-creatinine ratio", "albumin/creatinine ratio", "uacr", "acr"],
              "lib": ["uacr", "acr", "urine albumin-to-creatinine ratio", "尿白蛋白肌酐比", "uacr_mg_g", "acr_mg_g"]},
-    "sbp": {"en": ["systolic blood pressure", "systolic bp", "sbp", "systolic"], "lib": ["sbp", "systolic blood pressure", "收缩压", "高压", "sbp_mmhg"]},
-    "dbp": {"en": ["diastolic blood pressure", "diastolic bp", "dbp", "diastolic"], "lib": ["dbp", "diastolic blood pressure", "舒张压", "低压", "dbp_mmhg"]},
-    "pulse": {"en": ["pulse", "heart rate", "resting heart rate", "pulse rate"], "lib": ["pulse", "heart rate", "心率", "pulse_per_min"]},
+    "sbp": {"en": ["systolic blood pressure", "systolic bp", "sbp", "systolic", "systolic blood pres", "systolic: blood pres"], "lib": ["sbp", "systolic blood pressure", "收缩压", "高压", "sbp_mmhg"]},
+    "dbp": {"en": ["diastolic blood pressure", "diastolic bp", "dbp", "diastolic", "diastolic blood pres", "diastolic: blood pres"], "lib": ["dbp", "diastolic blood pressure", "舒张压", "低压", "dbp_mmhg"]},
+    "pulse": {"en": ["pulse", "heart rate", "resting heart rate", "pulse rate", "60 sec pulse", "60 sec. pulse"], "lib": ["pulse", "heart rate", "心率", "pulse_per_min"]},
     "bmi": {"en": ["bmi", "body mass index"], "lib": ["bmi", "body mass index", "身体质量指数", "bmi_kg_m2"]},
     "waist": {"en": ["waist circumference", "waist"], "lib": ["waist", "waist circumference", "腰围", "waist_cm"]},
     "height": {"en": ["height", "standing height", "body height"], "lib": ["height", "身高", "height_cm"]},
@@ -98,7 +98,7 @@ UNITS: Dict[str, str] = {
 
 def _fold(text: str) -> str:
     s = unicodedata.normalize("NFKC", str(text)).casefold()
-    s = re.sub(r"\s*\([^)]*\)\s*$", "", s)          # drop a trailing "(unit)" or "(abbreviation)"
+    s = re.sub(r"\s*\([^)]*\)\s*$", "", s.rstrip(" ."))  # drop a trailing "(unit)" or "(abbreviation)"
     return re.sub(r"[\s_\-·•:：,，/\\]+", "", s)
 
 
@@ -108,13 +108,14 @@ for _analyte, _names in ANALYTES.items():
         _EN_INDEX.setdefault(_fold(_name), _analyte)
 
 
-_QUALIFIERS = {"serum", "plasma", "level", "levels", "s", "p", "the", "of", "in", "result", "frozen", "refrigerated", "si"}
+_QUALIFIERS = {"serum", "plasma", "level", "levels", "s", "p", "the", "of", "in", "result", "frozen", "refrigerated", "refrig",
+               "si", "direct", "1st", "2nd", "3rd", "rdg"}
 
 
 def _tokens(text: str) -> str:
     """Word-order-free form: "Glucose, serum" and "Serum glucose" give the same key."""
     s = unicodedata.normalize("NFKC", str(text)).casefold()
-    s = re.sub(r"\s*\([^)]*\)\s*$", "", s)
+    s = re.sub(r"\s*\([^)]*\)\s*$", "", s.rstrip(" ."))
     words = [w for w in re.split(r"[^0-9a-z%#]+", s) if w and w not in _QUALIFIERS]
     return " ".join(sorted(words))
 
@@ -136,8 +137,10 @@ def analyte_of(name: str) -> Optional[str]:
 
 
 def unit_of(unit: str) -> str:
-    key = re.sub(r"\s+", " ", unicodedata.normalize("NFKC", str(unit or "")).strip()).casefold()
-    return UNITS.get(key, unit)
+    text = re.sub(r"\*\*", "^", str(unit or ""))   # kg/m**2 (NHANES codebook) -> kg/m^2
+    text = re.sub(r"(?i)^iu/", "U/", text.strip())   # IU/L for enzymes is U/L
+    key = re.sub(r"\s+", " ", unicodedata.normalize("NFKC", text)).casefold()
+    return UNITS.get(key, text)
 
 
 def translate_rows(rows: List[dict], known, normalize_unit=None) -> List[dict]:

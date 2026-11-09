@@ -17,7 +17,9 @@ from .library import Library
 _NUM = r"[-+]?\d+(?:[.,]\d+)?"
 _UNIT = r"(?:[A-Za-zµμ%/^*×·0-9.\-]+(?:\s?(?:cells|million|thousand)[A-Za-zµμ/^0-9]*)?(?:/[A-Za-zµμ0-9.^]+)?|%|‰)"
 # "Albumin (g/dL) 4.90"  /  "White blood cell count (1000 cells/uL) 6.10"
-_PAREN = re.compile(rf"(?P<item>[^;:\n()=]{{2,80}}?)\s*\((?P<unit>[^()]{{1,30}})\)\s*[:=]?\s*(?P<value>{_NUM})(?!\d)(?![.,]\d)")
+_PAREN = re.compile(rf"(?P<item>[^;:\n()=]{{2,80}}?(?:\s*\([A-Za-z][^()]{{0,14}}\))?)\s*\((?P<unit>[^()]{{1,30}})\)\s*[:=]?\s*(?P<value>{_NUM})(?!\d)(?![.,]\d)")
+# NHANES codebook style with the unit after the name: "Systolic: Blood pres (1st rdg) mm Hg 136"
+_UNIT_AFTER = re.compile(rf"(?P<item>[A-Za-z][^;\n=]{{2,60}}?)\s+(?P<unit>mm ?Hg)\s+(?P<value>{_NUM})(?!\d)(?![.,]\d)", re.I)
 # "Creatinine: 0.9 mg/dL", "肌酐=78 umol/L", "BMI 24.2 kg/m2", "肌酐 78 μmol/L"
 _PLAIN = re.compile(rf"(?P<item>[^\s;:,，；：=()（）\d][^;:,，；：=()（）\n]{{0,60}}?)\s*[:=：]?\s*(?P<value>{_NUM})\s*(?P<unit>{_UNIT})?(?=\s*(?:[;,，；\n]|$))")
 _PERSON = re.compile(r"^\s*(?:participant|patient|person|subject|individual|case|患者|受试者|参与者|对象)\s*([A-Z0-9甲乙丙丁一二三四])\s*[:：]",
@@ -26,8 +28,10 @@ _AGE = [re.compile(r"(\d{1,3}(?:\.\d+)?)[-\s]*(?:year|yr)s?[-\s]*old", re.I),
         re.compile(r"\bage[d]?\s*[:=]?\s*(\d{1,3}(?:\.\d+)?)\b", re.I),
         re.compile(r"(?:年龄|年纪)\s*[:：=]?\s*(\d{1,3}(?:\.\d+)?)"),
         re.compile(r"(\d{1,3})\s*岁")]
-_SEX = [(re.compile(r"\b(?:female|woman|women|girl)\b", re.I), "female"), (re.compile(r"\b(?:male|man|men|boy)\b", re.I), "male"),
-        (re.compile(r"女"), "female"), (re.compile(r"男"), "male")]
+_SEX = [(re.compile(r"\b(?:female|woman|women|girl|mother|mom|wife|daughter|sister)\b", re.I), "female"),
+        (re.compile(r"\b(?:male|man|men|boy|father|dad|husband|son|brother)\b", re.I), "male"),
+        (re.compile(r"女|我妈|妈妈|母亲|老妈|婆婆|奶奶|外婆|姥姥|妻子|老婆|姐姐|妹妹"), "female"),
+        (re.compile(r"男|我爸|爸爸|父亲|老爸|公公|爷爷|外公|姥爷|丈夫|老公|哥哥|弟弟"), "male")]
 _SKIP_ITEMS = {"age", "aged", "年龄", "year", "years", "option", "options"}
 
 
@@ -57,6 +61,11 @@ def _sex(text: str) -> Optional[str]:
     return found.pop() if len(found) == 1 else None
 
 
+def _looks_like_unit(text: str) -> bool:
+    words = text.split()
+    return len(words) <= 2 and not re.search(r"[*=]|\b(?:sec|rdg|reading|average|mean of)\b", text, re.I)
+
+
 def _clean_item(item: str) -> str:
     item = re.sub(r"^.*?(?:blood panel|biomarkers|labs?|panel|化验|检验|生化|血常规)\s*[:：]\s*", "", item, flags=re.I)
     return item.strip(" \t-–—•*·.;:,，；：")
@@ -65,10 +74,18 @@ def _clean_item(item: str) -> str:
 def parse_rows(text: str) -> List[Dict[str, str]]:
     rows: List[Dict[str, str]] = []
     taken = []
+    for m in _UNIT_AFTER.finditer(text):
+        rows.append({"item": _clean_item(m.group("item")), "value": m.group("value").replace(",", "."), "unit": m.group("unit")})
+        taken.append((m.start(), m.end()))
     for m in _PAREN.finditer(text):
+        if any(a <= m.start() < b for a, b in taken):
+            continue
         item = _clean_item(m.group("item"))
+        unit = m.group("unit").strip()
+        if not _looks_like_unit(unit):  # "60 sec. pulse (30 sec. pulse * 2) 68": the parenthesis is part of the name
+            item, unit = f"{item} ({unit})", ""
         if item and item.casefold() not in _SKIP_ITEMS:
-            rows.append({"item": item, "value": m.group("value").replace(",", "."), "unit": m.group("unit").strip()})
+            rows.append({"item": item, "value": m.group("value").replace(",", "."), "unit": unit})
             taken.append((m.start(), m.end()))
     rest = list(text)
     for a, b in taken:
