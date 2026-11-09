@@ -1,0 +1,52 @@
+# Packages the `longevity` command with a copy of this library, so any agent host can install it with
+#   uv tool install git+https://github.com/zwbao/longevity-skills
+# (or pipx / pip). The engine is tools/lk (installed as `longevity_kit`); the library files ride along
+# under longevity_kit/library/. Nothing here changes how the repository itself is used.
+[build-system]
+requires = ["hatchling>=1.21"]
+build-backend = "hatchling.build"
+
+[project]
+name = "longevity-skills"
+dynamic = ["version"]
+description = "Longevity and ageing methods, evidence and within-person variation for agents: one CLI and one MCP server."
+readme = "docs/lk-cli.md"
+requires-python = ">=3.9"
+license = { text = "MIT" }
+dependencies = []
+
+[project.optional-dependencies]
+# Only a few methods need these (see each skill's scripts/requirements.txt).
+scientific = ["numpy>=1.21", "pandas>=1.5", "scipy>=1.7", "openpyxl>=3.1"]
+
+[project.scripts]
+longevity = "longevity_kit.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/zwbao/longevity-skills"
+
+[tool.hatch.version]
+path = "VERSION"
+pattern = "(?P<version>\\d+\\.\\d+\\.\\d+)"
+
+[tool.hatch.build.targets.wheel]
+only-include = ["tools/lk"]
+exclude = ["**/__pycache__", "**/*.pyc"]
+
+[tool.hatch.build.targets.wheel.sources]
+"tools/lk" = "longevity_kit"
+
+[tool.hatch.build.targets.wheel.force-include]
+"skills" = "longevity_kit/library/skills"
+"data" = "longevity_kit/library/data"
+"registry" = "longevity_kit/library/registry"
+"schema" = "longevity_kit/library/schema"
+"tools/skillkit" = "longevity_kit/library/tools/skillkit"
+"catalog.json" = "longevity_kit/library/catalog.json"
+"intents.json" = "longevity_kit/library/intents.json"
+"VERSION" = "longevity_kit/library/VERSION"
+"LICENSE" = "longevity_kit/library/LICENSE"
+"THIRD_PARTY_NOTICES.md" = "longevity_kit/library/THIRD_PARTY_NOTICES.md"
+
+[tool.hatch.build.targets.sdist]
+exclude = [".github", ".cursor", ".claude-plugin", "agent", "**/__pycache__"]

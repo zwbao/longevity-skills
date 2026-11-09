@@ -11,6 +11,11 @@
       "name": "longevity-skills",
       "source": "./",
       "description": "Longevity and ageing methods for agents, updated weekly from new papers."
+    },
+    {
+      "name": "longevity",
+      "source": "./agent",
+      "description": "Light entry: one routing skill and an MCP server (needs uv). Same methods and evidence as longevity-skills, without loading 178 skills."
     }
   ]
 }
