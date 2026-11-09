@@ -1,0 +1,258 @@
+{
+  "schema": "longevity-skill/1",
+  "name": "multidimensional-sleep-health-score",
+  "kind": "paper",
+  "tier": "A",
+  "species": [
+    "human"
+  ],
+  "evidence": "cohort",
+  "domains": [
+    "临床年龄与可穿戴"
+  ],
+  "blurb_zh": "用手环或手表一周的睡眠时长、睡眠效率、睡眠中点及其波动，加两道睡眠问卷题，按论文切点算 0–6 分的睡眠健康分。",
+  "intents": [
+    "wearable_sleep"
+  ],
+  "triage": {
+    "reason_zh": "论文方法印出六维睡眠健康评分全部切点（6–8小时、效率≥85%、中点2–4点、中点波动<60分钟、PSQI两题），个人可用手环和两道问卷题算出0–6分；论文没印个人算例，验证保持草稿。",
+    "reviewed": false
+  },
+  "paper": {
+    "doi": "10.1007/s11357-026-02518-y",
+    "title": "Associations between multidimensional sleep measures and domain-specific cognitive function across repeated observations in adults aged 55 years and older",
+    "title_zh": "多维睡眠指标与 55 岁及以上成人分领域认知功能的重复观测关联",
+    "journal": "GeroScience",
+    "year": 2026,
+    "authors": "Marent 等",
+    "article_url": "https://doi.org/10.1007/s11357-026-02518-y",
+    "supplements": [
+      {
+        "label": "Online Resource 1（ESM 1，补充表 1A–7D）",
+        "url": "https://static-content.springer.com/esm/art%3A10.1007%2Fs11357-026-02518-y/MediaObjects/11357_2026_2518_MOESM1_ESM.pdf"
+      }
+    ],
+    "code_url": "https://github.com/pjmarent/PASOCA-sleep-cognition",
+    "card_notes": [
+      "数据来自比利时佛兰德的 PASOCA 队列：233 名 55 岁及以上社区成人（基线女性 51.1%，平均 68.3 ± 7.7 岁），两年内测三次；手腕 ActiGraph 戴 7 天，GGIR 处理；认知用 CANTAB 四个领域的 z 分。",
+      "评分照论文方法「Multidimensional sleep health score」：时长 6–8 小时、效率 ≥85%、睡眠中点 02:00–04:00、各晚中点标准差 <60 分钟、PSQI 总体睡眠质量答非常好或尚好、PSQI 白天犯困题答过去一个月没有或每周少于 1 次，各记 1 分，合计 0–6 分。基线中位数 5 分（四分位 4–6）。",
+      "论文的睡眠效率是 GGIR 选项 2：睡眠期内检测到的睡眠时间除以（睡眠期 + 入睡潜伏期）。消费级手环算法不同，同一晚的效率可能偏高或偏低。",
+      "线性混合模型里，睡眠时长、PSQI 总分和这个 0–6 分与四个认知领域都没有显著关联；只有睡眠效率越高、执行功能越好（多重校正后仍显著）。这是观察性关联，方向不能确定。代码仓库只有 GGIR 配置文件，没有评分代码。"
+    ],
+    "summary_zh": "这项研究在比利时 55 岁及以上社区成人中两年内测了三次手环睡眠、睡眠问卷和电脑化认知测验，发现睡眠效率较高的人执行功能较好，而睡眠时长、主观睡眠质量和六维睡眠健康总分与记忆、执行功能和处理速度都没有明确关联。个人报告只按论文的六条切点把你一周的睡眠逐项判为有利或不利并合计 0–6 分，不预测认知表现或痴呆风险。",
+    "summary_status": "draft"
+  },
+  "entry": {
+    "script": "scripts/personal_report.py",
+    "measurements_flag": "--measurements",
+    "measurements_header": [
+      "item",
+      "value",
+      "unit"
+    ],
+    "age_flag": "--age",
+    "out_flag": "--out",
+    "result_json": true,
+    "targets_flag": "--targets",
+    "levers_json": true
+  },
+  "population": {
+    "age_years": [
+      55,
+      90
+    ],
+    "note_zh": "论文人群是比利时 55–90 岁社区成人，排除了神经退行性病、卒中、慢性失眠、用呼吸机治疗睡眠呼吸暂停和 MoCA ≤23 分者。切点来自通用的睡眠健康文献，计分对其他年龄也能算，但与认知的关联只在这类人群里检验过。"
+  },
+  "inputs_status": "verified",
+  "inputs": [
+    {
+      "key": "sleep_duration_h",
+      "label_zh": "睡眠时长",
+      "aliases": [
+        "sleep duration",
+        "total sleep time",
+        "TST",
+        "sleep_hours",
+        "每晚睡眠时长",
+        "平均睡眠时长",
+        "总睡眠时长",
+        "夜间睡眠时长",
+        "睡眠时间",
+        "实际睡眠时长"
+      ],
+      "unit": "h",
+      "accept": {
+        "min": 0.016666666666666666
+      },
+      "range": [
+        2,
+        16
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "这里要手环或手表记录的一周平均每晚实际睡着的时长（不含躺着没睡着的时间），单位小时；写分钟时请在单位列写 min。"
+    },
+    {
+      "key": "sleep_efficiency_pct",
+      "label_zh": "睡眠效率",
+      "aliases": [
+        "sleep efficiency",
+        "SE",
+        "平均睡眠效率"
+      ],
+      "unit": "%",
+      "accept": {
+        "1": 100
+      },
+      "range": [
+        30,
+        100
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "这里要一周平均睡眠效率（睡着时间占在床时间的百分比，例如 86）；写成小数 0.86 时请在单位列写 1。"
+    },
+    {
+      "key": "sleep_midpoint_clock_h",
+      "label_zh": "睡眠中点",
+      "aliases": [
+        "sleep midpoint",
+        "midpoint of sleep",
+        "mid-sleep",
+        "MSF",
+        "睡眠中点时刻",
+        "平均睡眠中点"
+      ],
+      "unit": "h",
+      "range": [
+        0,
+        36
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "这里要一周平均睡眠中点（入睡和醒来正中间的钟点），写成小数小时：03:30 写 3.5，23:45 写 23.75。GGIR 输出的 27.5（从前一晚零点起算）也接受，按 03:30 读。"
+    },
+    {
+      "key": "sleep_midpoint_sd_min",
+      "label_zh": "睡眠中点标准差",
+      "aliases": [
+        "sleep midpoint SD",
+        "midpoint variability",
+        "sleep regularity SD",
+        "睡眠中点波动",
+        "睡眠中点变异",
+        "作息波动"
+      ],
+      "unit": "min",
+      "accept": {
+        "h": 60
+      },
+      "range": [
+        0,
+        600
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "这里要同一周各晚睡眠中点的标准差，单位分钟；写小时时请在单位列写 h。"
+    },
+    {
+      "key": "psqi_sleep_quality_code",
+      "label_zh": "PSQI 总体睡眠质量",
+      "aliases": [
+        "PSQI 6",
+        "PSQI Q6",
+        "PSQI item 6",
+        "subjective sleep quality item",
+        "overall sleep quality",
+        "近一个月总体睡眠质量",
+        "睡眠质量自评"
+      ],
+      "unit": "score",
+      "range": [
+        0,
+        3
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "这里要 PSQI「过去一个月，你如何评价自己总体的睡眠质量？」的答案代码：0 非常好，1 尚好，2 不好，3 非常差。"
+    },
+    {
+      "key": "psqi_trouble_awake_code",
+      "label_zh": "PSQI 白天犯困",
+      "aliases": [
+        "PSQI 8",
+        "PSQI Q8",
+        "PSQI item 8",
+        "trouble staying awake",
+        "daytime alertness item",
+        "开车吃饭社交时犯困",
+        "白天难以保持清醒"
+      ],
+      "unit": "score",
+      "range": [
+        0,
+        3
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "这里要 PSQI「过去一个月，你在开车、吃饭或参加社交活动时难以保持清醒的次数」的答案代码：0 过去一个月没有，1 每周少于 1 次，2 每周 1–2 次，3 每周 3 次或以上。"
+    },
+    {
+      "key": "age",
+      "label_zh": "年龄",
+      "unit": "a",
+      "range": [
+        18,
+        110
+      ],
+      "required": false,
+      "from": "profile",
+      "flag": "--age",
+      "note_zh": "不进计分，只用于提示论文人群是 55 岁及以上。"
+    }
+  ],
+  "outputs": [
+    {
+      "key": "sleep_health_score",
+      "label_zh": "六维睡眠健康分（0–6，越高越有利）",
+      "unit": "score"
+    },
+    {
+      "key": "duration_favourable",
+      "label_zh": "睡眠时长有利（1 是，0 否）",
+      "unit": "1"
+    },
+    {
+      "key": "efficiency_favourable",
+      "label_zh": "睡眠效率有利（1 是，0 否）",
+      "unit": "1"
+    },
+    {
+      "key": "timing_favourable",
+      "label_zh": "睡眠时点有利（1 是，0 否）",
+      "unit": "1"
+    },
+    {
+      "key": "regularity_favourable",
+      "label_zh": "睡眠规律有利（1 是，0 否）",
+      "unit": "1"
+    },
+    {
+      "key": "satisfaction_favourable",
+      "label_zh": "主观睡眠满意度有利（1 是，0 否）",
+      "unit": "1"
+    },
+    {
+      "key": "alertness_favourable",
+      "label_zh": "白天清醒度有利（1 是，0 否）",
+      "unit": "1"
+    }
+  ],
+  "related_not_same": [
+    "sleep-chart-biological-ageing"
+  ],
+  "validation": {
+    "status": "draft",
+    "gap_zh": "论文方法段印出了六条切点和 0–6 分的计分规则，测试核对这些切点与边界；但正文、补充材料 Online Resource 1（补充表 1A–7D，只有认知测验说明和混合模型系数）和代码仓库 pjmarent/PASOCA-sleep-cognition（只有 GGIR 配置）都没有印出某个人的输入对应的分数。表 1 和表 2 是期刊页面上的独立表格页，本次抓取被人机验证拦下没有打开；据正文描述它们是人群描述统计和模型估计，不是个人算例。所以不算复现。"
+  }
+}
