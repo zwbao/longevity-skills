@@ -1,0 +1,693 @@
+{
+  "schema": "longevity-skill/1",
+  "name": "frailty-index-32-item",
+  "kind": "paper",
+  "tier": "A",
+  "species": [
+    "human"
+  ],
+  "evidence": "cohort",
+  "domains": [
+    "衰弱与死亡风险",
+    "心血管"
+  ],
+  "blurb_zh": "用 30 道是/否题（慢病、看听力、日常活动和行动困难）、抑郁量表总分和认知分算 32 项衰弱指数，按论文切点分成强健、衰弱前期和衰弱。",
+  "intents": [
+    "frailty_mortality"
+  ],
+  "triage": {
+    "reason_zh": "补充表 2 印出了 32 项衰弱指数每一项的计分规则，正文印出了除以 32 和 0.12、0.25 两个切点，个人可以按问卷算出指数和分档；论文没有印出个人算例，验证保持草稿。",
+    "reviewed": false
+  },
+  "paper": {
+    "doi": "10.1007/s11357-026-02559-3",
+    "title": "Frailty trajectories and cardiovascular disease in adults with CKM stages 0–3",
+    "title_zh": "心血管-肾脏-代谢综合征 0–3 期成人的衰弱轨迹与心血管病",
+    "journal": "GeroScience",
+    "year": 2026,
+    "authors": "Zhang 等",
+    "article_url": "https://link.springer.com/article/10.1007/s11357-026-02559-3",
+    "supplements": [
+      {
+        "label": "ESM 1（补充表 1–8，含补充表 2：32 项衰弱指数的组成）",
+        "url": "https://static-content.springer.com/esm/art%3A10.1007%2Fs11357-026-02559-3/MediaObjects/11357_2026_2559_MOESM1_ESM.docx"
+      }
+    ],
+    "card_notes": [
+      "数据来自中国健康与养老追踪调查（CHARLS）2011–2020 年，4219 名 45 岁及以上、心血管-肾脏-代谢（CKM）综合征 0–3 期且基线没有心血管病和癌症的成人；随访中 541 人自报医生诊断的心脏病或中风。",
+      "衰弱指数按缺陷累积法构建：32 项（13 项共病和自评健康、10 项日常活动、7 项行动、CES-D-10 抑郁、认知），前 31 项是 0/1，认知是 0–1 的连续分，总和除以 32。切点：≤0.12 强健，0.12 到 ≤0.25 衰弱前期，>0.25 衰弱。",
+      "认知项由记忆和定向测验得分导出，论文没有印出换算方法；本技能只接受换算好的 0–1 分，不填时给出指数区间。",
+      "风险比来自 Cox 模型 2（调整年龄、性别、吸烟、饮酒、血红蛋白、血小板和是否用慢病药）；轨迹分组的潜类别模型参数没有印出，个人不能归组。结局是自报医生诊断，没有对照病历核实。"
+    ],
+    "summary_zh": "这项中国中老年队列研究发现，心血管-肾脏-代谢综合征早期（0–3 期）的成人中，基线衰弱前期或衰弱、以及衰弱指数随时间持续较高或快速上升的人，随后更常出现心脏病和中风。个人报告只按论文的 32 项问卷算你这一次的衰弱指数并分成强健、衰弱前期或衰弱，不归入轨迹组，也不估算个人发病概率。",
+    "summary_status": "draft"
+  },
+  "entry": {
+    "script": "scripts/personal_report.py",
+    "measurements_flag": "--measurements",
+    "measurements_header": [
+      "item",
+      "value",
+      "unit"
+    ],
+    "age_flag": "--age",
+    "out_flag": "--out",
+    "result_json": true
+  },
+  "population": {
+    "age_years": [
+      45,
+      120
+    ],
+    "note_zh": "论文人群是中国 45 岁及以上、CKM 0–3 期、基线没有心血管病和癌症的 CHARLS 参与者，中位年龄 57 岁；论文没有设年龄上限。已有心脏病、中风或癌症的人仍可算指数和分档，但不套用论文的风险比。"
+  },
+  "inputs_status": "verified",
+  "inputs": [
+    {
+      "key": "hypertension_dx_yn",
+      "label_zh": "高血压（医生诊断）",
+      "aliases": [
+        "高血压",
+        "hypertension",
+        "确诊高血压"
+      ],
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "共病",
+      "note_zh": "补充表 2 第 1 项（共病）：self-reported physician-diagnosed hypertension。是 = 1，否 = 0；也可以写“是”“否”。"
+    },
+    {
+      "key": "diabetes_dx_yn",
+      "label_zh": "糖尿病（医生诊断）",
+      "aliases": [
+        "糖尿病",
+        "diabetes",
+        "确诊糖尿病",
+        "血糖高（医生诊断）"
+      ],
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "共病",
+      "note_zh": "补充表 2 第 2 项（共病）：self-reported physician-diagnosed diabetes。是 = 1，否 = 0；也可以写“是”“否”。"
+    },
+    {
+      "key": "heart_disease_dx_yn",
+      "label_zh": "心脏病（医生诊断）",
+      "aliases": [
+        "心脏病",
+        "heart disease",
+        "冠心病",
+        "心梗",
+        "心绞痛",
+        "心衰"
+      ],
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "共病",
+      "note_zh": "补充表 2 第 3 项（共病）：self-reported physician-diagnosed heart disease。是 = 1，否 = 0；也可以写“是”“否”。"
+    },
+    {
+      "key": "stroke_dx_yn",
+      "label_zh": "中风（医生诊断）",
+      "aliases": [
+        "中风",
+        "脑卒中",
+        "卒中",
+        "stroke"
+      ],
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "共病",
+      "note_zh": "补充表 2 第 4 项（共病）：self-reported physician-diagnosed stroke。是 = 1，否 = 0；也可以写“是”“否”。"
+    },
+    {
+      "key": "cancer_dx_yn",
+      "label_zh": "癌症（医生诊断）",
+      "aliases": [
+        "癌症",
+        "恶性肿瘤",
+        "cancer"
+      ],
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "共病",
+      "note_zh": "补充表 2 第 5 项（共病）：self-reported physician-diagnosed cancer。是 = 1，否 = 0；也可以写“是”“否”。"
+    },
+    {
+      "key": "arthritis_dx_yn",
+      "label_zh": "关节炎或风湿病（医生诊断）",
+      "aliases": [
+        "关节炎",
+        "风湿",
+        "arthritis"
+      ],
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "共病",
+      "note_zh": "补充表 2 第 6 项（共病）：self-reported physician-diagnosed arthritis。是 = 1，否 = 0；也可以写“是”“否”。"
+    },
+    {
+      "key": "chronic_lung_disease_dx_yn",
+      "label_zh": "慢性肺部疾病（医生诊断）",
+      "aliases": [
+        "慢性肺病",
+        "慢阻肺",
+        "慢性支气管炎",
+        "肺气肿",
+        "chronic lung disease",
+        "COPD"
+      ],
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "共病",
+      "note_zh": "补充表 2 第 7 项（共病）：self-reported physician-diagnosed chronic lung disease。是 = 1，否 = 0；也可以写“是”“否”。"
+    },
+    {
+      "key": "asthma_dx_yn",
+      "label_zh": "哮喘（医生诊断）",
+      "aliases": [
+        "哮喘",
+        "asthma"
+      ],
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "共病",
+      "note_zh": "补充表 2 第 8 项（共病）：self-reported physician-diagnosed asthma。是 = 1，否 = 0；也可以写“是”“否”。"
+    },
+    {
+      "key": "psychiatric_dx_yn",
+      "label_zh": "情感、神经或精神问题（医生诊断）",
+      "aliases": [
+        "精神问题",
+        "情感或精神问题",
+        "psychiatric problems",
+        "emotional nervous psychiatric problems"
+      ],
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "共病",
+      "note_zh": "补充表 2 第 9 项（共病）：self-reported physician-diagnosed emotional, nervous, or psychiatric problems。是 = 1，否 = 0；也可以写“是”“否”。"
+    },
+    {
+      "key": "memory_disease_dx_yn",
+      "label_zh": "与记忆相关的疾病（医生诊断）",
+      "aliases": [
+        "记忆相关疾病",
+        "老年痴呆",
+        "痴呆",
+        "memory-related disease"
+      ],
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "共病",
+      "note_zh": "补充表 2 第 10 项（共病）：self-reported physician-diagnosed memory-related disease。是 = 1，否 = 0；也可以写“是”“否”。"
+    },
+    {
+      "key": "vision_problem_yn",
+      "label_zh": "自报视力问题",
+      "aliases": [
+        "视力问题",
+        "视力差",
+        "vision problems"
+      ],
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "共病",
+      "note_zh": "补充表 2 第 11 项（共病）：self-reported vision problems。是 = 1，否 = 0；也可以写“是”“否”。"
+    },
+    {
+      "key": "hearing_problem_yn",
+      "label_zh": "自报听力问题",
+      "aliases": [
+        "听力问题",
+        "听力差",
+        "hearing problems"
+      ],
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "共病",
+      "note_zh": "补充表 2 第 12 项（共病）：self-reported hearing problems。是 = 1，否 = 0；也可以写“是”“否”。"
+    },
+    {
+      "key": "self_rated_health_poor_yn",
+      "label_zh": "自评健康一般或差",
+      "aliases": [
+        "自评健康",
+        "自评健康状况",
+        "self-rated health",
+        "general health status"
+      ],
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "共病",
+      "note_zh": "补充表 2 第 13 项：自评健康一般或差 = 1，极好/很好/好 = 0；也可以直接写“一般”“差”“好”“很好”。"
+    },
+    {
+      "key": "difficulty_dressing_yn",
+      "label_zh": "穿衣有困难",
+      "aliases": [
+        "穿衣困难",
+        "dressing"
+      ],
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "躯体功能",
+      "note_zh": "补充表 2 第 14 项（躯体功能）：difficulty with dressing。是 = 1，否 = 0；也可以写“是”“否”。"
+    },
+    {
+      "key": "difficulty_bathing_yn",
+      "label_zh": "洗澡有困难",
+      "aliases": [
+        "洗澡困难",
+        "bathing",
+        "showering"
+      ],
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "躯体功能",
+      "note_zh": "补充表 2 第 15 项（躯体功能）：difficulty with bathing or showering。是 = 1，否 = 0；也可以写“是”“否”。"
+    },
+    {
+      "key": "difficulty_eating_yn",
+      "label_zh": "吃饭有困难",
+      "aliases": [
+        "吃饭困难",
+        "eating"
+      ],
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "躯体功能",
+      "note_zh": "补充表 2 第 16 项（躯体功能）：difficulty with eating。是 = 1，否 = 0；也可以写“是”“否”。"
+    },
+    {
+      "key": "difficulty_bed_yn",
+      "label_zh": "上下床有困难",
+      "aliases": [
+        "上下床困难",
+        "getting in and out of bed"
+      ],
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "躯体功能",
+      "note_zh": "补充表 2 第 17 项（躯体功能）：difficulty with getting in and out of bed。是 = 1，否 = 0；也可以写“是”“否”。"
+    },
+    {
+      "key": "difficulty_toilet_yn",
+      "label_zh": "上厕所有困难",
+      "aliases": [
+        "上厕所困难",
+        "using the toilet",
+        "toileting"
+      ],
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "躯体功能",
+      "note_zh": "补充表 2 第 18 项（躯体功能）：difficulty with using the toilet。是 = 1，否 = 0；也可以写“是”“否”。"
+    },
+    {
+      "key": "difficulty_money_yn",
+      "label_zh": "管钱有困难",
+      "aliases": [
+        "管钱困难",
+        "managing money"
+      ],
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "躯体功能",
+      "note_zh": "补充表 2 第 19 项（躯体功能）：difficulty with managing money。是 = 1，否 = 0；也可以写“是”“否”。"
+    },
+    {
+      "key": "difficulty_medications_yn",
+      "label_zh": "自己吃药有困难",
+      "aliases": [
+        "吃药困难",
+        "按时吃药困难",
+        "taking medications"
+      ],
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "躯体功能",
+      "note_zh": "补充表 2 第 20 项（躯体功能）：difficulty with taking medications。是 = 1，否 = 0；也可以写“是”“否”。"
+    },
+    {
+      "key": "difficulty_shopping_yn",
+      "label_zh": "买东西有困难",
+      "aliases": [
+        "买东西困难",
+        "购物困难",
+        "shopping for groceries"
+      ],
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "躯体功能",
+      "note_zh": "补充表 2 第 21 项（躯体功能）：difficulty with shopping for groceries。是 = 1，否 = 0；也可以写“是”“否”。"
+    },
+    {
+      "key": "difficulty_meals_yn",
+      "label_zh": "做饭有困难",
+      "aliases": [
+        "做饭困难",
+        "preparing meals"
+      ],
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "躯体功能",
+      "note_zh": "补充表 2 第 22 项（躯体功能）：difficulty with preparing meals。是 = 1，否 = 0；也可以写“是”“否”。"
+    },
+    {
+      "key": "difficulty_housework_yn",
+      "label_zh": "做家务有困难",
+      "aliases": [
+        "做家务困难",
+        "doing housework"
+      ],
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "躯体功能",
+      "note_zh": "补充表 2 第 23 项（躯体功能）：difficulty with doing housework。是 = 1，否 = 0；也可以写“是”“否”。"
+    },
+    {
+      "key": "difficulty_walk_100yd_yn",
+      "label_zh": "走 100 码（约 100 米）有困难",
+      "aliases": [
+        "走100米困难",
+        "走一百米困难",
+        "walking 100 yards"
+      ],
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "失能（活动）",
+      "note_zh": "补充表 2 第 24 项（失能（活动））：mobility difficulty with walking 100 yards。是 = 1，否 = 0；也可以写“是”“否”。"
+    },
+    {
+      "key": "difficulty_rise_chair_yn",
+      "label_zh": "久坐后从椅子上站起来有困难",
+      "aliases": [
+        "久坐后起身困难",
+        "从椅子站起困难",
+        "getting up from a chair"
+      ],
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "失能（活动）",
+      "note_zh": "补充表 2 第 25 项（失能（活动））：mobility difficulty with getting up from a chair after sitting for long periods。是 = 1，否 = 0；也可以写“是”“否”。"
+    },
+    {
+      "key": "difficulty_stairs_yn",
+      "label_zh": "不休息连续爬几层楼有困难",
+      "aliases": [
+        "爬楼困难",
+        "连续爬几层楼困难",
+        "climbing several flights of stairs"
+      ],
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "失能（活动）",
+      "note_zh": "补充表 2 第 26 项（失能（活动））：mobility difficulty with climbing several flights of stairs without resting。是 = 1，否 = 0；也可以写“是”“否”。"
+    },
+    {
+      "key": "difficulty_lift_10jin_yn",
+      "label_zh": "提或搬 10 斤重物有困难",
+      "aliases": [
+        "提10斤重物困难",
+        "搬重物困难",
+        "lifting or carrying weights"
+      ],
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "失能（活动）",
+      "note_zh": "补充表 2 第 27 项（失能（活动））：mobility difficulty with lifting or carrying weights over 10 pounds/jins。是 = 1，否 = 0；也可以写“是”“否”。"
+    },
+    {
+      "key": "difficulty_pick_coin_yn",
+      "label_zh": "从桌上捡起一枚硬币有困难",
+      "aliases": [
+        "捡硬币困难",
+        "picking up a coin"
+      ],
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "失能（活动）",
+      "note_zh": "补充表 2 第 28 项（失能（活动））：mobility difficulty with picking up a coin from the table。是 = 1，否 = 0；也可以写“是”“否”。"
+    },
+    {
+      "key": "difficulty_stoop_yn",
+      "label_zh": "弯腰、屈膝或下蹲有困难",
+      "aliases": [
+        "弯腰下蹲困难",
+        "stooping kneeling or crouching"
+      ],
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "失能（活动）",
+      "note_zh": "补充表 2 第 29 项（失能（活动））：mobility difficulty with stooping, kneeling, or crouching。是 = 1，否 = 0；也可以写“是”“否”。"
+    },
+    {
+      "key": "difficulty_reach_yn",
+      "label_zh": "手臂向上伸过肩膀有困难",
+      "aliases": [
+        "手臂上举困难",
+        "reaching arms above shoulder level"
+      ],
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "失能（活动）",
+      "note_zh": "补充表 2 第 30 项（失能（活动））：mobility difficulty with reaching arms above shoulder level。是 = 1，否 = 0；也可以写“是”“否”。"
+    },
+    {
+      "key": "cesd10_score",
+      "label_zh": "CES-D-10 抑郁量表总分",
+      "aliases": [
+        "CES-D-10",
+        "CESD-10",
+        "CESD10",
+        "CES-D 10 项",
+        "抑郁量表",
+        "CES-D-10 总分",
+        "流调中心抑郁量表"
+      ],
+      "unit": "score",
+      "range": [
+        0,
+        30
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "抑郁",
+      "note_zh": "补充表 2 第 31 项：CES-D-10 十道题每题 0–3 分，总分 0–30；总分超过 10 计 1 分，10 及以下计 0 分。"
+    },
+    {
+      "key": "cognition_deficit_0_1",
+      "label_zh": "认知缺损分（0–1）",
+      "aliases": [
+        "认知缺损分",
+        "cognition deficit",
+        "cognitive deficit score",
+        "认知缺陷分"
+      ],
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "required": false,
+      "from": "measurements",
+      "group": "认知",
+      "note_zh": "补充表 2 第 32 项：由记忆和定向测验得分导出的连续缺损分，0 到 1（越高缺损越多）。论文没有印出从原始得分换算的方法，所以只接受已经换算好的 0–1 分；不填时报告给出衰弱指数的区间。"
+    },
+    {
+      "key": "age",
+      "label_zh": "实足年龄",
+      "unit": "a",
+      "range": [
+        18,
+        120
+      ],
+      "required": false,
+      "from": "profile",
+      "flag": "--age",
+      "note_zh": "可选；不到 45 岁时报告提示不在论文人群内，不套用风险比。"
+    }
+  ],
+  "outputs": [
+    {
+      "key": "frailty_index",
+      "label_zh": "衰弱指数（32 项之和 ÷ 32；缺认知分时为空）",
+      "unit": "1"
+    },
+    {
+      "key": "frailty_index_low",
+      "label_zh": "衰弱指数下限（认知项取 0）",
+      "unit": "1"
+    },
+    {
+      "key": "frailty_index_high",
+      "label_zh": "衰弱指数上限（认知项取 1）",
+      "unit": "1"
+    },
+    {
+      "key": "frailty_status",
+      "label_zh": "衰弱分档（强健、衰弱前期、衰弱或不能确定）",
+      "unit": ""
+    },
+    {
+      "key": "deficit_sum_31_items",
+      "label_zh": "前 31 项（0/1 项）得分之和",
+      "unit": "1"
+    }
+  ],
+  "validation": {
+    "status": "draft",
+    "gap_zh": "论文没有印出任何个人 32 项答案对应衰弱指数的算例。找过的地方：期刊全文页（浙大图书馆订阅）的方法、结果和讨论；ESM 1（补充表 1–8 和补充方法、补充图 1）；正文表 1–3 在缓存里只有表题，单独的表格页这次没能打开，但它们是队列基线特征和风险比，不是个人算例。论文没有代码仓库，数据需向 CHARLS 申请。测试只核对计分规则、除以 32 和两个切点的边界与补充表 2 印出的一致。认知项的换算方法也没有印出。"
+  }
+}
