@@ -1,0 +1,365 @@
+{
+  "schema": "longevity-skill/1",
+  "name": "unruptured-intracranial-aneurysm-prevalence",
+  "kind": "paper",
+  "tier": "A",
+  "species": [
+    "human"
+  ],
+  "evidence": "review",
+  "domains": [
+    "脑、认知与痴呆",
+    "影像"
+  ],
+  "blurb_zh": "按年龄、性别、多囊肾、家族史、吸烟和高血压，查你这类人里脑动脉瘤（未破裂颅内动脉瘤）有多常见。",
+  "intents": [
+    "imaging"
+  ],
+  "triage": {
+    "reason_zh": "全文和附录印出参考人群患病率 3.9%、年龄两档、男女、四类合并病、吸烟、高血压和八国的患病率与比值；个人按这些印出的切点和分组落档，读出对应患病率。",
+    "reviewed": false
+  },
+  "paper": {
+    "doi": "10.1016/s1474-4422(26)00276-0",
+    "title": "Prevalence of unruptured intracranial aneurysms according to comorbidities, risk factors, country, and time period: a systematic review and meta-analysis",
+    "title_zh": "未破裂颅内动脉瘤患病率：按合并病、危险因素、国家和年代的系统综述与荟萃分析",
+    "journal": "The Lancet Neurology",
+    "year": 2026,
+    "authors": "Dremel 等",
+    "article_url": "https://doi.org/10.1016/S1474-4422(26)00276-0",
+    "supplements": [
+      {
+        "label": "Supplementary appendix（mmc1，40 页）",
+        "url": "https://ars.els-cdn.com/content/image/1-s2.0-S1474442226002760-mmc1.pdf"
+      },
+      {
+        "label": "乌得勒支大学机构库全文（出版社版本）",
+        "url": "https://dspace.library.uu.nl/handle/1874/491254"
+      }
+    ],
+    "card_notes": [
+      "论文汇总 162 项研究，按组分别给出患病率和比值，没有把年龄、性别、合并病、吸烟、高血压放进同一个模型，也没有印出模型系数；报告只把你落进各组并照抄各组的数，几项比值不相乘。",
+      "年龄两档（55 岁以下、以上）是按研究人群的平均年龄分的，不是按个人年龄；每多一岁的相对变化印作“1·06%（95% CI 1·03–1·09）”，记法有歧义，没有用来换算。",
+      "附录表 6 里荷兰的置信区间印作“01·0-1·5”，包不住点估计 2·1%，报告不引用这一区间。"
+    ],
+    "summary_zh": "这项研究汇总了几十年来各国对成人做脑血管影像或尸检的研究，发现未破裂颅内动脉瘤在女性、现在吸烟者、高血压者，以及多囊肾病、结缔组织病和有家族史的人里更常见，而且近二十年的研究里比例在上升。个人报告只按你的年龄、性别、合并病、吸烟、高血压和国家，找出论文里对应的人群并照抄其患病率和比值，不把几项相乘成你个人的概率，也不判断你有没有动脉瘤。",
+    "summary_status": "draft"
+  },
+  "entry": {
+    "script": "scripts/personal_report.py",
+    "age_flag": "--age",
+    "sex_flag": "--sex",
+    "out_flag": "--out",
+    "result_json": true
+  },
+  "inputs_status": "verified",
+  "inputs": [
+    {
+      "key": "age",
+      "label_zh": "实足年龄",
+      "unit": "a",
+      "range": [
+        18,
+        110
+      ],
+      "required": true,
+      "from": "profile",
+      "flag": "--age",
+      "note_zh": "论文按研究人群平均年龄在 55 岁处分两档；55 岁整按 55 岁以上算。"
+    },
+    {
+      "key": "sex",
+      "label_zh": "性别",
+      "required": true,
+      "from": "profile",
+      "flag": "--sex"
+    },
+    {
+      "key": "adpkd",
+      "label_zh": "是否有常染色体显性多囊肾病（ADPKD）",
+      "aliases": [
+        "多囊肾",
+        "多囊肾病",
+        "polycystic kidney disease",
+        "ADPKD"
+      ],
+      "required": true,
+      "from": "argument",
+      "flag": "--adpkd",
+      "note_zh": "yes 或 no。"
+    },
+    {
+      "key": "connective_tissue",
+      "label_zh": "是否有结缔组织病（马方、埃勒斯-当洛斯、Loeys-Dietz 综合征）",
+      "aliases": [
+        "马方综合征",
+        "Marfan",
+        "Ehlers-Danlos",
+        "Loeys-Dietz",
+        "结缔组织病"
+      ],
+      "required": true,
+      "from": "argument",
+      "flag": "--connective-tissue",
+      "note_zh": "yes 或 no。论文把这三种综合征合并成一组。"
+    },
+    {
+      "key": "family_history",
+      "label_zh": "一级亲属里有几位得过颅内动脉瘤或动脉瘤破裂出血（动脉瘤性蛛网膜下腔出血）",
+      "aliases": [
+        "家族史",
+        "family history",
+        "颅内动脉瘤家族史"
+      ],
+      "required": true,
+      "from": "argument",
+      "flag": "--family-history",
+      "note_zh": "no、1 或 2+；只知道有、不知道几位时写 yes。"
+    },
+    {
+      "key": "atherosclerosis",
+      "label_zh": "是否有动脉粥样硬化相关病（颈动脉狭窄、缺血性卒中、冠心病等）",
+      "aliases": [
+        "动脉粥样硬化",
+        "颈动脉狭窄",
+        "缺血性卒中",
+        "冠心病",
+        "atherosclerosis"
+      ],
+      "required": true,
+      "from": "argument",
+      "flag": "--atherosclerosis",
+      "note_zh": "yes 或 no。论文把颈动脉狭窄、缺血性卒中、缺血性心脏病、冠状动脉扩张或夹层、胸主动脉或肾动脉瘤的研究归为这一组。"
+    },
+    {
+      "key": "smoking",
+      "label_zh": "吸烟情况",
+      "aliases": [
+        "吸烟",
+        "smoking",
+        "smoker"
+      ],
+      "required": true,
+      "from": "argument",
+      "flag": "--smoking",
+      "note_zh": "current（现在吸）、former（已戒）或 never（从不吸）。"
+    },
+    {
+      "key": "hypertension",
+      "label_zh": "是否有高血压",
+      "aliases": [
+        "高血压",
+        "hypertension"
+      ],
+      "required": true,
+      "from": "argument",
+      "flag": "--hypertension",
+      "note_zh": "yes 或 no。在用降压药也算有。"
+    },
+    {
+      "key": "country",
+      "label_zh": "所在国家",
+      "required": false,
+      "from": "argument",
+      "flag": "--country",
+      "note_zh": "可选。附录表 6 单列了中国、日本、韩国、美国、芬兰、德国、荷兰、英国。"
+    }
+  ],
+  "outputs": [
+    {
+      "key": "age_band",
+      "label_zh": "年龄档（论文按 55 岁分）",
+      "unit": ""
+    },
+    {
+      "key": "age_band_prevalence_pct",
+      "label_zh": "所在年龄档的患病率（论文汇总）",
+      "unit": "%"
+    },
+    {
+      "key": "sex_prevalence_pct",
+      "label_zh": "同性别人群的患病率（论文汇总）",
+      "unit": "%"
+    },
+    {
+      "key": "female_rr",
+      "label_zh": "女性相对男性的风险比（仅女性）",
+      "unit": ""
+    },
+    {
+      "key": "comorbidity_group",
+      "label_zh": "所在合并病人群中患病率最高的一组（none 表示不属于任何一组）",
+      "unit": ""
+    },
+    {
+      "key": "comorbidity_group_prevalence_pct",
+      "label_zh": "该合并病人群的患病率（论文汇总）",
+      "unit": "%"
+    },
+    {
+      "key": "comorbidity_group_count",
+      "label_zh": "属于几个论文单列的合并病人群",
+      "unit": ""
+    },
+    {
+      "key": "adjusted_elevated_group_count",
+      "label_zh": "其中校正年龄性别后仍高于参考人群的组数",
+      "unit": ""
+    },
+    {
+      "key": "family_subgroup_prevalence_pct",
+      "label_zh": "按患病亲属人数分的家族史亚组患病率",
+      "unit": "%"
+    },
+    {
+      "key": "current_smoking_rr",
+      "label_zh": "现在吸烟相对不吸烟的风险比（仅现在吸烟者）",
+      "unit": ""
+    },
+    {
+      "key": "hypertension_rr",
+      "label_zh": "高血压相对无高血压的风险比（仅高血压者）",
+      "unit": ""
+    },
+    {
+      "key": "country_prevalence_pct",
+      "label_zh": "所在国家健康人研究的患病率",
+      "unit": "%"
+    },
+    {
+      "key": "country_pr_age_sex",
+      "label_zh": "所在国家相对美国的患病率比（校正年龄和性别）",
+      "unit": ""
+    }
+  ],
+  "validation": {
+    "status": "reproduced",
+    "examples": [
+      {
+        "locator": "Results, studies in healthy individuals (p 916)",
+        "quote": "The prevalence was 2·9% (1·7–4·5) in cohorts younger than 55 years and 5·2% (3·4–7·0) in cohorts older than 55 years.",
+        "values": [
+          2.9,
+          55,
+          5.2
+        ],
+        "tolerance": "完全一致：查表照抄印出的一位小数。",
+        "test": "tests/test_manifest.py::test_paper_age_bands"
+      },
+      {
+        "locator": "Results, studies in healthy individuals (p 916)",
+        "quote": "The crude prevalence for women was 5·5% (95% CI 4·3–6·9, 3415 of 65020 participants) and 3·0% (2·2–4·0, 2122 of 76130 participants) for men (RR for women 1·9 [95% CI 1·8–2·0]).",
+        "values": [
+          5.5,
+          3415,
+          65020,
+          3.0,
+          2122,
+          76130,
+          1.9
+        ],
+        "tolerance": "患病率与风险比照抄印出的一位小数；另由印出的人数算粗风险比 (3415/65020)/(2122/76130)=1.88，四舍五入到一位小数等于印出的 1·9。",
+        "test": "tests/test_manifest.py::test_paper_sex"
+      },
+      {
+        "locator": "Table 2, row ADPKD",
+        "quote": "ADPKD 293/1990 12·8% (9·2–17·6) 4·2 (2·4–7·2) 5·1 (1·5–17·2) 5·4 (1·6–17·7) 5·3 (1·6–17·9) 4·8 (1·6–14·3) 4·9 (1·5–15·8) 4·4 (1·5–12·6)",
+        "values": [
+          293,
+          1990,
+          12.8,
+          4.2,
+          4.4,
+          1.5,
+          12.6
+        ],
+        "tolerance": "完全一致：照抄印出的一位小数；校正患病率比取最后一列（年龄和性别都校正）。",
+        "test": "tests/test_manifest.py::test_paper_table2"
+      },
+      {
+        "locator": "Table 2, row Atherosclerosis",
+        "quote": "Atherosclerosis 2229/40 970 5·5% (4·7–6·4) 1·7 (1·2–2·4) 1·7 (1·0–2·6) 1·4 (0·9–2·3) 1·7 (1·1–2·6) 1·7 (1·2–2·6) 1·5 (0·9–2·3) 1·3 (0·8–2·0)",
+        "values": [
+          2229,
+          5.5,
+          1.7,
+          1.3,
+          0.8,
+          2.0
+        ],
+        "tolerance": "完全一致：照抄印出的一位小数；校正患病率比取最后一列。",
+        "test": "tests/test_manifest.py::test_paper_table2"
+      },
+      {
+        "locator": "Table 2, row Connective-tissue disorders",
+        "quote": "Connective-tissue disorders 94/879 10·3% (6·5–16·0) 3·3 (1·8–6·2) 3·2 (1·6–6·3) 4·2 (2·0–8·6) 3·3 (1·7–6·5) 3·5 (1·9–6·4) 3·1 (1·6–5·9) 3·9 (2·0–7·6)",
+        "values": [
+          94,
+          879,
+          10.3,
+          3.3,
+          3.9,
+          2.0,
+          7.6
+        ],
+        "tolerance": "完全一致：照抄印出的一位小数；校正患病率比取最后一列。",
+        "test": "tests/test_manifest.py::test_paper_table2"
+      },
+      {
+        "locator": "Table 2, row Family history",
+        "quote": "Family history 412/4252 7·9% (5·6–11·1) 2·5 (1·5–4·0) 5·4 (1·6–18·0) 6·6 (2·0–22·5) 3·3 (1·0–11·1) 2·6 (0·8–7·7) 3·2 (0·6–17·7) 2·4 (0·5–11·2)",
+        "values": [
+          412,
+          4252,
+          7.9,
+          2.5,
+          2.4,
+          0.5,
+          11.2
+        ],
+        "tolerance": "完全一致：照抄印出的一位小数；校正患病率比取最后一列。",
+        "test": "tests/test_manifest.py::test_paper_table2"
+      },
+      {
+        "locator": "Results, family history sensitivity analysis (p 918)",
+        "quote": "The sensitivity analysis on six studies reporting on first-degree relatives in families with only one relative with either ruptured or unruptured intracranial aneurysms showed a prevalence of 6·7% (4·0-10·9), and on four studies reporting on first-degree relatives in families with 2 or more family members with either UIA or aSAH prevalence was 9·5% (7·9–11·4).",
+        "values": [
+          6.7,
+          9.5
+        ],
+        "tolerance": "完全一致：照抄印出的一位小数。",
+        "test": "tests/test_manifest.py::test_paper_family_subgroups"
+      },
+      {
+        "locator": "Results, smoking and hypertension (p 916)",
+        "quote": "The RR for current smoking compared with non-smoking was 1·4 (1·2–1·6).",
+        "values": [
+          1.4
+        ],
+        "tolerance": "完全一致：照抄印出的一位小数。",
+        "test": "tests/test_manifest.py::test_paper_smoking_and_hypertension"
+      },
+      {
+        "locator": "Results, smoking and hypertension (p 916)",
+        "quote": "The RR for any definition of hypertension compared with no hypertension was 1·6 (1·5–1·7).",
+        "values": [
+          1.6
+        ],
+        "tolerance": "完全一致：照抄印出的一位小数。",
+        "test": "tests/test_manifest.py::test_paper_smoking_and_hypertension"
+      },
+      {
+        "locator": "Supplementary appendix, Table 6 (p 20), row China",
+        "quote": "China 701 /10 689 8·5% (6·0-11·8) 3·7 (1·4-9·7) 2·2 (0·8-6·1) 2·3 (1·1-4·8) 2·1 (0·9-5·1) 2·7 (1·3-5·5) 2·2 (0·8-5·8) 2·1 (1·0-4·2)",
+        "values": [
+          701,
+          8.5,
+          3.7,
+          2.1
+        ],
+        "tolerance": "完全一致：照抄印出的一位小数；校正患病率比取最后一列（年龄和性别都校正，以美国为参照）。",
+        "test": "tests/test_manifest.py::test_paper_country_china"
+      }
+    ]
+  }
+}
