@@ -1,0 +1,477 @@
+{
+  "schema": "longevity-skill/1",
+  "name": "philadelphia-expanded-ace",
+  "kind": "paper",
+  "tier": "A",
+  "species": [
+    "human"
+  ],
+  "evidence": "cohort",
+  "domains": [
+    "童年逆境与心理健康"
+  ],
+  "blurb_zh": "用 21 道童年经历问卷数出 14 类童年逆境（含歧视、社区和欺凌），按 0、1–3、4–5、6 条及以上分档，并列出该档在青年队列里的抑郁、创伤后应激、物质使用、约会暴力和学业比例。",
+  "intents": [],
+  "triage": {
+    "reason_zh": "补充表 eTable 1 印出了 21 题到 14 类逆境的计分阈值，正文给了分档，表 2、表 3 按分档印出各结局比例和比值比，个人答完问卷就能落到论文的分档。",
+    "reviewed": false
+  },
+  "paper": {
+    "doi": "10.1001/jamanetworkopen.2026.35834",
+    "title": "Childhood Adversity and Health in Emerging Adulthood",
+    "title_zh": "童年逆境与成年初期健康",
+    "journal": "JAMA Network Open",
+    "year": 2026,
+    "authors": "Temple 等",
+    "article_url": "https://jamanetwork.com/journals/jamanetworkopen/fullarticle/10.1001/jamanetworkopen.2026.35834",
+    "supplements": [
+      {
+        "label": "Supplement 1（eTable 1 计分与患病率、eTable 2 相关）",
+        "url": "https://pmc.ncbi.nlm.nih.gov/articles/instance/13613176/bin/jamanetwopen-e2635834-s001.pdf"
+      },
+      {
+        "label": "Supplement 2（数据共享声明）",
+        "url": "https://pmc.ncbi.nlm.nih.gov/articles/instance/13613176/bin/jamanetwopen-e2635834-s002.pdf"
+      }
+    ],
+    "card_notes": [
+      "全文和两份补充材料都已打开（PMC13613176）。eTable 1 印出每题的阈值；两题一类时是否任一题达到即算，补充表没写，报告按任一题计并给出两题都要满足时的条数。",
+      "论文没有公开代码；个体数据 2027 年 8 月起经申请在 NICHD DASH 提供。表 3 只印比值比，没有截距，所以不算个人发生概率。"
+    ],
+    "summary_zh": "这项研究在美国得克萨斯州一个约 19 岁青年的队列里发现，童年经历的家庭和社区逆境越多，抑郁、创伤后应激、自杀念头、物质使用和约会暴力越常见，上大学的比例越低。个人报告只按论文的问卷计分数出逆境条数和分档，并照录论文里这一档的人群比例和比值比，不算个人发生概率。",
+    "summary_status": "draft"
+  },
+  "population": {
+    "age_years": [
+      18,
+      20
+    ],
+    "note_zh": "论文只印了分析样本年龄均值 19 岁（标准差 0.6）；结局多在第 5 波（平均 18 岁）测量。美国得克萨斯州东南部城市和郊区学校招募。"
+  },
+  "entry": {
+    "script": "scripts/personal_report.py",
+    "measurements_flag": "--measurements",
+    "measurements_header": [
+      "item",
+      "value",
+      "unit"
+    ],
+    "age_flag": "--age",
+    "out_flag": "--out",
+    "result_json": true
+  },
+  "inputs_status": "verified",
+  "inputs": [
+    {
+      "key": "ea_insult",
+      "label_zh": "大人辱骂、贬低你",
+      "aliases": [
+        "swear at you, insult you, or put you down",
+        "PACE emotional abuse 1"
+      ],
+      "unit": "score",
+      "range": [
+        0,
+        2
+      ],
+      "required": false,
+      "from": "measurements",
+      "group": "emotional_abuse",
+      "note_zh": "18 岁以前。选项：0=从来没有，1=一次，2=不止一次；也可直接写选项文字。按 eTable 1，不止一次及以上算这一类逆境（原文阈值 more than once）。"
+    },
+    {
+      "key": "ea_afraid",
+      "label_zh": "大人让你害怕会挨打",
+      "aliases": [
+        "act in a way that made you afraid that you would be physically hurt",
+        "PACE emotional abuse 2"
+      ],
+      "unit": "score",
+      "range": [
+        0,
+        2
+      ],
+      "required": false,
+      "from": "measurements",
+      "group": "emotional_abuse",
+      "note_zh": "18 岁以前。选项：0=从来没有，1=一次，2=不止一次；也可直接写选项文字。按 eTable 1，不止一次及以上算这一类逆境（原文阈值 more than once）。"
+    },
+    {
+      "key": "pa_push",
+      "label_zh": "大人推、抓、搡或打耳光",
+      "aliases": [
+        "push, grab, shove, or slap you",
+        "PACE physical abuse 1"
+      ],
+      "unit": "score",
+      "range": [
+        0,
+        2
+      ],
+      "required": false,
+      "from": "measurements",
+      "group": "physical_abuse",
+      "note_zh": "18 岁以前。选项：0=从来没有，1=一次，2=不止一次；也可直接写选项文字。按 eTable 1，不止一次及以上算这一类逆境（原文阈值 more than once）。"
+    },
+    {
+      "key": "pa_marks",
+      "label_zh": "大人打得留下伤痕或受伤",
+      "aliases": [
+        "hit you so hard that you had marks or were injured",
+        "PACE physical abuse 2"
+      ],
+      "unit": "score",
+      "range": [
+        0,
+        2
+      ],
+      "required": false,
+      "from": "measurements",
+      "group": "physical_abuse",
+      "note_zh": "18 岁以前。选项：0=从来没有，1=一次，2=不止一次；也可直接写选项文字。按 eTable 1，一次及以上算这一类逆境（原文阈值 once）。"
+    },
+    {
+      "key": "sa_touch",
+      "label_zh": "年长者以性的方式触摸你",
+      "aliases": [
+        "touch or fondle you in a sexual way",
+        "PACE sexual abuse 1"
+      ],
+      "unit": "score",
+      "range": [
+        0,
+        1
+      ],
+      "required": false,
+      "from": "measurements",
+      "group": "sexual_abuse",
+      "note_zh": "18 岁以前。选项：0=否，1=是；也可直接写选项文字。按 eTable 1，答「是」算这一类逆境（原文阈值 yes）。"
+    },
+    {
+      "key": "sa_intercourse",
+      "label_zh": "年长者企图或实施性交",
+      "aliases": [
+        "attempt to have or actually have any type of sexual intercourse",
+        "PACE sexual abuse 2"
+      ],
+      "unit": "score",
+      "range": [
+        0,
+        1
+      ],
+      "required": false,
+      "from": "measurements",
+      "group": "sexual_abuse",
+      "note_zh": "18 岁以前。选项：0=否，1=是；也可直接写选项文字。按 eTable 1，答「是」算这一类逆境（原文阈值 yes）。"
+    },
+    {
+      "key": "en_important",
+      "label_zh": "有人让你觉得自己重要",
+      "aliases": [
+        "someone in your life who helped you feel important or special",
+        "PACE emotional neglect"
+      ],
+      "unit": "score",
+      "range": [
+        0,
+        4
+      ],
+      "required": false,
+      "from": "measurements",
+      "group": "emotional_neglect",
+      "note_zh": "18 岁以前。选项：0=从不符合，1=很少符合，2=有时符合，3=经常符合，4=非常经常符合；也可直接写选项文字。按 eTable 1，很少符合及以下算这一类逆境（原文阈值 rarely true）。"
+    },
+    {
+      "key": "pn_meals",
+      "label_zh": "家里因为没钱减餐或不吃饭",
+      "aliases": [
+        "family cut the size of meals or skipped meals",
+        "PACE physical neglect"
+      ],
+      "unit": "score",
+      "range": [
+        0,
+        4
+      ],
+      "required": false,
+      "from": "measurements",
+      "group": "physical_neglect",
+      "note_zh": "18 岁以前。选项：0=从不符合，1=很少符合，2=有时符合，3=经常符合，4=非常经常符合；也可直接写选项文字。按 eTable 1，经常符合及以上算这一类逆境（原文阈值 often true）。"
+    },
+    {
+      "key": "dv_beaten",
+      "label_zh": "看到或听到家里大人被打",
+      "aliases": [
+        "adult being slapped, kicked, punched, or beaten up",
+        "PACE domestic violence 1"
+      ],
+      "unit": "score",
+      "range": [
+        0,
+        3
+      ],
+      "required": false,
+      "from": "measurements",
+      "group": "domestic_violence",
+      "note_zh": "18 岁以前。选项：0=从来没有，1=一次，2=几次，3=很多次；也可直接写选项文字。按 eTable 1，几次及以上算这一类逆境（原文阈值 a few times）。"
+    },
+    {
+      "key": "dv_weapon",
+      "label_zh": "看到或听到家里大人被器物击打或刺伤",
+      "aliases": [
+        "adult being hit or cut with an object",
+        "PACE domestic violence 2"
+      ],
+      "unit": "score",
+      "range": [
+        0,
+        3
+      ],
+      "required": false,
+      "from": "measurements",
+      "group": "domestic_violence",
+      "note_zh": "18 岁以前。选项：0=从来没有，1=一次，2=几次，3=很多次；也可直接写选项文字。按 eTable 1，一次及以上算这一类逆境（原文阈值 once）。"
+    },
+    {
+      "key": "hh_alcohol",
+      "label_zh": "同住的人酗酒",
+      "aliases": [
+        "problem drinker or alcoholic",
+        "PACE household alcohol"
+      ],
+      "unit": "score",
+      "range": [
+        0,
+        1
+      ],
+      "required": false,
+      "from": "measurements",
+      "group": "household_substance",
+      "note_zh": "18 岁以前。选项：0=否，1=是；也可直接写选项文字。按 eTable 1，答「是」算这一类逆境（原文阈值 yes）。"
+    },
+    {
+      "key": "hh_drugs",
+      "label_zh": "同住的人吸毒或滥用处方药",
+      "aliases": [
+        "used illegal street drugs or abused prescription medications",
+        "PACE household drugs"
+      ],
+      "unit": "score",
+      "range": [
+        0,
+        1
+      ],
+      "required": false,
+      "from": "measurements",
+      "group": "household_substance",
+      "note_zh": "18 岁以前。选项：0=否，1=是；也可直接写选项文字。按 eTable 1，答「是」算这一类逆境（原文阈值 yes）。"
+    },
+    {
+      "key": "hh_depressed",
+      "label_zh": "同住的大人抑郁或有精神疾病",
+      "aliases": [
+        "adult in the house was depressed or mentally ill",
+        "PACE household mental illness 1"
+      ],
+      "unit": "score",
+      "range": [
+        0,
+        1
+      ],
+      "required": false,
+      "from": "measurements",
+      "group": "household_mental_illness",
+      "note_zh": "18 岁以前。选项：0=否，1=是；也可直接写选项文字。按 eTable 1，答「是」算这一类逆境（原文阈值 yes）。"
+    },
+    {
+      "key": "hh_suicidal",
+      "label_zh": "同住的大人有自杀倾向",
+      "aliases": [
+        "adult in the house was suicidal",
+        "PACE household mental illness 2"
+      ],
+      "unit": "score",
+      "range": [
+        0,
+        1
+      ],
+      "required": false,
+      "from": "measurements",
+      "group": "household_mental_illness",
+      "note_zh": "18 岁以前。选项：0=否，1=是；也可直接写选项文字。按 eTable 1，答「是」算这一类逆境（原文阈值 yes）。"
+    },
+    {
+      "key": "hh_incarcerated",
+      "label_zh": "同住的人坐过牢或被判刑",
+      "aliases": [
+        "lived with anyone who served time in prison or jail",
+        "PACE incarcerated household member"
+      ],
+      "unit": "score",
+      "range": [
+        0,
+        1
+      ],
+      "required": false,
+      "from": "measurements",
+      "group": "incarcerated_member",
+      "note_zh": "18 岁以前。选项：0=否，1=是；也可直接写选项文字。按 eTable 1，答「是」算这一类逆境（原文阈值 yes）。"
+    },
+    {
+      "key": "wv_seen",
+      "label_zh": "亲眼看到或听到有人被殴打、刺伤或枪击",
+      "aliases": [
+        "see or hear someone being beaten up, stabbed, or shot",
+        "PACE witnessed violence"
+      ],
+      "unit": "score",
+      "range": [
+        0,
+        3
+      ],
+      "required": false,
+      "from": "measurements",
+      "group": "witnessed_violence",
+      "note_zh": "18 岁以前。选项：0=从来没有，1=一次，2=几次，3=很多次；也可直接写选项文字。按 eTable 1，几次及以上算这一类逆境（原文阈值 a few times）。"
+    },
+    {
+      "key": "disc_race",
+      "label_zh": "因种族或民族受到不公对待",
+      "aliases": [
+        "treated badly or unfairly because of your race or ethnicity",
+        "PACE discrimination"
+      ],
+      "unit": "score",
+      "range": [
+        0,
+        4
+      ],
+      "required": false,
+      "from": "measurements",
+      "group": "discrimination",
+      "note_zh": "18 岁以前。选项：0=从不符合，1=很少符合，2=有时符合，3=经常符合，4=非常经常符合；也可直接写选项文字。按 eTable 1，有时符合及以上算这一类逆境（原文阈值 sometimes true）。"
+    },
+    {
+      "key": "nb_safe",
+      "label_zh": "在社区里觉得安全",
+      "aliases": [
+        "feel safe in your neighborhood",
+        "PACE neighborhood safety"
+      ],
+      "unit": "score",
+      "range": [
+        0,
+        3
+      ],
+      "required": false,
+      "from": "measurements",
+      "group": "neighborhood",
+      "note_zh": "18 岁以前。选项：0=从来没有，1=有时，2=大部分时间，3=一直；也可直接写选项文字。按 eTable 1，有时及以下算这一类逆境（原文阈值 some of the time）。"
+    },
+    {
+      "key": "nb_trust",
+      "label_zh": "社区里的人互相照应、值得信任",
+      "aliases": [
+        "people in your neighborhood looked out for each other and could be trusted",
+        "PACE neighborhood trust"
+      ],
+      "unit": "score",
+      "range": [
+        0,
+        3
+      ],
+      "required": false,
+      "from": "measurements",
+      "group": "neighborhood",
+      "note_zh": "18 岁以前。选项：0=从来没有，1=有时，2=大部分时间，3=一直；也可直接写选项文字。按 eTable 1，有时及以下算这一类逆境（原文阈值 some of the time）。"
+    },
+    {
+      "key": "bullied",
+      "label_zh": "被同伴或同学欺负",
+      "aliases": [
+        "bullied by a peer or classmate",
+        "PACE bullying"
+      ],
+      "unit": "score",
+      "range": [
+        0,
+        3
+      ],
+      "required": false,
+      "from": "measurements",
+      "group": "bullied",
+      "note_zh": "18 岁以前。选项：0=从来没有，1=有时，2=大部分时间，3=一直；也可直接写选项文字。按 eTable 1，大部分时间及以上算这一类逆境（原文阈值 most of the time）。"
+    },
+    {
+      "key": "foster_care",
+      "label_zh": "进过寄养家庭",
+      "aliases": [
+        "ever in foster care",
+        "PACE foster care"
+      ],
+      "unit": "score",
+      "range": [
+        0,
+        1
+      ],
+      "required": false,
+      "from": "measurements",
+      "group": "foster_care",
+      "note_zh": "18 岁以前。选项：0=否，1=是；也可直接写选项文字。按 eTable 1，答「是」算这一类逆境（原文阈值 yes）。"
+    },
+    {
+      "key": "age",
+      "label_zh": "实足年龄",
+      "unit": "a",
+      "range": [
+        10,
+        110
+      ],
+      "required": false,
+      "from": "profile",
+      "flag": "--age",
+      "note_zh": "年龄不进计数；论文的结局在 18 到 19 岁前后测量，年龄在 18 到 20 岁以外时报告提示。"
+    }
+  ],
+  "outputs": [
+    {
+      "key": "ace_count",
+      "label_zh": "童年逆境条数",
+      "unit": "score",
+      "note_zh": "14 类里符合的类数，0 到 14；有题没答时为空。"
+    },
+    {
+      "key": "ace_category",
+      "label_zh": "逆境分档",
+      "unit": "",
+      "note_zh": "0、1-3、4-5 或 6+，论文的分档。"
+    }
+  ],
+  "validation": {
+    "status": "reproduced",
+    "examples": [
+      {
+        "locator": "Results, paragraph 1 (same cells in Table 2, Depression row)",
+        "quote": "Compared with 0 ACEs, those with 4 to 5 and 6 or more ACEs had higher rates of depression (70 [21.0%] individuals with 0 ACEs vs 165 [46.5%] with 4 to 5 ACEs and 141 [56.9%] with 6 or more ACEs)",
+        "values": [
+          21.0,
+          46.5,
+          56.9
+        ],
+        "tolerance": "Exact: answers scored by eTable 1 land in the paper's category and the report prints the paper's cell to one decimal.",
+        "test": "tests/test_manifest.py::test_paper_example_depression_by_ace_category"
+      },
+      {
+        "locator": "Table 3, Depression row",
+        "quote": "Depression | 1798 (0.000) | 2.13 (1.56-2.91) | <.001 | 3.09 (2.16-4.41) | <.001 | 4.53 (3.06-6.70) | <.001",
+        "values": [
+          2.13,
+          3.09,
+          4.53
+        ],
+        "tolerance": "Exact: odds ratios as printed to two decimals for the 1 to 3, 4 to 5 and 6 or more categories.",
+        "test": "tests/test_manifest.py::test_paper_example_table3_depression_odds_ratios"
+      }
+    ]
+  }
+}
