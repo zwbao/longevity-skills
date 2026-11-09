@@ -1,0 +1,316 @@
+{
+  "schema": "longevity-skill/1",
+  "name": "cumulative-bmi-waist-exposure",
+  "kind": "paper",
+  "tier": "A",
+  "species": [
+    "human"
+  ],
+  "evidence": "cohort",
+  "domains": [
+    "体脂与腰围"
+  ],
+  "blurb_zh": "用自己三次量的体重指数（BMI）和腰围，按中国老人队列论文的切点算过去几年“超重多少×持续多久”的累积暴露，并标出在论文队列里的位置。",
+  "intents": [
+    "body_fat_waist",
+    "before_after"
+  ],
+  "triage": {
+    "reason_zh": "正文印出累积 BMI/腰围的切点（24 kg/m²；男 90、女 80 cm）和按年数累积的定义，个人三次测量即可算；三分位界值和长寿多基因评分的中位数没有印出，也没有个人算例，验证保持草稿。",
+    "reviewed": false
+  },
+  "paper": {
+    "doi": "10.1007/s11357-026-02437-y",
+    "title": "The impact of cumulative obesity and genetic susceptibility on biological aging in Chinese older adults",
+    "title_zh": "累积肥胖暴露和遗传易感性对中国老年人生物学衰老的影响",
+    "journal": "GeroScience",
+    "year": 2026,
+    "authors": "Yu 等",
+    "article_url": "https://doi.org/10.1007/s11357-026-02437-y",
+    "supplements": [
+      {
+        "label": "Supplementary file1（DOCX，补充方法与补充表 1–12）",
+        "url": "https://static-content.springer.com/esm/art%3A10.1007%2Fs11357-026-02437-y/MediaObjects/11357_2026_2437_MOESM1_ESM.docx"
+      }
+    ],
+    "card_notes": [
+      "数据来自江苏如皋老年纵向研究（RLAS）2014、2017、2019 三轮的 BMI 和腰围，2021 年用十项常规血检和血压算 KDM-BA 生物年龄和生理失调度（PD）；分析样本 687 人，平均 79.6 岁，女性 370 人（53.9%）。",
+      "累积暴露 = 每轮 BMI、腰围超出切点的量（低于切点记 0）乘以持续年数；切点 BMI 24 kg/m²，腰围男 90 cm、女 80 cm。论文没写清超出量怎样和年数相乘，本技能用相邻两轮平均乘以间隔（梯形面积）。",
+      "累积暴露为 0 的人是参照组，其余按三分位分 T1–T3；三分位界值没有印出。长寿多基因评分（11 个位点，补充表 1 只印了比值比）只用于按中位数分高低两组，中位数没有印出，本技能不算。",
+      "数据和 R 代码只能向通讯作者 Zuyun Liu 申请，没有公开仓库。作者声明无利益冲突。"
+    ],
+    "summary_zh": "这项中国如皋老年人队列研究发现，过去几年 BMI 和腰围超出切点越多、持续越久的老人，几年后用常规血检算出的生物年龄越高，长寿相关基因评分较低的人这种关联在腰围上更明显。个人报告只按论文切点算你三次测量的累积 BMI 和腰围暴露、最近一次的 BMI 分组，并标出在论文队列里的位置，不推算你的生物年龄。",
+    "summary_status": "draft"
+  },
+  "entry": {
+    "script": "scripts/personal_report.py",
+    "measurements_flag": "--measurements",
+    "measurements_header": [
+      "item",
+      "value",
+      "unit"
+    ],
+    "age_flag": "--age",
+    "sex_flag": "--sex",
+    "out_flag": "--out",
+    "result_json": true
+  },
+  "population": {
+    "age_years": [
+      70,
+      120
+    ],
+    "note_zh": "论文人群是江苏如皋农村社区 70 岁以上老人（2019 年平均 79.6 岁），三次测量间隔 3 年和 2 年。"
+  },
+  "inputs_status": "verified",
+  "inputs": [
+    {
+      "key": "bmi_wave1_kg_m2",
+      "label_zh": "第一次BMI",
+      "aliases": [
+        "BMI 1",
+        "bmi_1",
+        "bmi wave 1",
+        "first BMI",
+        "BMI (first)",
+        "第一次BMI",
+        "第一次体重指数",
+        "第一次体质指数",
+        "体重指数1",
+        "BMI第1次"
+      ],
+      "unit": "kg/m^2",
+      "range": [
+        12,
+        60
+      ],
+      "required": false,
+      "from": "measurements",
+      "note_zh": "体重（kg）除以身高（m）的平方。按时间先后填，第三次是最近一次。"
+    },
+    {
+      "key": "bmi_wave2_kg_m2",
+      "label_zh": "第二次BMI",
+      "aliases": [
+        "BMI 2",
+        "bmi_2",
+        "bmi wave 2",
+        "second BMI",
+        "BMI (second)",
+        "第二次BMI",
+        "第二次体重指数",
+        "第二次体质指数",
+        "体重指数2",
+        "BMI第2次"
+      ],
+      "unit": "kg/m^2",
+      "range": [
+        12,
+        60
+      ],
+      "required": false,
+      "from": "measurements",
+      "note_zh": "体重（kg）除以身高（m）的平方。按时间先后填，第三次是最近一次。"
+    },
+    {
+      "key": "bmi_wave3_kg_m2",
+      "label_zh": "第三次BMI",
+      "aliases": [
+        "BMI 3",
+        "bmi_3",
+        "bmi wave 3",
+        "third BMI",
+        "BMI (third)",
+        "第三次BMI",
+        "第三次体重指数",
+        "第三次体质指数",
+        "体重指数3",
+        "BMI第3次"
+      ],
+      "unit": "kg/m^2",
+      "range": [
+        12,
+        60
+      ],
+      "required": false,
+      "from": "measurements",
+      "note_zh": "体重（kg）除以身高（m）的平方。按时间先后填，第三次是最近一次。"
+    },
+    {
+      "key": "waist_wave1_cm",
+      "label_zh": "第一次腰围",
+      "aliases": [
+        "waist 1",
+        "waist_1",
+        "WC 1",
+        "waist wave 1",
+        "first waist",
+        "first waist circumference",
+        "第一次腰围",
+        "腰围1",
+        "腰围第1次"
+      ],
+      "unit": "cm",
+      "accept": {
+        "mm": 0.1,
+        "in": 2.54
+      },
+      "range": [
+        50,
+        170
+      ],
+      "required": false,
+      "from": "measurements",
+      "note_zh": "用不能拉伸的软尺量。按时间先后填，第三次是最近一次。"
+    },
+    {
+      "key": "waist_wave2_cm",
+      "label_zh": "第二次腰围",
+      "aliases": [
+        "waist 2",
+        "waist_2",
+        "WC 2",
+        "waist wave 2",
+        "second waist",
+        "second waist circumference",
+        "第二次腰围",
+        "腰围2",
+        "腰围第2次"
+      ],
+      "unit": "cm",
+      "accept": {
+        "mm": 0.1,
+        "in": 2.54
+      },
+      "range": [
+        50,
+        170
+      ],
+      "required": false,
+      "from": "measurements",
+      "note_zh": "用不能拉伸的软尺量。按时间先后填，第三次是最近一次。"
+    },
+    {
+      "key": "waist_wave3_cm",
+      "label_zh": "第三次腰围",
+      "aliases": [
+        "waist 3",
+        "waist_3",
+        "WC 3",
+        "waist wave 3",
+        "third waist",
+        "third waist circumference",
+        "第三次腰围",
+        "腰围3",
+        "腰围第3次"
+      ],
+      "unit": "cm",
+      "accept": {
+        "mm": 0.1,
+        "in": 2.54
+      },
+      "range": [
+        50,
+        170
+      ],
+      "required": false,
+      "from": "measurements",
+      "note_zh": "用不能拉伸的软尺量。按时间先后填，第三次是最近一次。"
+    },
+    {
+      "key": "interval_1_2_years",
+      "label_zh": "第一次到第二次测量间隔",
+      "aliases": [
+        "interval 1-2",
+        "interval_1_2",
+        "years 1-2",
+        "第一次到第二次间隔",
+        "间隔1",
+        "第1到2次间隔"
+      ],
+      "unit": "a",
+      "accept": {
+        "mo": 0.0833333,
+        "d": 0.00273791
+      },
+      "range": [
+        0.25,
+        15
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "单位是年；论文设计是 2014 到 2017 年，即 3 年。"
+    },
+    {
+      "key": "interval_2_3_years",
+      "label_zh": "第二次到第三次测量间隔",
+      "aliases": [
+        "interval 2-3",
+        "interval_2_3",
+        "years 2-3",
+        "第二次到第三次间隔",
+        "间隔2",
+        "第2到3次间隔"
+      ],
+      "unit": "a",
+      "accept": {
+        "mo": 0.0833333,
+        "d": 0.00273791
+      },
+      "range": [
+        0.25,
+        15
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "单位是年；论文设计是 2017 到 2019 年，即 2 年。"
+    },
+    {
+      "key": "sex",
+      "label_zh": "性别",
+      "required": false,
+      "from": "profile",
+      "flag": "--sex",
+      "note_zh": "算累积腰围时必填：腰围切点男 90 cm、女 80 cm。"
+    },
+    {
+      "key": "age",
+      "label_zh": "实足年龄",
+      "unit": "a",
+      "range": [
+        18,
+        120
+      ],
+      "required": false,
+      "from": "profile",
+      "flag": "--age",
+      "note_zh": "不到 70 岁时提示不在论文人群内。"
+    }
+  ],
+  "outputs": [
+    {
+      "key": "cbmi_kg_m2_years",
+      "label_zh": "累积 BMI 暴露（超过 24 kg/m² 的量×年）",
+      "unit": "kg/m^2·a"
+    },
+    {
+      "key": "cwc_cm_years",
+      "label_zh": "累积腰围暴露（超过男 90/女 80 cm 的量×年）",
+      "unit": "cm·a"
+    },
+    {
+      "key": "cwc_cm_years_female_85cm",
+      "label_zh": "女性按 85 cm 切点的累积腰围暴露（补充表 12）",
+      "unit": "cm·a"
+    },
+    {
+      "key": "baseline_bmi_group",
+      "label_zh": "最近一次 BMI 分组（中国标准）",
+      "unit": ""
+    }
+  ],
+  "validation": {
+    "status": "draft",
+    "gap_zh": "正文方法印出了切点（BMI 24 kg/m²，腰围男 90、女 80 cm）和“超出量乘以持续年数”的定义，但没有写超出量怎样与年数相乘，也没有印出任何个人的计算示例；结果只印了队列中位数和四分位数（cBMI 1.3（0.0, 11.0），cWC 20.5（0.5, 50.5）），三分位界值和长寿多基因评分中位数都没有印出。查过 Springer 全文页（含表 1 标题、图 1–3 图注）、Supplementary file1（补充方法、补充表 1–12），论文写明数据和代码只能向作者申请。"
+  }
+}
