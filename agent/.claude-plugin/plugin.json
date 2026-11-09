@@ -1,0 +1,26 @@
+{
+  "name": "longevity",
+  "description": "One routing skill and one MCP server over the longevity-skills library: methods from papers, an evidence store and within-person variation. The MCP server runs the `longevity` command; install it once with: uv tool install git+https://github.com/zwbao/longevity-skills",
+  "author": {
+    "name": "zwbao"
+  },
+  "homepage": "https://github.com/zwbao/longevity-skills",
+  "repository": "https://github.com/zwbao/longevity-skills",
+  "license": "MIT",
+  "keywords": [
+    "longevity",
+    "ageing",
+    "biological age",
+    "evidence",
+    "mcp"
+  ],
+  "version": "2026.45.0",
+  "mcpServers": {
+    "longevity": {
+      "command": "longevity",
+      "args": [
+        "mcp"
+      ]
+    }
+  }
+}

@@ -4,6 +4,20 @@
 
 仓库自己的代码、技能说明和工具用 [MIT](LICENSE) 许可；从论文和上游项目带进来的文件和数据保留各自的许可，见 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)。每条个人读出都标明它属于哪一类、来源是什么，见下面「标签」一节。
 
+## 给 Agent 的快速入口：`longevity` 命令
+
+一个命令行和一个 MCP 服务，覆盖这个库的全部用途：找方法、按论文算个人读数、查证据、判断指标变化是不是超出个体波动。输出都是 JSON；单位、范围、验证状态和来源的检查由引擎执行，任何 Agent 调用都一样。
+
+```bash
+python3 longevity find 我的生物年龄是多少                          # 在仓库检出里直接运行
+python3 longevity run ckd-epi-2021-egfr --age 62 --sex female -m '肌酐=78 umol/L'
+python3 longevity evidence NMN
+python3 longevity change --marker 收缩压 --before 138 --after 131
+uv tool install git+https://github.com/zwbao/longevity-skills      # 或者装成命令：longevity …
+```
+
+用法、MCP 配置和精简接入技能见 [docs/lk-cli.md](docs/lk-cli.md)。
+
 ## 这个仓库给 Agent 提供什么
 
 | 文件 | 内容 |
@@ -73,6 +87,7 @@ python3 -m tools.lsk test --changed origin/main   # 只测相对 main 改动过�
 - **Claude Code**：`/plugin marketplace add zwbao/longevity-skills`，再 `/plugin install longevity-skills@longevity-skills`。之后每次 `/plugin marketplace update` 拿到最新一周的版本。
 - **Cursor**：把 `~/.cursor/skills/<name>` 指到本仓库里的对应目录（不要写到 `~/.cursor/skills-cursor/`）。只想要个人读出时，只链接 `catalog.json` 里 `tier` 为 A 或 tool 的目录。
 - **其他 Agent**：读 `catalog.json`，按 `tier`、`validation_status`（显示时用 `validation_label_zh`）和 `inputs` 选技能。
+- **只要一个入口**：Claude Code 安装插件 `longevity`（`/plugin install longevity@longevity-skills`，只含一个路由技能和 MCP 服务；先装好 `longevity` 命令）；其他 Agent 用 `longevity` 命令或 `longevity mcp`，见 [docs/lk-cli.md](docs/lk-cli.md)。
 
 ## 许可
 
