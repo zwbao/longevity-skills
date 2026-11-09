@@ -88,7 +88,13 @@ def test_manifest_matches_presets():
         assert declared[key]["label_zh"] == label
         assert skillkit.normalize_unit(declared[key]["unit"]) == skillkit.normalize_unit(unit)
     assert MANIFEST["inputs_status"] == "verified"
-    assert {item["key"] for item in MANIFEST["outputs"]} == {"phenoage", "phenoage_advance", "mortality_10y_pct"}
+    assert {item["key"] for item in MANIFEST["outputs"]} == {
+        "phenoage", "phenoage_advance", "mortality_10y_pct",
+        "mortality_5y_pct", "mortality_15y_pct", "mortality_20y_pct", "median_survival_years",
+    }
+    for item in MANIFEST["outputs"]:
+        if item["key"] not in {"phenoage", "phenoage_advance", "mortality_10y_pct"}:
+            assert "外推" in item["label_zh"] and "外推" in item["note_zh"], "horizons the paper did not report are labelled"
 
 
 def test_chinese_report_with_units_matches_canonical(tmp_path: Path):

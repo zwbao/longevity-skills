@@ -7,7 +7,7 @@ import json
 import sys
 from typing import Any, Dict, List, Optional
 
-from . import evidence, methods, noise
+from . import compare, evidence, methods, noise, panel, reference, store
 from .library import Library, LKError, open_library
 from .run import parse_measurement
 from .run import run as run_method
@@ -24,6 +24,10 @@ longevity: methods, evidence and within-person variation from the longevity-skil
   longevity describe ckd-epi-2021-egfr                 inputs, units, ranges, outputs, validation, paper
   longevity run ckd-epi-2021-egfr --age 62 --sex female -m '肌酐=78 umol/L'
   longevity run china-par-ascvd-risk --input person.json   (or --input - for stdin)
+  longevity run accelerated-biological-aging-risk --panel-file labs.txt   a pasted panel, any language
+  longevity detect labs.txt                            which methods a pasted panel completes, per person
+  longevity estimate-age --panel-file labs.txt         what age the labs look like (reference model, not a paper)
+  longevity compare-age --panel-file two.txt           which of two protein/methylation profiles looks older
   longevity evidence NMN [雷帕霉素 ...]                 what the collected papers state, grouped human/animal/cell
   longevity change --marker 收缩压 --before 138 --after 131       is a change beyond normal variation
   longevity trend --marker 空腹血糖 --series 2024-09-03:5.0 2025-09-02:5.3 2026-09-01:5.6
@@ -75,6 +79,9 @@ def _run_parser() -> argparse.ArgumentParser:
     p.add_argument("--answer", action="append", default=[], metavar="KEY=VALUE", help="e.g. smoker=no diabetes=yes")
     p.add_argument("--medication", action="append", default=[])
     p.add_argument("--measurements-file")
+    p.add_argument("--panel-file", help="one person's pasted panel as a text file (any language); - for stdin")
+    p.add_argument("--panel-ref", help="id of a prompt saved by the prompt hook")
+    p.add_argument("--person", help="which person of a multi-person panel (A, B, ...)")
     p.add_argument("--allow-draft", action="store_true")
     p.add_argument("--allow-mixed-dates", action="store_true")
     p.add_argument("--report", action="store_true", help="include the method's Markdown report")
@@ -124,6 +131,15 @@ def cmd_run(lib: Library, argv: List[str]) -> Dict[str, Any]:
         payload["medications"] = list(payload.get("medications") or []) + a.medication
     if a.measurements_file:
         payload["measurements_file"] = a.measurements_file
+    if a.panel_ref:
+        payload["panel_ref"] = a.panel_ref
+    if a.person:
+        payload["person"] = a.person
+    if a.panel_file:
+        try:
+            payload["panel_text"] = sys.stdin.read() if a.panel_file == "-" else open(a.panel_file, encoding="utf-8").read()
+        except (OSError, UnicodeDecodeError) as exc:
+            raise LKError(f"--panel-file {a.panel_file}: {exc}", "bad_input", 3)
     return run_method(lib, a.name, payload, allow_draft=a.allow_draft, allow_mixed_dates=a.allow_mixed_dates,
                       include_report=a.report, out_dir=a.out, timeout=a.timeout)
 
@@ -143,6 +159,29 @@ def _globals(argv: List[str]):
             raise LKError("--library needs a path", "usage", 2)
     rest = argv
     return library, pretty, rest
+
+
+def _hook(lib: Library) -> int:
+    """Prompt hook (Claude Code UserPromptSubmit and similar): never blocks, never fails the prompt."""
+    try:
+        raw = sys.stdin.read()
+        try:
+            event = json.loads(raw)
+            text = event.get("prompt") or event.get("user_prompt") or "" if isinstance(event, dict) else ""
+        except ValueError:
+            text = raw
+        if len(text) > 200_000:
+            return 0
+        context = panel.hook_context(panel.detect(lib, text)) if text else None
+        if context:
+            ref = store.save(text)
+            context += (f"\nThe full prompt is saved locally as panel_ref=\"{ref}\": pass panel_ref (and, for one person of "
+                        f"several, person=\"A\") instead of copying panel_text; copying long data loses values.")
+            sys.stdout.write(json.dumps({"hookSpecificOutput": {"hookEventName": "UserPromptSubmit",
+                                                                "additionalContext": context}}) + "\n")
+    except Exception:  # noqa: BLE001 - a hook must never break the host
+        pass
+    return 0
 
 
 def main(argv: Optional[List[str]] = None) -> int:
@@ -179,6 +218,42 @@ def main(argv: Optional[List[str]] = None) -> int:
             p.add_argument("--all", action="store_true", help="also tier-B lookups and tools")
             a = p.parse_args(rest)
             out = methods.methods(lib, intent=a.intent, have=_split_csv(a.have), include_lookups=a.all)
+        elif cmd == "estimate-age":
+            p = Parser(prog="longevity estimate-age",
+                       description="What age a person's routine labs look like (reference model fitted on NHANES; not a published method).")
+            p.add_argument("--panel-file", help="pasted panel as text (any language; several people are estimated one by one); - for stdin")
+            p.add_argument("--sex")
+            p.add_argument("--bands", help="e.g. '18-30,30-45,45-60,60-75,75+' (default decades)")
+            p.add_argument("-m", "--measurement", action="append", default=[], metavar="ITEM=VALUE UNIT")
+            a = p.parse_args(rest)
+            payload: Dict[str, Any] = {"bands": a.bands} if a.bands else {}
+            if a.sex:
+                payload["sex"] = {"男": "male", "女": "female", "m": "male", "f": "female"}.get(a.sex.strip().lower(), a.sex.strip().lower())
+            if a.panel_file:
+                payload["panel_text"] = sys.stdin.read() if a.panel_file == "-" else open(a.panel_file, encoding="utf-8").read()
+            if a.measurement:
+                payload["measurements"] = [parse_measurement(x) for x in a.measurement]
+            if not payload.get("panel_text") and not payload.get("measurements"):
+                raise LKError("give --panel-file or -m ITEM=VALUE UNIT", "usage", 2)
+            out = reference.estimate_from_payload(lib, payload)
+        elif cmd == "compare-age":
+            p = Parser(prog="longevity compare-age",
+                       description="Which of two proteomic or methylation profiles looks older (age-direction vote; no age estimate).")
+            p.add_argument("--panel-file", required=True, help="text with both profiles (GENE (A: x, B: y) ... or Participant A/B blocks); - for stdin")
+            p.add_argument("--modality", choices=["proteomics", "methylation"])
+            a = p.parse_args(rest)
+            text = sys.stdin.read() if a.panel_file == "-" else open(a.panel_file, encoding="utf-8").read()
+            out = compare.compare_from_payload(lib, {"panel_text": text, "modality": a.modality})
+        elif cmd == "detect":
+            p = Parser(prog="longevity detect", description="Which methods a pasted panel completes, per person.")
+            p.add_argument("file", nargs="?", default="-", help="text file, or - for stdin (default)")
+            p.add_argument("--hook", action="store_true",
+                           help="read an agent host's prompt-hook JSON on stdin; print context only when a method applies")
+            a = p.parse_args(rest)
+            if a.hook:
+                return _hook(lib)
+            text = sys.stdin.read() if a.file == "-" else open(a.file, encoding="utf-8").read()
+            out = panel.detect(lib, text)
         elif cmd in ("describe", "read"):
             if len(rest) != 1:
                 raise LKError(f"{cmd} takes one method name", "usage", 2)

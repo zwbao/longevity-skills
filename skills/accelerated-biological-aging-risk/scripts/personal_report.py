@@ -63,6 +63,22 @@ def mortality_risk(values: dict[str, float], crp_transform: str = "ln") -> float
     return 1.0 - math.exp((MORTALITY_NUMERATOR * math.exp(_linear_predictor(values, crp_transform))) / GAMMA)
 
 
+def mortality_risk_at(values: dict[str, float], months: float, crp_transform: str = "ln") -> float:
+    """Cumulative mortality of the same Gompertz model at another horizon.
+
+    The model's hazard is exp(xb) * exp(GAMMA * t) with t in months, so the
+    cumulative hazard to t is exp(xb) * (exp(GAMMA * t) - 1) / GAMMA. At t = 120
+    this is mortality_risk. The paper reports only the 10-year score; other
+    horizons are the same fitted model evaluated elsewhere, not validated there.
+    """
+    return 1.0 - math.exp(-math.exp(_linear_predictor(values, crp_transform)) * math.expm1(GAMMA * months) / GAMMA)
+
+
+def median_survival_years(values: dict[str, float], crp_transform: str = "ln") -> float:
+    """Years until the model's cumulative mortality reaches 50% (same caveat as mortality_risk_at)."""
+    return math.log1p(GAMMA * math.log(2.0) / math.exp(_linear_predictor(values, crp_transform))) / GAMMA / 12.0
+
+
 def phenotypic_age(values: dict[str, float], crp_transform: str) -> float:
     """Levine phenotypic age as coded in phenoage_calc.R when orig=TRUE.
 
@@ -535,7 +551,9 @@ def write_report(
             "这次没有计算。原因如下：", "输入没有通过检查，所以没有表型年龄。原因如下："
         )
         path.write_text(_with_paper_card(text), encoding="utf-8")
-        skillkit.write_result(out_dir, manifest, {"phenoage": None, "phenoage_advance": None, "mortality_10y_pct": None})
+        skillkit.write_result(out_dir, manifest, {"phenoage": None, "phenoage_advance": None, "mortality_10y_pct": None,
+                                                  "mortality_5y_pct": None, "mortality_15y_pct": None,
+                                                  "mortality_20y_pct": None, "median_survival_years": None})
         return path
     if age is not None:
         values["age"] = age
@@ -569,6 +587,10 @@ def write_report(
         "phenoage": computed,
         "phenoage_advance": age_advance(computed, age) if computed is not None and age is not None else None,
         "mortality_10y_pct": 100 * mortality_risk(complete) if complete is not None else None,
+        "mortality_5y_pct": 100 * mortality_risk_at(complete, 60) if complete is not None else None,
+        "mortality_15y_pct": 100 * mortality_risk_at(complete, 180) if complete is not None else None,
+        "mortality_20y_pct": 100 * mortality_risk_at(complete, 240) if complete is not None else None,
+        "median_survival_years": median_survival_years(complete) if complete is not None else None,
     })
     if complete is not None:
         wanted: dict[str, float] = {}

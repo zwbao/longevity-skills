@@ -13,7 +13,7 @@ import sys
 import traceback
 from typing import Any, Callable, Dict, List, Optional
 
-from . import evidence, methods, noise
+from . import compare, evidence, methods, noise, panel, reference
 from .library import Library, LKError
 from .run import run as run_method
 
@@ -44,19 +44,27 @@ TOOLS: List[Dict[str, Any]] = [
      "inputSchema": {"type": "object", "properties": {
          "text": {"type": "string"},
          "have": {"type": "array", "items": {"type": "string"}},
+         "panel_text": {"type": "string", "description": "a pasted lab panel or profile, any language, possibly several "
+                                                         "people; returns which methods each person's data completes"},
          "intent": {"type": "string", "description": "an intent id from a previous result"},
          "include_lookups": {"type": "boolean", "description": "also list tier-B lookups and tools"}}}},
     {"name": "read_method",
      "description": "Inputs (units, accepted units, ranges), outputs, validation status and paper of one method.",
      "inputSchema": {"type": "object", "properties": {"name": {"type": "string"}}, "required": ["name"]}},
     {"name": "run_method",
-     "description": "Run one method for one person. Tier C and undeclared methods are refused; draft methods need "
+     "description": "Run one method for one person (pass the panel as panel_text, or rows as measurements). Tier C and "
+                    "undeclared methods are refused; draft methods need "
                     "allow_draft. Input problems (unit, range, missing value) come back as status input_problem with reasons.",
      "inputSchema": {"type": "object", "properties": {
          "name": {"type": "string"},
          "age": {"type": "number"},
          "sex": {"type": "string", "enum": ["male", "female"]},
          "measurements": _MEAS,
+         "panel_ref": {"type": "string", "description": "id of the prompt saved by the prompt hook; use instead of copying long data"},
+         "person": {"type": "string", "description": "which person (A, B, ...) when the panel describes several"},
+         "panel_text": {"type": "string", "description": "instead of measurements: one person's pasted panel as text, any "
+                                                         "language (e.g. 'Albumin (g/dL) 4.30; Creatinine (umol/L) 57.77; ...'); "
+                                                         "age and sex are read from it when not given"},
          "answers": {"type": "object", "description": "yes/no answers the method asks for, keyed as read_method lists them "
                                                       "(e.g. smoker, diabetes, treated, north)",
                      "additionalProperties": {"type": ["boolean", "string", "number"]}},
@@ -67,6 +75,32 @@ TOOLS: List[Dict[str, Any]] = [
          "allow_mixed_dates": {"type": "boolean"},
          "include_report": {"type": "boolean", "description": "also return the method's own report in Markdown"}},
          "required": ["name"]}},
+    {"name": "estimate_age",
+     "description": "What age a person's routine labs and body measurements look like, from a reference model this "
+                    "library fitted on public US NHANES data (2011-2016; held-out 2017-2018 mean error about 10 years). "
+                    "Not a published method and not a biological age. Returns an estimate, a 90% interval and the "
+                    "probability of each age band (18-29 ... 70+). Use when the age is unknown or to compare people. "
+                    "Pass panel_text (any language; several people are estimated one by one) or measurements, and sex.",
+     "inputSchema": {"type": "object", "properties": {
+         "panel_text": {"type": "string"},
+         "panel_ref": {"type": "string", "description": "id of the prompt saved by the prompt hook; use instead of copying long data"},
+         "measurements": _MEAS,
+         "sex": {"type": "string", "enum": ["male", "female"]},
+         "bands": {"type": "string", "description": "age bands to report probabilities for, e.g. '18-30, 30-45, 45-60, 60-75, 75+' "
+                                                    "(a shared edge belongs to the higher band); default decades"}}}},
+    {"name": "compare_age",
+     "description": "Which of two plasma proteomic (Olink NPX) or blood methylation (CpG beta/M) profiles looks older. "
+                    "Votes over every protein or CpG both profiles have, using its direction of change with age in a "
+                    "published cohort (proteins: China Kadoorie Biobank, Iona 2025; CpGs: Generation Scotland, McCartney "
+                    "2020), weighted by association strength. Needs no reference means; both profiles must come from the "
+                    "same platform. Gives A/B and a weighted share, not an age. Pass panel_text (e.g. 'ELN (A: 0.31, B: -0.12); ...' "
+                    "or two 'Participant A/B' blocks) or profile_a and profile_b.",
+     "inputSchema": {"type": "object", "properties": {
+         "panel_text": {"type": "string"},
+         "panel_ref": {"type": "string", "description": "id of the prompt saved by the prompt hook; use instead of copying long data"},
+         "profile_a": {"type": "object", "additionalProperties": {"type": "number"}},
+         "profile_b": {"type": "object", "additionalProperties": {"type": "number"}},
+         "modality": {"type": "string", "enum": ["proteomics", "methylation"]}}}},
     {"name": "query_evidence",
      "description": "What the papers collected in this library state about drugs, supplements, diets, genes or proteins: "
                     "grouped into human studies, animal and cell experiments, each row with DOI and location; plus "
@@ -170,6 +204,12 @@ def call(lib: Library, name: str, args: Dict[str, Any]) -> Dict[str, Any]:
         if text is not None and not isinstance(text, str):
             raise LKError("text must be a string", "bad_input", 3)
         have = _str_list(args.get("have"), "have")
+        if args.get("panel_text") is not None:
+            if not isinstance(args["panel_text"], str):
+                raise LKError("panel_text must be a string", "bad_input", 3)
+            out["panel"] = panel.detect(lib, args["panel_text"])
+            if not text and not have:
+                return out
         if text:
             out["find"] = methods.find(lib, text)
         if have or args.get("intent") or args.get("include_lookups") or not text:
@@ -179,7 +219,8 @@ def call(lib: Library, name: str, args: Dict[str, Any]) -> Dict[str, Any]:
     if name == "read_method":
         return methods.describe(lib, str(args.get("name", "")))
     if name == "run_method":
-        payload = {k: args.get(k) for k in ("age", "sex", "measurements", "targets", "measurements_file")}
+        payload = {k: args.get(k) for k in ("age", "sex", "measurements", "targets", "measurements_file", "panel_text",
+                                            "panel_ref", "person")}
         payload["medications"] = _str_list(args.get("medications"), "medications")
         answers = args.get("answers") or {}
         if not isinstance(answers, dict):
@@ -188,6 +229,10 @@ def call(lib: Library, name: str, args: Dict[str, Any]) -> Dict[str, Any]:
         return run_method(lib, str(args.get("name", "")), payload, allow_draft=args.get("allow_draft") is True,
                           allow_mixed_dates=args.get("allow_mixed_dates") is True,
                           include_report=args.get("include_report") is True)
+    if name == "estimate_age":
+        return reference.estimate_from_payload(lib, {k: args.get(k) for k in ("panel_text", "panel_ref", "measurements", "sex", "bands")})
+    if name == "compare_age":
+        return compare.compare_from_payload(lib, {k: args.get(k) for k in ("panel_text", "panel_ref", "profile_a", "profile_b", "modality")})
     if name == "query_evidence":
         limit = _int(args["limit"], "limit") if args.get("limit") is not None else 12
         return evidence.query(lib, _str_list(args.get("entities"), "entities"), limit=limit)
