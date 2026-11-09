@@ -1,0 +1,182 @@
+{
+  "schema": "longevity-skill/1",
+  "name": "handgrip-low-strength-mortality",
+  "kind": "paper",
+  "tier": "A",
+  "species": [
+    "human"
+  ],
+  "evidence": "cohort",
+  "domains": [
+    "跌倒与肌肉"
+  ],
+  "blurb_zh": "用自己测的握力和性别，按 EWGSOP2 和 FNIH 肌少症切点判断握力是否偏低，给出墨西哥 50 岁以上队列里低握力者相对握力达标者的全因死亡风险比；给身高时另算身高校正握力。",
+  "intents": [
+    "frailty_mortality"
+  ],
+  "triage": {
+    "reason_zh": "握力按补充表S3印出的EWGSOP2和FNIH分性别切点分档，查回该档的全因死亡风险比；论文没印个人算例，验证保持草稿。",
+    "reviewed": false
+  },
+  "paper": {
+    "doi": "10.1007/s11357-026-02639-4",
+    "title": "Sex-specific associations between handgrip strength and all-cause mortality in older Mexican adults",
+    "title_zh": "墨西哥中老年人握力与全因死亡的性别差异关联",
+    "journal": "GeroScience",
+    "year": 2026,
+    "authors": "Pérez-Sousa 等",
+    "article_url": "https://doi.org/10.1007/s11357-026-02639-4",
+    "supplements": [
+      {
+        "label": "Supplementary Material 1（补充表 S1、S2，抽样加权 Cox 模型）",
+        "url": "https://static-content.springer.com/esm/art%3A10.1007%2Fs11357-026-02639-4/MediaObjects/11357_2026_2639_MOESM1_ESM.pdf"
+      },
+      {
+        "label": "Supplementary Material 2（补充表 S3，EWGSOP2 和 FNIH 切点）",
+        "url": "https://static-content.springer.com/esm/art%3A10.1007%2Fs11357-026-02639-4/MediaObjects/11357_2026_2639_MOESM2_ESM.pdf"
+      },
+      {
+        "label": "Supplementary Material 3（补充表 S4，Tomkinson 国际常模分组）",
+        "url": "https://static-content.springer.com/esm/art%3A10.1007%2Fs11357-026-02639-4/MediaObjects/11357_2026_2639_MOESM3_ESM.pdf"
+      }
+    ],
+    "card_notes": [
+      "数据来自墨西哥健康与老龄研究（MHAS）2012 年第 3 轮做了握力测试的 1917 名 50 岁及以上成人（男 41.7%），随访到 2021 年，中位 109 个月，死亡 371 人。",
+      "握力：电子握力计，每只手测两次，取优势手最大值（kg）。低握力切点：EWGSOP2 男 <27 kg、女 <16 kg；FNIH 男 <26 kg、女 <16 kg；达到或高于切点者为参照组。",
+      "风险比来自补充表 S3：按性别分层、不加权、完整资料样本（男 726 人死亡 173，女 1039 人死亡 179）的 Cox 模型；模型 1 只调整年龄，模型 2 再调整多病共存、吸烟、饮酒、剧烈活动、居住安排、农村居住和教育。报告以模型 2 为主。",
+      "论文主分析的四分位界值和标准差印在正文表 1–3，本次期刊页面的表格被人机验证拦住、缓存里没有 PDF，所以不按四分位分组、不算标准化分数。补充表 S4 的 Tomkinson 国际常模分组需要另一篇论文的分年龄百分位表，本技能不用。"
+    ],
+    "summary_zh": "这项墨西哥中老年人队列研究发现，握力越低的人随后全因死亡风险越高，这种关联在男性中比在女性中更强。个人报告只按两个国际肌少症标准的握力切点判断你的握力是否偏低，并给出论文里该组相对握力达标者的死亡风险比；不估算个人死亡概率或预期寿命，也不诊断肌少症。",
+    "summary_status": "draft"
+  },
+  "entry": {
+    "script": "scripts/personal_report.py",
+    "measurements_flag": "--measurements",
+    "measurements_header": [
+      "item",
+      "value",
+      "unit"
+    ],
+    "age_flag": "--age",
+    "sex_flag": "--sex",
+    "out_flag": "--out",
+    "result_json": true
+  },
+  "population": {
+    "age_years": [
+      50,
+      120
+    ],
+    "note_zh": "论文人群是墨西哥 50 岁及以上成人（MHAS 第 3 轮握力子样本，男性平均 64.1 岁、女性 63.1 岁），随访中位约 9 年。不到 50 岁时风险比不一定适用。"
+  },
+  "inputs_status": "verified",
+  "inputs": [
+    {
+      "key": "grip_kg",
+      "label_zh": "握力（优势手最大值）",
+      "aliases": [
+        "grip",
+        "grip strength",
+        "handgrip",
+        "handgrip strength",
+        "hand grip strength",
+        "HGS",
+        "握力",
+        "手握力",
+        "握力(kg)",
+        "优势手握力",
+        "最大握力"
+      ],
+      "unit": "kg",
+      "accept": {
+        "lb": 0.45359237
+      },
+      "range": [
+        2,
+        100
+      ],
+      "unit_required": true,
+      "required": true,
+      "from": "measurements",
+      "note_zh": "用握力计每只手测两次，填优势手的最大值。有的握力计显示磅（lb），磅数也常落在合理范围内，所以必须写单位。"
+    },
+    {
+      "key": "height_cm",
+      "label_zh": "身高",
+      "aliases": [
+        "height",
+        "body height",
+        "stature",
+        "身高(cm)"
+      ],
+      "loinc": [
+        "8302-2"
+      ],
+      "unit": "cm",
+      "accept": {
+        "m": 100,
+        "mm": 0.1,
+        "in": 2.54
+      },
+      "range": [
+        100,
+        230
+      ],
+      "required": false,
+      "from": "measurements",
+      "note_zh": "只用来算身高校正握力（握力 ÷ 身高²），不改变切点判断。"
+    },
+    {
+      "key": "sex",
+      "label_zh": "性别",
+      "required": true,
+      "from": "profile",
+      "flag": "--sex",
+      "note_zh": "切点和风险比男女不同。"
+    },
+    {
+      "key": "age",
+      "label_zh": "实足年龄",
+      "unit": "a",
+      "range": [
+        18,
+        120
+      ],
+      "required": false,
+      "from": "profile",
+      "flag": "--age",
+      "note_zh": "不进计算；不到 50 岁会提示不在论文人群内。"
+    }
+  ],
+  "outputs": [
+    {
+      "key": "ewgsop2_category",
+      "label_zh": "按 EWGSOP2 切点的握力分档",
+      "unit": ""
+    },
+    {
+      "key": "ewgsop2_mortality_hr",
+      "label_zh": "该档全因死亡风险比（补充表 S3 模型 2，参照达到切点者）",
+      "unit": "1"
+    },
+    {
+      "key": "fnih_category",
+      "label_zh": "按 FNIH 切点的握力分档",
+      "unit": ""
+    },
+    {
+      "key": "fnih_mortality_hr",
+      "label_zh": "该档全因死亡风险比（补充表 S3 模型 2，参照达到切点者）",
+      "unit": "1"
+    },
+    {
+      "key": "allometric_hgs_kg_m2",
+      "label_zh": "身高校正握力（握力 ÷ 身高²）",
+      "unit": "kg/m^2"
+    }
+  ],
+  "validation": {
+    "status": "draft",
+    "gap_zh": "补充表 S3 印出了 EWGSOP2 和 FNIH 分性别切点与各低握力组的风险比，测试只核对分档查表与印出的数一致；正文、表 1–4 和补充表 S1–S4 都没有印出某个人握力对应结果的算例。正文表 1–4（四分位界值、标准差）在期刊页面被人机验证拦住、缓存没有文章 PDF，本次没能打开；补充材料 1–3 已下载打开。"
+  }
+}
