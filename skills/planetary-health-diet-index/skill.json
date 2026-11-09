@@ -1,0 +1,475 @@
+{
+  "schema": "longevity-skill/1",
+  "name": "planetary-health-diet-index",
+  "kind": "paper",
+  "tier": "A",
+  "species": [
+    "human"
+  ],
+  "evidence": "cohort",
+  "domains": [
+    "衰弱与死亡风险"
+  ],
+  "blurb_zh": "用每天吃的 15 类食物算地球健康饮食指数（0–140 分），对照西班牙老人队列里饮食评分与衰弱的关联。",
+  "intents": [
+    "frailty_mortality"
+  ],
+  "triage": {
+    "reason_zh": "补充表 S1 印出 PHDI 15 类食物的 0 分和满分摄入切点及权重，可由个人膳食摄入算 0–140 分；论文没印个人算例，验证保持草稿。",
+    "reviewed": false
+  },
+  "paper": {
+    "doi": "10.1093/gerona/glag244",
+    "title": "Planetary health diet adherence and frailty in older adults: evidence from the Seniors-ENRICA cohorts",
+    "title_zh": "地球健康饮食依从性与老年人衰弱：来自 Seniors-ENRICA 队列的证据",
+    "journal": "The Journals of Gerontology, Series A: Biological Sciences and Medical Sciences",
+    "year": 2026,
+    "authors": "Diez-Echave 等",
+    "article_url": "https://academic.oup.com/biomedgerontology/article/81/11/glag244/8868952",
+    "supplements": [
+      {
+        "label": "Supplementary Data（表 S1–S3、图 S1，PDF）",
+        "url": "https://academic.oup.com/biomedgerontology/article/81/11/glag244/8868952#supplementary-data"
+      }
+    ],
+    "card_notes": [
+      "数据来自西班牙两个社区老人队列：Seniors-ENRICA-1（2008–2015，60 岁及以上，入组 3289 人，分析 2143 人）和 Seniors-ENRICA-2（2015–2023，65 岁及以上，入组 3273 人，分析 1602 人），合并 3745 人；基线饮食用覆盖 880 种食物的电子饮食史问卷（DH-ENRICA）评估。",
+      "PHDI 计分照补充表 S1（转引自 Bui 等，Am J Clin Nutr 2024）：15 类食物各按 0 分和满分摄入两条切点线性计分，非大豆豆类和大豆各 0–5 分，其余各 0–10 分，总分 0–140；第 13–15 项（不饱和油、饱和与反式脂肪、添加糖）按占总能量的百分比计分。",
+      "衰弱按 Fried 表型（疲乏、体力活动少、步速慢、握力弱、非意愿体重下降五项中至少三项），在随访各轮重复评估，用广义估计方程（GEE）估计比值比；模型 3 调整年龄、性别、教育、吸烟、饮酒、久坐、休闲体力活动、能量摄入、体重指数、慢病数和用药数。",
+      "论文只印出各三分位组的平均分，没有印出三分位切点；报告不判断个人落在哪一个三分位。利益冲突：作者声明无。"
+    ],
+    "summary_zh": "这项研究在西班牙两个社区老人队列里发现，饮食越接近 EAT-Lancet 地球健康饮食（以蔬菜、水果、全谷物、豆类和坚果为主，少吃红肉和添加糖）的老人，随访中出现衰弱的可能越低。个人报告只用你自己估计的 15 类食物每日摄入算出地球健康饮食指数总分和各项得分，并列出论文人群里的比值比作对照，不估算你个人的衰弱概率。",
+    "summary_status": "draft"
+  },
+  "entry": {
+    "script": "scripts/personal_report.py",
+    "measurements_flag": "--measurements",
+    "measurements_header": [
+      "item",
+      "value",
+      "unit"
+    ],
+    "age_flag": "--age",
+    "sex_flag": "--sex",
+    "out_flag": "--out",
+    "result_json": true,
+    "targets_flag": "--targets",
+    "levers_json": true
+  },
+  "population": {
+    "age_years": [
+      60,
+      120
+    ],
+    "note_zh": "论文人群是西班牙 60 岁及以上（Seniors-ENRICA-1）和 65 岁及以上（Seniors-ENRICA-2）的社区老人；分数对任何成人都能算，衰弱关联只来自这一人群。"
+  },
+  "inputs_status": "verified",
+  "inputs": [
+    {
+      "key": "whole_grains_g_d",
+      "label_zh": "全谷物",
+      "aliases": [
+        "whole grains",
+        "whole grain",
+        "全谷物",
+        "粗粮",
+        "全麦"
+      ],
+      "unit": "g/d",
+      "note_zh": "每日平均摄入的可食部分重量（克/天）。",
+      "range": [
+        0,
+        1000
+      ],
+      "required": true,
+      "from": "measurements"
+    },
+    {
+      "key": "tubers_g_d",
+      "label_zh": "薯类（土豆、木薯等）",
+      "aliases": [
+        "tubers",
+        "starchy vegetables",
+        "potatoes",
+        "薯类",
+        "土豆",
+        "马铃薯",
+        "淀粉类蔬菜"
+      ],
+      "unit": "g/d",
+      "note_zh": "每日平均摄入的可食部分重量（克/天）。",
+      "range": [
+        0,
+        1500
+      ],
+      "required": true,
+      "from": "measurements"
+    },
+    {
+      "key": "vegetables_g_d",
+      "label_zh": "蔬菜（不含土豆等淀粉类）",
+      "aliases": [
+        "vegetables",
+        "non-starchy vegetables",
+        "蔬菜",
+        "非淀粉类蔬菜"
+      ],
+      "unit": "g/d",
+      "note_zh": "每日平均摄入的可食部分重量（克/天）。",
+      "range": [
+        0,
+        2500
+      ],
+      "required": true,
+      "from": "measurements"
+    },
+    {
+      "key": "fruit_g_d",
+      "label_zh": "完整水果",
+      "aliases": [
+        "whole fruit",
+        "fruit",
+        "fruits",
+        "水果",
+        "完整水果"
+      ],
+      "unit": "g/d",
+      "note_zh": "每日平均摄入的可食部分重量（克/天）。",
+      "range": [
+        0,
+        3000
+      ],
+      "required": true,
+      "from": "measurements"
+    },
+    {
+      "key": "dairy_g_d",
+      "label_zh": "奶类（奶、奶酪、酸奶）",
+      "aliases": [
+        "dairy",
+        "dairy foods",
+        "milk and dairy",
+        "奶类",
+        "奶制品",
+        "乳制品"
+      ],
+      "unit": "g/d",
+      "note_zh": "每日平均摄入的可食部分重量（克/天）。",
+      "range": [
+        0,
+        3000
+      ],
+      "required": true,
+      "from": "measurements"
+    },
+    {
+      "key": "red_meat_g_d",
+      "label_zh": "红肉和加工肉（牛、羊、猪）",
+      "aliases": [
+        "red meat",
+        "red and processed meat",
+        "processed meat",
+        "红肉",
+        "红肉和加工肉",
+        "畜肉"
+      ],
+      "unit": "g/d",
+      "note_zh": "每日平均摄入的可食部分重量（克/天）。",
+      "range": [
+        0,
+        1000
+      ],
+      "required": true,
+      "from": "measurements"
+    },
+    {
+      "key": "poultry_g_d",
+      "label_zh": "鸡肉和其他禽肉",
+      "aliases": [
+        "poultry",
+        "chicken",
+        "禽肉",
+        "鸡肉"
+      ],
+      "unit": "g/d",
+      "note_zh": "每日平均摄入的可食部分重量（克/天）。",
+      "range": [
+        0,
+        1000
+      ],
+      "required": true,
+      "from": "measurements"
+    },
+    {
+      "key": "eggs_g_d",
+      "label_zh": "蛋",
+      "aliases": [
+        "eggs",
+        "egg",
+        "蛋",
+        "蛋类",
+        "鸡蛋"
+      ],
+      "unit": "g/d",
+      "note_zh": "每日平均摄入的可食部分重量（克/天）。",
+      "range": [
+        0,
+        500
+      ],
+      "required": true,
+      "from": "measurements"
+    },
+    {
+      "key": "fish_g_d",
+      "label_zh": "鱼和贝类",
+      "aliases": [
+        "fish",
+        "fish and shellfish",
+        "seafood",
+        "鱼",
+        "鱼虾贝",
+        "水产",
+        "鱼和贝类"
+      ],
+      "unit": "g/d",
+      "note_zh": "每日平均摄入的可食部分重量（克/天）。",
+      "range": [
+        0,
+        1000
+      ],
+      "required": true,
+      "from": "measurements"
+    },
+    {
+      "key": "nuts_g_d",
+      "label_zh": "坚果（花生、核桃、杏仁等）",
+      "aliases": [
+        "nuts",
+        "坚果"
+      ],
+      "unit": "g/d",
+      "note_zh": "每日平均摄入的可食部分重量（克/天）。",
+      "range": [
+        0,
+        500
+      ],
+      "required": true,
+      "from": "measurements"
+    },
+    {
+      "key": "legumes_g_d",
+      "label_zh": "非大豆豆类（干豆、扁豆、豌豆）",
+      "aliases": [
+        "legumes",
+        "non-soy legumes",
+        "beans",
+        "豆类",
+        "杂豆",
+        "非大豆豆类"
+      ],
+      "unit": "g/d",
+      "note_zh": "每日平均摄入的可食部分重量（克/天）。",
+      "range": [
+        0,
+        1000
+      ],
+      "required": true,
+      "from": "measurements"
+    },
+    {
+      "key": "soy_g_d",
+      "label_zh": "大豆和豆制品",
+      "aliases": [
+        "soy",
+        "soy foods",
+        "soybean",
+        "大豆",
+        "豆制品",
+        "大豆和豆制品"
+      ],
+      "unit": "g/d",
+      "note_zh": "每日平均摄入的可食部分重量（克/天）。",
+      "range": [
+        0,
+        1000
+      ],
+      "required": true,
+      "from": "measurements"
+    },
+    {
+      "key": "unsat_oil_pct_energy",
+      "label_zh": "不饱和植物油（橄榄油、菜籽油等）",
+      "aliases": [
+        "unsaturated oils",
+        "unsaturated fat",
+        "不饱和植物油",
+        "植物油",
+        "不饱和油脂"
+      ],
+      "unit": "%",
+      "accept": {
+        "1": 100
+      },
+      "unit_required": true,
+      "note_zh": "按占每日总能量的百分比填，不是克数（补充表 S1 第 13 项按 % TEI 计分）。",
+      "range": [
+        0,
+        70
+      ],
+      "required": true,
+      "from": "measurements"
+    },
+    {
+      "key": "sat_fat_pct_energy",
+      "label_zh": "饱和脂肪和反式脂肪（黄油、猪油、棕榈油、人造黄油等）",
+      "aliases": [
+        "saturated fat",
+        "saturated and trans fat",
+        "饱和脂肪",
+        "饱和脂肪和反式脂肪"
+      ],
+      "unit": "%",
+      "accept": {
+        "1": 100
+      },
+      "unit_required": true,
+      "note_zh": "按占每日总能量的百分比填，不是克数（补充表 S1 第 14 项按 % TEI 计分）。",
+      "range": [
+        0,
+        50
+      ],
+      "required": true,
+      "from": "measurements"
+    },
+    {
+      "key": "added_sugar_pct_energy",
+      "label_zh": "添加糖和果汁里的糖",
+      "aliases": [
+        "added sugar",
+        "added sugars",
+        "添加糖",
+        "游离糖",
+        "添加糖和果汁糖"
+      ],
+      "unit": "%",
+      "accept": {
+        "1": 100
+      },
+      "unit_required": true,
+      "note_zh": "按占每日总能量的百分比填，不是克数（补充表 S1 第 15 项按 % TEI 计分）。",
+      "range": [
+        0,
+        60
+      ],
+      "required": true,
+      "from": "measurements"
+    },
+    {
+      "key": "sex",
+      "label_zh": "性别",
+      "required": true,
+      "from": "profile",
+      "flag": "--sex",
+      "note_zh": "全谷物满分线按性别不同：女性 75 克/天，男性 90 克/天（补充表 S1）。"
+    },
+    {
+      "key": "age",
+      "label_zh": "实足年龄",
+      "unit": "a",
+      "range": [
+        18,
+        120
+      ],
+      "required": false,
+      "from": "profile",
+      "flag": "--age",
+      "note_zh": "不进评分；不到 60 岁时报告提示不在论文人群内。"
+    }
+  ],
+  "outputs": [
+    {
+      "key": "phdi_total",
+      "label_zh": "地球健康饮食指数（PHDI）总分",
+      "unit": "score"
+    },
+    {
+      "key": "score_whole_grains_g_d",
+      "label_zh": "PHDI 第 1 项得分：全谷物",
+      "unit": "score"
+    },
+    {
+      "key": "score_tubers_g_d",
+      "label_zh": "PHDI 第 2 项得分：薯类（土豆、木薯等）",
+      "unit": "score"
+    },
+    {
+      "key": "score_vegetables_g_d",
+      "label_zh": "PHDI 第 3 项得分：蔬菜（不含土豆等淀粉类）",
+      "unit": "score"
+    },
+    {
+      "key": "score_fruit_g_d",
+      "label_zh": "PHDI 第 4 项得分：完整水果",
+      "unit": "score"
+    },
+    {
+      "key": "score_dairy_g_d",
+      "label_zh": "PHDI 第 5 项得分：奶类（奶、奶酪、酸奶）",
+      "unit": "score"
+    },
+    {
+      "key": "score_red_meat_g_d",
+      "label_zh": "PHDI 第 6 项得分：红肉和加工肉（牛、羊、猪）",
+      "unit": "score"
+    },
+    {
+      "key": "score_poultry_g_d",
+      "label_zh": "PHDI 第 7 项得分：鸡肉和其他禽肉",
+      "unit": "score"
+    },
+    {
+      "key": "score_eggs_g_d",
+      "label_zh": "PHDI 第 8 项得分：蛋",
+      "unit": "score"
+    },
+    {
+      "key": "score_fish_g_d",
+      "label_zh": "PHDI 第 9 项得分：鱼和贝类",
+      "unit": "score"
+    },
+    {
+      "key": "score_nuts_g_d",
+      "label_zh": "PHDI 第 10 项得分：坚果（花生、核桃、杏仁等）",
+      "unit": "score"
+    },
+    {
+      "key": "score_legumes_g_d",
+      "label_zh": "PHDI 第 11 项得分：非大豆豆类（干豆、扁豆、豌豆）",
+      "unit": "score"
+    },
+    {
+      "key": "score_soy_g_d",
+      "label_zh": "PHDI 第 12 项得分：大豆和豆制品",
+      "unit": "score"
+    },
+    {
+      "key": "score_unsat_oil_pct_energy",
+      "label_zh": "PHDI 第 13 项得分：不饱和植物油（橄榄油、菜籽油等）",
+      "unit": "score"
+    },
+    {
+      "key": "score_sat_fat_pct_energy",
+      "label_zh": "PHDI 第 14 项得分：饱和脂肪和反式脂肪（黄油、猪油、棕榈油、人造黄油等）",
+      "unit": "score"
+    },
+    {
+      "key": "score_added_sugar_pct_energy",
+      "label_zh": "PHDI 第 15 项得分：添加糖和果汁里的糖",
+      "unit": "score"
+    }
+  ],
+  "validation": {
+    "status": "draft",
+    "gap_zh": "补充表 S1 印出了 15 类食物的全部切点和权重，测试核对常数与表 S1 一致、各项满分之和为正文印出的 0–140 分；正文、表 1–3、图 1–2 和补充材料（表 S1–S3、图 S1）都没有印出任何个人摄入对应的 PHDI 分数算例，所以没有可复现的个人示例。"
+  }
+}
