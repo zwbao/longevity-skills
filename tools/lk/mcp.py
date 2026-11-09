@@ -60,6 +60,8 @@ TOOLS: List[Dict[str, Any]] = [
          "age": {"type": "number"},
          "sex": {"type": "string", "enum": ["male", "female"]},
          "measurements": _MEAS,
+         "panel_ref": {"type": "string", "description": "id of the prompt saved by the prompt hook; use instead of copying long data"},
+         "person": {"type": "string", "description": "which person (A, B, ...) when the panel describes several"},
          "panel_text": {"type": "string", "description": "instead of measurements: one person's pasted panel as text, any "
                                                          "language (e.g. 'Albumin (g/dL) 4.30; Creatinine (umol/L) 57.77; ...'); "
                                                          "age and sex are read from it when not given"},
@@ -81,6 +83,7 @@ TOOLS: List[Dict[str, Any]] = [
                     "Pass panel_text (any language; several people are estimated one by one) or measurements, and sex.",
      "inputSchema": {"type": "object", "properties": {
          "panel_text": {"type": "string"},
+         "panel_ref": {"type": "string", "description": "id of the prompt saved by the prompt hook; use instead of copying long data"},
          "measurements": _MEAS,
          "sex": {"type": "string", "enum": ["male", "female"]},
          "bands": {"type": "string", "description": "age bands to report probabilities for, e.g. '18-30, 30-45, 45-60, 60-75, 75+' "
@@ -94,6 +97,7 @@ TOOLS: List[Dict[str, Any]] = [
                     "or two 'Participant A/B' blocks) or profile_a and profile_b.",
      "inputSchema": {"type": "object", "properties": {
          "panel_text": {"type": "string"},
+         "panel_ref": {"type": "string", "description": "id of the prompt saved by the prompt hook; use instead of copying long data"},
          "profile_a": {"type": "object", "additionalProperties": {"type": "number"}},
          "profile_b": {"type": "object", "additionalProperties": {"type": "number"}},
          "modality": {"type": "string", "enum": ["proteomics", "methylation"]}}}},
@@ -215,7 +219,8 @@ def call(lib: Library, name: str, args: Dict[str, Any]) -> Dict[str, Any]:
     if name == "read_method":
         return methods.describe(lib, str(args.get("name", "")))
     if name == "run_method":
-        payload = {k: args.get(k) for k in ("age", "sex", "measurements", "targets", "measurements_file", "panel_text")}
+        payload = {k: args.get(k) for k in ("age", "sex", "measurements", "targets", "measurements_file", "panel_text",
+                                            "panel_ref", "person")}
         payload["medications"] = _str_list(args.get("medications"), "medications")
         answers = args.get("answers") or {}
         if not isinstance(answers, dict):
@@ -225,9 +230,9 @@ def call(lib: Library, name: str, args: Dict[str, Any]) -> Dict[str, Any]:
                           allow_mixed_dates=args.get("allow_mixed_dates") is True,
                           include_report=args.get("include_report") is True)
     if name == "estimate_age":
-        return reference.estimate_from_payload(lib, {k: args.get(k) for k in ("panel_text", "measurements", "sex", "bands")})
+        return reference.estimate_from_payload(lib, {k: args.get(k) for k in ("panel_text", "panel_ref", "measurements", "sex", "bands")})
     if name == "compare_age":
-        return compare.compare_from_payload(lib, {k: args.get(k) for k in ("panel_text", "profile_a", "profile_b", "modality")})
+        return compare.compare_from_payload(lib, {k: args.get(k) for k in ("panel_text", "panel_ref", "profile_a", "profile_b", "modality")})
     if name == "query_evidence":
         limit = _int(args["limit"], "limit") if args.get("limit") is not None else 12
         return evidence.query(lib, _str_list(args.get("entities"), "entities"), limit=limit)

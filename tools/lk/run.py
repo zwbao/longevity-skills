@@ -28,7 +28,7 @@ from datetime import date
 from pathlib import Path
 from typing import Any, Dict, List, Optional
 
-from . import aliases, panel
+from . import aliases, panel, store
 from .library import Library, LKError
 from .methods import argument_kind, label_of, paper_of, status_of
 
@@ -258,18 +258,27 @@ def run(lib: Library, name: str, payload: Dict[str, Any], allow_draft: bool = Fa
         raise bad("the input must be a JSON object")
 
     from_panel = False
+    if payload.get("panel_ref") and payload.get("panel_text") is None:
+        payload = {**payload, "panel_text": store.load(payload["panel_ref"])}
+    payload.pop("panel_ref", None) if isinstance(payload, dict) else None
     if payload.get("panel_text") is not None:
         if payload.get("measurements") or payload.get("measurements_file"):
             raise bad("give panel_text, measurements or measurements_file, not two of them")
         if not isinstance(payload["panel_text"], str) or not payload["panel_text"].strip():
             raise bad("panel_text must be the pasted panel as text")
         people = panel.parse_panel(payload["panel_text"])
+        if payload.get("person") and len(people) > 1:
+            pick = [p for p in people if str(p["label"]).upper() == str(payload["person"]).strip().upper()]
+            if not pick:
+                raise bad(f"person {payload['person']!r} not in the panel; it has {', '.join(str(p['label']) for p in people)}")
+            people = pick
         if len(people) > 1:
             labels = ", ".join(str(p["label"]) for p in people)
             raise bad(f"panel_text describes {len(people)} people ({labels}); run once per person with that person's part")
         person = people[0]
         payload = {**payload, "measurements": person["rows"]}
         payload.pop("panel_text")
+        payload.pop("person", None)
         if payload.get("age") is None and person["age"] is not None:
             payload["age"] = person["age"]
         if payload.get("sex") is None and person["sex"]:

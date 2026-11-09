@@ -22,6 +22,7 @@ import math
 import re
 from typing import Any, Dict, List, Optional, Tuple
 
+from . import store
 from .library import Library, LKError
 
 REFS = {
@@ -32,13 +33,13 @@ REFS = {
                     "source": "McCartney et al., Genome Med 2020, doi 10.1186/s13073-019-0693-z; data doi 10.7488/ds/2709 (Generation Scotland, CC BY)",
                     "check": "LongevityBench mini DNAm pairwise (GEO cohorts, 45 pairs): 41/45 = 91%"},
 }
-_CACHE: Dict[Tuple[str, str], Dict[str, Tuple[float, float]]] = {}
+_CACHE: Dict[Tuple[str, str], Dict[str, Tuple[float, float, float]]] = {}
 _PROTEIN_SIG_P = 2.305e-6  # the paper's Bonferroni threshold over principal components
 _NUM = r"-?\d+(?:\.\d+)?(?:[eE][-+]?\d+)?"
 
 
-def _load(lib: Library, modality: str) -> Dict[str, Tuple[float, float]]:
-    """feature -> (direction weight: signed |z|, raw slope)."""
+def _load(lib: Library, modality: str) -> Dict[str, Tuple[float, float, float]]:
+    """feature -> (direction weight: signed |z|, raw slope, p)."""
     key = (str(lib.root), modality)
     if key in _CACHE:
         return _CACHE[key]
@@ -50,10 +51,10 @@ def _load(lib: Library, modality: str) -> Dict[str, Tuple[float, float]]:
         for r in csv.DictReader(fh):
             if modality == "proteomics":
                 b, se, p = float(r["sd_per_year"]), float(r["se"]), float(r["p"])
-                if p < _PROTEIN_SIG_P and se > 0:
-                    table[r["gene"].upper()] = (b / se, b)
+                if p < 0.05 and se > 0:
+                    table[r["gene"].upper()] = (b / se, b, p)
             else:
-                table[r["cpg"]] = (float(r["z"]), float(r["m_per_year"]))
+                table[r["cpg"]] = (float(r["z"]), float(r["m_per_year"]), 0.0)
     _CACHE[key] = table
     return table
 
@@ -91,7 +92,12 @@ def compare_age(lib: Library, pairs: Dict[str, Tuple[float, float]], modality: O
     if modality not in REFS:
         raise LKError("modality must be proteomics or methylation", "bad_input", 3)
     ref = _load(lib, modality)
-    used = [(k, a, b) for k, (a, b) in pairs.items() if k in ref and a == a and b == b]
+    present = [(k, a, b) for k, (a, b) in pairs.items() if k in ref and a == a and b == b]
+    strict = _PROTEIN_SIG_P if modality == "proteomics" else 1.0
+    used = [x for x in present if ref[x[0]][2] < strict]
+    low_confidence = False
+    if len(used) < 5 and len(present) >= 5:  # too few strongly age-related features: fall back to nominal ones, say so
+        used, low_confidence = present, True
     head = {"method": f"age-direction vote ({modality})",
             "label_zh": "本库的方法：按已发表队列里每项随年龄升降的方向投票（不是已发表时钟，只比较谁更“老”，不估年龄）",
             "reference": REFS[modality]["source"], "independent_check": REFS[modality]["check"], **lib.stamp()}
@@ -106,11 +112,11 @@ def compare_age(lib: Library, pairs: Dict[str, Tuple[float, float]], modality: O
     return {**head, "status": "ok",
             "outputs": {"looks_older": "A" if share_a > 0.5 else "B" if share_a < 0.5 else "tie",
                         "weighted_share_for_A_older": round(share_a, 3),
-                        "features_used": len(used), "features_given": len(pairs)},
+                        "features_used": len(used), "features_given": len(pairs), "low_confidence": low_confidence},
             "strongest_features": [{"feature": k, "A": a, "B": b, "rises_with_age": ref[k][0] > 0,
                                     "points_to": ("A" if (a > b) == (ref[k][0] > 0) else "B") if a != b else "tie"}
                                    for k, a, b in top],
-            "caveats_zh": ["两份数据必须用同一平台、同样的标准化方法测得，否则差别可能来自批次而不是年龄。",
+            "caveats_zh": (["强年龄相关的项目不到 5 个，改用名义显著（P<0.05）的项目投票，把握较低。"] if low_confidence else []) + ["两份数据必须用同一平台、同样的标准化方法测得，否则差别可能来自批次而不是年龄。",
                            "只判断谁“看起来”更老；得分接近 0.5 时说明区分不开。不给具体年龄，也不是生物年龄。",
                            f"独立核对（参考队列与题源不重叠）：{REFS[modality]['check']}。"]}
 
@@ -124,10 +130,10 @@ def compare_from_payload(lib: Library, payload: Dict[str, Any]) -> Dict[str, Any
         a = {norm(k): float(v) for k, v in a.items()}
         b = {norm(k): float(v) for k, v in b.items()}
         pairs = {k: (a[k], b[k]) for k in a if k in b}
-    elif isinstance(payload.get("panel_text"), str):
-        pairs = parse_pairs(payload["panel_text"])
+    elif isinstance(store.resolve(payload), str):
+        pairs = parse_pairs(store.resolve(payload))
     else:
-        raise LKError("give panel_text, or profile_a and profile_b", "bad_input", 3)
+        raise LKError("give panel_ref, panel_text, or profile_a and profile_b", "bad_input", 3)
     return compare_age(lib, pairs, payload.get("modality"))
 
 

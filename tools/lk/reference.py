@@ -18,7 +18,7 @@ import re
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple
 
-from . import aliases, panel
+from . import aliases, panel, store
 from .library import Library, LKError
 
 MODEL_FILE = Path("data") / "reference" / "nhanes_age_reference.json"
@@ -236,6 +236,7 @@ def estimate_age(lib: Library, rows: List[Dict[str, Any]], sex: Optional[str], b
 
 
 def estimate_from_payload(lib: Library, payload: Dict[str, Any]) -> Dict[str, Any]:
+    payload = {**payload, "panel_text": store.resolve(payload)}
     if payload.get("panel_text") is not None:
         people = panel.parse_panel(str(payload["panel_text"]))
         if len(people) > 1:

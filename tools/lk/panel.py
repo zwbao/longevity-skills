@@ -150,7 +150,7 @@ def hook_context(result: Dict[str, Any]) -> Optional[str]:
         who = f"Person {p['label']}" if p["label"] else "The person"
         if p.get("age_reference_items"):
             lines.append(f"- {who}: {p['age_reference_items']} routine values fit the age reference model -> MCP tool "
-                         f"estimate_age (panel_text) gives the age these values look like, a 90% interval and age-band "
+                         f"estimate_age gives the age these values look like, a 90% interval and age-band "
                          f"probabilities (fitted on NHANES 2011-2016, held-out mean error ~10 years; not a published method).")
         if not p["complete_methods"]:
             continue
@@ -159,15 +159,14 @@ def hook_context(result: Dict[str, Any]) -> Optional[str]:
             for m in p["complete_methods"][:6])
         lines.append(f"- {who} ({p['rows']} values read): {methods_text}.")
     if result.get("pairwise_omics"):
-        lines.append("- The prompt compares two proteomic or methylation profiles -> MCP tool compare_age (panel_text = the "
-                     "prompt's data, copied as is) votes over every protein/CpG with its direction of change with age in a "
-                     "published cohort (no age estimate; independent check about 87-91% correct on public benchmark pairs).")
+        lines.append("- The prompt compares two proteomic or methylation profiles -> MCP tool compare_age votes over every "
+                     "protein/CpG with its direction of change with age in a published cohort (gives which looks older, not an "
+                     "age; independent check about 87-91% correct on public benchmark pairs).")
     if not lines:
         return None
-    return ("longevity plugin: the prompt contains measurements that published methods in the longevity library can "
-            "compute from directly.\n" + "\n".join(lines) + "\n"
-            "Before answering a question about this person's age, biological age, mortality or survival, kidney function "
-            "or body composition, run the relevant method: MCP tool run_method with name=<method> and panel_text=<that "
-            "person's part of the prompt, copied as is> (or `longevity run <method> --panel-file <file>`). A fitted, "
-            "published model is more reliable than judging the values by eye. Then weigh its result together with the "
-            "rest of the profile (history, medicines), cite the paper and its caveats, and say if you chose not to use it.")
+    return ("longevity plugin: the prompt contains measurements that methods in the longevity library can compute from "
+            "directly.\n" + "\n".join(lines) + "\n"
+            "Before answering a question about these people's age, which is older, biological age, mortality or survival, "
+            "kidney function or body composition, run the relevant tool (run_method with name=<method>, estimate_age, "
+            "compare_age). A fitted model is more reliable than judging the values by eye. Then weigh its result together "
+            "with the rest of the profile (history, medicines), cite its source and caveats, and say if you chose not to use it.")

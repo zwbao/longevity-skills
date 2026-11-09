@@ -7,7 +7,7 @@ import json
 import sys
 from typing import Any, Dict, List, Optional
 
-from . import compare, evidence, methods, noise, panel, reference
+from . import compare, evidence, methods, noise, panel, reference, store
 from .library import Library, LKError, open_library
 from .run import parse_measurement
 from .run import run as run_method
@@ -80,6 +80,8 @@ def _run_parser() -> argparse.ArgumentParser:
     p.add_argument("--medication", action="append", default=[])
     p.add_argument("--measurements-file")
     p.add_argument("--panel-file", help="one person's pasted panel as a text file (any language); - for stdin")
+    p.add_argument("--panel-ref", help="id of a prompt saved by the prompt hook")
+    p.add_argument("--person", help="which person of a multi-person panel (A, B, ...)")
     p.add_argument("--allow-draft", action="store_true")
     p.add_argument("--allow-mixed-dates", action="store_true")
     p.add_argument("--report", action="store_true", help="include the method's Markdown report")
@@ -129,6 +131,10 @@ def cmd_run(lib: Library, argv: List[str]) -> Dict[str, Any]:
         payload["medications"] = list(payload.get("medications") or []) + a.medication
     if a.measurements_file:
         payload["measurements_file"] = a.measurements_file
+    if a.panel_ref:
+        payload["panel_ref"] = a.panel_ref
+    if a.person:
+        payload["person"] = a.person
     if a.panel_file:
         try:
             payload["panel_text"] = sys.stdin.read() if a.panel_file == "-" else open(a.panel_file, encoding="utf-8").read()
@@ -168,6 +174,9 @@ def _hook(lib: Library) -> int:
             return 0
         context = panel.hook_context(panel.detect(lib, text)) if text else None
         if context:
+            ref = store.save(text)
+            context += (f"\nThe full prompt is saved locally as panel_ref=\"{ref}\": pass panel_ref (and, for one person of "
+                        f"several, person=\"A\") instead of copying panel_text; copying long data loses values.")
             sys.stdout.write(json.dumps({"hookSpecificOutput": {"hookEventName": "UserPromptSubmit",
                                                                 "additionalContext": context}}) + "\n")
     except Exception:  # noqa: BLE001 - a hook must never break the host
