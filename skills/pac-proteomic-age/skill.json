@@ -1,0 +1,2210 @@
+{
+  "schema": "longevity-skill/1",
+  "name": "pac-proteomic-age",
+  "kind": "paper",
+  "tier": "A",
+  "species": [
+    "human"
+  ],
+  "evidence": "rct_secondary",
+  "domains": [
+    "蛋白、代谢与器官年龄"
+  ],
+  "blurb_zh": "用 Olink 血液蛋白组（NPX）的 128 个蛋白和年龄算 PAC 蛋白质组年龄，可比较同一批次前后两次的变化。",
+  "intents": [
+    "proteomic_organ_age",
+    "before_after"
+  ],
+  "triage": {
+    "reason_zh": "PAC 时钟的 128 个蛋白系数和 Gompertz 参数公开在论文点名的代码里，可以用一个人的 Olink NPX 和年龄算出蛋白质组年龄及前后变化。",
+    "reviewed": false
+  },
+  "paper": {
+    "doi": "10.1038/s41587-026-03286-y",
+    "title": "Integration of proteomic aging clocks in a phase 2a clinical trial supports simultaneous geroprotective assessment",
+    "title_zh": "把蛋白质组衰老时钟纳入 2a 期临床试验，同时评估抗衰老作用",
+    "journal": "Nature Biotechnology",
+    "year": 2026,
+    "authors": "Zhavoronkov 等",
+    "article_url": "https://www.nature.com/articles/s41587-026-03286-y",
+    "supplements": [
+      {
+        "label": "Supplementary Tables S1–S15 (MOESM3, xlsx)",
+        "url": "https://static-content.springer.com/esm/art%3A10.1038%2Fs41587-026-03286-y/MediaObjects/41587_2026_3286_MOESM3_ESM.xlsx"
+      }
+    ],
+    "code_url": "https://github.com/kuo-lab-uchc/PAC",
+    "card_notes": [
+      "论文比较了六个蛋白质组时钟；本技能只算其中权重全部公开、一个人的原始 NPX 就能算的 PAC（Kuo 等，Aging Cell 2024，doi:10.1111/acel.14195）。",
+      "系数和 Gompertz 参数取自 kuo-lab-uchc/PAC 的 pac_proteomic_age.R（commit e15edb6），与论文所用 Insilico-org/proteoclock（commit d078b24，MIT）的 kuo_2024 权重逐项一致；论文补充表 2 把这个时钟标为 Kuo_2024(none)，即原始 NPX、不做缩放。",
+      "另外五个时钟不在个人报告里：ProtAge 的权重要与作者合作才能拿到，ipfP3GPT 的权重受英国生物银行限制，OrganAge 的两个版本要按一批样本做标准化，PAOPAC 只发布了编译好的 Windows 模块和另行下载的 model.bin、没有印出权重。"
+    ],
+    "summary_zh": "这项研究是一项特发性肺纤维化 2a 期随机试验（人）的事后探索分析，用六个蛋白质组衰老时钟比较 12 周用药前后血清蛋白组，发现各治疗组的预测生物年龄普遍比安慰剂组下降，但时钟本身分不清是衰老变慢还是纤维化减轻。个人报告只用你的 Olink NPX 中 PAC 时钟的 128 个蛋白和年龄算 PAC 蛋白质组年龄、它与实足年龄之差，以及给了基线样本时前后两次的差，不算另外五个时钟，也不评价任何药物。",
+    "summary_status": "draft"
+  },
+  "entry": {
+    "script": "scripts/personal_report.py",
+    "measurements_flag": "--measurements",
+    "measurements_header": [
+      "marker",
+      "value",
+      "unit"
+    ],
+    "age_flag": "--age",
+    "medications_flag": "--medications",
+    "labs_flag": "--labs",
+    "out_flag": "--out",
+    "result_json": true
+  },
+  "inputs_status": "verified",
+  "inputs": [
+    {
+      "key": "age",
+      "label_zh": "实足年龄",
+      "unit": "a",
+      "range": [
+        18,
+        110
+      ],
+      "required": true,
+      "from": "profile",
+      "flag": "--age",
+      "note_zh": "采这份血样那天的年龄。PAC 在 39–70 岁的英国人里拟合，范围外是外推。"
+    },
+    {
+      "key": "ada2_npx",
+      "label_zh": "ADA2",
+      "aliases": [
+        "ADA2"
+      ],
+      "unit": "1",
+      "range": [
+        -10,
+        20
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "pac_128",
+      "note_zh": "Olink Explore 3072 的 NPX（log2 相对丰度，不是浓度）。pg/mL、ng/mL 等浓度单位不能换算成 NPX。"
+    },
+    {
+      "key": "adamts13_npx",
+      "label_zh": "ADAMTS13",
+      "aliases": [
+        "ADAMTS13"
+      ],
+      "unit": "1",
+      "range": [
+        -10,
+        20
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "pac_128",
+      "note_zh": "Olink Explore 3072 的 NPX（log2 相对丰度，不是浓度）。pg/mL、ng/mL 等浓度单位不能换算成 NPX。"
+    },
+    {
+      "key": "adamts16_npx",
+      "label_zh": "ADAMTS16",
+      "aliases": [
+        "ADAMTS16"
+      ],
+      "unit": "1",
+      "range": [
+        -10,
+        20
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "pac_128",
+      "note_zh": "Olink Explore 3072 的 NPX（log2 相对丰度，不是浓度）。pg/mL、ng/mL 等浓度单位不能换算成 NPX。"
+    },
+    {
+      "key": "adgrg2_npx",
+      "label_zh": "ADGRG2",
+      "aliases": [
+        "ADGRG2"
+      ],
+      "unit": "1",
+      "range": [
+        -10,
+        20
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "pac_128",
+      "note_zh": "Olink Explore 3072 的 NPX（log2 相对丰度，不是浓度）。pg/mL、ng/mL 等浓度单位不能换算成 NPX。"
+    },
+    {
+      "key": "adm_npx",
+      "label_zh": "ADM",
+      "aliases": [
+        "ADM"
+      ],
+      "unit": "1",
+      "range": [
+        -10,
+        20
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "pac_128",
+      "note_zh": "Olink Explore 3072 的 NPX（log2 相对丰度，不是浓度）。pg/mL、ng/mL 等浓度单位不能换算成 NPX。"
+    },
+    {
+      "key": "ager_npx",
+      "label_zh": "AGER",
+      "aliases": [
+        "AGER"
+      ],
+      "unit": "1",
+      "range": [
+        -10,
+        20
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "pac_128",
+      "note_zh": "Olink Explore 3072 的 NPX（log2 相对丰度，不是浓度）。pg/mL、ng/mL 等浓度单位不能换算成 NPX。"
+    },
+    {
+      "key": "agr2_npx",
+      "label_zh": "AGR2",
+      "aliases": [
+        "AGR2"
+      ],
+      "unit": "1",
+      "range": [
+        -10,
+        20
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "pac_128",
+      "note_zh": "Olink Explore 3072 的 NPX（log2 相对丰度，不是浓度）。pg/mL、ng/mL 等浓度单位不能换算成 NPX。"
+    },
+    {
+      "key": "apoe_npx",
+      "label_zh": "APOE",
+      "aliases": [
+        "APOE"
+      ],
+      "unit": "1",
+      "range": [
+        -10,
+        20
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "pac_128",
+      "note_zh": "Olink Explore 3072 的 NPX（log2 相对丰度，不是浓度）。pg/mL、ng/mL 等浓度单位不能换算成 NPX。"
+    },
+    {
+      "key": "areg_npx",
+      "label_zh": "AREG",
+      "aliases": [
+        "AREG"
+      ],
+      "unit": "1",
+      "range": [
+        -10,
+        20
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "pac_128",
+      "note_zh": "Olink Explore 3072 的 NPX（log2 相对丰度，不是浓度）。pg/mL、ng/mL 等浓度单位不能换算成 NPX。"
+    },
+    {
+      "key": "art3_npx",
+      "label_zh": "ART3",
+      "aliases": [
+        "ART3"
+      ],
+      "unit": "1",
+      "range": [
+        -10,
+        20
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "pac_128",
+      "note_zh": "Olink Explore 3072 的 NPX（log2 相对丰度，不是浓度）。pg/mL、ng/mL 等浓度单位不能换算成 NPX。"
+    },
+    {
+      "key": "bag3_npx",
+      "label_zh": "BAG3",
+      "aliases": [
+        "BAG3"
+      ],
+      "unit": "1",
+      "range": [
+        -10,
+        20
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "pac_128",
+      "note_zh": "Olink Explore 3072 的 NPX（log2 相对丰度，不是浓度）。pg/mL、ng/mL 等浓度单位不能换算成 NPX。"
+    },
+    {
+      "key": "bcam_npx",
+      "label_zh": "BCAM",
+      "aliases": [
+        "BCAM"
+      ],
+      "unit": "1",
+      "range": [
+        -10,
+        20
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "pac_128",
+      "note_zh": "Olink Explore 3072 的 NPX（log2 相对丰度，不是浓度）。pg/mL、ng/mL 等浓度单位不能换算成 NPX。"
+    },
+    {
+      "key": "bcan_npx",
+      "label_zh": "BCAN",
+      "aliases": [
+        "BCAN"
+      ],
+      "unit": "1",
+      "range": [
+        -10,
+        20
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "pac_128",
+      "note_zh": "Olink Explore 3072 的 NPX（log2 相对丰度，不是浓度）。pg/mL、ng/mL 等浓度单位不能换算成 NPX。"
+    },
+    {
+      "key": "brk1_npx",
+      "label_zh": "BRK1",
+      "aliases": [
+        "BRK1"
+      ],
+      "unit": "1",
+      "range": [
+        -10,
+        20
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "pac_128",
+      "note_zh": "Olink Explore 3072 的 NPX（log2 相对丰度，不是浓度）。pg/mL、ng/mL 等浓度单位不能换算成 NPX。"
+    },
+    {
+      "key": "c7_npx",
+      "label_zh": "C7",
+      "aliases": [
+        "C7"
+      ],
+      "unit": "1",
+      "range": [
+        -10,
+        20
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "pac_128",
+      "note_zh": "Olink Explore 3072 的 NPX（log2 相对丰度，不是浓度）。pg/mL、ng/mL 等浓度单位不能换算成 NPX。"
+    },
+    {
+      "key": "ca14_npx",
+      "label_zh": "CA14",
+      "aliases": [
+        "CA14"
+      ],
+      "unit": "1",
+      "range": [
+        -10,
+        20
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "pac_128",
+      "note_zh": "Olink Explore 3072 的 NPX（log2 相对丰度，不是浓度）。pg/mL、ng/mL 等浓度单位不能换算成 NPX。"
+    },
+    {
+      "key": "ca4_npx",
+      "label_zh": "CA4",
+      "aliases": [
+        "CA4"
+      ],
+      "unit": "1",
+      "range": [
+        -10,
+        20
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "pac_128",
+      "note_zh": "Olink Explore 3072 的 NPX（log2 相对丰度，不是浓度）。pg/mL、ng/mL 等浓度单位不能换算成 NPX。"
+    },
+    {
+      "key": "calca_npx",
+      "label_zh": "CALCA",
+      "aliases": [
+        "CALCA"
+      ],
+      "unit": "1",
+      "range": [
+        -10,
+        20
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "pac_128",
+      "note_zh": "Olink Explore 3072 的 NPX（log2 相对丰度，不是浓度）。pg/mL、ng/mL 等浓度单位不能换算成 NPX。"
+    },
+    {
+      "key": "cblif_npx",
+      "label_zh": "CBLIF",
+      "aliases": [
+        "CBLIF"
+      ],
+      "unit": "1",
+      "range": [
+        -10,
+        20
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "pac_128",
+      "note_zh": "Olink Explore 3072 的 NPX（log2 相对丰度，不是浓度）。pg/mL、ng/mL 等浓度单位不能换算成 NPX。"
+    },
+    {
+      "key": "cd248_npx",
+      "label_zh": "CD248",
+      "aliases": [
+        "CD248"
+      ],
+      "unit": "1",
+      "range": [
+        -10,
+        20
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "pac_128",
+      "note_zh": "Olink Explore 3072 的 NPX（log2 相对丰度，不是浓度）。pg/mL、ng/mL 等浓度单位不能换算成 NPX。"
+    },
+    {
+      "key": "cd34_npx",
+      "label_zh": "CD34",
+      "aliases": [
+        "CD34"
+      ],
+      "unit": "1",
+      "range": [
+        -10,
+        20
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "pac_128",
+      "note_zh": "Olink Explore 3072 的 NPX（log2 相对丰度，不是浓度）。pg/mL、ng/mL 等浓度单位不能换算成 NPX。"
+    },
+    {
+      "key": "cdcp1_npx",
+      "label_zh": "CDCP1",
+      "aliases": [
+        "CDCP1"
+      ],
+      "unit": "1",
+      "range": [
+        -10,
+        20
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "pac_128",
+      "note_zh": "Olink Explore 3072 的 NPX（log2 相对丰度，不是浓度）。pg/mL、ng/mL 等浓度单位不能换算成 NPX。"
+    },
+    {
+      "key": "ceacam5_npx",
+      "label_zh": "CEACAM5",
+      "aliases": [
+        "CEACAM5"
+      ],
+      "unit": "1",
+      "range": [
+        -10,
+        20
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "pac_128",
+      "note_zh": "Olink Explore 3072 的 NPX（log2 相对丰度，不是浓度）。pg/mL、ng/mL 等浓度单位不能换算成 NPX。"
+    },
+    {
+      "key": "ceacam6_npx",
+      "label_zh": "CEACAM6",
+      "aliases": [
+        "CEACAM6"
+      ],
+      "unit": "1",
+      "range": [
+        -10,
+        20
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "pac_128",
+      "note_zh": "Olink Explore 3072 的 NPX（log2 相对丰度，不是浓度）。pg/mL、ng/mL 等浓度单位不能换算成 NPX。"
+    },
+    {
+      "key": "cela2a_npx",
+      "label_zh": "CELA2A",
+      "aliases": [
+        "CELA2A"
+      ],
+      "unit": "1",
+      "range": [
+        -10,
+        20
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "pac_128",
+      "note_zh": "Olink Explore 3072 的 NPX（log2 相对丰度，不是浓度）。pg/mL、ng/mL 等浓度单位不能换算成 NPX。"
+    },
+    {
+      "key": "chad_npx",
+      "label_zh": "CHAD",
+      "aliases": [
+        "CHAD"
+      ],
+      "unit": "1",
+      "range": [
+        -10,
+        20
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "pac_128",
+      "note_zh": "Olink Explore 3072 的 NPX（log2 相对丰度，不是浓度）。pg/mL、ng/mL 等浓度单位不能换算成 NPX。"
+    },
+    {
+      "key": "cndp1_npx",
+      "label_zh": "CNDP1",
+      "aliases": [
+        "CNDP1"
+      ],
+      "unit": "1",
+      "range": [
+        -10,
+        20
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "pac_128",
+      "note_zh": "Olink Explore 3072 的 NPX（log2 相对丰度，不是浓度）。pg/mL、ng/mL 等浓度单位不能换算成 NPX。"
+    },
+    {
+      "key": "col24a1_npx",
+      "label_zh": "COL24A1",
+      "aliases": [
+        "COL24A1"
+      ],
+      "unit": "1",
+      "range": [
+        -10,
+        20
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "pac_128",
+      "note_zh": "Olink Explore 3072 的 NPX（log2 相对丰度，不是浓度）。pg/mL、ng/mL 等浓度单位不能换算成 NPX。"
+    },
+    {
+      "key": "cpa2_npx",
+      "label_zh": "CPA2",
+      "aliases": [
+        "CPA2"
+      ],
+      "unit": "1",
+      "range": [
+        -10,
+        20
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "pac_128",
+      "note_zh": "Olink Explore 3072 的 NPX（log2 相对丰度，不是浓度）。pg/mL、ng/mL 等浓度单位不能换算成 NPX。"
+    },
+    {
+      "key": "crh_npx",
+      "label_zh": "CRH",
+      "aliases": [
+        "CRH"
+      ],
+      "unit": "1",
+      "range": [
+        -10,
+        20
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "pac_128",
+      "note_zh": "Olink Explore 3072 的 NPX（log2 相对丰度，不是浓度）。pg/mL、ng/mL 等浓度单位不能换算成 NPX。"
+    },
+    {
+      "key": "crisp3_npx",
+      "label_zh": "CRISP3",
+      "aliases": [
+        "CRISP3"
+      ],
+      "unit": "1",
+      "range": [
+        -10,
+        20
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "pac_128",
+      "note_zh": "Olink Explore 3072 的 NPX（log2 相对丰度，不是浓度）。pg/mL、ng/mL 等浓度单位不能换算成 NPX。"
+    },
+    {
+      "key": "crtac1_npx",
+      "label_zh": "CRTAC1",
+      "aliases": [
+        "CRTAC1"
+      ],
+      "unit": "1",
+      "range": [
+        -10,
+        20
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "pac_128",
+      "note_zh": "Olink Explore 3072 的 NPX（log2 相对丰度，不是浓度）。pg/mL、ng/mL 等浓度单位不能换算成 NPX。"
+    },
+    {
+      "key": "cthrc1_npx",
+      "label_zh": "CTHRC1",
+      "aliases": [
+        "CTHRC1"
+      ],
+      "unit": "1",
+      "range": [
+        -10,
+        20
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "pac_128",
+      "note_zh": "Olink Explore 3072 的 NPX（log2 相对丰度，不是浓度）。pg/mL、ng/mL 等浓度单位不能换算成 NPX。"
+    },
+    {
+      "key": "ctrc_npx",
+      "label_zh": "CTRC",
+      "aliases": [
+        "CTRC"
+      ],
+      "unit": "1",
+      "range": [
+        -10,
+        20
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "pac_128",
+      "note_zh": "Olink Explore 3072 的 NPX（log2 相对丰度，不是浓度）。pg/mL、ng/mL 等浓度单位不能换算成 NPX。"
+    },
+    {
+      "key": "dcxr_npx",
+      "label_zh": "DCXR",
+      "aliases": [
+        "DCXR"
+      ],
+      "unit": "1",
+      "range": [
+        -10,
+        20
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "pac_128",
+      "note_zh": "Olink Explore 3072 的 NPX（log2 相对丰度，不是浓度）。pg/mL、ng/mL 等浓度单位不能换算成 NPX。"
+    },
+    {
+      "key": "ddc_npx",
+      "label_zh": "DDC",
+      "aliases": [
+        "DDC"
+      ],
+      "unit": "1",
+      "range": [
+        -10,
+        20
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "pac_128",
+      "note_zh": "Olink Explore 3072 的 NPX（log2 相对丰度，不是浓度）。pg/mL、ng/mL 等浓度单位不能换算成 NPX。"
+    },
+    {
+      "key": "dkk4_npx",
+      "label_zh": "DKK4",
+      "aliases": [
+        "DKK4"
+      ],
+      "unit": "1",
+      "range": [
+        -10,
+        20
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "pac_128",
+      "note_zh": "Olink Explore 3072 的 NPX（log2 相对丰度，不是浓度）。pg/mL、ng/mL 等浓度单位不能换算成 NPX。"
+    },
+    {
+      "key": "dsg4_npx",
+      "label_zh": "DSG4",
+      "aliases": [
+        "DSG4"
+      ],
+      "unit": "1",
+      "range": [
+        -10,
+        20
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "pac_128",
+      "note_zh": "Olink Explore 3072 的 NPX（log2 相对丰度，不是浓度）。pg/mL、ng/mL 等浓度单位不能换算成 NPX。"
+    },
+    {
+      "key": "eda2r_npx",
+      "label_zh": "EDA2R",
+      "aliases": [
+        "EDA2R"
+      ],
+      "unit": "1",
+      "range": [
+        -10,
+        20
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "pac_128",
+      "note_zh": "Olink Explore 3072 的 NPX（log2 相对丰度，不是浓度）。pg/mL、ng/mL 等浓度单位不能换算成 NPX。"
+    },
+    {
+      "key": "egfr_npx",
+      "label_zh": "EGFR",
+      "aliases": [
+        "EGFR"
+      ],
+      "unit": "1",
+      "range": [
+        -10,
+        20
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "pac_128",
+      "note_zh": "Olink Explore 3072 的 NPX（log2 相对丰度，不是浓度）。pg/mL、ng/mL 等浓度单位不能换算成 NPX。"
+    },
+    {
+      "key": "epha4_npx",
+      "label_zh": "EPHA4",
+      "aliases": [
+        "EPHA4"
+      ],
+      "unit": "1",
+      "range": [
+        -10,
+        20
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "pac_128",
+      "note_zh": "Olink Explore 3072 的 NPX（log2 相对丰度，不是浓度）。pg/mL、ng/mL 等浓度单位不能换算成 NPX。"
+    },
+    {
+      "key": "fap_npx",
+      "label_zh": "FAP",
+      "aliases": [
+        "FAP"
+      ],
+      "unit": "1",
+      "range": [
+        -10,
+        20
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "pac_128",
+      "note_zh": "Olink Explore 3072 的 NPX（log2 相对丰度，不是浓度）。pg/mL、ng/mL 等浓度单位不能换算成 NPX。"
+    },
+    {
+      "key": "faslg_npx",
+      "label_zh": "FASLG",
+      "aliases": [
+        "FASLG"
+      ],
+      "unit": "1",
+      "range": [
+        -10,
+        20
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "pac_128",
+      "note_zh": "Olink Explore 3072 的 NPX（log2 相对丰度，不是浓度）。pg/mL、ng/mL 等浓度单位不能换算成 NPX。"
+    },
+    {
+      "key": "fcrl1_npx",
+      "label_zh": "FCRL1",
+      "aliases": [
+        "FCRL1"
+      ],
+      "unit": "1",
+      "range": [
+        -10,
+        20
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "pac_128",
+      "note_zh": "Olink Explore 3072 的 NPX（log2 相对丰度，不是浓度）。pg/mL、ng/mL 等浓度单位不能换算成 NPX。"
+    },
+    {
+      "key": "fgfbp1_npx",
+      "label_zh": "FGFBP1",
+      "aliases": [
+        "FGFBP1"
+      ],
+      "unit": "1",
+      "range": [
+        -10,
+        20
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "pac_128",
+      "note_zh": "Olink Explore 3072 的 NPX（log2 相对丰度，不是浓度）。pg/mL、ng/mL 等浓度单位不能换算成 NPX。"
+    },
+    {
+      "key": "fgfbp2_npx",
+      "label_zh": "FGFBP2",
+      "aliases": [
+        "FGFBP2"
+      ],
+      "unit": "1",
+      "range": [
+        -10,
+        20
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "pac_128",
+      "note_zh": "Olink Explore 3072 的 NPX（log2 相对丰度，不是浓度）。pg/mL、ng/mL 等浓度单位不能换算成 NPX。"
+    },
+    {
+      "key": "flt3_npx",
+      "label_zh": "FLT3",
+      "aliases": [
+        "FLT3"
+      ],
+      "unit": "1",
+      "range": [
+        -10,
+        20
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "pac_128",
+      "note_zh": "Olink Explore 3072 的 NPX（log2 相对丰度，不是浓度）。pg/mL、ng/mL 等浓度单位不能换算成 NPX。"
+    },
+    {
+      "key": "fut3_fut5_npx",
+      "label_zh": "FUT3-FUT5",
+      "aliases": [
+        "FUT3-FUT5",
+        "FUT3_FUT5",
+        "FUT3/FUT5"
+      ],
+      "unit": "1",
+      "range": [
+        -10,
+        20
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "pac_128",
+      "note_zh": "Olink Explore 3072 的 NPX（log2 相对丰度，不是浓度）。pg/mL、ng/mL 等浓度单位不能换算成 NPX。"
+    },
+    {
+      "key": "galnt5_npx",
+      "label_zh": "GALNT5",
+      "aliases": [
+        "GALNT5"
+      ],
+      "unit": "1",
+      "range": [
+        -10,
+        20
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "pac_128",
+      "note_zh": "Olink Explore 3072 的 NPX（log2 相对丰度，不是浓度）。pg/mL、ng/mL 等浓度单位不能换算成 NPX。"
+    },
+    {
+      "key": "galnt7_npx",
+      "label_zh": "GALNT7",
+      "aliases": [
+        "GALNT7"
+      ],
+      "unit": "1",
+      "range": [
+        -10,
+        20
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "pac_128",
+      "note_zh": "Olink Explore 3072 的 NPX（log2 相对丰度，不是浓度）。pg/mL、ng/mL 等浓度单位不能换算成 NPX。"
+    },
+    {
+      "key": "gdf15_npx",
+      "label_zh": "GDF15",
+      "aliases": [
+        "GDF15"
+      ],
+      "unit": "1",
+      "range": [
+        -10,
+        20
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "pac_128",
+      "note_zh": "Olink Explore 3072 的 NPX（log2 相对丰度，不是浓度）。pg/mL、ng/mL 等浓度单位不能换算成 NPX。"
+    },
+    {
+      "key": "gfap_npx",
+      "label_zh": "GFAP",
+      "aliases": [
+        "GFAP"
+      ],
+      "unit": "1",
+      "range": [
+        -10,
+        20
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "pac_128",
+      "note_zh": "Olink Explore 3072 的 NPX（log2 相对丰度，不是浓度）。pg/mL、ng/mL 等浓度单位不能换算成 NPX。"
+    },
+    {
+      "key": "gp2_npx",
+      "label_zh": "GP2",
+      "aliases": [
+        "GP2"
+      ],
+      "unit": "1",
+      "range": [
+        -10,
+        20
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "pac_128",
+      "note_zh": "Olink Explore 3072 的 NPX（log2 相对丰度，不是浓度）。pg/mL、ng/mL 等浓度单位不能换算成 NPX。"
+    },
+    {
+      "key": "gzma_npx",
+      "label_zh": "GZMA",
+      "aliases": [
+        "GZMA"
+      ],
+      "unit": "1",
+      "range": [
+        -10,
+        20
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "pac_128",
+      "note_zh": "Olink Explore 3072 的 NPX（log2 相对丰度，不是浓度）。pg/mL、ng/mL 等浓度单位不能换算成 NPX。"
+    },
+    {
+      "key": "havcr1_npx",
+      "label_zh": "HAVCR1",
+      "aliases": [
+        "HAVCR1"
+      ],
+      "unit": "1",
+      "range": [
+        -10,
+        20
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "pac_128",
+      "note_zh": "Olink Explore 3072 的 NPX（log2 相对丰度，不是浓度）。pg/mL、ng/mL 等浓度单位不能换算成 NPX。"
+    },
+    {
+      "key": "hgf_npx",
+      "label_zh": "HGF",
+      "aliases": [
+        "HGF"
+      ],
+      "unit": "1",
+      "range": [
+        -10,
+        20
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "pac_128",
+      "note_zh": "Olink Explore 3072 的 NPX（log2 相对丰度，不是浓度）。pg/mL、ng/mL 等浓度单位不能换算成 NPX。"
+    },
+    {
+      "key": "hpgds_npx",
+      "label_zh": "HPGDS",
+      "aliases": [
+        "HPGDS"
+      ],
+      "unit": "1",
+      "range": [
+        -10,
+        20
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "pac_128",
+      "note_zh": "Olink Explore 3072 的 NPX（log2 相对丰度，不是浓度）。pg/mL、ng/mL 等浓度单位不能换算成 NPX。"
+    },
+    {
+      "key": "icam3_npx",
+      "label_zh": "ICAM3",
+      "aliases": [
+        "ICAM3"
+      ],
+      "unit": "1",
+      "range": [
+        -10,
+        20
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "pac_128",
+      "note_zh": "Olink Explore 3072 的 NPX（log2 相对丰度，不是浓度）。pg/mL、ng/mL 等浓度单位不能换算成 NPX。"
+    },
+    {
+      "key": "icam5_npx",
+      "label_zh": "ICAM5",
+      "aliases": [
+        "ICAM5"
+      ],
+      "unit": "1",
+      "range": [
+        -10,
+        20
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "pac_128",
+      "note_zh": "Olink Explore 3072 的 NPX（log2 相对丰度，不是浓度）。pg/mL、ng/mL 等浓度单位不能换算成 NPX。"
+    },
+    {
+      "key": "igfbp3_npx",
+      "label_zh": "IGFBP3",
+      "aliases": [
+        "IGFBP3"
+      ],
+      "unit": "1",
+      "range": [
+        -10,
+        20
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "pac_128",
+      "note_zh": "Olink Explore 3072 的 NPX（log2 相对丰度，不是浓度）。pg/mL、ng/mL 等浓度单位不能换算成 NPX。"
+    },
+    {
+      "key": "igfbp7_npx",
+      "label_zh": "IGFBP7",
+      "aliases": [
+        "IGFBP7"
+      ],
+      "unit": "1",
+      "range": [
+        -10,
+        20
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "pac_128",
+      "note_zh": "Olink Explore 3072 的 NPX（log2 相对丰度，不是浓度）。pg/mL、ng/mL 等浓度单位不能换算成 NPX。"
+    },
+    {
+      "key": "il1rl1_npx",
+      "label_zh": "IL1RL1",
+      "aliases": [
+        "IL1RL1"
+      ],
+      "unit": "1",
+      "range": [
+        -10,
+        20
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "pac_128",
+      "note_zh": "Olink Explore 3072 的 NPX（log2 相对丰度，不是浓度）。pg/mL、ng/mL 等浓度单位不能换算成 NPX。"
+    },
+    {
+      "key": "il22_npx",
+      "label_zh": "IL22",
+      "aliases": [
+        "IL22"
+      ],
+      "unit": "1",
+      "range": [
+        -10,
+        20
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "pac_128",
+      "note_zh": "Olink Explore 3072 的 NPX（log2 相对丰度，不是浓度）。pg/mL、ng/mL 等浓度单位不能换算成 NPX。"
+    },
+    {
+      "key": "il6_npx",
+      "label_zh": "IL6",
+      "aliases": [
+        "IL6"
+      ],
+      "unit": "1",
+      "range": [
+        -10,
+        20
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "pac_128",
+      "note_zh": "Olink Explore 3072 的 NPX（log2 相对丰度，不是浓度）。pg/mL、ng/mL 等浓度单位不能换算成 NPX。Olink Explore 的几个面板各测一次 IL6（重叠检测），导出表里可能有几行 IL6；请只保留一行。论文和 PAC 代码都没有写用哪一个面板的 IL6。"
+    },
+    {
+      "key": "itga2_npx",
+      "label_zh": "ITGA2",
+      "aliases": [
+        "ITGA2"
+      ],
+      "unit": "1",
+      "range": [
+        -10,
+        20
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "pac_128",
+      "note_zh": "Olink Explore 3072 的 NPX（log2 相对丰度，不是浓度）。pg/mL、ng/mL 等浓度单位不能换算成 NPX。"
+    },
+    {
+      "key": "itgam_npx",
+      "label_zh": "ITGAM",
+      "aliases": [
+        "ITGAM"
+      ],
+      "unit": "1",
+      "range": [
+        -10,
+        20
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "pac_128",
+      "note_zh": "Olink Explore 3072 的 NPX（log2 相对丰度，不是浓度）。pg/mL、ng/mL 等浓度单位不能换算成 NPX。"
+    },
+    {
+      "key": "itgav_npx",
+      "label_zh": "ITGAV",
+      "aliases": [
+        "ITGAV"
+      ],
+      "unit": "1",
+      "range": [
+        -10,
+        20
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "pac_128",
+      "note_zh": "Olink Explore 3072 的 NPX（log2 相对丰度，不是浓度）。pg/mL、ng/mL 等浓度单位不能换算成 NPX。"
+    },
+    {
+      "key": "izumo1_npx",
+      "label_zh": "IZUMO1",
+      "aliases": [
+        "IZUMO1"
+      ],
+      "unit": "1",
+      "range": [
+        -10,
+        20
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "pac_128",
+      "note_zh": "Olink Explore 3072 的 NPX（log2 相对丰度，不是浓度）。pg/mL、ng/mL 等浓度单位不能换算成 NPX。"
+    },
+    {
+      "key": "kit_npx",
+      "label_zh": "KIT",
+      "aliases": [
+        "KIT"
+      ],
+      "unit": "1",
+      "range": [
+        -10,
+        20
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "pac_128",
+      "note_zh": "Olink Explore 3072 的 NPX（log2 相对丰度，不是浓度）。pg/mL、ng/mL 等浓度单位不能换算成 NPX。"
+    },
+    {
+      "key": "klk3_npx",
+      "label_zh": "KLK3",
+      "aliases": [
+        "KLK3"
+      ],
+      "unit": "1",
+      "range": [
+        -10,
+        20
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "pac_128",
+      "note_zh": "Olink Explore 3072 的 NPX（log2 相对丰度，不是浓度）。pg/mL、ng/mL 等浓度单位不能换算成 NPX。"
+    },
+    {
+      "key": "klk4_npx",
+      "label_zh": "KLK4",
+      "aliases": [
+        "KLK4"
+      ],
+      "unit": "1",
+      "range": [
+        -10,
+        20
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "pac_128",
+      "note_zh": "Olink Explore 3072 的 NPX（log2 相对丰度，不是浓度）。pg/mL、ng/mL 等浓度单位不能换算成 NPX。"
+    },
+    {
+      "key": "krt19_npx",
+      "label_zh": "KRT19",
+      "aliases": [
+        "KRT19"
+      ],
+      "unit": "1",
+      "range": [
+        -10,
+        20
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "pac_128",
+      "note_zh": "Olink Explore 3072 的 NPX（log2 相对丰度，不是浓度）。pg/mL、ng/mL 等浓度单位不能换算成 NPX。"
+    },
+    {
+      "key": "lcp1_npx",
+      "label_zh": "LCP1",
+      "aliases": [
+        "LCP1"
+      ],
+      "unit": "1",
+      "range": [
+        -10,
+        20
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "pac_128",
+      "note_zh": "Olink Explore 3072 的 NPX（log2 相对丰度，不是浓度）。pg/mL、ng/mL 等浓度单位不能换算成 NPX。"
+    },
+    {
+      "key": "lrrn1_npx",
+      "label_zh": "LRRN1",
+      "aliases": [
+        "LRRN1"
+      ],
+      "unit": "1",
+      "range": [
+        -10,
+        20
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "pac_128",
+      "note_zh": "Olink Explore 3072 的 NPX（log2 相对丰度，不是浓度）。pg/mL、ng/mL 等浓度单位不能换算成 NPX。"
+    },
+    {
+      "key": "lrtm2_npx",
+      "label_zh": "LRTM2",
+      "aliases": [
+        "LRTM2"
+      ],
+      "unit": "1",
+      "range": [
+        -10,
+        20
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "pac_128",
+      "note_zh": "Olink Explore 3072 的 NPX（log2 相对丰度，不是浓度）。pg/mL、ng/mL 等浓度单位不能换算成 NPX。"
+    },
+    {
+      "key": "ltbp2_npx",
+      "label_zh": "LTBP2",
+      "aliases": [
+        "LTBP2"
+      ],
+      "unit": "1",
+      "range": [
+        -10,
+        20
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "pac_128",
+      "note_zh": "Olink Explore 3072 的 NPX（log2 相对丰度，不是浓度）。pg/mL、ng/mL 等浓度单位不能换算成 NPX。"
+    },
+    {
+      "key": "lto1_npx",
+      "label_zh": "LTO1",
+      "aliases": [
+        "LTO1"
+      ],
+      "unit": "1",
+      "range": [
+        -10,
+        20
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "pac_128",
+      "note_zh": "Olink Explore 3072 的 NPX（log2 相对丰度，不是浓度）。pg/mL、ng/mL 等浓度单位不能换算成 NPX。"
+    },
+    {
+      "key": "mep1b_npx",
+      "label_zh": "MEP1B",
+      "aliases": [
+        "MEP1B"
+      ],
+      "unit": "1",
+      "range": [
+        -10,
+        20
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "pac_128",
+      "note_zh": "Olink Explore 3072 的 NPX（log2 相对丰度，不是浓度）。pg/mL、ng/mL 等浓度单位不能换算成 NPX。"
+    },
+    {
+      "key": "mepe_npx",
+      "label_zh": "MEPE",
+      "aliases": [
+        "MEPE"
+      ],
+      "unit": "1",
+      "range": [
+        -10,
+        20
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "pac_128",
+      "note_zh": "Olink Explore 3072 的 NPX（log2 相对丰度，不是浓度）。pg/mL、ng/mL 等浓度单位不能换算成 NPX。"
+    },
+    {
+      "key": "met_npx",
+      "label_zh": "MET",
+      "aliases": [
+        "MET"
+      ],
+      "unit": "1",
+      "range": [
+        -10,
+        20
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "pac_128",
+      "note_zh": "Olink Explore 3072 的 NPX（log2 相对丰度，不是浓度）。pg/mL、ng/mL 等浓度单位不能换算成 NPX。"
+    },
+    {
+      "key": "mmp10_npx",
+      "label_zh": "MMP10",
+      "aliases": [
+        "MMP10"
+      ],
+      "unit": "1",
+      "range": [
+        -10,
+        20
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "pac_128",
+      "note_zh": "Olink Explore 3072 的 NPX（log2 相对丰度，不是浓度）。pg/mL、ng/mL 等浓度单位不能换算成 NPX。"
+    },
+    {
+      "key": "mmp12_npx",
+      "label_zh": "MMP12",
+      "aliases": [
+        "MMP12"
+      ],
+      "unit": "1",
+      "range": [
+        -10,
+        20
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "pac_128",
+      "note_zh": "Olink Explore 3072 的 NPX（log2 相对丰度，不是浓度）。pg/mL、ng/mL 等浓度单位不能换算成 NPX。"
+    },
+    {
+      "key": "mmp9_npx",
+      "label_zh": "MMP9",
+      "aliases": [
+        "MMP9"
+      ],
+      "unit": "1",
+      "range": [
+        -10,
+        20
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "pac_128",
+      "note_zh": "Olink Explore 3072 的 NPX（log2 相对丰度，不是浓度）。pg/mL、ng/mL 等浓度单位不能换算成 NPX。"
+    },
+    {
+      "key": "ncan_npx",
+      "label_zh": "NCAN",
+      "aliases": [
+        "NCAN"
+      ],
+      "unit": "1",
+      "range": [
+        -10,
+        20
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "pac_128",
+      "note_zh": "Olink Explore 3072 的 NPX（log2 相对丰度，不是浓度）。pg/mL、ng/mL 等浓度单位不能换算成 NPX。"
+    },
+    {
+      "key": "nefl_npx",
+      "label_zh": "NEFL",
+      "aliases": [
+        "NEFL"
+      ],
+      "unit": "1",
+      "range": [
+        -10,
+        20
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "pac_128",
+      "note_zh": "Olink Explore 3072 的 NPX（log2 相对丰度，不是浓度）。pg/mL、ng/mL 等浓度单位不能换算成 NPX。"
+    },
+    {
+      "key": "nppb_npx",
+      "label_zh": "NPPB",
+      "aliases": [
+        "NPPB"
+      ],
+      "unit": "1",
+      "range": [
+        -10,
+        20
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "pac_128",
+      "note_zh": "Olink Explore 3072 的 NPX（log2 相对丰度，不是浓度）。pg/mL、ng/mL 等浓度单位不能换算成 NPX。"
+    },
+    {
+      "key": "ntf4_npx",
+      "label_zh": "NTF4",
+      "aliases": [
+        "NTF4"
+      ],
+      "unit": "1",
+      "range": [
+        -10,
+        20
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "pac_128",
+      "note_zh": "Olink Explore 3072 的 NPX（log2 相对丰度，不是浓度）。pg/mL、ng/mL 等浓度单位不能换算成 NPX。"
+    },
+    {
+      "key": "ntprobnp_npx",
+      "label_zh": "NTPROBNP",
+      "aliases": [
+        "NTPROBNP"
+      ],
+      "unit": "1",
+      "range": [
+        -10,
+        20
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "pac_128",
+      "note_zh": "Olink Explore 3072 的 NPX（log2 相对丰度，不是浓度）。pg/mL、ng/mL 等浓度单位不能换算成 NPX。"
+    },
+    {
+      "key": "ocln_npx",
+      "label_zh": "OCLN",
+      "aliases": [
+        "OCLN"
+      ],
+      "unit": "1",
+      "range": [
+        -10,
+        20
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "pac_128",
+      "note_zh": "Olink Explore 3072 的 NPX（log2 相对丰度，不是浓度）。pg/mL、ng/mL 等浓度单位不能换算成 NPX。"
+    },
+    {
+      "key": "odam_npx",
+      "label_zh": "ODAM",
+      "aliases": [
+        "ODAM"
+      ],
+      "unit": "1",
+      "range": [
+        -10,
+        20
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "pac_128",
+      "note_zh": "Olink Explore 3072 的 NPX（log2 相对丰度，不是浓度）。pg/mL、ng/mL 等浓度单位不能换算成 NPX。"
+    },
+    {
+      "key": "optc_npx",
+      "label_zh": "OPTC",
+      "aliases": [
+        "OPTC"
+      ],
+      "unit": "1",
+      "range": [
+        -10,
+        20
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "pac_128",
+      "note_zh": "Olink Explore 3072 的 NPX（log2 相对丰度，不是浓度）。pg/mL、ng/mL 等浓度单位不能换算成 NPX。"
+    },
+    {
+      "key": "pepd_npx",
+      "label_zh": "PEPD",
+      "aliases": [
+        "PEPD"
+      ],
+      "unit": "1",
+      "range": [
+        -10,
+        20
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "pac_128",
+      "note_zh": "Olink Explore 3072 的 NPX（log2 相对丰度，不是浓度）。pg/mL、ng/mL 等浓度单位不能换算成 NPX。"
+    },
+    {
+      "key": "prg3_npx",
+      "label_zh": "PRG3",
+      "aliases": [
+        "PRG3"
+      ],
+      "unit": "1",
+      "range": [
+        -10,
+        20
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "pac_128",
+      "note_zh": "Olink Explore 3072 的 NPX（log2 相对丰度，不是浓度）。pg/mL、ng/mL 等浓度单位不能换算成 NPX。"
+    },
+    {
+      "key": "prss8_npx",
+      "label_zh": "PRSS8",
+      "aliases": [
+        "PRSS8"
+      ],
+      "unit": "1",
+      "range": [
+        -10,
+        20
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "pac_128",
+      "note_zh": "Olink Explore 3072 的 NPX（log2 相对丰度，不是浓度）。pg/mL、ng/mL 等浓度单位不能换算成 NPX。"
+    },
+    {
+      "key": "ptgr1_npx",
+      "label_zh": "PTGR1",
+      "aliases": [
+        "PTGR1"
+      ],
+      "unit": "1",
+      "range": [
+        -10,
+        20
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "pac_128",
+      "note_zh": "Olink Explore 3072 的 NPX（log2 相对丰度，不是浓度）。pg/mL、ng/mL 等浓度单位不能换算成 NPX。"
+    },
+    {
+      "key": "ptn_npx",
+      "label_zh": "PTN",
+      "aliases": [
+        "PTN"
+      ],
+      "unit": "1",
+      "range": [
+        -10,
+        20
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "pac_128",
+      "note_zh": "Olink Explore 3072 的 NPX（log2 相对丰度，不是浓度）。pg/mL、ng/mL 等浓度单位不能换算成 NPX。"
+    },
+    {
+      "key": "rbfox3_npx",
+      "label_zh": "RBFOX3",
+      "aliases": [
+        "RBFOX3"
+      ],
+      "unit": "1",
+      "range": [
+        -10,
+        20
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "pac_128",
+      "note_zh": "Olink Explore 3072 的 NPX（log2 相对丰度，不是浓度）。pg/mL、ng/mL 等浓度单位不能换算成 NPX。"
+    },
+    {
+      "key": "reg3g_npx",
+      "label_zh": "REG3G",
+      "aliases": [
+        "REG3G"
+      ],
+      "unit": "1",
+      "range": [
+        -10,
+        20
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "pac_128",
+      "note_zh": "Olink Explore 3072 的 NPX（log2 相对丰度，不是浓度）。pg/mL、ng/mL 等浓度单位不能换算成 NPX。"
+    },
+    {
+      "key": "ren_npx",
+      "label_zh": "REN",
+      "aliases": [
+        "REN"
+      ],
+      "unit": "1",
+      "range": [
+        -10,
+        20
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "pac_128",
+      "note_zh": "Olink Explore 3072 的 NPX（log2 相对丰度，不是浓度）。pg/mL、ng/mL 等浓度单位不能换算成 NPX。"
+    },
+    {
+      "key": "scg2_npx",
+      "label_zh": "SCG2",
+      "aliases": [
+        "SCG2"
+      ],
+      "unit": "1",
+      "range": [
+        -10,
+        20
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "pac_128",
+      "note_zh": "Olink Explore 3072 的 NPX（log2 相对丰度，不是浓度）。pg/mL、ng/mL 等浓度单位不能换算成 NPX。"
+    },
+    {
+      "key": "scg3_npx",
+      "label_zh": "SCG3",
+      "aliases": [
+        "SCG3"
+      ],
+      "unit": "1",
+      "range": [
+        -10,
+        20
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "pac_128",
+      "note_zh": "Olink Explore 3072 的 NPX（log2 相对丰度，不是浓度）。pg/mL、ng/mL 等浓度单位不能换算成 NPX。"
+    },
+    {
+      "key": "scgb1a1_npx",
+      "label_zh": "SCGB1A1",
+      "aliases": [
+        "SCGB1A1"
+      ],
+      "unit": "1",
+      "range": [
+        -10,
+        20
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "pac_128",
+      "note_zh": "Olink Explore 3072 的 NPX（log2 相对丰度，不是浓度）。pg/mL、ng/mL 等浓度单位不能换算成 NPX。"
+    },
+    {
+      "key": "scgb3a1_npx",
+      "label_zh": "SCGB3A1",
+      "aliases": [
+        "SCGB3A1"
+      ],
+      "unit": "1",
+      "range": [
+        -10,
+        20
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "pac_128",
+      "note_zh": "Olink Explore 3072 的 NPX（log2 相对丰度，不是浓度）。pg/mL、ng/mL 等浓度单位不能换算成 NPX。"
+    },
+    {
+      "key": "sdc4_npx",
+      "label_zh": "SDC4",
+      "aliases": [
+        "SDC4"
+      ],
+      "unit": "1",
+      "range": [
+        -10,
+        20
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "pac_128",
+      "note_zh": "Olink Explore 3072 的 NPX（log2 相对丰度，不是浓度）。pg/mL、ng/mL 等浓度单位不能换算成 NPX。"
+    },
+    {
+      "key": "selenop_npx",
+      "label_zh": "SELENOP",
+      "aliases": [
+        "SELENOP"
+      ],
+      "unit": "1",
+      "range": [
+        -10,
+        20
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "pac_128",
+      "note_zh": "Olink Explore 3072 的 NPX（log2 相对丰度，不是浓度）。pg/mL、ng/mL 等浓度单位不能换算成 NPX。"
+    },
+    {
+      "key": "sell_npx",
+      "label_zh": "SELL",
+      "aliases": [
+        "SELL"
+      ],
+      "unit": "1",
+      "range": [
+        -10,
+        20
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "pac_128",
+      "note_zh": "Olink Explore 3072 的 NPX（log2 相对丰度，不是浓度）。pg/mL、ng/mL 等浓度单位不能换算成 NPX。"
+    },
+    {
+      "key": "sez6l_npx",
+      "label_zh": "SEZ6L",
+      "aliases": [
+        "SEZ6L"
+      ],
+      "unit": "1",
+      "range": [
+        -10,
+        20
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "pac_128",
+      "note_zh": "Olink Explore 3072 的 NPX（log2 相对丰度，不是浓度）。pg/mL、ng/mL 等浓度单位不能换算成 NPX。"
+    },
+    {
+      "key": "sfrp1_npx",
+      "label_zh": "SFRP1",
+      "aliases": [
+        "SFRP1"
+      ],
+      "unit": "1",
+      "range": [
+        -10,
+        20
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "pac_128",
+      "note_zh": "Olink Explore 3072 的 NPX（log2 相对丰度，不是浓度）。pg/mL、ng/mL 等浓度单位不能换算成 NPX。"
+    },
+    {
+      "key": "sftpd_npx",
+      "label_zh": "SFTPD",
+      "aliases": [
+        "SFTPD"
+      ],
+      "unit": "1",
+      "range": [
+        -10,
+        20
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "pac_128",
+      "note_zh": "Olink Explore 3072 的 NPX（log2 相对丰度，不是浓度）。pg/mL、ng/mL 等浓度单位不能换算成 NPX。"
+    },
+    {
+      "key": "skap1_npx",
+      "label_zh": "SKAP1",
+      "aliases": [
+        "SKAP1"
+      ],
+      "unit": "1",
+      "range": [
+        -10,
+        20
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "pac_128",
+      "note_zh": "Olink Explore 3072 的 NPX（log2 相对丰度，不是浓度）。pg/mL、ng/mL 等浓度单位不能换算成 NPX。"
+    },
+    {
+      "key": "slitrk1_npx",
+      "label_zh": "SLITRK1",
+      "aliases": [
+        "SLITRK1"
+      ],
+      "unit": "1",
+      "range": [
+        -10,
+        20
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "pac_128",
+      "note_zh": "Olink Explore 3072 的 NPX（log2 相对丰度，不是浓度）。pg/mL、ng/mL 等浓度单位不能换算成 NPX。"
+    },
+    {
+      "key": "slitrk2_npx",
+      "label_zh": "SLITRK2",
+      "aliases": [
+        "SLITRK2"
+      ],
+      "unit": "1",
+      "range": [
+        -10,
+        20
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "pac_128",
+      "note_zh": "Olink Explore 3072 的 NPX（log2 相对丰度，不是浓度）。pg/mL、ng/mL 等浓度单位不能换算成 NPX。"
+    },
+    {
+      "key": "sost_npx",
+      "label_zh": "SOST",
+      "aliases": [
+        "SOST"
+      ],
+      "unit": "1",
+      "range": [
+        -10,
+        20
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "pac_128",
+      "note_zh": "Olink Explore 3072 的 NPX（log2 相对丰度，不是浓度）。pg/mL、ng/mL 等浓度单位不能换算成 NPX。"
+    },
+    {
+      "key": "spock1_npx",
+      "label_zh": "SPOCK1",
+      "aliases": [
+        "SPOCK1"
+      ],
+      "unit": "1",
+      "range": [
+        -10,
+        20
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "pac_128",
+      "note_zh": "Olink Explore 3072 的 NPX（log2 相对丰度，不是浓度）。pg/mL、ng/mL 等浓度单位不能换算成 NPX。"
+    },
+    {
+      "key": "spon1_npx",
+      "label_zh": "SPON1",
+      "aliases": [
+        "SPON1"
+      ],
+      "unit": "1",
+      "range": [
+        -10,
+        20
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "pac_128",
+      "note_zh": "Olink Explore 3072 的 NPX（log2 相对丰度，不是浓度）。pg/mL、ng/mL 等浓度单位不能换算成 NPX。"
+    },
+    {
+      "key": "spp1_npx",
+      "label_zh": "SPP1",
+      "aliases": [
+        "SPP1"
+      ],
+      "unit": "1",
+      "range": [
+        -10,
+        20
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "pac_128",
+      "note_zh": "Olink Explore 3072 的 NPX（log2 相对丰度，不是浓度）。pg/mL、ng/mL 等浓度单位不能换算成 NPX。"
+    },
+    {
+      "key": "tff3_npx",
+      "label_zh": "TFF3",
+      "aliases": [
+        "TFF3"
+      ],
+      "unit": "1",
+      "range": [
+        -10,
+        20
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "pac_128",
+      "note_zh": "Olink Explore 3072 的 NPX（log2 相对丰度，不是浓度）。pg/mL、ng/mL 等浓度单位不能换算成 NPX。"
+    },
+    {
+      "key": "tnc_npx",
+      "label_zh": "TNC",
+      "aliases": [
+        "TNC"
+      ],
+      "unit": "1",
+      "range": [
+        -10,
+        20
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "pac_128",
+      "note_zh": "Olink Explore 3072 的 NPX（log2 相对丰度，不是浓度）。pg/mL、ng/mL 等浓度单位不能换算成 NPX。"
+    },
+    {
+      "key": "tnfrsf10b_npx",
+      "label_zh": "TNFRSF10B",
+      "aliases": [
+        "TNFRSF10B"
+      ],
+      "unit": "1",
+      "range": [
+        -10,
+        20
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "pac_128",
+      "note_zh": "Olink Explore 3072 的 NPX（log2 相对丰度，不是浓度）。pg/mL、ng/mL 等浓度单位不能换算成 NPX。"
+    },
+    {
+      "key": "tnfrsf6b_npx",
+      "label_zh": "TNFRSF6B",
+      "aliases": [
+        "TNFRSF6B"
+      ],
+      "unit": "1",
+      "range": [
+        -10,
+        20
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "pac_128",
+      "note_zh": "Olink Explore 3072 的 NPX（log2 相对丰度，不是浓度）。pg/mL、ng/mL 等浓度单位不能换算成 NPX。"
+    },
+    {
+      "key": "tnn_npx",
+      "label_zh": "TNN",
+      "aliases": [
+        "TNN"
+      ],
+      "unit": "1",
+      "range": [
+        -10,
+        20
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "pac_128",
+      "note_zh": "Olink Explore 3072 的 NPX（log2 相对丰度，不是浓度）。pg/mL、ng/mL 等浓度单位不能换算成 NPX。"
+    },
+    {
+      "key": "tnr_npx",
+      "label_zh": "TNR",
+      "aliases": [
+        "TNR"
+      ],
+      "unit": "1",
+      "range": [
+        -10,
+        20
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "pac_128",
+      "note_zh": "Olink Explore 3072 的 NPX（log2 相对丰度，不是浓度）。pg/mL、ng/mL 等浓度单位不能换算成 NPX。"
+    },
+    {
+      "key": "tpk1_npx",
+      "label_zh": "TPK1",
+      "aliases": [
+        "TPK1"
+      ],
+      "unit": "1",
+      "range": [
+        -10,
+        20
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "pac_128",
+      "note_zh": "Olink Explore 3072 的 NPX（log2 相对丰度，不是浓度）。pg/mL、ng/mL 等浓度单位不能换算成 NPX。"
+    },
+    {
+      "key": "ttr_npx",
+      "label_zh": "TTR",
+      "aliases": [
+        "TTR"
+      ],
+      "unit": "1",
+      "range": [
+        -10,
+        20
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "pac_128",
+      "note_zh": "Olink Explore 3072 的 NPX（log2 相对丰度，不是浓度）。pg/mL、ng/mL 等浓度单位不能换算成 NPX。"
+    },
+    {
+      "key": "txndc15_npx",
+      "label_zh": "TXNDC15",
+      "aliases": [
+        "TXNDC15"
+      ],
+      "unit": "1",
+      "range": [
+        -10,
+        20
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "pac_128",
+      "note_zh": "Olink Explore 3072 的 NPX（log2 相对丰度，不是浓度）。pg/mL、ng/mL 等浓度单位不能换算成 NPX。"
+    },
+    {
+      "key": "vgf_npx",
+      "label_zh": "VGF",
+      "aliases": [
+        "VGF"
+      ],
+      "unit": "1",
+      "range": [
+        -10,
+        20
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "pac_128",
+      "note_zh": "Olink Explore 3072 的 NPX（log2 相对丰度，不是浓度）。pg/mL、ng/mL 等浓度单位不能换算成 NPX。"
+    },
+    {
+      "key": "wfdc2_npx",
+      "label_zh": "WFDC2",
+      "aliases": [
+        "WFDC2"
+      ],
+      "unit": "1",
+      "range": [
+        -10,
+        20
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "pac_128",
+      "note_zh": "Olink Explore 3072 的 NPX（log2 相对丰度，不是浓度）。pg/mL、ng/mL 等浓度单位不能换算成 NPX。"
+    },
+    {
+      "key": "xg_npx",
+      "label_zh": "XG",
+      "aliases": [
+        "XG"
+      ],
+      "unit": "1",
+      "range": [
+        -10,
+        20
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "pac_128",
+      "note_zh": "Olink Explore 3072 的 NPX（log2 相对丰度，不是浓度）。pg/mL、ng/mL 等浓度单位不能换算成 NPX。"
+    },
+    {
+      "key": "baseline_age",
+      "label_zh": "基线采血时的年龄",
+      "unit": "a",
+      "range": [
+        18,
+        110
+      ],
+      "required": false,
+      "from": "argument",
+      "flag": "--baseline-age",
+      "note_zh": "只在同时给了 --baseline 基线 NPX 文件时使用。"
+    }
+  ],
+  "outputs": [
+    {
+      "key": "pac_age",
+      "label_zh": "PAC 蛋白质组年龄",
+      "unit": "a"
+    },
+    {
+      "key": "pac_age_gap",
+      "label_zh": "PAC 蛋白质组年龄减实足年龄",
+      "unit": "a",
+      "note_zh": "不同批次的 NPX 有系统偏移，这个差会随之偏移。"
+    },
+    {
+      "key": "pac_mortality_10y_pct",
+      "label_zh": "10 年全因死亡风险（PAC 模型估计）",
+      "unit": "%",
+      "note_zh": "英国生物银行人群模型的估计，不是这个人的风险。"
+    },
+    {
+      "key": "baseline_pac_age",
+      "label_zh": "基线样本的 PAC 蛋白质组年龄",
+      "unit": "a"
+    },
+    {
+      "key": "pac_age_change",
+      "label_zh": "PAC 蛋白质组年龄变化（本次减基线）",
+      "unit": "a",
+      "note_zh": "论文里的 ΔBioAge；两份样本最好在同一批次测。"
+    }
+  ],
+  "related_not_same": [
+    "proteomic-aging-clock",
+    "organ-specific-proteomic-aging"
+  ],
+  "validation": {
+    "status": "reproduced_secondary",
+    "comparisons": [
+      {
+        "kind": "implementation",
+        "source": "kuo-lab-uchc/PAC (commit e15edb66800f876a928cec9c8856500048c46fea), R 函数 pac_proteomic_age",
+        "locator": "pac_proteomic_age.R::pac_proteomic_age，在 Rscript 中对 tests/fixtures/synthetic_npx.csv 的 7 个合成样本运行",
+        "values": [
+          52.803729,
+          42.734027,
+          37.191619,
+          60.479266,
+          47.886142,
+          62.90474,
+          52.721563
+        ],
+        "tolerance": "1e-5 岁以内；7 个合成样本（不是真人），系数与 R 代码逐位相同",
+        "test": "tests/test_validation.py::test_matches_original_pac_r_code"
+      },
+      {
+        "kind": "implementation",
+        "source": "Insilico-org/proteoclock (commit d078b246c9a834bb1eaa54a79381b6c6c14245f7, v1.0.0, MIT) GompertzClock + kuo_2024 权重，即论文自己用的库",
+        "locator": "proteoclock/clocks/simple_clocks/clocks.py::GompertzClock.predict_age(scaling=None)，同 7 个合成样本",
+        "values": [
+          52.821877,
+          42.752174,
+          37.209766,
+          60.497413,
+          47.904291,
+          62.922887,
+          52.739711
+        ],
+        "tolerance": "0.03 岁以内：proteoclock 的权重文件把 Gompertz rate 印成 2.32E-04（R 代码是 0.000231560557596016），log(2.32/2.3156)/0.1087932 ≈ 0.018 岁，7 个样本都恰好高 0.018 岁",
+        "test": "tests/test_validation.py::test_matches_proteoclock_kuo_2024"
+      }
+    ],
+    "gap_zh": "论文没有印出可复现的个人示例：补充表 2 有 42 名受试者各时间点的 PAC 预测（Kuo_2024(none) 列），但对应的 Olink NPX 存在 OMIX008341，访问受控（页面写 Controlled-access），本次拿不到输入；正文、补充表 S1–S15 和同行评审文件里也没有给定输入的 PAC 算例。所以不是复现论文的例子，而是和原始 R 代码与论文所用 proteoclock 库两个独立实现逐例核对。"
+  }
+}
