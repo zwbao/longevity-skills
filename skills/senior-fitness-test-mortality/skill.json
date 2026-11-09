@@ -1,0 +1,399 @@
+{
+  "schema": "longevity-skill/1",
+  "name": "senior-fitness-test-mortality",
+  "kind": "paper",
+  "tier": "A",
+  "species": [
+    "human"
+  ],
+  "evidence": "cohort",
+  "domains": [
+    "衰弱与死亡风险",
+    "跌倒与肌肉"
+  ],
+  "blurb_zh": "把老人体能测试（踏步、坐站、弯举、抓背、坐姿体前弯、单脚站、起身绕行）的成绩按台湾老人队列的男女五分位分档，给出该档相对最差一档的全因死亡风险比。",
+  "intents": [
+    "frailty_mortality"
+  ],
+  "triage": {
+    "reason_zh": "七项老年体适能成绩按补充表 eTable 3 的男女五分位切点分档，查回正文图 3 和补充图 4–6 印出的全因死亡调整风险比。",
+    "reviewed": false
+  },
+  "paper": {
+    "doi": "10.1001/jamanetworkopen.2026.28227",
+    "title": "Physical Fitness and All-Cause Mortality in Older Adults",
+    "title_zh": "老年人体适能与全因死亡",
+    "journal": "JAMA Network Open",
+    "year": 2026,
+    "authors": "Wu 等",
+    "article_url": "https://doi.org/10.1001/jamanetworkopen.2026.28227",
+    "supplements": [
+      {
+        "label": "Supplement 1（eMethods 4 测试规范、eTable 3 男女五分位范围、eFigure 4–6 风险比）",
+        "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC13458872/"
+      }
+    ],
+    "card_notes": [
+      "数据来自台湾国民体能检测数据库 2015 年 1 月–2016 年 11 月测试的 13423 名 65–90 岁社区老人（女 8394、男 5029），连到健保死亡登记随访到 2022 年底，中位 7.0 年，1631 人（12.2%）死亡。排除失智、脑卒中、截肢和持重大伤病卡者。",
+      "七项测试按 Senior Fitness Test 规范：2 分钟原地抬膝踏步、30 秒手臂弯举（女 2.27 kg、男 3.63 kg）、30 秒椅子坐立、抓背、椅子坐姿体前弯、睁眼单脚站立（上限 30 秒）、8 英尺（2.44 米）起身绕行。每项按性别分五分位，Q1 最差作参照，8 英尺起身绕行越快档越高。",
+      "风险比来自多变量 Cox 模型，每项测试单独进模型，调整年龄、规律运动、体重指数、社会经济和地区、十种慢病和 Charlson 共病指数（合并模型另调整性别）；没有吸烟数据。男女合并模型的数在正文图 3 和补充 eFigure 4，男女分层的在 eFigure 5、6。",
+      "综合体适能指数（七项同性别百分位之和）需要全队列的百分位分布，论文只印了五分位范围，所以不算。"
+    ],
+    "summary_zh": "这项台湾老人队列研究发现，65 岁以上社区老人一次体能测试的成绩越好，随后约 7 年的全因死亡风险越低，平衡敏捷、下肢力量和心肺耐力的差别最明显。个人报告只把你的各项成绩放进论文的男女五分位，并给出该档相对最差一档的死亡风险比，不算个人死亡概率，也不算论文的综合体适能指数。",
+    "summary_status": "draft"
+  },
+  "entry": {
+    "script": "scripts/personal_report.py",
+    "measurements_flag": "--measurements",
+    "measurements_header": [
+      "item",
+      "value",
+      "unit"
+    ],
+    "age_flag": "--age",
+    "sex_flag": "--sex",
+    "out_flag": "--out",
+    "result_json": true,
+    "targets_flag": "--targets",
+    "levers_json": true
+  },
+  "population": {
+    "age_years": [
+      65,
+      90
+    ],
+    "note_zh": "台湾 65–90 岁能完成体能测试的社区老人，排除失智、脑卒中、截肢和重大伤病卡持有者；作者提到这让人群偏健康。"
+  },
+  "inputs_status": "verified",
+  "inputs": [
+    {
+      "key": "step_2min_count",
+      "label_zh": "2 分钟原地抬膝踏步",
+      "aliases": [
+        "2-minute step test",
+        "2-min step",
+        "2 minute step",
+        "step test",
+        "2分钟原地踏步",
+        "2分钟踏步",
+        "两分钟原地踏步",
+        "原地抬膝踏步",
+        "原地站立抬膝",
+        "2分钟原地站立抬膝",
+        "2分钟抬膝踏步"
+      ],
+      "unit": "1",
+      "range": [
+        0,
+        250
+      ],
+      "required": false,
+      "from": "measurements",
+      "group": "fitness",
+      "note_zh": "双膝都抬到髂前上棘与髌骨中点连线中点高度才算一次，记 2 分钟内的次数（eMethods 4.1）。单位列留空或写“次”。"
+    },
+    {
+      "key": "arm_curl_30s_count",
+      "label_zh": "30 秒手臂弯举",
+      "aliases": [
+        "30-second arm curl",
+        "30-s arm curl",
+        "arm curl",
+        "手臂弯举",
+        "肱二头肌手臂屈举",
+        "肱二头肌屈举",
+        "30秒屈臂",
+        "30秒哑铃弯举",
+        "屈臂举"
+      ],
+      "unit": "1",
+      "range": [
+        0,
+        60
+      ],
+      "required": false,
+      "from": "measurements",
+      "group": "fitness",
+      "note_zh": "坐姿，优势手持哑铃，女性 2.27 kg（5 磅）、男性 3.63 kg（8 磅），记 30 秒内完整屈肘次数（eMethods 4.2）。单位列留空或写“次”。"
+    },
+    {
+      "key": "chair_stand_30s_count",
+      "label_zh": "30 秒椅子坐立",
+      "aliases": [
+        "30-second chair stand",
+        "30-s chair stand",
+        "chair stand",
+        "椅子坐立",
+        "30秒坐站",
+        "30秒坐立",
+        "坐站测试",
+        "30秒起坐",
+        "坐立测试"
+      ],
+      "unit": "1",
+      "range": [
+        0,
+        60
+      ],
+      "required": false,
+      "from": "measurements",
+      "group": "fitness",
+      "note_zh": "约 43 cm 高无扶手椅，双臂胸前交叉，记 30 秒内完整站起坐下次数（eMethods 4.3）。单位列留空或写“次”。"
+    },
+    {
+      "key": "back_scratch_cm",
+      "label_zh": "抓背",
+      "aliases": [
+        "back scratch",
+        "back scratch test",
+        "抓背测验",
+        "抓背测试",
+        "背后抓手",
+        "背后双手相扣",
+        "双手背后相扣"
+      ],
+      "unit": "cm",
+      "accept": {
+        "mm": 0.1,
+        "in": 2.54
+      },
+      "range": [
+        -60,
+        40
+      ],
+      "unit_required": true,
+      "required": false,
+      "from": "measurements",
+      "group": "fitness",
+      "note_zh": "一手过肩向下、一手从下往上，量两中指指尖距离；重叠记正、差距记负，取两次较好值（eMethods 4.4）。请写单位 cm 或 in。"
+    },
+    {
+      "key": "chair_sit_reach_cm",
+      "label_zh": "椅子坐姿体前弯",
+      "aliases": [
+        "chair sit-and-reach",
+        "chair sit and reach",
+        "sit-and-reach",
+        "椅子坐姿体前弯",
+        "椅子坐位体前屈",
+        "坐椅体前屈",
+        "椅子坐姿前伸",
+        "坐姿体前弯"
+      ],
+      "unit": "cm",
+      "accept": {
+        "mm": 0.1,
+        "in": 2.54
+      },
+      "range": [
+        -40,
+        40
+      ],
+      "unit_required": true,
+      "required": false,
+      "from": "measurements",
+      "group": "fitness",
+      "note_zh": "坐椅前缘，一腿伸直脚跟着地勾脚，指尖超过脚尖记正、不到记负，取较好腿两次中的较好值（eMethods 4.5）。不是地面上的坐位体前屈。请写单位 cm 或 in。"
+    },
+    {
+      "key": "one_leg_stance_s",
+      "label_zh": "睁眼单脚站立",
+      "aliases": [
+        "one-leg stance",
+        "1-leg stance",
+        "one leg stance",
+        "single-leg stance",
+        "unipedal stance",
+        "单脚站立",
+        "单腿站立",
+        "睁眼单脚站立",
+        "开眼单足立",
+        "睁眼单足站立",
+        "单足站立"
+      ],
+      "unit": "s",
+      "accept": {
+        "ms": 0.001,
+        "min": 60
+      },
+      "range": [
+        0,
+        120
+      ],
+      "required": false,
+      "from": "measurements",
+      "group": "fitness",
+      "note_zh": "双手叉腰、睁眼、优势脚站立，两次各到 30 秒停，取较长（eMethods 4.6）。超过 30 秒按 30 秒归档。"
+    },
+    {
+      "key": "up_and_go_8ft_s",
+      "label_zh": "8 英尺起身绕行",
+      "aliases": [
+        "8-foot up-and-go",
+        "8-ft up-and-go",
+        "8 foot up and go",
+        "up-and-go",
+        "8英尺起身绕行",
+        "8英尺坐起绕物",
+        "椅子坐立绕物",
+        "坐起绕物走",
+        "起身绕行",
+        "2.44米起身绕行"
+      ],
+      "unit": "s",
+      "accept": {
+        "ms": 0.001
+      },
+      "range": [
+        2,
+        60
+      ],
+      "required": false,
+      "from": "measurements",
+      "group": "fitness",
+      "note_zh": "从约 43 cm 椅子起身，走到 8 英尺（2.44 米）外的锥桶绕回坐下，取两次较快（eMethods 4.7）。不是 3 米起立-行走计时（TUG）。"
+    },
+    {
+      "key": "sex",
+      "label_zh": "性别",
+      "required": true,
+      "from": "profile",
+      "flag": "--sex",
+      "note_zh": "论文的五分位和风险比男女分开。"
+    },
+    {
+      "key": "age",
+      "label_zh": "实足年龄",
+      "unit": "a",
+      "range": [
+        18,
+        120
+      ],
+      "required": false,
+      "from": "profile",
+      "flag": "--age",
+      "note_zh": "论文人群 65–90 岁；年龄在外时报告会说明。"
+    }
+  ],
+  "outputs": [
+    {
+      "key": "step_2min_quintile",
+      "label_zh": "2 分钟原地抬膝踏步的同性别五分位（1 最差，5 最好）",
+      "unit": "1"
+    },
+    {
+      "key": "step_2min_ahr_sex",
+      "label_zh": "2 分钟原地抬膝踏步该五分位的全因死亡风险比（同性别分层模型，参照 Q1）",
+      "unit": "1"
+    },
+    {
+      "key": "step_2min_ahr",
+      "label_zh": "2 分钟原地抬膝踏步该五分位的全因死亡风险比（男女合并模型，参照 Q1）",
+      "unit": "1"
+    },
+    {
+      "key": "arm_curl_quintile",
+      "label_zh": "30 秒手臂弯举的同性别五分位（1 最差，5 最好）",
+      "unit": "1"
+    },
+    {
+      "key": "arm_curl_ahr_sex",
+      "label_zh": "30 秒手臂弯举该五分位的全因死亡风险比（同性别分层模型，参照 Q1）",
+      "unit": "1"
+    },
+    {
+      "key": "arm_curl_ahr",
+      "label_zh": "30 秒手臂弯举该五分位的全因死亡风险比（男女合并模型，参照 Q1）",
+      "unit": "1"
+    },
+    {
+      "key": "chair_stand_quintile",
+      "label_zh": "30 秒椅子坐立的同性别五分位（1 最差，5 最好）",
+      "unit": "1"
+    },
+    {
+      "key": "chair_stand_ahr_sex",
+      "label_zh": "30 秒椅子坐立该五分位的全因死亡风险比（同性别分层模型，参照 Q1）",
+      "unit": "1"
+    },
+    {
+      "key": "chair_stand_ahr",
+      "label_zh": "30 秒椅子坐立该五分位的全因死亡风险比（男女合并模型，参照 Q1）",
+      "unit": "1"
+    },
+    {
+      "key": "back_scratch_quintile",
+      "label_zh": "抓背的同性别五分位（1 最差，5 最好）",
+      "unit": "1"
+    },
+    {
+      "key": "back_scratch_ahr_sex",
+      "label_zh": "抓背该五分位的全因死亡风险比（同性别分层模型，参照 Q1）",
+      "unit": "1"
+    },
+    {
+      "key": "back_scratch_ahr",
+      "label_zh": "抓背该五分位的全因死亡风险比（男女合并模型，参照 Q1）",
+      "unit": "1"
+    },
+    {
+      "key": "sit_reach_quintile",
+      "label_zh": "椅子坐姿体前弯的同性别五分位（1 最差，5 最好）",
+      "unit": "1"
+    },
+    {
+      "key": "sit_reach_ahr_sex",
+      "label_zh": "椅子坐姿体前弯该五分位的全因死亡风险比（同性别分层模型，参照 Q1）",
+      "unit": "1"
+    },
+    {
+      "key": "sit_reach_ahr",
+      "label_zh": "椅子坐姿体前弯该五分位的全因死亡风险比（男女合并模型，参照 Q1）",
+      "unit": "1"
+    },
+    {
+      "key": "one_leg_quintile",
+      "label_zh": "睁眼单脚站立的同性别五分位（1 最差，5 最好）",
+      "unit": "1"
+    },
+    {
+      "key": "one_leg_ahr_sex",
+      "label_zh": "睁眼单脚站立该五分位的全因死亡风险比（同性别分层模型，参照 Q1）",
+      "unit": "1"
+    },
+    {
+      "key": "one_leg_ahr",
+      "label_zh": "睁眼单脚站立该五分位的全因死亡风险比（男女合并模型，参照 Q1）",
+      "unit": "1"
+    },
+    {
+      "key": "up_and_go_quintile",
+      "label_zh": "8 英尺起身绕行的同性别五分位（1 最差，5 最好）",
+      "unit": "1"
+    },
+    {
+      "key": "up_and_go_ahr_sex",
+      "label_zh": "8 英尺起身绕行该五分位的全因死亡风险比（同性别分层模型，参照 Q1）",
+      "unit": "1"
+    },
+    {
+      "key": "up_and_go_ahr",
+      "label_zh": "8 英尺起身绕行该五分位的全因死亡风险比（男女合并模型，参照 Q1）",
+      "unit": "1"
+    },
+    {
+      "key": "tests_done",
+      "label_zh": "交了成绩的测试项数",
+      "unit": "1"
+    },
+    {
+      "key": "tests_in_q1",
+      "label_zh": "落在同性别最低五分位（Q1）的项数",
+      "unit": "1"
+    }
+  ],
+  "validation": {
+    "status": "draft",
+    "gap_zh": "论文没有印出任何个人成绩对应结果的算例。测试核对：七项男女五分位范围与 Supplement 1 eTable 3 一致，风险比与正文图 3、eFigure 4–6 一致，并用 eFigure 5、6 印出的各组死亡人数除以 eTable 3 的各组人数，重算出印出的死亡百分比（70 格差都不超过 0.06 个百分点，其中 3 格是论文两次四舍五入），确认男女两列没有读反。这些是查表和队列一致性核对，不是个人算例的复现，所以保持草稿。"
+  }
+}
