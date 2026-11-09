@@ -1,0 +1,176 @@
+{
+  "schema": "longevity-skill/1",
+  "name": "osta-grip-possible-osteosarcopenia",
+  "kind": "paper",
+  "tier": "A",
+  "species": [
+    "human"
+  ],
+  "evidence": "cohort",
+  "domains": [
+    "骨骼肌",
+    "衰弱与死亡风险"
+  ],
+  "blurb_zh": "用体重、年龄和握力，按 OSTA 骨质疏松自评指数和亚洲肌少症握力切点，判断是否属于“可能骨肌减少症”。",
+  "intents": [
+    "frailty_mortality"
+  ],
+  "triage": {
+    "reason_zh": "正文印有 OSTA 公式与切点（≤−1）及握力 <18/<28 kg 切点，可用体重、年龄、握力判定可能骨肌减少症；论文没印个人算例，验证保持草稿。",
+    "reviewed": false
+  },
+  "paper": {
+    "doi": "10.1093/gerona/glag211",
+    "title": "Possible osteosarcopenia is associated with loss in intrinsic capacity and early cognitive deficits: a longitudinal study of older adults in Singapore",
+    "title_zh": "可能骨肌减少症与新加坡老年人内在能力下降和早期认知缺损相关：一项纵向研究",
+    "journal": "The Journals of Gerontology, Series A: Biological Sciences and Medical Sciences",
+    "year": 2026,
+    "authors": "Koh 等",
+    "article_url": "https://doi.org/10.1093/gerona/glag211",
+    "supplements": [
+      {
+        "label": "Supplementary data（glag211_supplementary_data.docx，补充表 1–19、补充图 1–2）",
+        "url": "https://academic.oup.com/biomedgerontology/article/81/11/glag211/8771243#supplementary-data"
+      }
+    ],
+    "card_notes": [
+      "数据来自新加坡 TARGET 全国前瞻性队列：2291 名 60 岁及以上社区老人，平均 74.6 岁，基线入户评估，之后每 3 个月电话随访；6 个月时用简版 MoCA（0–15 分）评估认知。",
+      "可能骨质疏松：OSTA 指数 = 0.2 ×（体重 kg − 年龄），≤ −1（中、高风险）。可能肌少症：亚洲肌少症工作组 2019 握力切点，男 < 28 kg、女 < 18 kg，取优势手两次平均。两项都符合为可能骨肌减少症（队列中 50.3%）。",
+      "在做过 DXA 的参与者里（补充表 3 写 515 人，正文写 895 人做了 DXA），对照 DXA 骨密度、肌肉量和握力的定义：灵敏度 92.3%，特异度 71.4%，阳性预测值 48.6%。",
+      "关联来自多层混合效应模型，调整了社会人口学、健康和心理社会变量；6 个月简版 MoCA 缺失 45%，用多重插补。单独的骨质疏松或肌少症与内在能力、认知都没有显著关联。作者声明无利益冲突。"
+    ],
+    "summary_zh": "这项新加坡社区老年人队列研究发现，同时符合可能骨质疏松和可能肌少症的“可能骨肌减少症”很常见，与基线内在能力（尤其认知能力）较低有关，并且在基线认知已下降的人里与 6 个月后更差的认知（延迟回忆和定向力）有关。个人报告只用你的体重、年龄、性别和握力，按论文印出的 OSTA 公式和握力切点判断你是否属于可能骨质疏松、可能肌少症和可能骨肌减少症，不诊断疾病，也不预测你个人的认知变化。",
+    "summary_status": "draft"
+  },
+  "entry": {
+    "script": "scripts/personal_report.py",
+    "measurements_flag": "--measurements",
+    "measurements_header": [
+      "item",
+      "value",
+      "unit"
+    ],
+    "age_flag": "--age",
+    "sex_flag": "--sex",
+    "out_flag": "--out",
+    "result_json": true
+  },
+  "population": {
+    "age_years": [
+      60,
+      110
+    ],
+    "note_zh": "论文人群是新加坡 60 岁及以上社区老人（华人、马来人、印度人为主），平均 74.6 岁。OSTA 原本为亚洲绝经后女性设计，论文男女同用一个切点。"
+  },
+  "inputs_status": "verified",
+  "inputs": [
+    {
+      "key": "weight_kg",
+      "label_zh": "体重",
+      "aliases": [
+        "weight",
+        "body weight",
+        "body_weight",
+        "体重(kg)",
+        "体重（kg）",
+        "Wt",
+        "BW"
+      ],
+      "loinc": [
+        "29463-7"
+      ],
+      "unit": "kg",
+      "accept": {
+        "lb": 0.45359237,
+        "g": 0.001
+      },
+      "range": [
+        25,
+        250
+      ],
+      "unit_required": true,
+      "required": true,
+      "from": "measurements",
+      "note_zh": "请写单位：磅（lb）数值也常落在 25–250 之间。用“斤”记的体重请先除以 2 换成 kg。"
+    },
+    {
+      "key": "grip_strength_kg",
+      "label_zh": "握力",
+      "aliases": [
+        "grip",
+        "grip strength",
+        "handgrip",
+        "handgrip strength",
+        "hand grip strength",
+        "HGS",
+        "握力(kg)",
+        "优势手握力",
+        "手握力"
+      ],
+      "unit": "kg",
+      "accept": {
+        "lb": 0.45359237
+      },
+      "range": [
+        1,
+        100
+      ],
+      "unit_required": true,
+      "required": true,
+      "from": "measurements",
+      "note_zh": "论文做法：用握力计每只手量两次，取优势手两次的平均。请写单位：有的握力计显示磅（lb）。"
+    },
+    {
+      "key": "age",
+      "label_zh": "实足年龄",
+      "unit": "a",
+      "range": [
+        18,
+        120
+      ],
+      "required": true,
+      "from": "profile",
+      "flag": "--age",
+      "note_zh": "进入 OSTA 公式。不到 60 岁会提示不在论文人群内。"
+    },
+    {
+      "key": "sex",
+      "label_zh": "性别",
+      "required": true,
+      "from": "profile",
+      "flag": "--sex",
+      "note_zh": "握力切点男女不同：男 < 28 kg、女 < 18 kg。"
+    }
+  ],
+  "outputs": [
+    {
+      "key": "osta_index",
+      "label_zh": "OSTA 指数（0.2 ×（体重 − 年龄））",
+      "unit": "1"
+    },
+    {
+      "key": "osta_risk_category",
+      "label_zh": "OSTA 风险分档",
+      "unit": ""
+    },
+    {
+      "key": "possible_osteoporosis",
+      "label_zh": "可能骨质疏松（OSTA ≤ −1）",
+      "unit": ""
+    },
+    {
+      "key": "possible_sarcopenia",
+      "label_zh": "可能肌少症（握力男 < 28 kg、女 < 18 kg）",
+      "unit": ""
+    },
+    {
+      "key": "possible_osteosarcopenia",
+      "label_zh": "可能骨肌减少症（两项都符合）",
+      "unit": ""
+    }
+  ],
+  "validation": {
+    "status": "draft",
+    "gap_zh": "公式和切点都印在正文方法部分（OSTA = 0.2 ×（体重 − 年龄），≤ −1；握力男 < 28 kg、女 < 18 kg），测试只核对公式和切点边界。正文（表 1–4、图 1）和补充材料 docx（补充表 1–19、补充图 1–2）都查过，没有印出任何个人的体重、年龄、握力对应的 OSTA 值或分类，也没有分组的体重、握力或 OSTA 均值可供核对，所以不算复现。"
+  }
+}
