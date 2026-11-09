@@ -1,0 +1,332 @@
+{
+  "schema": "longevity-skill/1",
+  "name": "phenoage-acceleration-cvd-hazard",
+  "kind": "paper",
+  "tier": "A",
+  "species": [
+    "human"
+  ],
+  "evidence": "cohort",
+  "domains": [
+    "临床年龄与可穿戴"
+  ],
+  "blurb_zh": "九项常规血检算表型年龄，并按英国生物银行队列换算成心血管病风险比。",
+  "intents": [
+    "biological_age",
+    "lab_meaning"
+  ],
+  "triage": {
+    "reason_zh": "补充方法印出表型年龄全部系数，正文印出表型年龄加速每 1 岁对应的心血管发病和死亡风险比，个人可用九项常规血检算表型年龄并换算目标值对应的风险比。",
+    "reviewed": false
+  },
+  "paper": {
+    "doi": "10.1007/s11357-026-02543-x",
+    "title": "Accelerated aging as a key mechanism linking diet quality to cardiovascular disease: a prospective mediation analysis in the UK Biobank",
+    "title_zh": "加速衰老连接饮食质量与心血管病：英国生物银行前瞻性中介分析",
+    "journal": "GeroScience",
+    "year": 2026,
+    "authors": "Yu 等",
+    "article_url": "https://link.springer.com/article/10.1007/s11357-026-02543-x",
+    "supplements": [
+      {
+        "label": "补充材料 ESM1（补充方法、表 S1–S9）",
+        "url": "https://static-content.springer.com/esm/art%3A10.1007%2Fs11357-026-02543-x/MediaObjects/11357_2026_2543_MOESM1_ESM.pdf"
+      }
+    ],
+    "code_url": "https://github.com/dayoonkwon/BioAge",
+    "card_notes": [
+      "表型年龄公式和单位见补充材料“Assessment method of biological aging”和表 S1；作者用 R 的 BioAge 包计算，本技能用该包 phenoage_calc.R（orig=TRUE）里未四舍五入的系数。",
+      "补充材料把对数项的系数印成 −0.0053，BioAge 代码是 −0.0055305；这只让所有人的表型年龄整体平移约 0.47 岁，不影响两次表型年龄之差和由此换算的风险比。碱性磷酸酶权重印成 0.00188，代码是 0.001868778，影响不到 0.04 岁。",
+      "论文的表型年龄加速是英国生物银行队列里表型年龄对实足年龄回归的残差，回归截距和斜率没有印出，所以个人报告给的是“表型年龄减实足年龄”，不是论文的残差。",
+      "KDM 生物年龄（BioAgeAccel）要用 NHANES 拟合的参数，论文没有印出，没有计算；四个饮食评分需要完整的 24 小时膳食记录，也没有计算。"
+    ],
+    "summary_zh": "这项研究在英国生物银行的成年人里发现，饮食质量越高，表型年龄加速越低、心血管病发病和死亡风险越低，其中一部分关联可以由加速衰老来解释。个人报告只用你的九项常规血检和实足年龄算表型年龄及它和实足年龄的差，给了目标值时再按论文的风险比换算目标值对应的心血管病风险比，不算饮食评分、KDM 生物年龄或你的绝对风险。",
+    "summary_status": "draft"
+  },
+  "entry": {
+    "script": "scripts/personal_report.py",
+    "measurements_flag": "--biomarkers",
+    "measurements_header": [
+      "marker",
+      "value",
+      "unit"
+    ],
+    "age_flag": "--age",
+    "out_flag": "--out",
+    "result_json": true,
+    "targets_flag": "--targets",
+    "levers_json": true
+  },
+  "inputs_status": "verified",
+  "inputs": [
+    {
+      "key": "albumin_gL",
+      "label_zh": "白蛋白",
+      "aliases": [
+        "albumin_gl",
+        "albumin",
+        "ALB",
+        "血清白蛋白",
+        "白蛋白(ALB)"
+      ],
+      "loinc": [
+        "1751-7"
+      ],
+      "unit": "g/L",
+      "accept": {
+        "g/dL": 10
+      },
+      "range": [
+        15,
+        65
+      ],
+      "required": true,
+      "from": "measurements"
+    },
+    {
+      "key": "creat_umol",
+      "label_zh": "肌酐",
+      "aliases": [
+        "creatinine_umol",
+        "creatinine",
+        "CREA",
+        "Cr",
+        "Scr",
+        "血肌酐",
+        "肌酐(CREA)"
+      ],
+      "loinc": [
+        "14682-9",
+        "2160-0"
+      ],
+      "unit": "umol/L",
+      "accept": {
+        "mg/dL": 88.4
+      },
+      "molar_mass": 113.12,
+      "range": [
+        15,
+        2000
+      ],
+      "required": true,
+      "from": "measurements"
+    },
+    {
+      "key": "glucose_mmol",
+      "label_zh": "血糖",
+      "aliases": [
+        "glucose",
+        "GLU",
+        "FPG",
+        "葡萄糖",
+        "空腹血糖",
+        "空腹葡萄糖",
+        "fasting glucose",
+        "空腹血葡萄糖",
+        "FBG"
+      ],
+      "loinc": [
+        "14771-0",
+        "1558-6",
+        "2345-7",
+        "14749-6"
+      ],
+      "unit": "mmol/L",
+      "accept": {
+        "mg/dL": 0.0555
+      },
+      "molar_mass": 180.16,
+      "range": [
+        1.5,
+        40
+      ],
+      "required": true,
+      "from": "measurements"
+    },
+    {
+      "key": "crp_mg_dl",
+      "label_zh": "C反应蛋白",
+      "aliases": [
+        "crp",
+        "hs-crp",
+        "hscrp",
+        "c-反应蛋白",
+        "超敏c反应蛋白",
+        "超敏crp",
+        "c-reactive protein"
+      ],
+      "loinc": [
+        "30522-7",
+        "1988-5"
+      ],
+      "unit": "mg/dL",
+      "accept": {
+        "mg/L": 0.1
+      },
+      "range": [
+        0.001,
+        50
+      ],
+      "unit_required": true,
+      "required": true,
+      "from": "measurements",
+      "note_zh": "国内化验单上的 CRP 和超敏 CRP 多用 mg/L，数值除以 10 才是 mg/dL。"
+    },
+    {
+      "key": "lymph_pct",
+      "label_zh": "淋巴细胞百分比",
+      "aliases": [
+        "lymph%",
+        "lymphocyte %",
+        "LYM%",
+        "LY%",
+        "淋巴细胞%",
+        "淋巴细胞比率"
+      ],
+      "loinc": [
+        "736-9",
+        "26478-8"
+      ],
+      "unit": "%",
+      "range": [
+        5,
+        80
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "这里要淋巴细胞百分比（%），不是淋巴细胞绝对计数（×10⁹/L）。"
+    },
+    {
+      "key": "mcv_fl",
+      "label_zh": "平均红细胞体积",
+      "aliases": [
+        "mcv",
+        "MCV(平均红细胞体积)",
+        "30428-7"
+      ],
+      "loinc": [
+        "787-2",
+        "30428-7"
+      ],
+      "unit": "fL",
+      "range": [
+        50,
+        150
+      ],
+      "required": true,
+      "from": "measurements"
+    },
+    {
+      "key": "rdw_pct",
+      "label_zh": "红细胞分布宽度",
+      "aliases": [
+        "rdw",
+        "RDW-CV",
+        "红细胞分布宽度-CV",
+        "红细胞体积分布宽度",
+        "红细胞体积分布宽度-CV",
+        "红细胞分布宽度-变异系数",
+        "30385-9"
+      ],
+      "loinc": [
+        "788-0",
+        "30385-9"
+      ],
+      "unit": "%",
+      "range": [
+        8,
+        32
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "化验单上常同时有 RDW-CV（%）和 RDW-SD（fL），这里要 RDW-CV。"
+    },
+    {
+      "key": "alp_u_l",
+      "label_zh": "碱性磷酸酶",
+      "aliases": [
+        "alp",
+        "AKP",
+        "alkaline phosphatase"
+      ],
+      "loinc": [
+        "6768-6"
+      ],
+      "unit": "U/L",
+      "accept": {
+        "ukat/L": 60
+      },
+      "range": [
+        10,
+        2000
+      ],
+      "required": true,
+      "from": "measurements"
+    },
+    {
+      "key": "wbc_10e3",
+      "label_zh": "白细胞",
+      "aliases": [
+        "wbc",
+        "白细胞计数",
+        "白细胞数",
+        "leukocytes"
+      ],
+      "loinc": [
+        "6690-2",
+        "26464-8"
+      ],
+      "unit": "10^3/uL",
+      "accept": {
+        "10^9/L": 1
+      },
+      "range": [
+        0.5,
+        100
+      ],
+      "required": true,
+      "from": "measurements"
+    },
+    {
+      "key": "age",
+      "label_zh": "实足年龄",
+      "unit": "a",
+      "range": [
+        18,
+        110
+      ],
+      "required": true,
+      "from": "profile",
+      "flag": "--age"
+    }
+  ],
+  "outputs": [
+    {
+      "key": "phenoage",
+      "label_zh": "表型年龄",
+      "unit": "a"
+    },
+    {
+      "key": "phenoage_advance",
+      "label_zh": "表型年龄减实足年龄",
+      "unit": "a"
+    },
+    {
+      "key": "target_phenoage_delta",
+      "label_zh": "达到全部目标时表型年龄的变化",
+      "unit": "a"
+    },
+    {
+      "key": "target_hr_incident_cvd",
+      "label_zh": "达到全部目标时心血管病发病风险比（模型换算）"
+    },
+    {
+      "key": "target_hr_cvd_death",
+      "label_zh": "达到全部目标时心血管病死亡风险比（模型换算）"
+    }
+  ],
+  "validation": {
+    "status": "draft",
+    "gap_zh": "论文正文、补充材料 PDF（ESM1，48 页，含补充方法、表 S1–S9、图 S1–S9）都没有印出任何个人输入对应的表型年龄或风险比示例；表 1 只有队列均值（实足年龄 55.83 岁、表型年龄 49.69 岁），需要个体数据才能复现。论文未公开代码，数据须向英国生物银行申请。测试只核对了两件事：BioAge 代码系数四舍五入后等于补充方法印出的系数（对数项印 −0.0053、代码 −0.0055305，碱性磷酸酶印 0.00188、代码 0.001868778，两处不一致已记录并计算影响），以及用正文印出的路径 1 系数和路径 2 风险比相乘能得到表 S2 印出的间接效应，说明风险比是按表型年龄加速每 1 岁、在对数风险尺度上使用的。"
+  }
+}
