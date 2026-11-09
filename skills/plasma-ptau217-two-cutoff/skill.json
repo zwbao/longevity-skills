@@ -1,0 +1,244 @@
+{
+  "schema": "longevity-skill/1",
+  "name": "plasma-ptau217-two-cutoff",
+  "kind": "paper",
+  "tier": "A",
+  "species": [
+    "human"
+  ],
+  "evidence": "cross_sectional",
+  "domains": [
+    "脑、认知与痴呆"
+  ],
+  "blurb_zh": "阿尔茨海默病血液检测（血浆 pTau217，Simoa ALZpath）按论文的双切点分成阴性、灰区、阳性；有血浆 Aβ42 时再算 pTau217/Aβ42 比值。",
+  "intents": [
+    "cognition_dementia",
+    "lab_meaning"
+  ],
+  "triage": {
+    "reason_zh": "正文和表2印出Simoa血浆pTau217单切点0.63与双切点0.50/0.79 pg/mL及pTau217/Aβ42切点，补充表2-3印出混合模型参数可复现这些切点，能对个人分阳性/灰区/阴性。",
+    "reviewed": false
+  },
+  "paper": {
+    "doi": "10.1038/s41467-026-76434-2",
+    "title": "Diagnostic performance of plasma pTau217 in genetically admixed South American populations",
+    "title_zh": "血浆 pTau217 在南美混血人群中的诊断表现",
+    "journal": "Nature Communications",
+    "year": 2026,
+    "authors": "Martino-Adami 等",
+    "article_url": "https://www.nature.com/articles/s41467-026-76434-2",
+    "supplements": [
+      {
+        "label": "Supplementary Information（补充表 2、3：混合模型均值、方差、比例）",
+        "url": "https://static-content.springer.com/esm/art%3A10.1038%2Fs41467-026-76434-2/MediaObjects/41467_2026_76434_MOESM1_ESM.pdf"
+      },
+      {
+        "label": "正文表 2（巴西队列各切点及阳性/阴性预测值）",
+        "url": "https://www.nature.com/articles/s41467-026-76434-2/tables/2"
+      }
+    ],
+    "card_notes": [
+      "切点照正文表 2 和结果部分印出的数：pTau217 单切点 ≥0.63 pg/mL；巴西队列 ≥0.85 双切点 ≤0.50 / ≥0.79 pg/mL；pTau217/Aβ42 单切点 ≥0.12，双切点 ≤0.08 / ≥0.17。",
+      "补充表 2、3 印出的两成分等方差混合模型参数（自然对数尺度）重算出全部印出切点，误差不超过最后一位的一个单位。",
+      "只适用于 Simoa HD-X 平台 ALZpath V2 pTau217 和 Neurology 4-plex E Aβ42；其他检测方法的数值尺度不同。",
+      "论文声明作者无利益冲突；论文没有专用代码，数据需向伦理委员会申请。"
+    ],
+    "summary_zh": "这项研究在巴西和阿根廷记忆门诊及社区的老年人里检验血浆 pTau217 及其与 Aβ42 的比值，发现它们能较准确地识别脑脊液确认的淀粉样蛋白病理，用两个切点留出“灰区”时判断更可靠。个人报告只把一次 Simoa ALZpath 血浆 pTau217（和可选的 Aβ42）结果对照论文印出的切点，分成阴性、灰区或阳性，不做诊断，也不算患病概率。",
+    "summary_status": "draft"
+  },
+  "entry": {
+    "script": "scripts/personal_report.py",
+    "measurements_flag": "--measurements",
+    "measurements_header": [
+      "item",
+      "value",
+      "unit"
+    ],
+    "out_flag": "--out",
+    "result_json": true
+  },
+  "inputs_status": "verified",
+  "inputs": [
+    {
+      "key": "ptau217_pg_ml",
+      "label_zh": "血浆pTau217",
+      "aliases": [
+        "pTau217",
+        "p-tau217",
+        "p-Tau217",
+        "ptau-217",
+        "plasma pTau217",
+        "plasma p-tau217",
+        "phosphorylated tau 217",
+        "phospho-tau217",
+        "pTau217 (ALZpath)",
+        "磷酸化tau217",
+        "磷酸化Tau217",
+        "磷酸化 tau 217",
+        "血浆p-tau217",
+        "p-tau217蛋白"
+      ],
+      "unit": "pg/mL",
+      "accept": {
+        "ng/L": 1
+      },
+      "range": [
+        0.01,
+        20
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "EDTA 血浆，Simoa（Quanterix）平台 ALZpath pTau217 试剂。论文巴西队列范围大致 0.1–3 pg/mL；其他方法（Lumipulse、Elecsys、质谱）的数不能用。"
+    },
+    {
+      "key": "abeta42_pg_ml",
+      "label_zh": "血浆Aβ42",
+      "aliases": [
+        "Abeta42",
+        "Aβ42",
+        "Ab42",
+        "A-beta 42",
+        "amyloid beta 42",
+        "amyloid-beta 1-42",
+        "plasma Aβ42",
+        "β淀粉样蛋白42",
+        "β-淀粉样蛋白1-42",
+        "淀粉样蛋白β42",
+        "血浆Aβ1-42"
+      ],
+      "unit": "pg/mL",
+      "accept": {
+        "ng/L": 1
+      },
+      "range": [
+        0.5,
+        100
+      ],
+      "required": false,
+      "from": "measurements",
+      "note_zh": "可选。Simoa Neurology 4-plex E 试剂测的血浆 Aβ42；有它才算 pTau217/Aβ42 比值。脑脊液 Aβ42 的数值大得多，不能用。"
+    },
+    {
+      "key": "assay",
+      "label_zh": "pTau217 检测方法",
+      "required": true,
+      "from": "argument",
+      "flag": "--assay",
+      "note_zh": "必须写 simoa-alzpath（Simoa 平台 ALZpath 试剂）。论文切点只适用于这种方法。"
+    },
+    {
+      "key": "cohort",
+      "label_zh": "切点来自哪个队列",
+      "required": false,
+      "from": "argument",
+      "flag": "--cohort",
+      "note_zh": "brazil（默认，有脑脊液验证）或 argentina。"
+    },
+    {
+      "key": "probability",
+      "label_zh": "灰区的后验概率阈值",
+      "required": false,
+      "from": "argument",
+      "flag": "--probability",
+      "note_zh": "0.80、0.85（默认，论文表现最好）或 0.90。"
+    }
+  ],
+  "outputs": [
+    {
+      "key": "ptau217_two_cutoff_category",
+      "label_zh": "pTau217 双切点分档",
+      "unit": "",
+      "note_zh": "negative、indeterminate 或 positive；默认巴西队列 ≥0.85：≤0.50 阴性，≥0.79 阳性。"
+    },
+    {
+      "key": "ptau217_single_cutoff_status",
+      "label_zh": "pTau217 单切点（≥0.63 pg/mL）",
+      "unit": ""
+    },
+    {
+      "key": "ptau217_abnormal_class_probability",
+      "label_zh": "按论文混合模型属于异常分布的后验概率",
+      "unit": "",
+      "note_zh": "不是患病概率。"
+    },
+    {
+      "key": "ptau217_abeta42_ratio",
+      "label_zh": "pTau217/Aβ42 比值",
+      "unit": ""
+    },
+    {
+      "key": "ratio_two_cutoff_category",
+      "label_zh": "比值双切点分档",
+      "unit": ""
+    },
+    {
+      "key": "ratio_single_cutoff_status",
+      "label_zh": "比值单切点（≥0.12）",
+      "unit": ""
+    },
+    {
+      "key": "ashton_two_cutoff_category",
+      "label_zh": "对照：Ashton 等（2024）双切点分档（<0.40 / >0.63 pg/mL）",
+      "unit": ""
+    },
+    {
+      "key": "cutoff_set",
+      "label_zh": "用的切点组",
+      "unit": ""
+    }
+  ],
+  "validation": {
+    "status": "reproduced",
+    "examples": [
+      {
+        "locator": "Results, 'Data driven plasma pTau217 and pTau217/Aβ42 cut-offs in Cog-Aging-Study–Brazil'; parameters from Supplementary Table 2 (pTau217, 2 components, Equal)",
+        "quote": "These models yielded a cut-off of 0.63 pg/mL and an OVL coefficient of 0.13 for pTau217 ... For pTau217, a probability threshold of ≥0.80 (lower cut-off, 0.52 pg/mL; upper cut-off, 0.76 pg/mL) ... Increasing the threshold to ≥0.85 (lower cut-off, 0.50 pg/mL; upper cut-off, 0.79 pg/mL) ... At ≥0.90 (lower cut-off, 0.47 pg/mL; upper cut-off, 0.84 pg/mL)",
+        "values": [
+          0.63,
+          0.52,
+          0.76,
+          0.5,
+          0.79,
+          0.47,
+          0.84
+        ],
+        "tolerance": "绝对差 ≤0.01 pg/mL（最后一位的一个单位）：切点和补充表 2 的混合模型参数（均值 −1.18、0.09，方差 0.17，比例 0.64、0.36）都只印到两位小数；实测最大差 0.006。",
+        "test": "tests/test_manifest.py::test_paper_example_brazil_ptau217"
+      },
+      {
+        "locator": "Results, 'Data-driven plasma pTau217 and pTau217/Aβ42 cut-offs in GeNED.ar–Argentina'; parameters from Supplementary Table 3 (pTau217, 2 components, Equal)",
+        "quote": "These models identified a single cut-off of 0.63 pg/mL for pTau217 ... For pTau217, at the ≥0.80 threshold (lower cut-off, 0.52 pg/mL; upper cut-off, 0.77 pg/mL) ... At ≥0.85 (lower cut-off, 0.50 pg/mL; upper cut-off, 0.81 pg/mL) ... At ≥0.90 (lower cut-off, 0.47 pg/mL; upper cut-off, 0.86 pg/mL)",
+        "values": [
+          0.63,
+          0.52,
+          0.77,
+          0.5,
+          0.81,
+          0.47,
+          0.86
+        ],
+        "tolerance": "绝对差 ≤0.01 pg/mL，理由同上（补充表 3 参数均值 −1.20、−0.05，方差 0.16，比例 0.77、0.23）。",
+        "test": "tests/test_manifest.py::test_paper_example_argentina_ptau217"
+      },
+      {
+        "locator": "Table 2 (pTau217/Aβ42 GMM rows, Cog-Aging-Study–Brazil) and Results 'Data-driven plasma pTau217 and pTau217/Aβ42 cut-offs in GeNED.ar–Argentina'; parameters from Supplementary Tables 2 and 3 (pTau217/Aβ42, 2 components, Equal)",
+        "quote": "pTau217/Aβ42 | GMM | – | ≥0.12 | – | – | – ... GMM | 0.80 | – | ≤0.09 | ≥0.16 ... GMM | 0.85 | – | ≤0.08 | ≥0.17 ... GMM | 0.90 | – | ≤0.07 | ≥0.19 ... For pTau217/Aβ42, at ≥0.80 (lower cut-off, 0.10; upper cut-off, 0.14) ... At ≥0.85 (lower cut-off, 0.097; upper cut-off, 0.15) ... Finally, at ≥0.90 (lower cut-off, 0.09; upper cut-off, 0.16)",
+        "values": [
+          0.12,
+          0.09,
+          0.16,
+          0.08,
+          0.17,
+          0.07,
+          0.19,
+          0.1,
+          0.14,
+          0.097,
+          0.15
+        ],
+        "tolerance": "绝对差 ≤0.01（比值只印到两位小数，参数也是两位）；实测最大差 0.005（巴西 ≥0.85 上切点算出 0.175，印 0.17）。",
+        "test": "tests/test_manifest.py::test_paper_example_ratio"
+      }
+    ]
+  }
+}
