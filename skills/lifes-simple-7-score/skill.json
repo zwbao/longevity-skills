@@ -1,0 +1,191 @@
+{
+  "schema": "longevity-skill/1",
+  "name": "lifes-simple-7-score",
+  "kind": "paper",
+  "tier": "A",
+  "species": ["human"],
+  "evidence": "cohort",
+  "domains": ["心血管"],
+  "blurb_zh": "吸烟、饮食、运动、体重指数、血压、胆固醇、空腹血糖七项，按 Life's Simple 7 打 0–14 分的心血管健康总分。",
+  "intents": ["frailty_mortality", "lab_meaning"],
+  "triage": {
+    "reason_zh": "补充材料表S1A印出LS7七项理想/中等/差切点与0-14总分规则，可用个人体检和生活方式算LS7总分。",
+    "reviewed": false
+  },
+  "paper": {
+    "doi": "10.1007/s11357-026-02549-5",
+    "title": "Life's Simple 7, depressive symptoms, cognitive performance, and their associations with all-cause mortality among middle-aged urban adults",
+    "title_zh": "心血管健康 LS7、抑郁症状、认知与全因死亡",
+    "journal": "GeroScience",
+    "year": 2026,
+    "authors": "Georgescu 等",
+    "article_url": "https://link.springer.com/article/10.1007/s11357-026-02549-5",
+    "supplements": [
+      {"label": "ESM 1（补充方法 1–4、表 S1A–S5）", "url": "https://static-content.springer.com/esm/art%3A10.1007%2Fs11357-026-02549-5/MediaObjects/11357_2026_2549_MOESM1_ESM.pdf"},
+      {"label": "ESM 2（图 S1 有向无环图）", "url": "https://static-content.springer.com/esm/art%3A10.1007%2Fs11357-026-02549-5/MediaObjects/11357_2026_2549_MOESM2_ESM.pdf"}
+    ],
+    "card_notes": [
+      "七项切点和 0–14 计分来自补充材料 ESM 1 的补充方法 2 与表 S1A（表 S1A 的“差”一列在 PDF 里被截断，差档切点取自补充方法 2 第 1.1 和 1.5 节）。",
+      "正文表 2、表 3（LS7 与全因死亡的风险比）在出版社页面需登录才能打开，本技能没有取得，报告不给出风险比。",
+      "饮食与身体活动两项是 HANDLS 按现有问卷改编的版本（24 小时膳食回顾、Baecke 问卷），个人报告直接用自报的饮食目标数和每周运动分钟数。"
+    ],
+    "summary_zh": "这项研究在美国巴尔的摩一个中年城市成人队列（人）里发现，心血管健康 LS7 总分越高、抑郁症状越少、认知表现越好，随访期间的全因死亡风险越低。个人报告只按论文补充材料的切点给七项打分并算出 0–14 分的 LS7 总分，不算抑郁轨迹、认知得分，也不把总分换算成个人死亡风险。",
+    "summary_status": "draft"
+  },
+  "entry": {
+    "script": "scripts/personal_report.py",
+    "measurements_flag": "--measurements",
+    "measurements_header": ["item", "value", "unit"],
+    "out_flag": "--out",
+    "result_json": true,
+    "targets_flag": "--targets",
+    "levers_json": true
+  },
+  "inputs_status": "verified",
+  "inputs": [
+    {
+      "key": "bmi_kg_m2",
+      "label_zh": "体重指数",
+      "aliases": ["bmi", "BMI", "body mass index", "体质指数", "身体质量指数", "体重指数(BMI)"],
+      "loinc": ["39156-5"],
+      "unit": "kg/m^2",
+      "range": [12, 70],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "体重（kg）除以身高（m）的平方。"
+    },
+    {
+      "key": "sbp_mmhg",
+      "label_zh": "收缩压",
+      "aliases": ["sbp", "SBP", "systolic", "systolic blood pressure", "收缩压(高压)", "高压"],
+      "loinc": ["8480-6"],
+      "unit": "mmHg",
+      "accept": {"kPa": 7.500617},
+      "range": [60, 260],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "论文用坐位左右臂读数的平均值。"
+    },
+    {
+      "key": "dbp_mmhg",
+      "label_zh": "舒张压",
+      "aliases": ["dbp", "DBP", "diastolic", "diastolic blood pressure", "舒张压(低压)", "低压"],
+      "loinc": ["8462-4"],
+      "unit": "mmHg",
+      "accept": {"kPa": 7.500617},
+      "range": [30, 160],
+      "required": true,
+      "from": "measurements"
+    },
+    {
+      "key": "tc_mg_dl",
+      "label_zh": "总胆固醇",
+      "aliases": ["tc", "TC", "CHOL", "total cholesterol", "cholesterol", "总胆固醇(TC)", "血清总胆固醇", "胆固醇"],
+      "loinc": ["2093-3", "14647-2"],
+      "unit": "mg/dL",
+      "accept": {"mmol/L": 38.61},
+      "molar_mass": 386.65,
+      "range": [50, 600],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "国内化验单多用 mmol/L，请在单位列写明。"
+    },
+    {
+      "key": "glucose_mg_dl",
+      "label_zh": "空腹血糖",
+      "aliases": ["glucose", "fasting glucose", "FPG", "FBG", "GLU", "血糖", "葡萄糖", "空腹葡萄糖", "空腹血葡萄糖"],
+      "loinc": ["1558-6", "14771-0"],
+      "unit": "mg/dL",
+      "accept": {"mmol/L": 18.016},
+      "molar_mass": 180.16,
+      "range": [27, 720],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "要空腹血糖；国内化验单多用 mmol/L，请在单位列写明。"
+    },
+    {
+      "key": "pa_moderate_min_wk",
+      "label_zh": "中等强度身体活动（分钟/周）",
+      "aliases": ["moderate activity", "moderate minutes", "中等强度运动", "中等强度活动", "中等强度运动分钟"],
+      "unit": "min",
+      "accept": {"h": 60},
+      "range": [0, 3000],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "每周累计分钟数，例如快走、骑车、跳舞、游泳；没有就写 0。"
+    },
+    {
+      "key": "pa_vigorous_min_wk",
+      "label_zh": "高强度身体活动（分钟/周）",
+      "aliases": ["vigorous activity", "vigorous minutes", "高强度运动", "高强度活动", "剧烈运动", "高强度运动分钟"],
+      "unit": "min",
+      "accept": {"h": 60},
+      "range": [0, 2000],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "每周累计分钟数，例如跑步、篮球、足球；没有就写 0。"
+    },
+    {
+      "key": "diet_goals_met",
+      "label_zh": "达到的饮食目标数（0–5）",
+      "aliases": ["diet goals", "diet score", "healthy diet score", "饮食目标数", "健康饮食得分", "饮食得分"],
+      "unit": "1",
+      "range": [0, 5],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "按每天 2000 千卡折算，五项各算 1 个：蔬菜水果每天至少 4.5 杯；鱼每周至少两份（每份 3.5 盎司）；高纤维全谷物每天至少 3 盎司当量；钠每天少于 1500 毫克；含糖饮料每周不超过 450 千卡。"
+    },
+    {
+      "key": "smoking",
+      "label_zh": "吸烟状态",
+      "required": true,
+      "from": "argument",
+      "flag": "--smoking",
+      "note_zh": "never（从不）、quit_over_1y（戒烟超过 1 年）、quit_within_1y（戒烟不满 1 年）、current（现在吸）。"
+    },
+    {
+      "key": "bp_treated",
+      "label_zh": "是否在用降压药",
+      "required": true,
+      "from": "argument",
+      "flag": "--bp-treated"
+    },
+    {
+      "key": "chol_treated",
+      "label_zh": "是否在用调脂药",
+      "required": true,
+      "from": "argument",
+      "flag": "--chol-treated"
+    },
+    {
+      "key": "glucose_treated",
+      "label_zh": "是否在用降糖药",
+      "required": true,
+      "from": "argument",
+      "flag": "--glucose-treated"
+    }
+  ],
+  "outputs": [
+    {"key": "ls7_total", "label_zh": "LS7 总分（0–14，越高越好）", "unit": "score"},
+    {"key": "ls7_band", "label_zh": "总分分段（较好 10–14 / 中等 5–9 / 较差 0–4）"},
+    {"key": "smoking_points", "label_zh": "吸烟得分（0–2）", "unit": "score"},
+    {"key": "diet_points", "label_zh": "健康饮食得分（0–2）", "unit": "score"},
+    {"key": "physical_activity_points", "label_zh": "身体活动得分（0–2）", "unit": "score"},
+    {"key": "bmi_points", "label_zh": "体重指数得分（0–2）", "unit": "score"},
+    {"key": "blood_pressure_points", "label_zh": "血压得分（0–2）", "unit": "score"},
+    {"key": "cholesterol_points", "label_zh": "总胆固醇得分（0–2）", "unit": "score"},
+    {"key": "glucose_points", "label_zh": "空腹血糖得分（0–2）", "unit": "score"}
+  ],
+  "validation": {
+    "status": "reproduced",
+    "examples": [
+      {
+        "locator": "Results, Descriptives of analytic sample by sex and race (main text) + Table S4 LS7 SUBSCORES (ESM 1)",
+        "quote": "In Table 1, women compared to men in multivariable models were more likely to have a lower LS7 total score (7.38 vs. 7.78, P < 0.001)",
+        "values": [7.38, 7.78],
+        "tolerance": "绝对误差 0.035 以内：表 S4 的七项平均分各四舍五入到两位小数，七项相加最多累积 0.035；实际相加正好得 7.38 和 7.78。这一例核对的是“七项 0–2 分相加得总分”的规则，七项切点本身论文没有印出个人计算示例。",
+        "test": "tests/test_manifest.py::test_component_means_add_up_to_printed_total"
+      }
+    ]
+  }
+}
