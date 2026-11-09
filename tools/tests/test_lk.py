@@ -245,10 +245,146 @@ class McpTest(unittest.TestCase):
         )
         self.assertEqual(replies[0]["error"]["code"], -32700)
         self.assertEqual(replies[1]["error"]["code"], -32601)
-        self.assertTrue(replies[2]["result"]["isError"])
+        self.assertEqual(replies[2]["error"]["code"], -32602)  # unknown tool
         self.assertTrue(replies[3]["result"]["isError"])
         self.assertEqual(replies[4]["result"]["protocolVersion"], "2025-06-18")
         self.assertEqual(replies[5]["result"], {})
+
+
+class ReviewFixesTest(unittest.TestCase):
+    """Regression tests for the findings of the three adversarial reviews (2026-11-09)."""
+
+    def mcp_raw(self, data: bytes, env_extra=None) -> tuple:
+        import os
+        env = dict(os.environ, **(env_extra or {}))
+        done = subprocess.run([sys.executable, str(REPO / "longevity"), "mcp"], input=data, capture_output=True,
+                              timeout=120, env=env)
+        return done.returncode, [json.loads(line) for line in done.stdout.decode("utf-8").splitlines() if line.strip()]
+
+    def test_stdio_is_utf8_whatever_the_console_code_page(self):
+        msgs = b"\n".join(json.dumps(m).encode() for m in (
+            {"jsonrpc": "2.0", "id": 1, "method": "initialize", "params": {}},
+            {"jsonrpc": "2.0", "id": 2, "method": "tools/list"},
+            {"jsonrpc": "2.0", "id": 3, "method": "tools/call",
+             "params": {"name": "review_change", "arguments": {"marker": "收缩压", "before": [138], "after": [131]}}})) + b"\n"
+        code, replies = self.mcp_raw(msgs, {"PYTHONIOENCODING": "cp1252"})
+        self.assertEqual((code, len(replies)), (0, 3))
+        self.assertEqual(json.loads(replies[2]["result"]["content"][0]["text"])["verdict"], "within_noise")
+
+    def test_bad_bytes_and_deep_nesting_do_not_kill_the_server(self):
+        data = (b'{"jsonrpc":"2.0","id":1,"method":"ping","params":{"x":"\xff"}}\n' + b"[" * 200000 + b"\n"
+                + b'{"jsonrpc":"2.0","id":2,"method":"ping"}\n' + b"[]\n")
+        code, replies = self.mcp_raw(data)
+        self.assertEqual(code, 0)
+        self.assertEqual(replies[0]["result"], {})
+        self.assertEqual(replies[1]["error"]["code"], -32700)
+        self.assertEqual(replies[2]["result"], {})
+        self.assertEqual(replies[3]["error"]["code"], -32600)  # empty batch
+
+    def test_mcp_flags_need_real_booleans(self):
+        from tools.lk.mcp import call
+        draft = next(s["name"] for s in LIB.skills.values() if methods.status_of(s)[0] == "draft")
+        self.assertEqual(call(LIB, "run_method", {"name": draft, "allow_draft": "false"})["code"], "draft")
+
+    def test_mcp_strings_are_not_split_into_characters(self):
+        from tools.lk.mcp import call
+        out = call(LIB, "find_methods", {"have": "肌酐"})
+        ckd = next(m for m in out["methods"]["methods"] if m["name"] == "ckd-epi-2021-egfr")
+        self.assertEqual(ckd["uses_from_have"], ["血肌酐"])
+
+    def test_non_finite_numbers_are_refused(self):
+        from tools.lk.mcp import call
+        with self.assertRaises(LKError):
+            call(LIB, "review_change", {"marker": "收缩压", "before": [float("nan")], "after": [131]})
+        code, out = lk("change", "--marker", "收缩压", "--before", "nan", "--after", "131")
+        self.assertEqual((code, out["error"]), (3, "bad_input"))
+
+    def test_have_does_not_mark_unusable_methods_complete(self):
+        out = methods.methods(LIB, have=["年龄", "性别", "肌酐", "白蛋白", "葡萄糖", "C反应蛋白", "淋巴细胞百分比",
+                                         "平均红细胞体积", "红细胞分布宽度", "碱性磷酸酶", "白细胞"])
+        complete = {m["name"] for m in out["methods"] if m.get("complete")}
+        self.assertEqual(complete, {"ckd-epi-2021-egfr", "accelerated-biological-aging-risk",
+                                    "principal-component-clinical-aging"})
+
+    def test_all_null_outputs_are_not_computed(self):
+        out = run(LIB, "genome-wide-proteomics-frailty", {})
+        self.assertEqual(out["status"], "not_computed")
+
+    def test_engine_checks_ranges_for_lookups_too(self):
+        lookup = next(s["name"] for s in LIB.skills.values()
+                      if methods.status_of(s)[0] == "lookup" and any(i.get("range") and i.get("from", "measurements") == "measurements"
+                                                                      for i in (s.get("inputs") or [])))
+        spec = next(i for i in LIB.manifest(lookup)["inputs"] if i.get("range") and i.get("from", "measurements") == "measurements")
+        out = run(LIB, lookup, {"age": 50, "sex": "male",
+                                "measurements": [{"item": spec["key"], "value": spec["range"][1] * 10 + 1000, "unit": spec.get("unit", "")}]})
+        self.assertEqual((out["status"], out.get("checked_by")), ("input_problem", "engine"), out)
+
+    def test_partial_and_file_dates(self):
+        import tempfile
+        rows = [{"item": "收缩压", "value": 130, "unit": "mmHg", "date": "2026-10-01"}, {"item": "腰围", "value": 80, "unit": "cm"}]
+        self.assertEqual(run(LIB, "china-par-ascvd-risk", {"measurements": rows})["code"], "mixed_dates")
+        same = [{"item": "收缩压", "value": 130, "unit": "mmHg", "date": "2026-10-01"},
+                {"item": "腰围", "value": 80, "unit": "cm", "date": "2026/10/01"}]
+        self.assertNotEqual(run(LIB, "china-par-ascvd-risk", {"measurements": same}).get("code"), "mixed_dates")
+        with tempfile.TemporaryDirectory() as tmp:
+            f = Path(tmp) / "m.csv"
+            f.write_text("item,value,unit,date\n收缩压,130,mmHg,2026-10-01\n腰围,80,cm,2019-01-01\n", encoding="utf-8")
+            out = run(LIB, "china-par-ascvd-risk", {"measurements_file": str(f)})
+            self.assertEqual(out["code"], "mixed_dates")
+
+    def test_line_breaks_and_types(self):
+        for bad_payload in ({"measurements": [{"item": "肌酐", "value": "1\nface_age_1,50,x", "unit": "mg/dL"}]},
+                            {"measurements": [{"item": "肌酐", "value": True, "unit": "mg/dL"}]},
+                            {"medications": [1]},
+                            {"measurements": [{"item": "肌酐", "value": 1, "unit": "mg/dL"}], "measurements_file": "/x"}):
+            with self.assertRaises(LKError, msg=bad_payload):
+                run(LIB, "ckd-epi-2021-egfr", bad_payload)
+
+    def test_medications_string_is_one_medicine(self):
+        from tools.lk.run import _str_list
+        self.assertEqual(_str_list("metformin", "medications"), ["metformin"])
+
+    def test_out_dir_must_be_new_or_empty(self):
+        import tempfile
+        with tempfile.TemporaryDirectory() as tmp:
+            (Path(tmp) / "result.json").write_text("{}")
+            with self.assertRaises(LKError):
+                run(LIB, "ckd-epi-2021-egfr", {"age": 50, "sex": "male",
+                                                "measurements": [{"item": "肌酐", "value": 1, "unit": "mg/dL"}]}, out_dir=tmp)
+
+    def test_argument_kinds_follow_the_script(self):
+        from tools.lk.methods import argument_kind
+        kinds = {}
+        for name in ("nutrigenetic-variant-panel", "pyaging", "cpic-pharmacogenomics", "china-par-ascvd-risk"):
+            m = LIB.manifest(name)
+            text = (LIB.skill_dir(name) / m["entry"]["script"]).read_text(encoding="utf-8")
+            kinds.update({f"{name}.{i['key']}": argument_kind(i, text) for i in m["inputs"] if i.get("from") == "argument"})
+        self.assertEqual(kinds["nutrigenetic-variant-panel.apoe"], "switch")
+        self.assertEqual(kinds["pyaging.matrix"], "file")
+        self.assertEqual(kinds["cpic-pharmacogenomics.drug"], "multi")
+        self.assertEqual(kinds["china-par-ascvd-risk.urban"], "yes_no")
+
+    def test_run_example_lists_every_answer(self):
+        example = methods.describe(LIB, "china-par-ascvd-risk")["run_example"]
+        for key in ("urban", "family_history"):
+            self.assertIn(f"--answer {key}=", example)
+
+    def test_cli_errors_are_json(self):
+        code, out = lk("run", "ckd-epi-2021-egfr", "--input", "/no/such/file.json")
+        self.assertEqual((code, out["error"]), (3, "bad_input"))
+        code, out = lk("run")  # argparse error
+        self.assertEqual((code, out["error"]), (2, "usage"))
+        code, out = lk("--library=" + str(REPO), "version", "--pretty")
+        self.assertEqual(code, 0)
+
+    def test_library_is_not_written_to(self):
+        before = {p for p in (REPO / "tools" / "skillkit").rglob("*")} | \
+                 {p for p in (REPO / "skills" / "longevity-evidence" / "scripts").rglob("*")}
+        lk("evidence", "NMN")
+        lk("methods", "--have", "肌酐")
+        after = {p for p in (REPO / "tools" / "skillkit").rglob("*")} | \
+                {p for p in (REPO / "skills" / "longevity-evidence" / "scripts").rglob("*")}
+        self.assertEqual({p for p in after - before if "__pycache__" in str(p)}, set())
 
 
 if __name__ == "__main__":

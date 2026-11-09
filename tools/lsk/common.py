@@ -20,6 +20,8 @@ CATALOG = ROOT / "catalog.json"
 VERSION_FILE = ROOT / "VERSION"
 README = ROOT / "README.md"
 PLUGIN = ROOT / ".claude-plugin" / "plugin.json"
+# The light plugin (one routing skill + MCP) carries the same release version.
+AGENT_PLUGIN = ROOT / "agent" / ".claude-plugin" / "plugin.json"
 LEGACY_REGISTRY = SKILLS / "_registry" / "processed_dois.jsonl"
 LEGACY_METHOD_MAP = SKILLS / "_registry" / "method_map.json"
 KIT_SOURCE = ROOT / "tools" / "skillkit" / "skillkit.py"

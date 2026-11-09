@@ -560,13 +560,27 @@ def build_parser(prog: str = "longevity") -> argparse.ArgumentParser:
     return p
 
 
+class HelpShown(Exception):
+    """`--help` was asked for; argparse already printed it."""
+
+
+def _finite(a: argparse.Namespace) -> None:
+    for key, value in vars(a).items():
+        for v in (value if isinstance(value, list) else [value]):
+            if isinstance(v, float) and not math.isfinite(v):
+                raise ValueError(f"--{key.replace('_', '-')}: {v} is not a finite number")
+
+
 def compute(argv: List[str], library: Optional[str] = None) -> Dict[str, Any]:
     """Parse noise arguments (as the coach's CLI takes them) and return the result dict."""
     p = build_parser()
     try:
         a = p.parse_args(argv)
     except SystemExit as exc:  # argparse prints usage to stderr; keep the server alive
+        if exc.code == 0:
+            raise HelpShown() from exc
         raise ValueError(f"bad arguments for the variation commands: {' '.join(argv)}") from exc
+    _finite(a)
     lib = find_library(library or a.library)
     z, idx, effects = load(lib)
     a.readouts = load_readouts(lib)

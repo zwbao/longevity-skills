@@ -65,7 +65,8 @@ jobs:
 
   # The `longevity` engine (tools/lk) promises Python 3.9+ with the standard library only.
   engine-py39:
-    runs-on: ubuntu-latest
+    # Python 3.9 builds exist for ubuntu-22.04/24.04 only; pin so a newer ubuntu-latest does not drop it.
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
 

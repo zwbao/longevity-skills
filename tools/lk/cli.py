@@ -1,4 +1,4 @@
-"""Command line: `longevity <command>`. Every command prints one JSON object on stdout."""
+"""Command line: `longevity <command>`. Every command prints one JSON object on stdout (`--help` prints text)."""
 
 from __future__ import annotations
 
@@ -8,12 +8,13 @@ import sys
 from typing import Any, Dict, List, Optional
 
 from . import evidence, methods, noise
-from .library import LKError, open_library
+from .library import Library, LKError, open_library
 from .run import parse_measurement
 from .run import run as run_method
 
 NOISE_COMMANDS = {"change", "trend", "plan", "predict", "markers"}
-EXIT = {"ok": 0, "input_problem": 3, "refused": 4, "missing_dependency": 5, "error": 1}
+EXIT = {"ok": 0, "input_problem": 3, "not_computed": 3, "refused": 4, "missing_dependency": 5, "error": 1}
+ERROR_EXIT = {"bad_input": 3, "usage": 2, "unknown_method": 2, "unknown_intent": 2, "library_not_found": 2}
 
 USAGE = """\
 longevity: methods, evidence and within-person variation from the longevity-skills library. Output is JSON.
@@ -31,13 +32,27 @@ longevity: methods, evidence and within-person variation from the longevity-skil
   longevity mcp                                        serve all of this over stdio MCP
   longevity version
 
-Global options (before the command): --library PATH, --pretty.
-Exit codes: 0 ok, 2 usage, 3 input problem, 4 refused, 5 missing dependency, 1 error.
+Global options: --library PATH (or --library=PATH) before the command, --pretty anywhere.
+Exit codes: 0 ok, 2 usage, 3 input problem or nothing computed, 4 refused, 5 missing dependency, 1 error.
 """
 
 
+class Parser(argparse.ArgumentParser):
+    """argparse that reports errors as JSON (through LKError) instead of printing usage and exiting."""
+
+    def error(self, message: str):  # type: ignore[override]
+        raise LKError(f"{self.prog}: {message}", "usage", 2)
+
+
+def _dump(obj: Any, pretty: bool) -> str:
+    return json.dumps(obj, ensure_ascii=False, allow_nan=False, indent=2 if pretty else None)
+
+
 def _print(obj: Any, pretty: bool) -> None:
-    text = json.dumps(obj, ensure_ascii=False, indent=2 if pretty else None)
+    try:
+        text = _dump(obj, pretty)
+    except ValueError:  # NaN/Infinity are not JSON
+        text = _dump({"error": "bad_output", "message": "the result held a non-finite number"}, pretty)
     sys.stdout.write(text + "\n")
     sys.stdout.flush()
 
@@ -50,10 +65,10 @@ def _split_csv(values: Optional[List[str]]) -> List[str]:
 
 
 def _run_parser() -> argparse.ArgumentParser:
-    p = argparse.ArgumentParser(prog="longevity run", description="Run one method for one person.")
+    p = Parser(prog="longevity run", description="Run one method for one person.")
     p.add_argument("name")
     p.add_argument("--input", help="JSON file (or - for stdin): {age, sex, measurements:[{item,value,unit,date}], "
-                                   "arguments:{key: yes|no}, medications:[...], targets:[...], measurements_file}")
+                                   "arguments:{key: value}, medications:[...], targets:[...], measurements_file}")
     p.add_argument("--age", type=float)
     p.add_argument("--sex")
     p.add_argument("-m", "--measurement", action="append", default=[], metavar="ITEM=VALUE UNIT[@DATE]")
@@ -63,24 +78,30 @@ def _run_parser() -> argparse.ArgumentParser:
     p.add_argument("--allow-draft", action="store_true")
     p.add_argument("--allow-mixed-dates", action="store_true")
     p.add_argument("--report", action="store_true", help="include the method's Markdown report")
-    p.add_argument("--out", help="keep the method's output files in this directory")
+    p.add_argument("--out", help="keep the method's output files in this new or empty directory")
     p.add_argument("--timeout", type=int, default=180)
     return p
 
 
-def cmd_run(lib, argv: List[str]) -> Dict[str, Any]:
+def _read_input(path: str) -> Dict[str, Any]:
+    try:
+        raw = sys.stdin.buffer.read().decode("utf-8") if path == "-" else open(path, encoding="utf-8").read()
+    except (OSError, UnicodeDecodeError) as exc:
+        raise LKError(f"--input {path}: {exc}", "bad_input", 3)
+    try:
+        payload = json.loads(raw)
+    except (ValueError, RecursionError) as exc:
+        raise LKError(f"--input is not valid JSON: {exc}", "bad_input", 3)
+    if not isinstance(payload, dict):
+        raise LKError("--input must be a JSON object", "bad_input", 3)
+    if "answers" in payload and "arguments" not in payload:
+        payload["arguments"] = payload.pop("answers")
+    return payload
+
+
+def cmd_run(lib: Library, argv: List[str]) -> Dict[str, Any]:
     a = _run_parser().parse_args(argv)
-    payload: Dict[str, Any] = {}
-    if a.input:
-        raw = sys.stdin.read() if a.input == "-" else open(a.input, encoding="utf-8").read()
-        try:
-            payload = json.loads(raw)
-        except ValueError as exc:
-            raise LKError(f"--input is not valid JSON: {exc}", "bad_input", 2)
-        if not isinstance(payload, dict):
-            raise LKError("--input must be a JSON object", "bad_input", 2)
-        if "answers" in payload and "arguments" not in payload:
-            payload["arguments"] = payload.pop("answers")
+    payload: Dict[str, Any] = _read_input(a.input) if a.input else {}
     if a.age is not None:
         payload["age"] = a.age
     if a.sex:
@@ -91,9 +112,13 @@ def cmd_run(lib, argv: List[str]) -> Dict[str, Any]:
         answers = dict(payload.get("arguments") or {})
         for item in a.answer:
             if "=" not in item:
-                raise LKError(f"--answer {item!r} should be KEY=VALUE", "bad_input", 2)
+                raise LKError(f"--answer {item!r} should be KEY=VALUE", "bad_input", 3)
             k, v = item.split("=", 1)
-            answers[k.strip().replace("-", "_")] = v.strip()
+            k = k.strip().replace("-", "_")
+            if k in answers:  # repeated answers (e.g. --answer drug=A --answer drug=B) become a list
+                answers[k] = (answers[k] if isinstance(answers[k], list) else [answers[k]]) + [v.strip()]
+            else:
+                answers[k] = v.strip()
         payload["arguments"] = answers
     if a.medication:
         payload["medications"] = list(payload.get("medications") or []) + a.medication
@@ -103,20 +128,39 @@ def cmd_run(lib, argv: List[str]) -> Dict[str, Any]:
                       include_report=a.report, out_dir=a.out, timeout=a.timeout)
 
 
-def main(argv: Optional[List[str]] = None) -> int:
-    argv = list(sys.argv[1:] if argv is None else argv)
-    library, pretty = None, False
-    while argv and argv[0] in ("--library", "--pretty"):
+def _globals(argv: List[str]):
+    library, pretty, rest = None, False, []
+    if "--pretty" in argv:
+        pretty = True
+        argv = [x for x in argv if x != "--pretty"]
+    while argv and (argv[0] == "--library" or argv[0].startswith("--library=")):
         flag = argv.pop(0)
-        if flag == "--pretty":
-            pretty = True
+        if flag.startswith("--library="):
+            library = flag.split("=", 1)[1]
         elif argv:
             library = argv.pop(0)
-    if not argv or argv[0] in ("-h", "--help", "help"):
-        sys.stdout.write(USAGE)
-        return 0 if argv else 2
-    cmd, rest = argv[0], argv[1:]
+        else:
+            raise LKError("--library needs a path", "usage", 2)
+    rest = argv
+    return library, pretty, rest
+
+
+def main(argv: Optional[List[str]] = None) -> int:
+    for stream in (sys.stdout, sys.stderr):  # JSON with Chinese text must not depend on the console code page
+        if hasattr(stream, "reconfigure"):
+            try:
+                stream.reconfigure(encoding="utf-8")
+            except (ValueError, OSError):
+                pass
+    argv = list(sys.argv[1:] if argv is None else argv)
+    pretty = "--pretty" in argv
+    lib: Optional[Library] = None
     try:
+        library, pretty, argv = _globals(argv)
+        if not argv or argv[0] in ("-h", "--help", "help"):
+            sys.stdout.write(USAGE)
+            return 0 if argv else 2
+        cmd, rest = argv[0], argv[1:]
         lib = open_library(library)
         if cmd == "mcp":
             from .mcp import Server
@@ -126,10 +170,10 @@ def main(argv: Optional[List[str]] = None) -> int:
                                    "methods": sum(1 for s in lib.skills.values() if methods.status_of(s)[0] == "runnable")}
         elif cmd == "find":
             if not rest:
-                raise LKError("find needs the person's words", "bad_input", 2)
+                raise LKError("find needs the person's words", "usage", 2)
             out = methods.find(lib, " ".join(rest))
         elif cmd == "methods":
-            p = argparse.ArgumentParser(prog="longevity methods")
+            p = Parser(prog="longevity methods")
             p.add_argument("--intent")
             p.add_argument("--have", action="append", help="comma-separated measurement names")
             p.add_argument("--all", action="store_true", help="also tier-B lookups and tools")
@@ -137,14 +181,14 @@ def main(argv: Optional[List[str]] = None) -> int:
             out = methods.methods(lib, intent=a.intent, have=_split_csv(a.have), include_lookups=a.all)
         elif cmd in ("describe", "read"):
             if len(rest) != 1:
-                raise LKError(f"{cmd} takes one method name", "bad_input", 2)
+                raise LKError(f"{cmd} takes one method name", "usage", 2)
             out = methods.describe(lib, rest[0])
         elif cmd == "run":
             out = cmd_run(lib, rest)
             _print(out, pretty)
             return EXIT.get(out.get("status", "error"), 1)
         elif cmd == "evidence":
-            p = argparse.ArgumentParser(prog="longevity evidence")
+            p = Parser(prog="longevity evidence")
             p.add_argument("names", nargs="*")
             p.add_argument("--entity", action="append", default=[])
             p.add_argument("--medication", action="append", default=[])
@@ -154,13 +198,18 @@ def main(argv: Optional[List[str]] = None) -> int:
         elif cmd in NOISE_COMMANDS:
             try:
                 out = {**noise.compute([cmd, *rest], str(lib.root)), **lib.stamp()}
+            except noise.HelpShown:
+                return 0
             except ValueError as exc:
-                raise LKError(str(exc), "bad_input", 2)
+                raise LKError(str(exc), "bad_input", 3)
         else:
             raise LKError(f"unknown command {cmd!r}; run `longevity --help`", "usage", 2)
     except LKError as exc:
-        _print({"error": exc.code, "message": str(exc)}, pretty)
-        return exc.exit_code
+        err: Dict[str, Any] = {"error": exc.code, "message": str(exc)}
+        if lib is not None:
+            err.update(lib.stamp())
+        _print(err, pretty)
+        return ERROR_EXIT.get(exc.code, exc.exit_code)
     _print(out, pretty)
     return 0
 

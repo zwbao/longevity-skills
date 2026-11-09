@@ -87,7 +87,7 @@ python3 -m tools.lsk test --changed origin/main   # 只测相对 main 改动过�
 - **Claude Code**：`/plugin marketplace add zwbao/longevity-skills`，再 `/plugin install longevity-skills@longevity-skills`。之后每次 `/plugin marketplace update` 拿到最新一周的版本。
 - **Cursor**：把 `~/.cursor/skills/<name>` 指到本仓库里的对应目录（不要写到 `~/.cursor/skills-cursor/`）。只想要个人读出时，只链接 `catalog.json` 里 `tier` 为 A 或 tool 的目录。
 - **其他 Agent**：读 `catalog.json`，按 `tier`、`validation_status`（显示时用 `validation_label_zh`）和 `inputs` 选技能。
-- **只要一个入口**：Claude Code 安装插件 `longevity`（`/plugin install longevity@longevity-skills`，只含一个路由技能和 MCP 服务，需要 uv）；其他 Agent 用 `longevity` 命令或 `longevity mcp`，见 [docs/lk-cli.md](docs/lk-cli.md)。
+- **只要一个入口**：Claude Code 安装插件 `longevity`（`/plugin install longevity@longevity-skills`，只含一个路由技能和 MCP 服务；先装好 `longevity` 命令）；其他 Agent 用 `longevity` 命令或 `longevity mcp`，见 [docs/lk-cli.md](docs/lk-cli.md)。
 
 ## 许可
 

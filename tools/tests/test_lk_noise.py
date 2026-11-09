@@ -26,6 +26,15 @@ TREND_CASES = FIXTURES / "trend_cases.json"
 PREDICTION_CASES = FIXTURES / "prediction_cases.json"
 
 
+class FixtureCopiesTest(unittest.TestCase):
+    @unittest.skipUnless(ANALYST, "set LONGEVITY_ANALYST_SKILL to a longevity-analyst checkout")
+    def test_shared_cases_match_the_analyst(self) -> None:
+        for name in ("rcv_cases.json", "trend_cases.json", "prediction_cases.json"):
+            theirs = ANALYST / "tests" / "fixtures" / name
+            self.assertEqual(json.loads((FIXTURES / name).read_text(encoding="utf-8")),
+                             json.loads(theirs.read_text(encoding="utf-8")), f"{name} is stale; copy it again")
+
+
 def run(*argv: str, lib: Path = None) -> dict:
     """noise.compute takes a library folder; a temp_library only needs the data/ tables."""
     lib = Path(lib or LIB)

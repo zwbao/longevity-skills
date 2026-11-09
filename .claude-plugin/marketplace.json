@@ -15,7 +15,7 @@
     {
       "name": "longevity",
       "source": "./agent",
-      "description": "Light entry: one routing skill and an MCP server (needs uv). Same methods and evidence as longevity-skills, without loading 178 skills."
+      "description": "Light entry: one routing skill and an MCP server. Same methods and evidence as longevity-skills without loading every skill; install the `longevity` command first (uv tool install git+https://github.com/zwbao/longevity-skills)."
     }
   ]
 }

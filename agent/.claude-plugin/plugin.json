@@ -1,6 +1,6 @@
 {
   "name": "longevity",
-  "description": "One routing skill and one MCP server over the longevity-skills library: methods from papers, an evidence store and within-person variation. The full library stays in the longevity-skills plugin.",
+  "description": "One routing skill and one MCP server over the longevity-skills library: methods from papers, an evidence store and within-person variation. The MCP server runs the `longevity` command; install it once with: uv tool install git+https://github.com/zwbao/longevity-skills",
   "author": {
     "name": "zwbao"
   },
@@ -14,13 +14,11 @@
     "evidence",
     "mcp"
   ],
+  "version": "2026.45.0",
   "mcpServers": {
     "longevity": {
-      "command": "uvx",
+      "command": "longevity",
       "args": [
-        "--from",
-        "git+https://github.com/zwbao/longevity-skills",
-        "longevity",
         "mcp"
       ]
     }

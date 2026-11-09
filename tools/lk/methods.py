@@ -20,6 +20,32 @@ PROFILE_WORDS = {
 }
 
 
+def argument_kind(spec: Dict[str, Any], script_text: str) -> str:
+    """How a `from: argument` input is passed, read from the script's own argparse line.
+
+    switch (store_true), file (type=Path), multi (action=append), yes_no (a 是否 question),
+    number (declares a unit) or text.
+    """
+    flag = spec.get("flag") or "--" + spec["key"].replace("_", "-")
+    m = re.search(r"add_argument\(\s*[\"']" + re.escape(flag) + r"[\"']([^)]*)\)", script_text)
+    options = m.group(1) if m else ""
+    if re.search(r"action\s*=\s*[\"']store_true[\"']", options):
+        return "switch"
+    if re.search(r"type\s*=\s*Path\b", options):
+        return "file"
+    if re.search(r"action\s*=\s*[\"']append[\"']", options):
+        return "multi"
+    if "是否" in spec.get("label_zh", ""):
+        return "yes_no"
+    if spec.get("unit") is not None:
+        return "number"
+    return "text"
+
+
+ANSWER_ZH = {"switch": "yes 或 no", "yes_no": "yes 或 no", "file": "文件路径", "multi": "文本，可以给多个（列表）",
+             "number": "数值", "text": "文本"}
+
+
 def status_of(s: Dict[str, Any]) -> Tuple[str, str]:
     """(status, why_zh). status: runnable | draft | lookup | tool | not_runnable."""
     tier = s.get("tier")
@@ -170,7 +196,10 @@ def methods(lib: Library, intent: Optional[str] = None, have: Optional[List[str]
 
 
 def _coverage(lib: Library, s: Dict[str, Any], have: List[str]) -> Dict[str, Any]:
+    """complete means: at least one listed item is used, and nothing the method requires is missing."""
     kit, meas, index = _have_index(lib, s)
+    if not meas:
+        return {"uses_from_have": [], "missing": ["整份输入文件（例如甲基化 β 值表或基因数据文件）"], "complete": False}
     got = set()
     for item in have:
         for v in kit.name_variants(item):
@@ -183,10 +212,14 @@ def _coverage(lib: Library, s: Dict[str, Any], have: List[str]) -> Dict[str, Any
         if not ({kit.fold_name(w) for w in PROFILE_WORDS.get(key, {key})} & folded):
             missing.append({"age": "年龄", "sex": "性别"}.get(key, key))
     used = [i.get("label_zh", i["key"]) for i in meas if i["key"] in got]
-    out = {"uses_from_have": used, "missing": missing, "complete": not missing}
-    if not meas and not (s.get("inputs") or []):
-        out["complete"] = False
-        out["missing"] = ["整份输入文件"]
+    if not used and not missing:
+        missing = ["手上的项目都不是这个方法用的输入"]
+    out: Dict[str, Any] = {"uses_from_have": used, "missing": missing, "complete": bool(used) and not missing}
+    answers = [i.get("label_zh", i["key"]) for i in (s.get("inputs") or []) if i.get("from") == "argument"]
+    if answers:
+        out["also_ask"] = answers
+    if used and not missing and not any(i.get("required") for i in meas):
+        out["note_zh"] = "这个方法的项目都是可选的；手上有的越少，读数越不完整"
     return out
 
 
@@ -195,6 +228,8 @@ def describe(lib: Library, name: str) -> Dict[str, Any]:
     m = lib.manifest(name)
     status, why = status_of(s)
     entry = m.get("entry") or {}
+    script = lib.skill_dir(name) / entry.get("script", "") if entry.get("script") else None
+    script_text = script.read_text(encoding="utf-8", errors="replace") if script and script.is_file() else ""
     inputs = []
     for i in m.get("inputs") or []:
         row = {k: i[k] for k in ("key", "label_zh", "unit", "range", "required", "from", "note_zh", "unit_required") if k in i}
@@ -205,7 +240,7 @@ def describe(lib: Library, name: str) -> Dict[str, Any]:
         if i.get("loinc"):
             row["loinc"] = i["loinc"]
         if i.get("from") == "argument":
-            row["answer"] = "yes 或 no" if not i.get("unit") else row.get("unit", "")
+            row["answer"] = ANSWER_ZH[argument_kind(i, script_text)]
         inputs.append(row)
     validation = m.get("validation") or {}
     v_out: Dict[str, Any] = {"status": validation.get("status"),
@@ -227,11 +262,12 @@ def describe(lib: Library, name: str) -> Dict[str, Any]:
     if why:
         out["why_zh"] = why
     if status in ("runnable", "draft", "lookup", "tool"):
-        out["run_example"] = _example(name, m)
+        out["run_example"] = _example(name, m, script_text)
     return out
 
 
-def _example(name: str, m: Dict[str, Any]) -> str:
+def _example(name: str, m: Dict[str, Any], script_text: str) -> str:
+    """One command that names every input the script may ask for (some scripts need answers skill.json marks optional)."""
     entry = m.get("entry") or {}
     parts = ["longevity", "run", name]
     if entry.get("age_flag"):
@@ -242,8 +278,10 @@ def _example(name: str, m: Dict[str, Any]) -> str:
         if i.get("from", "measurements") == "measurements" and i.get("required"):
             unit = f" {i['unit']}" if i.get("unit") not in (None, "", "1") else ""
             parts += ["-m", f"'{i.get('label_zh', i['key'])}=<值>{unit}'"]
-        elif i.get("from") == "argument" and i.get("required"):
-            parts += ["--answer", f"{i['key']}=<yes|no>"]
-    if not m.get("inputs"):
+        elif i.get("from") == "argument":
+            kind = argument_kind(i, script_text)
+            hint = {"switch": "<yes|no>", "yes_no": "<yes|no>", "file": "<文件路径>", "number": "<数值>"}.get(kind, "<文本>")
+            parts += ["--answer", f"{i['key']}={hint}"]
+    if not m.get("inputs") and entry.get("measurements_flag"):
         parts += ["--measurements-file", "<文件>"]
     return " ".join(parts)

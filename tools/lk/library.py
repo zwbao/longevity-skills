@@ -113,7 +113,7 @@ class Library:
             if (self.root / ".git").exists():
                 try:
                     done = subprocess.run(["git", "-C", str(self.root), "rev-parse", "--short", "HEAD"],
-                                          capture_output=True, text=True, timeout=3)
+                                          capture_output=True, text=True, timeout=3, stdin=subprocess.DEVNULL)
                     if done.returncode == 0:
                         self._commit = done.stdout.strip()
                 except (OSError, subprocess.SubprocessError):
@@ -139,9 +139,22 @@ class Library:
                 raise LKError(f"cannot load {path}", "library_broken")
             module = importlib.util.module_from_spec(spec)
             sys.modules[spec.name] = module  # dataclasses look the module up by name
-            spec.loader.exec_module(module)
+            with no_bytecode():
+                spec.loader.exec_module(module)
             self._skillkit = module
         return self._skillkit
+
+
+class no_bytecode:
+    """Import library code without writing __pycache__ into the library (an installed copy may be read-only)."""
+
+    def __enter__(self):
+        self.saved = sys.dont_write_bytecode
+        sys.dont_write_bytecode = True
+
+    def __exit__(self, *exc):
+        sys.dont_write_bytecode = self.saved
+        return False
 
 
 def open_library(given: Optional[str] = None) -> Library:

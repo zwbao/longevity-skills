@@ -7,7 +7,7 @@ import sys
 from collections import OrderedDict
 from typing import Any, Dict, List, Optional
 
-from .library import Library, LKError
+from .library import Library, LKError, no_bytecode
 
 _MODULES: Dict[str, Any] = {}
 
@@ -26,7 +26,8 @@ def _query_module(lib: Library):
         try:
             spec = importlib.util.spec_from_file_location(f"longevity_evidence_query_{len(_MODULES)}", path)
             module = importlib.util.module_from_spec(spec)
-            spec.loader.exec_module(module)
+            with no_bytecode():
+                spec.loader.exec_module(module)
         finally:
             if added:
                 sys.path.remove(scripts)
@@ -79,10 +80,13 @@ def _effect(q, row: Dict[str, Any]) -> Dict[str, Any]:
 
 
 def query(lib: Library, entities: List[str], limit: int = 12, medications: Optional[List[str]] = None) -> Dict[str, Any]:
+    for group in (entities or [], medications or []):
+        if not isinstance(group, list) or not all(isinstance(x, str) for x in group):
+            raise LKError("entities and medications must be lists of names", "bad_input", 3)
     entities = [e.strip() for e in entities or [] if e and e.strip()]
     medications = [m.strip() for m in medications or [] if m and m.strip()]
     if not entities and not medications:
-        raise LKError("give at least one entity (a drug, supplement, diet, gene or protein name)", "bad_input", 2)
+        raise LKError("give at least one entity (a drug, supplement, diet, gene or protein name)", "bad_input", 3)
     limit = max(1, min(int(limit), 100))
     q = _query_module(lib)
     claims = q.load_claims(lib.root / "skills" / "longevity-evidence" / "data" / "claims.jsonl")

@@ -12,7 +12,11 @@ dynamic = ["version"]
 description = "Longevity and ageing methods, evidence and within-person variation for agents: one CLI and one MCP server."
 readme = "docs/lk-cli.md"
 requires-python = ">=3.9"
-license = { text = "MIT" }
+# MIT covers this repository's own code and text. The package also carries third-party files and data that keep
+# their own terms (GPL-2.0, CC BY, CC BY-NC-ND excerpts, non-commercial clock coefficients and others):
+# THIRD_PARTY_NOTICES.md lists every one and ships in the package's licence files.
+license = { text = "MIT for the repository's own code; bundled third-party files and data keep their own terms, see THIRD_PARTY_NOTICES.md" }
+license-files = ["LICENSE", "THIRD_PARTY_NOTICES.md"]
 dependencies = []
 
 [project.optional-dependencies]

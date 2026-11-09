@@ -8,6 +8,7 @@ query_evidence, review_change, review_trend) so a host can switch between them.
 from __future__ import annotations
 
 import json
+import math
 import sys
 import traceback
 from typing import Any, Callable, Dict, List, Optional
@@ -106,96 +107,189 @@ TOOLS: List[Dict[str, Any]] = [
 
 
 def _num_list(values: Any, what: str) -> List[str]:
+    if isinstance(values, (int, float)) and not isinstance(values, bool):
+        values = [values]
     if not isinstance(values, list) or not values:
-        raise LKError(f"{what} must be a non-empty list of numbers", "bad_input", 2)
+        raise LKError(f"{what} must be a non-empty list of numbers", "bad_input", 3)
     out = []
     for v in values:
-        if isinstance(v, bool) or not isinstance(v, (int, float)):
-            raise LKError(f"{what}: {v!r} is not a number", "bad_input", 2)
+        if isinstance(v, bool) or not isinstance(v, (int, float)) or not math.isfinite(v):
+            raise LKError(f"{what}: {v!r} is not a finite number", "bad_input", 3)
         out.append(repr(float(v)))
     return out
+
+
+def _str_list(values: Any, what: str) -> List[str]:
+    """A list of non-empty strings; a single string counts as a list of one (never split into characters)."""
+    if values is None:
+        return []
+    if isinstance(values, str):
+        values = [values]
+    if not isinstance(values, list) or not all(isinstance(v, str) for v in values):
+        raise LKError(f"{what} must be a list of strings", "bad_input", 3)
+    return [v for v in values if v.strip()]
+
+
+def _int(value: Any, what: str, minimum: int = 1) -> int:
+    if isinstance(value, bool):
+        raise LKError(f"{what} must be an integer", "bad_input", 3)
+    try:
+        number = int(value)
+    except (TypeError, ValueError):
+        raise LKError(f"{what} must be an integer, got {value!r}", "bad_input", 3)
+    if number < minimum or (isinstance(value, float) and value != number):
+        raise LKError(f"{what} must be an integer >= {minimum}, got {value!r}", "bad_input", 3)
+    return number
+
+
+def _number(value: Any, what: str) -> str:
+    if isinstance(value, bool) or not isinstance(value, (int, float)) or not math.isfinite(value):
+        raise LKError(f"{what} must be a finite number, got {value!r}", "bad_input", 3)
+    return repr(float(value))
 
 
 def _noise(lib: Library, argv: List[str]) -> Dict[str, Any]:
     try:
         return {**noise.compute(argv, str(lib.root)), **lib.stamp()}
     except ValueError as exc:
-        raise LKError(str(exc), "bad_input", 2)
+        raise LKError(str(exc), "bad_input", 3)
+
+
+def _text(value: Any, what: str) -> str:
+    if not isinstance(value, str) or not value.strip():
+        raise LKError(f"{what} must be a non-empty string", "bad_input", 3)
+    if value.lstrip().startswith("-"):  # would be read as an option by the variation parser
+        raise LKError(f"{what} cannot start with '-': {value!r}", "bad_input", 3)
+    return value
 
 
 def call(lib: Library, name: str, args: Dict[str, Any]) -> Dict[str, Any]:
     if name == "find_methods":
         out: Dict[str, Any] = {}
-        if args.get("text"):
-            out["find"] = methods.find(lib, str(args["text"]))
-        if args.get("have") or args.get("intent") or args.get("include_lookups") or not args.get("text"):
-            out["methods"] = methods.methods(lib, intent=args.get("intent"), have=args.get("have"),
+        text = args.get("text")
+        if text is not None and not isinstance(text, str):
+            raise LKError("text must be a string", "bad_input", 3)
+        have = _str_list(args.get("have"), "have")
+        if text:
+            out["find"] = methods.find(lib, text)
+        if have or args.get("intent") or args.get("include_lookups") or not text:
+            out["methods"] = methods.methods(lib, intent=args.get("intent") or None, have=have,
                                              include_lookups=bool(args.get("include_lookups")))
         return out
     if name == "read_method":
         return methods.describe(lib, str(args.get("name", "")))
     if name == "run_method":
-        payload = {k: args.get(k) for k in ("age", "sex", "measurements", "medications", "targets", "measurements_file")}
-        payload["arguments"] = args.get("answers") or {}
-        return run_method(lib, str(args.get("name", "")), payload, allow_draft=bool(args.get("allow_draft")),
-                          allow_mixed_dates=bool(args.get("allow_mixed_dates")),
-                          include_report=bool(args.get("include_report")))
+        payload = {k: args.get(k) for k in ("age", "sex", "measurements", "targets", "measurements_file")}
+        payload["medications"] = _str_list(args.get("medications"), "medications")
+        answers = args.get("answers") or {}
+        if not isinstance(answers, dict):
+            raise LKError("answers must be an object {key: value}", "bad_input", 3)
+        payload["arguments"] = answers
+        return run_method(lib, str(args.get("name", "")), payload, allow_draft=args.get("allow_draft") is True,
+                          allow_mixed_dates=args.get("allow_mixed_dates") is True,
+                          include_report=args.get("include_report") is True)
     if name == "query_evidence":
-        ents = args.get("entities")
-        if isinstance(ents, str):
-            ents = [ents]
-        return evidence.query(lib, ents or [], limit=int(args.get("limit") or 12))
+        limit = _int(args["limit"], "limit") if args.get("limit") is not None else 12
+        return evidence.query(lib, _str_list(args.get("entities"), "entities"), limit=limit)
     if name == "review_change":
-        argv = ["change", "--marker", str(args.get("marker", "")), "--before", *_num_list(args.get("before"), "before"),
-                "--after", *_num_list(args.get("after"), "after")]
+        argv = ["change", "--marker", _text(args.get("marker"), "marker"),
+                "--before", *_num_list(args.get("before"), "before"), "--after", *_num_list(args.get("after"), "after")]
         if args.get("gap_days") is not None:
-            argv += ["--gap-days", str(int(args["gap_days"]))]
+            argv += ["--gap-days", str(_int(args["gap_days"], "gap_days", minimum=0))]
         return _noise(lib, argv)
     if name == "review_trend":
         series = args.get("series")
         if not isinstance(series, list) or not series:
-            raise LKError("series must be a non-empty list of {date, value, unit?}", "bad_input", 2)
+            raise LKError("series must be a non-empty list of {date, value, unit?}", "bad_input", 3)
         tokens = []
         for p in series:
-            if not isinstance(p, dict) or not p.get("date") or p.get("value") is None:
-                raise LKError(f"series point {p!r} needs date and value", "bad_input", 2)
-            tok = f"{p['date']}:{p['value']}" + (f":{p['unit']}" if p.get("unit") else "")
-            tokens.append(tok)
-        return _noise(lib, ["trend", "--marker", str(args.get("marker", "")), "--series", *tokens])
+            if not isinstance(p, dict) or not isinstance(p.get("date"), str) or p.get("value") is None:
+                raise LKError(f"series point {p!r} needs a date string and a value", "bad_input", 3)
+            value = p["value"]
+            if isinstance(value, (int, float)) and not isinstance(value, bool):
+                value = _number(value, "series value")
+            elif not isinstance(value, str):  # strings carry censored values such as "<0.5"
+                raise LKError(f"series value {value!r} must be a number or a string", "bad_input", 3)
+            parts = [p["date"].strip(), str(value).strip()]
+            if p.get("unit"):
+                parts.append(str(p["unit"]).strip())
+            if any(":" in x for x in parts[:2]) or any(x.startswith("-") and not x[1:2].isdigit() for x in parts):
+                raise LKError(f"series point {p!r} has a ':' or a leading '-' it cannot carry", "bad_input", 3)
+            tokens.append(":".join(parts))
+        return _noise(lib, ["trend", "--marker", _text(args.get("marker"), "marker"), "--series", *tokens])
     if name == "plan_experiment":
         mode = args.get("mode")
         if mode not in ("plan", "predict"):
-            raise LKError("mode must be plan or predict", "bad_input", 2)
+            raise LKError("mode must be plan or predict", "bad_input", 3)
         if mode == "predict" and not args.get("intervention"):
-            raise LKError("predict needs an intervention", "bad_input", 2)
-        argv = [mode, "--marker", str(args.get("marker", ""))]
-        for key, flag in (("intervention", "--intervention"), ("baseline", "--baseline"), ("unit", "--unit"),
-                          ("repeats", "--repeats"), ("per_units", "--per-units")):
-            if args.get(key) is not None:
-                argv += [flag, str(args[key])]
+            raise LKError("predict needs an intervention", "bad_input", 3)
+        argv = [mode, "--marker", _text(args.get("marker"), "marker")]
+        if args.get("intervention") is not None:
+            argv += ["--intervention", _text(args["intervention"], "intervention")]
+        if args.get("unit") is not None:
+            argv += ["--unit", _text(args["unit"], "unit")]
+        if args.get("baseline") is not None:
+            argv += ["--baseline", _number(args["baseline"], "baseline")]
+        if args.get("per_units") is not None:
+            argv += ["--per-units", _number(args["per_units"], "per_units")]
+        if args.get("repeats") is not None:
+            argv += ["--repeats", str(_int(args["repeats"], "repeats"))]
         if mode == "predict" and args.get("adherence") is not None:
-            argv += ["--adherence", str(args["adherence"])]
+            argv += ["--adherence", _number(args["adherence"], "adherence")]
         return _noise(lib, argv)
-    raise LKError(f"unknown tool {name!r}", "unknown_tool", 2)
+    raise RpcError(-32602, f"unknown tool: {name!r}")
+
+
+class RpcError(Exception):
+    def __init__(self, code: int, message: str) -> None:
+        super().__init__(message)
+        self.code = code
+
+
+TOOL_NAMES = {t["name"] for t in TOOLS}
+# Results whose status means the tool did not produce what was asked; refusals and input problems are answers.
+ERROR_STATUSES = {"error", "missing_dependency"}
 
 
 class Server:
+    """stdio MCP server. Protocol messages go to the real stdout; anything else printed while serving goes to stderr."""
+
     def __init__(self, lib: Library, out=None, log=None) -> None:
         self.lib = lib
-        self.out = out or sys.stdout
+        self.out = out
         self.log = log or sys.stderr
 
-    def send(self, message: Dict[str, Any]) -> None:
-        self.out.write(json.dumps(message, ensure_ascii=False) + "\n")
+    def _write(self, payload: Any) -> None:
+        # allow_nan=False: NaN/Infinity are not JSON; a result that has them is a bug, reported as an error instead.
+        text = json.dumps(payload, ensure_ascii=False, allow_nan=False) + "\n"
+        if hasattr(self.out, "buffer"):
+            self.out.buffer.write(text.encode("utf-8"))
+        else:
+            self.out.write(text)
         self.out.flush()
+
+    def send(self, message: Any) -> None:
+        try:
+            self._write(message)
+        except ValueError:  # NaN in a result
+            mid = message.get("id") if isinstance(message, dict) else None
+            self._write({"jsonrpc": "2.0", "id": mid, "error": {"code": -32603, "message": "result held a non-finite number"}})
+
+    @staticmethod
+    def _error(mid: Any, code: int, message: str) -> Dict[str, Any]:
+        return {"jsonrpc": "2.0", "id": mid, "error": {"code": code, "message": message}}
 
     def handle(self, msg: Any) -> Optional[Dict[str, Any]]:
         if not isinstance(msg, dict) or msg.get("jsonrpc") != "2.0":
-            return {"jsonrpc": "2.0", "id": None, "error": {"code": -32600, "message": "invalid request"}}
+            return self._error(None, -32600, "invalid request")
+        if "method" not in msg and ("result" in msg or "error" in msg):
+            return None  # a response to a request this server never sends; ignore
         method, mid = msg.get("method"), msg.get("id")
         is_request = "id" in msg
+        if is_request and (isinstance(mid, bool) or not isinstance(mid, (str, int))):
+            return self._error(None, -32600, "id must be a string or an integer")
         if not isinstance(method, str):
-            return {"jsonrpc": "2.0", "id": mid, "error": {"code": -32600, "message": "invalid request"}} if is_request else None
+            return self._error(mid, -32600, "invalid request") if is_request else None
         handlers: Dict[str, Callable[[Dict[str, Any]], Any]] = {
             "initialize": self.initialize, "ping": lambda p: {},
             "tools/list": lambda p: {"tools": TOOLS}, "tools/call": self.tools_call,
@@ -205,15 +299,19 @@ class Server:
             return None
         fn = handlers.get(method)
         if fn is None:
-            return {"jsonrpc": "2.0", "id": mid, "error": {"code": -32601, "message": f"method not found: {method}"}}
-        params = msg.get("params") or {}
+            return self._error(mid, -32601, f"method not found: {method}")
+        params = msg.get("params")
+        if params is None:
+            params = {}
         if not isinstance(params, dict):
-            return {"jsonrpc": "2.0", "id": mid, "error": {"code": -32602, "message": "params must be an object"}}
+            return self._error(mid, -32602, "params must be an object")
         try:
             return {"jsonrpc": "2.0", "id": mid, "result": fn(params)}
-        except Exception as exc:  # never let one bad call end the session
+        except RpcError as exc:
+            return self._error(mid, exc.code, str(exc))
+        except Exception:  # never let one bad call end the session, never send a traceback to the client
             traceback.print_exc(file=self.log)
-            return {"jsonrpc": "2.0", "id": mid, "error": {"code": -32603, "message": f"internal error: {exc}"}}
+            return self._error(mid, -32603, "internal error")
 
     def initialize(self, params: Dict[str, Any]) -> Dict[str, Any]:
         asked = params.get("protocolVersion")
@@ -224,37 +322,68 @@ class Server:
 
     def tools_call(self, params: Dict[str, Any]) -> Dict[str, Any]:
         name = params.get("name")
-        args = params.get("arguments") or {}
-        if not isinstance(args, dict):
+        if not isinstance(name, str) or name not in TOOL_NAMES:
+            raise RpcError(-32602, f"unknown tool: {name!r}")
+        args = params.get("arguments")
+        if args is None:
             args = {}
+        if not isinstance(args, dict):
+            raise RpcError(-32602, "arguments must be an object")
         try:
-            result = call(self.lib, str(name), args)
-            is_error = False
+            result = call(self.lib, name, args)
+            is_error = isinstance(result, dict) and result.get("status") in ERROR_STATUSES
         except LKError as exc:
             result, is_error = {"error": exc.code, "message": str(exc)}, True
-        except Exception as exc:  # report, do not crash
+        except (TypeError, ValueError, KeyError, AttributeError, ZeroDivisionError, OverflowError) as exc:
             traceback.print_exc(file=self.log)
-            result, is_error = {"error": "internal", "message": str(exc)}, True
-        return {"content": [{"type": "text", "text": json.dumps(result, ensure_ascii=False)}], "isError": is_error}
+            result, is_error = {"error": "bad_input", "message": f"{type(exc).__name__}: {exc}"}, True
+        try:
+            text = json.dumps(result, ensure_ascii=False, allow_nan=False)
+        except ValueError:
+            text, is_error = json.dumps({"error": "bad_input", "message": "the result held a non-finite number"}), True
+        return {"content": [{"type": "text", "text": text}], "isError": is_error}
+
+    def _line(self, raw: bytes) -> None:
+        line = raw.decode("utf-8", errors="replace").strip()
+        if not line:
+            return
+        try:
+            msg = json.loads(line)
+        except (ValueError, RecursionError):
+            self.send(self._error(None, -32700, "parse error"))
+            return
+        if isinstance(msg, list):  # batches (2025-03-26) are answered together
+            if not msg:
+                self.send(self._error(None, -32600, "empty batch"))
+                return
+            replies = [r for r in (self.handle(m) for m in msg) if r is not None]
+            if replies:
+                self.send(replies)
+            return
+        reply = self.handle(msg)
+        if reply is not None:
+            self.send(reply)
 
     def serve(self, stream=None) -> int:
-        stream = stream or sys.stdin
-        for line in stream:
-            line = line.strip()
-            if not line:
-                continue
-            try:
-                msg = json.loads(line)
-            except ValueError:
-                self.send({"jsonrpc": "2.0", "id": None, "error": {"code": -32700, "message": "parse error"}})
-                continue
-            if isinstance(msg, list):  # batches (2025-03-26) are answered one by one
-                replies = [r for r in (self.handle(m) for m in msg) if r is not None]
-                if replies:
-                    self.out.write(json.dumps(replies, ensure_ascii=False) + "\n")
-                    self.out.flush()
-                continue
-            reply = self.handle(msg)
-            if reply is not None:
-                self.send(reply)
+        """Read newline-delimited JSON-RPC as bytes (UTF-8, bad bytes replaced) until EOF."""
+        real_stdout = sys.stdout
+        if self.out is None:
+            self.out = real_stdout
+        if stream is None:
+            stream = sys.stdin.buffer
+        sys.stdout = sys.stderr  # stray prints from anything we call cannot corrupt the protocol stream
+        try:
+            for raw in stream:
+                if isinstance(raw, str):
+                    raw = raw.encode("utf-8", errors="replace")
+                try:
+                    self._line(raw)
+                except Exception:  # keep serving whatever one line did
+                    traceback.print_exc(file=self.log)
+                    try:
+                        self.send(self._error(None, -32603, "internal error"))
+                    except Exception:
+                        pass
+        finally:
+            sys.stdout = real_stdout
         return 0

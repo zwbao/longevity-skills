@@ -23,7 +23,7 @@ import sys
 from typing import List
 
 from . import catalog, datasets, dispatch, evidence, frontmatter, manifest, readme, registry, testrun, vendor
-from .common import CATALOG, PLUGIN, README, dump_json, read_json, write_json
+from .common import AGENT_PLUGIN, CATALOG, PLUGIN, README, dump_json, read_json, write_json
 from .doi import normalize_doi
 
 
@@ -80,8 +80,10 @@ def cmd_check() -> int:
     status |= _report(dispatch_errors, "dispatch (coach 常用方法, analyst whitelists)" + (f" [{'; '.join(skipped)}]" if skipped else ""))
     if not errors:
         status |= cmd_catalog(check=True)
-    if PLUGIN.exists():
-        status |= _report([] if read_json(PLUGIN) == plugin_manifest() else [".claude-plugin/plugin.json version differs from VERSION (run: python3 -m tools.lsk build)"], ".claude-plugin/plugin.json")
+    for path in (PLUGIN, AGENT_PLUGIN):
+        if path.exists():
+            rel = path.relative_to(path.parents[2]).as_posix() if path == AGENT_PLUGIN else ".claude-plugin/plugin.json"
+            status |= _report([] if read_json(path) == plugin_manifest(path) else [f"{rel} version differs from VERSION (run: python3 -m tools.lsk build)"], rel)
     status |= cmd_readme(check=True)
     return status
 
@@ -114,14 +116,15 @@ def cmd_build() -> int:
     print(f"SKILL.md tier lines updated: {len(rewritten)}")
     status = cmd_catalog(check=False)
     status |= cmd_readme(check=False)
-    if write_json(PLUGIN, plugin_manifest()):
-        print(".claude-plugin/plugin.json version written")
+    for path in (PLUGIN, AGENT_PLUGIN):
+        if path.exists() and write_json(path, plugin_manifest(path)):
+            print(f"{path.parent.parent.name}/{path.parent.name}/plugin.json version written")
     return status
 
 
-def plugin_manifest() -> dict:
-    """The Claude Code plugin manifest carries the release version from VERSION."""
-    data = read_json(PLUGIN)
+def plugin_manifest(path=PLUGIN) -> dict:
+    """A Claude Code plugin manifest carries the release version from VERSION."""
+    data = read_json(path)
     data["version"] = catalog.version()
     return data
 
