@@ -1,0 +1,187 @@
+{
+  "schema": "longevity-skill/1",
+  "name": "bia-acc-osteosarcopenic-adiposity",
+  "kind": "paper",
+  "tier": "A",
+  "species": [
+    "human"
+  ],
+  "evidence": "cross_sectional",
+  "domains": [
+    "体脂与腰围",
+    "骨骼与肌肉"
+  ],
+  "blurb_zh": "拿 BIA-ACC 生物电阻抗体成分报告上的骨量 T 值、肌量 S 值和体脂率，按论文切点看骨量是否降低、肌量是否降低、脂肪是否偏多，以及三项是否同时出现（骨肌减少性肥胖表型）。",
+  "intents": [
+    "body_fat_waist",
+    "frailty_mortality"
+  ],
+  "triage": {
+    "reason_zh": "全文印出 BIA-ACC T 值、S 值和男女体脂率切点，个人可用自己的 BIA-ACC 报告判定骨肌减少性肥胖表型；T、S 值的算法为厂商专有，只能读设备报告上的数。",
+    "reviewed": false
+  },
+  "paper": {
+    "doi": "10.1007/s11357-026-02496-1",
+    "title": "Sex- and age-specific patterns in bone, muscle, and fat across adulthood and their relation to osteosarcopenic adiposity phenotype: a cross-sectional study",
+    "title_zh": "成年期骨、肌肉和脂肪的性别与年龄特异模式及其与骨肌减少性肥胖表型的关系：一项横断面研究",
+    "journal": "GeroScience",
+    "year": 2026,
+    "authors": "Ilich 等",
+    "article_url": "https://link.springer.com/article/10.1007/s11357-026-02496-1",
+    "supplements": [],
+    "card_notes": [
+      "切点照论文方法部分：T 值 ≥ −1.0 骨量在参考范围内，−2.5 < T < −1.0 中度降低，T ≤ −2.5 明显降低；S 值 ≤ −1.0 肌量降低；体脂率男 ≥ 25%、女 ≥ 32% 为脂肪偏多；三项同时出现为 BIA-ACC 操作性骨肌减少性肥胖（OSA）表型。",
+      "T 值和 S 值由 BIA-ACC（BioTekna，意大利）设备按厂商专有的预测方程和参考人群算出，论文写明这些方程和参考库不公开；技能只读设备报告上的数，不重算，也不接受 DXA 骨密度 T 值或其他体脂秤读数。",
+      "论文没有补充材料，原始数据不公开（Data availability）；表 1、表 2（按 OSA 分组的均值）在缓存的全文页里没有内容，出版社表格页被人机验证拦住，未能打开。论文没有印出单个人的计算示例。",
+      "作者之一 Dario Boschiero 署名单位为 BioTekna 的 Open Academy of Medicine（设备厂商）；论文声明无利益冲突。"
+    ],
+    "summary_zh": "这项研究用 BIA-ACC 生物电阻抗设备测了 20–90 岁意大利成人的骨量、肌肉量、体脂和肌内脂肪，发现男女随年龄变化的拐点不同，而骨量低、肌量低和脂肪多同时出现的人（骨肌减少性肥胖表型）骨和肌肉曲线更早往下走，年轻人里也有。个人报告只把论文印出的切点套在这个人 BIA-ACC 报告上的 T 值、S 值和体脂率上，给出三项分档和是否符合这一表型，不重算设备分数，也不推算年龄拐点。",
+    "summary_status": "draft"
+  },
+  "entry": {
+    "script": "scripts/personal_report.py",
+    "measurements_flag": "--measurements",
+    "measurements_header": [
+      "item",
+      "value",
+      "unit"
+    ],
+    "age_flag": "--age",
+    "sex_flag": "--sex",
+    "out_flag": "--out",
+    "result_json": true
+  },
+  "population": {
+    "age_years": [
+      20,
+      90
+    ],
+    "note_zh": "9717 名意大利白人成人（女 6412、男 3305），2010–2014 年多中心横断面研究，排除慢性病、近期骨折、影响骨代谢的药物和长期用药。"
+  },
+  "inputs_status": "verified",
+  "inputs": [
+    {
+      "key": "bia_acc_t_score",
+      "label_zh": "BIA-ACC 骨量 T 值",
+      "aliases": [
+        "BIA-ACC T-score",
+        "T-score BIA-ACC",
+        "T-scoreBIA-ACC",
+        "BIA-ACC T值",
+        "BIA T-score",
+        "BIA骨量T值",
+        "全身骨量T值",
+        "生物电阻抗骨量T值"
+      ],
+      "unit": "score",
+      "range": [
+        -7,
+        7
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "读 BIA-ACC 报告上全身骨量的 T 值（标准差单位）。双能 X 线（DXA）骨密度报告上的 T 值不是这个数，不能填。"
+    },
+    {
+      "key": "bia_acc_s_score",
+      "label_zh": "BIA-ACC 肌量 S 值",
+      "aliases": [
+        "BIA-ACC S-score",
+        "S-score BIA-ACC",
+        "S-scoreBIA-ACC",
+        "S-score",
+        "S值",
+        "BIA-ACC S值",
+        "肌量S值",
+        "骨骼肌S值"
+      ],
+      "unit": "score",
+      "range": [
+        -7,
+        7
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "读 BIA-ACC 报告上骨骼肌量的 S 值（标准差单位）。"
+    },
+    {
+      "key": "body_fat_pct",
+      "label_zh": "体脂率",
+      "aliases": [
+        "FM%",
+        "fat mass %",
+        "fat mass percentage",
+        "body fat %",
+        "body fat percentage",
+        "PBF",
+        "脂肪率",
+        "体脂百分比",
+        "脂肪百分比"
+      ],
+      "unit": "%",
+      "range": [
+        3,
+        75
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "读同一份 BIA-ACC 报告上脂肪量占体重的百分比，写成百分数（例如 28.5），不要写成 0.285。"
+    },
+    {
+      "key": "sex",
+      "label_zh": "性别",
+      "required": true,
+      "from": "profile",
+      "flag": "--sex"
+    },
+    {
+      "key": "age",
+      "label_zh": "实足年龄",
+      "unit": "a",
+      "range": [
+        18,
+        120
+      ],
+      "required": false,
+      "from": "profile",
+      "flag": "--age",
+      "note_zh": "研究对象 20–90 岁。给了年龄时，报告会说明是否在研究年龄内。"
+    }
+  ],
+  "outputs": [
+    {
+      "key": "bone_category",
+      "label_zh": "骨量分档（T 值）",
+      "unit": ""
+    },
+    {
+      "key": "reduced_bone_mass",
+      "label_zh": "骨量降低（T < −1.0）",
+      "unit": ""
+    },
+    {
+      "key": "reduced_muscle_mass",
+      "label_zh": "肌量降低（S ≤ −1.0）",
+      "unit": ""
+    },
+    {
+      "key": "adiposity",
+      "label_zh": "脂肪偏多（男 ≥25%，女 ≥32%）",
+      "unit": ""
+    },
+    {
+      "key": "components_met",
+      "label_zh": "达到切点的项数（0–3）",
+      "unit": "1"
+    },
+    {
+      "key": "osa_phenotype",
+      "label_zh": "BIA-ACC 操作性骨肌减少性肥胖表型",
+      "unit": ""
+    }
+  ],
+  "validation": {
+    "status": "draft",
+    "gap_zh": "方法部分印出了全部切点（T 值 −1.0 和 −2.5、S 值 −1.0、体脂率男 25%、女 32%），测试只核对切点边界与原文一致；正文和图注没有印出任何个人的 T 值、S 值、体脂率及其分档示例，论文没有补充材料，原始数据不公开；表 1、表 2 只是按 OSA 分组的均值，缓存全文里没有表格内容，出版社表格页被人机验证拦住未能打开，所以不算复现。"
+  }
+}
