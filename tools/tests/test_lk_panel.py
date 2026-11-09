@@ -113,3 +113,12 @@ def test_specific_form_also_shows_broader_human_rows_labelled(capsys):
         assert out["broader_name"]["query"] == "维生素D" and "不专指" in out["broader_name"]["label_zh"]
     b12 = _cli(capsys, "evidence", "维生素B12")["results"][0]
     assert "broader_name" not in b12, "a two-digit form (B12) is never cut: 维生素B1 is a different vitamin"
+
+
+def test_evidence_search_keeps_combinations_and_english_trial_names(capsys):
+    out = _cli(capsys, "evidence", "dasatinib")["results"][0]
+    human = [r["entity"] for r in (out.get("human") or {}).get("rows", [])]
+    assert any("quercetin" in e for e in human), "a combination row is found even when other rows are named exactly dasatinib"
+    for q in ("time-restricted eating", "16:8 fasting"):
+        res = _cli(capsys, "evidence", q)["results"][0]
+        assert len(res.get("trial_effects", [])) >= 1, q

@@ -134,8 +134,11 @@ def detect(lib: Library, text: str) -> Dict[str, Any]:
             complete.append({"name": m["name"], "label_zh": m.get("label_zh"), "uses": m.get("uses_from_have", []),
                              "outputs": outputs,
                              "paper": " ".join(str(paper[k]) for k in ("journal", "year") if paper.get(k)) or None})
+        from .reference import analyte_for  # local import: reference imports this module
+        ref_items = sorted({a for a in (analyte_for(r["item"]) for r in person["rows"]) if a})
         people.append({"label": person["label"], "age": person["age"], "sex": person["sex"],
-                       "rows": len(person["rows"]), "complete_methods": complete})
+                       "rows": len(person["rows"]), "complete_methods": complete,
+                       "age_reference_items": len(ref_items) if person["sex"] and len(ref_items) >= 3 else 0})
     return {"people": people, **lib.stamp()}
 
 
@@ -143,9 +146,13 @@ def hook_context(result: Dict[str, Any]) -> Optional[str]:
     """One short paragraph for an agent host's prompt hook, or None when the text has no usable panel."""
     lines = []
     for p in result["people"]:
+        who = f"Person {p['label']}" if p["label"] else "The person"
+        if p.get("age_reference_items"):
+            lines.append(f"- {who}: {p['age_reference_items']} routine values fit the age reference model -> MCP tool "
+                         f"estimate_age (panel_text) gives the age these values look like, a 90% interval and age-band "
+                         f"probabilities (fitted on NHANES 2011-2016, held-out mean error ~10 years; not a published method).")
         if not p["complete_methods"]:
             continue
-        who = f"Person {p['label']}" if p["label"] else "The person"
         methods_text = "; ".join(
             f"{m['name']} [{m['paper'] or 'paper in read_method'}] -> {', '.join(m['outputs'][:8]) or 'see read_method'}"
             for m in p["complete_methods"][:6])
@@ -154,8 +161,8 @@ def hook_context(result: Dict[str, Any]) -> Optional[str]:
         return None
     return ("longevity plugin: the prompt contains measurements that published methods in the longevity library can "
             "compute from directly.\n" + "\n".join(lines) + "\n"
-            "Before answering a question about this person's biological age, mortality or survival, kidney function or "
-            "body composition, run the relevant method: MCP tool run_method with name=<method> and panel_text=<that "
+            "Before answering a question about this person's age, biological age, mortality or survival, kidney function "
+            "or body composition, run the relevant method: MCP tool run_method with name=<method> and panel_text=<that "
             "person's part of the prompt, copied as is> (or `longevity run <method> --panel-file <file>`). A fitted, "
             "published model is more reliable than judging the values by eye. Then weigh its result together with the "
             "rest of the profile (history, medicines), cite the paper and its caveats, and say if you chose not to use it.")

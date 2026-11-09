@@ -13,7 +13,7 @@ import sys
 import traceback
 from typing import Any, Callable, Dict, List, Optional
 
-from . import evidence, methods, noise, panel
+from . import evidence, methods, noise, panel, reference
 from .library import Library, LKError
 from .run import run as run_method
 
@@ -73,6 +73,18 @@ TOOLS: List[Dict[str, Any]] = [
          "allow_mixed_dates": {"type": "boolean"},
          "include_report": {"type": "boolean", "description": "also return the method's own report in Markdown"}},
          "required": ["name"]}},
+    {"name": "estimate_age",
+     "description": "What age a person's routine labs and body measurements look like, from a reference model this "
+                    "library fitted on public US NHANES data (2011-2016; held-out 2017-2018 mean error about 10 years). "
+                    "Not a published method and not a biological age. Returns an estimate, a 90% interval and the "
+                    "probability of each age band (18-29 ... 70+). Use when the age is unknown or to compare people. "
+                    "Pass panel_text (any language; several people are estimated one by one) or measurements, and sex.",
+     "inputSchema": {"type": "object", "properties": {
+         "panel_text": {"type": "string"},
+         "measurements": _MEAS,
+         "sex": {"type": "string", "enum": ["male", "female"]},
+         "bands": {"type": "string", "description": "age bands to report probabilities for, e.g. '18-30, 30-45, 45-60, 60-75, 75+' "
+                                                    "(a shared edge belongs to the higher band); default decades"}}}},
     {"name": "query_evidence",
      "description": "What the papers collected in this library state about drugs, supplements, diets, genes or proteins: "
                     "grouped into human studies, animal and cell experiments, each row with DOI and location; plus "
@@ -200,6 +212,8 @@ def call(lib: Library, name: str, args: Dict[str, Any]) -> Dict[str, Any]:
         return run_method(lib, str(args.get("name", "")), payload, allow_draft=args.get("allow_draft") is True,
                           allow_mixed_dates=args.get("allow_mixed_dates") is True,
                           include_report=args.get("include_report") is True)
+    if name == "estimate_age":
+        return reference.estimate_from_payload(lib, {k: args.get(k) for k in ("panel_text", "measurements", "sex", "bands")})
     if name == "query_evidence":
         limit = _int(args["limit"], "limit") if args.get("limit") is not None else 12
         return evidence.query(lib, _str_list(args.get("entities"), "entities"), limit=limit)

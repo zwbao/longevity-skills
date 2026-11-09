@@ -7,7 +7,7 @@ import json
 import sys
 from typing import Any, Dict, List, Optional
 
-from . import evidence, methods, noise, panel
+from . import evidence, methods, noise, panel, reference
 from .library import Library, LKError, open_library
 from .run import parse_measurement
 from .run import run as run_method
@@ -26,6 +26,7 @@ longevity: methods, evidence and within-person variation from the longevity-skil
   longevity run china-par-ascvd-risk --input person.json   (or --input - for stdin)
   longevity run accelerated-biological-aging-risk --panel-file labs.txt   a pasted panel, any language
   longevity detect labs.txt                            which methods a pasted panel completes, per person
+  longevity estimate-age --panel-file labs.txt         what age the labs look like (reference model, not a paper)
   longevity evidence NMN [雷帕霉素 ...]                 what the collected papers state, grouped human/animal/cell
   longevity change --marker 收缩压 --before 138 --after 131       is a change beyond normal variation
   longevity trend --marker 空腹血糖 --series 2024-09-03:5.0 2025-09-02:5.3 2026-09-01:5.6
@@ -207,6 +208,24 @@ def main(argv: Optional[List[str]] = None) -> int:
             p.add_argument("--all", action="store_true", help="also tier-B lookups and tools")
             a = p.parse_args(rest)
             out = methods.methods(lib, intent=a.intent, have=_split_csv(a.have), include_lookups=a.all)
+        elif cmd == "estimate-age":
+            p = Parser(prog="longevity estimate-age",
+                       description="What age a person's routine labs look like (reference model fitted on NHANES; not a published method).")
+            p.add_argument("--panel-file", help="pasted panel as text (any language; several people are estimated one by one); - for stdin")
+            p.add_argument("--sex")
+            p.add_argument("--bands", help="e.g. '18-30,30-45,45-60,60-75,75+' (default decades)")
+            p.add_argument("-m", "--measurement", action="append", default=[], metavar="ITEM=VALUE UNIT")
+            a = p.parse_args(rest)
+            payload: Dict[str, Any] = {"bands": a.bands} if a.bands else {}
+            if a.sex:
+                payload["sex"] = {"男": "male", "女": "female", "m": "male", "f": "female"}.get(a.sex.strip().lower(), a.sex.strip().lower())
+            if a.panel_file:
+                payload["panel_text"] = sys.stdin.read() if a.panel_file == "-" else open(a.panel_file, encoding="utf-8").read()
+            if a.measurement:
+                payload["measurements"] = [parse_measurement(x) for x in a.measurement]
+            if not payload.get("panel_text") and not payload.get("measurements"):
+                raise LKError("give --panel-file or -m ITEM=VALUE UNIT", "usage", 2)
+            out = reference.estimate_from_payload(lib, payload)
         elif cmd == "detect":
             p = Parser(prog="longevity detect", description="Which methods a pasted panel completes, per person.")
             p.add_argument("file", nargs="?", default="-", help="text file, or - for stdin (default)")
