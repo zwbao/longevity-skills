@@ -1,0 +1,334 @@
+{
+  "schema": "longevity-skill/1",
+  "name": "handgrip-asymmetry-weakness-transitions",
+  "kind": "paper",
+  "tier": "A",
+  "species": [
+    "human"
+  ],
+  "evidence": "cohort",
+  "domains": [
+    "跌倒与肌肉"
+  ],
+  "blurb_zh": "用前后两次自己测的左右手握力，按论文切点判断两手是否不对称、握力是否偏低，分成四种变化模式，给出中国中老年队列里该模式的全因死亡风险比。",
+  "intents": [
+    "frailty_mortality"
+  ],
+  "triage": {
+    "reason_zh": "正文印出握力不对称比<0.90或>1.10及AWGS2025低握力切点（男34/28、女20/18 kg），个人两次测量可分型并查回表2与补充表S12、S14的风险比；论文没印个人算例，验证保持草稿。",
+    "reviewed": false
+  },
+  "paper": {
+    "doi": "10.1007/s11357-026-02558-4",
+    "title": "Two-wave status patterns of handgrip strength asymmetry and low handgrip strength in relation to all-cause mortality in middle-aged and older Chinese adults",
+    "title_zh": "中国中老年人握力不对称和低握力的两次状态模式与全因死亡",
+    "journal": "GeroScience",
+    "year": 2026,
+    "authors": "Xu 等",
+    "article_url": "https://link.springer.com/article/10.1007/s11357-026-02558-4",
+    "supplements": [
+      {
+        "label": "Supplementary Material ESM1（补充表 S1–S26，PDF）",
+        "url": "https://static-content.springer.com/esm/art%3A10.1007%2Fs11357-026-02558-4/MediaObjects/11357_2026_2558_MOESM1_ESM.pdf"
+      }
+    ],
+    "card_notes": [
+      "数据来自中国健康与养老追踪调查（CHARLS）2011 和 2013 两轮，8924 名 45 岁及以上、两次双手握力都齐的成人；以 2013 年为起点随访到 2018 年，中位 5.38 年，647 人死亡。",
+      "测量：每只手测两次（Yuejian WL-1000 握力计），各取最高值。左右不对称 = 非惯用手 ÷ 惯用手小于 0.90 或大于 1.10；握力低按亚洲肌少症工作组 2025 标准：不到 65 岁男 <34.0 kg、女 <20.0 kg，65 岁及以上男 <28.0 kg、女 <18.0 kg，每次按当时年龄判断。",
+      "风险比来自 Cox 模型（表 2、补充表 S14 未加权列），调整年龄、性别、教育、城乡、婚姻、收入、吸烟、饮酒、体力活动和体质指数；慢病分层来自补充表 S12，连续变化来自补充表 S11。",
+      "论文没写两手一样时怎样算比值；本技能这时用论文敏感性分析里的强手定义（弱手 ÷ 强手，补充表 S16）。论文没有提供代码。"
+    ],
+    "summary_zh": "这项中国中老年队列研究比较了两年内两次握力测量的变化模式与随后全因死亡的关系，握力低（尤其两次都低或新出现）比两手不对称的关联更一致，两次都不对称也与较高死亡风险有关。个人报告只把你两次测的左右手握力按论文切点分型，并给出该模式在论文人群中相对参照组的风险比，不估算个人死亡概率或预期寿命，也不做诊断。",
+    "summary_status": "draft"
+  },
+  "entry": {
+    "script": "scripts/personal_report.py",
+    "measurements_flag": "--measurements",
+    "measurements_header": [
+      "item",
+      "value",
+      "unit"
+    ],
+    "age_flag": "--age",
+    "sex_flag": "--sex",
+    "out_flag": "--out",
+    "result_json": true
+  },
+  "population": {
+    "age_years": [
+      45,
+      120
+    ],
+    "note_zh": "论文人群是中国 45 岁及以上成人，两次测量间隔约 2 年（2011 和 2013）。间隔差得多、或不到 45 岁时，分型和风险比都不一定适用。"
+  },
+  "inputs_status": "verified",
+  "inputs": [
+    {
+      "key": "grip_left_w1_kg",
+      "label_zh": "第一次左手握力",
+      "aliases": [
+        "left grip 1",
+        "left hand grip wave 1",
+        "left handgrip 1",
+        "grip_left_1",
+        "第一次左手握力",
+        "左手握力(第一次)",
+        "左手握力1"
+      ],
+      "unit": "kg",
+      "accept": {
+        "lb": 0.45359237
+      },
+      "range": [
+        1,
+        100
+      ],
+      "unit_required": true,
+      "required": true,
+      "from": "measurements",
+      "note_zh": "每只手用握力计测两次，取这只手的最高值（论文方法）。"
+    },
+    {
+      "key": "grip_right_w1_kg",
+      "label_zh": "第一次右手握力",
+      "aliases": [
+        "right grip 1",
+        "right hand grip wave 1",
+        "right handgrip 1",
+        "grip_right_1",
+        "第一次右手握力",
+        "右手握力(第一次)",
+        "右手握力1"
+      ],
+      "unit": "kg",
+      "accept": {
+        "lb": 0.45359237
+      },
+      "range": [
+        1,
+        100
+      ],
+      "unit_required": true,
+      "required": true,
+      "from": "measurements",
+      "note_zh": "每只手用握力计测两次，取这只手的最高值（论文方法）。"
+    },
+    {
+      "key": "grip_left_w2_kg",
+      "label_zh": "第二次左手握力",
+      "aliases": [
+        "left grip 2",
+        "left hand grip wave 2",
+        "left handgrip 2",
+        "grip_left_2",
+        "第二次左手握力",
+        "左手握力(第二次)",
+        "左手握力2"
+      ],
+      "unit": "kg",
+      "accept": {
+        "lb": 0.45359237
+      },
+      "range": [
+        1,
+        100
+      ],
+      "unit_required": true,
+      "required": true,
+      "from": "measurements",
+      "note_zh": "每只手用握力计测两次，取这只手的最高值（论文方法）。和第一次同样的方法，论文两次间隔约 2 年。"
+    },
+    {
+      "key": "grip_right_w2_kg",
+      "label_zh": "第二次右手握力",
+      "aliases": [
+        "right grip 2",
+        "right hand grip wave 2",
+        "right handgrip 2",
+        "grip_right_2",
+        "第二次右手握力",
+        "右手握力(第二次)",
+        "右手握力2"
+      ],
+      "unit": "kg",
+      "accept": {
+        "lb": 0.45359237
+      },
+      "range": [
+        1,
+        100
+      ],
+      "unit_required": true,
+      "required": true,
+      "from": "measurements",
+      "note_zh": "每只手用握力计测两次，取这只手的最高值（论文方法）。和第一次同样的方法，论文两次间隔约 2 年。"
+    },
+    {
+      "key": "age_w1_years",
+      "label_zh": "第一次测量时年龄",
+      "aliases": [
+        "age at first measurement",
+        "age wave 1",
+        "age_1",
+        "第一次年龄",
+        "第一次测量年龄"
+      ],
+      "unit": "a",
+      "range": [
+        18,
+        120
+      ],
+      "required": false,
+      "from": "measurements",
+      "note_zh": "第一次的握力低切点按当时年龄段取（不到 65 岁 / 65 岁及以上）。不填时按第二次的年龄算。"
+    },
+    {
+      "key": "bmi_w1_kg_m2",
+      "label_zh": "第一次体质指数",
+      "aliases": [
+        "bmi 1",
+        "bmi wave 1",
+        "bmi_1",
+        "第一次BMI",
+        "第一次体质指数",
+        "BMI(第一次)"
+      ],
+      "unit": "kg/m^2",
+      "range": [
+        10,
+        60
+      ],
+      "required": false,
+      "from": "measurements",
+      "note_zh": "只用于相对握力（最大握力 ÷ 体质指数）的下降；两次都给才算。"
+    },
+    {
+      "key": "bmi_w2_kg_m2",
+      "label_zh": "第二次体质指数",
+      "aliases": [
+        "bmi 2",
+        "bmi wave 2",
+        "bmi_2",
+        "第二次BMI",
+        "第二次体质指数",
+        "BMI(第二次)"
+      ],
+      "unit": "kg/m^2",
+      "range": [
+        10,
+        60
+      ],
+      "required": false,
+      "from": "measurements",
+      "note_zh": "只用于相对握力的下降；两次都给才算。"
+    },
+    {
+      "key": "age",
+      "label_zh": "第二次测量时年龄",
+      "unit": "a",
+      "range": [
+        18,
+        120
+      ],
+      "required": true,
+      "from": "profile",
+      "flag": "--age",
+      "note_zh": "第二次的握力低切点按这个年龄段取；不到 45 岁会提示不在论文人群内。"
+    },
+    {
+      "key": "sex",
+      "label_zh": "性别",
+      "required": true,
+      "from": "profile",
+      "flag": "--sex",
+      "note_zh": "握力低的切点男女不同。"
+    },
+    {
+      "key": "dominant_hand",
+      "label_zh": "惯用手",
+      "required": true,
+      "from": "argument",
+      "flag": "--dominant-hand",
+      "note_zh": "右手、左手或两手一样。左右握力比 = 非惯用手 ÷ 惯用手；两手一样时用弱手 ÷ 强手。"
+    },
+    {
+      "key": "chronic_conditions",
+      "label_zh": "确诊慢病数",
+      "unit": "1",
+      "range": [
+        0,
+        6
+      ],
+      "required": false,
+      "from": "argument",
+      "flag": "--chronic-conditions",
+      "note_zh": "心血管病、高血压、血脂异常、糖尿病、癌症、慢性肺病里确诊了几种；给了就另外列出补充表 S12 对应分层的风险比。"
+    }
+  ],
+  "outputs": [
+    {
+      "key": "grip_ratio_w1",
+      "label_zh": "第一次左右握力比（非惯用手 ÷ 惯用手）",
+      "unit": "1"
+    },
+    {
+      "key": "grip_ratio_w2",
+      "label_zh": "第二次左右握力比（非惯用手 ÷ 惯用手）",
+      "unit": "1"
+    },
+    {
+      "key": "hgsa_pattern",
+      "label_zh": "左右不对称的两次模式",
+      "unit": ""
+    },
+    {
+      "key": "hgsa_pattern_hr",
+      "label_zh": "该不对称模式的全因死亡风险比（表 2，参照两次都正常）",
+      "unit": "1"
+    },
+    {
+      "key": "max_grip_w1_kg",
+      "label_zh": "第一次最大握力",
+      "unit": "kg"
+    },
+    {
+      "key": "max_grip_w2_kg",
+      "label_zh": "第二次最大握力",
+      "unit": "kg"
+    },
+    {
+      "key": "lhgs_pattern",
+      "label_zh": "握力低的两次模式",
+      "unit": ""
+    },
+    {
+      "key": "lhgs_pattern_hr",
+      "label_zh": "该握力低模式的全因死亡风险比（表 2，参照两次都不低）",
+      "unit": "1"
+    },
+    {
+      "key": "joint_score_w2",
+      "label_zh": "第二次联合异常分（0–2）",
+      "unit": "1"
+    },
+    {
+      "key": "joint_score_hr",
+      "label_zh": "该联合异常分的全因死亡风险比（表 2，参照 0 分）",
+      "unit": "1"
+    },
+    {
+      "key": "delta_aai",
+      "label_zh": "不对称指数变化（第二次 − 第一次）",
+      "unit": "1"
+    },
+    {
+      "key": "loss_rgs",
+      "label_zh": "相对握力下降（第一次 − 第二次，最大握力 ÷ 体质指数）",
+      "unit": ""
+    }
+  ],
+  "validation": {
+    "status": "draft",
+    "gap_zh": "正文方法和结果、表 2 的文字转述、补充表 S11、S12、S14 印出了全部切点和风险比，测试只核对分型和查表与印出的数一致；正文、表格和补充材料 ESM1（S1–S26 全部打开过）都没有印出任何个人两次握力对应结果的算例，所以不算复现。论文没有提供代码。"
+  }
+}
