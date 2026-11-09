@@ -1,0 +1,219 @@
+{
+  "schema": "longevity-skill/1",
+  "name": "mci-two-year-dementia-conversion",
+  "kind": "paper",
+  "tier": "A",
+  "species": [
+    "human"
+  ],
+  "evidence": "cohort",
+  "domains": [
+    "脑、认知与痴呆"
+  ],
+  "blurb_zh": "已诊断轻度认知障碍的人，用记忆门诊六项量表（MMSE、CDR、ADAS-Cog、FAQ）估两年内转为痴呆的概率。",
+  "intents": [
+    "cognition_dementia"
+  ],
+  "triage": {
+    "reason_zh": "作者在 GitHub 公开了训练好的模型；用 MMSE、CDR 全局分、CDR-SB、ADAS-Cog 11/13 和 FAQ 六项量表算两年内转化为痴呆的校准概率。",
+    "reviewed": false
+  },
+  "paper": {
+    "doi": "10.1007/s11357-026-02551-x",
+    "title": "Multimodal prediction of MCI-to-dementia conversion over a two-year window",
+    "title_zh": "轻度认知障碍两年内转为痴呆的多模态预测",
+    "journal": "GeroScience",
+    "year": 2026,
+    "authors": "Simkhada 等",
+    "article_url": "https://link.springer.com/article/10.1007/s11357-026-02551-x",
+    "supplements": [
+      {
+        "label": "ESM 1（补充表 S1–S7）",
+        "url": "https://static-content.springer.com/esm/art%3A10.1007%2Fs11357-026-02551-x/MediaObjects/11357_2026_2551_MOESM1_ESM.docx"
+      }
+    ],
+    "code_url": "https://github.com/bipulsimkhada/mci_progression_ml/tree/c67358dbb0960b41c2b1fd775114d000bae13081",
+    "card_notes": [
+      "个人结果用的是作者仓库里只用六项认知与功能量表训练的模型（models/final_model_cognitive_scores.pkl，commit c67358d），这是论文消融实验里的“只用认知量表”模型，不是论文主打的含磁共振的多模态模型。",
+      "模型的树、五组校准参数和切点从该文件导出到技能的 data/cog_model.json；导出文件不含 ADNI 训练数据。作者仓库没有写许可证。"
+    ],
+    "summary_zh": "这项研究用 ADNI 队列里已诊断轻度认知障碍的人（人类）的单次就诊数据训练机器学习模型，发现认知与功能量表、APOE ε4 和结构磁共振合在一起，比任何单一类数据更能预测两年内是否转为痴呆。个人报告只用六项认知与功能量表、按作者公开的量表模型算两年转化概率，不算含磁共振和基因的主模型。",
+    "summary_status": "draft"
+  },
+  "entry": {
+    "script": "scripts/personal_report.py",
+    "measurements_flag": "--scores",
+    "measurements_header": [
+      "marker",
+      "value",
+      "unit"
+    ],
+    "medications_flag": "--medications",
+    "labs_flag": "--labs",
+    "out_flag": "--out",
+    "result_json": true
+  },
+  "inputs_status": "verified",
+  "inputs": [
+    {
+      "key": "mmse_score",
+      "label_zh": "简易精神状态检查（MMSE）",
+      "aliases": [
+        "MMSE",
+        "MMSCORE",
+        "Mini-Mental State Examination",
+        "简易精神状态检查",
+        "简易精神状态检查量表",
+        "简易智能精神状态检查",
+        "简易智能精神状态检查量表",
+        "简易精神状态量表"
+      ],
+      "unit": "score",
+      "range": [
+        0,
+        30
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "总分 0–30，越低越差。"
+    },
+    {
+      "key": "cdr_global_score",
+      "label_zh": "临床痴呆评定总分（CDR 全局）",
+      "aliases": [
+        "CDR",
+        "CDR global",
+        "CDR Global",
+        "CDR-GS",
+        "CDGLOBAL",
+        "Clinical Dementia Rating",
+        "临床痴呆评定量表",
+        "临床痴呆评定",
+        "临床痴呆评定总分",
+        "CDR总分",
+        "CDR全局分"
+      ],
+      "unit": "score",
+      "range": [
+        0,
+        3
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "只能是 0、0.5、1、2、3；不要和 CDR-SB（各项之和，0–18）混。"
+    },
+    {
+      "key": "cdr_sb_score",
+      "label_zh": "临床痴呆评定各项之和（CDR-SB）",
+      "aliases": [
+        "CDR-SB",
+        "CDRSB",
+        "CDR SB",
+        "CDR sum of boxes",
+        "Clinical Dementia Rating - Sum of Boxes",
+        "CDR各项之和",
+        "CDR总和",
+        "CDR盒子总分"
+      ],
+      "unit": "score",
+      "range": [
+        0,
+        18
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "六个方框之和，0–18，0.5 的倍数。"
+    },
+    {
+      "key": "adas11_score",
+      "label_zh": "阿尔茨海默病评估量表认知部分 11 项（ADAS-Cog 11）",
+      "aliases": [
+        "ADAS11",
+        "ADAS-Cog 11",
+        "ADAS-Cog11",
+        "ADAS-cog",
+        "ADAS-Cog",
+        "TOTSCORE",
+        "阿尔茨海默病评估量表认知部分",
+        "阿尔茨海默病评估量表-认知",
+        "ADAS-Cog 11项"
+      ],
+      "unit": "score",
+      "range": [
+        0,
+        70
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "11 项版本，0–70，越高越差。"
+    },
+    {
+      "key": "adas13_score",
+      "label_zh": "阿尔茨海默病评估量表认知部分 13 项（ADAS-Cog 13）",
+      "aliases": [
+        "ADAS13",
+        "ADAS-Cog 13",
+        "ADAS-Cog13",
+        "TOTAL13",
+        "ADAS-Cog 13项"
+      ],
+      "unit": "score",
+      "range": [
+        0,
+        85
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "13 项版本（加延迟回忆和数字划消），0–85，比 11 项版本多 0–15 分。"
+    },
+    {
+      "key": "faq_score",
+      "label_zh": "功能活动问卷（FAQ）",
+      "aliases": [
+        "FAQ",
+        "FAQTOTAL",
+        "Functional Activities Questionnaire",
+        "功能活动问卷",
+        "社会功能活动问卷",
+        "Pfeffer功能活动问卷"
+      ],
+      "unit": "score",
+      "range": [
+        0,
+        30
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "十项日常活动，每项 0–3，合计 0–30，越高越差。"
+    }
+  ],
+  "outputs": [
+    {
+      "key": "conversion_probability_pct",
+      "label_zh": "24 个月内由轻度认知障碍转为痴呆的校准概率（六项量表模型）",
+      "unit": "%"
+    },
+    {
+      "key": "model_group",
+      "label_zh": "相对模型切点的分组（above_threshold 归入转化组，below_threshold 归入稳定组）"
+    },
+    {
+      "key": "model_threshold_pct",
+      "label_zh": "六项量表模型自己的判别切点",
+      "unit": "%"
+    }
+  ],
+  "data_files": [
+    {
+      "path": "data/cog_model.json",
+      "source_url": "https://github.com/bipulsimkhada/mci_progression_ml/blob/c67358dbb0960b41c2b1fd775114d000bae13081/models/final_model_cognitive_scores.pkl",
+      "license": "作者仓库未声明许可证；此文件只含从该模型导出的树分裂点、叶值、校准参数和切点，不含 ADNI 数据",
+      "sha256": "90221b2f43e6c6377e4de62e45a0c1881e1cd61fabcff4959b387ddb8cb82268",
+      "redistributable": "unknown"
+    }
+  ],
+  "validation": {
+    "status": "draft",
+    "gap_zh": "论文正文、补充材料 ESM 1（表 S1–S7、图 S1）和作者仓库都没有印出任何个人输入对应的转化概率，所以没有可复现的个人示例。论文对六项量表模型印出的唯一数字是独立测试集上的消融结果（只用认知量表时平衡准确率比主模型低 4.73%，主模型 bootstrap 均值 81.97%）。离线核对：用作者仓库的 final_dataset.csv 和同一划分（scikit-learn 1.8.0，训练 1607、测试 401 例，与论文印出的人数一致），本技能导出的模型在测试集上的 bootstrap 平衡准确率均值是 77.24%，81.97−77.24=4.73，与论文一致；导出模型与原 pkl 在 1,568 个合成输入上最大差 1.3e-7。这一核对要用 ADNI 个人数据，ADNI 数据使用协议不允许放进本仓库，所以没有写成仓库里的测试。"
+  }
+}
