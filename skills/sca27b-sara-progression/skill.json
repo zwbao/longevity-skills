@@ -1,0 +1,393 @@
+{
+  "schema": "longevity-skill/1",
+  "name": "sca27b-sara-progression",
+  "kind": "paper",
+  "tier": "A",
+  "species": [
+    "human"
+  ],
+  "evidence": "cohort",
+  "domains": [
+    "脑、认知与痴呆",
+    "跌倒与肌肉"
+  ],
+  "blurb_zh": "SCA27B（FGF14 基因 GAA 重复扩增的迟发小脑共济失调）患者用医生打的 SARA 共济失调评分和基因报告的重复数，对照论文队列的同龄分数、平均进展速度和较短等位重复数带来的进展差。",
+  "intents": [
+    "gene_variant"
+  ],
+  "triage": {
+    "reason_zh": "八项 SARA 相加后对照正文印出的同龄中位数和健康对照第 90 百分位，较短等位重复数按补充表 S4、S5 的交互系数算出相对中位数 16 的进展差，正文的 +0.48 分/年每 100 重复和各项 78%/47%/147%/174% 都能由补充表复现。",
+    "reviewed": false
+  },
+  "paper": {
+    "doi": "10.1016/j.ebiom.2026.106437",
+    "title": "Longitudinal progression, metrics, age-dependence, and modifiers of ataxia severity in SCA27B: a multicentre study of 219 patients",
+    "title_zh": "SCA27B 共济失调严重程度的纵向进展、量表特性、年龄依赖性和修饰因素：219 名患者的多中心研究",
+    "journal": "eBioMedicine",
+    "year": 2026,
+    "authors": "Traschütz 等",
+    "article_url": "https://doi.org/10.1016/j.ebiom.2026.106437",
+    "supplements": [
+      {
+        "label": "Supplementary Material（mmc1.docx：表 S1、S3、S4、S5，图 S2）",
+        "url": "https://europepmc.org/article/PMC/PMC13503081"
+      }
+    ],
+    "card_notes": [
+      "9 个欧洲和北美中心 2015–2024 年的 219 名基因确诊 SCA27B 患者（较长等位 ≥250 个 GAA 重复），661 次 SARA 评分，116 人有纵向随访；健康对照 390 人（18–79 岁）来自独立的 SARA 验证队列。",
+      "进展用线性混合效应模型估计，先排除 14 名有其他疾病、多病共存或近期跌倒、手术干扰评分的患者：全队列每年 0.54 分，步态项 ≤3 的独立行走亚组每年 0.40 分。",
+      "较短等位重复数是进展的修饰因素：补充表 S4 的“随访时间 × 较短等位重复数”交互项为每个重复 0.004802 分/年；按 >180 和 ≥250 切点分组另行建模。表 S4 的协变量做过中心化，中心化常数没有印出，所以报告只给相对较短等位 16 个重复（队列中位数）的差值。",
+      "同龄对照只用正文印出的数：SCA27B 患者 40–80 岁各年龄段中位数，健康对照 50–80 岁各年龄段第 90 百分位。正文提到的较长等位与起病年龄的回归没有印出截距，不计算。"
+    ],
+    "summary_zh": "这项多中心观察研究追踪了欧洲和北美的 SCA27B 患者，发现共济失调评分主要由步态和站姿驱动、总体进展缓慢，同龄健康老人的评分也会随年龄升高，较短等位上的 GAA 重复数越多进展越快。个人报告只把医生打的 SARA 各项相加，对照论文印出的同龄患者和健康对照分数、队列平均进展速度，并按补充表系数算出较短等位重复数带来的进展差，不预测个人病程，也不做诊断。",
+    "summary_status": "draft"
+  },
+  "entry": {
+    "script": "scripts/personal_report.py",
+    "measurements_flag": "--measurements",
+    "measurements_header": [
+      "item",
+      "value",
+      "unit"
+    ],
+    "age_flag": "--age",
+    "out_flag": "--out",
+    "result_json": true
+  },
+  "population": {
+    "age_years": [
+      24,
+      86
+    ],
+    "note_zh": "论文人群是基因确诊（较长等位 ≥250 个 GAA 重复）的 SCA27B 患者，24–86 岁；健康对照第 90 百分位只印出 50–80 岁。没有确诊 SCA27B 的人，这些对照不适用。"
+  },
+  "inputs_status": "verified",
+  "inputs": [
+    {
+      "key": "sara_gait_score",
+      "label_zh": "SARA 步态",
+      "aliases": [
+        "gait",
+        "SARA gait",
+        "sara item 1",
+        "步态",
+        "行走",
+        "步态评分"
+      ],
+      "unit": "score",
+      "range": [
+        0,
+        8
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "医生按 SARA 标准查体的得分，0–8 分；四肢项一般取左右两侧平均，可以是 0.5 的倍数。"
+    },
+    {
+      "key": "sara_stance_score",
+      "label_zh": "SARA 站姿",
+      "aliases": [
+        "stance",
+        "SARA stance",
+        "sara item 2",
+        "站姿",
+        "站立",
+        "站立平衡"
+      ],
+      "unit": "score",
+      "range": [
+        0,
+        6
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "医生按 SARA 标准查体的得分，0–6 分；四肢项一般取左右两侧平均，可以是 0.5 的倍数。"
+    },
+    {
+      "key": "sara_sitting_score",
+      "label_zh": "SARA 坐姿",
+      "aliases": [
+        "sitting",
+        "SARA sitting",
+        "sara item 3",
+        "坐姿",
+        "坐位平衡"
+      ],
+      "unit": "score",
+      "range": [
+        0,
+        4
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "医生按 SARA 标准查体的得分，0–4 分；四肢项一般取左右两侧平均，可以是 0.5 的倍数。"
+    },
+    {
+      "key": "sara_speech_score",
+      "label_zh": "SARA 言语",
+      "aliases": [
+        "speech",
+        "speech disturbance",
+        "SARA speech",
+        "sara item 4",
+        "言语",
+        "言语障碍",
+        "构音"
+      ],
+      "unit": "score",
+      "range": [
+        0,
+        6
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "医生按 SARA 标准查体的得分，0–6 分；四肢项一般取左右两侧平均，可以是 0.5 的倍数。"
+    },
+    {
+      "key": "sara_finger_chase_score",
+      "label_zh": "SARA 手指追踪",
+      "aliases": [
+        "finger chase",
+        "finger-chase",
+        "SARA finger chase",
+        "sara item 5",
+        "手指追踪",
+        "追指试验"
+      ],
+      "unit": "score",
+      "range": [
+        0,
+        4
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "医生按 SARA 标准查体的得分，0–4 分；四肢项一般取左右两侧平均，可以是 0.5 的倍数。"
+    },
+    {
+      "key": "sara_nose_finger_score",
+      "label_zh": "SARA 指鼻试验",
+      "aliases": [
+        "nose-finger",
+        "nose finger",
+        "nose-finger test",
+        "SARA nose-finger",
+        "sara item 6",
+        "指鼻试验",
+        "指鼻"
+      ],
+      "unit": "score",
+      "range": [
+        0,
+        4
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "医生按 SARA 标准查体的得分，0–4 分；四肢项一般取左右两侧平均，可以是 0.5 的倍数。"
+    },
+    {
+      "key": "sara_fast_alternating_score",
+      "label_zh": "SARA 快速轮替动作",
+      "aliases": [
+        "fast alternating hand movements",
+        "alternating hand movements",
+        "diadochokinesia",
+        "SARA diadochokinesia",
+        "sara item 7",
+        "快速轮替动作",
+        "轮替动作",
+        "快复轮替"
+      ],
+      "unit": "score",
+      "range": [
+        0,
+        4
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "医生按 SARA 标准查体的得分，0–4 分；四肢项一般取左右两侧平均，可以是 0.5 的倍数。"
+    },
+    {
+      "key": "sara_heel_shin_score",
+      "label_zh": "SARA 跟膝胫试验",
+      "aliases": [
+        "heel-shin",
+        "heel shin",
+        "heel-shin slide",
+        "SARA heel-shin",
+        "sara item 8",
+        "跟膝胫试验",
+        "跟膝胫"
+      ],
+      "unit": "score",
+      "range": [
+        0,
+        4
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "医生按 SARA 标准查体的得分，0–4 分；四肢项一般取左右两侧平均，可以是 0.5 的倍数。"
+    },
+    {
+      "key": "gaa_long_allele_repeats",
+      "label_zh": "FGF14 GAA 重复数（较长等位）",
+      "aliases": [
+        "long allele",
+        "longer allele",
+        "GAA long allele",
+        "FGF14 long allele",
+        "FGF14 GAA longer allele",
+        "较长等位",
+        "长等位",
+        "较长等位基因重复数",
+        "FGF14 长等位"
+      ],
+      "unit": "1",
+      "range": [
+        0,
+        2000
+      ],
+      "required": false,
+      "from": "measurements",
+      "note_zh": "基因报告上两个数里大的那个，单位是重复个数，不是碱基对数。论文人群为 251–937 个重复。"
+    },
+    {
+      "key": "gaa_short_allele_repeats",
+      "label_zh": "FGF14 GAA 重复数（较短等位）",
+      "aliases": [
+        "short allele",
+        "shorter allele",
+        "GAA short allele",
+        "FGF14 short allele",
+        "FGF14 GAA shorter allele",
+        "较短等位",
+        "短等位",
+        "较短等位基因重复数",
+        "FGF14 短等位"
+      ],
+      "unit": "1",
+      "range": [
+        0,
+        2000
+      ],
+      "required": false,
+      "from": "measurements",
+      "note_zh": "基因报告上两个数里小的那个，单位是重复个数，不是碱基对数。论文人群中位数 16（四分位 9–53），最大 348。"
+    },
+    {
+      "key": "age",
+      "label_zh": "评分时年龄",
+      "unit": "a",
+      "range": [
+        18,
+        110
+      ],
+      "required": false,
+      "from": "profile",
+      "flag": "--age",
+      "note_zh": "做 SARA 评分那天的年龄；给了才做同年龄段对照。论文对照的第 90 百分位只印到 50–80 岁。"
+    }
+  ],
+  "outputs": [
+    {
+      "key": "sara_total_score",
+      "label_zh": "SARA 总分（八项相加，0–40）",
+      "unit": "score"
+    },
+    {
+      "key": "ambulatory_subgroup",
+      "label_zh": "是否属于步态项 ≤3 的独立行走亚组",
+      "unit": ""
+    },
+    {
+      "key": "cohort_progression_points_per_year",
+      "label_zh": "所属组的队列平均进展（SARA 分/年）",
+      "unit": "score"
+    },
+    {
+      "key": "control_p90_for_age_decade",
+      "label_zh": "同年龄段健康对照 SARA 第 90 百分位",
+      "unit": "score"
+    },
+    {
+      "key": "margin_over_control_p90",
+      "label_zh": "SARA 总分减去同年龄段对照第 90 百分位",
+      "unit": "score"
+    },
+    {
+      "key": "short_allele_group",
+      "label_zh": "较短等位重复数分组（≤180 / 181–249 / ≥250）",
+      "unit": ""
+    },
+    {
+      "key": "short_allele_progression_difference",
+      "label_zh": "相对较短等位 16 个重复的模型进展差（SARA 分/年，补充表 S4）",
+      "unit": "score"
+    }
+  ],
+  "validation": {
+    "status": "reproduced",
+    "examples": [
+      {
+        "locator": "Results, “Modification of progression by repeat size of the shorter allele”（由补充表 S4 交互项算出）",
+        "quote": "GAA repeat number on the shorter allele was associated with faster longitudinal disease progression in SCA27B (+0.48 SARA points/year per 100 repeats, [95% CI: 0.19–0.77], p = 0.001).",
+        "values": [
+          0.48,
+          0.19,
+          0.77
+        ],
+        "tolerance": "两位小数：脚本用补充表 S4 未取整的 0.004802（0.001941–0.007663）每重复，对较短等位 116 与 16 个重复之差（100）算出 0.4802（0.1941–0.7663），四舍五入到正文印出的两位。",
+        "test": "tests/test_manifest.py::test_paper_short_allele_per_100_repeats"
+      },
+      {
+        "locator": "Results, “Progression modelling and interference by frequent comorbidity in late-adult populations”（由补充表 S4 时间项取整）",
+        "quote": "After removing these outliers, the estimated annual progression in SCA27B was 0.54 SARA points/year [95% CI: 0.37–0.71] in the overall cohort",
+        "values": [
+          0.54,
+          0.37,
+          0.71
+        ],
+        "tolerance": "两位小数：补充表 S4 印出 0.5412（0.3678–0.7145），取两位后等于正文。",
+        "test": "tests/test_manifest.py::test_paper_overall_progression_from_table_s4"
+      },
+      {
+        "locator": "Results, “Modification of progression by repeat size of the shorter allele”（由补充表 S5 各项系数相除）",
+        "quote": "At the SARA item level, the short repeat number was associated with accelerated progression of the most responsive items gait and stance (by 78% and 47% per 100 repeats relative to progression in the overall cohort, LMEM, p < 0.001 and p = 0.003); and, in addition, particularly also of the otherwise less responsive items sitting or speech (by 147% and 174% per 100 repeats; p = 0.002 p = 0.017; see Table S5 for details).",
+        "values": [
+          78,
+          47,
+          147,
+          174
+        ],
+        "tolerance": "取整到 1%：表 S5 步态 0.158/0.202=78.2%，站姿 0.074/0.158=46.8%，坐姿 0.053/0.036=147.2%，言语 0.061/0.035=174.3%。",
+        "test": "tests/test_manifest.py::test_paper_item_relative_acceleration"
+      },
+      {
+        "locator": "Discussion，第四段",
+        "quote": "Two thirds of this longitudinal progression were contributed by progressive impairment in the gait and stance domain, although the corresponding SARA items gait and stance make up only 35% of the SARA total score.",
+        "values": [
+          35
+        ],
+        "tolerance": "精确：方法写明步态 0–8、站姿 0–6、总分 0–40，(8+6)/40=35%。",
+        "test": "tests/test_manifest.py::test_paper_gait_stance_share"
+      },
+      {
+        "locator": "Results, “SARA scores in SCA27B relative to healthy controls across age groups”",
+        "quote": "(e.g. median [IQR] of patients with SCA27B vs. 90th percentile in controls; 50–60 years: 6 [3.5–12] vs. 1 point; 60–70 years: 6 [4–10] vs. 2.5 points; 70–80 years: 8.5 [5–12.5] vs. 5 points)",
+        "values": [
+          6,
+          3.5,
+          12,
+          1,
+          4,
+          10,
+          2.5,
+          8.5,
+          5,
+          12.5
+        ],
+        "tolerance": "查表，精确：报告按评分时年龄所在年龄段给出印出的患者中位数和健康对照第 90 百分位。",
+        "test": "tests/test_manifest.py::test_paper_age_decade_lookup"
+      }
+    ]
+  }
+}
