@@ -1,0 +1,203 @@
+{
+  "schema": "longevity-skill/1",
+  "name": "parental-longevity-group",
+  "kind": "paper",
+  "tier": "A",
+  "species": [
+    "human"
+  ],
+  "evidence": "cross_sectional",
+  "domains": [
+    "衰弱与死亡风险"
+  ],
+  "blurb_zh": "按父亲、母亲去世或目前的年龄，把父母长寿分成高、中、低三档，并说明瑞典 70 岁老人里各档的差别。",
+  "intents": [
+    "frailty_mortality"
+  ],
+  "triage": {
+    "reason_zh": "父母长寿分组的规则（双亲都活到 85 岁为高、一方为中、都没有为低，一方 41 岁前去世排除）印在方法里，可用一个人自报的父母年龄分档；多基因长寿评分的位点权重未公布，不算；论文没印个人算例，验证保持草稿。",
+    "reviewed": false
+  },
+  "paper": {
+    "doi": "10.1007/s11357-026-02501-7",
+    "title": "Parental longevity and polygenic longevity scores in relation to ageing-related factors in a population of 70-year-olds followed over six years: The Gothenburg H70 Birth Cohort Study",
+    "title_zh": "父母长寿、多基因长寿评分与 70 岁人群衰老相关因素：哥德堡 H70 出生队列六年随访",
+    "journal": "GeroScience",
+    "year": 2026,
+    "authors": "Seidu 等",
+    "article_url": "https://doi.org/10.1007/s11357-026-02501-7",
+    "supplements": [
+      {
+        "label": "ESM 1（补充表 S1–S6，docx）",
+        "url": "https://static-content.springer.com/esm/art%3A10.1007%2Fs11357-026-02501-7/MediaObjects/11357_2026_2501_MOESM1_ESM.docx"
+      }
+    ],
+    "card_notes": [
+      "分组规则（方法“Definition of the PL groups”）：双亲都活到 85 岁为高，一方活到 85 岁为中，双亲都在 85 岁前去世为低；父母年龄是去世时或目前的年龄，在世且已过 85 岁算活到。",
+      "排除规则（方法“Study population”）：缺一方父母年龄的不补值；有一方父母在 41 岁前去世的排除。父母尚未满 85 岁的情况论文没有遇到，本技能报告为“未定”并给出目前至少的分档。",
+      "人群：瑞典哥德堡 1944 年出生的 70 岁老人 1126 人（高 194、中 488、低 444），800 人约 6 年后复查。各组差别来自年龄和性别调整的回归，正文表 3、表 5 的数值本技能没有引用。",
+      "多基因长寿评分用 PRS-CS 和 GWAS catalogue GCST008598 构建，位点权重未公布，本技能不算。"
+    ],
+    "summary_zh": "这项瑞典 70 岁老人队列研究发现，双亲都活到 85 岁的人平均受教育更多、认知得分更高、炎症指标和同型半胱氨酸更低、高血压和吸烟更少，随访中阿尔茨海默病血液标志物 pTau217 上升也更少；多基因长寿评分主要和社会经济与心血管因素有关。个人报告只按你父母去世或目前的年龄把父母长寿分成高、中、低三档，并转述论文里该档与低档相比的群体差别，不算多基因评分，也不预测个人寿命。",
+    "summary_status": "draft"
+  },
+  "entry": {
+    "script": "scripts/personal_report.py",
+    "measurements_flag": "--measurements",
+    "measurements_header": [
+      "item",
+      "value",
+      "unit"
+    ],
+    "age_flag": "--age",
+    "sex_flag": "--sex",
+    "out_flag": "--out",
+    "result_json": true
+  },
+  "population": {
+    "age_years": [
+      65,
+      80
+    ],
+    "note_zh": "论文人群是 1944 年出生、约 70 岁的瑞典哥德堡居民，父母约 1920 年出生（队列预期寿命约 74 岁）。父母年代或本人年龄差得多时，85 岁切点和各组差别不一定适用。"
+  },
+  "inputs_status": "verified",
+  "inputs": [
+    {
+      "key": "father_death_age_a",
+      "label_zh": "父亲去世时年龄",
+      "aliases": [
+        "父亲去世年龄",
+        "父亲去世时年龄",
+        "父亲享年",
+        "父亲死亡年龄",
+        "father age at death",
+        "father death age",
+        "father's age at death"
+      ],
+      "unit": "a",
+      "range": [
+        0,
+        120
+      ],
+      "required": false,
+      "from": "measurements",
+      "note_zh": "父亲已去世时填去世时的年龄（岁）；和父亲目前年龄只填一项。不到 41 岁去世的，论文排除在分组之外。"
+    },
+    {
+      "key": "father_current_age_a",
+      "label_zh": "父亲目前年龄（在世）",
+      "aliases": [
+        "父亲目前年龄",
+        "父亲现在年龄",
+        "父亲年龄(在世)",
+        "父亲在世年龄",
+        "father current age",
+        "father age now",
+        "father age (alive)"
+      ],
+      "unit": "a",
+      "range": [
+        18,
+        120
+      ],
+      "required": false,
+      "from": "measurements",
+      "note_zh": "父亲在世时填目前年龄（岁）；和父亲去世时年龄只填一项。"
+    },
+    {
+      "key": "mother_death_age_a",
+      "label_zh": "母亲去世时年龄",
+      "aliases": [
+        "母亲去世年龄",
+        "母亲去世时年龄",
+        "母亲享年",
+        "母亲死亡年龄",
+        "mother age at death",
+        "mother death age",
+        "mother's age at death"
+      ],
+      "unit": "a",
+      "range": [
+        0,
+        120
+      ],
+      "required": false,
+      "from": "measurements",
+      "note_zh": "母亲已去世时填去世时的年龄（岁）；和母亲目前年龄只填一项。不到 41 岁去世的，论文排除在分组之外。"
+    },
+    {
+      "key": "mother_current_age_a",
+      "label_zh": "母亲目前年龄（在世）",
+      "aliases": [
+        "母亲目前年龄",
+        "母亲现在年龄",
+        "母亲年龄(在世)",
+        "母亲在世年龄",
+        "mother current age",
+        "mother age now",
+        "mother age (alive)"
+      ],
+      "unit": "a",
+      "range": [
+        18,
+        120
+      ],
+      "required": false,
+      "from": "measurements",
+      "note_zh": "母亲在世时填目前年龄（岁）；和母亲去世时年龄只填一项。"
+    },
+    {
+      "key": "sex",
+      "label_zh": "性别",
+      "required": false,
+      "from": "profile",
+      "flag": "--sex",
+      "note_zh": "女性且分在中等组时，报告加一句论文的性别交互结果。"
+    },
+    {
+      "key": "age",
+      "label_zh": "实足年龄",
+      "unit": "a",
+      "range": [
+        18,
+        120
+      ],
+      "required": false,
+      "from": "profile",
+      "flag": "--age",
+      "note_zh": "论文人群约 70 岁；年龄不在 65–80 岁时报告提示各组比较结果不一定适用。"
+    }
+  ],
+  "outputs": [
+    {
+      "key": "pl_group",
+      "label_zh": "父母长寿分组（high-PL / medium-PL / low-PL；未定或排除时为空）",
+      "unit": ""
+    },
+    {
+      "key": "pl_status",
+      "label_zh": "分组状态（determined 确定 / provisional 父母尚未满 85 岁 / excluded 一方 41 岁前去世）",
+      "unit": ""
+    },
+    {
+      "key": "pl_group_floor",
+      "label_zh": "按目前情况至少的分组",
+      "unit": ""
+    },
+    {
+      "key": "parents_reached_85",
+      "label_zh": "活到 85 岁的父母人数",
+      "unit": "1"
+    },
+    {
+      "key": "parents_mean_age_a",
+      "label_zh": "父母年龄均值（去世或目前年龄）",
+      "unit": "a"
+    }
+  ],
+  "validation": {
+    "status": "draft",
+    "gap_zh": "方法印出了分组切点（85 岁）和排除规则（41 岁前去世），测试按这些规则核对分档；正文、表格和补充表 S1–S6（ESM 1 docx）都没有印出某个人父母年龄对应分组的算例。正文表 1–5 的单独页面和 PDF 被出版社的人机验证拦住，本次没有读到，各组数值没有引用。所以不算复现。"
+  }
+}
