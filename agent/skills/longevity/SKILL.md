@@ -1,11 +1,14 @@
 ---
 name: longevity
 description: >-
-  Longevity and ageing methods from published papers, an evidence store and within-person variation data, behind one
-  command (`longevity`) or MCP server. Use for: biological or phenotypic age from blood tests, eGFR and kidney stage,
-  China-PAR 10-year cardiovascular risk, body fat from tape measurements, methylation or proteomic clocks, what papers say
-  about a drug, supplement, diet or gene (NMN, rapamycin, fasting, a medicine), and whether a lab change is real or within
-  normal variation. 生物年龄、表型年龄、肾小球滤过率、心血管风险、体脂率、甲基化年龄、补剂或药物有没有证据、指标变化是不是真的。
+  Published longevity and ageing methods, an evidence store and within-person variation data behind one command
+  (`longevity`) or MCP server. Use whenever a question gives a person's blood tests or body measurements, in any
+  language (English report or NHANES-style names such as "Albumin (g/dL)", "Lymphocyte percent (%)", "White blood cell
+  count (1000 cells/uL)" are accepted): phenotypic or biological age, 5/10/15/20-year mortality risk and model survival
+  (PhenoAge Gompertz model; needs age), which of two people has higher mortality risk, eGFR and kidney stage, China-PAR
+  10-year cardiovascular risk, body fat from tape measurements, methylation or proteomic clocks; also what papers say
+  about a drug, supplement, diet or gene (NMN, rapamycin, fasting), and whether a lab change is real or within normal
+  variation. 生物年龄、表型年龄、死亡风险、肾小球滤过率、心血管风险、体脂率、甲基化年龄、补剂或药物证据、指标变化是不是真的。
 ---
 
 # longevity
@@ -26,7 +29,7 @@ description: >-
 
 1. **找方法**：`longevity find <用户原话>`；或者 `longevity methods --have 肌酐,白蛋白,年龄,性别`，看 `complete` 是否为 true、还缺什么、还要问用户什么（`also_ask`）。
 2. **看输入**：`longevity describe <方法>`，了解单位、可换算单位、范围和要问用户的项目；`run_example` 是一行可以照着填的命令。
-3. **运行**：例如 `longevity run ckd-epi-2021-egfr --age 62 --sex female -m '肌酐=78 umol/L'`。数值和单位照化验单原样写；是否项、文件路径等用 `--answer 键=值`，例如 `--answer smoker=no`。
+3. **运行**：例如 `longevity run ckd-epi-2021-egfr --age 62 --sex female -m '肌酐=78 umol/L'`。数值和单位照化验单原样写，中英文名称都可以（英文化验单、NHANES 式名称会自动对应）；是否项、文件路径等用 `--answer 键=值`，例如 `--answer smoker=no`。
 4. **查证据**：`longevity evidence NMN`。
 5. **看变化**：`longevity change --marker 收缩压 --before 138 --after 131`；有多次带日期的结果用 `longevity trend`。
 

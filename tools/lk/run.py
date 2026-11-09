@@ -28,6 +28,7 @@ from datetime import date
 from pathlib import Path
 from typing import Any, Dict, List, Optional
 
+from . import aliases, panel
 from .library import Library, LKError
 from .methods import argument_kind, label_of, paper_of, status_of
 
@@ -256,6 +257,25 @@ def run(lib: Library, name: str, payload: Dict[str, Any], allow_draft: bool = Fa
     if not isinstance(payload, dict):
         raise bad("the input must be a JSON object")
 
+    from_panel = False
+    if payload.get("panel_text") is not None:
+        if payload.get("measurements") or payload.get("measurements_file"):
+            raise bad("give panel_text, measurements or measurements_file, not two of them")
+        if not isinstance(payload["panel_text"], str) or not payload["panel_text"].strip():
+            raise bad("panel_text must be the pasted panel as text")
+        people = panel.parse_panel(payload["panel_text"])
+        if len(people) > 1:
+            labels = ", ".join(str(p["label"]) for p in people)
+            raise bad(f"panel_text describes {len(people)} people ({labels}); run once per person with that person's part")
+        person = people[0]
+        payload = {**payload, "measurements": person["rows"]}
+        payload.pop("panel_text")
+        if payload.get("age") is None and person["age"] is not None:
+            payload["age"] = person["age"]
+        if payload.get("sex") is None and person["sex"]:
+            payload["sex"] = person["sex"]
+        from_panel = True
+
     manifest = lib.manifest(name)
     entry = manifest.get("entry") or {}
     skill_dir = lib.skill_dir(name)
@@ -303,19 +323,33 @@ def run(lib: Library, name: str, payload: Dict[str, Any], allow_draft: bool = Fa
     # The engine checks declared measurements itself, with the same skillkit the scripts use.
     checked: Optional[Dict[str, Any]] = None
     rows_for_script = measurements
+    translated: Dict[str, str] = {}
     if measurements and meas_specs:
+        # English report names (NHANES-style labels, LOINC-style long names) the method itself does not list.
+        index = kit.alias_index(meas_specs)
+        measurements = aliases.translate_rows(
+            measurements, lambda n: any(v in index for v in kit.name_variants(n)), kit.normalize_unit)
+        translated = {r["source_item"]: r["item"] for r in measurements if r.get("source_item")}
+        measurements = [{k: v for k, v in r.items() if k != "source_item"} for r in measurements]
         collected = kit.collect_measurements(measurements, manifest)
         if collected.problems:
             return {**head, "status": "input_problem", "checked_by": "engine",
                     "problems": [p.as_dict() for p in collected.problems], "inputs_used": measurements,
+                    **({"translated_names": translated} if translated else {}),
                     "message_zh": "输入没有通过检查，这次没有计算。改正后重新运行；缺的项不要用别的数代替。"}
         units = {spec["key"]: spec.get("unit", "") for spec in meas_specs}
         rows_for_script = [{"item": key, "value": repr(float(v)), "unit": "" if units[key] in (None, "1") else units[key]}
                            for key, v in collected.values.items()]
         unmatched = set(collected.unmatched)
-        rows_for_script += [r for r in measurements if r["item"] in unmatched]
+        if not from_panel:  # rows the person listed on purpose go to the script; free-text leftovers do not
+            rows_for_script += [r for r in measurements if r["item"] in unmatched]
         checked = {"matched": {k: round(v, 6) for k, v in collected.values.items()},
                    "unmatched": sorted(unmatched)}
+        if translated:
+            checked["translated_names"] = translated
+        if from_panel:
+            checked["read_from_panel_text"] = {"rows": len(measurements), "age": payload.get("age"), "sex": payload.get("sex"),
+                                               "note": "unmatched rows were ignored"}
     elif measurements and not entry.get("measurements_flag"):
         raise bad(f"{name} does not take a measurements table")
 

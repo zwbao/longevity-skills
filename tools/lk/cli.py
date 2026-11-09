@@ -7,7 +7,7 @@ import json
 import sys
 from typing import Any, Dict, List, Optional
 
-from . import evidence, methods, noise
+from . import evidence, methods, noise, panel
 from .library import Library, LKError, open_library
 from .run import parse_measurement
 from .run import run as run_method
@@ -24,6 +24,8 @@ longevity: methods, evidence and within-person variation from the longevity-skil
   longevity describe ckd-epi-2021-egfr                 inputs, units, ranges, outputs, validation, paper
   longevity run ckd-epi-2021-egfr --age 62 --sex female -m '肌酐=78 umol/L'
   longevity run china-par-ascvd-risk --input person.json   (or --input - for stdin)
+  longevity run accelerated-biological-aging-risk --panel-file labs.txt   a pasted panel, any language
+  longevity detect labs.txt                            which methods a pasted panel completes, per person
   longevity evidence NMN [雷帕霉素 ...]                 what the collected papers state, grouped human/animal/cell
   longevity change --marker 收缩压 --before 138 --after 131       is a change beyond normal variation
   longevity trend --marker 空腹血糖 --series 2024-09-03:5.0 2025-09-02:5.3 2026-09-01:5.6
@@ -75,6 +77,7 @@ def _run_parser() -> argparse.ArgumentParser:
     p.add_argument("--answer", action="append", default=[], metavar="KEY=VALUE", help="e.g. smoker=no diabetes=yes")
     p.add_argument("--medication", action="append", default=[])
     p.add_argument("--measurements-file")
+    p.add_argument("--panel-file", help="one person's pasted panel as a text file (any language); - for stdin")
     p.add_argument("--allow-draft", action="store_true")
     p.add_argument("--allow-mixed-dates", action="store_true")
     p.add_argument("--report", action="store_true", help="include the method's Markdown report")
@@ -124,6 +127,11 @@ def cmd_run(lib: Library, argv: List[str]) -> Dict[str, Any]:
         payload["medications"] = list(payload.get("medications") or []) + a.medication
     if a.measurements_file:
         payload["measurements_file"] = a.measurements_file
+    if a.panel_file:
+        try:
+            payload["panel_text"] = sys.stdin.read() if a.panel_file == "-" else open(a.panel_file, encoding="utf-8").read()
+        except (OSError, UnicodeDecodeError) as exc:
+            raise LKError(f"--panel-file {a.panel_file}: {exc}", "bad_input", 3)
     return run_method(lib, a.name, payload, allow_draft=a.allow_draft, allow_mixed_dates=a.allow_mixed_dates,
                       include_report=a.report, out_dir=a.out, timeout=a.timeout)
 
@@ -143,6 +151,26 @@ def _globals(argv: List[str]):
             raise LKError("--library needs a path", "usage", 2)
     rest = argv
     return library, pretty, rest
+
+
+def _hook(lib: Library) -> int:
+    """Prompt hook (Claude Code UserPromptSubmit and similar): never blocks, never fails the prompt."""
+    try:
+        raw = sys.stdin.read()
+        try:
+            event = json.loads(raw)
+            text = event.get("prompt") or event.get("user_prompt") or "" if isinstance(event, dict) else ""
+        except ValueError:
+            text = raw
+        if len(text) > 200_000:
+            return 0
+        context = panel.hook_context(panel.detect(lib, text)) if text else None
+        if context:
+            sys.stdout.write(json.dumps({"hookSpecificOutput": {"hookEventName": "UserPromptSubmit",
+                                                                "additionalContext": context}}) + "\n")
+    except Exception:  # noqa: BLE001 - a hook must never break the host
+        pass
+    return 0
 
 
 def main(argv: Optional[List[str]] = None) -> int:
@@ -179,6 +207,16 @@ def main(argv: Optional[List[str]] = None) -> int:
             p.add_argument("--all", action="store_true", help="also tier-B lookups and tools")
             a = p.parse_args(rest)
             out = methods.methods(lib, intent=a.intent, have=_split_csv(a.have), include_lookups=a.all)
+        elif cmd == "detect":
+            p = Parser(prog="longevity detect", description="Which methods a pasted panel completes, per person.")
+            p.add_argument("file", nargs="?", default="-", help="text file, or - for stdin (default)")
+            p.add_argument("--hook", action="store_true",
+                           help="read an agent host's prompt-hook JSON on stdin; print context only when a method applies")
+            a = p.parse_args(rest)
+            if a.hook:
+                return _hook(lib)
+            text = sys.stdin.read() if a.file == "-" else open(a.file, encoding="utf-8").read()
+            out = panel.detect(lib, text)
         elif cmd in ("describe", "read"):
             if len(rest) != 1:
                 raise LKError(f"{cmd} takes one method name", "usage", 2)

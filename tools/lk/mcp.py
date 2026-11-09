@@ -13,7 +13,7 @@ import sys
 import traceback
 from typing import Any, Callable, Dict, List, Optional
 
-from . import evidence, methods, noise
+from . import evidence, methods, noise, panel
 from .library import Library, LKError
 from .run import run as run_method
 
@@ -44,19 +44,25 @@ TOOLS: List[Dict[str, Any]] = [
      "inputSchema": {"type": "object", "properties": {
          "text": {"type": "string"},
          "have": {"type": "array", "items": {"type": "string"}},
+         "panel_text": {"type": "string", "description": "a pasted lab panel or profile, any language, possibly several "
+                                                         "people; returns which methods each person's data completes"},
          "intent": {"type": "string", "description": "an intent id from a previous result"},
          "include_lookups": {"type": "boolean", "description": "also list tier-B lookups and tools"}}}},
     {"name": "read_method",
      "description": "Inputs (units, accepted units, ranges), outputs, validation status and paper of one method.",
      "inputSchema": {"type": "object", "properties": {"name": {"type": "string"}}, "required": ["name"]}},
     {"name": "run_method",
-     "description": "Run one method for one person. Tier C and undeclared methods are refused; draft methods need "
+     "description": "Run one method for one person (pass the panel as panel_text, or rows as measurements). Tier C and "
+                    "undeclared methods are refused; draft methods need "
                     "allow_draft. Input problems (unit, range, missing value) come back as status input_problem with reasons.",
      "inputSchema": {"type": "object", "properties": {
          "name": {"type": "string"},
          "age": {"type": "number"},
          "sex": {"type": "string", "enum": ["male", "female"]},
          "measurements": _MEAS,
+         "panel_text": {"type": "string", "description": "instead of measurements: one person's pasted panel as text, any "
+                                                         "language (e.g. 'Albumin (g/dL) 4.30; Creatinine (umol/L) 57.77; ...'); "
+                                                         "age and sex are read from it when not given"},
          "answers": {"type": "object", "description": "yes/no answers the method asks for, keyed as read_method lists them "
                                                       "(e.g. smoker, diabetes, treated, north)",
                      "additionalProperties": {"type": ["boolean", "string", "number"]}},
@@ -170,6 +176,12 @@ def call(lib: Library, name: str, args: Dict[str, Any]) -> Dict[str, Any]:
         if text is not None and not isinstance(text, str):
             raise LKError("text must be a string", "bad_input", 3)
         have = _str_list(args.get("have"), "have")
+        if args.get("panel_text") is not None:
+            if not isinstance(args["panel_text"], str):
+                raise LKError("panel_text must be a string", "bad_input", 3)
+            out["panel"] = panel.detect(lib, args["panel_text"])
+            if not text and not have:
+                return out
         if text:
             out["find"] = methods.find(lib, text)
         if have or args.get("intent") or args.get("include_lookups") or not text:
@@ -179,7 +191,7 @@ def call(lib: Library, name: str, args: Dict[str, Any]) -> Dict[str, Any]:
     if name == "read_method":
         return methods.describe(lib, str(args.get("name", "")))
     if name == "run_method":
-        payload = {k: args.get(k) for k in ("age", "sex", "measurements", "targets", "measurements_file")}
+        payload = {k: args.get(k) for k in ("age", "sex", "measurements", "targets", "measurements_file", "panel_text")}
         payload["medications"] = _str_list(args.get("medications"), "medications")
         answers = args.get("answers") or {}
         if not isinstance(answers, dict):
