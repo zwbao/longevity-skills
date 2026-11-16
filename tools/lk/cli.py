@@ -7,7 +7,7 @@ import json
 import sys
 from typing import Any, Dict, List, Optional
 
-from . import compare, evidence, methods, noise, panel, reference, store
+from . import cohort, compare, evidence, methods, noise, panel, reference, store
 from .library import Library, LKError, open_library
 from .run import parse_measurement
 from .run import run as run_method
@@ -28,6 +28,8 @@ longevity: methods, evidence and within-person variation from the longevity-skil
   longevity detect labs.txt                            which methods a pasted panel completes, per person
   longevity estimate-age --panel-file labs.txt         what age the labs look like (reference model, not a paper)
   longevity compare-age --panel-file two.txt           which of two protein/methylation profiles looks older
+  longevity contrast --input spec.json                 case vs control for a clock readout in a public dataset (research)
+  longevity annotations GSE_series_matrix_header.txt   sample annotations of a GEO series, to pick age and individual fields
   longevity evidence NMN [雷帕霉素 ...]                 what the collected papers state, grouped human/animal/cell
   longevity change --marker 收缩压 --before 138 --after 131       is a change beyond normal variation
   longevity trend --marker 空腹血糖 --series 2024-09-03:5.0 2025-09-02:5.3 2026-09-01:5.6
@@ -244,6 +246,24 @@ def main(argv: Optional[List[str]] = None) -> int:
             a = p.parse_args(rest)
             text = sys.stdin.read() if a.panel_file == "-" else open(a.panel_file, encoding="utf-8").read()
             out = compare.compare_from_payload(lib, {"panel_text": text, "modality": a.modality})
+        elif cmd == "contrast":
+            p = Parser(prog="longevity contrast",
+                       description="Case versus control for one clock readout in a study (research use). The JSON gives values "
+                                   "{sample: readout} or values_file + value_column, case and control sample lists, measure "
+                                   "(age, acceleration_residual, acceleration_difference, rate, other) and optionally ages, "
+                                   "subjects, annotations_file, age_field, subject_field, design, alpha or threshold_text.")
+            p.add_argument("--input", required=True, help="JSON file, or - for stdin")
+            a = p.parse_args(rest)
+            raw = sys.stdin.read() if a.input == "-" else open(a.input, encoding="utf-8").read()
+            try:
+                spec = json.loads(raw)
+            except json.JSONDecodeError as exc:
+                raise LKError(f"--input is not JSON: {exc}", "bad_input", 3) from exc
+            out = cohort.contrast_from_payload(lib, spec)
+        elif cmd == "annotations":
+            if len(rest) != 1:
+                raise LKError("annotations takes one file (GEO series matrix header or EBI sdrf)", "usage", 2)
+            out = cohort.annotations_from_file(lib, rest[0])
         elif cmd == "detect":
             p = Parser(prog="longevity detect", description="Which methods a pasted panel completes, per person.")
             p.add_argument("file", nargs="?", default="-", help="text file, or - for stdin (default)")

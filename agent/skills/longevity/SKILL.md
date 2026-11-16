@@ -32,6 +32,7 @@ description: >-
 3. **运行**：例如 `longevity run ckd-epi-2021-egfr --age 62 --sex female -m '肌酐=78 umol/L'`。数值和单位照化验单原样写，中英文名称都可以（英文化验单、NHANES 式名称会自动对应）；是否项、文件路径等用 `--answer 键=值`，例如 `--answer smoker=no`。
 4. **查证据**：`longevity evidence NMN`。
 5. **看变化**：`longevity change --marker 收缩压 --before 138 --after 131`；有多次带日期的结果用 `longevity trend`。
+6. **队列分析（研究用途）**：比较一个公开数据集里两组样本的时钟读数。先 `longevity annotations <注释文件>` 看有哪些字段，自己判断哪个是实足年龄、哪个标识同一个人，再 `longevity contrast --input spec.json`（MCP：`list_annotations`、`contrast_groups`）。结果里的 `method` 写明用了哪种检验。
 
 ## 规则
 

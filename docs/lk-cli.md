@@ -34,6 +34,8 @@ python3 longevity version
 | `longevity evidence NMN 雷帕霉素` | 已收录论文对这些对象的说法，按人群、动物、细胞分组，逐条带 DOI 和原文位置；同时列出试验平均效应 |
 | `longevity change --marker 收缩压 --before 138 --after 131` | 两次结果的变化是否超出个体正常波动 |
 | `longevity trend --marker 空腹血糖 --series 2024-09-03:5.0 2025-09-02:5.3 2026-09-01:5.6` | 多次带日期的结果有没有趋势 |
+| `longevity annotations GSE_header.txt` | 研究用途。列出一个 GEO 数据集的样本注释（series matrix 文件的表头部分，或 EBI 镜像的 sdrf 文件）：每个字段有多少样本、几种取值、示例，以及本库猜的年龄字段和个体字段 |
+| `longevity contrast --input spec.json` | 研究用途。比较一项研究里两组样本的时钟读数：病例组更高、更低，还是没有显著差别。JSON 里给每个样本的读数（`values` 或 `values_file` 加 `value_column`）、两组样本编号（`case`、`control`）、论文用的度量（`measure`：`age`、`acceleration_residual`、`acceleration_difference`、`rate`），可选年龄和个体（`ages`、`subjects`，或 `annotations_file` 加 `age_field`、`subject_field`）、`design`、`alpha` 或 `threshold_text` |
 | `longevity plan` / `predict` / `markers` | 一个人能不能测出某个干预的效果；哪些指标有波动数据 |
 | `longevity mcp` | 以 stdio MCP 的方式提供上面的功能（`markers` 除外） |
 | `longevity version` | 发布号、库的位置 |
@@ -48,6 +50,8 @@ python3 longevity version
                   {"item": "腰围", "value": 80, "unit": "cm", "date": "2026-10-01"}],
  "arguments": {"treated": "no", "smoker": "no", "diabetes": "yes", "north": "yes", "urban": "yes", "family_history": "no"}}
 ```
+
+`contrast` 按研究设计选检验：两组是同一批人的两次测量，用配对 t 检验；一个人在同一组有多份样本，先按人取平均；原始时钟读数且年龄已知，用带年龄的回归检验组别项；其余用 Welch t 检验。残差和差值两种度量必须有每个样本的年龄，没有就返回 `not_computed`，不猜。哪个注释字段是年龄、哪个字段标识个体，由调用方看过 `annotations` 的结果后指定；没指定时本库会猜，并在结果里标 `guessed`。
 
 退出码：0 成功；2 用法错误；3 输入没通过检查，或者运行了但一个读数也没算出（`not_computed`）；4 拒绝运行；5 缺依赖；1 其他错误。除了 `--help`，所有输出都是 JSON。
 
@@ -72,7 +76,7 @@ python3 longevity version
 - 在仓库检出里可以不安装：`{"command": "python3", "args": ["<仓库路径>/longevity", "mcp"]}`。
 - 也可以用 `uvx`（`{"command": "uvx", "args": ["--from", "git+https://github.com/zwbao/longevity-skills", "longevity", "mcp"]}`），但第一次启动要下载整个仓库，可能超过宿主的启动等待时间。
 
-工具名和 LongPi 的原生工具一致：`find_methods`、`read_method`、`run_method`、`query_evidence`、`review_change`、`review_trend`，另有 `plan_experiment`（`plan` 和 `predict`）。服务是单线程的，一次运行最长 180 秒。
+工具名和 LongPi 的原生工具一致：`find_methods`、`read_method`、`run_method`、`query_evidence`、`review_change`、`review_trend`，另有 `plan_experiment`（`plan` 和 `predict`）。研究用途的队列分析是 `list_annotations` 和 `contrast_groups`。服务是单线程的，一次运行最长 180 秒。
 
 ## 精简接入技能
 
