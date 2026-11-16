@@ -234,7 +234,7 @@ def contrast(values: Dict[str, Any], case: Sequence[str], control: Sequence[str]
             by.setdefault((subjects or {}).get(s) or f"sample:{s}", []).append((y, a))
         unit[g] = {k: (_mean([y for y, _ in v]), (_mean([a for _, a in v if a is not None]) if any(a is not None for _, a in v) else None))
                    for k, v in by.items()}
-        if any(len(v) > 1 for v in by.values()):
+        if any(len(v) > 1 for v in by.values()) and "unit_means" not in method_bits:
             method_bits.append("unit_means")
     shared = [k for k in unit["case"] if k in unit["control"] and not k.startswith("sample:")]
     n_units = {g: len(u) for g, u in unit.items()}
