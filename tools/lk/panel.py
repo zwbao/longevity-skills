@@ -161,7 +161,7 @@ def hook_context(result: Dict[str, Any]) -> Optional[str]:
     if result.get("pairwise_omics"):
         lines.append("- The prompt compares two proteomic or methylation profiles -> MCP tool compare_age votes over every "
                      "protein/CpG with its direction of change with age in a published cohort (gives which looks older, not an "
-                     "age; independent check about 87-91% correct on public benchmark pairs).")
+                     "age; independent check about 87-89% correct on public benchmark pairs).")
     if not lines:
         return None
     return ("longevity plugin: the prompt contains measurements that methods in the longevity library can compute from "

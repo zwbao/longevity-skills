@@ -28,10 +28,10 @@ from .library import Library, LKError
 REFS = {
     "proteomics": {"file": "data/reference/olink_age_direction_ckb.csv.gz",
                    "source": "Iona et al., Eur J Epidemiol 2025, doi 10.1007/s10654-025-01311-z (China Kadoorie Biobank, n=2,006, CC BY)",
-                   "check": "LongevityBench mini Olink pairwise (UK Biobank, 45 pairs): 39/45 = 87%"},
+                   "check": "LongevityBench mini Olink pairwise (public young-vs-old cohort, not UK Biobank; 45 pairs): 39/45 = 87%"},
     "methylation": {"file": "data/reference/dnam_age_direction_gs.csv.gz",
                     "source": "McCartney et al., Genome Med 2020, doi 10.1186/s13073-019-0693-z; data doi 10.7488/ds/2709 (Generation Scotland, CC BY)",
-                    "check": "LongevityBench mini DNAm pairwise (GEO cohorts, 45 pairs): 41/45 = 91%"},
+                    "check": "LongevityBench mini DNAm pairwise (GEO cohorts, 45 pairs): 40/45 = 89%"},
 }
 _CACHE: Dict[Tuple[str, str], Dict[str, Tuple[float, float, float]]] = {}
 _PROTEIN_SIG_P = 2.305e-6  # the paper's Bonferroni threshold over principal components
