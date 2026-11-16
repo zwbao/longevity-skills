@@ -71,16 +71,20 @@ def names_of(row: Dict[str, Any]) -> List[str]:
 
 
 def search(rows: Sequence[Dict[str, Any]], query: str) -> List[Dict[str, Any]]:
-    """Rows whose entity, Chinese name or alias equals the query; else contains it."""
+    """Rows whose entity, Chinese name or alias equals the query, then rows whose names contain it.
+
+    Exact matches come first. Containing matches are kept too: "dasatinib" must also find "dasatinib plus
+    quercetin", even when other rows are named exactly "dasatinib"."""
     wanted = fold(query)
     if not wanted:
         return []
     exact = [row for row in rows if any(fold(name) == wanted for name in names_of(row))]
-    if exact:
-        return exact
     if len(wanted) < 3:
-        return []
-    return [row for row in rows if any(wanted in fold(name) for name in names_of(row) if len(fold(name)) >= 3)]
+        return exact
+    seen = {id(row) for row in exact}
+    contains = [row for row in rows if id(row) not in seen
+                and any(wanted in fold(name) for name in names_of(row) if len(fold(name)) >= 3)]
+    return exact + contains
 
 
 def search_effects(rows: Sequence[Dict[str, Any]], query: str) -> List[Dict[str, Any]]:
@@ -90,9 +94,12 @@ def search_effects(rows: Sequence[Dict[str, Any]], query: str) -> List[Dict[str,
         return []
     found = []
     for row in rows:
-        names = [row.get("intervention_zh", ""), *row.get("keywords", [])]
+        names = [row.get("intervention_zh", ""), row.get("intervention", ""), *row.get("keywords", [])]
         folded = [fold(name) for name in names if name]
-        if any(name == wanted for name in folded) or (len(wanted) >= 3 and any(wanted in name for name in folded)):
+        keywords = [fold(k) for k in row.get("keywords", []) if len(fold(k)) >= 4]
+        if (any(name == wanted for name in folded)
+                or (len(wanted) >= 3 and any(wanted in name for name in folded))
+                or any(k in wanted for k in keywords)):  # "time-restricted eating" contains the keyword "time-restricted"
             found.append(row)
     return found
 

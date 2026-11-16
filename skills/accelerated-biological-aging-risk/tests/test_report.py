@@ -143,3 +143,12 @@ def test_skill_metadata():
     assert examples.startswith("```bash")
     assert "personal_report.py" in examples
     assert "GEO" not in examples
+
+
+def test_other_horizons_are_the_same_gompertz_model():
+    import personal_report as r
+    v = {"albumin_gL": 43, "creat_umol": 79.56, "glucose_mmol": 5.439, "crp_mg_dl": 0.21, "lymph_pct": 30,
+         "mcv_fl": 90, "rdw_pct": 13.1, "alp_u_l": 70, "wbc_10e3": 6.2, "age": 55}
+    assert abs(r.mortality_risk_at(v, 120) - r.mortality_risk(v)) < 1e-6, "120 months is the paper's 10-year score"
+    assert r.mortality_risk_at(v, 60) < r.mortality_risk(v) < r.mortality_risk_at(v, 180) < r.mortality_risk_at(v, 240)
+    assert abs(r.mortality_risk_at(v, 12 * r.median_survival_years(v)) - 0.5) < 1e-9

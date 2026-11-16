@@ -1,0 +1,16 @@
+{
+  "description": "When a prompt contains a person's measurements, tell the agent which longevity methods can compute from them. Silent otherwise; never blocks the prompt.",
+  "hooks": {
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "command -v longevity >/dev/null 2>&1 && longevity detect --hook || true",
+            "timeout": 10
+          }
+        ]
+      }
+    ]
+  }
+}

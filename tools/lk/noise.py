@@ -103,7 +103,18 @@ def load(lib: Path) -> Tuple[float, Dict[str, Dict[str, Any]], List[Dict[str, An
 
 
 def match(idx: Dict[str, Dict[str, Any]], name: str) -> Optional[Dict[str, Any]]:
-    return next((idx[v] for v in variants(name) if v in idx), None)
+    hit = next((idx[v] for v in variants(name) if v in idx), None)
+    if hit is None:  # English report names ("Glycohemoglobin (%)"): try the library's own names for that analyte
+        try:
+            from . import aliases
+        except ImportError:  # run as a standalone script
+            return None
+        analyte = aliases.analyte_of(name) or aliases.analyte_of(re.sub(r"\s*\([^)]*\)\s*$", "", str(name)))
+        for other in (aliases.ANALYTES[analyte]["lib"] if analyte else []):
+            hit = next((idx[v] for v in variants(other) if v in idx), None)
+            if hit is not None:
+                break
+    return hit
 
 
 def cvs(m: Dict[str, Any]) -> Tuple[float, float]:
@@ -337,7 +348,7 @@ def cmd_trend(a: argparse.Namespace, z: float, idx: Dict[str, Any], _: List[Any]
         out.update(pairs=[], baseline_vs_latest=None, trend=slope_test(m, points, z_trend), summary_verdict="not_judged")
     else:
         pairs = [compare_points(m, z, p, q) for p, q in zip(points, points[1:])]
-        bl = compare_points(m, z, points[0], points[-1], check_gap=False)
+        bl = compare_points(m, z, points[0], points[-1])  # same retest interval rule as the pairs
         bl.pop("from"), bl.pop("to")
         tr = slope_test(m, points, z_trend)
         beyond = lambda v: v in ("up_beyond_noise", "down_beyond_noise")  # noqa: E731
