@@ -13,7 +13,7 @@ import sys
 import traceback
 from typing import Any, Callable, Dict, List, Optional
 
-from . import compare, evidence, methods, noise, panel, reference
+from . import cohort, compare, evidence, methods, noise, panel, reference
 from .library import Library, LKError
 from .run import run as run_method
 
@@ -101,6 +101,32 @@ TOOLS: List[Dict[str, Any]] = [
          "profile_a": {"type": "object", "additionalProperties": {"type": "number"}},
          "profile_b": {"type": "object", "additionalProperties": {"type": "number"}},
          "modality": {"type": "string", "enum": ["proteomics", "methylation"]}}}},
+    {"name": "contrast_groups",
+     "description": "Research use: is a clock readout higher, lower or not significantly different in the case group than in "
+                    "the control group of a study (for example a public GEO methylation series)? Give per-sample readouts as "
+                    "values {sample: number} or values_file + value_column, the two sample lists, and the measure the paper "
+                    "used: age (raw clock output), acceleration_residual (clock regressed on chronological age), "
+                    "acceleration_difference (clock minus age) or rate. The test follows the design: paired when the same "
+                    "individuals are in both groups, age-adjusted regression for a raw clock output with known ages, Welch "
+                    "otherwise. Ages and individuals come from ages/subjects, or from annotations_file with age_field and "
+                    "subject_field (call list_annotations first and choose the fields yourself; unchosen fields are guessed "
+                    "and flagged). Returns call, direction, P value, effect and the method used.",
+     "inputSchema": {"type": "object", "required": ["case", "control"], "properties": {
+         "values": {"type": "object", "additionalProperties": {"type": "number"}},
+         "values_file": {"type": "string"}, "value_column": {"type": "string"}, "id_column": {"type": "string"},
+         "case": {"type": "array", "items": {"type": "string"}}, "control": {"type": "array", "items": {"type": "string"}},
+         "measure": {"type": "string", "enum": ["age", "acceleration_residual", "acceleration_difference", "rate", "other"]},
+         "ages": {"type": "object", "additionalProperties": {"type": "number"}},
+         "subjects": {"type": "object", "additionalProperties": {"type": "string"}},
+         "annotations_file": {"type": "string"}, "age_field": {"type": "string"}, "subject_field": {"type": "string"},
+         "design": {"type": "string", "enum": ["auto", "welch", "age_adjusted", "paired"]},
+         "residual_pool": {"description": "sample ids the residual regression is fitted on, or 'all_samples'; default the two groups"},
+         "alpha": {"type": "number"}, "threshold_text": {"type": "string", "description": "the paper's criterion, e.g. 'P < 0.05'"}}}},
+    {"name": "list_annotations",
+     "description": "Sample annotations of a GEO series (from a series-matrix header or an EBI sdrf file): every field with "
+                    "counts and examples, and this library's guess of the chronological-age and individual fields. Use it to "
+                    "choose age_field and subject_field for contrast_groups.",
+     "inputSchema": {"type": "object", "required": ["file"], "properties": {"file": {"type": "string"}}}},
     {"name": "query_evidence",
      "description": "What the papers collected in this library state about drugs, supplements, diets, genes or proteins: "
                     "grouped into human studies, animal and cell experiments, each row with DOI and location; plus "
@@ -233,6 +259,10 @@ def call(lib: Library, name: str, args: Dict[str, Any]) -> Dict[str, Any]:
         return reference.estimate_from_payload(lib, {k: args.get(k) for k in ("panel_text", "panel_ref", "measurements", "sex", "bands")})
     if name == "compare_age":
         return compare.compare_from_payload(lib, {k: args.get(k) for k in ("panel_text", "panel_ref", "profile_a", "profile_b", "modality")})
+    if name == "contrast_groups":
+        return cohort.contrast_from_payload(lib, dict(args))
+    if name == "list_annotations":
+        return cohort.annotations_from_file(lib, _text(args.get("file"), "file"))
     if name == "query_evidence":
         limit = _int(args["limit"], "limit") if args.get("limit") is not None else 12
         return evidence.query(lib, _str_list(args.get("entities"), "entities"), limit=limit)
