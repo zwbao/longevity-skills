@@ -1,0 +1,143 @@
+{
+  "schema": "longevity-skill/1",
+  "name": "body-roundness-index",
+  "kind": "paper",
+  "tier": "A",
+  "species": [
+    "human"
+  ],
+  "evidence": "method",
+  "domains": [
+    "体脂与人体测量"
+  ],
+  "blurb_zh": "用身高和腰围计算身体圆度指数 BRI，并比较自填腰围情景。",
+  "intents": [
+    "body_fat_waist",
+    "before_after"
+  ],
+  "triage": {
+    "reason_zh": "人体研究公开腰围版 BRI 几何公式，个人身高和腰围可复现图 3 的指数及补充图 S2 的偏心率。",
+    "reviewed": false
+  },
+  "paper": {
+    "doi": "10.1002/oby.20408",
+    "title": "Relationships between body roundness with body fat and visceral adipose tissue emerging from a new geometrical model.",
+    "title_zh": "身体圆度指数与体脂及内脏脂肪的几何模型",
+    "journal": "Obesity (Silver Spring, Md.)",
+    "year": 2013,
+    "authors": "Thomas 等",
+    "article_url": "https://onlinelibrary.wiley.com/doi/full/10.1002/oby.20408",
+    "supplements": [
+      {
+        "label": "Supplemental Information：几何推导、图 S1–S5、表 S1–S2（PMC 作者稿）",
+        "url": "https://pmc.ncbi.nlm.nih.gov/articles/instance/3692604/bin/NIHMS438355-supplement-supplement_1.pdf"
+      },
+      {
+        "label": "Wiley Supporting Information（下载被拦；已读 PMC 对应补充 PDF）",
+        "url": "https://onlinelibrary.wiley.com/doi/suppl/10.1002/oby.20408/supinfo/oby20408-sup-0001-SuppInfo.docx"
+      }
+    ],
+    "card_notes": [
+      "本技能实现腰围版 BRI 与偏心率，未实现体脂率、内脏脂肪预测和健康范围；补充表 S2 的部分高阶系数仅印为 0.000，健康体脂切点只引用另一篇论文。",
+      "论文给出的在线计算器为 https://www.pbrc.edu/bodyroundness；本技能不依赖在线计算器，也不从其输出反推参数。"
+    ],
+    "summary_zh": "这项研究在人群测量资料中建立身体圆度几何模型，发现它与总体脂肪和内脏脂肪有关，对脂肪的预测较传统人体测量指标略有改善。个人报告只计算身高和腰围对应的身体圆度指数及偏心率，并比较自填腰围情景，不估算脂肪含量或健康范围。",
+    "summary_status": "draft"
+  },
+  "entry": {
+    "script": "scripts/personal_report.py",
+    "measurements_flag": "--measurements",
+    "measurements_header": [
+      "marker",
+      "value",
+      "unit"
+    ],
+    "age_flag": "--age",
+    "sex_flag": "--sex",
+    "out_flag": "--out",
+    "result_json": true,
+    "targets_flag": "--targets",
+    "levers_json": true
+  },
+  "inputs_status": "verified",
+  "inputs": [
+    {
+      "key": "height_cm",
+      "label_zh": "身高",
+      "aliases": [
+        "身高(cm)",
+        "Height",
+        "H",
+        "body height",
+        "stature"
+      ],
+      "unit": "cm",
+      "accept": {
+        "m": 100,
+        "mm": 0.1,
+        "in": 2.54
+      },
+      "range": [
+        100,
+        250
+      ],
+      "unit_required": true,
+      "required": true,
+      "from": "measurements",
+      "note_zh": "成人站立身高；范围为输入错误检查，不是论文入选或健康界限。"
+    },
+    {
+      "key": "waist_cm",
+      "label_zh": "腰围",
+      "aliases": [
+        "腰围(cm)",
+        "Waist",
+        "WC",
+        "waist circumference",
+        "腹围"
+      ],
+      "unit": "cm",
+      "accept": {
+        "m": 100,
+        "mm": 0.1,
+        "in": 2.54
+      },
+      "range": [
+        30,
+        300
+      ],
+      "unit_required": true,
+      "required": true,
+      "from": "measurements",
+      "note_zh": "保持测量部位一致；范围为输入错误检查，不是健康界限。"
+    }
+  ],
+  "outputs": [
+    {
+      "key": "bri",
+      "label_zh": "身体圆度指数",
+      "unit": "1"
+    },
+    {
+      "key": "waist_eccentricity",
+      "label_zh": "腰围椭圆偏心率",
+      "unit": "1"
+    }
+  ],
+  "validation": {
+    "status": "reproduced",
+    "examples": [
+      {
+        "locator": "Main article Figure 3, calculator screenshot (Height and Waist fields; Body Roundness Index output)",
+        "quote": "Height (in) 65\nWaist (in) 39\nBody Roundness Index: 5.4 (out of healthy zone)",
+        "values": [
+          65,
+          39,
+          5.4
+        ],
+        "tolerance": "BRI 绝对误差 ≤ 0.05：原图输出只保留一位小数。只复现 BRI 数值，不复现图中健康分区或脂肪预测。",
+        "test": "tests/test_manifest.py::test_figure3_printed_bri"
+      }
+    ]
+  }
+}
