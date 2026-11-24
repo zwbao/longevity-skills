@@ -1,0 +1,187 @@
+{
+  "schema": "longevity-skill/1",
+  "name": "calvarial-bone-marrow-adiposity",
+  "kind": "paper",
+  "tier": "A",
+  "species": [
+    "human",
+    "mouse"
+  ],
+  "evidence": "method",
+  "domains": [
+    "影像",
+    "骨骼"
+  ],
+  "blurb_zh": "用头部磁共振提取的强度矩阵估计颅骨骨髓信号，尚未复现论文个人算例。",
+  "intents": [
+    "imaging"
+  ],
+  "triage": {
+    "reason_zh": "公开预训练权重、输入归一化和质控阈值齐全，可从个人MRI强度矩阵计算骨髓信号代理指标；未找到完整个人输入输出算例。",
+    "reviewed": false
+  },
+  "paper": {
+    "doi": "10.7554/elife.101499",
+    "title": "Estimating bone marrow adiposity from head MRI and identifying its genetic architecture.",
+    "title_zh": "从头部磁共振估计骨髓脂肪并解析其遗传结构",
+    "journal": "eLife",
+    "year": 2026,
+    "authors": "Kaufmann 等",
+    "article_url": "https://elifesciences.org/articles/101499",
+    "supplements": [
+      {
+        "label": "Appendix 1：图1–14、表1–9（正文内嵌）",
+        "url": "https://elifesciences.org/articles/101499/figures"
+      },
+      {
+        "label": "MDAR checklist",
+        "url": "https://cdn.elifesciences.org/articles/101499/elife-101499-mdarchecklist1-v1.docx"
+      }
+    ],
+    "code_url": "https://github.com/comgen/boneMarrowLocalisationT1wMRI",
+    "summary_zh": "这项研究在人群头部磁共振中提取骨髓信号，观察到与年龄、性别和骨密度相关的变化，并结合小鼠单细胞资料研究相关遗传机制。个人报告只计算颅骨骨髓信号代理指标及定位质控结果，不计算脂肪百分比、生物年龄或疾病风险。",
+    "summary_status": "draft",
+    "card_notes": [
+      "使用公开预训练模型；论文文字与发布模型的网络层宽度有差异，详见方法合同。",
+      "输入须为作者预处理流程生成的50层强度矩阵，当前入口不直接处理原始MRI或影像文字报告。",
+      "未找到完整个人输入及对应印出输出，保留draft。"
+    ]
+  },
+  "entry": {
+    "script": "scripts/personal_report.py",
+    "runtime": "scientific",
+    "age_flag": "--age",
+    "sex_flag": "--sex",
+    "out_flag": "--out",
+    "result_json": true
+  },
+  "inputs_status": "draft",
+  "inputs": [
+    {
+      "key": "layer_intensity_score",
+      "label_zh": "颅骨分层MRI强度矩阵",
+      "aliases": [
+        "T1-weighted intensity",
+        "intensity matrix",
+        "T1加权信号强度",
+        "layers.csv"
+      ],
+      "unit": "score",
+      "accept": {},
+      "range": [
+        0,
+        255
+      ],
+      "required": true,
+      "from": "argument",
+      "flag": "--layers",
+      "note_zh": "分号分隔、无表头，每行一个位点的50个信号值，或转置为50行。来自FreeSurfer nu.mgz及作者提取流程；score表示原始0–255信号尺度，不是百分比。"
+    },
+    {
+      "key": "layer_spacing_mm",
+      "label_zh": "分层间距",
+      "aliases": [
+        "layer spacing",
+        "层间距"
+      ],
+      "unit": "mm",
+      "accept": {},
+      "range": [
+        0.01,
+        25
+      ],
+      "required": true,
+      "from": "argument",
+      "flag": "--layer-spacing-mm",
+      "note_zh": "方法仅接受0.5 mm；命令默认0.5，不进行重采样。"
+    },
+    {
+      "key": "age",
+      "label_zh": "实足年龄",
+      "aliases": [
+        "Age",
+        "年龄"
+      ],
+      "unit": "a",
+      "accept": {},
+      "range": [
+        0,
+        120
+      ],
+      "required": false,
+      "from": "profile",
+      "flag": "--age",
+      "note_zh": "可选背景，不参与推断。"
+    },
+    {
+      "key": "sex",
+      "label_zh": "性别",
+      "aliases": [
+        "Sex"
+      ],
+      "required": false,
+      "from": "profile",
+      "flag": "--sex",
+      "note_zh": "male/female，可选背景，不参与推断。"
+    }
+  ],
+  "outputs": [
+    {
+      "key": "bma_intensity_score",
+      "label_zh": "骨髓信号代理指标",
+      "unit": "score"
+    },
+    {
+      "key": "outer_table_intensity_score",
+      "label_zh": "外板平均信号",
+      "unit": "score"
+    },
+    {
+      "key": "outer_table_sd_score",
+      "label_zh": "外板信号位点间标准差",
+      "unit": "score"
+    },
+    {
+      "key": "calvarial_vertices",
+      "label_zh": "可用颅顶部位点数",
+      "unit": "1"
+    },
+    {
+      "key": "md_outlier_fraction",
+      "label_zh": "马氏距离平方超限比例",
+      "unit": "1"
+    },
+    {
+      "key": "qc_status",
+      "label_zh": "定位质控状态",
+      "unit": "1"
+    }
+  ],
+  "validation": {
+    "status": "draft",
+    "gap_zh": "已检查正式全文、Figure 1、Appendix 1图1–14与表1–9、MDAR清单、GitHub v1.2模型/训练笔记本/README和GWAS文件；未见完整个人50层输入与对应BMA输出。图1d和附录图4/10只有散点或热图，不能无损还原输入。模型架构与正文描述也有差异。工程测试对照公开权重，不算论文算例复现。"
+  },
+  "data_files": [
+    {
+      "path": "data/model/saved_model.pb",
+      "source_url": "https://github.com/comgen/boneMarrowLocalisationT1wMRI/blob/d33e4009afb47dedba73de94fb34d55b4fdb770c/000_simulateAndTrainNN/NNmodels/2021-02-11/saved_model.pb",
+      "license": "MIT",
+      "redistributable": "yes",
+      "sha256": "39421e11feca7694238effb081a185236978b61132cf30d52f47c71b47a223c7"
+    },
+    {
+      "path": "data/model/variables/variables.data-00000-of-00001",
+      "source_url": "https://github.com/comgen/boneMarrowLocalisationT1wMRI/blob/d33e4009afb47dedba73de94fb34d55b4fdb770c/000_simulateAndTrainNN/NNmodels/2021-02-11/variables/variables.data-00000-of-00001",
+      "license": "MIT",
+      "redistributable": "yes",
+      "sha256": "3d18668a1b88873a8a358ef6d51dbd5eb6152a6d3634f14a8c5aceada8bea692"
+    },
+    {
+      "path": "data/model/variables/variables.index",
+      "source_url": "https://github.com/comgen/boneMarrowLocalisationT1wMRI/blob/d33e4009afb47dedba73de94fb34d55b4fdb770c/000_simulateAndTrainNN/NNmodels/2021-02-11/variables/variables.index",
+      "license": "MIT",
+      "redistributable": "yes",
+      "sha256": "ee2dc1bd62af50c33954f2b54679280a43fe240feb8bfd4d913cff90647480ed"
+    }
+  ]
+}
