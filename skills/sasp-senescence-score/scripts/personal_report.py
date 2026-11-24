@@ -155,6 +155,8 @@ def render(score: float, z: Dict[str, float]) -> str:
         "",
         "## 论文里的人群数字（不是你的结果）",
         "",
+        f"- 建立和验证人群：UK Biobank 蛋白组子样本（UKB-PPP）{PAPER['n_ukb_ppp']} 人，基线 39–70 岁（平均 56.8 岁），"
+        "约 94% 为欧洲裔；其他年龄段和族群的适用性论文没有在个人层面检验。",
         f"- UK Biobank 测试样本 {PAPER['n_test']} 人：SASP 评分与实足年龄的相关 rho = {PAPER['rho_age_test']:.2f}；"
         f"调整年龄、性别等因素后，每高 1 个标准差，死亡风险比 {PAPER['hr_mortality_per_sd']:.2f}"
         f"（95% CI {PAPER['hr_mortality_ci'][0]:.2f}–{PAPER['hr_mortality_ci'][1]:.2f}），平均随访 {PAPER['mean_follow_up_years']} 年。",
@@ -204,6 +206,8 @@ def main(argv: Optional[List[str]] = None) -> int:
     parser.add_argument("--proteins", type=Path, help="CSV: marker,value,unit (unit NPX)")
     parser.add_argument("--out", type=Path, required=True)
     args = parser.parse_args(argv)
+    if args.proteins is not None and not args.proteins.is_file():
+        parser.error(f"找不到蛋白数据文件：{args.proteins}")
     try:
         path = write_report(args.out, args.proteins)
     except SystemExit as exc:
