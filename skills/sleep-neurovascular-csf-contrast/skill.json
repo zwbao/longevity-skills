@@ -1,0 +1,223 @@
+{
+  "schema": "longevity-skill/1",
+  "name": "sleep-neurovascular-csf-contrast",
+  "kind": "paper",
+  "tier": "A",
+  "species": [
+    "human"
+  ],
+  "evidence": "cross_sectional",
+  "domains": [
+    "神经退行与脑衰老"
+  ],
+  "blurb_zh": "用同年龄组两份睡眠脑电和磁共振功率的比值，算脑脊液功率的模型差。",
+  "intents": [
+    "imaging",
+    "wearable_sleep",
+    "before_after"
+  ],
+  "triage": {
+    "reason_zh": "补充表3给出原始中介路径系数，可用个人NREM EEG与BOLD功率比计算同年龄组的条件CSF功率差，并复现印出的路径乘积。",
+    "reviewed": false
+  },
+  "paper": {
+    "doi": "10.1038/s43587-026-01270-4",
+    "title": "The aging human brain exhibits reduced hemodynamic and cerebrospinal fluid flow waves during sleep.",
+    "title_zh": "衰老人脑在睡眠中的血流动力学及脑脊液波动减弱",
+    "journal": "Nature Aging",
+    "year": 2026,
+    "authors": "Bailes 等",
+    "article_url": "https://www.nature.com/articles/s43587-026-01270-4",
+    "supplements": [
+      {
+        "label": "Supplementary Information（含表 1–7）",
+        "url": "https://static-content.springer.com/esm/art%3A10.1038%2Fs43587-026-01270-4/MediaObjects/43587_2026_1270_MOESM1_ESM.pdf"
+      },
+      {
+        "label": "Reporting Summary",
+        "url": "https://static-content.springer.com/esm/art%3A10.1038%2Fs43587-026-01270-4/MediaObjects/43587_2026_1270_MOESM2_ESM.pdf"
+      },
+      {
+        "label": "Peer Review File",
+        "url": "https://static-content.springer.com/esm/art%3A10.1038%2Fs43587-026-01270-4/MediaObjects/43587_2026_1270_MOESM3_ESM.pdf"
+      },
+      {
+        "label": "Source Data Fig. 2",
+        "url": "https://static-content.springer.com/esm/art%3A10.1038%2Fs43587-026-01270-4/MediaObjects/43587_2026_1270_MOESM4_ESM.xlsx"
+      },
+      {
+        "label": "Source Data Fig. 3",
+        "url": "https://static-content.springer.com/esm/art%3A10.1038%2Fs43587-026-01270-4/MediaObjects/43587_2026_1270_MOESM5_ESM.xlsx"
+      },
+      {
+        "label": "Source Data Fig. 4",
+        "url": "https://static-content.springer.com/esm/art%3A10.1038%2Fs43587-026-01270-4/MediaObjects/43587_2026_1270_MOESM6_ESM.xlsx"
+      },
+      {
+        "label": "Source Data Fig. 5",
+        "url": "https://static-content.springer.com/esm/art%3A10.1038%2Fs43587-026-01270-4/MediaObjects/43587_2026_1270_MOESM7_ESM.xlsx"
+      },
+      {
+        "label": "Source Data Fig. 6",
+        "url": "https://static-content.springer.com/esm/art%3A10.1038%2Fs43587-026-01270-4/MediaObjects/43587_2026_1270_MOESM8_ESM.xlsx"
+      },
+      {
+        "label": "Source Data Fig. 7",
+        "url": "https://static-content.springer.com/esm/art%3A10.1038%2Fs43587-026-01270-4/MediaObjects/43587_2026_1270_MOESM9_ESM.xlsx"
+      }
+    ],
+    "code_url": "https://github.com/LewisNeuro/HRAN",
+    "summary_zh": "这项研究在人类年轻与老年成人中发现，老年人在非快速眼动睡眠中的脑脊液波动减弱，并与脑电慢波、血流动力学波动和额叶灰质结构有关。个人报告只比较同年龄组两份睡眠记录的脑电与磁共振功率所对应的模型脑脊液功率差，不计算脑龄或痴呆风险。",
+    "summary_status": "draft",
+    "card_notes": [
+      "计算使用补充表3的条件斜率；代码链接是论文引用的HRAN去噪工具，并非本文中介模型实现。",
+      "已复现的是补充表3的路径乘积，不是个人预测准确度；未提供截距，不计算绝对功率。",
+      "输入为研究级NREM线性功率之比；日常手环或常规MRI报告不适用。"
+    ]
+  },
+  "entry": {
+    "script": "scripts/personal_report.py",
+    "measurements_flag": "--measurements",
+    "measurements_header": [
+      "marker",
+      "value",
+      "unit"
+    ],
+    "age_flag": "--age",
+    "sex_flag": "--sex",
+    "out_flag": "--out",
+    "result_json": true,
+    "targets_flag": "--targets",
+    "levers_json": true
+  },
+  "population": {
+    "age_years": [
+      18,
+      83
+    ],
+    "note_zh": "夜间样本仅18–39岁与60–83岁；拒绝40–59岁及跨年龄组比较，不能作为已验证的纵向预测。"
+  },
+  "inputs_status": "verified",
+  "inputs": [
+    {
+      "key": "eeg_nrem_power_ratio",
+      "label_zh": "额叶NREM慢波线性功率比",
+      "aliases": [
+        "EEG NREM power ratio",
+        "脑电慢波功率比",
+        "M1 power ratio"
+      ],
+      "unit": "1",
+      "accept": {
+        "%": 0.01
+      },
+      "range": [
+        0.001,
+        1000
+      ],
+      "required": true,
+      "from": "measurements",
+      "unit_required": true,
+      "note_zh": "比较记录/参照记录，均为同流程NREM的线性功率。1或100%表示相等；不是百分比增幅，不接受dB数直接作为比值。"
+    },
+    {
+      "key": "bold_nrem_power_ratio",
+      "label_zh": "全灰质NREM BOLD线性功率比",
+      "aliases": [
+        "BOLD NREM power ratio",
+        "灰质BOLD功率比",
+        "M2 power ratio"
+      ],
+      "unit": "1",
+      "accept": {
+        "%": 0.01
+      },
+      "range": [
+        0.001,
+        1000
+      ],
+      "required": true,
+      "from": "measurements",
+      "unit_required": true,
+      "note_zh": "比较记录/参照记录，均为同流程NREM的线性功率。1或100%表示相等；不是百分比增幅，不接受dB数直接作为比值。"
+    },
+    {
+      "key": "age",
+      "label_zh": "比较记录时年龄",
+      "aliases": [],
+      "unit": "a",
+      "accept": {},
+      "range": [
+        18,
+        83
+      ],
+      "required": true,
+      "from": "argument",
+      "flag": "--age",
+      "note_zh": "两份记录须同属18–39岁或60–83岁年龄组。"
+    },
+    {
+      "key": "reference_age",
+      "label_zh": "参照记录时年龄",
+      "aliases": [],
+      "unit": "a",
+      "accept": {},
+      "range": [
+        18,
+        83
+      ],
+      "required": true,
+      "from": "argument",
+      "flag": "--reference-age",
+      "note_zh": "两份记录须同属18–39岁或60–83岁年龄组。"
+    }
+  ],
+  "outputs": [
+    {
+      "key": "eeg_power_difference_db",
+      "label_zh": "额叶EEG慢波功率差",
+      "unit": "dB",
+      "note_zh": "比较记录减参照记录；模型项不是实测CSF流速。"
+    },
+    {
+      "key": "bold_power_difference_db",
+      "label_zh": "全灰质BOLD功率差",
+      "unit": "dB",
+      "note_zh": "比较记录减参照记录；模型项不是实测CSF流速。"
+    },
+    {
+      "key": "eeg_conditional_term_db",
+      "label_zh": "EEG条件模型项",
+      "unit": "dB",
+      "note_zh": "比较记录减参照记录；模型项不是实测CSF流速。"
+    },
+    {
+      "key": "bold_conditional_term_db",
+      "label_zh": "BOLD条件模型项",
+      "unit": "dB",
+      "note_zh": "比较记录减参照记录；模型项不是实测CSF流速。"
+    },
+    {
+      "key": "csf_power_difference_db",
+      "label_zh": "CSF条件模型功率差",
+      "unit": "dB",
+      "note_zh": "比较记录减参照记录；模型项不是实测CSF流速。"
+    }
+  ],
+  "validation": {
+    "status": "reproduced",
+    "examples": [
+      {
+        "locator": "Supplementary Table 3, PDF page 5, Estimate column (indirect1, indirect2, indirect3)",
+        "quote": "a₁ 2.178; a₂ 1.342; d₂₁ 0.376; b₁ 0.804; b₂ 0.610; indirect₁ = a₁*b₁ 1.751; indirect₂ = a₂*b₂ 0.818; indirect₃ = a₁*d₂₁*b₂ 0.500",
+        "values": [
+          1.751,
+          0.818,
+          0.5
+        ],
+        "tolerance": "绝对误差≤0.002 dB；路径系数和乘积各印至三位小数，容差覆盖末位舍入传播，不重新拟合系数。",
+        "test": "tests/test_manifest.py::test_printed_indirect_effects"
+      }
+    ]
+  }
+}
