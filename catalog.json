@@ -1,6 +1,6 @@
 {
   "schema": "longevity-catalog/1",
-  "version": "2026.45.0",
+  "version": "2026.48.0",
   "counts": {
     "skills": 177,
     "tiers": {
@@ -9,8 +9,8 @@
       "C": 73,
       "tool": 8
     },
-    "claims": 4864,
-    "claim_entities": 4429
+    "claims": 8927,
+    "claim_entities": 7482
   },
   "intents": [
     {
