@@ -1,0 +1,525 @@
+{
+  "schema": "longevity-skill/1",
+  "name": "daily-step-health-lookup",
+  "kind": "paper",
+  "tier": "A",
+  "species": [
+    "human"
+  ],
+  "evidence": "review",
+  "domains": [
+    "体力活动与健康"
+  ],
+  "blurb_zh": "用设备日均步数查九项健康结局的人群危险比；非整千步展示相邻表行。",
+  "intents": [
+    "wearable_sleep",
+    "frailty_mortality"
+  ],
+  "triage": {
+    "reason_zh": "人体前瞻性研究的荟萃分析在正文表2公开日均2000至12000步的危险比及置信区间，可按个人步数定位原表。",
+    "reviewed": false
+  },
+  "paper": {
+    "doi": "10.1016/s2468-2667(25)00164-1",
+    "title": "Daily steps and health outcomes in adults: a systematic review and dose-response meta-analysis.",
+    "title_zh": "成人日均步数与健康结局：系统综述及剂量反应荟萃分析",
+    "journal": "The Lancet Public Health",
+    "year": 2025,
+    "authors": "Ding 等",
+    "article_url": "https://www.thelancet.com/journals/lanpub/article/PIIS2468-2667(25)00164-1/fulltext",
+    "supplements": [
+      {
+        "label": "补充附录（封面标注2025-08-27更正版）",
+        "url": "https://ars.els-cdn.com/content/image/1-s2.0-S2468266725001641-mmc1.pdf"
+      }
+    ],
+    "card_notes": [
+      "计算采用正文表 2；附录表 8 另以 7000 步为参照并明确不可与主分析直接比较，本技能不混用。",
+      "代码仅可向作者索取，未给出公开代码仓库；本技能复现印出的查表值，不重拟合荟萃模型。"
+    ],
+    "summary_zh": "这项研究综合成人前瞻性研究，发现设备测得的日均步数与死亡及多种疾病结局存在关联，不同结局的关联曲线和证据确定性各不相同。个人报告只按你的步数定位论文表格中的人群危险比及置信区间，不计算个人绝对风险或寿命。",
+    "summary_status": "draft"
+  },
+  "entry": {
+    "script": "scripts/personal_report.py",
+    "measurements_flag": "--measurements",
+    "measurements_header": [
+      "marker",
+      "value",
+      "unit"
+    ],
+    "age_flag": "--age",
+    "sex_flag": "--sex",
+    "out_flag": "--out",
+    "result_json": true,
+    "targets_flag": "--targets",
+    "levers_json": true
+  },
+  "inputs_status": "verified",
+  "inputs": [
+    {
+      "key": "steps_per_day",
+      "label_zh": "日均步数",
+      "aliases": [
+        "每日步数",
+        "平均每日步数",
+        "平均步数",
+        "日步数",
+        "daily steps",
+        "steps per day",
+        "daily step count",
+        "Steps/day",
+        "mean daily steps"
+      ],
+      "unit": "1",
+      "accept": {},
+      "range": [
+        2000,
+        12000
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "设备多日记录的每日平均步数；1是计数单位，日时间窗由键名限定，不是比例或每周总数。仅支持原表2000至12000步；不接受距离、时长换算。"
+    },
+    {
+      "key": "age",
+      "label_zh": "实足年龄",
+      "aliases": [
+        "年龄",
+        "age",
+        "chronological age"
+      ],
+      "unit": "a",
+      "accept": {},
+      "range": [
+        18,
+        120
+      ],
+      "required": true,
+      "from": "profile",
+      "note_zh": "仅核对成人范围；120为输入合理性上限，不是论文规定的年龄上限；不据此选择年龄亚组。"
+    }
+  ],
+  "outputs": [
+    {
+      "key": "steps_per_day",
+      "label_zh": "输入日均步数",
+      "unit": "1",
+      "note_zh": "lower/upper表示输入两侧的表行；HR及CI均相对2000步。命中表行时两侧相同；参照行CI为null。"
+    },
+    {
+      "key": "reference_steps_per_day",
+      "label_zh": "共同参照日均步数",
+      "unit": "1",
+      "note_zh": "lower/upper表示输入两侧的表行；HR及CI均相对2000步。命中表行时两侧相同；参照行CI为null。"
+    },
+    {
+      "key": "lower_steps_per_day",
+      "label_zh": "下侧表行步数",
+      "unit": "1",
+      "note_zh": "lower/upper表示输入两侧的表行；HR及CI均相对2000步。命中表行时两侧相同；参照行CI为null。"
+    },
+    {
+      "key": "upper_steps_per_day",
+      "label_zh": "上侧表行步数",
+      "unit": "1",
+      "note_zh": "lower/upper表示输入两侧的表行；HR及CI均相对2000步。命中表行时两侧相同；参照行CI为null。"
+    },
+    {
+      "key": "lookup_mode",
+      "label_zh": "查表方式：exact 为命中，bracket 为相邻两行",
+      "note_zh": "lower/upper表示输入两侧的表行；HR及CI均相对2000步。命中表行时两侧相同；参照行CI为null。"
+    },
+    {
+      "key": "all_cause_mortality_lower_hr",
+      "label_zh": "全因死亡：下侧表行HR",
+      "unit": "1",
+      "note_zh": "lower/upper表示输入两侧的表行；HR及CI均相对2000步。命中表行时两侧相同；参照行CI为null。"
+    },
+    {
+      "key": "all_cause_mortality_lower_ci_low",
+      "label_zh": "全因死亡：下侧表行95% CI 下限",
+      "unit": "1",
+      "note_zh": "lower/upper表示输入两侧的表行；HR及CI均相对2000步。命中表行时两侧相同；参照行CI为null。"
+    },
+    {
+      "key": "all_cause_mortality_lower_ci_high",
+      "label_zh": "全因死亡：下侧表行95% CI 上限",
+      "unit": "1",
+      "note_zh": "lower/upper表示输入两侧的表行；HR及CI均相对2000步。命中表行时两侧相同；参照行CI为null。"
+    },
+    {
+      "key": "all_cause_mortality_upper_hr",
+      "label_zh": "全因死亡：上侧表行HR",
+      "unit": "1",
+      "note_zh": "lower/upper表示输入两侧的表行；HR及CI均相对2000步。命中表行时两侧相同；参照行CI为null。"
+    },
+    {
+      "key": "all_cause_mortality_upper_ci_low",
+      "label_zh": "全因死亡：上侧表行95% CI 下限",
+      "unit": "1",
+      "note_zh": "lower/upper表示输入两侧的表行；HR及CI均相对2000步。命中表行时两侧相同；参照行CI为null。"
+    },
+    {
+      "key": "all_cause_mortality_upper_ci_high",
+      "label_zh": "全因死亡：上侧表行95% CI 上限",
+      "unit": "1",
+      "note_zh": "lower/upper表示输入两侧的表行；HR及CI均相对2000步。命中表行时两侧相同；参照行CI为null。"
+    },
+    {
+      "key": "cvd_incidence_lower_hr",
+      "label_zh": "心血管病发生：下侧表行HR",
+      "unit": "1",
+      "note_zh": "lower/upper表示输入两侧的表行；HR及CI均相对2000步。命中表行时两侧相同；参照行CI为null。"
+    },
+    {
+      "key": "cvd_incidence_lower_ci_low",
+      "label_zh": "心血管病发生：下侧表行95% CI 下限",
+      "unit": "1",
+      "note_zh": "lower/upper表示输入两侧的表行；HR及CI均相对2000步。命中表行时两侧相同；参照行CI为null。"
+    },
+    {
+      "key": "cvd_incidence_lower_ci_high",
+      "label_zh": "心血管病发生：下侧表行95% CI 上限",
+      "unit": "1",
+      "note_zh": "lower/upper表示输入两侧的表行；HR及CI均相对2000步。命中表行时两侧相同；参照行CI为null。"
+    },
+    {
+      "key": "cvd_incidence_upper_hr",
+      "label_zh": "心血管病发生：上侧表行HR",
+      "unit": "1",
+      "note_zh": "lower/upper表示输入两侧的表行；HR及CI均相对2000步。命中表行时两侧相同；参照行CI为null。"
+    },
+    {
+      "key": "cvd_incidence_upper_ci_low",
+      "label_zh": "心血管病发生：上侧表行95% CI 下限",
+      "unit": "1",
+      "note_zh": "lower/upper表示输入两侧的表行；HR及CI均相对2000步。命中表行时两侧相同；参照行CI为null。"
+    },
+    {
+      "key": "cvd_incidence_upper_ci_high",
+      "label_zh": "心血管病发生：上侧表行95% CI 上限",
+      "unit": "1",
+      "note_zh": "lower/upper表示输入两侧的表行；HR及CI均相对2000步。命中表行时两侧相同；参照行CI为null。"
+    },
+    {
+      "key": "cvd_mortality_lower_hr",
+      "label_zh": "心血管病死亡：下侧表行HR",
+      "unit": "1",
+      "note_zh": "lower/upper表示输入两侧的表行；HR及CI均相对2000步。命中表行时两侧相同；参照行CI为null。"
+    },
+    {
+      "key": "cvd_mortality_lower_ci_low",
+      "label_zh": "心血管病死亡：下侧表行95% CI 下限",
+      "unit": "1",
+      "note_zh": "lower/upper表示输入两侧的表行；HR及CI均相对2000步。命中表行时两侧相同；参照行CI为null。"
+    },
+    {
+      "key": "cvd_mortality_lower_ci_high",
+      "label_zh": "心血管病死亡：下侧表行95% CI 上限",
+      "unit": "1",
+      "note_zh": "lower/upper表示输入两侧的表行；HR及CI均相对2000步。命中表行时两侧相同；参照行CI为null。"
+    },
+    {
+      "key": "cvd_mortality_upper_hr",
+      "label_zh": "心血管病死亡：上侧表行HR",
+      "unit": "1",
+      "note_zh": "lower/upper表示输入两侧的表行；HR及CI均相对2000步。命中表行时两侧相同；参照行CI为null。"
+    },
+    {
+      "key": "cvd_mortality_upper_ci_low",
+      "label_zh": "心血管病死亡：上侧表行95% CI 下限",
+      "unit": "1",
+      "note_zh": "lower/upper表示输入两侧的表行；HR及CI均相对2000步。命中表行时两侧相同；参照行CI为null。"
+    },
+    {
+      "key": "cvd_mortality_upper_ci_high",
+      "label_zh": "心血管病死亡：上侧表行95% CI 上限",
+      "unit": "1",
+      "note_zh": "lower/upper表示输入两侧的表行；HR及CI均相对2000步。命中表行时两侧相同；参照行CI为null。"
+    },
+    {
+      "key": "cancer_incidence_lower_hr",
+      "label_zh": "癌症发生：下侧表行HR",
+      "unit": "1",
+      "note_zh": "lower/upper表示输入两侧的表行；HR及CI均相对2000步。命中表行时两侧相同；参照行CI为null。"
+    },
+    {
+      "key": "cancer_incidence_lower_ci_low",
+      "label_zh": "癌症发生：下侧表行95% CI 下限",
+      "unit": "1",
+      "note_zh": "lower/upper表示输入两侧的表行；HR及CI均相对2000步。命中表行时两侧相同；参照行CI为null。"
+    },
+    {
+      "key": "cancer_incidence_lower_ci_high",
+      "label_zh": "癌症发生：下侧表行95% CI 上限",
+      "unit": "1",
+      "note_zh": "lower/upper表示输入两侧的表行；HR及CI均相对2000步。命中表行时两侧相同；参照行CI为null。"
+    },
+    {
+      "key": "cancer_incidence_upper_hr",
+      "label_zh": "癌症发生：上侧表行HR",
+      "unit": "1",
+      "note_zh": "lower/upper表示输入两侧的表行；HR及CI均相对2000步。命中表行时两侧相同；参照行CI为null。"
+    },
+    {
+      "key": "cancer_incidence_upper_ci_low",
+      "label_zh": "癌症发生：上侧表行95% CI 下限",
+      "unit": "1",
+      "note_zh": "lower/upper表示输入两侧的表行；HR及CI均相对2000步。命中表行时两侧相同；参照行CI为null。"
+    },
+    {
+      "key": "cancer_incidence_upper_ci_high",
+      "label_zh": "癌症发生：上侧表行95% CI 上限",
+      "unit": "1",
+      "note_zh": "lower/upper表示输入两侧的表行；HR及CI均相对2000步。命中表行时两侧相同；参照行CI为null。"
+    },
+    {
+      "key": "cancer_mortality_lower_hr",
+      "label_zh": "癌症死亡：下侧表行HR",
+      "unit": "1",
+      "note_zh": "lower/upper表示输入两侧的表行；HR及CI均相对2000步。命中表行时两侧相同；参照行CI为null。"
+    },
+    {
+      "key": "cancer_mortality_lower_ci_low",
+      "label_zh": "癌症死亡：下侧表行95% CI 下限",
+      "unit": "1",
+      "note_zh": "lower/upper表示输入两侧的表行；HR及CI均相对2000步。命中表行时两侧相同；参照行CI为null。"
+    },
+    {
+      "key": "cancer_mortality_lower_ci_high",
+      "label_zh": "癌症死亡：下侧表行95% CI 上限",
+      "unit": "1",
+      "note_zh": "lower/upper表示输入两侧的表行；HR及CI均相对2000步。命中表行时两侧相同；参照行CI为null。"
+    },
+    {
+      "key": "cancer_mortality_upper_hr",
+      "label_zh": "癌症死亡：上侧表行HR",
+      "unit": "1",
+      "note_zh": "lower/upper表示输入两侧的表行；HR及CI均相对2000步。命中表行时两侧相同；参照行CI为null。"
+    },
+    {
+      "key": "cancer_mortality_upper_ci_low",
+      "label_zh": "癌症死亡：上侧表行95% CI 下限",
+      "unit": "1",
+      "note_zh": "lower/upper表示输入两侧的表行；HR及CI均相对2000步。命中表行时两侧相同；参照行CI为null。"
+    },
+    {
+      "key": "cancer_mortality_upper_ci_high",
+      "label_zh": "癌症死亡：上侧表行95% CI 上限",
+      "unit": "1",
+      "note_zh": "lower/upper表示输入两侧的表行；HR及CI均相对2000步。命中表行时两侧相同；参照行CI为null。"
+    },
+    {
+      "key": "diabetes_incidence_lower_hr",
+      "label_zh": "2 型糖尿病发生：下侧表行HR",
+      "unit": "1",
+      "note_zh": "lower/upper表示输入两侧的表行；HR及CI均相对2000步。命中表行时两侧相同；参照行CI为null。"
+    },
+    {
+      "key": "diabetes_incidence_lower_ci_low",
+      "label_zh": "2 型糖尿病发生：下侧表行95% CI 下限",
+      "unit": "1",
+      "note_zh": "lower/upper表示输入两侧的表行；HR及CI均相对2000步。命中表行时两侧相同；参照行CI为null。"
+    },
+    {
+      "key": "diabetes_incidence_lower_ci_high",
+      "label_zh": "2 型糖尿病发生：下侧表行95% CI 上限",
+      "unit": "1",
+      "note_zh": "lower/upper表示输入两侧的表行；HR及CI均相对2000步。命中表行时两侧相同；参照行CI为null。"
+    },
+    {
+      "key": "diabetes_incidence_upper_hr",
+      "label_zh": "2 型糖尿病发生：上侧表行HR",
+      "unit": "1",
+      "note_zh": "lower/upper表示输入两侧的表行；HR及CI均相对2000步。命中表行时两侧相同；参照行CI为null。"
+    },
+    {
+      "key": "diabetes_incidence_upper_ci_low",
+      "label_zh": "2 型糖尿病发生：上侧表行95% CI 下限",
+      "unit": "1",
+      "note_zh": "lower/upper表示输入两侧的表行；HR及CI均相对2000步。命中表行时两侧相同；参照行CI为null。"
+    },
+    {
+      "key": "diabetes_incidence_upper_ci_high",
+      "label_zh": "2 型糖尿病发生：上侧表行95% CI 上限",
+      "unit": "1",
+      "note_zh": "lower/upper表示输入两侧的表行；HR及CI均相对2000步。命中表行时两侧相同；参照行CI为null。"
+    },
+    {
+      "key": "dementia_lower_hr",
+      "label_zh": "痴呆：下侧表行HR",
+      "unit": "1",
+      "note_zh": "lower/upper表示输入两侧的表行；HR及CI均相对2000步。命中表行时两侧相同；参照行CI为null。"
+    },
+    {
+      "key": "dementia_lower_ci_low",
+      "label_zh": "痴呆：下侧表行95% CI 下限",
+      "unit": "1",
+      "note_zh": "lower/upper表示输入两侧的表行；HR及CI均相对2000步。命中表行时两侧相同；参照行CI为null。"
+    },
+    {
+      "key": "dementia_lower_ci_high",
+      "label_zh": "痴呆：下侧表行95% CI 上限",
+      "unit": "1",
+      "note_zh": "lower/upper表示输入两侧的表行；HR及CI均相对2000步。命中表行时两侧相同；参照行CI为null。"
+    },
+    {
+      "key": "dementia_upper_hr",
+      "label_zh": "痴呆：上侧表行HR",
+      "unit": "1",
+      "note_zh": "lower/upper表示输入两侧的表行；HR及CI均相对2000步。命中表行时两侧相同；参照行CI为null。"
+    },
+    {
+      "key": "dementia_upper_ci_low",
+      "label_zh": "痴呆：上侧表行95% CI 下限",
+      "unit": "1",
+      "note_zh": "lower/upper表示输入两侧的表行；HR及CI均相对2000步。命中表行时两侧相同；参照行CI为null。"
+    },
+    {
+      "key": "dementia_upper_ci_high",
+      "label_zh": "痴呆：上侧表行95% CI 上限",
+      "unit": "1",
+      "note_zh": "lower/upper表示输入两侧的表行；HR及CI均相对2000步。命中表行时两侧相同；参照行CI为null。"
+    },
+    {
+      "key": "depressive_symptoms_lower_hr",
+      "label_zh": "抑郁症状：下侧表行HR",
+      "unit": "1",
+      "note_zh": "lower/upper表示输入两侧的表行；HR及CI均相对2000步。命中表行时两侧相同；参照行CI为null。"
+    },
+    {
+      "key": "depressive_symptoms_lower_ci_low",
+      "label_zh": "抑郁症状：下侧表行95% CI 下限",
+      "unit": "1",
+      "note_zh": "lower/upper表示输入两侧的表行；HR及CI均相对2000步。命中表行时两侧相同；参照行CI为null。"
+    },
+    {
+      "key": "depressive_symptoms_lower_ci_high",
+      "label_zh": "抑郁症状：下侧表行95% CI 上限",
+      "unit": "1",
+      "note_zh": "lower/upper表示输入两侧的表行；HR及CI均相对2000步。命中表行时两侧相同；参照行CI为null。"
+    },
+    {
+      "key": "depressive_symptoms_upper_hr",
+      "label_zh": "抑郁症状：上侧表行HR",
+      "unit": "1",
+      "note_zh": "lower/upper表示输入两侧的表行；HR及CI均相对2000步。命中表行时两侧相同；参照行CI为null。"
+    },
+    {
+      "key": "depressive_symptoms_upper_ci_low",
+      "label_zh": "抑郁症状：上侧表行95% CI 下限",
+      "unit": "1",
+      "note_zh": "lower/upper表示输入两侧的表行；HR及CI均相对2000步。命中表行时两侧相同；参照行CI为null。"
+    },
+    {
+      "key": "depressive_symptoms_upper_ci_high",
+      "label_zh": "抑郁症状：上侧表行95% CI 上限",
+      "unit": "1",
+      "note_zh": "lower/upper表示输入两侧的表行；HR及CI均相对2000步。命中表行时两侧相同；参照行CI为null。"
+    },
+    {
+      "key": "falls_lower_hr",
+      "label_zh": "跌倒（老年人群证据）：下侧表行HR",
+      "unit": "1",
+      "note_zh": "lower/upper表示输入两侧的表行；HR及CI均相对2000步。命中表行时两侧相同；参照行CI为null。"
+    },
+    {
+      "key": "falls_lower_ci_low",
+      "label_zh": "跌倒（老年人群证据）：下侧表行95% CI 下限",
+      "unit": "1",
+      "note_zh": "lower/upper表示输入两侧的表行；HR及CI均相对2000步。命中表行时两侧相同；参照行CI为null。"
+    },
+    {
+      "key": "falls_lower_ci_high",
+      "label_zh": "跌倒（老年人群证据）：下侧表行95% CI 上限",
+      "unit": "1",
+      "note_zh": "lower/upper表示输入两侧的表行；HR及CI均相对2000步。命中表行时两侧相同；参照行CI为null。"
+    },
+    {
+      "key": "falls_upper_hr",
+      "label_zh": "跌倒（老年人群证据）：上侧表行HR",
+      "unit": "1",
+      "note_zh": "lower/upper表示输入两侧的表行；HR及CI均相对2000步。命中表行时两侧相同；参照行CI为null。"
+    },
+    {
+      "key": "falls_upper_ci_low",
+      "label_zh": "跌倒（老年人群证据）：上侧表行95% CI 下限",
+      "unit": "1",
+      "note_zh": "lower/upper表示输入两侧的表行；HR及CI均相对2000步。命中表行时两侧相同；参照行CI为null。"
+    },
+    {
+      "key": "falls_upper_ci_high",
+      "label_zh": "跌倒（老年人群证据）：上侧表行95% CI 上限",
+      "unit": "1",
+      "note_zh": "lower/upper表示输入两侧的表行；HR及CI均相对2000步。命中表行时两侧相同；参照行CI为null。"
+    }
+  ],
+  "data_files": [
+    {
+      "path": "data/table2.json",
+      "source_url": "https://onaps.fr/wp-content/uploads/2025/10/2025-07-Daily-steps-and-health-outcomes-in-adults.pdf",
+      "license": "CC-BY-NC-4.0 (source article; numerical table transcription)",
+      "sha256": "d09e34903b62b1725db6c826805ea84d85d45850589eb2759e5451d88d97475c",
+      "redistributable": "yes"
+    }
+  ],
+  "validation": {
+    "status": "reproduced",
+    "examples": [
+      {
+        "locator": "Table 2, p e676, Steps per day 7000; all nine outcome columns in printed order",
+        "quote": "7000                0·53              0·75                 0·53             0·94               0·63            0·86           0·62           0·78          0·72\n(0·46–0·6)        (0·67–0·85)         (0·37–0·77)       (0·87–1·01)        (0·55–0·72)     (0·74–1·00)    (0·53–0·73)    (0·73–0·83)    (0·65–0·81)",
+        "values": [
+          7000,
+          0.53,
+          0.46,
+          0.6,
+          0.75,
+          0.67,
+          0.85,
+          0.53,
+          0.37,
+          0.77,
+          0.94,
+          0.87,
+          1.01,
+          0.63,
+          0.55,
+          0.72,
+          0.86,
+          0.74,
+          1.0,
+          0.62,
+          0.53,
+          0.73,
+          0.78,
+          0.73,
+          0.83,
+          0.72,
+          0.65,
+          0.81
+        ],
+        "tolerance": "原表保留的小数直接查表，浮点值精确相等，不以未报告的更高精度重算。",
+        "test": "tests/test_manifest.py::test_table2_7000_all_outcomes"
+      },
+      {
+        "locator": "Table 2, p e676, Steps per day 12000; CVD mortality, cancer mortality and falls",
+        "quote": "12 000              0·45              0·69                 0·48             0·88               0·50           0·73           0·58            0·61          0·78\n(0·39–0·53)       (0·62–0·78)         (0·33–0·71)       (0·76–1·01)        (0·41–0·60)     (0·54–0·99)    (0·49–0·70)    (0·53–0·70)    (0·67–0·92)",
+        "values": [
+          0.48,
+          0.33,
+          0.71,
+          0.5,
+          0.41,
+          0.6,
+          0.78,
+          0.67,
+          0.92
+        ],
+        "tolerance": "逐项等于排版PDF印出的表值；不采用搜索引擎的PDF转写数值。",
+        "test": "tests/test_manifest.py::test_table2_12000_printed_cells"
+      }
+    ]
+  }
+}
