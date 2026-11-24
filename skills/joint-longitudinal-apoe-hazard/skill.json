@@ -1,0 +1,186 @@
+{
+  "schema": "longevity-skill/1",
+  "name": "joint-longitudinal-apoe-hazard",
+  "kind": "paper",
+  "tier": "A",
+  "species": [
+    "human"
+  ],
+  "evidence": "cohort",
+  "domains": [
+    "脑与认知衰老",
+    "遗传风险"
+  ],
+  "blurb_zh": "用 APOE ε4 拷贝数计算研究模型中的失智相对风险及认知路径。",
+  "intents": [
+    "gene_variant",
+    "cognition_dementia"
+  ],
+  "triage": {
+    "reason_zh": "人群研究公开 APOE ε4 剂量编码及分祖源 log hazard 系数，可按个人拷贝数计算相对于零拷贝的关联性风险比。",
+    "reviewed": false
+  },
+  "paper": {
+    "doi": "10.64898/2026.11.06.26367441",
+    "title": "Joint Longitudinal Hazard Modeling Distinguishes Polygenic Effects on Dementia via Premorbid Cognitive Function and Aging-Related Decline",
+    "title_zh": "失智遗传风险经病前认知水平与衰老相关认知下降的不同路径",
+    "journal": "medRxiv",
+    "year": 2026,
+    "authors": "Clapp Sullivan 等",
+    "article_url": "https://www.medrxiv.org/content/10.64898/2026.11.06.26367441v1",
+    "supplements": [
+      {
+        "label": "Supplementary Note（DC1）",
+        "url": "https://www.medrxiv.org/content/medrxiv/early/2026/11/09/2026.11.06.26367441/DC1/embed/media-1.docx?download=true"
+      },
+      {
+        "label": "Supplementary Tables S1–S18（DC2）",
+        "url": "https://www.medrxiv.org/content/medrxiv/early/2026/11/09/2026.11.06.26367441/DC2/embed/media-2.xlsx?download=true"
+      }
+    ],
+    "card_notes": [
+      "预印本，未经同行评审。只实现 HRS 的 APOE ε4 剂量关联，不实现完整联合模型或 LBC 模型。",
+      "正文和两份补充材料已核查；Data/Code 页仅说明 HRS 与 Lothian Birth Cohort 数据须申请，未列出公开分析代码。"
+    ],
+    "summary_zh": "这项研究在人群中发现，不同遗传因素与失智的关联可能分别经过病前认知水平和随年龄发生的认知下降，且部分关联因祖源而异。个人报告只根据已知 APOE ε4 拷贝数计算所选研究模型中的相对风险及认知路径，不计算个人患病概率或干预收益。",
+    "summary_status": "draft"
+  },
+  "entry": {
+    "script": "scripts/personal_report.py",
+    "measurements_flag": "--measurements",
+    "measurements_header": [
+      "marker",
+      "value",
+      "unit"
+    ],
+    "age_flag": "--age",
+    "sex_flag": "--sex",
+    "out_flag": "--out",
+    "result_json": true
+  },
+  "inputs_status": "verified",
+  "inputs": [
+    {
+      "key": "apoe_e4_count",
+      "label_zh": "APOE ε4 拷贝数",
+      "aliases": [
+        "APOE ε4拷贝数",
+        "APOE e4 allele count",
+        "APOE e-4 status",
+        "number of APOE e4 alleles",
+        "APOE ε4 等位基因数"
+      ],
+      "unit": "1",
+      "accept": {},
+      "range": [
+        0,
+        2
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "仅接受报告已确认的 0、1、2 整数拷贝数；不是 APOE 蛋白浓度、携带状态、百分比或插补剂量。未知不能填 0。"
+    },
+    {
+      "key": "ancestry",
+      "label_zh": "研究祖源模型",
+      "required": true,
+      "from": "argument",
+      "flag": "--ancestry",
+      "note_zh": "EUR、AFR、AMR 三选一；必须明确选择，东亚或未知祖源无可用模型，不从国籍推定。"
+    },
+    {
+      "key": "age",
+      "label_zh": "年龄上下文",
+      "unit": "a",
+      "range": [
+        18,
+        110
+      ],
+      "required": false,
+      "from": "profile",
+      "flag": "--age",
+      "note_zh": "仅作研究范围提示，不进入计算；正文排除 50 岁及以下，表 S11 最大 107 岁。"
+    },
+    {
+      "key": "sex",
+      "label_zh": "性别上下文",
+      "required": false,
+      "from": "profile",
+      "flag": "--sex",
+      "note_zh": "female、male、unknown；仅作上下文，不重新调整风险比。"
+    }
+  ],
+  "outputs": [
+    {
+      "key": "hr_total",
+      "label_zh": "总关联风险比（相对 0 拷贝）",
+      "unit": "1"
+    },
+    {
+      "key": "hr_level",
+      "label_zh": "经病前认知水平风险比（相对 0 拷贝）",
+      "unit": "1"
+    },
+    {
+      "key": "hr_change",
+      "label_zh": "经认知下降速度风险比（相对 0 拷贝）",
+      "unit": "1"
+    },
+    {
+      "key": "hr_direct",
+      "label_zh": "剩余直接关联风险比（相对 0 拷贝）",
+      "unit": "1"
+    },
+    {
+      "key": "model_ancestry",
+      "label_zh": "所选 HRS 研究祖源模型"
+    },
+    {
+      "key": "apoe_e4_count",
+      "label_zh": "用于计算的 APOE ε4 拷贝数",
+      "unit": "1"
+    }
+  ],
+  "validation": {
+    "status": "draft",
+    "gap_zh": "预印本，未经同行评审；已用 Tables S1、S3、S4 的 APOE 每拷贝 log hazard 系数复现 12 个印出的 HR，正文 Figure 3 说明每拷贝单位。没有个人绝对风险或两拷贝的独立印出示例；未复现完整联合拟合。S1 的 LBC 认知下降路径 Beta=0.517 与 HR=1.73 不一致，未纳入。正文、Supplementary Note、Supplementary Tables S1–S18 与 Data/Code 页均已检查。",
+    "examples": [
+      {
+        "locator": "Table S1, HRS EUR, APOE e-4 status rows (Mediation Analysis and Unique Direct Effect); Figure 3 per-allele units",
+        "quote": "APOE e-4 status 0.683 0.064 1.98 1.75 - 2.24< 0.001-0.013 0.034-2 0.99 0.92 - 1.06 0.703 0.633 0.086 93 1.88 1.59 - 2.23< 0.001\nAPOE e-4 status 10684 0.010 0.026 0.701-0.523 0.041< 0.001 0.063 0.072 1.07 0.92 - 1.23 0.384",
+        "values": [
+          1.98,
+          0.99,
+          1.88,
+          1.07
+        ],
+        "tolerance": "HR 绝对误差不超过 0.006；Beta 印到三位小数，HR 印到两位小数，容纳两次舍入误差。输入为增加 1 拷贝；不反推系数。",
+        "test": "tests/test_manifest.py::test_printed_apoe_hazard_ratios"
+      },
+      {
+        "locator": "Table S3, HRS AFR, APOE e-4 status rows (Mediation Analysis and Unique Direct Effect); Figure 3 per-allele units",
+        "quote": "APOE e-4 status 0.316 0.109 1.37 1.11 -1.70 0.004 0.042 0.069 13 1.04 0.91 - 1.19 0.547 0.152 0.105 48 1.16 0.95 - 1.43 0.148\nAPOE e-4 status 2240-0.031 0.052 0.546-0.138 0.095 0.145 0.122 0.102 1.13 0.93 - 1.38 0.231",
+        "values": [
+          1.37,
+          1.04,
+          1.16,
+          1.13
+        ],
+        "tolerance": "HR 绝对误差不超过 0.006；Beta 印到三位小数，HR 印到两位小数，容纳两次舍入误差。输入为增加 1 拷贝；不反推系数。",
+        "test": "tests/test_manifest.py::test_printed_apoe_hazard_ratios"
+      },
+      {
+        "locator": "Table S4, HRS AMR, APOE e-4 status rows (Mediation Analysis and Unique Direct Effect); Figure 3 per-allele units",
+        "quote": "APOE e-4 status 0.025 0.163 1.03 0.74 - 1.41 0.877-0.025 0.104-100 0.98 0.80 - 1.20 0.814 0.133 0.112 532 1.14 0.92 - 1.42 0.233\nAPOE e-4 status 1697 0.018 0.076 0.814-0.216 0.171 0.206-0.084 0.16 0.92 0.67 - 1.26 0.602",
+        "values": [
+          1.03,
+          0.98,
+          1.14,
+          0.92
+        ],
+        "tolerance": "HR 绝对误差不超过 0.006；Beta 印到三位小数，HR 印到两位小数，容纳两次舍入误差。输入为增加 1 拷贝；不反推系数。",
+        "test": "tests/test_manifest.py::test_printed_apoe_hazard_ratios"
+      }
+    ]
+  }
+}
