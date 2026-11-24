@@ -1,0 +1,264 @@
+{
+  "schema": "longevity-skill/1",
+  "name": "caide-dementia-risk",
+  "kind": "paper",
+  "tier": "A",
+  "species": [
+    "human"
+  ],
+  "evidence": "cohort",
+  "domains": [
+    "认知与脑健康"
+  ],
+  "blurb_zh": "用中年血压、血脂、体重和生活信息计算 CAIDE 痴呆风险评分。",
+  "intents": [
+    "cognition_dementia",
+    "lab_meaning"
+  ],
+  "triage": {
+    "reason_zh": "人群纵向研究在表2公开两种CAIDE评分权重，方法段和表3提供风险换算，表4的六个示例可直接复现。",
+    "reviewed": false
+  },
+  "paper": {
+    "doi": "10.1016/s1474-4422(06)70537-3",
+    "title": "Risk score for the prediction of dementia risk in 20 years among middle aged people: a longitudinal, population-based study.",
+    "title_zh": "CAIDE 中年痴呆风险评分",
+    "journal": "The Lancet Neurology",
+    "year": 2006,
+    "authors": "Kivipelto 等",
+    "article_url": "https://doi.org/10.1016/s1474-4422(06)70537-3",
+    "supplements": [],
+    "card_notes": [
+      "采用正文表 2 的整数分值、表 3 的分组观察发生率和方法段的评分换算公式；模型 2 需明确的 APOE ε4 携带状态。"
+    ],
+    "summary_zh": "这项研究在芬兰人群中发现，中年的年龄、教育和血管风险因素组合可以预测晚年的痴呆风险。个人报告只计算原研究的评分、相应分组发生率及公式风险估计，不判断是否已经患有痴呆。",
+    "summary_status": "draft"
+  },
+  "entry": {
+    "script": "scripts/personal_report.py",
+    "measurements_flag": "--measurements",
+    "measurements_header": [
+      "marker",
+      "value",
+      "unit"
+    ],
+    "age_flag": "--age",
+    "sex_flag": "--sex",
+    "out_flag": "--out",
+    "result_json": true,
+    "targets_flag": "--targets",
+    "levers_json": true
+  },
+  "population": {
+    "age_years": [
+      39,
+      64
+    ],
+    "note_zh": "芬兰东部 CAIDE 中年基线人群，存活至晚年复查；未作外部验证。超出基线年龄范围停止计算。"
+  },
+  "inputs_status": "verified",
+  "inputs": [
+    {
+      "key": "education_years",
+      "label_zh": "受教育年限",
+      "unit": "a",
+      "range": [
+        0,
+        30
+      ],
+      "aliases": [
+        "education",
+        "education years",
+        "years of education",
+        "教育年数",
+        "受教育年数"
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "已完成的整年数；不把小数自动分档。"
+    },
+    {
+      "key": "sbp_mmhg",
+      "label_zh": "收缩压",
+      "unit": "mmHg",
+      "range": [
+        60,
+        300
+      ],
+      "aliases": [
+        "SBP",
+        "systolic blood pressure",
+        "高压",
+        "收缩期血压"
+      ],
+      "required": true,
+      "from": "measurements",
+      "accept": {
+        "kPa": 7.500617
+      },
+      "unit_required": true
+    },
+    {
+      "key": "bmi_kg_m2",
+      "label_zh": "体质指数",
+      "unit": "kg/m^2",
+      "range": [
+        10,
+        80
+      ],
+      "aliases": [
+        "BMI",
+        "body mass index",
+        "体重指数"
+      ],
+      "required": true,
+      "from": "measurements"
+    },
+    {
+      "key": "total_cholesterol_mmol_l",
+      "label_zh": "总胆固醇",
+      "unit": "mmol/L",
+      "range": [
+        0.5,
+        20
+      ],
+      "aliases": [
+        "TC",
+        "TCHO",
+        "CHOL",
+        "total cholesterol",
+        "血清总胆固醇"
+      ],
+      "required": true,
+      "from": "measurements",
+      "accept": {
+        "mg/dL": 0.025863183757920603,
+        "umol/L": 0.001
+      },
+      "molar_mass": 386.65,
+      "unit_required": true
+    },
+    {
+      "key": "physical_active_1",
+      "label_zh": "身体活动达标",
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "aliases": [
+        "physical activity active",
+        "physically active",
+        "休闲身体活动达标"
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "1=每周至少两次、每次至少20–30分钟且出汗和气促的休闲活动；0=未达标；未知留空。"
+    },
+    {
+      "key": "apoe_e4_1",
+      "label_zh": "APOE ε4 携带状态",
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "aliases": [
+        "APOE e4 carrier",
+        "APOE ε4 carrier",
+        "APOE4携带者",
+        "载脂蛋白E ε4携带"
+      ],
+      "required": false,
+      "from": "measurements",
+      "note_zh": "0=不携带，1=至少携带一个ε4等位基因。仅 --model apoe 时必需；未知不能填0。"
+    },
+    {
+      "key": "age",
+      "label_zh": "中年测量时年龄",
+      "unit": "a",
+      "range": [
+        39,
+        64
+      ],
+      "aliases": [
+        "age",
+        "基线年龄",
+        "midlife age"
+      ],
+      "required": true,
+      "from": "profile",
+      "flag": "--age"
+    },
+    {
+      "key": "sex",
+      "label_zh": "研究性别分类",
+      "aliases": [
+        "sex",
+        "性别"
+      ],
+      "required": true,
+      "from": "profile",
+      "flag": "--sex",
+      "note_zh": "female 或 male，对应原文 Women/Men；不推断。"
+    }
+  ],
+  "outputs": [
+    {
+      "key": "model",
+      "label_zh": "采用模型"
+    },
+    {
+      "key": "score",
+      "label_zh": "CAIDE 总分",
+      "unit": "score"
+    },
+    {
+      "key": "model_risk_20y_pct",
+      "label_zh": "20年公式风险估计",
+      "unit": "%"
+    },
+    {
+      "key": "score_category",
+      "label_zh": "表3分数组"
+    },
+    {
+      "key": "group_risk_pct",
+      "label_zh": "原队列分组发生率",
+      "unit": "%"
+    },
+    {
+      "key": "group_ci_low_pct",
+      "label_zh": "原队列分组95%置信区间下限",
+      "unit": "%"
+    },
+    {
+      "key": "group_ci_high_pct",
+      "label_zh": "原队列分组95%置信区间上限",
+      "unit": "%"
+    }
+  ],
+  "validation": {
+    "status": "reproduced",
+    "examples": [
+      {
+        "locator": "Table 4, p738, score and Risk of dementia rows (low, intermediate, high; Models 1 and 2)",
+        "quote": "score=0 score=0 score=10 score=10 score=15 score=18\nRisk of dementia 0·13% 0·09% 6·91% 4·06% 35·55% 48·93%",
+        "values": [
+          0,
+          10,
+          15,
+          18,
+          0.13,
+          0.09,
+          6.91,
+          4.06,
+          35.55,
+          48.93
+        ],
+        "tolerance": "整数分数精确一致；风险绝对误差≤0.005个百分点，对应表4百分比小数点后两位的半个末位。输入类别及数值选择详见测试和contract.md。",
+        "test": "tests/test_manifest.py::test_table4_printed_examples"
+      }
+    ]
+  }
+}
