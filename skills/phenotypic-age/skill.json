@@ -1,0 +1,342 @@
+{
+  "schema": "longevity-skill/1",
+  "name": "phenotypic-age",
+  "kind": "paper",
+  "tier": "A",
+  "species": [
+    "human"
+  ],
+  "evidence": "cohort",
+  "domains": [
+    "临床年龄与可穿戴"
+  ],
+  "blurb_zh": "按公开更正公式，用年龄和九项血检计算表型年龄及年龄差。",
+  "intents": [
+    "biological_age",
+    "lab_meaning"
+  ],
+  "triage": {
+    "reason_zh": "人群独立验证研究及其正式更正公开九项血检和年龄的全部计算常数；可计算个人表型年龄，未找到印出的个人算例，保留 draft。",
+    "reviewed": false
+  },
+  "paper": {
+    "doi": "10.1371/journal.pmed.1002718",
+    "title": "A new aging measure captures morbidity and mortality risk across diverse subpopulations from NHANES IV: A cohort study.",
+    "title_zh": "表型年龄与不同人群的疾病及死亡风险",
+    "journal": "PLoS Medicine",
+    "year": 2018,
+    "authors": "Liu 等",
+    "article_url": "https://journals.plos.org/plosmedicine/article?id=10.1371/journal.pmed.1002718",
+    "supplements": [
+      {
+        "label": "S1 Appendix：KDM BioAge 比较",
+        "url": "https://journals.plos.org/plosmedicine/article/file?type=supplementary&id=10.1371/journal.pmed.1002718.s001"
+      },
+      {
+        "label": "S1 Fig：KDM 与疾病数",
+        "url": "https://journals.plos.org/plosmedicine/article/file?type=supplementary&id=10.1371/journal.pmed.1002718.s002"
+      },
+      {
+        "label": "S2 Fig：ROC 比较",
+        "url": "https://journals.plos.org/plosmedicine/article/file?type=supplementary&id=10.1371/journal.pmed.1002718.s003"
+      },
+      {
+        "label": "S1 STROBE",
+        "url": "https://journals.plos.org/plosmedicine/article/file?type=supplementary&id=10.1371/journal.pmed.1002718.s004"
+      },
+      {
+        "label": "S1 Table：人群及血检描述",
+        "url": "https://journals.plos.org/plosmedicine/article/file?type=supplementary&id=10.1371/journal.pmed.1002718.s005"
+      },
+      {
+        "label": "S2 Table：KDM 死亡关联",
+        "url": "https://journals.plos.org/plosmedicine/article/file?type=supplementary&id=10.1371/journal.pmed.1002718.s006"
+      },
+      {
+        "label": "S3 Table：KDM 亚组关联",
+        "url": "https://journals.plos.org/plosmedicine/article/file?type=supplementary&id=10.1371/journal.pmed.1002718.s007"
+      },
+      {
+        "label": "S4 Table：KDM 高龄组关联",
+        "url": "https://journals.plos.org/plosmedicine/article/file?type=supplementary&id=10.1371/journal.pmed.1002718.s008"
+      }
+    ],
+    "card_notes": [
+      "公式采用正式更正：https://doi.org/10.1371/journal.pmed.1002760（2019），补入 M 步骤并采用更正的血糖、RDW 系数。",
+      "单位依据本文引用的原始方法 Table 1：https://www.aging-us.com/article/101414/text；本文 S1 Table 中白蛋白和 CRP 的单位标签与该方法冲突。",
+      "未发现本文发布的专用代码仓库；全部补充材料已核查。PhenoAgeAccel 所需的年龄回归参数未印出，本报告不计算该残差。"
+    ],
+    "summary_zh": "这项研究在美国成年人的独立随访人群中发现，常规血检得到的表型年龄与已有疾病数量及后续死亡有关，在多类人群中仍有这种关联。个人报告只按公开公式计算表型年龄、它与实足年龄的差及用户提供的血检目标情景，不计算年龄回归残差、疾病诊断或个人寿命。",
+    "summary_status": "draft"
+  },
+  "entry": {
+    "script": "scripts/personal_report.py",
+    "measurements_flag": "--measurements",
+    "measurements_header": [
+      "marker",
+      "value",
+      "unit"
+    ],
+    "age_flag": "--age",
+    "sex_flag": "--sex",
+    "out_flag": "--out",
+    "result_json": true,
+    "targets_flag": "--targets",
+    "levers_json": true
+  },
+  "population": {
+    "age_years": [
+      20,
+      84
+    ],
+    "note_zh": "原始 NHANES III 推导样本及本文主要 NHANES IV 验证样本年龄范围；本文另有顶码为 85 岁的高龄组，不在个人读出支持范围。"
+  },
+  "inputs_status": "draft",
+  "inputs": [
+    {
+      "key": "albumin_g_l",
+      "label_zh": "白蛋白",
+      "aliases": [
+        "albumin_gl",
+        "albumin",
+        "ALB",
+        "血清白蛋白",
+        "白蛋白(ALB)"
+      ],
+      "unit": "g/L",
+      "accept": {
+        "g/dL": 10
+      },
+      "range": [
+        5,
+        65
+      ],
+      "required": true,
+      "from": "measurements",
+      "unit_required": true
+    },
+    {
+      "key": "creatinine_umol_l",
+      "label_zh": "肌酐",
+      "aliases": [
+        "creatinine_umol",
+        "creatinine",
+        "CREA",
+        "Cr",
+        "Scr",
+        "血肌酐",
+        "肌酐(CREA)"
+      ],
+      "unit": "umol/L",
+      "accept": {
+        "mg/dL": 88.4
+      },
+      "molar_mass": 113.12,
+      "range": [
+        5,
+        2500
+      ],
+      "required": true,
+      "from": "measurements",
+      "unit_required": true
+    },
+    {
+      "key": "glucose_mmol_l",
+      "label_zh": "血糖",
+      "aliases": [
+        "glucose",
+        "GLU",
+        "FPG",
+        "葡萄糖",
+        "空腹血糖",
+        "空腹葡萄糖",
+        "fasting glucose",
+        "空腹血葡萄糖",
+        "FBG"
+      ],
+      "unit": "mmol/L",
+      "accept": {
+        "mg/dL": 0.0555
+      },
+      "molar_mass": 180.16,
+      "range": [
+        1,
+        60
+      ],
+      "required": true,
+      "from": "measurements",
+      "unit_required": true
+    },
+    {
+      "key": "crp_mg_dl",
+      "label_zh": "C反应蛋白",
+      "aliases": [
+        "crp",
+        "hs-crp",
+        "hscrp",
+        "c-反应蛋白",
+        "超敏c反应蛋白",
+        "超敏crp",
+        "c-reactive protein"
+      ],
+      "unit": "mg/dL",
+      "accept": {
+        "mg/L": 0.1
+      },
+      "range": [
+        1e-06,
+        100
+      ],
+      "unit_required": true,
+      "required": true,
+      "from": "measurements",
+      "note_zh": "国内化验单上的 CRP 和超敏 CRP 多用 mg/L，数值除以 10 才是 mg/dL。"
+    },
+    {
+      "key": "lymphocyte_pct",
+      "label_zh": "淋巴细胞百分比",
+      "aliases": [
+        "lymph%",
+        "lymphocyte %",
+        "LYM%",
+        "LY%",
+        "淋巴细胞%",
+        "淋巴细胞比率",
+        "lymphocyte percent",
+        "lymphocyte percentage"
+      ],
+      "unit": "%",
+      "range": [
+        0,
+        100
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "这里要淋巴细胞百分比（%），不是淋巴细胞绝对计数（×10⁹/L）。",
+      "unit_required": true
+    },
+    {
+      "key": "mcv_fl",
+      "label_zh": "平均红细胞体积",
+      "aliases": [
+        "mcv",
+        "MCV(平均红细胞体积)",
+        "mean cell volume",
+        "mean corpuscular volume"
+      ],
+      "unit": "fL",
+      "range": [
+        40,
+        180
+      ],
+      "required": true,
+      "from": "measurements",
+      "unit_required": true
+    },
+    {
+      "key": "rdw_pct",
+      "label_zh": "红细胞分布宽度",
+      "aliases": [
+        "rdw",
+        "RDW-CV",
+        "红细胞分布宽度-CV",
+        "红细胞体积分布宽度",
+        "红细胞体积分布宽度-CV",
+        "红细胞分布宽度-变异系数",
+        "red cell distribution width"
+      ],
+      "unit": "%",
+      "range": [
+        5,
+        40
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "化验单上常同时有 RDW-CV（%）和 RDW-SD（fL），这里要 RDW-CV。",
+      "unit_required": true
+    },
+    {
+      "key": "alp_u_l",
+      "label_zh": "碱性磷酸酶",
+      "aliases": [
+        "alp",
+        "AKP",
+        "alkaline phosphatase"
+      ],
+      "unit": "U/L",
+      "accept": {
+        "ukat/L": 60
+      },
+      "range": [
+        1,
+        5000
+      ],
+      "required": true,
+      "from": "measurements",
+      "unit_required": true
+    },
+    {
+      "key": "wbc_10e9_l",
+      "label_zh": "白细胞",
+      "aliases": [
+        "wbc",
+        "白细胞计数",
+        "白细胞数",
+        "leukocytes",
+        "white blood cell count"
+      ],
+      "unit": "10^9/L",
+      "accept": {
+        "10^3/uL": 1
+      },
+      "range": [
+        0.01,
+        200
+      ],
+      "required": true,
+      "from": "measurements",
+      "unit_required": true
+    },
+    {
+      "key": "age",
+      "label_zh": "实足年龄",
+      "unit": "a",
+      "range": [
+        20,
+        84
+      ],
+      "required": true,
+      "from": "profile",
+      "flag": "--age",
+      "note_zh": "限主要验证组的年龄范围；85+ 的真实年龄在研究中被顶码。"
+    },
+    {
+      "key": "sex",
+      "label_zh": "性别",
+      "required": false,
+      "from": "profile",
+      "flag": "--sex",
+      "note_zh": "不进入表型年龄公式，不改变结果。"
+    }
+  ],
+  "outputs": [
+    {
+      "key": "phenoage",
+      "label_zh": "表型年龄",
+      "unit": "a"
+    },
+    {
+      "key": "phenoage_difference",
+      "label_zh": "表型年龄减实足年龄",
+      "unit": "a",
+      "note_zh": "简单年龄差，不是 PhenoAgeAccel。"
+    }
+  ],
+  "related_not_same": [
+    "accelerated-biological-aging-risk"
+  ],
+  "validation": {
+    "status": "draft",
+    "gap_zh": "已核查 PLoS Medicine 2018 全文、Tables 1–4、Figures 1–7、全部八个补充文件（S1 Appendix、S1–S2 Fig、S1 STROBE、S1–S4 Table）及 2019 正式更正。没有印出包含年龄和九项血检的完整个人输入及其表型年龄输出；引言的 50/55/45 岁只是释义，S1 Table 是边际汇总，不能当个人算例。常数齐全；工程测试仅核对更正公式的等价实现、输入检查和目标情景，不作为论文示例复现。"
+  }
+}
