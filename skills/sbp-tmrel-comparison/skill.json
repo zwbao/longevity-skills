@@ -1,0 +1,125 @@
+{
+  "schema": "longevity-skill/1",
+  "name": "sbp-tmrel-comparison",
+  "kind": "paper",
+  "tier": "A",
+  "species": [
+    "human"
+  ],
+  "evidence": "method",
+  "domains": [
+    "心血管与代谢"
+  ],
+  "blurb_zh": "用自己的收缩压，比较 GBD 2021 理论最低风险区间的位置和端点差值。",
+  "intents": [
+    "lab_meaning"
+  ],
+  "triage": {
+    "reason_zh": "附录 1 表 S9 明确印出收缩压 TMREL 105–115 mmHg，个人测量可计算端点差值与区间位置；不计算个人风险。",
+    "reviewed": false
+  },
+  "paper": {
+    "doi": "10.1016/s0140-6736(24)00933-4",
+    "title": "Global burden and strength of evidence for 88 risk factors in 204 countries and 811 subnational locations, 1990-2021: a systematic analysis for the Global Burden of Disease Study 2021.",
+    "title_zh": "全球疾病负担研究：危险因素负担及其证据强度",
+    "journal": "Lancet (London, England)",
+    "year": 2024,
+    "authors": "GBD 2021 Risk Factors Collaborators",
+    "article_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11120204/",
+    "supplements": [
+      {
+        "label": "附录 1：表 S9 与收缩压方法",
+        "url": "https://ars.els-cdn.com/content/image/1-s2.0-S0140673624009334-mmc1.pdf"
+      },
+      {
+        "label": "附录 2",
+        "url": "https://ars.els-cdn.com/content/image/1-s2.0-S0140673624009334-mmc2.pdf"
+      },
+      {
+        "label": "附录 3",
+        "url": "https://ars.els-cdn.com/content/image/1-s2.0-S0140673624009334-mmc3.pdf"
+      }
+    ],
+    "code_url": "http://ghdx.healthdata.org/gbd-2021/code",
+    "card_notes": [
+      "采用附录 1 表 S9（印刷页 513）的 2021 TMREL 列，区间含义见收缩压方法页 278–279；这是群体研究参照，不是临床正常范围。",
+      "原代码入口已重定向至 IHME 数据访问说明页；GHDx 的额外结果表需登录，未下载。技能所需两个端点均已在附录核对。"
+    ],
+    "summary_zh": "这项研究综合人群资料估计全球危险因素暴露及相关疾病负担，发现代谢危险因素的负担随人口老龄化和生活方式变化而增加。个人报告只计算收缩压相对研究参照区间的位置与端点差值，不计算个人疾病概率或预期寿命。",
+    "summary_status": "draft"
+  },
+  "entry": {
+    "script": "scripts/personal_report.py",
+    "measurements_flag": "--measurements",
+    "measurements_header": [
+      "item",
+      "value",
+      "unit"
+    ],
+    "out_flag": "--out",
+    "result_json": true
+  },
+  "inputs_status": "draft",
+  "inputs": [
+    {
+      "key": "sbp_mmhg",
+      "label_zh": "肱动脉收缩压",
+      "aliases": [
+        "收缩压",
+        "高压",
+        "SBP",
+        "Systolic blood pressure",
+        "Systolic BP",
+        "Brachial systolic blood pressure"
+      ],
+      "unit": "mmHg",
+      "accept": {
+        "kPa": 7.500617
+      },
+      "range": [
+        40,
+        300
+      ],
+      "unit_required": true,
+      "required": true,
+      "from": "measurements",
+      "note_zh": "提供上臂测量的收缩压数值；不接受 120/80 这样的合并读数。范围仅用于输入检查，不是临床正常范围。"
+    }
+  ],
+  "outputs": [
+    {
+      "key": "sbp_mmhg",
+      "label_zh": "输入收缩压",
+      "unit": "mmHg"
+    },
+    {
+      "key": "tmrel_lower_mmhg",
+      "label_zh": "TMREL 下端点",
+      "unit": "mmHg"
+    },
+    {
+      "key": "tmrel_upper_mmhg",
+      "label_zh": "TMREL 上端点",
+      "unit": "mmHg"
+    },
+    {
+      "key": "difference_from_lower_mmhg",
+      "label_zh": "收缩压减 TMREL 下端点",
+      "unit": "mmHg"
+    },
+    {
+      "key": "difference_from_upper_mmhg",
+      "label_zh": "收缩压减 TMREL 上端点",
+      "unit": "mmHg"
+    },
+    {
+      "key": "position",
+      "label_zh": "相对 TMREL 区间位置",
+      "note_zh": "below / within / above；仅数值位置，含端点，不是临床分级。"
+    }
+  ],
+  "validation": {
+    "status": "draft",
+    "gap_zh": "已核对全文、附录 1 表 S9（页 513）及收缩压方法（页 267–303）、附录 2 图表说明和附录 3；未找到印有个人收缩压输入及对应端点差值或分档输出的示例。常数抄录与软件边界检查不作为论文示例复现。GHDx 额外结果表需登录，代码旧入口重定向，未据此声称这些材料没有示例。"
+  }
+}
