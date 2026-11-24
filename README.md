@@ -113,6 +113,7 @@ python3 -m tools.lsk test --changed origin/main   # 只测相对 main 改动过�
 - `skills/calerie-methylation-clocks/` — 限食试验里的时钟数值。（名单类）
 - `skills/epigenetic-clock-reliability/` — 同一个时钟两次年龄的差，只做相减，不计算论文的主成分时钟。（名单类）
 - `skills/epigenetic-frailty-risk-score/` — 甲基化数值，可带衰弱指数。
+- `skills/methylation-variability-aging-score/` — 血液甲基化芯片（450K 或 EPIC）的 β 值，按论文补充表和作者代码算把甲基化水平和变异性合在一起的衰老评分。
 - `skills/nanopore-parent-origin-methylation/` — 已标准化的甲基化套论文系数，或两数相减（个人原始甲基化比例做不出标准化）。（名单类）
 - `skills/omniage-mitotic-clonal-hematopoiesis/` — 探针甲基化对应的干细胞分裂次数。
 - `skills/semaglutide-epigenetic-aging-trial/` — 同一时钟第 32 周减基线（只做减法，旁边附论文组间差）。（名单类）
@@ -181,6 +182,7 @@ python3 -m tools.lsk test --changed origin/main   # 只测相对 main 改动过�
 - `skills/epigenetic-frailty-risk-score/` — 见「甲基化」。
 - `skills/genome-wide-proteomics-frailty/` — 已经算好的医院衰弱风险分。
 - `skills/metabolomic-frailty-subtypes/` — 十一项核磁代谢物离哪个已发表亚型均值最近（近似，不是论文的分型）。（名单类）
+- `skills/methylation-variability-aging-score/` — 见「甲基化」。
 - `skills/one-year-mortality-aging-marker/` — 年龄和性别。一年死亡概率的回归系数没有印出。（名单类）
 - `skills/plasma-protein-risk-score/` — 按论文系数把你交来的标准化蛋白值加权求和，可算足跟超声骨密度；不是你的骨折风险。（名单类）
 - `skills/sleep-study-life-expectancy/` — 你已有的睡眠年龄估计减去实足年龄，只做相减，不跑论文的深度网络。（名单类）
