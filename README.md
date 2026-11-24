@@ -270,6 +270,7 @@ python3 -m tools.lsk test --changed origin/main   # 只测相对 main 改动过�
 ## 跌倒与肌肉
 
 - `skills/calf-circumference-decline-falls/` — 用前后两次自己量的小腿围算绝对和相对减少量，按论文切点分档，给出中国老人队列里该档与小腿围没减少者相比的跌倒比值比。
+- `skills/reactive-agility-fall-history/` — 用 SKILLCOURT 反应敏捷测试（随机星形跑完成时间、站立踏步简单和选择反应时）的成绩，对照论文印出的探索性切点，看落在有跌倒史一侧还是没有跌倒史一侧。
 
 ## 饮食与基因
 

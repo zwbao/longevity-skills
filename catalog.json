@@ -2,9 +2,9 @@
   "schema": "longevity-catalog/1",
   "version": "2026.48.0",
   "counts": {
-    "skills": 182,
+    "skills": 183,
     "tiers": {
-      "A": 18,
+      "A": 19,
       "B": 83,
       "C": 73,
       "tool": 8
@@ -26597,6 +26597,166 @@
         "title_zh": "剂量分箱",
         "journal": "Nature",
         "year": 2024
+      }
+    },
+    {
+      "name": "reactive-agility-fall-history",
+      "kind": "paper",
+      "tier": "A",
+      "species": [
+        "human"
+      ],
+      "evidence": "cross_sectional",
+      "domains": [
+        "跌倒与肌肉"
+      ],
+      "blurb_zh": "用 SKILLCOURT 反应敏捷测试（随机星形跑完成时间、站立踏步简单和选择反应时）的成绩，对照论文印出的探索性切点，看落在有跌倒史一侧还是没有跌倒史一侧。",
+      "description": "Tier A draft: the paper's printed example is not reproduced yet, so treat the readout as provisional. Compares one older adult's own SKILLCOURT results (Random Star Run reactive agility completion time, simple and choice stepping reaction times) with the exploratory cutoffs printed by Giesche et al. (GeroScience 2026, community-dwelling adults aged 60 and over in Germany and Luxembourg): 28.6 s, 0.62 s and 0.88 s, and says on which side of each cutoff the person falls. Use for SKILLCOURT, Random Star Run, 随机星形跑, 反应敏捷, 踏步反应时, 老人跌倒, 跌倒史, 跌倒风险筛查. States that the cutoffs separate people with and without a past-year fall in a cross-sectional sample, are not a personal fall probability or a prediction, and apply only to SKILLCOURT results.",
+      "intents": [
+        "frailty_mortality"
+      ],
+      "has_script": true,
+      "validation_status": "draft",
+      "validation_label_zh": "仍在验证",
+      "entry": {
+        "script": "scripts/personal_report.py",
+        "measurements_flag": "--measurements",
+        "measurements_header": [
+          "item",
+          "value",
+          "unit"
+        ],
+        "age_flag": "--age",
+        "out_flag": "--out",
+        "result_json": true
+      },
+      "population": {
+        "age_years": [
+          60,
+          120
+        ],
+        "note_zh": "论文人群是德国和卢森堡 60 岁及以上、能独立行走、无严重神经和认知疾病的社区老人，平均 71.9 岁。切点要求用 SKILLCOURT 设备按论文流程测；其他敏捷或反应测试的秒数不能套用。"
+      },
+      "inputs_status": "verified",
+      "inputs": [
+        {
+          "key": "random_star_run_s",
+          "label_zh": "随机星形跑完成时间（SKILLCOURT）",
+          "aliases": [
+            "Random Star Run",
+            "RSR",
+            "SKILLCOURT RSR",
+            "SC RSR",
+            "random star run time",
+            "随机星形跑",
+            "随机星跑",
+            "星形跑",
+            "反应敏捷跑"
+          ],
+          "unit": "s",
+          "accept": {
+            "ms": 0.001
+          },
+          "range": [
+            10,
+            150
+          ],
+          "required": false,
+          "from": "measurements",
+          "note_zh": "8 个外侧目标随机出现、每次回中心；3 次取最快一次的总时间（秒）。"
+        },
+        {
+          "key": "skillcourt_simple_reaction_s",
+          "label_zh": "SKILLCOURT 简单踏步反应时间",
+          "aliases": [
+            "SKILLCOURT simple reaction",
+            "SKILLCOURT SRT",
+            "SC SRT",
+            "simple stepping reaction time",
+            "simple reaction stepping",
+            "简单踏步反应时",
+            "简单踏步反应时间",
+            "简单反应踏步"
+          ],
+          "unit": "s",
+          "accept": {
+            "ms": 0.001
+          },
+          "range": [
+            0.2,
+            3
+          ],
+          "required": false,
+          "from": "measurements",
+          "note_zh": "站立，看到中央橙色方块后侧向迈步到目标格，30 次（两腿各 15 次）的平均时间。坐着按键的电脑反应时不是这一项。"
+        },
+        {
+          "key": "skillcourt_choice_reaction_s",
+          "label_zh": "SKILLCOURT 选择踏步反应时间",
+          "aliases": [
+            "SKILLCOURT choice reaction",
+            "SKILLCOURT CRT",
+            "SC CRT",
+            "choice stepping reaction time",
+            "choice reaction stepping",
+            "选择踏步反应时",
+            "选择踏步反应时间",
+            "选择反应踏步"
+          ],
+          "unit": "s",
+          "accept": {
+            "ms": 0.001
+          },
+          "range": [
+            0.2,
+            3
+          ],
+          "required": false,
+          "from": "measurements",
+          "note_zh": "站立，按颜色（橙/蓝）向左或向右迈步，30 次的平均时间。"
+        },
+        {
+          "key": "age",
+          "label_zh": "实足年龄",
+          "unit": "a",
+          "range": [
+            18,
+            120
+          ],
+          "required": false,
+          "from": "profile",
+          "flag": "--age",
+          "note_zh": "只用来提示是否在论文人群（60 岁及以上）内；切点本身不随年龄变化。"
+        }
+      ],
+      "outputs": [
+        {
+          "key": "random_star_run_side",
+          "label_zh": "随机星形跑相对 28.6 秒切点的位置",
+          "unit": ""
+        },
+        {
+          "key": "simple_reaction_side",
+          "label_zh": "简单踏步反应相对 0.62 秒切点的位置",
+          "unit": ""
+        },
+        {
+          "key": "choice_reaction_side",
+          "label_zh": "选择踏步反应相对 0.88 秒切点的位置",
+          "unit": ""
+        },
+        {
+          "key": "tests_at_or_above_cutoff",
+          "label_zh": "达到或超过切点的测试个数",
+          "unit": "1"
+        }
+      ],
+      "paper": {
+        "doi": "10.1007/s11357-026-02477-4",
+        "title": "Reactive agility and motor-cognitive assessments for distinguishing community-dwelling older adults with and without a history of falls: a dual-centre cross-sectional study",
+        "title_zh": "反应敏捷与运动-认知测评区分有无跌倒史的社区老人：双中心横断面研究",
+        "journal": "GeroScience",
+        "year": 2026
       }
     },
     {
