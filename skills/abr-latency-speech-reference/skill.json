@@ -1,0 +1,201 @@
+{
+  "schema": "longevity-skill/1",
+  "name": "abr-latency-speech-reference",
+  "kind": "paper",
+  "tier": "A",
+  "species": [
+    "human"
+  ],
+  "evidence": "cross_sectional",
+  "domains": [
+    "听觉与言语识别"
+  ],
+  "blurb_zh": "按原表中精确的年龄和听觉脑干反应波 I 潜伏期，查询固定其他测量后的言语识别参考值。",
+  "intents": [
+    "lab_meaning"
+  ],
+  "triage": {
+    "reason_zh": "人体横断面研究的 S12 印出了年龄和波 I 潜伏期对应的数值预测，可做严格离散查表；完整回归缺中心化均值，预印本保持 draft。",
+    "reviewed": false
+  },
+  "paper": {
+    "doi": "10.64898/2026.01.27.26344934",
+    "title": "Peripheral Predictors of Speech in Noise Deficits in a Population Cohort",
+    "title_zh": "人群中噪声下言语识别困难的外周听觉预测因素",
+    "journal": "medRxiv",
+    "year": 2026,
+    "authors": "Cederroth",
+    "article_url": "https://www.medrxiv.org/content/10.64898/2026.01.27.26344934v3.full",
+    "supplements": [
+      {
+        "label": "补充表 S12（第 19 页）及 S1–S13",
+        "url": "https://www.medrxiv.org/content/medrxiv/early/2026/11/12/2026.01.27.26344934/DC1/embed/media-1.pdf?download=true"
+      }
+    ],
+    "summary_zh": "这项研究对无耳鸣的瑞典成年人进行横断面分析，发现扩展高频听力阈值与噪声中言语识别相关，听觉脑干反应波一潜伏期与年龄的交互作用也与词语识别表现相关。个人报告只查询原表列出的年龄和潜伏期对应的固定协变量参考值及均值置信区间，不估算个人听力年龄或治疗效果。",
+    "summary_status": "draft",
+    "card_notes": [
+      "预印本，未经同行评审；使用 2026-11-12 发布的第三版。",
+      "仅实现 S12 的离散原表查询，未独立复现 S9/S10 回归。其他连续协变量固定为中心化零值、性别固定为男性参考设定。",
+      "全文与 S1–S13 未提供完整的模型中心化均值；Data/Code 页称个体数据待伦理批准后提供，未列出公开代码仓库。"
+    ]
+  },
+  "entry": {
+    "script": "scripts/personal_report.py",
+    "measurements_flag": "--measurements",
+    "measurements_header": [
+      "marker",
+      "value",
+      "unit"
+    ],
+    "age_flag": "--age",
+    "sex_flag": "--sex",
+    "out_flag": "--out",
+    "result_json": true
+  },
+  "population": {
+    "age_years": [
+      20,
+      84
+    ],
+    "note_zh": "STOP 无耳鸣成年人；总计 263 人、526 耳，S12 源模型为完整数据的 163 人、298 耳。原表仅有 45/55/65/75 岁，并非连续适用年龄区间。"
+  },
+  "inputs_status": "verified",
+  "inputs": [
+    {
+      "key": "w1_latency_ms",
+      "label_zh": "ABR波I潜伏期",
+      "aliases": [
+        "Wave I latency",
+        "W1.Latency",
+        "W1Lat",
+        "ABR wave I latency",
+        "听觉脑干反应I波潜伏期",
+        "波Ⅰ潜伏期",
+        "I波绝对潜伏期"
+      ],
+      "unit": "ms",
+      "accept": {
+        "s": 1000
+      },
+      "range": [
+        0.5,
+        3
+      ],
+      "unit_required": true,
+      "required": true,
+      "from": "measurements",
+      "note_zh": "同一只耳、与论文刺激方案匹配的点击 ABR 波 I 绝对潜伏期；不是波间潜伏期或振幅。仅接受 S12 的 1、1.2667、1.4、1.48、1.83 ms，不插值或四舍五入。"
+    },
+    {
+      "key": "age_years",
+      "label_zh": "实足年龄",
+      "aliases": [
+        "Age",
+        "年龄"
+      ],
+      "unit": "a",
+      "range": [
+        20,
+        84
+      ],
+      "required": true,
+      "from": "argument",
+      "flag": "--age",
+      "note_zh": "仅接受原表的 45、55、65、75 岁，不能就近取整。"
+    },
+    {
+      "key": "sex",
+      "label_zh": "自报性别",
+      "aliases": [
+        "Gender",
+        "性别"
+      ],
+      "required": false,
+      "from": "profile",
+      "flag": "--sex",
+      "note_zh": "可写 male/female/男/女；只作背景，查询始终为原表男性参考设定，不做性别调整。"
+    }
+  ],
+  "outputs": [
+    {
+      "key": "ws_reference_pct",
+      "label_zh": "词语识别原表参考均值",
+      "unit": "%",
+      "note_zh": "S12 原表值；固定其他协变量及男性参考设定。标准误的单位为百分点，区间是均值置信区间。"
+    },
+    {
+      "key": "ws_mean_se_pp",
+      "label_zh": "词语识别均值标准误（百分点）",
+      "unit": "%",
+      "note_zh": "S12 原表值；固定其他协变量及男性参考设定。标准误的单位为百分点，区间是均值置信区间。"
+    },
+    {
+      "key": "ws_mean_ci_lower_pct",
+      "label_zh": "词语识别均值置信下限",
+      "unit": "%",
+      "note_zh": "S12 原表值；固定其他协变量及男性参考设定。标准误的单位为百分点，区间是均值置信区间。"
+    },
+    {
+      "key": "ws_mean_ci_upper_pct",
+      "label_zh": "词语识别均值置信上限",
+      "unit": "%",
+      "note_zh": "S12 原表值；固定其他协变量及男性参考设定。标准误的单位为百分点，区间是均值置信区间。"
+    },
+    {
+      "key": "ps_reference_pct",
+      "label_zh": "音素识别原表参考均值",
+      "unit": "%",
+      "note_zh": "S12 原表值；固定其他协变量及男性参考设定。标准误的单位为百分点，区间是均值置信区间。"
+    },
+    {
+      "key": "ps_mean_se_pp",
+      "label_zh": "音素识别均值标准误（百分点）",
+      "unit": "%",
+      "note_zh": "S12 原表值；固定其他协变量及男性参考设定。标准误的单位为百分点，区间是均值置信区间。"
+    },
+    {
+      "key": "ps_mean_ci_lower_pct",
+      "label_zh": "音素识别均值置信下限",
+      "unit": "%",
+      "note_zh": "S12 原表值；固定其他协变量及男性参考设定。标准误的单位为百分点，区间是均值置信区间。"
+    },
+    {
+      "key": "ps_mean_ci_upper_pct",
+      "label_zh": "音素识别均值置信上限",
+      "unit": "%",
+      "note_zh": "S12 原表值；固定其他协变量及男性参考设定。标准误的单位为百分点，区间是均值置信区间。"
+    }
+  ],
+  "data_files": [
+    {
+      "path": "data/table_s12.csv",
+      "source_url": "https://www.medrxiv.org/content/medrxiv/early/2026/11/12/2026.01.27.26344934/DC1/embed/media-1.pdf?download=true",
+      "license": "Numerical facts transcribed from Table S12; source preprint CC-BY-NC-ND 4.0; no source PDF redistributed.",
+      "sha256": "5fe5674ac60731255149193230e1f6a8144e876eb1cadd9d26de5d7c7ebc4457",
+      "redistributable": "yes"
+    }
+  ],
+  "validation": {
+    "status": "draft",
+    "gap_zh": "预印本，未经同行评审；已核对 S12 离散查表的印刷示例，但这不是独立重算 S9/S10 回归。查阅第三版全文、补充 PDF 的图 S1–S2 与表 S1–S13、Data/Code 页，未找到各连续变量完整的中心化均值或公开模型代码，故不支持完整回归、表外输入或个人预测区间。",
+    "examples": [
+      {
+        "locator": "v3 Supplementary Table S12, p. 19, age 75, Maximum (WS and PS)",
+        "quote": "75 Maximum 1.83 55.5767880023087 6.30956600884295 43.1565808286259 67.9969951759915\n75 Maximum 1.83 80.3626538616887 4.14018202793002 72.212819395803 88.5124883275744",
+        "values": [
+          55.5767880023087,
+          6.30956600884295,
+          43.1565808286259,
+          67.9969951759915,
+          80.3626538616887,
+          4.14018202793002,
+          72.212819395803,
+          88.5124883275744
+        ],
+        "tolerance": "原表查值，不做回归或插值；绝对误差 ≤1e-12，仅容纳浮点序列化误差。",
+        "test": "tests/test_manifest.py::test_table_s12_age75_maximum"
+      }
+    ]
+  }
+}
