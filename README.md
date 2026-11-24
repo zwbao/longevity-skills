@@ -134,6 +134,7 @@ python3 -m tools.lsk test --changed origin/main   # 只测相对 main 改动过�
 - `skills/plasma-proteomics-brain-immune/` — 研究用：把已在一批样本内 z 分数化的血浆蛋白乘补充表系数得出器官预测年龄，或标出你交来的器官 z；单个人的化验值没法直接套。（名单类）
 - `skills/proteomic-aging-clock/` — 你已有的蛋白质年龄减去实足年龄，只做相减，不从蛋白量重算论文的时钟。（名单类）
 - `skills/proteomic-clocks-eye-aging/` — 已经算好的 ProAge 或 cProAge。（名单类）
+- `skills/sasp-senescence-score/` — 见「细胞衰老」。
 - `skills/structural-signature-plasma-proteins/` — 照录你交来的三个肽段结构可及性；不做阿尔茨海默病分组。（名单类）
 
 ## 影像
@@ -200,6 +201,10 @@ python3 -m tools.lsk test --changed origin/main   # 只测相对 main 改动过�
 ## 自噬
 
 - `skills/ulk1-autophagy-alzheimers/` — 见「脑、认知与痴呆」。
+
+## 细胞衰老
+
+- `skills/sasp-senescence-score/` — 38 个血浆蛋白（Olink 蛋白组 NPX）算细胞衰老分泌表型（SASP）评分。
 
 ## 骨骼肌
 

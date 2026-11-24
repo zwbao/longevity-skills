@@ -2,9 +2,9 @@
   "schema": "longevity-catalog/1",
   "version": "2026.48.0",
   "counts": {
-    "skills": 179,
+    "skills": 180,
     "tiers": {
-      "A": 15,
+      "A": 16,
       "B": 83,
       "C": 73,
       "tool": 8
@@ -25900,6 +25900,792 @@
         "title_zh": "视网膜年龄差",
         "journal": "npj Digital Medicine",
         "year": 2025
+      }
+    },
+    {
+      "name": "sasp-senescence-score",
+      "kind": "paper",
+      "tier": "A",
+      "species": [
+        "human"
+      ],
+      "evidence": "cohort",
+      "domains": [
+        "细胞衰老",
+        "蛋白、代谢与器官年龄"
+      ],
+      "blurb_zh": "38 个血浆蛋白（Olink 蛋白组 NPX）算细胞衰老分泌表型（SASP）评分。",
+      "description": "Tier A draft: the paper's printed example is not reproduced yet, so treat the readout as provisional. Computes one person's SASP Score, a deep-learning composite of 38 plasma senescence-associated secretory proteins (Zhao et al., Aging Cell 2026), by running the authors' released pre-trained GAET model on the person's Olink Explore NPX values on the UK Biobank Pharma Proteomics scale, and places it against the paper's high-score cutoff of 65. Use when the user has Olink proteomics and asks about cellular senescence burden, SASP, senescence score, 衰老细胞负荷 or 衰老分泌表型. Stops on concentrations (pg/mL), missing proteins or another platform's NPX scale. Does not compute an age gap, per-protein contributions or a personal disease risk, and the report does not say what to start or stop.",
+      "intents": [
+        "proteomic_organ_age",
+        "frailty_mortality"
+      ],
+      "has_script": true,
+      "validation_status": "draft",
+      "validation_label_zh": "仍在验证",
+      "entry": {
+        "script": "scripts/personal_report.py",
+        "runtime": "scientific",
+        "measurements_flag": "--proteins",
+        "measurements_header": [
+          "marker",
+          "value",
+          "unit"
+        ],
+        "out_flag": "--out",
+        "result_json": true
+      },
+      "population": {
+        "age_years": [
+          39,
+          70
+        ],
+        "note_zh": "UKB-PPP 参与者基线 39–70 岁（平均 56.8 岁），以欧洲裔为主；外部验证 MEDEX 为 65–84 岁并经微调。"
+      },
+      "inputs_status": "verified",
+      "inputs": [
+        {
+          "key": "ang_npx",
+          "label_zh": "血管生成素",
+          "aliases": [
+            "ANG",
+            "Angiogenin",
+            "血管生成素(ANG)"
+          ],
+          "unit": "",
+          "range": [
+            -10,
+            15
+          ],
+          "unit_required": true,
+          "required": true,
+          "from": "measurements",
+          "group": "sasp_38",
+          "note_zh": "Olink Explore 3072 的 NPX 值（log2 标度），需与 UK Biobank Pharma Proteomics Project 同一标准化；单位列写 NPX。"
+        },
+        {
+          "key": "ccl13_npx",
+          "label_zh": "单核细胞趋化蛋白4（CCL13）",
+          "aliases": [
+            "CCL13",
+            "MCP-4",
+            "MCP4"
+          ],
+          "unit": "",
+          "range": [
+            -10,
+            15
+          ],
+          "unit_required": true,
+          "required": true,
+          "from": "measurements",
+          "group": "sasp_38",
+          "note_zh": "Olink Explore 3072 的 NPX 值（log2 标度），需与 UK Biobank Pharma Proteomics Project 同一标准化；单位列写 NPX。"
+        },
+        {
+          "key": "ccl2_npx",
+          "label_zh": "单核细胞趋化蛋白1（CCL2）",
+          "aliases": [
+            "CCL2",
+            "MCP-1",
+            "MCP1"
+          ],
+          "unit": "",
+          "range": [
+            -10,
+            15
+          ],
+          "unit_required": true,
+          "required": true,
+          "from": "measurements",
+          "group": "sasp_38",
+          "note_zh": "Olink Explore 3072 的 NPX 值（log2 标度），需与 UK Biobank Pharma Proteomics Project 同一标准化；单位列写 NPX。"
+        },
+        {
+          "key": "ccl20_npx",
+          "label_zh": "巨噬细胞炎症蛋白3α（CCL20）",
+          "aliases": [
+            "CCL20",
+            "MIP-3a",
+            "MIP-3α",
+            "MIP3A"
+          ],
+          "unit": "",
+          "range": [
+            -10,
+            15
+          ],
+          "unit_required": true,
+          "required": true,
+          "from": "measurements",
+          "group": "sasp_38",
+          "note_zh": "Olink Explore 3072 的 NPX 值（log2 标度），需与 UK Biobank Pharma Proteomics Project 同一标准化；单位列写 NPX。"
+        },
+        {
+          "key": "ccl3_npx",
+          "label_zh": "巨噬细胞炎症蛋白1α（CCL3）",
+          "aliases": [
+            "CCL3",
+            "MIP-1a",
+            "MIP-1α",
+            "MIP1A"
+          ],
+          "unit": "",
+          "range": [
+            -10,
+            15
+          ],
+          "unit_required": true,
+          "required": true,
+          "from": "measurements",
+          "group": "sasp_38",
+          "note_zh": "Olink Explore 3072 的 NPX 值（log2 标度），需与 UK Biobank Pharma Proteomics Project 同一标准化；单位列写 NPX。"
+        },
+        {
+          "key": "ccl4_npx",
+          "label_zh": "巨噬细胞炎症蛋白1β（CCL4）",
+          "aliases": [
+            "CCL4",
+            "MIP-1b",
+            "MIP-1β",
+            "MIP1B"
+          ],
+          "unit": "",
+          "range": [
+            -10,
+            15
+          ],
+          "unit_required": true,
+          "required": true,
+          "from": "measurements",
+          "group": "sasp_38",
+          "note_zh": "Olink Explore 3072 的 NPX 值（log2 标度），需与 UK Biobank Pharma Proteomics Project 同一标准化；单位列写 NPX。"
+        },
+        {
+          "key": "chi3l1_npx",
+          "label_zh": "几丁质酶3样蛋白1（YKL-40）",
+          "aliases": [
+            "CHI3L1",
+            "YKL-40",
+            "YKL40"
+          ],
+          "unit": "",
+          "range": [
+            -10,
+            15
+          ],
+          "unit_required": true,
+          "required": true,
+          "from": "measurements",
+          "group": "sasp_38",
+          "note_zh": "Olink Explore 3072 的 NPX 值（log2 标度），需与 UK Biobank Pharma Proteomics Project 同一标准化；单位列写 NPX。"
+        },
+        {
+          "key": "csf2_npx",
+          "label_zh": "粒细胞-巨噬细胞集落刺激因子（GM-CSF）",
+          "aliases": [
+            "CSF2",
+            "GM-CSF",
+            "GMCSF"
+          ],
+          "unit": "",
+          "range": [
+            -10,
+            15
+          ],
+          "unit_required": true,
+          "required": true,
+          "from": "measurements",
+          "group": "sasp_38",
+          "note_zh": "Olink Explore 3072 的 NPX 值（log2 标度），需与 UK Biobank Pharma Proteomics Project 同一标准化；单位列写 NPX。"
+        },
+        {
+          "key": "cxcl1_npx",
+          "label_zh": "趋化因子CXCL1（GRO-α）",
+          "aliases": [
+            "CXCL1",
+            "GRO-a",
+            "GRO-α",
+            "GROA"
+          ],
+          "unit": "",
+          "range": [
+            -10,
+            15
+          ],
+          "unit_required": true,
+          "required": true,
+          "from": "measurements",
+          "group": "sasp_38",
+          "note_zh": "Olink Explore 3072 的 NPX 值（log2 标度），需与 UK Biobank Pharma Proteomics Project 同一标准化；单位列写 NPX。"
+        },
+        {
+          "key": "cxcl10_npx",
+          "label_zh": "干扰素诱导蛋白10（CXCL10）",
+          "aliases": [
+            "CXCL10",
+            "IP-10",
+            "IP10"
+          ],
+          "unit": "",
+          "range": [
+            -10,
+            15
+          ],
+          "unit_required": true,
+          "required": true,
+          "from": "measurements",
+          "group": "sasp_38",
+          "note_zh": "Olink Explore 3072 的 NPX 值（log2 标度），需与 UK Biobank Pharma Proteomics Project 同一标准化；单位列写 NPX。"
+        },
+        {
+          "key": "cxcl8_npx",
+          "label_zh": "白细胞介素8（CXCL8）",
+          "aliases": [
+            "CXCL8",
+            "IL-8",
+            "IL8",
+            "白介素8"
+          ],
+          "unit": "",
+          "range": [
+            -10,
+            15
+          ],
+          "unit_required": true,
+          "required": true,
+          "from": "measurements",
+          "group": "sasp_38",
+          "note_zh": "Olink Explore 3072 的 NPX 值（log2 标度），需与 UK Biobank Pharma Proteomics Project 同一标准化；单位列写 NPX。"
+        },
+        {
+          "key": "cxcl9_npx",
+          "label_zh": "干扰素γ诱导单核因子（CXCL9）",
+          "aliases": [
+            "CXCL9",
+            "MIG"
+          ],
+          "unit": "",
+          "range": [
+            -10,
+            15
+          ],
+          "unit_required": true,
+          "required": true,
+          "from": "measurements",
+          "group": "sasp_38",
+          "note_zh": "Olink Explore 3072 的 NPX 值（log2 标度），需与 UK Biobank Pharma Proteomics Project 同一标准化；单位列写 NPX。"
+        },
+        {
+          "key": "fga_npx",
+          "label_zh": "纤维蛋白原α链（FGA）",
+          "aliases": [
+            "FGA",
+            "Fibrinogen alpha chain"
+          ],
+          "unit": "",
+          "range": [
+            -10,
+            15
+          ],
+          "unit_required": true,
+          "required": true,
+          "from": "measurements",
+          "group": "sasp_38",
+          "note_zh": "Olink Explore 3072 的 NPX 值（log2 标度），需与 UK Biobank Pharma Proteomics Project 同一标准化；单位列写 NPX。"
+        },
+        {
+          "key": "fgf2_npx",
+          "label_zh": "碱性成纤维细胞生长因子（FGF2）",
+          "aliases": [
+            "FGF2",
+            "bFGF",
+            "FGF-2"
+          ],
+          "unit": "",
+          "range": [
+            -10,
+            15
+          ],
+          "unit_required": true,
+          "required": true,
+          "from": "measurements",
+          "group": "sasp_38",
+          "note_zh": "Olink Explore 3072 的 NPX 值（log2 标度），需与 UK Biobank Pharma Proteomics Project 同一标准化；单位列写 NPX。"
+        },
+        {
+          "key": "fstl3_npx",
+          "label_zh": "卵泡抑素样蛋白3（FSTL3）",
+          "aliases": [
+            "FSTL3",
+            "Follistatin-like 3"
+          ],
+          "unit": "",
+          "range": [
+            -10,
+            15
+          ],
+          "unit_required": true,
+          "required": true,
+          "from": "measurements",
+          "group": "sasp_38",
+          "note_zh": "Olink Explore 3072 的 NPX 值（log2 标度），需与 UK Biobank Pharma Proteomics Project 同一标准化；单位列写 NPX。"
+        },
+        {
+          "key": "gdf15_npx",
+          "label_zh": "生长分化因子15（GDF-15）",
+          "aliases": [
+            "GDF15",
+            "GDF-15"
+          ],
+          "unit": "",
+          "range": [
+            -10,
+            15
+          ],
+          "unit_required": true,
+          "required": true,
+          "from": "measurements",
+          "group": "sasp_38",
+          "note_zh": "Olink Explore 3072 的 NPX 值（log2 标度），需与 UK Biobank Pharma Proteomics Project 同一标准化；单位列写 NPX。"
+        },
+        {
+          "key": "hgf_npx",
+          "label_zh": "肝细胞生长因子（HGF）",
+          "aliases": [
+            "HGF",
+            "Hepatocyte growth factor"
+          ],
+          "unit": "",
+          "range": [
+            -10,
+            15
+          ],
+          "unit_required": true,
+          "required": true,
+          "from": "measurements",
+          "group": "sasp_38",
+          "note_zh": "Olink Explore 3072 的 NPX 值（log2 标度），需与 UK Biobank Pharma Proteomics Project 同一标准化；单位列写 NPX。"
+        },
+        {
+          "key": "icam1_npx",
+          "label_zh": "细胞间黏附分子1（ICAM-1）",
+          "aliases": [
+            "ICAM1",
+            "ICAM-1"
+          ],
+          "unit": "",
+          "range": [
+            -10,
+            15
+          ],
+          "unit_required": true,
+          "required": true,
+          "from": "measurements",
+          "group": "sasp_38",
+          "note_zh": "Olink Explore 3072 的 NPX 值（log2 标度），需与 UK Biobank Pharma Proteomics Project 同一标准化；单位列写 NPX。"
+        },
+        {
+          "key": "igfbp2_npx",
+          "label_zh": "胰岛素样生长因子结合蛋白2（IGFBP-2）",
+          "aliases": [
+            "IGFBP2",
+            "IGFBP-2"
+          ],
+          "unit": "",
+          "range": [
+            -10,
+            15
+          ],
+          "unit_required": true,
+          "required": true,
+          "from": "measurements",
+          "group": "sasp_38",
+          "note_zh": "Olink Explore 3072 的 NPX 值（log2 标度），需与 UK Biobank Pharma Proteomics Project 同一标准化；单位列写 NPX。"
+        },
+        {
+          "key": "igfbp6_npx",
+          "label_zh": "胰岛素样生长因子结合蛋白6（IGFBP-6）",
+          "aliases": [
+            "IGFBP6",
+            "IGFBP-6"
+          ],
+          "unit": "",
+          "range": [
+            -10,
+            15
+          ],
+          "unit_required": true,
+          "required": true,
+          "from": "measurements",
+          "group": "sasp_38",
+          "note_zh": "Olink Explore 3072 的 NPX 值（log2 标度），需与 UK Biobank Pharma Proteomics Project 同一标准化；单位列写 NPX。"
+        },
+        {
+          "key": "il1b_npx",
+          "label_zh": "白细胞介素1β（IL-1β）",
+          "aliases": [
+            "IL1B",
+            "IL-1b",
+            "IL-1β",
+            "IL1beta",
+            "白介素1β"
+          ],
+          "unit": "",
+          "range": [
+            -10,
+            15
+          ],
+          "unit_required": true,
+          "required": true,
+          "from": "measurements",
+          "group": "sasp_38",
+          "note_zh": "Olink Explore 3072 的 NPX 值（log2 标度），需与 UK Biobank Pharma Proteomics Project 同一标准化；单位列写 NPX。"
+        },
+        {
+          "key": "il4_npx",
+          "label_zh": "白细胞介素4（IL-4）",
+          "aliases": [
+            "IL4",
+            "IL-4",
+            "白介素4"
+          ],
+          "unit": "",
+          "range": [
+            -10,
+            15
+          ],
+          "unit_required": true,
+          "required": true,
+          "from": "measurements",
+          "group": "sasp_38",
+          "note_zh": "Olink Explore 3072 的 NPX 值（log2 标度），需与 UK Biobank Pharma Proteomics Project 同一标准化；单位列写 NPX。"
+        },
+        {
+          "key": "il5_npx",
+          "label_zh": "白细胞介素5（IL-5）",
+          "aliases": [
+            "IL5",
+            "IL-5",
+            "白介素5"
+          ],
+          "unit": "",
+          "range": [
+            -10,
+            15
+          ],
+          "unit_required": true,
+          "required": true,
+          "from": "measurements",
+          "group": "sasp_38",
+          "note_zh": "Olink Explore 3072 的 NPX 值（log2 标度），需与 UK Biobank Pharma Proteomics Project 同一标准化；单位列写 NPX。"
+        },
+        {
+          "key": "il6_npx",
+          "label_zh": "白细胞介素6（IL-6）",
+          "aliases": [
+            "IL6",
+            "IL-6",
+            "白介素6"
+          ],
+          "unit": "",
+          "range": [
+            -10,
+            15
+          ],
+          "unit_required": true,
+          "required": true,
+          "from": "measurements",
+          "group": "sasp_38",
+          "note_zh": "Olink Explore 3072 的 NPX 值（log2 标度），需与 UK Biobank Pharma Proteomics Project 同一标准化；单位列写 NPX。"
+        },
+        {
+          "key": "il6st_npx",
+          "label_zh": "白细胞介素6信号转导蛋白（gp130）",
+          "aliases": [
+            "IL6ST",
+            "gp130",
+            "IL-6ST"
+          ],
+          "unit": "",
+          "range": [
+            -10,
+            15
+          ],
+          "unit_required": true,
+          "required": true,
+          "from": "measurements",
+          "group": "sasp_38",
+          "note_zh": "Olink Explore 3072 的 NPX 值（log2 标度），需与 UK Biobank Pharma Proteomics Project 同一标准化；单位列写 NPX。"
+        },
+        {
+          "key": "lep_npx",
+          "label_zh": "瘦素（LEP）",
+          "aliases": [
+            "LEP",
+            "Leptin"
+          ],
+          "unit": "",
+          "range": [
+            -10,
+            15
+          ],
+          "unit_required": true,
+          "required": true,
+          "from": "measurements",
+          "group": "sasp_38",
+          "note_zh": "Olink Explore 3072 的 NPX 值（log2 标度），需与 UK Biobank Pharma Proteomics Project 同一标准化；单位列写 NPX。"
+        },
+        {
+          "key": "mif_npx",
+          "label_zh": "巨噬细胞移动抑制因子（MIF）",
+          "aliases": [
+            "MIF",
+            "Macrophage migration inhibitory factor"
+          ],
+          "unit": "",
+          "range": [
+            -10,
+            15
+          ],
+          "unit_required": true,
+          "required": true,
+          "from": "measurements",
+          "group": "sasp_38",
+          "note_zh": "Olink Explore 3072 的 NPX 值（log2 标度），需与 UK Biobank Pharma Proteomics Project 同一标准化；单位列写 NPX。"
+        },
+        {
+          "key": "mmp12_npx",
+          "label_zh": "基质金属蛋白酶12（MMP-12）",
+          "aliases": [
+            "MMP12",
+            "MMP-12"
+          ],
+          "unit": "",
+          "range": [
+            -10,
+            15
+          ],
+          "unit_required": true,
+          "required": true,
+          "from": "measurements",
+          "group": "sasp_38",
+          "note_zh": "Olink Explore 3072 的 NPX 值（log2 标度），需与 UK Biobank Pharma Proteomics Project 同一标准化；单位列写 NPX。"
+        },
+        {
+          "key": "pgf_npx",
+          "label_zh": "胎盘生长因子（PlGF）",
+          "aliases": [
+            "PGF",
+            "PlGF",
+            "PLGF"
+          ],
+          "unit": "",
+          "range": [
+            -10,
+            15
+          ],
+          "unit_required": true,
+          "required": true,
+          "from": "measurements",
+          "group": "sasp_38",
+          "note_zh": "Olink Explore 3072 的 NPX 值（log2 标度），需与 UK Biobank Pharma Proteomics Project 同一标准化；单位列写 NPX。"
+        },
+        {
+          "key": "plaur_npx",
+          "label_zh": "尿激酶型纤溶酶原激活物受体（uPAR）",
+          "aliases": [
+            "PLAUR",
+            "uPAR",
+            "suPAR"
+          ],
+          "unit": "",
+          "range": [
+            -10,
+            15
+          ],
+          "unit_required": true,
+          "required": true,
+          "from": "measurements",
+          "group": "sasp_38",
+          "note_zh": "Olink Explore 3072 的 NPX 值（log2 标度），需与 UK Biobank Pharma Proteomics Project 同一标准化；单位列写 NPX。"
+        },
+        {
+          "key": "serpine1_npx",
+          "label_zh": "纤溶酶原激活物抑制剂1（PAI-1）",
+          "aliases": [
+            "SERPINE1",
+            "PAI-1",
+            "PAI1",
+            "SERPIN1"
+          ],
+          "unit": "",
+          "range": [
+            -10,
+            15
+          ],
+          "unit_required": true,
+          "required": true,
+          "from": "measurements",
+          "group": "sasp_38",
+          "note_zh": "Olink Explore 3072 的 NPX 值（log2 标度），需与 UK Biobank Pharma Proteomics Project 同一标准化；单位列写 NPX。"
+        },
+        {
+          "key": "tf_npx",
+          "label_zh": "转铁蛋白（TF，Olink 检测）",
+          "aliases": [
+            "TF",
+            "Serotransferrin"
+          ],
+          "unit": "",
+          "range": [
+            -10,
+            15
+          ],
+          "unit_required": true,
+          "required": true,
+          "from": "measurements",
+          "group": "sasp_38",
+          "note_zh": "Olink Explore 3072 的 NPX 值（log2 标度），需与 UK Biobank Pharma Proteomics Project 同一标准化；单位列写 NPX。"
+        },
+        {
+          "key": "timp1_npx",
+          "label_zh": "金属蛋白酶组织抑制剂1（TIMP-1）",
+          "aliases": [
+            "TIMP1",
+            "TIMP-1"
+          ],
+          "unit": "",
+          "range": [
+            -10,
+            15
+          ],
+          "unit_required": true,
+          "required": true,
+          "from": "measurements",
+          "group": "sasp_38",
+          "note_zh": "Olink Explore 3072 的 NPX 值（log2 标度），需与 UK Biobank Pharma Proteomics Project 同一标准化；单位列写 NPX。"
+        },
+        {
+          "key": "tnfrsf11b_npx",
+          "label_zh": "骨保护素（OPG）",
+          "aliases": [
+            "TNFRSF11B",
+            "OPG",
+            "Osteoprotegerin"
+          ],
+          "unit": "",
+          "range": [
+            -10,
+            15
+          ],
+          "unit_required": true,
+          "required": true,
+          "from": "measurements",
+          "group": "sasp_38",
+          "note_zh": "Olink Explore 3072 的 NPX 值（log2 标度），需与 UK Biobank Pharma Proteomics Project 同一标准化；单位列写 NPX。"
+        },
+        {
+          "key": "tnfrsf1a_npx",
+          "label_zh": "肿瘤坏死因子受体1（TNFR1）",
+          "aliases": [
+            "TNFRSF1A",
+            "TNFR1",
+            "TNF-R1"
+          ],
+          "unit": "",
+          "range": [
+            -10,
+            15
+          ],
+          "unit_required": true,
+          "required": true,
+          "from": "measurements",
+          "group": "sasp_38",
+          "note_zh": "Olink Explore 3072 的 NPX 值（log2 标度），需与 UK Biobank Pharma Proteomics Project 同一标准化；单位列写 NPX。"
+        },
+        {
+          "key": "tnfrsf1b_npx",
+          "label_zh": "肿瘤坏死因子受体2（TNFR2）",
+          "aliases": [
+            "TNFRSF1B",
+            "TNFR2",
+            "TNF-R2"
+          ],
+          "unit": "",
+          "range": [
+            -10,
+            15
+          ],
+          "unit_required": true,
+          "required": true,
+          "from": "measurements",
+          "group": "sasp_38",
+          "note_zh": "Olink Explore 3072 的 NPX 值（log2 标度），需与 UK Biobank Pharma Proteomics Project 同一标准化；单位列写 NPX。"
+        },
+        {
+          "key": "tnfsf10_npx",
+          "label_zh": "TNF相关凋亡诱导配体（TRAIL）",
+          "aliases": [
+            "TNFSF10",
+            "TRAIL"
+          ],
+          "unit": "",
+          "range": [
+            -10,
+            15
+          ],
+          "unit_required": true,
+          "required": true,
+          "from": "measurements",
+          "group": "sasp_38",
+          "note_zh": "Olink Explore 3072 的 NPX 值（log2 标度），需与 UK Biobank Pharma Proteomics Project 同一标准化；单位列写 NPX。"
+        },
+        {
+          "key": "vegfa_npx",
+          "label_zh": "血管内皮生长因子A（VEGF-A）",
+          "aliases": [
+            "VEGFA",
+            "VEGF-A",
+            "VEGF"
+          ],
+          "unit": "",
+          "range": [
+            -10,
+            15
+          ],
+          "unit_required": true,
+          "required": true,
+          "from": "measurements",
+          "group": "sasp_38",
+          "note_zh": "Olink Explore 3072 的 NPX 值（log2 标度），需与 UK Biobank Pharma Proteomics Project 同一标准化；单位列写 NPX。"
+        }
+      ],
+      "outputs": [
+        {
+          "key": "sasp_score",
+          "label_zh": "SASP 评分",
+          "unit": "score",
+          "note_zh": "GAET 预训练模型的输出；训练时用年龄引导，数值与年龄同量级，但不是年龄。"
+        },
+        {
+          "key": "sasp_group",
+          "label_zh": "论文分组（high > 65，low ≤ 65）",
+          "note_zh": "65 是训练样本中基线无主要慢病者的第 90 百分位。"
+        },
+        {
+          "key": "proteins_far_from_ukb",
+          "label_zh": "离 UKB-PPP 平均值 ≥3 个标准差的蛋白数",
+          "unit": "1",
+          "note_zh": "描述用，不是模型贡献。"
+        }
+      ],
+      "paper": {
+        "doi": "10.1111/acel.70737",
+        "title": "A Deep-Learning Based Biomarker of Systemic Cellular Senescence Burden to Predict Mortality and Health Outcomes",
+        "title_zh": "深度学习血浆 SASP 评分（系统性细胞衰老负荷）",
+        "journal": "Aging Cell",
+        "year": 2026
       }
     },
     {
