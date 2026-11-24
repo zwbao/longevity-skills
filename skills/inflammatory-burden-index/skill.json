@@ -1,0 +1,187 @@
+{
+  "schema": "longevity-skill/1",
+  "name": "inflammatory-burden-index",
+  "kind": "paper",
+  "tier": "A",
+  "species": [
+    "human",
+    "mouse"
+  ],
+  "evidence": "cross_sectional",
+  "domains": [
+    "免疫与炎症衰老"
+  ],
+  "blurb_zh": "用 C反应蛋白和两项血细胞计数计算炎症负荷指数，并对照探索性切点。",
+  "intents": [
+    "lab_meaning",
+    "immune_inflammation",
+    "frailty_mortality"
+  ],
+  "triage": {
+    "reason_zh": "人体分析明确给出 IBI 公式及探索切点，可用个人常规化验计算；缺少完整输入输出示例，保留 draft。",
+    "reviewed": false
+  },
+  "paper": {
+    "doi": "10.1038/s41514-026-00459-6",
+    "title": "Programmatic adaptive failure in myeloid cells: a hypothesis-generating framework linking frailty to accelerated epigenetic aging",
+    "title_zh": "髓系细胞适应失败假说：衰弱、炎症与表观遗传衰老",
+    "journal": "npj Aging",
+    "year": 2026,
+    "authors": "Wang 等",
+    "article_url": "https://www.nature.com/articles/s41514-026-00459-6",
+    "supplements": [
+      {
+        "label": "补充材料（Figures S1–S8、File S1）",
+        "url": "https://static-content.springer.com/esm/art%3A10.1038%2Fs41514-026-00459-6/MediaObjects/41514_2026_459_MOESM1_ESM.pdf"
+      }
+    ],
+    "card_notes": [
+      "仍在验证：未找到具有完整化验输入和 IBI 输出的论文示例。",
+      "分析代码仅可向作者索取；论文配套应用的名称和部分其他规则与正文不一致，本技能只实现正文 IBI 公式。",
+      "切点按正文原始公式作探索性对照；其推导尺度尚未通过原始分析代码核实。"
+    ],
+    "summary_zh": "这项研究在人群横断面数据中发现衰弱、炎症与表观遗传衰老相关，并结合人类转录组和小鼠单细胞数据提出髓系细胞适应失败的假说。个人报告只计算常规化验对应的炎症负荷指数并对照探索性切点，不计算衰老年龄、衰弱诊断或个人患病概率。",
+    "summary_status": "draft"
+  },
+  "entry": {
+    "script": "scripts/personal_report.py",
+    "measurements_flag": "--measurements",
+    "measurements_header": [
+      "marker",
+      "value",
+      "unit"
+    ],
+    "age_flag": "--age",
+    "sex_flag": "--sex",
+    "out_flag": "--out",
+    "result_json": true,
+    "targets_flag": "--targets",
+    "levers_json": true
+  },
+  "inputs_status": "draft",
+  "inputs": [
+    {
+      "key": "crp_mg_l",
+      "label_zh": "C反应蛋白",
+      "aliases": [
+        "CRP",
+        "C-reactive protein",
+        "C反应蛋白浓度",
+        "C-反应蛋白",
+        "hs-CRP",
+        "hsCRP",
+        "超敏C反应蛋白",
+        "超敏CRP"
+      ],
+      "unit": "mg/L",
+      "accept": {
+        "mg/dL": 10,
+        "ug/mL": 1
+      },
+      "range": [
+        0,
+        1000
+      ],
+      "unit_required": true,
+      "required": true,
+      "from": "measurements",
+      "note_zh": "需要定量结果及单位；小于检测限的结果不能替换为零。"
+    },
+    {
+      "key": "neutrophils_10e9_l",
+      "label_zh": "中性粒细胞计数",
+      "aliases": [
+        "neutrophil count",
+        "absolute neutrophil count",
+        "neutrophils",
+        "ANC",
+        "NEUT#",
+        "NEU#",
+        "中性粒细胞绝对值",
+        "中性粒细胞绝对计数"
+      ],
+      "unit": "10^9/L",
+      "accept": {
+        "10^3/uL": 1,
+        "/uL": 0.001
+      },
+      "range": [
+        0,
+        200
+      ],
+      "unit_required": true,
+      "required": true,
+      "from": "measurements",
+      "note_zh": "需要绝对计数，不能填百分比。"
+    },
+    {
+      "key": "lymphocytes_10e9_l",
+      "label_zh": "淋巴细胞计数",
+      "aliases": [
+        "lymphocyte count",
+        "absolute lymphocyte count",
+        "lymphocytes",
+        "ALC",
+        "LYM#",
+        "LYMPH#",
+        "LY#",
+        "淋巴细胞绝对值",
+        "淋巴细胞绝对计数"
+      ],
+      "unit": "10^9/L",
+      "accept": {
+        "10^3/uL": 1,
+        "/uL": 0.001
+      },
+      "range": [
+        0.001,
+        200
+      ],
+      "unit_required": true,
+      "required": true,
+      "from": "measurements",
+      "note_zh": "需要大于零的绝对计数，零或低于检测限的结果不能作分母。"
+    },
+    {
+      "key": "age",
+      "label_zh": "实足年龄",
+      "unit": "a",
+      "range": [
+        0,
+        120
+      ],
+      "required": false,
+      "from": "profile",
+      "flag": "--age",
+      "note_zh": "只提示与研究人群的年龄差异，不进入公式。"
+    },
+    {
+      "key": "sex",
+      "label_zh": "性别",
+      "required": false,
+      "from": "profile",
+      "flag": "--sex",
+      "note_zh": "不进入公式或改变分层。"
+    }
+  ],
+  "outputs": [
+    {
+      "key": "nlr",
+      "label_zh": "中性粒细胞/淋巴细胞比值",
+      "unit": "1"
+    },
+    {
+      "key": "ibi_mg_l",
+      "label_zh": "炎症负荷指数（按 CRP mg/L 计）",
+      "unit": "mg/L"
+    },
+    {
+      "key": "ibi_stratum",
+      "label_zh": "论文探索切点分组"
+    }
+  ],
+  "validation": {
+    "status": "draft",
+    "gap_zh": "已读期刊全文 HTML/PDF、Table 1、全部补充材料 Figures S1–S8/File S1、FIRE 应用静态界面及 GEO 来源记录。公式和 1.496 切点已印出，但没有完整 CRP/中性粒/淋巴输入与 IBI 输出配对示例；Table 1 为群体汇总，S3D 是拟合图，均不能充当个体示例。S4 仅用于测试边界，不能证明公式已复现。分析代码需向作者索取；正文回归标准化描述及汇总中位数差异使切点推导尺度仍需核实，未猜测标准化参数或单位修正。"
+  }
+}
