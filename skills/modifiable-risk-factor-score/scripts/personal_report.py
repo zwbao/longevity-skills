@@ -332,7 +332,10 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--labs", type=Path, help="accepted and ignored")
     parser.add_argument("--out", type=Path, required=True)
     args = parser.parse_args(argv)
-    path = write_report(args.out, args.measurements, args.age, {name: getattr(args, name) for name in FLAGS}, args.targets)
+    for flag, given in (("--measurements", args.measurements), ("--targets", args.targets)):
+        if given is not None and not given.is_file():
+            parser.error(f"{flag} 指向的文件不存在或不是文件：{given}")
+    path =write_report(args.out, args.measurements, args.age, {name: getattr(args, name) for name in FLAGS}, args.targets)
     sys.stdout.write(str(path) + "\n")
     return skillkit.EXIT_INPUT_PROBLEM if (args.out / "problems.json").exists() else 0
 
