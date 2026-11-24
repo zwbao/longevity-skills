@@ -1,0 +1,107 @@
+name: pipeline-pr
+
+# The weekly paper pipeline runs on a server that holds a deploy key and no API
+# token. It pushes pipeline/<week>/<name> branches; the last commit of a finished
+# branch is empty and carries the pull request title and body, followed by
+#   Pipeline-PR: ready | draft
+#   Pipeline-Tier: A | B | C
+# This workflow runs the checks, opens the pull request, and applies the merge
+# policy: evidence (B) and index (C) branches that pass are merged into main;
+# skills (A) wait for a person.
+on:
+  push:
+    branches: ['pipeline/**']
+
+permissions:
+  contents: write
+  pull-requests: write
+
+# One at a time: two branches of the same week both touch the registry.
+concurrency:
+  group: pipeline-pr
+  cancel-in-progress: false
+
+jobs:
+  handle:
+    if: contains(github.event.head_commit.message, 'Pipeline-PR:')
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
+      BRANCH: ${{ github.ref_name }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+          cache-dependency-path: requirements-ci.txt
+
+      - run: pip install -r requirements-ci.txt
+
+      - name: Read the request from the last commit
+        id: request
+        run: |
+          git log -1 --format=%s > "$RUNNER_TEMP/title"
+          git log -1 --format=%b | grep -v -E '^Pipeline-(PR|Tier):' > "$RUNNER_TEMP/body"
+          state=$(git log -1 --format=%b | sed -n 's/^Pipeline-PR: *//p' | tail -1)
+          tier=$(git log -1 --format=%b | sed -n 's/^Pipeline-Tier: *//p' | tail -1)
+          case "$state" in ready|draft) ;; *) echo "unknown Pipeline-PR value: $state"; exit 1;; esac
+          case "$tier" in A|B|C) ;; *) echo "unknown Pipeline-Tier value: $tier"; exit 1;; esac
+          echo "state=$state" >> "$GITHUB_OUTPUT"
+          echo "tier=$tier" >> "$GITHUB_OUTPUT"
+
+      - name: Checks
+        id: checks
+        continue-on-error: true
+        run: |
+          python -m tools.lsk build
+          python -m tools.lsk check
+          python -m pytest -q tools/tests
+          python -m tools.lsk test --jobs 4
+
+      - name: Drop generated files
+        run: git checkout -- . && git clean -fdq
+
+      - name: Open the pull request
+        id: pr
+        run: |
+          number=$(gh pr list --head "$BRANCH" --state open --json number --jq '.[0].number // empty')
+          if [ -z "$number" ]; then
+            draft=""
+            if [ "${{ steps.request.outputs.state }}" = "draft" ] || [ "${{ steps.checks.outcome }}" != "success" ]; then draft="--draft"; fi
+            gh pr create --head "$BRANCH" --base main --title "$(cat "$RUNNER_TEMP/title")" --body-file "$RUNNER_TEMP/body" --label pipeline $draft
+            number=$(gh pr list --head "$BRANCH" --state open --json number --jq '.[0].number')
+          fi
+          echo "number=$number" >> "$GITHUB_OUTPUT"
+          if [ "${{ steps.checks.outcome }}" != "success" ]; then
+            gh pr comment "$number" --body "Checks failed in the pipeline-pr workflow: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          fi
+
+      # Merged here, not with the merge button: the registry is merged per DOI
+      # (tools/merge_registry.py), the merged tree is checked again, and the
+      # generated files are rebuilt in the same push.
+      - name: Merge evidence and index branches that passed
+        if: steps.checks.outcome == 'success' && steps.request.outputs.state == 'ready' && (steps.request.outputs.tier == 'B' || steps.request.outputs.tier == 'C')
+        run: |
+          git config user.name "longevity-skills-bot"
+          git config user.email "longevity-skills-bot@users.noreply.github.com"
+          git config merge.registry.driver "python3 tools/merge_registry.py %O %A %B"
+          git fetch origin main
+          git checkout -B main origin/main
+          git merge --no-ff -m "$(cat "$RUNNER_TEMP/title") (#${{ steps.pr.outputs.number }})" "origin/$BRANCH"
+          python -m tools.lsk registry --sync
+          python -m tools.lsk build
+          python -m tools.lsk check
+          if [ -n "$(git status --porcelain)" ]; then
+            git add -A catalog.json README.md skills/_registry registry skills .claude-plugin/plugin.json
+            git commit -m "Regenerate catalog, README list and registry"
+          fi
+          git push origin main
+          git push origin --delete "$BRANCH"
+
+      - name: Fail the run when the checks failed
+        if: steps.checks.outcome != 'success'
+        run: exit 1

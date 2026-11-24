@@ -1,16 +1,16 @@
 {
   "schema": "longevity-catalog/1",
-  "version": "2026.46.0",
+  "version": "2026.48.0",
   "counts": {
-    "skills": 177,
+    "skills": 178,
     "tiers": {
-      "A": 13,
+      "A": 14,
       "B": 83,
       "C": 73,
       "tool": 8
     },
-    "claims": 4864,
-    "claim_entities": 4429
+    "claims": 8927,
+    "claim_entities": 7482
   },
   "intents": [
     {
@@ -9452,6 +9452,121 @@
         "title_zh": "铁与纤维化衰老",
         "journal": "Nature Metabolism",
         "year": 2023
+      }
+    },
+    {
+      "name": "itfnat-face-name-mci-cutoff",
+      "kind": "paper",
+      "tier": "A",
+      "species": [
+        "human"
+      ],
+      "evidence": "cross_sectional",
+      "domains": [
+        "脑、认知与痴呆"
+      ],
+      "blurb_zh": "把自己做过的意大利人脸-姓名联想记忆测验（ItFNAT）延迟自由回忆校正分和 MoCA 校正分对到论文的轻度认知障碍切点，给出切点哪一侧和对应的似然比。",
+      "description": "Tier A personal readout: computes one person's value with the paper's printed method and reproduces a printed example. Compares a person's own Italian Face-Name Association Test (ItFNAT) delayed free recall score and MoCA total score, both already adjusted with the Italian norms, with the mild cognitive impairment cut-offs of Scaramuzzi et al. (GeroScience 2026, Table 4: DFR <= 3.21, MoCA <= 23.99) and reports which side of each cut-off the score falls on and the likelihood ratio for that side from the printed sensitivity and specificity. Use for 人脸姓名联想记忆, 人脸-姓名测验, ItFNAT, face-name test, MoCA 切点, 轻度认知障碍筛查, 记忆力下降. Does not convert raw scores, does not give a probability of MCI and does not diagnose.",
+      "intents": [
+        "cognition_dementia"
+      ],
+      "has_script": true,
+      "validation_status": "reproduced",
+      "validation_label_zh": "已复现论文",
+      "entry": {
+        "script": "scripts/personal_report.py",
+        "measurements_flag": "--measurements",
+        "measurements_header": [
+          "item",
+          "value",
+          "unit"
+        ],
+        "out_flag": "--out",
+        "result_json": true
+      },
+      "inputs_status": "verified",
+      "inputs": [
+        {
+          "key": "itfnat_dfr_adjusted_score",
+          "label_zh": "ItFNAT 延迟自由回忆校正分",
+          "aliases": [
+            "ItFNAT DFR adjusted",
+            "ItFNAT DFR adjusted score",
+            "DFR adjusted",
+            "DFR adjusted score",
+            "adjusted DFR",
+            "ItFNAT delayed free recall adjusted",
+            "delayed free recall adjusted score",
+            "ItFNAT DFR punteggio corretto",
+            "DFR punteggio corretto",
+            "ItFNAT 延迟自由回忆校正分",
+            "延迟自由回忆校正分",
+            "人脸姓名延迟自由回忆校正分",
+            "人脸-姓名延迟自由回忆校正分",
+            "DFR校正分"
+          ],
+          "unit": "score",
+          "range": [
+            -5,
+            22
+          ],
+          "required": false,
+          "from": "measurements",
+          "note_zh": "按 ItFNAT 意大利常模做过年龄校正的延迟自由回忆分。原始分是 16 对人脸-姓名里 15 分钟后自己说对的个数（0–16），校正后会在原始分上下浮动几分。"
+        },
+        {
+          "key": "moca_adjusted_score",
+          "label_zh": "MoCA 校正总分",
+          "aliases": [
+            "MoCA adjusted",
+            "MoCA adjusted score",
+            "MoCA adjusted total",
+            "adjusted MoCA",
+            "MoCA corrected score",
+            "MoCA punteggio corretto",
+            "MoCA 校正分",
+            "MoCA 校正总分",
+            "蒙特利尔认知评估校正分",
+            "蒙特利尔认知评估量表校正分"
+          ],
+          "unit": "score",
+          "range": [
+            0,
+            34
+          ],
+          "required": false,
+          "from": "measurements",
+          "note_zh": "按意大利 MoCA 8.1 常模（Dapor 等 2025）做过年龄和教育校正的总分。中文版 MoCA 只加 1 分教育校正的原始分不是这个分数。"
+        }
+      ],
+      "outputs": [
+        {
+          "key": "dfr_cutoff_result",
+          "label_zh": "ItFNAT 延迟自由回忆校正分相对切点 3.21（表 4）",
+          "unit": ""
+        },
+        {
+          "key": "dfr_likelihood_ratio",
+          "label_zh": "ItFNAT 延迟自由回忆这一侧的似然比（表 4 灵敏度和特异度）",
+          "unit": "1"
+        },
+        {
+          "key": "moca_cutoff_result",
+          "label_zh": "MoCA 校正总分相对切点 23.99（表 4）",
+          "unit": ""
+        },
+        {
+          "key": "moca_likelihood_ratio",
+          "label_zh": "MoCA 这一侧的似然比（表 4 灵敏度和特异度）",
+          "unit": "1"
+        }
+      ],
+      "paper": {
+        "doi": "10.1007/s11357-026-02599-9",
+        "title": "Delayed associative memory and recall error patterns in mild cognitive impairment: discriminant capacity of the Italian face-name association test",
+        "title_zh": "轻度认知障碍的延迟联想记忆与回忆错误模式：意大利人脸-姓名联想测验的区分能力",
+        "journal": "GeroScience",
+        "year": 2026
       }
     },
     {
