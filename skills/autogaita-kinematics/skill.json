@@ -1,0 +1,345 @@
+{
+  "schema": "longevity-skill/1",
+  "name": "autogaita-kinematics",
+  "kind": "paper",
+  "tier": "A",
+  "species": [
+    "human",
+    "mouse",
+    "drosophila"
+  ],
+  "evidence": "method",
+  "domains": [
+    "步态",
+    "运动功能"
+  ],
+  "blurb_zh": "用个人步行视频标定的关节坐标，计算膝踝角度、水平速度和跨步距离。",
+  "intents": [
+    "before_after"
+  ],
+  "triage": {
+    "reason_zh": "人体步态坐标可按公开算法计算个人角度、水平速度和实测跨步距离；不需要回归模型参数，不估计推进力或衰老风险。",
+    "reviewed": false
+  },
+  "paper": {
+    "doi": "10.1073/pnas.2534093123",
+    "title": "Cross-species identification of conserved and divergent locomotor kinematic strategies using AutoGaitA.",
+    "title_zh": "跨物种步态运动学的保守与差异策略",
+    "journal": "Proceedings of the National Academy of Sciences of the United States of America",
+    "year": 2026,
+    "authors": "Hosseini 等",
+    "article_url": "https://www.pnas.org/doi/10.1073/pnas.2534093123",
+    "supplements": [
+      {
+        "label": "SI Appendix：扩展方法",
+        "url": "https://www.pnas.org/doi/suppl/10.1073/pnas.2534093123/suppl_file/pnas.2534093123.sapp.pdf"
+      },
+      {
+        "label": "全部补充材料（Europe PMC）",
+        "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC13535145/supplementaryFiles"
+      }
+    ],
+    "code_url": "https://github.com/mahan-hosseini/AutoGaitA/tree/v1.3.1",
+    "summary_zh": "这项研究比较人、小鼠和果蝇的步行运动，发现关节运动速度的分布有共同特点，并从运动学变化推测年龄增长伴随推进能力下降。个人报告只计算一个已标注人体步态周期的膝踝角度、水平速度和实测跨步距离，不估计推进力、跌倒风险或生物年龄。",
+    "summary_status": "draft",
+    "card_notes": [
+      "个人读出暂定：归一化索引示例已核对，但没有复现论文印出的个人运动学结果。",
+      "仅实现人体侧面二维地面步行的有限计算；角度和速度按公开代码 v1.3.1，跨步距离按附录第5页定义。"
+    ]
+  },
+  "entry": {
+    "script": "scripts/personal_report.py",
+    "measurements_flag": "--measurements",
+    "measurements_header": [
+      "item",
+      "value",
+      "unit"
+    ],
+    "age_flag": "--age",
+    "sex_flag": "--sex",
+    "out_flag": "--out",
+    "result_json": true
+  },
+  "population": {
+    "age_years": [
+      21,
+      85
+    ],
+    "note_zh": "人体样本分为21–36岁和46–85岁两组；中间年龄段未覆盖。这里只描述测量，没有年龄预测方程。"
+  },
+  "inputs_status": "draft",
+  "inputs": [
+    {
+      "key": "time_s",
+      "label_zh": "时间戳",
+      "aliases": [
+        "Time",
+        "timestamp",
+        "时间"
+      ],
+      "unit": "s",
+      "accept": {
+        "ms": 0.001
+      },
+      "range": [
+        0,
+        86400
+      ],
+      "unit_required": true,
+      "required": true,
+      "from": "measurements",
+      "note_zh": "每帧的第一行；相邻帧必须等间隔。"
+    },
+    {
+      "key": "hip_x_cm",
+      "label_zh": "髋x坐标",
+      "aliases": [
+        "hip x",
+        "Hipx",
+        "髋关节x坐标"
+      ],
+      "unit": "cm",
+      "accept": {
+        "m": 100,
+        "mm": 0.1
+      },
+      "range": [
+        -1000,
+        1000
+      ],
+      "unit_required": true,
+      "required": true,
+      "from": "measurements",
+      "note_zh": "侧面二维坐标，需由本人视频标定；x 向前、y 向上，不能直接填像素。范围只用于发现输入错误。"
+    },
+    {
+      "key": "hip_y_cm",
+      "label_zh": "髋y坐标",
+      "aliases": [
+        "hip y",
+        "Hipy",
+        "髋关节y坐标"
+      ],
+      "unit": "cm",
+      "accept": {
+        "m": 100,
+        "mm": 0.1
+      },
+      "range": [
+        -1000,
+        1000
+      ],
+      "unit_required": true,
+      "required": true,
+      "from": "measurements",
+      "note_zh": "侧面二维坐标，需由本人视频标定；x 向前、y 向上，不能直接填像素。范围只用于发现输入错误。"
+    },
+    {
+      "key": "knee_x_cm",
+      "label_zh": "膝x坐标",
+      "aliases": [
+        "knee x",
+        "Kneex",
+        "膝关节x坐标"
+      ],
+      "unit": "cm",
+      "accept": {
+        "m": 100,
+        "mm": 0.1
+      },
+      "range": [
+        -1000,
+        1000
+      ],
+      "unit_required": true,
+      "required": true,
+      "from": "measurements",
+      "note_zh": "侧面二维坐标，需由本人视频标定；x 向前、y 向上，不能直接填像素。范围只用于发现输入错误。"
+    },
+    {
+      "key": "knee_y_cm",
+      "label_zh": "膝y坐标",
+      "aliases": [
+        "knee y",
+        "Kneey",
+        "膝关节y坐标"
+      ],
+      "unit": "cm",
+      "accept": {
+        "m": 100,
+        "mm": 0.1
+      },
+      "range": [
+        -1000,
+        1000
+      ],
+      "unit_required": true,
+      "required": true,
+      "from": "measurements",
+      "note_zh": "侧面二维坐标，需由本人视频标定；x 向前、y 向上，不能直接填像素。范围只用于发现输入错误。"
+    },
+    {
+      "key": "ankle_x_cm",
+      "label_zh": "踝x坐标",
+      "aliases": [
+        "ankle x",
+        "Anklex",
+        "踝关节x坐标"
+      ],
+      "unit": "cm",
+      "accept": {
+        "m": 100,
+        "mm": 0.1
+      },
+      "range": [
+        -1000,
+        1000
+      ],
+      "unit_required": true,
+      "required": true,
+      "from": "measurements",
+      "note_zh": "侧面二维坐标，需由本人视频标定；x 向前、y 向上，不能直接填像素。范围只用于发现输入错误。"
+    },
+    {
+      "key": "ankle_y_cm",
+      "label_zh": "踝y坐标",
+      "aliases": [
+        "ankle y",
+        "Ankley",
+        "踝关节y坐标"
+      ],
+      "unit": "cm",
+      "accept": {
+        "m": 100,
+        "mm": 0.1
+      },
+      "range": [
+        -1000,
+        1000
+      ],
+      "unit_required": true,
+      "required": true,
+      "from": "measurements",
+      "note_zh": "侧面二维坐标，需由本人视频标定；x 向前、y 向上，不能直接填像素。范围只用于发现输入错误。"
+    },
+    {
+      "key": "midfoot_x_cm",
+      "label_zh": "足中部x坐标",
+      "aliases": [
+        "midfoot x",
+        "Footx",
+        "足中点x坐标"
+      ],
+      "unit": "cm",
+      "accept": {
+        "m": 100,
+        "mm": 0.1
+      },
+      "range": [
+        -1000,
+        1000
+      ],
+      "unit_required": true,
+      "required": true,
+      "from": "measurements",
+      "note_zh": "侧面二维坐标，需由本人视频标定；x 向前、y 向上，不能直接填像素。范围只用于发现输入错误。"
+    },
+    {
+      "key": "midfoot_y_cm",
+      "label_zh": "足中部y坐标",
+      "aliases": [
+        "midfoot y",
+        "Footy",
+        "足中点y坐标"
+      ],
+      "unit": "cm",
+      "accept": {
+        "m": 100,
+        "mm": 0.1
+      },
+      "range": [
+        -1000,
+        1000
+      ],
+      "unit_required": true,
+      "required": true,
+      "from": "measurements",
+      "note_zh": "侧面二维坐标，需由本人视频标定；x 向前、y 向上，不能直接填像素。范围只用于发现输入错误。"
+    },
+    {
+      "key": "age",
+      "label_zh": "实足年龄",
+      "unit": "a",
+      "range": [
+        18,
+        120
+      ],
+      "required": false,
+      "from": "profile",
+      "flag": "--age"
+    },
+    {
+      "key": "sex",
+      "label_zh": "性别",
+      "required": false,
+      "from": "profile",
+      "flag": "--sex"
+    }
+  ],
+  "outputs": [
+    {
+      "key": "stride_length_cm",
+      "label_zh": "足中部实测跨步距离",
+      "unit": "cm"
+    },
+    {
+      "key": "time_to_peak_s",
+      "label_zh": "起点至足中部最大横坐标的时间",
+      "unit": "s"
+    },
+    {
+      "key": "knee_angle_min_deg",
+      "label_zh": "膝内角最小值（原始周期）",
+      "unit": "deg"
+    },
+    {
+      "key": "knee_angle_max_deg",
+      "label_zh": "膝内角最大值（原始周期）",
+      "unit": "deg"
+    },
+    {
+      "key": "ankle_angle_min_deg",
+      "label_zh": "踝内角最小值（原始周期）",
+      "unit": "deg"
+    },
+    {
+      "key": "ankle_angle_max_deg",
+      "label_zh": "踝内角最大值（原始周期）",
+      "unit": "deg"
+    },
+    {
+      "key": "hip_peak_vx_cm_s",
+      "label_zh": "髋峰值水平速度（归一化周期）",
+      "unit": "cm/s"
+    },
+    {
+      "key": "knee_peak_vx_cm_s",
+      "label_zh": "膝峰值水平速度（归一化周期）",
+      "unit": "cm/s"
+    },
+    {
+      "key": "ankle_peak_vx_cm_s",
+      "label_zh": "踝峰值水平速度（归一化周期）",
+      "unit": "cm/s"
+    },
+    {
+      "key": "midfoot_peak_vx_cm_s",
+      "label_zh": "足中部峰值水平速度（归一化周期）",
+      "unit": "cm/s"
+    }
+  ],
+  "validation": {
+    "status": "draft",
+    "gap_zh": "已检查正式正文、SI Appendix第1–17页及图、Datasets S1–S39、Movie S1和AutoGaitA v1.3.1代码及示例。正文的5点到10箱归一化示例仅提供源索引映射，可复现但不是个人运动学输出；未找到印有完整人体坐标输入与角度、速度、跨步距离期望值的算例。PCA载荷与群组统计不能替代这种验证。"
+  }
+}
