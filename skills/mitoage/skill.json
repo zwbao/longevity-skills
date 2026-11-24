@@ -1,0 +1,622 @@
+{
+  "schema": "longevity-skill/1",
+  "name": "mitoage",
+  "kind": "paper",
+  "tier": "A",
+  "species": [
+    "human",
+    "cell_line"
+  ],
+  "evidence": "in_vitro",
+  "domains": [
+    "蛋白、代谢与器官年龄"
+  ],
+  "blurb_zh": "用25项血浆蛋白和性别计算仍在验证的MitoAge线粒体相关分值，不是年龄岁数。",
+  "intents": [
+    "proteomic_organ_age"
+  ],
+  "triage": {
+    "reason_zh": "人体血浆蛋白的25个权重、截距和男性系数均公开，可计算个人线性分值；无完整个人算例，标为draft。",
+    "reviewed": false
+  },
+  "paper": {
+    "doi": "10.1038/s41514-026-00449-8",
+    "title": "The blood proteome predicts the impact of circulating factors on age-related mitochondrial health",
+    "title_zh": "血液蛋白预测循环因子对年龄相关线粒体健康的影响",
+    "journal": "npj Aging",
+    "year": 2026,
+    "authors": "Heimler 等",
+    "article_url": "https://www.nature.com/articles/s41514-026-00449-8",
+    "supplements": [
+      {
+        "label": "补充图表PDF",
+        "url": "https://static-content.springer.com/esm/art%3A10.1038%2Fs41514-026-00449-8/MediaObjects/41514_2026_449_MOESM1_ESM.pdf"
+      },
+      {
+        "label": "Supplementary Data 1（MitoAge权重表）",
+        "url": "https://static-content.springer.com/esm/art%3A10.1038%2Fs41514-026-00449-8/MediaObjects/41514_2026_449_MOESM2_ESM.xlsx"
+      }
+    ],
+    "code_url": "https://github.com/juliancandia/eNetXplorer",
+    "card_notes": [
+      "仍在验证：未找到完整个人算例；代码链接为通用建模包，不是本文冻结的预测程序。",
+      "输入为SomaScan 1.3K经质控的自然对数RFU。分值的绝对尺度尚未与作者的个人预测核验，不换算为实测呼吸率。"
+    ],
+    "summary_zh": "这项研究用不同年龄人的血清处理人原代成纤维细胞，发现血浆蛋白特征与血清对细胞线粒体呼吸能力的影响及人的体能有关。个人报告只用对应的血浆蛋白测量和性别计算线性分值，不估算年龄岁数、疾病风险或治疗效果。",
+    "summary_status": "draft"
+  },
+  "entry": {
+    "script": "scripts/personal_report.py",
+    "measurements_flag": "--measurements",
+    "measurements_header": [
+      "marker",
+      "value",
+      "unit"
+    ],
+    "age_flag": "--age",
+    "sex_flag": "--sex",
+    "out_flag": "--out",
+    "result_json": true,
+    "targets_flag": "--targets",
+    "levers_json": true
+  },
+  "population": {
+    "age_years": [
+      22,
+      92
+    ],
+    "note_zh": "GESTALT健康成年人横断面血样；来自同一受试者组的不同细胞系和生理指标验证，不是独立外部人群。"
+  },
+  "inputs_status": "draft",
+  "inputs": [
+    {
+      "key": "ccl2_ln_rfu",
+      "label_zh": "单核细胞趋化蛋白1（ln RFU）",
+      "aliases": [
+        "MCP-1",
+        "CCL2",
+        "2578-67",
+        "SL000038"
+      ],
+      "unit": "1",
+      "accept": {},
+      "range": [
+        -20,
+        30
+      ],
+      "unit_required": true,
+      "required": true,
+      "from": "measurements",
+      "note_zh": "SomaScan 1.3K对应SeqId、已完成实验室质控的自然对数RFU；无量纲1。不是原始RFU、log2、Olink NPX或质量浓度，不支持这些单位之间的固定比例换算。"
+    },
+    {
+      "key": "areg_ln_rfu",
+      "label_zh": "双调蛋白（ln RFU）",
+      "aliases": [
+        "AREG",
+        "2970-60",
+        "SL000136"
+      ],
+      "unit": "1",
+      "accept": {},
+      "range": [
+        -20,
+        30
+      ],
+      "unit_required": true,
+      "required": true,
+      "from": "measurements",
+      "note_zh": "SomaScan 1.3K对应SeqId、已完成实验室质控的自然对数RFU；无量纲1。不是原始RFU、log2、Olink NPX或质量浓度，不支持这些单位之间的固定比例换算。"
+    },
+    {
+      "key": "ctsd_ln_rfu",
+      "label_zh": "组织蛋白酶D（ln RFU）",
+      "aliases": [
+        "Cathepsin D",
+        "CTSD",
+        "5508-62",
+        "SL000344"
+      ],
+      "unit": "1",
+      "accept": {},
+      "range": [
+        -20,
+        30
+      ],
+      "unit_required": true,
+      "required": true,
+      "from": "measurements",
+      "note_zh": "SomaScan 1.3K对应SeqId、已完成实验室质控的自然对数RFU；无量纲1。不是原始RFU、log2、Olink NPX或质量浓度，不支持这些单位之间的固定比例换算。"
+    },
+    {
+      "key": "ifna2_ln_rfu",
+      "label_zh": "干扰素α2（ln RFU）",
+      "aliases": [
+        "IFN-aA",
+        "IFNA2",
+        "3497-13",
+        "SL002075"
+      ],
+      "unit": "1",
+      "accept": {},
+      "range": [
+        -20,
+        30
+      ],
+      "unit_required": true,
+      "required": true,
+      "from": "measurements",
+      "note_zh": "SomaScan 1.3K对应SeqId、已完成实验室质控的自然对数RFU；无量纲1。不是原始RFU、log2、Olink NPX或质量浓度，不支持这些单位之间的固定比例换算。"
+    },
+    {
+      "key": "il2rg_ln_rfu",
+      "label_zh": "白细胞介素2受体γ亚基（ln RFU）",
+      "aliases": [
+        "IL-2 sRg",
+        "IL2RG",
+        "2634-2",
+        "SL003307"
+      ],
+      "unit": "1",
+      "accept": {},
+      "range": [
+        -20,
+        30
+      ],
+      "unit_required": true,
+      "required": true,
+      "from": "measurements",
+      "note_zh": "SomaScan 1.3K对应SeqId、已完成实验室质控的自然对数RFU；无量纲1。不是原始RFU、log2、Olink NPX或质量浓度，不支持这些单位之间的固定比例换算。"
+    },
+    {
+      "key": "smad3_ln_rfu",
+      "label_zh": "SMAD3蛋白（ln RFU）",
+      "aliases": [
+        "SMAD3",
+        "10363-13",
+        "SL004097"
+      ],
+      "unit": "1",
+      "accept": {},
+      "range": [
+        -20,
+        30
+      ],
+      "unit_required": true,
+      "required": true,
+      "from": "measurements",
+      "note_zh": "SomaScan 1.3K对应SeqId、已完成实验室质控的自然对数RFU；无量纲1。不是原始RFU、log2、Olink NPX或质量浓度，不支持这些单位之间的固定比例换算。"
+    },
+    {
+      "key": "acp5_ln_rfu",
+      "label_zh": "抗酒石酸酸性磷酸酶5（ln RFU）",
+      "aliases": [
+        "TrATPase",
+        "ACP5",
+        "3232-28",
+        "SL004118"
+      ],
+      "unit": "1",
+      "accept": {},
+      "range": [
+        -20,
+        30
+      ],
+      "unit_required": true,
+      "required": true,
+      "from": "measurements",
+      "note_zh": "SomaScan 1.3K对应SeqId、已完成实验室质控的自然对数RFU；无量纲1。不是原始RFU、log2、Olink NPX或质量浓度，不支持这些单位之间的固定比例换算。"
+    },
+    {
+      "key": "tnfsf13b_ln_rfu",
+      "label_zh": "B细胞活化因子（ln RFU）",
+      "aliases": [
+        "BAFF",
+        "TNFSF13B",
+        "3059-50",
+        "SL004327"
+      ],
+      "unit": "1",
+      "accept": {},
+      "range": [
+        -20,
+        30
+      ],
+      "unit_required": true,
+      "required": true,
+      "from": "measurements",
+      "note_zh": "SomaScan 1.3K对应SeqId、已完成实验室质控的自然对数RFU；无量纲1。不是原始RFU、log2、Olink NPX或质量浓度，不支持这些单位之间的固定比例换算。"
+    },
+    {
+      "key": "fgf16_ln_rfu",
+      "label_zh": "成纤维细胞生长因子16（ln RFU）",
+      "aliases": [
+        "FGF-16",
+        "FGF16",
+        "4393-3",
+        "SL004334"
+      ],
+      "unit": "1",
+      "accept": {},
+      "range": [
+        -20,
+        30
+      ],
+      "unit_required": true,
+      "required": true,
+      "from": "measurements",
+      "note_zh": "SomaScan 1.3K对应SeqId、已完成实验室质控的自然对数RFU；无量纲1。不是原始RFU、log2、Olink NPX或质量浓度，不支持这些单位之间的固定比例换算。"
+    },
+    {
+      "key": "dkk1_ln_rfu",
+      "label_zh": "Dickkopf相关蛋白1（ln RFU）",
+      "aliases": [
+        "DKK1",
+        "3535-84",
+        "SL004367"
+      ],
+      "unit": "1",
+      "accept": {},
+      "range": [
+        -20,
+        30
+      ],
+      "unit_required": true,
+      "required": true,
+      "from": "measurements",
+      "note_zh": "SomaScan 1.3K对应SeqId、已完成实验室质控的自然对数RFU；无量纲1。不是原始RFU、log2、Olink NPX或质量浓度，不支持这些单位之间的固定比例换算。"
+    },
+    {
+      "key": "il1rap_ln_rfu",
+      "label_zh": "白细胞介素1受体辅助蛋白（ln RFU）",
+      "aliases": [
+        "IL-1 R AcP",
+        "IL1RAP",
+        "2630-12",
+        "SL004588"
+      ],
+      "unit": "1",
+      "accept": {},
+      "range": [
+        -20,
+        30
+      ],
+      "unit_required": true,
+      "required": true,
+      "from": "measurements",
+      "note_zh": "SomaScan 1.3K对应SeqId、已完成实验室质控的自然对数RFU；无量纲1。不是原始RFU、log2、Olink NPX或质量浓度，不支持这些单位之间的固定比例换算。"
+    },
+    {
+      "key": "eda_ln_rfu",
+      "label_zh": "外胚层发育不良蛋白A（ln RFU）",
+      "aliases": [
+        "EDA",
+        "2826-53",
+        "SL004644"
+      ],
+      "unit": "1",
+      "accept": {},
+      "range": [
+        -20,
+        30
+      ],
+      "unit_required": true,
+      "required": true,
+      "from": "measurements",
+      "note_zh": "SomaScan 1.3K对应SeqId、已完成实验室质控的自然对数RFU；无量纲1。不是原始RFU、log2、Olink NPX或质量浓度，不支持这些单位之间的固定比例换算。"
+    },
+    {
+      "key": "ddx19b_ln_rfu",
+      "label_zh": "DDX19B蛋白（ln RFU）",
+      "aliases": [
+        "DEAD-box protein 19B",
+        "DDX19B",
+        "5460-60",
+        "SL004750"
+      ],
+      "unit": "1",
+      "accept": {},
+      "range": [
+        -20,
+        30
+      ],
+      "unit_required": true,
+      "required": true,
+      "from": "measurements",
+      "note_zh": "SomaScan 1.3K对应SeqId、已完成实验室质控的自然对数RFU；无量纲1。不是原始RFU、log2、Olink NPX或质量浓度，不支持这些单位之间的固定比例换算。"
+    },
+    {
+      "key": "nme2_ln_rfu",
+      "label_zh": "核苷二磷酸激酶B（ln RFU）",
+      "aliases": [
+        "NDP kinase B",
+        "NME2",
+        "4249-64",
+        "SL004921"
+      ],
+      "unit": "1",
+      "accept": {},
+      "range": [
+        -20,
+        30
+      ],
+      "unit_required": true,
+      "required": true,
+      "from": "measurements",
+      "note_zh": "SomaScan 1.3K对应SeqId、已完成实验室质控的自然对数RFU；无量纲1。不是原始RFU、log2、Olink NPX或质量浓度，不支持这些单位之间的固定比例换算。"
+    },
+    {
+      "key": "nbl1_ln_rfu",
+      "label_zh": "DAN蛋白（ln RFU）",
+      "aliases": [
+        "DAN",
+        "NBL1",
+        "2944-66",
+        "SL005156"
+      ],
+      "unit": "1",
+      "accept": {},
+      "range": [
+        -20,
+        30
+      ],
+      "unit_required": true,
+      "required": true,
+      "from": "measurements",
+      "note_zh": "SomaScan 1.3K对应SeqId、已完成实验室质控的自然对数RFU；无量纲1。不是原始RFU、log2、Olink NPX或质量浓度，不支持这些单位之间的固定比例换算。"
+    },
+    {
+      "key": "il10ra_ln_rfu",
+      "label_zh": "白细胞介素10受体α（ln RFU）",
+      "aliases": [
+        "IL-10 Ra",
+        "IL10RA",
+        "10344-334",
+        "SL005173"
+      ],
+      "unit": "1",
+      "accept": {},
+      "range": [
+        -20,
+        30
+      ],
+      "unit_required": true,
+      "required": true,
+      "from": "measurements",
+      "note_zh": "SomaScan 1.3K对应SeqId、已完成实验室质控的自然对数RFU；无量纲1。不是原始RFU、log2、Olink NPX或质量浓度，不支持这些单位之间的固定比例换算。"
+    },
+    {
+      "key": "psma6_ln_rfu",
+      "label_zh": "蛋白酶体α6亚基（ln RFU）",
+      "aliases": [
+        "PSA6",
+        "PSMA6",
+        "3860-7",
+        "SL005630"
+      ],
+      "unit": "1",
+      "accept": {},
+      "range": [
+        -20,
+        30
+      ],
+      "unit_required": true,
+      "required": true,
+      "from": "measurements",
+      "note_zh": "SomaScan 1.3K对应SeqId、已完成实验室质控的自然对数RFU；无量纲1。不是原始RFU、log2、Olink NPX或质量浓度，不支持这些单位之间的固定比例换算。"
+    },
+    {
+      "key": "fgr_ln_rfu",
+      "label_zh": "FGR蛋白（ln RFU）",
+      "aliases": [
+        "FGR",
+        "3810-50",
+        "SL006912"
+      ],
+      "unit": "1",
+      "accept": {},
+      "range": [
+        -20,
+        30
+      ],
+      "unit_required": true,
+      "required": true,
+      "from": "measurements",
+      "note_zh": "SomaScan 1.3K对应SeqId、已完成实验室质控的自然对数RFU；无量纲1。不是原始RFU、log2、Olink NPX或质量浓度，不支持这些单位之间的固定比例换算。"
+    },
+    {
+      "key": "dhh_ln_rfu",
+      "label_zh": "沙漠刺猬蛋白（ln RFU）",
+      "aliases": [
+        "DHH",
+        "4389-2",
+        "SL007003"
+      ],
+      "unit": "1",
+      "accept": {},
+      "range": [
+        -20,
+        30
+      ],
+      "unit_required": true,
+      "required": true,
+      "from": "measurements",
+      "note_zh": "SomaScan 1.3K对应SeqId、已完成实验室质控的自然对数RFU；无量纲1。不是原始RFU、log2、Olink NPX或质量浓度，不支持这些单位之间的固定比例换算。"
+    },
+    {
+      "key": "ube2l3_ln_rfu",
+      "label_zh": "泛素结合酶E2 L3（ln RFU）",
+      "aliases": [
+        "UB2L3",
+        "UBE2L3",
+        "3874-8",
+        "SL008157"
+      ],
+      "unit": "1",
+      "accept": {},
+      "range": [
+        -20,
+        30
+      ],
+      "unit_required": true,
+      "required": true,
+      "from": "measurements",
+      "note_zh": "SomaScan 1.3K对应SeqId、已完成实验室质控的自然对数RFU；无量纲1。不是原始RFU、log2、Olink NPX或质量浓度，不支持这些单位之间的固定比例换算。"
+    },
+    {
+      "key": "ufc1_ln_rfu",
+      "label_zh": "UFC1蛋白（ln RFU）",
+      "aliases": [
+        "UFC1",
+        "3405-6",
+        "SL010529"
+      ],
+      "unit": "1",
+      "accept": {},
+      "range": [
+        -20,
+        30
+      ],
+      "unit_required": true,
+      "required": true,
+      "from": "measurements",
+      "note_zh": "SomaScan 1.3K对应SeqId、已完成实验室质控的自然对数RFU；无量纲1。不是原始RFU、log2、Olink NPX或质量浓度，不支持这些单位之间的固定比例换算。"
+    },
+    {
+      "key": "arpp19_ln_rfu",
+      "label_zh": "cAMP调节磷蛋白19（ln RFU）",
+      "aliases": [
+        "ARP19",
+        "ARPP19",
+        "4963-19",
+        "SL011708"
+      ],
+      "unit": "1",
+      "accept": {},
+      "range": [
+        -20,
+        30
+      ],
+      "unit_required": true,
+      "required": true,
+      "from": "measurements",
+      "note_zh": "SomaScan 1.3K对应SeqId、已完成实验室质控的自然对数RFU；无量纲1。不是原始RFU、log2、Olink NPX或质量浓度，不支持这些单位之间的固定比例换算。"
+    },
+    {
+      "key": "fut5_ln_rfu",
+      "label_zh": "岩藻糖基转移酶5（ln RFU）",
+      "aliases": [
+        "FUT5",
+        "4549-78",
+        "SL014008"
+      ],
+      "unit": "1",
+      "accept": {},
+      "range": [
+        -20,
+        30
+      ],
+      "unit_required": true,
+      "required": true,
+      "from": "measurements",
+      "note_zh": "SomaScan 1.3K对应SeqId、已完成实验室质控的自然对数RFU；无量纲1。不是原始RFU、log2、Olink NPX或质量浓度，不支持这些单位之间的固定比例换算。"
+    },
+    {
+      "key": "fgf8_ln_rfu",
+      "label_zh": "成纤维细胞生长因子8A（ln RFU）",
+      "aliases": [
+        "FGF-8A",
+        "FGF8",
+        "4394-71",
+        "SL014308"
+      ],
+      "unit": "1",
+      "accept": {},
+      "range": [
+        -20,
+        30
+      ],
+      "unit_required": true,
+      "required": true,
+      "from": "measurements",
+      "note_zh": "SomaScan 1.3K对应SeqId、已完成实验室质控的自然对数RFU；无量纲1。不是原始RFU、log2、Olink NPX或质量浓度，不支持这些单位之间的固定比例换算。"
+    },
+    {
+      "key": "ampk_a2b2g1_ln_rfu",
+      "label_zh": "AMPK α2β2γ1复合物（ln RFU）",
+      "aliases": [
+        "AMPK a2b2g1",
+        "PRKAA2 PRKAB2 PRKAG1",
+        "5245-40",
+        "SL016549"
+      ],
+      "unit": "1",
+      "accept": {},
+      "range": [
+        -20,
+        30
+      ],
+      "unit_required": true,
+      "required": true,
+      "from": "measurements",
+      "note_zh": "SomaScan 1.3K对应SeqId、已完成实验室质控的自然对数RFU；无量纲1。不是原始RFU、log2、Olink NPX或质量浓度，不支持这些单位之间的固定比例换算。"
+    },
+    {
+      "key": "age",
+      "label_zh": "实足年龄",
+      "unit": "a",
+      "range": [
+        18,
+        120
+      ],
+      "required": false,
+      "from": "profile",
+      "flag": "--age",
+      "note_zh": "仅提示是否超出研究年龄22–92岁，不进入公式。"
+    },
+    {
+      "key": "sex",
+      "label_zh": "模型所用性别",
+      "required": true,
+      "from": "profile",
+      "flag": "--sex",
+      "note_zh": "Table 2 Sex (Male)：male/男为1，female/女为0。"
+    },
+    {
+      "key": "preprocessing",
+      "label_zh": "蛋白数据处理确认",
+      "required": true,
+      "from": "argument",
+      "flag": "--preprocessing",
+      "note_zh": "仅接受somascan-1.3k-ln-qc，确认同平台、相同SeqId、自然对数及实验室质控；此标记不能替代实际质控。"
+    }
+  ],
+  "outputs": [
+    {
+      "key": "mitoage_score",
+      "label_zh": "MitoAge线性分值（仍在验证）",
+      "unit": "score",
+      "note_zh": "论文权重的线性输出；绝对尺度未获个人算例验证，不是岁数或临床阈值。"
+    }
+  ],
+  "validation": {
+    "status": "draft",
+    "gap_zh": "已读期刊HTML和PDF全文、Table 1–4、Figure 1–5、补充PDF（Figure S1、Table S1）、Supplementary Data 1三个工作表及所引eNetXplorer仓库。未见任一个人的25项蛋白输入、性别与预测值配对；图中点编号不是完整输入，相关系数不是个人算例。现仅依Methods的自然对数RFU和MitoAge工作表计算线性式，未能核验绝对输出尺度；不反推中心化、标准差、校准或指数逆变换。零向量、单项变化等测试只核对已印出的常数与程序行为，不算论文示例复现。"
+  },
+  "data_files": [
+    {
+      "path": "data/coefficients.csv",
+      "source_url": "https://static-content.springer.com/esm/art%3A10.1038%2Fs41514-026-00449-8/MediaObjects/41514_2026_449_MOESM2_ESM.xlsx",
+      "license": "CC-BY-4.0",
+      "redistributable": "yes",
+      "sha256": "5796a98196f09b63a1faab6de5e19fb40a100221632861adffe6090be3fed5bf"
+    },
+    {
+      "path": "data/constants.json",
+      "source_url": "https://static-content.springer.com/esm/art%3A10.1038%2Fs41514-026-00449-8/MediaObjects/41514_2026_449_MOESM2_ESM.xlsx",
+      "license": "CC-BY-4.0",
+      "redistributable": "yes",
+      "sha256": "92a4d643d77a462c49aba43f7094dba262a0fde2bc5a38d442fada3d2c2812c6"
+    }
+  ]
+}
