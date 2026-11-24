@@ -111,6 +111,7 @@ python3 -m tools.lsk test --changed origin/main   # 只测相对 main 改动过�
 
 - `skills/blood-epigenetic-intrinsic-capacity/` — 血液甲基化芯片的 91 个位点 β 值，按论文补充表 1 算甲基化内在能力（认知、行走、情绪、感官和活力的综合）。
 - `skills/calerie-methylation-clocks/` — 限食试验里的时钟数值。（名单类）
+- `skills/edisea-dietary-index/` — 用茶、全谷物、水果、薯条、酒、加工肉、甜饮料等十类食物每天的份数，算与表观衰老较慢相关的饮食指数 EDISEA。
 - `skills/epigenetic-clock-reliability/` — 同一个时钟两次年龄的差，只做相减，不计算论文的主成分时钟。（名单类）
 - `skills/epigenetic-frailty-risk-score/` — 甲基化数值，可带衰弱指数。
 - `skills/methylation-variability-aging-score/` — 血液甲基化芯片（450K 或 EPIC）的 β 值，按论文补充表和作者代码算把甲基化水平和变异性合在一起的衰老评分。
@@ -179,6 +180,7 @@ python3 -m tools.lsk test --changed origin/main   # 只测相对 main 改动过�
 ## 衰弱与死亡风险
 
 - `skills/circadian-frailty-older-adults/` — 用最活跃十小时和最不活跃五小时的活动量算相对振幅，并把两道疲劳题相加；不判断衰弱。（名单类）
+- `skills/edisea-dietary-index/` — 见「甲基化」。
 - `skills/environmental-genetic-aging-mortality/` — 暴露回答。（名单类）
 - `skills/epigenetic-frailty-risk-score/` — 见「甲基化」。
 - `skills/genome-wide-proteomics-frailty/` — 已经算好的医院衰弱风险分。
