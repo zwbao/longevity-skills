@@ -1,0 +1,282 @@
+{
+  "schema": "longevity-skill/1",
+  "name": "blood-lead-conditional-survival",
+  "kind": "paper",
+  "tier": "A",
+  "species": [
+    "human"
+  ],
+  "evidence": "cohort",
+  "domains": [
+    "环境暴露与生存"
+  ],
+  "blurb_zh": "用全血铅与指定参考浓度计算条件生存时间差，保留五次插补结果。",
+  "intents": [
+    "lab_meaning",
+    "frailty_mortality"
+  ],
+  "triage": {
+    "reason_zh": "人体队列正文表2与附录S3公开血铅log2剂量系数，可计算个人浓度相对指定参考浓度的条件生存时间差；预印本保留draft。",
+    "reviewed": false
+  },
+  "paper": {
+    "doi": "10.64898/2026.06.29.26356268",
+    "title": "Environmental toxic metal exposure and conditional mortality survival among US adults: a prospective cohort study",
+    "title_zh": "环境有毒金属暴露与美国成人条件生存时间",
+    "journal": "medRxiv",
+    "year": 2026,
+    "authors": "Fang 与 Schwartz",
+    "article_url": "https://www.medrxiv.org/content/10.64898/2026.06.29.26356268v2",
+    "supplements": [
+      {
+        "label": "附录（表S3，第9页）",
+        "url": "https://www.medrxiv.org/content/medrxiv/early/2026/11/12/2026.06.29.26356268/DC1/embed/media-1.pdf"
+      }
+    ],
+    "code_url": "https://github.com/fangxin0922/Heavy-metal-exposure-and-all-cause-mortality-in-U.S.-adults",
+    "card_notes": [
+      "预印本，未经同行评审。采用2026年11月12日v2及新版29页附录，未采用旧版系数。",
+      "本报告使用主分析血铅系数；尿镉相互调整后血铅关联不再成立。"
+    ],
+    "summary_zh": "这项研究在美国成人随访队列中发现尿镉和血铅较高与较短的条件生存时间相关，其中血铅关联在调整尿镉后不再成立。个人报告只计算全血铅相对指定参考浓度的模型时间差，不计算个人预期寿命或干预获益。",
+    "summary_status": "draft"
+  },
+  "entry": {
+    "script": "scripts/personal_report.py",
+    "measurements_flag": "--measurements",
+    "measurements_header": [
+      "marker",
+      "value",
+      "unit"
+    ],
+    "age_flag": "--age",
+    "sex_flag": "--sex",
+    "out_flag": "--out",
+    "result_json": true,
+    "targets_flag": "--targets",
+    "levers_json": true
+  },
+  "inputs_status": "verified",
+  "inputs": [
+    {
+      "key": "blood_lead_ug_dl",
+      "label_zh": "全血铅",
+      "aliases": [
+        "血铅",
+        "血铅(Pb)",
+        "铅（全血）",
+        "Blood lead",
+        "Whole blood lead",
+        "Pb",
+        "BLL",
+        "LBXBPB"
+      ],
+      "unit": "ug/dL",
+      "accept": {
+        "ug/L": 0.1,
+        "ng/mL": 0.1
+      },
+      "range": [
+        0.001,
+        300
+      ],
+      "unit_required": true,
+      "required": true,
+      "from": "measurements",
+      "note_zh": "仅全血铅，不接受尿铅、头发铅或血清铅；请保留报告单位。"
+    },
+    {
+      "key": "reference_lead_ug_dl",
+      "label_zh": "参考血铅",
+      "aliases": [
+        "参考血铅浓度",
+        "血铅参考浓度",
+        "Reference blood lead",
+        "Reference lead"
+      ],
+      "unit": "ug/dL",
+      "accept": {
+        "ug/L": 0.1,
+        "ng/mL": 0.1
+      },
+      "range": [
+        0.001,
+        300
+      ],
+      "unit_required": true,
+      "required": true,
+      "from": "measurements",
+      "note_zh": "由用户指定比较基准，可用自己的另一份全血铅结果；不是检验正常上限或安全阈值，不自动代填。"
+    },
+    {
+      "key": "age",
+      "label_zh": "实足年龄",
+      "unit": "a",
+      "range": [
+        40,
+        120
+      ],
+      "required": true,
+      "from": "profile",
+      "flag": "--age",
+      "note_zh": "仅核查40岁及以上的研究人群范围，不参与血铅对比公式。"
+    },
+    {
+      "key": "sex",
+      "label_zh": "性别",
+      "required": false,
+      "from": "profile",
+      "flag": "--sex",
+      "note_zh": "可选上下文，不进入相同协变量下的浓度差公式。"
+    }
+  ],
+  "outputs": [
+    {
+      "key": "q10_i1_years",
+      "label_zh": "第10百分位条件生存时间差（插补I1）",
+      "unit": "a",
+      "note_zh": "当前浓度减参考浓度；null表示原表不可估计，未合并插补。"
+    },
+    {
+      "key": "q10_i2_years",
+      "label_zh": "第10百分位条件生存时间差（插补I2）",
+      "unit": "a",
+      "note_zh": "当前浓度减参考浓度；null表示原表不可估计，未合并插补。"
+    },
+    {
+      "key": "q10_i3_years",
+      "label_zh": "第10百分位条件生存时间差（插补I3）",
+      "unit": "a",
+      "note_zh": "当前浓度减参考浓度；null表示原表不可估计，未合并插补。"
+    },
+    {
+      "key": "q10_i4_years",
+      "label_zh": "第10百分位条件生存时间差（插补I4）",
+      "unit": "a",
+      "note_zh": "当前浓度减参考浓度；null表示原表不可估计，未合并插补。"
+    },
+    {
+      "key": "q10_i5_years",
+      "label_zh": "第10百分位条件生存时间差（插补I5）",
+      "unit": "a",
+      "note_zh": "当前浓度减参考浓度；null表示原表不可估计，未合并插补。"
+    },
+    {
+      "key": "q25_i1_years",
+      "label_zh": "第25百分位条件生存时间差（插补I1）",
+      "unit": "a",
+      "note_zh": "当前浓度减参考浓度；null表示原表不可估计，未合并插补。"
+    },
+    {
+      "key": "q25_i2_years",
+      "label_zh": "第25百分位条件生存时间差（插补I2）",
+      "unit": "a",
+      "note_zh": "当前浓度减参考浓度；null表示原表不可估计，未合并插补。"
+    },
+    {
+      "key": "q25_i3_years",
+      "label_zh": "第25百分位条件生存时间差（插补I3）",
+      "unit": "a",
+      "note_zh": "当前浓度减参考浓度；null表示原表不可估计，未合并插补。"
+    },
+    {
+      "key": "q25_i4_years",
+      "label_zh": "第25百分位条件生存时间差（插补I4）",
+      "unit": "a",
+      "note_zh": "当前浓度减参考浓度；null表示原表不可估计，未合并插补。"
+    },
+    {
+      "key": "q25_i5_years",
+      "label_zh": "第25百分位条件生存时间差（插补I5）",
+      "unit": "a",
+      "note_zh": "当前浓度减参考浓度；null表示原表不可估计，未合并插补。"
+    },
+    {
+      "key": "q50_i1_years",
+      "label_zh": "第50百分位条件生存时间差（插补I1）",
+      "unit": "a",
+      "note_zh": "当前浓度减参考浓度；null表示原表不可估计，未合并插补。"
+    },
+    {
+      "key": "q50_i2_years",
+      "label_zh": "第50百分位条件生存时间差（插补I2）",
+      "unit": "a",
+      "note_zh": "当前浓度减参考浓度；null表示原表不可估计，未合并插补。"
+    },
+    {
+      "key": "q50_i3_years",
+      "label_zh": "第50百分位条件生存时间差（插补I3）",
+      "unit": "a",
+      "note_zh": "当前浓度减参考浓度；null表示原表不可估计，未合并插补。"
+    },
+    {
+      "key": "q50_i4_years",
+      "label_zh": "第50百分位条件生存时间差（插补I4）",
+      "unit": "a",
+      "note_zh": "当前浓度减参考浓度；null表示原表不可估计，未合并插补。"
+    },
+    {
+      "key": "q50_i5_years",
+      "label_zh": "第50百分位条件生存时间差（插补I5）",
+      "unit": "a",
+      "note_zh": "当前浓度减参考浓度；null表示原表不可估计，未合并插补。"
+    }
+  ],
+  "validation": {
+    "status": "draft",
+    "gap_zh": "预印本，未经同行评审；已复现v2正文翻倍示例、表2及附录S3的13个可估计血铅结果，I1/I4中位数保持NE。核查全文、29页附录及作者代码后，仍未验证个人寿命预测、因果干预获益或重跑完整队列；完整主分析还依赖未公开研究档案。",
+    "examples": [
+      {
+        "locator": "v2 Results, Primary analysis; Table 2 and Supplementary Table S3 (p9), blood lead I1–I5",
+        "quote": "from 1.57 µg/dL to 3.14 µg/dL\nI1: −0.671 (−0.906, −0.411); p<0.0001\nI2: −0.685 (−0.923, −0.437); p<0.0001\nI3: −0.679 (−0.995, −0.354); p<0.0001\nI4: −0.706 (−0.974, −0.461); p<0.0001\nI5: −0.625 (−0.890, −0.310); p<0.0001",
+        "values": [
+          -0.671,
+          -0.685,
+          -0.679,
+          -0.706,
+          -0.625
+        ],
+        "tolerance": "1e-12年；翻倍的log2比为1，逐项复现S3印出三位小数。",
+        "test": "tests/test_manifest.py::test_printed_lead_doubling"
+      },
+      {
+        "locator": "v2 Results, Primary analysis, blood-lead doubling example",
+        "quote": "A doubling of whole-blood lead (eg, from 1.57 µg/dL to 3.14 µg/dL) was associated with 0.63–0.71 fewer years at the 10th percentile, 0.55–0.65 at the 25th percentile, and 0.61–0.63 at the median",
+        "values": [
+          0.63,
+          0.71,
+          0.55,
+          0.65,
+          0.61,
+          0.63
+        ],
+        "tolerance": "绝对差≤0.006年，正文保留两位小数、S3保留三位；正文0.55对应S3的0.555，保留两处原值而不反推或修改系数。",
+        "test": "tests/test_manifest.py::test_printed_results_ranges"
+      },
+      {
+        "locator": "Supplementary Table S3 (p9), blood lead, 25th percentile I1–I5",
+        "quote": "I1: −0.555 (−0.916, −0.140); p=0.0051\nI2: −0.607 (−0.813, −0.380); p<0.0001\nI3: −0.587 (−0.817, −0.365); p<0.0001\nI4: −0.650 (−0.895, −0.388); p<0.0001\nI5: −0.612 (−0.887, −0.268); p=0.0001",
+        "values": [
+          -0.555,
+          -0.607,
+          -0.587,
+          -0.65,
+          -0.612
+        ],
+        "tolerance": "1e-12年；正文翻倍输入对应S3三位小数系数。",
+        "test": "tests/test_manifest.py::test_printed_lead_doubling"
+      },
+      {
+        "locator": "Supplementary Table S3 (p9), blood lead, 50th percentile I1–I5",
+        "quote": "I1: NE\nI2: −0.613 (−0.815, −0.383); p<0.0001\nI3: −0.626 (−0.879, −0.281); p<0.0001\nI4: NE\nI5: −0.620 (−0.913, −0.319); p<0.0001",
+        "values": [
+          -0.613,
+          -0.626,
+          -0.62
+        ],
+        "tolerance": "1e-12年；I1/I4严格保留null，不能填零。",
+        "test": "tests/test_manifest.py::test_printed_lead_doubling"
+      }
+    ]
+  }
+}
