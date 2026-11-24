@@ -1,0 +1,369 @@
+{
+  "schema": "longevity-skill/1",
+  "name": "accelerometry-mortality-dose-response",
+  "kind": "paper",
+  "tier": "A",
+  "species": [
+    "human"
+  ],
+  "evidence": "review",
+  "domains": [
+    "身体活动",
+    "久坐",
+    "死亡风险"
+  ],
+  "blurb_zh": "按符合原文处理定义的加速度计活动或久坐日均值，查全因死亡相对危险比。",
+  "intents": [
+    "frailty_mortality"
+  ],
+  "triage": {
+    "reason_zh": "补充表5逐行公开六种加速度计暴露的剂量、HR和置信区间，可按个人同定义测量进行查表。",
+    "reviewed": true
+  },
+  "paper": {
+    "doi": "10.1136/bmj.l4570",
+    "title": "Dose-response associations between accelerometry measured physical activity and sedentary time and all cause mortality: systematic review and harmonised meta-analysis.",
+    "title_zh": "加速度计测量的活动、久坐与全因死亡的剂量反应关联",
+    "journal": "BMJ (Clinical research ed.)",
+    "year": 2019,
+    "authors": "Ekelund 等",
+    "article_url": "https://www.bmj.com/content/366/bmj.l4570",
+    "supplements": [
+      {
+        "label": "补充表1–8及图1–3（表5用于查表）",
+        "url": "https://pmc.ncbi.nlm.nih.gov/articles/instance/6699591/bin/ekeu048737.ww1.pdf"
+      }
+    ],
+    "summary_zh": "这项研究对中老年人的前瞻性队列进行系统综述和协调荟萃分析，发现更多身体活动和更少久坐与较低全因死亡风险相关。个人报告只把同定义的加速度计测量对应到已发表的相对危险比表，不计算绝对死亡概率或寿命。",
+    "summary_status": "draft",
+    "card_notes": [
+      "补表5提供离散查表值；表格点之间只展示相邻两行，不插值或外推。",
+      "参照按补表5印出值；MVPA参照与补表3不一致，久坐12小时置信上限与正文有差异，详见方法说明。",
+      "论文没有发布可直接执行的代码或样条系数；研究级汇总数据需向通讯作者索取。本技能只使用公开表格。"
+    ]
+  },
+  "entry": {
+    "script": "scripts/personal_report.py",
+    "measurements_flag": "--measurements",
+    "measurements_header": [
+      "marker",
+      "value",
+      "unit"
+    ],
+    "age_flag": "--age",
+    "sex_flag": "--sex",
+    "out_flag": "--out",
+    "result_json": true,
+    "targets_flag": "--targets",
+    "levers_json": true
+  },
+  "inputs_status": "verified",
+  "inputs": [
+    {
+      "key": "total_activity_cpm",
+      "label_zh": "总身体活动",
+      "aliases": [
+        "Total PA",
+        "Total physical activity",
+        "CPM",
+        "总活动计数"
+      ],
+      "unit": "/min",
+      "accept": {},
+      "range": [
+        75,
+        375
+      ],
+      "unit_required": true,
+      "required": false,
+      "from": "measurements",
+      "note_zh": "每次只提供六项中的一项。时长均为有效佩戴日的每日平均；范围是补表5的可查范围，不是生理正常范围。总活动/min是设备计数率，不是步频。"
+    },
+    {
+      "key": "light_min_day",
+      "label_zh": "轻强度活动",
+      "aliases": [
+        "LPA",
+        "Light physical activity",
+        "轻体力活动时间"
+      ],
+      "unit": "min",
+      "accept": {
+        "h": 60
+      },
+      "range": [
+        150,
+        450
+      ],
+      "unit_required": true,
+      "required": false,
+      "from": "measurements",
+      "note_zh": "每次只提供六项中的一项。时长均为有效佩戴日的每日平均；范围是补表5的可查范围，不是生理正常范围。总活动/min是设备计数率，不是步频。"
+    },
+    {
+      "key": "low_light_min_day",
+      "label_zh": "低轻强度活动",
+      "aliases": [
+        "Low LPA",
+        "Low light physical activity",
+        "低轻度活动时间"
+      ],
+      "unit": "min",
+      "accept": {
+        "h": 60
+      },
+      "range": [
+        100,
+        325
+      ],
+      "unit_required": true,
+      "required": false,
+      "from": "measurements",
+      "note_zh": "每次只提供六项中的一项。时长均为有效佩戴日的每日平均；范围是补表5的可查范围，不是生理正常范围。总活动/min是设备计数率，不是步频。"
+    },
+    {
+      "key": "high_light_min_day",
+      "label_zh": "高轻强度活动",
+      "aliases": [
+        "High LPA",
+        "High light physical activity",
+        "高轻度活动时间"
+      ],
+      "unit": "min",
+      "accept": {
+        "h": 60
+      },
+      "range": [
+        10,
+        120
+      ],
+      "unit_required": true,
+      "required": false,
+      "from": "measurements",
+      "note_zh": "每次只提供六项中的一项。时长均为有效佩戴日的每日平均；范围是补表5的可查范围，不是生理正常范围。总活动/min是设备计数率，不是步频。"
+    },
+    {
+      "key": "mvpa_min_day",
+      "label_zh": "中高强度活动",
+      "aliases": [
+        "MVPA",
+        "Moderate-to-vigorous physical activity",
+        "中高强度活动时间"
+      ],
+      "unit": "min",
+      "accept": {
+        "h": 60
+      },
+      "range": [
+        0,
+        24
+      ],
+      "unit_required": true,
+      "required": false,
+      "from": "measurements",
+      "note_zh": "每次只提供六项中的一项。时长均为有效佩戴日的每日平均；范围是补表5的可查范围，不是生理正常范围。总活动/min是设备计数率，不是步频。"
+    },
+    {
+      "key": "sedentary_h_day",
+      "label_zh": "久坐时间",
+      "aliases": [
+        "Sedentary",
+        "Sedentary time",
+        "每日久坐时间"
+      ],
+      "unit": "h",
+      "accept": {
+        "min": 0.016666666666666666
+      },
+      "range": [
+        6,
+        12
+      ],
+      "unit_required": true,
+      "required": false,
+      "from": "measurements",
+      "note_zh": "每次只提供六项中的一项。时长均为有效佩戴日的每日平均；范围是补表5的可查范围，不是生理正常范围。总活动/min是设备计数率，不是步频。"
+    },
+    {
+      "key": "age",
+      "label_zh": "年龄",
+      "aliases": [
+        "Age",
+        "实足年龄"
+      ],
+      "unit": "a",
+      "range": [
+        40,
+        120
+      ],
+      "required": true,
+      "from": "argument",
+      "flag": "--age",
+      "note_zh": "原文纳入40岁及以上；120是输入合理性上限，不是研究年龄上限。"
+    },
+    {
+      "key": "sex",
+      "label_zh": "性别",
+      "required": false,
+      "from": "argument",
+      "flag": "--sex",
+      "note_zh": "可填male/female/男/女；本表不是性别特异模型。"
+    },
+    {
+      "key": "device",
+      "label_zh": "设备",
+      "required": true,
+      "from": "argument",
+      "flag": "--device",
+      "note_zh": "actigraph或actical；Actical仅适用MVPA，均为躯干部位佩戴。"
+    },
+    {
+      "key": "protocol",
+      "label_zh": "已核实的处理协议",
+      "required": true,
+      "from": "argument",
+      "flag": "--protocol",
+      "note_zh": "仅在确认SKILL.md中全部处理要求后填vertical-60s-harmonised，不可自动假定。"
+    }
+  ],
+  "outputs": [
+    {
+      "key": "metric",
+      "label_zh": "本次查表指标"
+    },
+    {
+      "key": "exposure",
+      "label_zh": "输入的每日平均暴露"
+    },
+    {
+      "key": "exposure_unit",
+      "label_zh": "本次暴露单位"
+    },
+    {
+      "key": "lookup_mode",
+      "label_zh": "exact为表格点，bracket为相邻两行"
+    },
+    {
+      "key": "hazard_ratio",
+      "label_zh": "输入点的印出HR；非表格点为空",
+      "unit": "1"
+    },
+    {
+      "key": "ci_low",
+      "label_zh": "输入点HR置信下限",
+      "unit": "1"
+    },
+    {
+      "key": "ci_high",
+      "label_zh": "输入点HR置信上限",
+      "unit": "1"
+    },
+    {
+      "key": "reference_dose",
+      "label_zh": "该列印出参照剂量"
+    },
+    {
+      "key": "lower_dose",
+      "label_zh": "较低暴露行剂量",
+      "note_zh": "lower/upper指暴露大小，不是HR排序；剂量单位见exposure_unit。"
+    },
+    {
+      "key": "lower_hr",
+      "label_zh": "较低暴露行HR",
+      "unit": "1",
+      "note_zh": "lower/upper指暴露大小，不是HR排序；剂量单位见exposure_unit。"
+    },
+    {
+      "key": "lower_ci_low",
+      "label_zh": "较低暴露行HR置信下限",
+      "unit": "1",
+      "note_zh": "lower/upper指暴露大小，不是HR排序；剂量单位见exposure_unit。"
+    },
+    {
+      "key": "lower_ci_high",
+      "label_zh": "较低暴露行HR置信上限",
+      "unit": "1",
+      "note_zh": "lower/upper指暴露大小，不是HR排序；剂量单位见exposure_unit。"
+    },
+    {
+      "key": "upper_dose",
+      "label_zh": "较高暴露行剂量",
+      "note_zh": "lower/upper指暴露大小，不是HR排序；剂量单位见exposure_unit。"
+    },
+    {
+      "key": "upper_hr",
+      "label_zh": "较高暴露行HR",
+      "unit": "1",
+      "note_zh": "lower/upper指暴露大小，不是HR排序；剂量单位见exposure_unit。"
+    },
+    {
+      "key": "upper_ci_low",
+      "label_zh": "较高暴露行HR置信下限",
+      "unit": "1",
+      "note_zh": "lower/upper指暴露大小，不是HR排序；剂量单位见exposure_unit。"
+    },
+    {
+      "key": "upper_ci_high",
+      "label_zh": "较高暴露行HR置信上限",
+      "unit": "1",
+      "note_zh": "lower/upper指暴露大小，不是HR排序；剂量单位见exposure_unit。"
+    }
+  ],
+  "data_files": [
+    {
+      "path": "data/dose_response.csv",
+      "source_url": "https://pmc.ncbi.nlm.nih.gov/articles/instance/6699591/bin/ekeu048737.ww1.pdf",
+      "license": "CC BY-NC 4.0 (source article); numerical table transcription with attribution",
+      "redistributable": "yes",
+      "sha256": "32be36a444232cb13490750bd32f19ed4b419f1f3cc027ced9fd5b20dd771e92"
+    }
+  ],
+  "validation": {
+    "status": "reproduced",
+    "examples": [
+      {
+        "locator": "Supplementary Table 5, PDF page 7, Sedentary (h/d), HR (95% CI)",
+        "quote": "10 1.48 (1.22, 1.79)\n12 2.92 (2.24, 3.82)",
+        "values": [
+          10,
+          1.48,
+          1.22,
+          1.79,
+          12,
+          2.92,
+          2.24,
+          3.82
+        ],
+        "tolerance": "逐字抄录表格单元格，精确相等；不重拟合曲线，不更改印出小数。",
+        "test": "tests/test_manifest.py::test_printed_sedentary_examples"
+      },
+      {
+        "locator": "Supplementary Table 5, PDF page 7, Total PA / LPA / Low LPA / High LPA / MVPA columns",
+        "quote": "300 0.34 (0.27, 0.43)\n375 0.48 (0.38, 0.63)\n325 0.45 (0.34, 0.60)\n80 0.40 (0.31, 0.52)\n24 0.39 (0.26, 0.59)",
+        "values": [
+          300,
+          0.34,
+          0.27,
+          0.43,
+          375,
+          0.48,
+          0.38,
+          0.63,
+          325,
+          0.45,
+          0.6,
+          80,
+          0.4,
+          0.31,
+          0.52,
+          24,
+          0.39,
+          0.26,
+          0.59
+        ],
+        "tolerance": "精确相等，查表直接复现印出值。",
+        "test": "tests/test_manifest.py::test_printed_activity_examples"
+      }
+    ]
+  }
+}
