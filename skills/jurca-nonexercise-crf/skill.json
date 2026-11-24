@@ -1,0 +1,181 @@
+{
+  "schema": "longevity-skill/1",
+  "name": "jurca-nonexercise-crf",
+  "kind": "paper",
+  "tier": "A",
+  "species": [
+    "human"
+  ],
+  "evidence": "cross_sectional",
+  "domains": [
+    "运动与心肺适能"
+  ],
+  "blurb_zh": "用年龄、性别、BMI、静息心率和日常活动等级估计心肺适能。",
+  "intents": [
+    "lab_meaning"
+  ],
+  "triage": {
+    "reason_zh": "人体研究的NASA非运动测试计算表公开全部回归系数，可计算个人MET；正文示例无法复现，保留暂定状态。",
+    "reviewed": false
+  },
+  "paper": {
+    "doi": "10.1016/j.amepre.2005.06.004",
+    "title": "Assessing cardiorespiratory fitness without performing exercise testing.",
+    "title_zh": "无需运动测试估计心肺适能",
+    "journal": "American Journal of Preventive Medicine",
+    "year": 2005,
+    "authors": "Jurca 等",
+    "article_url": "https://doi.org/10.1016/j.amepre.2005.06.004",
+    "supplements": [],
+    "card_notes": [
+      "采用表5的NASA模型及图1计算表；不切换为ACLS或ADNFS模型。",
+      "公开全文：https://www.unm.edu/~lkravitz/Sports%20Physiology/Jurca.pdf",
+      "全文未指向独立补充文件或代码仓库。出版商动态全文页访问受限；已逐页读取大学公开的期刊版全文及图1。",
+      "暂定：正文计算示例与所印系数不一致，详见技能的验证说明。"
+    ],
+    "summary_zh": "这项研究对成人既有数据进行横断面分析，发现年龄、性别、体质指数、静息心率和自报活动水平可用于估计心肺适能，并在不同人群间检验了模型。个人报告只计算非运动测试心肺适能估计及用户目标下的公式变化，不计算死亡风险或寿命。",
+    "summary_status": "draft"
+  },
+  "entry": {
+    "script": "scripts/personal_report.py",
+    "measurements_flag": "--measurements",
+    "measurements_header": [
+      "marker",
+      "value",
+      "unit"
+    ],
+    "age_flag": "--age",
+    "sex_flag": "--sex",
+    "out_flag": "--out",
+    "result_json": true,
+    "targets_flag": "--targets",
+    "levers_json": true
+  },
+  "population": {
+    "age_years": [
+      20,
+      70
+    ],
+    "note_zh": "NASA推导样本以非西班牙裔白人为主，未使用影响心率的药物，运动心电图无异常；非诊断或疗效模型。"
+  },
+  "inputs_status": "draft",
+  "inputs": [
+    {
+      "key": "age",
+      "label_zh": "年龄",
+      "aliases": [
+        "年龄（岁）",
+        "Age",
+        "age_years"
+      ],
+      "unit": "a",
+      "accept": {},
+      "range": [
+        20,
+        70
+      ],
+      "required": true,
+      "from": "argument",
+      "flag": "--age",
+      "note_zh": "仅在论文20–70岁范围内计算。"
+    },
+    {
+      "key": "sex",
+      "label_zh": "性别编码",
+      "aliases": [
+        "性别",
+        "Gender",
+        "Sex"
+      ],
+      "unit": "1",
+      "accept": {},
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "argument",
+      "flag": "--sex",
+      "note_zh": "仅接受论文的female/女/0或male/男/1编码，不推断未提供的性别。"
+    },
+    {
+      "key": "bmi_kg_m2",
+      "label_zh": "体质指数",
+      "aliases": [
+        "BMI",
+        "body mass index",
+        "体重指数",
+        "身体质量指数"
+      ],
+      "unit": "kg/m^2",
+      "accept": {
+        "kg/m2": 1
+      },
+      "range": [
+        10,
+        70
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "BMI=体重kg/身高m的平方；范围是输入错误检查，不是健康切点或验证范围。"
+    },
+    {
+      "key": "resting_hr_bpm",
+      "label_zh": "静息心率",
+      "aliases": [
+        "RHR",
+        "resting HR",
+        "resting heart rate",
+        "安静心率"
+      ],
+      "unit": "/min",
+      "accept": {
+        "bpm": 1,
+        "次/分钟": 1
+      },
+      "range": [
+        25,
+        150
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "平卧或半卧休息5分钟后的静息测量；不使用运动心率或全天平均心率。范围是输入错误检查。"
+    },
+    {
+      "key": "activity_level",
+      "label_zh": "活动等级",
+      "aliases": [
+        "physical activity level",
+        "SR-PA level",
+        "日常活动等级"
+      ],
+      "unit": "score",
+      "accept": {},
+      "range": [
+        1,
+        5
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "图1的1–5整数档位；不是SR-PA-0至4编码，不是原NASA八级量表，不直接填MET分数。"
+    }
+  ],
+  "outputs": [
+    {
+      "key": "estimated_crf_met",
+      "label_zh": "估计最大心肺适能",
+      "unit": "MET",
+      "note_zh": "NASA非运动测试回归估计，保留原始线性输出。"
+    },
+    {
+      "key": "activity_score_met",
+      "label_zh": "活动等级对应的加分",
+      "unit": "MET",
+      "note_zh": "图1活动分值，仅用于该回归模型。"
+    }
+  ],
+  "validation": {
+    "status": "draft",
+    "gap_zh": "已逐页核查期刊全文表1–6、图1及第191页示例。45岁男性、193磅/68英寸、静息心率72、Level 2，按图1 BMI换算与表5系数约得9.51 MET；采用所印87.7 kg/172 cm约得9.46 MET，均不能复现所印9.02 MET。没有可用独立示例支持反推系数，因此不改常数；tests/test_manifest.py保留两种输入的严格预期失败测试。"
+  }
+}
