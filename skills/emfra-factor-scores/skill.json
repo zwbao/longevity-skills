@@ -1,0 +1,325 @@
+{
+  "schema": "longevity-skill/1",
+  "name": "emfra-factor-scores",
+  "kind": "paper",
+  "tier": "A",
+  "species": [
+    "human"
+  ],
+  "evidence": "cross_sectional",
+  "domains": [
+    "功能与衰弱",
+    "心理与认知"
+  ],
+  "blurb_zh": "用已评定的 EMFRA 九项分数分别计算老年自主性和心理困扰分数。",
+  "intents": [
+    "frailty_mortality"
+  ],
+  "triage": {
+    "reason_zh": "人体研究公开九项条目的双因子权重与反向计分规则，可计算个人两个独立分数；预印本保留草稿状态。",
+    "reviewed": false
+  },
+  "paper": {
+    "doi": "10.64898/2026.11.11.26367642",
+    "title": "Psychometric analysis of the Evaluation of Multidimensional Functioning and Risks in Aging (EMFRA) scale: reliability, structural validity, and concurrent validity.",
+    "title_zh": "EMFRA 老年多维功能与风险量表的信度和效度分析",
+    "journal": "medRxiv",
+    "year": 2026,
+    "authors": "Fierro-Marrero 等",
+    "article_url": "https://www.medrxiv.org/content/10.64898/2026.11.11.26367642v2",
+    "supplements": [
+      {
+        "label": "R Quarto Script：表64权重与表65理论端点",
+        "url": "https://www.medrxiv.org/content/medrxiv/early/2026/11/16/2026.11.11.26367642/DC1/embed/media-1.pdf?download=true"
+      },
+      {
+        "label": "Database - Age Eliminated（公开评分数据）",
+        "url": "https://www.medrxiv.org/content/medrxiv/early/2026/11/16/2026.11.11.26367642/DC2/embed/media-2.xlsx?download=true"
+      }
+    ],
+    "code_url": "https://www.medrxiv.org/content/medrxiv/early/2026/11/16/2026.11.11.26367642/DC1/embed/media-1.pdf?download=true",
+    "summary_zh": "这项研究在西班牙老年人中探索了多维功能量表的结构，发现自主性与心理困扰适合分别描述，但测量性能仍需进一步验证。个人报告只按已评定的条目分数计算自主性和心理困扰两个分数，不计算总分、诊断或个人变化结论。",
+    "summary_status": "draft",
+    "card_notes": [
+      "预印本，未经同行评审；采用 medRxiv v2（2026-11-16）。",
+      "复现补充表65的理论评分端点，不等于复现真实个体案例或完成外部临床验证。",
+      "输入是原版 EMFRA 已评定的条目分数；中文条目名称仅作说明，不构成经过验证的中文版量表。"
+    ]
+  },
+  "entry": {
+    "script": "scripts/personal_report.py",
+    "measurements_flag": "--measurements",
+    "measurements_header": [
+      "marker",
+      "value",
+      "unit"
+    ],
+    "age_flag": "--age",
+    "sex_flag": "--sex",
+    "out_flag": "--out",
+    "result_json": true
+  },
+  "population": {
+    "age_years": [
+      65,
+      99
+    ],
+    "note_zh": "西班牙马德里社区、日间照护中心及养老机构；纳入年龄至少65岁、无医生确诊痴呆者，实际样本65–99岁；无外部验证。"
+  },
+  "inputs_status": "verified",
+  "inputs": [
+    {
+      "key": "emfra_item1_score",
+      "label_zh": "EMFRA 第1项：握力评分",
+      "aliases": [
+        "EMFRA_item1_trait",
+        "EMFRA 握力评分",
+        "Item 1. Hand-grip strength",
+        "EMFRA Grip strength",
+        "HGS"
+      ],
+      "unit": "score",
+      "accept": {},
+      "range": [
+        0,
+        2
+      ],
+      "unit_required": true,
+      "required": true,
+      "from": "measurements",
+      "note_zh": "只接受原版 EMFRA 已评定、尚未反向计分的整数条目分数 0、1、2；不把原始测量值或自由描述换成分数。"
+    },
+    {
+      "key": "emfra_item2_score",
+      "label_zh": "EMFRA 第2项：步速评分",
+      "aliases": [
+        "EMFRA_item2_trait",
+        "EMFRA 步速评分",
+        "Item 2. Gait speed",
+        "EMFRA Gait speed",
+        "GS"
+      ],
+      "unit": "score",
+      "accept": {},
+      "range": [
+        0,
+        2
+      ],
+      "unit_required": true,
+      "required": true,
+      "from": "measurements",
+      "note_zh": "只接受原版 EMFRA 已评定、尚未反向计分的整数条目分数 0、1、2；不把原始测量值或自由描述换成分数。"
+    },
+    {
+      "key": "emfra_item5_score",
+      "label_zh": "EMFRA 第5项：疲劳评分",
+      "aliases": [
+        "EMFRA_item5_trait",
+        "EMFRA 疲劳评分",
+        "Item 5. Fatigue",
+        "EMFRA Fatigue",
+        "FAT"
+      ],
+      "unit": "score",
+      "accept": {},
+      "range": [
+        0,
+        2
+      ],
+      "unit_required": true,
+      "required": true,
+      "from": "measurements",
+      "note_zh": "只接受原版 EMFRA 已评定、尚未反向计分的整数条目分数 0、1、2；不把原始测量值或自由描述换成分数。"
+    },
+    {
+      "key": "emfra_item6_score",
+      "label_zh": "EMFRA 第6项：钱币算术评分",
+      "aliases": [
+        "EMFRA_item6_trait",
+        "EMFRA 钱币算术评分",
+        "Item 6. Arithmetics for money",
+        "EMFRA Arithmetic money",
+        "AM"
+      ],
+      "unit": "score",
+      "accept": {},
+      "range": [
+        0,
+        2
+      ],
+      "unit_required": true,
+      "required": true,
+      "from": "measurements",
+      "note_zh": "只接受原版 EMFRA 已评定、尚未反向计分的整数条目分数 0、1、2；不把原始测量值或自由描述换成分数。"
+    },
+    {
+      "key": "emfra_item7_score",
+      "label_zh": "EMFRA 第7项：注意与抑制评分",
+      "aliases": [
+        "EMFRA_item7_trait",
+        "EMFRA 注意与抑制评分",
+        "Item 7. Attention-inhibition",
+        "EMFRA Atten-Inhib",
+        "AttIn"
+      ],
+      "unit": "score",
+      "accept": {},
+      "range": [
+        0,
+        2
+      ],
+      "unit_required": true,
+      "required": true,
+      "from": "measurements",
+      "note_zh": "只接受原版 EMFRA 已评定、尚未反向计分的整数条目分数 0、1、2；不把原始测量值或自由描述换成分数。"
+    },
+    {
+      "key": "emfra_item11_score",
+      "label_zh": "EMFRA 第11项：孤独感评分",
+      "aliases": [
+        "EMFRA_item11_trait",
+        "EMFRA 孤独感评分",
+        "Item 11. Loneliness",
+        "EMFRA Loneliness",
+        "LON"
+      ],
+      "unit": "score",
+      "accept": {},
+      "range": [
+        0,
+        2
+      ],
+      "unit_required": true,
+      "required": true,
+      "from": "measurements",
+      "note_zh": "只接受原版 EMFRA 已评定、尚未反向计分的整数条目分数 0、1、2；不把原始测量值或自由描述换成分数。"
+    },
+    {
+      "key": "emfra_item12_score",
+      "label_zh": "EMFRA 第12项：悲伤评分",
+      "aliases": [
+        "EMFRA_item12_trait",
+        "EMFRA 悲伤评分",
+        "Item 12. Sadness",
+        "EMFRA Sadness",
+        "SAD"
+      ],
+      "unit": "score",
+      "accept": {},
+      "range": [
+        0,
+        2
+      ],
+      "unit_required": true,
+      "required": true,
+      "from": "measurements",
+      "note_zh": "只接受原版 EMFRA 已评定、尚未反向计分的整数条目分数 0、1、2；不把原始测量值或自由描述换成分数。"
+    },
+    {
+      "key": "emfra_item15_score",
+      "label_zh": "EMFRA 第15项：生活满意度评分",
+      "aliases": [
+        "EMFRA_item15_trait",
+        "EMFRA 生活满意度评分",
+        "Item 15. Life satisfaction",
+        "EMFRA Life satisf.",
+        "LS"
+      ],
+      "unit": "score",
+      "accept": {},
+      "range": [
+        0,
+        2
+      ],
+      "unit_required": true,
+      "required": true,
+      "from": "measurements",
+      "note_zh": "只接受原版 EMFRA 已评定、尚未反向计分的整数条目分数 0、1、2；不把原始测量值或自由描述换成分数。"
+    },
+    {
+      "key": "emfra_item19_score",
+      "label_zh": "EMFRA 第19项：社交娱乐活动评分",
+      "aliases": [
+        "EMFRA_item19_trait",
+        "EMFRA 社交娱乐活动评分",
+        "Item 19. Social-ludic activities",
+        "EMFRA Socio-Ludic act.",
+        "SLA"
+      ],
+      "unit": "score",
+      "accept": {},
+      "range": [
+        0,
+        2
+      ],
+      "unit_required": true,
+      "required": true,
+      "from": "measurements",
+      "note_zh": "只接受原版 EMFRA 已评定、尚未反向计分的整数条目分数 0、1、2；不把原始测量值或自由描述换成分数。"
+    },
+    {
+      "key": "age",
+      "label_zh": "实足年龄",
+      "aliases": [
+        "年龄",
+        "Age"
+      ],
+      "unit": "a",
+      "range": [
+        65,
+        120
+      ],
+      "required": true,
+      "from": "profile",
+      "flag": "--age",
+      "note_zh": "仅核对人群，不进入公式；研究实际年龄为65–99岁，120岁是录入合理性上限。"
+    },
+    {
+      "key": "sex",
+      "label_zh": "性别",
+      "required": false,
+      "from": "profile",
+      "flag": "--sex",
+      "note_zh": "可选背景，不进入因子公式。"
+    },
+    {
+      "key": "dementia_diagnosis",
+      "label_zh": "医生确诊痴呆情况",
+      "required": true,
+      "from": "argument",
+      "flag": "--dementia-diagnosis",
+      "note_zh": "no=没有医生确诊痴呆；yes=已有诊断；未知不能当作no。yes时不计算，不通过本技能诊断痴呆。"
+    }
+  ],
+  "outputs": [
+    {
+      "key": "autonomy_score",
+      "label_zh": "EMFRA 自主性分数",
+      "unit": "score",
+      "note_zh": "独立因子，越高表示该因子所描述的自主性越强；保留两位小数，不设分档。"
+    },
+    {
+      "key": "psychological_distress_score",
+      "label_zh": "EMFRA 心理困扰分数",
+      "unit": "score",
+      "note_zh": "独立因子，越高表示该因子所描述的困扰越多；保留两位小数，不设分档。"
+    }
+  ],
+  "validation": {
+    "status": "draft",
+    "gap_zh": "预印本，未经同行评审；已用全文第3.6–3.7节及补充R脚本第5.3–6节核对全部权重，并复现表65定义的理论最小值和最大值。已检查全文、R Quarto Script全部章节及Database - Age Eliminated数据表；未找到同一受试者九项输入及其印出的因子得分成对示例，未重跑整个人群分析或进行外部验证。",
+    "examples": [
+      {
+        "locator": "Supplementary R Quarto Script, section 6, Table 65 (factor-specific recoded endpoint inputs)",
+        "quote": "Factor Factor name Minimum possible score Maximum possible score MR1 Autonomy 0 2.696 MR2 Psychological distress 0 2.732",
+        "values": [
+          0,
+          2.696,
+          2.732
+        ],
+        "tolerance": "1e-12：使用表64印出的三位小数权重；第6节定义每项在因子特定反向计分后全为0或全为2的端点，结果精确复现表65。个人报告另按正文要求显示两位小数。",
+        "test": "tests/test_manifest.py::test_paper_table65_endpoints"
+      }
+    ]
+  }
+}
