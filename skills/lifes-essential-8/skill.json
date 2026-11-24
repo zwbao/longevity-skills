@@ -1,0 +1,470 @@
+{
+  "schema": "longevity-skill/1",
+  "name": "lifes-essential-8",
+  "kind": "paper",
+  "tier": "A",
+  "species": [
+    "human"
+  ],
+  "evidence": "consensus",
+  "domains": [
+    "心血管健康"
+  ],
+  "blurb_zh": "用饮食、运动、吸烟、睡眠和体检数据计算成人心血管健康八项评分。",
+  "intents": [
+    "lab_meaning",
+    "before_after",
+    "wearable_sleep",
+    "body_fat_waist"
+  ],
+  "triage": {
+    "reason_zh": "成人LE8八项切点、修正及等权均值均已印出，附录提供可逐项复现的个人案例。",
+    "reviewed": false
+  },
+  "paper": {
+    "doi": "10.1161/cir.0000000000001078",
+    "title": "Life's Essential 8: Updating and Enhancing the American Heart Association's Construct of Cardiovascular Health: A Presidential Advisory From the American Heart Association.",
+    "title_zh": "生命必需八要素：更新心血管健康评价框架",
+    "journal": "Circulation",
+    "year": 2022,
+    "authors": "Lloyd-Jones 等",
+    "article_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10503546/",
+    "supplements": [
+      {
+        "label": "Supplemental Material：Appendix 1–3（LWW出版商托管的原始附件镜像）",
+        "url": "https://cdn-links.lww.com/permalink/jcn/a/jcn_00_00_2022_08_26_hayman_jcn-d-22-00197_sdc1.pdf"
+      }
+    ],
+    "card_notes": [
+      "专家咨询文件，非新的人群预测模型；本实现限成人，饮食采用已完成的16项MEPA总分。",
+      "Table 1及其实施注释提供评分规则，Supplemental Appendix 3提供验证案例；未发布专用计算代码。"
+    ],
+    "summary_zh": "这项研究由美国心脏协会专家组整合人体心血管健康证据，更新饮食、活动、尼古丁暴露、睡眠和常规体检指标的评价方法，以支持个人健康状态的持续监测。个人报告只计算成人心血管健康各项得分、综合分及输入目标后的分数差，不计算患病概率或寿命。",
+    "summary_status": "draft"
+  },
+  "entry": {
+    "script": "scripts/personal_report.py",
+    "measurements_flag": "--measurements",
+    "measurements_header": [
+      "marker",
+      "value",
+      "unit"
+    ],
+    "age_flag": "--age",
+    "sex_flag": "--sex",
+    "out_flag": "--out",
+    "result_json": true,
+    "targets_flag": "--targets",
+    "levers_json": true
+  },
+  "inputs_status": "verified",
+  "inputs": [
+    {
+      "key": "mepa_score",
+      "label_zh": "成人MEPA总分",
+      "unit": "score",
+      "range": [
+        0,
+        16
+      ],
+      "aliases": [
+        "MEPA",
+        "MEPA score"
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "已完成的成人16项MEPA整数总分；不是14项MEDAS，也不是LE8饮食分。"
+    },
+    {
+      "key": "moderate_min_week",
+      "label_zh": "每周中等强度活动分钟数",
+      "unit": "min",
+      "range": [
+        0,
+        10080
+      ],
+      "aliases": [
+        "moderate activity minutes per week"
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "填写过去一周该强度的整数分钟数，两种强度不能重复计数。单位 min 表示一周累计。",
+      "accept": {
+        "h": 60
+      }
+    },
+    {
+      "key": "vigorous_min_week",
+      "label_zh": "每周高强度活动分钟数",
+      "unit": "min",
+      "range": [
+        0,
+        10080
+      ],
+      "aliases": [
+        "vigorous activity minutes per week"
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "填写过去一周该强度的整数分钟数，两种强度不能重复计数。单位 min 表示一周累计。",
+      "accept": {
+        "h": 60
+      }
+    },
+    {
+      "key": "smoking_status",
+      "label_zh": "吸烟状态编码",
+      "unit": "1",
+      "range": [
+        0,
+        4
+      ],
+      "aliases": [
+        "smoking status"
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "0=从不吸烟，1=戒烟至少5年，2=戒烟1至不足5年，3=戒烟不足1年，4=当前吸烟。"
+    },
+    {
+      "key": "inhaled_nicotine",
+      "label_zh": "当前使用吸入式尼古丁产品",
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "aliases": [
+        "vaping",
+        "电子烟"
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "0=否，1=是；不能把未知填成0。"
+    },
+    {
+      "key": "indoor_smoke",
+      "label_zh": "家中室内二手烟暴露",
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "aliases": [
+        "secondhand smoke"
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "0=否，1=是；不能把未知填成0。"
+    },
+    {
+      "key": "sleep_h",
+      "label_zh": "平均每晚睡眠时长",
+      "unit": "h",
+      "range": [
+        0,
+        24
+      ],
+      "aliases": [
+        "sleep duration",
+        "睡眠小时数"
+      ],
+      "required": true,
+      "from": "measurements",
+      "accept": {
+        "min": 0.016666666666666666
+      }
+    },
+    {
+      "key": "bmi_kg_m2",
+      "label_zh": "体质指数",
+      "unit": "kg/m^2",
+      "range": [
+        10,
+        100
+      ],
+      "aliases": [
+        "BMI",
+        "body mass index",
+        "体重指数"
+      ],
+      "required": true,
+      "from": "measurements"
+    },
+    {
+      "key": "bmi_asian_scale",
+      "label_zh": "采用亚洲太平洋祖源BMI尺度",
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "aliases": [
+        "Asian BMI scale"
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "0=否，1=是；不能把未知填成0。"
+    },
+    {
+      "key": "non_hdl_mg_dl",
+      "label_zh": "非高密度脂蛋白胆固醇",
+      "unit": "mg/dL",
+      "range": [
+        10,
+        1000
+      ],
+      "aliases": [
+        "non-HDL-C",
+        "non-HDL cholesterol",
+        "非HDL胆固醇"
+      ],
+      "required": true,
+      "from": "measurements",
+      "accept": {
+        "mmol/L": 38.665
+      },
+      "molar_mass": 386.65,
+      "unit_required": true
+    },
+    {
+      "key": "lipid_treated",
+      "label_zh": "血脂为药物治疗后测量值",
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "aliases": [
+        "lipid treatment"
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "0=否，1=是；不能把未知填成0。"
+    },
+    {
+      "key": "diabetes",
+      "label_zh": "已确诊糖尿病史",
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "aliases": [
+        "diabetes history"
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "0=否，1=是；不能把未知填成0。"
+    },
+    {
+      "key": "fasting_glucose_mg_dl",
+      "label_zh": "空腹血糖",
+      "unit": "mg/dL",
+      "range": [
+        20,
+        1000
+      ],
+      "aliases": [
+        "FPG",
+        "FBG",
+        "fasting blood glucose",
+        "空腹血葡萄糖"
+      ],
+      "required": false,
+      "from": "measurements",
+      "accept": {
+        "mmol/L": 18.016
+      },
+      "molar_mass": 180.16,
+      "unit_required": true
+    },
+    {
+      "key": "hba1c_pct",
+      "label_zh": "糖化血红蛋白",
+      "unit": "%",
+      "range": [
+        2,
+        25
+      ],
+      "aliases": [
+        "HbA1c",
+        "hemoglobin A1c"
+      ],
+      "required": false,
+      "from": "measurements"
+    },
+    {
+      "key": "sbp_mmhg",
+      "label_zh": "收缩压",
+      "unit": "mmHg",
+      "range": [
+        50,
+        300
+      ],
+      "aliases": [
+        "SBP",
+        "systolic blood pressure"
+      ],
+      "required": true,
+      "from": "measurements",
+      "accept": {
+        "kPa": 7.500617
+      }
+    },
+    {
+      "key": "dbp_mmhg",
+      "label_zh": "舒张压",
+      "unit": "mmHg",
+      "range": [
+        20,
+        200
+      ],
+      "aliases": [
+        "DBP",
+        "diastolic blood pressure"
+      ],
+      "required": true,
+      "from": "measurements",
+      "accept": {
+        "kPa": 7.500617
+      }
+    },
+    {
+      "key": "bp_treated",
+      "label_zh": "血压为药物治疗后测量值",
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "aliases": [
+        "antihypertensive treatment"
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "0=否，1=是；不能把未知填成0。"
+    },
+    {
+      "key": "sleep_apnea_penalty",
+      "label_zh": "医生决定应用睡眠呼吸暂停扣分",
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "aliases": [
+        "sleep apnea penalty"
+      ],
+      "required": false,
+      "from": "measurements",
+      "note_zh": "仅填写医生已明确决定的酌情扣分；省略表示本次不应用该可选修正，不表示不存在相关疾病。"
+    },
+    {
+      "key": "prediabetes_penalty",
+      "label_zh": "医生决定应用治疗后正常血糖的糖尿病前期扣分",
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "aliases": [
+        "prediabetes penalty"
+      ],
+      "required": false,
+      "from": "measurements",
+      "note_zh": "仅填写医生已明确决定的酌情扣分；省略表示本次不应用该可选修正，不表示不存在相关疾病。"
+    },
+    {
+      "key": "age",
+      "label_zh": "实足年龄",
+      "unit": "a",
+      "range": [
+        20,
+        120
+      ],
+      "required": true,
+      "from": "profile",
+      "flag": "--age"
+    },
+    {
+      "key": "sex",
+      "label_zh": "性别",
+      "required": false,
+      "from": "profile",
+      "flag": "--sex",
+      "note_zh": "不进入已计分MEPA和成人LE8计算。"
+    }
+  ],
+  "outputs": [
+    {
+      "key": "diet_score",
+      "label_zh": "饮食得分",
+      "unit": "score"
+    },
+    {
+      "key": "activity_score",
+      "label_zh": "体力活动得分",
+      "unit": "score"
+    },
+    {
+      "key": "nicotine_score",
+      "label_zh": "尼古丁暴露得分",
+      "unit": "score"
+    },
+    {
+      "key": "sleep_score",
+      "label_zh": "睡眠得分",
+      "unit": "score"
+    },
+    {
+      "key": "bmi_score",
+      "label_zh": "体质指数得分",
+      "unit": "score"
+    },
+    {
+      "key": "lipids_score",
+      "label_zh": "血脂得分",
+      "unit": "score"
+    },
+    {
+      "key": "glucose_score",
+      "label_zh": "血糖得分",
+      "unit": "score"
+    },
+    {
+      "key": "bp_score",
+      "label_zh": "血压得分",
+      "unit": "score"
+    },
+    {
+      "key": "score_sum",
+      "label_zh": "八项分数之和",
+      "unit": "score"
+    },
+    {
+      "key": "le8_score",
+      "label_zh": "LE8综合得分",
+      "unit": "score"
+    },
+    {
+      "key": "cvh_category",
+      "label_zh": "心血管健康分档"
+    }
+  ],
+  "validation": {
+    "status": "reproduced",
+    "examples": [
+      {
+        "locator": "Supplemental Appendix 3, Example 4, page 14 (Ms. D)",
+        "quote": "Sum: 720\nMs. D’s Total CVH Score = 720/8 = 90 out of 100 (High CVH)",
+        "values": [
+          720,
+          90
+        ],
+        "tolerance": "Exact: the printed sum divided by eight equals the printed total, with no rounding. Inputs are transcribed from Example 4 in the named test.",
+        "test": "tests/test_manifest.py::test_appendix3_example4"
+      }
+    ]
+  }
+}
