@@ -165,6 +165,7 @@ python3 -m tools.lsk test --changed origin/main   # 只测相对 main 改动过�
 - `skills/cerebrospinal-fluid-molecular-subtypes/` — 脑脊液蛋白。分型载荷不在已读材料里时，报告停在蛋白读出。（名单类）
 - `skills/dissecting-genetic-proteomic-risk/` — 谵妄相关蛋白，以及两个 APOE 位点的基因型。（名单类）
 - `skills/hippocampal-neurogenesis-adulthood-ageing/` — 核对年龄和情景记忆比较是否合乎“记忆超常高龄者”的入组写法；不评估大脑。（名单类）
+- `skills/itfnat-face-name-mci-cutoff/` — 把自己做过的意大利人脸-姓名联想记忆测验（ItFNAT）延迟自由回忆校正分和 MoCA 校正分对到论文的轻度认知障碍切点，给出切点哪一侧和对应的似然比。
 - `skills/neurodegeneration-proteomics-biomarker/` — 神经退行相关血浆蛋白的符号和数值。（名单类）
 - `skills/plasma-proteome-dementia-biomarkers/` — 痴呆相关血浆蛋白的符号和数值。（名单类）
 - `skills/plasma-proteome-future-dementia/` — 四个血浆蛋白的数值。梯度提升树的权重没有印出。（名单类）
