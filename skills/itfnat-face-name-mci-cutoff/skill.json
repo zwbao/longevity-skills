@@ -1,0 +1,156 @@
+{
+  "schema": "longevity-skill/1",
+  "name": "itfnat-face-name-mci-cutoff",
+  "kind": "paper",
+  "tier": "A",
+  "species": [
+    "human"
+  ],
+  "evidence": "cross_sectional",
+  "domains": [
+    "脑、认知与痴呆"
+  ],
+  "blurb_zh": "把自己做过的意大利人脸-姓名联想记忆测验（ItFNAT）延迟自由回忆校正分和 MoCA 校正分对到论文的轻度认知障碍切点，给出切点哪一侧和对应的似然比。",
+  "intents": [
+    "cognition_dementia"
+  ],
+  "triage": {
+    "reason_zh": "表 4 印出 ItFNAT 延迟自由回忆校正分 ≤3.21 和 MoCA 校正分 ≤23.99 的切点及灵敏度、特异度，个人校正分可直接分档并算似然比。",
+    "reviewed": false
+  },
+  "paper": {
+    "doi": "10.1007/s11357-026-02599-9",
+    "title": "Delayed associative memory and recall error patterns in mild cognitive impairment: discriminant capacity of the Italian face-name association test",
+    "title_zh": "轻度认知障碍的延迟联想记忆与回忆错误模式：意大利人脸-姓名联想测验的区分能力",
+    "journal": "GeroScience",
+    "year": 2026,
+    "authors": "Scaramuzzi 等",
+    "article_url": "https://doi.org/10.1007/s11357-026-02599-9",
+    "card_notes": [
+      "样本：意大利南部普利亚大区 136 名社区成年志愿者（女性 77 人，平均 63.37 岁，平均受教育 11.85 年），神经心理师按 DSM-5 轻度神经认知障碍和 Petersen 标准分为认知健康 72 人、轻度认知障碍 64 人；没有影像或生物标志物。",
+      "ItFNAT 第一版：16 张人脸配姓名，学习后即时回忆，15 分钟后延迟自由回忆（DFR），答不出或答错再做三选一再认；DFR 加再认正确数为延迟总回忆（DTR）。",
+      "表 4 的 ROC 用校正分：ItFNAT DFR 按 ItFNAT 意大利常模（Manippa 等，Clin Neuropsychol 2025）做年龄校正，MoCA 按意大利 MoCA 8.1 常模（Dapor 等，Neurol Sci 2025）做年龄和教育校正；校正公式不在本文，技能只接受校正后的分数。",
+      "Youden 指数最优切点：DFR ≤3.21（灵敏度 60.00%，特异度 80.56%，AUC 0.711），MoCA ≤23.99（灵敏度 65.00%，特异度 72.22%，AUC 0.705）；两条 ROC 曲线 DeLong 检验 p = 0.925。正文另写 MoCA 灵敏度 78.1%、特异度 65.0%，与表 4 不一致，技能照表 4。",
+      "表 3 的 logistic 回归只印了斜率（DFR B = −0.206），没印截距，所以不算个人患病概率。作者声明无利益冲突，研究无专项资助。"
+    ],
+    "summary_zh": "这项研究在意大利 136 名老年人中比较了人脸-姓名联想记忆测验各分数区分认知健康和轻度认知障碍的能力，发现 15 分钟后的延迟自由回忆最能区分两组，整体区分力与 MoCA 相当但特异度更高。个人报告只把你按意大利常模校正过的延迟自由回忆分和 MoCA 分对到论文切点，给出落在哪一侧和对应的似然比，不换算原始分、不算患病概率，也不做诊断。",
+    "summary_status": "draft"
+  },
+  "entry": {
+    "script": "scripts/personal_report.py",
+    "measurements_flag": "--measurements",
+    "measurements_header": [
+      "item",
+      "value",
+      "unit"
+    ],
+    "out_flag": "--out",
+    "result_json": true
+  },
+  "inputs_status": "verified",
+  "inputs": [
+    {
+      "key": "itfnat_dfr_adjusted_score",
+      "label_zh": "ItFNAT 延迟自由回忆校正分",
+      "aliases": [
+        "ItFNAT DFR adjusted",
+        "ItFNAT DFR adjusted score",
+        "DFR adjusted",
+        "DFR adjusted score",
+        "adjusted DFR",
+        "ItFNAT delayed free recall adjusted",
+        "delayed free recall adjusted score",
+        "ItFNAT DFR punteggio corretto",
+        "DFR punteggio corretto",
+        "ItFNAT 延迟自由回忆校正分",
+        "延迟自由回忆校正分",
+        "人脸姓名延迟自由回忆校正分",
+        "人脸-姓名延迟自由回忆校正分",
+        "DFR校正分"
+      ],
+      "unit": "score",
+      "range": [
+        -5,
+        22
+      ],
+      "required": false,
+      "from": "measurements",
+      "note_zh": "按 ItFNAT 意大利常模做过年龄校正的延迟自由回忆分。原始分是 16 对人脸-姓名里 15 分钟后自己说对的个数（0–16），校正后会在原始分上下浮动几分。"
+    },
+    {
+      "key": "moca_adjusted_score",
+      "label_zh": "MoCA 校正总分",
+      "aliases": [
+        "MoCA adjusted",
+        "MoCA adjusted score",
+        "MoCA adjusted total",
+        "adjusted MoCA",
+        "MoCA corrected score",
+        "MoCA punteggio corretto",
+        "MoCA 校正分",
+        "MoCA 校正总分",
+        "蒙特利尔认知评估校正分",
+        "蒙特利尔认知评估量表校正分"
+      ],
+      "unit": "score",
+      "range": [
+        0,
+        34
+      ],
+      "required": false,
+      "from": "measurements",
+      "note_zh": "按意大利 MoCA 8.1 常模（Dapor 等 2025）做过年龄和教育校正的总分。中文版 MoCA 只加 1 分教育校正的原始分不是这个分数。"
+    }
+  ],
+  "outputs": [
+    {
+      "key": "dfr_cutoff_result",
+      "label_zh": "ItFNAT 延迟自由回忆校正分相对切点 3.21（表 4）",
+      "unit": ""
+    },
+    {
+      "key": "dfr_likelihood_ratio",
+      "label_zh": "ItFNAT 延迟自由回忆这一侧的似然比（表 4 灵敏度和特异度）",
+      "unit": "1"
+    },
+    {
+      "key": "moca_cutoff_result",
+      "label_zh": "MoCA 校正总分相对切点 23.99（表 4）",
+      "unit": ""
+    },
+    {
+      "key": "moca_likelihood_ratio",
+      "label_zh": "MoCA 这一侧的似然比（表 4 灵敏度和特异度）",
+      "unit": "1"
+    }
+  ],
+  "validation": {
+    "status": "reproduced",
+    "examples": [
+      {
+        "locator": "Results, Group comparisons and classification performance (last paragraph); Table 4 ItFNAT DFR row",
+        "quote": "Table 4: ItFNAT DFR | 0.711 [0.621, 0.801] | <.001 | ≤ 3.21 | 60.00 [47.54, 72.44] | 80.56 [69.53, 88.94]. Results: Conversely, the optimal threshold value for the DFR was identified at ≤ 3.21, balancing a lower true-positive capture rate than MoCA but with a superior protection against false positives. Additionally, its positive likelihood ratio (PLR = 3.086) indicates",
+        "values": [
+          3.21,
+          60.00,
+          80.56,
+          3.086
+        ],
+        "tolerance": "±0.0005：正文 PLR 印到三位小数；用表 4 印出的灵敏度 60.00% 和特异度 80.56% 算 60.00/(100−80.56) = 3.0864。",
+        "test": "tests/test_manifest.py::test_paper_dfr_positive_likelihood_ratio"
+      },
+      {
+        "locator": "Results, Group comparisons and classification performance (last paragraph); Table 4 MoCA row",
+        "quote": "Table 4: MoCA | 0.705 [0.614, 0.796] | <.001 | ≤ 23.99 | 65.00 [51.60, 77.87] | 72.22 [60.41, 82.14]. Results: The MoCA total score was established at ≤ 23.99, maximizing sensitivity at the cost of elevated false-positive classifications. The MoCA low negative likelihood ratio (NLR = 0.485)",
+        "values": [
+          23.99,
+          65.00,
+          72.22,
+          0.485
+        ],
+        "tolerance": "±0.0005：正文 NLR 印到三位小数；用表 4 的灵敏度 65.00% 和特异度 72.22% 算 (100−65.00)/72.22 = 0.4846。",
+        "test": "tests/test_manifest.py::test_paper_moca_negative_likelihood_ratio"
+      }
+    ]
+  }
+}
