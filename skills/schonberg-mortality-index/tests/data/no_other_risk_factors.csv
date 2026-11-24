@@ -1,0 +1,10 @@
+marker,value,unit
+bmi_kg_m2,25,kg/m^2
+health_code,0,1
+copd_history,0,1
+cancer_history,0,1
+diabetes_history,0,1
+iadl_help,0,1
+walking_difficulty,0,1
+smoking_code,0,1
+hospitalizations_count,0,1
