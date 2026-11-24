@@ -1,0 +1,309 @@
+{
+  "schema": "longevity-skill/1",
+  "name": "lee-mortality-index",
+  "kind": "paper",
+  "tier": "A",
+  "species": [
+    "human"
+  ],
+  "evidence": "cohort",
+  "domains": [
+    "衰弱与死亡风险"
+  ],
+  "blurb_zh": "用年龄、病史和日常功能问卷计算Lee四年死亡风险指数。",
+  "intents": [
+    "frailty_mortality"
+  ],
+  "triage": {
+    "reason_zh": "人体社区队列公开逐项计分与逐分死亡率，可计算个人分层；正文示例矛盾使验证暂定。",
+    "reviewed": false
+  },
+  "paper": {
+    "doi": "10.1001/jama.295.7.801",
+    "title": "Development and validation of a prognostic index for 4-year mortality in older adults.",
+    "title_zh": "老年人四年死亡风险预后指数的开发与验证",
+    "journal": "JAMA",
+    "year": 2006,
+    "authors": "Lee 等",
+    "article_url": "https://jamanetwork.com/journals/jama/fullarticle/202375",
+    "supplements": [],
+    "card_notes": [
+      "采用正文表3计分和表4验证队列逐分死亡率；期刊全文页未列单独补充表或发布代码。",
+      "勘误明确糖尿病为1分：https://jamanetwork.com/journals/jama/fullarticle/202729 。",
+      "正文78岁示例与表3年龄分值不一致，尚未完整复现，验证暂定。"
+    ],
+    "summary_zh": "这项研究发现，美国社区居住中老年人的年龄、性别、自报病史和日常功能可共同用于死亡风险分层。个人报告只计算问卷总分并查出相应的历史队列死亡率，不推算个人能活多久或治疗收益。",
+    "summary_status": "draft"
+  },
+  "entry": {
+    "script": "scripts/personal_report.py",
+    "measurements_flag": "--measurements",
+    "measurements_header": [
+      "marker",
+      "value",
+      "unit"
+    ],
+    "age_flag": "--age",
+    "sex_flag": "--sex",
+    "out_flag": "--out",
+    "result_json": true,
+    "targets_flag": "--targets",
+    "levers_json": true
+  },
+  "inputs_status": "verified",
+  "inputs": [
+    {
+      "key": "bmi_kg_m2",
+      "label_zh": "体质指数",
+      "aliases": [
+        "BMI",
+        "body mass index",
+        "体重指数"
+      ],
+      "unit": "kg/m^2",
+      "accept": {
+        "kg/m2": 1
+      },
+      "range": [
+        10,
+        80
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "使用本人身高体重计算的BMI；低于25加分不是增重建议。"
+    },
+    {
+      "key": "community_dwelling",
+      "label_zh": "社区居住",
+      "aliases": [
+        "community dwelling",
+        "是否社区居住"
+      ],
+      "unit": "1",
+      "accept": {},
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "适用性检查，1=社区居住，0=养老院或其他机构照护；不进入评分。 1=是，0=否；未知须补问，不得填0。"
+    },
+    {
+      "key": "diabetes",
+      "label_zh": "糖尿病或高血糖诊断史",
+      "aliases": [
+        "diabetes",
+        "diabetes mellitus",
+        "糖尿病"
+      ],
+      "unit": "1",
+      "accept": {},
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "医生曾告知糖尿病或高血糖；不是凭一次血糖值自行诊断。 1=是，0=否；未知须补问，不得填0。"
+    },
+    {
+      "key": "cancer",
+      "label_zh": "癌症诊断史（排除轻微皮肤癌）",
+      "aliases": [
+        "cancer",
+        "malignant tumor",
+        "癌症病史"
+      ],
+      "unit": "1",
+      "accept": {},
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "医生曾告知癌症或恶性肿瘤，排除轻微皮肤癌；不排除黑色素瘤。 1=是，0=否；未知须补问，不得填0。"
+    },
+    {
+      "key": "lung_disease",
+      "label_zh": "限制活动或需居家氧疗的慢性肺病",
+      "aliases": [
+        "lung disease",
+        "chronic lung disease",
+        "慢性肺病"
+      ],
+      "unit": "1",
+      "accept": {},
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "慢性肺病限制日常活动，或使本人需要居家氧疗；不能只按任意肺病诊断填是。 1=是，0=否；未知须补问，不得填0。"
+    },
+    {
+      "key": "heart_failure",
+      "label_zh": "充血性心力衰竭诊断史",
+      "aliases": [
+        "heart failure",
+        "congestive heart failure",
+        "CHF",
+        "心衰"
+      ],
+      "unit": "1",
+      "accept": {},
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "医生曾告知充血性心力衰竭。 1=是，0=否；未知须补问，不得填0。"
+    },
+    {
+      "key": "current_smoker",
+      "label_zh": "过去一周吸烟",
+      "aliases": [
+        "current smoker",
+        "current tobacco use",
+        "当前吸烟"
+      ],
+      "unit": "1",
+      "accept": {},
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "Box问卷：过去一周是否吸过香烟；不是累计吸烟史。 1=是，0=否；未知须补问，不得填0。"
+    },
+    {
+      "key": "bathing_difficulty",
+      "label_zh": "洗澡困难",
+      "aliases": [
+        "bathing",
+        "bathing difficulty",
+        "洗澡或淋浴困难"
+      ],
+      "unit": "1",
+      "accept": {},
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "因健康或记忆问题，洗澡或淋浴有任何困难。 1=是，0=否；未知须补问，不得填0。"
+    },
+    {
+      "key": "finances_difficulty",
+      "label_zh": "管理钱财困难",
+      "aliases": [
+        "managing finances",
+        "managing money",
+        "财务管理困难"
+      ],
+      "unit": "1",
+      "accept": {},
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "因健康或记忆问题，支付账单、记录支出等钱财管理有困难。 1=是，0=否；未知须补问，不得填0。"
+    },
+    {
+      "key": "walking_difficulty",
+      "label_zh": "步行数个街区困难",
+      "aliases": [
+        "walking several blocks",
+        "步行困难"
+      ],
+      "unit": "1",
+      "accept": {},
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "因健康问题，步行数个街区有困难；不自行换成固定米数。 1=是，0=否；未知须补问，不得填0。"
+    },
+    {
+      "key": "pushing_difficulty",
+      "label_zh": "推拉大件物品困难",
+      "aliases": [
+        "pushing/pulling heavy objects",
+        "pulling or pushing large objects",
+        "推拉重物困难"
+      ],
+      "unit": "1",
+      "accept": {},
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "因健康问题，推拉客厅椅子等大件物品有困难。 1=是，0=否；未知须补问，不得填0。"
+    },
+    {
+      "key": "age",
+      "label_zh": "实足年龄",
+      "aliases": [
+        "age",
+        "年龄"
+      ],
+      "unit": "a",
+      "accept": {
+        "years": 1
+      },
+      "range": [
+        50,
+        120
+      ],
+      "required": true,
+      "from": "profile",
+      "flag": "--age",
+      "note_zh": "填整数周岁；120是软件合理性上界，并非原队列最大年龄。"
+    },
+    {
+      "key": "sex",
+      "label_zh": "论文二分类性别",
+      "aliases": [
+        "sex",
+        "性别"
+      ],
+      "unit": "1",
+      "accept": {},
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "profile",
+      "flag": "--sex",
+      "note_zh": "male/男/1，female/女/0；不从姓名推断。"
+    }
+  ],
+  "outputs": [
+    {
+      "key": "lee_score",
+      "label_zh": "Lee指数总分",
+      "unit": "1"
+    },
+    {
+      "key": "mortality_4y_pct",
+      "label_zh": "表4验证队列同分组四年死亡率",
+      "unit": "%"
+    }
+  ],
+  "validation": {
+    "status": "draft",
+    "gap_zh": "已读取JAMA全文表1至表4、Box原图公开副本及2006年勘误，逐项分数和表4查表测试通过。但正文Risk Stratification by Points的78岁女性示例印年龄3分、总分6分，表3的75–79岁为4分，按表合计为7分；勘误仅改Box糖尿病为1分，未解决该矛盾。保留严格预期失败测试，不反推或篡改权重，按流水线规则暂定。"
+  }
+}
