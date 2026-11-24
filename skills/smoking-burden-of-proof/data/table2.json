@@ -1,0 +1,2192 @@
+{
+  "source": "https://www.nature.com/articles/s41591-022-01978-x/tables/2",
+  "doi": "10.1038/s41591-022-01978-x",
+  "license": "CC-BY-4.0",
+  "retrieved": "2026-11-25",
+  "locator": "Table 2",
+  "column_exposures": [
+    5,
+    10,
+    20,
+    40
+  ],
+  "records": [
+    {
+      "key": "laryngeal_cancer",
+      "label_zh": "喉癌",
+      "printed_label": "Laryngeal cancer",
+      "exposure_key": "pack_years",
+      "printed_unit": "Pack-years",
+      "reference_age_years": null,
+      "sex": null,
+      "stars": 5,
+      "publication_bias": false,
+      "n_studies": 5,
+      "raw_cells": [
+        "Laryngeal cancer",
+        "Pack-years",
+        "2.30 (1.88, 2.84)",
+        "3.77 (2.73, 5.30)",
+        "7.25 (4.48, 12.05)",
+        "14.62 (7.62, 29.11)",
+        "50.50",
+        "17.73 (8.82, 37.07)",
+        "1.56",
+        "4.75",
+        "374.95",
+        "5",
+        "0",
+        "5"
+      ],
+      "points": [
+        {
+          "exposure": 5,
+          "rr": 2.3,
+          "ui_lower": 1.88,
+          "ui_upper": 2.84
+        },
+        {
+          "exposure": 10,
+          "rr": 3.77,
+          "ui_lower": 2.73,
+          "ui_upper": 5.3
+        },
+        {
+          "exposure": 20,
+          "rr": 7.25,
+          "ui_lower": 4.48,
+          "ui_upper": 12.05
+        },
+        {
+          "exposure": 40,
+          "rr": 14.62,
+          "ui_lower": 7.62,
+          "ui_upper": 29.11
+        },
+        {
+          "exposure": 50.5,
+          "rr": 17.73,
+          "ui_lower": 8.82,
+          "ui_upper": 37.07
+        }
+      ],
+      "p85_exposure": 50.5
+    },
+    {
+      "key": "aortic_aneurysm",
+      "label_zh": "主动脉瘤",
+      "printed_label": "Aortic aneurism (ref. age: 55–59 years)",
+      "exposure_key": "cigarettes_per_day",
+      "printed_unit": "Cigarettes per day",
+      "reference_age_years": [
+        55,
+        59
+      ],
+      "sex": null,
+      "stars": 5,
+      "publication_bias": false,
+      "n_studies": 14,
+      "raw_cells": [
+        "Aortic aneurism (ref. age: 55–59 years)",
+        "Cigarettes per day",
+        "2.52 (1.79, 3.60)",
+        "3.78 (2.31, 6.33)",
+        "5.39 (2.89, 10.36)",
+        "6.22 (3.17, 12.64)",
+        "30.00",
+        "6.08 (3.13, 12.27)",
+        "0.92",
+        "2.50",
+        "149.73",
+        "5",
+        "0",
+        "14"
+      ],
+      "points": [
+        {
+          "exposure": 5,
+          "rr": 2.52,
+          "ui_lower": 1.79,
+          "ui_upper": 3.6
+        },
+        {
+          "exposure": 10,
+          "rr": 3.78,
+          "ui_lower": 2.31,
+          "ui_upper": 6.33
+        },
+        {
+          "exposure": 20,
+          "rr": 5.39,
+          "ui_lower": 2.89,
+          "ui_upper": 10.36
+        },
+        {
+          "exposure": 30.0,
+          "rr": 6.08,
+          "ui_lower": 3.13,
+          "ui_upper": 12.27
+        },
+        {
+          "exposure": 40,
+          "rr": 6.22,
+          "ui_lower": 3.17,
+          "ui_upper": 12.64
+        }
+      ],
+      "p85_exposure": 30.0
+    },
+    {
+      "key": "peripheral_artery_disease",
+      "label_zh": "外周动脉疾病",
+      "printed_label": "Peripheral artery disease (ref. age: 60–64 years)",
+      "exposure_key": "cigarettes_per_day",
+      "printed_unit": "Cigarettes per day",
+      "reference_age_years": [
+        60,
+        64
+      ],
+      "sex": null,
+      "stars": 5,
+      "publication_bias": false,
+      "n_studies": 6,
+      "raw_cells": [
+        "Peripheral artery disease (ref. age: 60–64 years)",
+        "Cigarettes per day",
+        "2.52 (1.67, 3.90)",
+        "3.80 (2.10, 7.14)",
+        "5.69 (2.62, 12.94)",
+        "7.82 (3.13, 20.68)",
+        "31.25",
+        "7.16 (2.98, 18.16)",
+        "0.86",
+        "2.37",
+        "136.53",
+        "5",
+        "0",
+        "6"
+      ],
+      "points": [
+        {
+          "exposure": 5,
+          "rr": 2.52,
+          "ui_lower": 1.67,
+          "ui_upper": 3.9
+        },
+        {
+          "exposure": 10,
+          "rr": 3.8,
+          "ui_lower": 2.1,
+          "ui_upper": 7.14
+        },
+        {
+          "exposure": 20,
+          "rr": 5.69,
+          "ui_lower": 2.62,
+          "ui_upper": 12.94
+        },
+        {
+          "exposure": 31.25,
+          "rr": 7.16,
+          "ui_lower": 2.98,
+          "ui_upper": 18.16
+        },
+        {
+          "exposure": 40,
+          "rr": 7.82,
+          "ui_lower": 3.13,
+          "ui_upper": 20.68
+        }
+      ],
+      "p85_exposure": 31.25
+    },
+    {
+      "key": "lung_cancer",
+      "label_zh": "肺癌",
+      "printed_label": "Lung cancer",
+      "exposure_key": "pack_years",
+      "printed_unit": "Pack-years",
+      "reference_age_years": null,
+      "sex": null,
+      "stars": 5,
+      "publication_bias": true,
+      "n_studies": 78,
+      "raw_cells": [
+        "Lung cancer",
+        "Pack-years",
+        "1.58 (1.19, 2.15)",
+        "2.48 (1.40, 4.53)",
+        "5.11 (1.84, 14.99)",
+        "11.62 (2.49, 58.73)",
+        "50.88",
+        "13.42 (2.63, 74.59)",
+        "0.73",
+        "2.07",
+        "106.66",
+        "5",
+        "1",
+        "78"
+      ],
+      "points": [
+        {
+          "exposure": 5,
+          "rr": 1.58,
+          "ui_lower": 1.19,
+          "ui_upper": 2.15
+        },
+        {
+          "exposure": 10,
+          "rr": 2.48,
+          "ui_lower": 1.4,
+          "ui_upper": 4.53
+        },
+        {
+          "exposure": 20,
+          "rr": 5.11,
+          "ui_lower": 1.84,
+          "ui_upper": 14.99
+        },
+        {
+          "exposure": 40,
+          "rr": 11.62,
+          "ui_lower": 2.49,
+          "ui_upper": 58.73
+        },
+        {
+          "exposure": 50.88,
+          "rr": 13.42,
+          "ui_lower": 2.63,
+          "ui_upper": 74.59
+        }
+      ],
+      "p85_exposure": 50.88
+    },
+    {
+      "key": "other_pharynx_cancer",
+      "label_zh": "其他咽癌（不含鼻咽癌）",
+      "printed_label": "Other pharynx cancer",
+      "exposure_key": "pack_years",
+      "printed_unit": "Pack-years",
+      "reference_age_years": null,
+      "sex": null,
+      "stars": 5,
+      "publication_bias": false,
+      "n_studies": 8,
+      "raw_cells": [
+        "Other pharynx cancer",
+        "Pack-years",
+        "1.65 (1.30, 2.13)",
+        "2.20 (1.51, 3.30)",
+        "3.02 (1.77, 5.30)",
+        "3.89 (2.02, 7.78)",
+        "63.75",
+        "4.72 (2.24, 10.45)",
+        "0.65",
+        "1.92",
+        "92.26",
+        "5",
+        "0",
+        "8"
+      ],
+      "points": [
+        {
+          "exposure": 5,
+          "rr": 1.65,
+          "ui_lower": 1.3,
+          "ui_upper": 2.13
+        },
+        {
+          "exposure": 10,
+          "rr": 2.2,
+          "ui_lower": 1.51,
+          "ui_upper": 3.3
+        },
+        {
+          "exposure": 20,
+          "rr": 3.02,
+          "ui_lower": 1.77,
+          "ui_upper": 5.3
+        },
+        {
+          "exposure": 40,
+          "rr": 3.89,
+          "ui_lower": 2.02,
+          "ui_upper": 7.78
+        },
+        {
+          "exposure": 63.75,
+          "rr": 4.72,
+          "ui_lower": 2.24,
+          "ui_upper": 10.45
+        }
+      ],
+      "p85_exposure": 63.75
+    },
+    {
+      "key": "copd",
+      "label_zh": "慢性阻塞性肺疾病",
+      "printed_label": "COPD",
+      "exposure_key": "pack_years",
+      "printed_unit": "Pack-years",
+      "reference_age_years": null,
+      "sex": null,
+      "stars": 4,
+      "publication_bias": true,
+      "n_studies": 13,
+      "raw_cells": [
+        "COPD",
+        "Pack-years",
+        "1.61 (1.21, 2.17)",
+        "2.16 (1.37, 3.51)",
+        "3.17 (1.60, 6.55)",
+        "5.05 (1.94, 13.97)",
+        "49.75",
+        "6.01 (2.08, 18.58)",
+        "0.54",
+        "1.72",
+        "72.11",
+        "4",
+        "1",
+        "13"
+      ],
+      "points": [
+        {
+          "exposure": 5,
+          "rr": 1.61,
+          "ui_lower": 1.21,
+          "ui_upper": 2.17
+        },
+        {
+          "exposure": 10,
+          "rr": 2.16,
+          "ui_lower": 1.37,
+          "ui_upper": 3.51
+        },
+        {
+          "exposure": 20,
+          "rr": 3.17,
+          "ui_lower": 1.6,
+          "ui_upper": 6.55
+        },
+        {
+          "exposure": 40,
+          "rr": 5.05,
+          "ui_lower": 1.94,
+          "ui_upper": 13.97
+        },
+        {
+          "exposure": 49.75,
+          "rr": 6.01,
+          "ui_lower": 2.08,
+          "ui_upper": 18.58
+        }
+      ],
+      "p85_exposure": 49.75
+    },
+    {
+      "key": "lower_respiratory_infection",
+      "label_zh": "下呼吸道感染",
+      "printed_label": "Lower respiratory infection",
+      "exposure_key": "cigarettes_per_day",
+      "printed_unit": "Cigarettes per day",
+      "reference_age_years": null,
+      "sex": null,
+      "stars": 4,
+      "publication_bias": false,
+      "n_studies": 7,
+      "raw_cells": [
+        "Lower respiratory infection",
+        "Cigarettes per day",
+        "1.46 (1.23, 1.76)",
+        "1.83 (1.38, 2.46)",
+        "2.63 (1.68, 4.23)",
+        "2.97 (1.79, 5.06)",
+        "31.25",
+        "2.97 (1.79, 5.06)",
+        "0.43",
+        "1.54",
+        "54.45",
+        "4",
+        "0",
+        "7"
+      ],
+      "points": [
+        {
+          "exposure": 5,
+          "rr": 1.46,
+          "ui_lower": 1.23,
+          "ui_upper": 1.76
+        },
+        {
+          "exposure": 10,
+          "rr": 1.83,
+          "ui_lower": 1.38,
+          "ui_upper": 2.46
+        },
+        {
+          "exposure": 20,
+          "rr": 2.63,
+          "ui_lower": 1.68,
+          "ui_upper": 4.23
+        },
+        {
+          "exposure": 31.25,
+          "rr": 2.97,
+          "ui_lower": 1.79,
+          "ui_upper": 5.06
+        },
+        {
+          "exposure": 40,
+          "rr": 2.97,
+          "ui_lower": 1.79,
+          "ui_upper": 5.06
+        }
+      ],
+      "p85_exposure": 31.25
+    },
+    {
+      "key": "pancreatic_cancer",
+      "label_zh": "胰腺癌",
+      "printed_label": "Pancreatic cancer",
+      "exposure_key": "pack_years",
+      "printed_unit": "Pack-years",
+      "reference_age_years": null,
+      "sex": null,
+      "stars": 4,
+      "publication_bias": false,
+      "n_studies": 19,
+      "raw_cells": [
+        "Pancreatic cancer",
+        "Pack-years",
+        "1.26 (1.22, 1.31)",
+        "1.47 (1.38, 1.57)",
+        "1.72 (1.57, 1.88)",
+        "1.80 (1.63, 1.98)",
+        "51.25",
+        "1.87 (1.69, 2.08)",
+        "0.42",
+        "1.52",
+        "51.66",
+        "4",
+        "0",
+        "19"
+      ],
+      "points": [
+        {
+          "exposure": 5,
+          "rr": 1.26,
+          "ui_lower": 1.22,
+          "ui_upper": 1.31
+        },
+        {
+          "exposure": 10,
+          "rr": 1.47,
+          "ui_lower": 1.38,
+          "ui_upper": 1.57
+        },
+        {
+          "exposure": 20,
+          "rr": 1.72,
+          "ui_lower": 1.57,
+          "ui_upper": 1.88
+        },
+        {
+          "exposure": 40,
+          "rr": 1.8,
+          "ui_lower": 1.63,
+          "ui_upper": 1.98
+        },
+        {
+          "exposure": 51.25,
+          "rr": 1.87,
+          "ui_lower": 1.69,
+          "ui_upper": 2.08
+        }
+      ],
+      "p85_exposure": 51.25
+    },
+    {
+      "key": "bladder_cancer",
+      "label_zh": "膀胱癌",
+      "printed_label": "Bladder cancer",
+      "exposure_key": "pack_years",
+      "printed_unit": "Pack-years",
+      "reference_age_years": null,
+      "sex": null,
+      "stars": 3,
+      "publication_bias": true,
+      "n_studies": 30,
+      "raw_cells": [
+        "Bladder cancer",
+        "Pack-years",
+        "1.21 (1.08, 1.36)",
+        "1.43 (1.16, 1.77)",
+        "1.90 (1.31, 2.81)",
+        "2.92 (1.57, 5.63)",
+        "50.65",
+        "3.29 (1.65, 6.83)",
+        "0.34",
+        "1.40",
+        "40.18",
+        "3",
+        "1",
+        "30"
+      ],
+      "points": [
+        {
+          "exposure": 5,
+          "rr": 1.21,
+          "ui_lower": 1.08,
+          "ui_upper": 1.36
+        },
+        {
+          "exposure": 10,
+          "rr": 1.43,
+          "ui_lower": 1.16,
+          "ui_upper": 1.77
+        },
+        {
+          "exposure": 20,
+          "rr": 1.9,
+          "ui_lower": 1.31,
+          "ui_upper": 2.81
+        },
+        {
+          "exposure": 40,
+          "rr": 2.92,
+          "ui_lower": 1.57,
+          "ui_upper": 5.63
+        },
+        {
+          "exposure": 50.65,
+          "rr": 3.29,
+          "ui_lower": 1.65,
+          "ui_upper": 6.83
+        }
+      ],
+      "p85_exposure": 50.65
+    },
+    {
+      "key": "tuberculosis",
+      "label_zh": "结核病",
+      "printed_label": "Tuberculosis",
+      "exposure_key": "cigarettes_per_day",
+      "printed_unit": "Cigarettes per day",
+      "reference_age_years": null,
+      "sex": null,
+      "stars": 3,
+      "publication_bias": false,
+      "n_studies": 19,
+      "raw_cells": [
+        "Tuberculosis",
+        "Cigarettes per day",
+        "1.46 (1.13, 1.92)",
+        "1.88 (1.22, 2.97)",
+        "2.71 (1.38, 5.56)",
+        "3.47 (1.49, 8.50)",
+        "26.56",
+        "3.24 (1.46, 7.56)",
+        "0.27",
+        "1.31",
+        "31.04",
+        "3",
+        "0",
+        "19"
+      ],
+      "points": [
+        {
+          "exposure": 5,
+          "rr": 1.46,
+          "ui_lower": 1.13,
+          "ui_upper": 1.92
+        },
+        {
+          "exposure": 10,
+          "rr": 1.88,
+          "ui_lower": 1.22,
+          "ui_upper": 2.97
+        },
+        {
+          "exposure": 20,
+          "rr": 2.71,
+          "ui_lower": 1.38,
+          "ui_upper": 5.56
+        },
+        {
+          "exposure": 26.56,
+          "rr": 3.24,
+          "ui_lower": 1.46,
+          "ui_upper": 7.56
+        },
+        {
+          "exposure": 40,
+          "rr": 3.47,
+          "ui_lower": 1.49,
+          "ui_upper": 8.5
+        }
+      ],
+      "p85_exposure": 26.56
+    },
+    {
+      "key": "esophageal_cancer",
+      "label_zh": "食管癌",
+      "printed_label": "Esophageal cancer",
+      "exposure_key": "pack_years",
+      "printed_unit": "Pack-years",
+      "reference_age_years": null,
+      "sex": null,
+      "stars": 3,
+      "publication_bias": true,
+      "n_studies": 14,
+      "raw_cells": [
+        "Esophageal cancer",
+        "Pack-years",
+        "1.24 (1.06, 1.46)",
+        "1.48 (1.11, 2.00)",
+        "1.96 (1.20, 3.32)",
+        "3.12 (1.36, 7.57)",
+        "50.00",
+        "4.79 (1.53, 16.26)",
+        "0.26",
+        "1.29",
+        "29.36",
+        "3",
+        "1",
+        "14"
+      ],
+      "points": [
+        {
+          "exposure": 5,
+          "rr": 1.24,
+          "ui_lower": 1.06,
+          "ui_upper": 1.46
+        },
+        {
+          "exposure": 10,
+          "rr": 1.48,
+          "ui_lower": 1.11,
+          "ui_upper": 2.0
+        },
+        {
+          "exposure": 20,
+          "rr": 1.96,
+          "ui_lower": 1.2,
+          "ui_upper": 3.32
+        },
+        {
+          "exposure": 40,
+          "rr": 3.12,
+          "ui_lower": 1.36,
+          "ui_upper": 7.57
+        },
+        {
+          "exposure": 50.0,
+          "rr": 4.79,
+          "ui_lower": 1.53,
+          "ui_upper": 16.26
+        }
+      ],
+      "p85_exposure": 50.0
+    },
+    {
+      "key": "cervical_cancer",
+      "label_zh": "宫颈癌",
+      "printed_label": "Cervical cancer",
+      "exposure_key": "pack_years",
+      "printed_unit": "Pack-years",
+      "reference_age_years": null,
+      "sex": "female",
+      "stars": 3,
+      "publication_bias": false,
+      "n_studies": 4,
+      "raw_cells": [
+        "Cervical cancer",
+        "Pack-years",
+        "1.60 (1.12, 2.35)",
+        "1.99 (1.18, 3.48)",
+        "2.37 (1.23, 4.79)",
+        "2.62 (1.26, 5.72)",
+        "25.50",
+        "2.53 (1.25, 5.36)",
+        "0.21",
+        "1.24",
+        "23.53",
+        "3",
+        "0",
+        "4"
+      ],
+      "points": [
+        {
+          "exposure": 5,
+          "rr": 1.6,
+          "ui_lower": 1.12,
+          "ui_upper": 2.35
+        },
+        {
+          "exposure": 10,
+          "rr": 1.99,
+          "ui_lower": 1.18,
+          "ui_upper": 3.48
+        },
+        {
+          "exposure": 20,
+          "rr": 2.37,
+          "ui_lower": 1.23,
+          "ui_upper": 4.79
+        },
+        {
+          "exposure": 25.5,
+          "rr": 2.53,
+          "ui_lower": 1.25,
+          "ui_upper": 5.36
+        },
+        {
+          "exposure": 40,
+          "rr": 2.62,
+          "ui_lower": 1.26,
+          "ui_upper": 5.72
+        }
+      ],
+      "p85_exposure": 25.5
+    },
+    {
+      "key": "multiple_sclerosis",
+      "label_zh": "多发性硬化",
+      "printed_label": "Multiple sclerosis",
+      "exposure_key": "cigarettes_per_day",
+      "printed_unit": "Cigarettes per day",
+      "reference_age_years": null,
+      "sex": null,
+      "stars": 3,
+      "publication_bias": false,
+      "n_studies": 6,
+      "raw_cells": [
+        "Multiple sclerosis",
+        "Cigarettes per day",
+        "1.14 (1.10, 1.17)",
+        "1.31 (1.23, 1.40)",
+        "1.78 (1.55, 2.06)",
+        "2.77 (2.17, 3.60)",
+        "20.00",
+        "1.78 (1.55, 2.06)",
+        "0.21",
+        "1.23",
+        "23.36",
+        "3",
+        "0",
+        "6"
+      ],
+      "points": [
+        {
+          "exposure": 5,
+          "rr": 1.14,
+          "ui_lower": 1.1,
+          "ui_upper": 1.17
+        },
+        {
+          "exposure": 10,
+          "rr": 1.31,
+          "ui_lower": 1.23,
+          "ui_upper": 1.4
+        },
+        {
+          "exposure": 20,
+          "rr": 1.78,
+          "ui_lower": 1.55,
+          "ui_upper": 2.06
+        },
+        {
+          "exposure": 40,
+          "rr": 2.77,
+          "ui_lower": 2.17,
+          "ui_upper": 3.6
+        }
+      ],
+      "p85_exposure": 20.0
+    },
+    {
+      "key": "rheumatoid_arthritis",
+      "label_zh": "类风湿关节炎",
+      "printed_label": "Rheumatoid arthritis",
+      "exposure_key": "cigarettes_per_day",
+      "printed_unit": "Cigarettes per day",
+      "reference_age_years": null,
+      "sex": null,
+      "stars": 3,
+      "publication_bias": true,
+      "n_studies": 6,
+      "raw_cells": [
+        "Rheumatoid arthritis",
+        "Cigarettes per day",
+        "1.20 (1.10, 1.31)",
+        "1.40 (1.20, 1.66)",
+        "1.67 (1.31, 2.14)",
+        "1.73 (1.34, 2.26)",
+        "26.25",
+        "1.72 (1.34, 2.25)",
+        "0.21",
+        "1.23",
+        "23.32",
+        "3",
+        "1",
+        "6"
+      ],
+      "points": [
+        {
+          "exposure": 5,
+          "rr": 1.2,
+          "ui_lower": 1.1,
+          "ui_upper": 1.31
+        },
+        {
+          "exposure": 10,
+          "rr": 1.4,
+          "ui_lower": 1.2,
+          "ui_upper": 1.66
+        },
+        {
+          "exposure": 20,
+          "rr": 1.67,
+          "ui_lower": 1.31,
+          "ui_upper": 2.14
+        },
+        {
+          "exposure": 26.25,
+          "rr": 1.72,
+          "ui_lower": 1.34,
+          "ui_upper": 2.25
+        },
+        {
+          "exposure": 40,
+          "rr": 1.73,
+          "ui_lower": 1.34,
+          "ui_upper": 2.26
+        }
+      ],
+      "p85_exposure": 26.25
+    },
+    {
+      "key": "lower_back_pain",
+      "label_zh": "下背痛",
+      "printed_label": "Lower back pain",
+      "exposure_key": "cigarettes_per_day",
+      "printed_unit": "Cigarettes per day",
+      "reference_age_years": null,
+      "sex": null,
+      "stars": 3,
+      "publication_bias": false,
+      "n_studies": 6,
+      "raw_cells": [
+        "Lower back pain",
+        "Cigarettes per day",
+        "1.58 (1.11, 2.28)",
+        "1.96 (1.16, 3.39)",
+        "2.26 (1.20, 4.40)",
+        "2.29 (1.21, 4.50)",
+        "26.25",
+        "2.29 (1.21, 4.49)",
+        "0.20",
+        "1.22",
+        "21.84",
+        "3",
+        "0",
+        "6"
+      ],
+      "points": [
+        {
+          "exposure": 5,
+          "rr": 1.58,
+          "ui_lower": 1.11,
+          "ui_upper": 2.28
+        },
+        {
+          "exposure": 10,
+          "rr": 1.96,
+          "ui_lower": 1.16,
+          "ui_upper": 3.39
+        },
+        {
+          "exposure": 20,
+          "rr": 2.26,
+          "ui_lower": 1.2,
+          "ui_upper": 4.4
+        },
+        {
+          "exposure": 26.25,
+          "rr": 2.29,
+          "ui_lower": 1.21,
+          "ui_upper": 4.49
+        },
+        {
+          "exposure": 40,
+          "rr": 2.29,
+          "ui_lower": 1.21,
+          "ui_upper": 4.5
+        }
+      ],
+      "p85_exposure": 26.25
+    },
+    {
+      "key": "ischemic_heart_disease",
+      "label_zh": "缺血性心脏病",
+      "printed_label": "Ischemic heart disease (ref. age: 55–59 years)",
+      "exposure_key": "cigarettes_per_day",
+      "printed_unit": "Cigarettes per day",
+      "reference_age_years": [
+        55,
+        59
+      ],
+      "sex": null,
+      "stars": 3,
+      "publication_bias": true,
+      "n_studies": 60,
+      "raw_cells": [
+        "Ischemic heart disease (ref. age: 55–59 years)",
+        "Cigarettes per day",
+        "1.66 (1.09, 2.57)",
+        "2.12 (1.14, 4.1)",
+        "2.43 (1.17, 5.27)",
+        "4.20 (1.28, 14.77)",
+        "31.25",
+        "3.13 (1.22, 8.50)",
+        "0.19",
+        "1.20",
+        "20.39",
+        "3",
+        "1",
+        "60"
+      ],
+      "points": [
+        {
+          "exposure": 5,
+          "rr": 1.66,
+          "ui_lower": 1.09,
+          "ui_upper": 2.57
+        },
+        {
+          "exposure": 10,
+          "rr": 2.12,
+          "ui_lower": 1.14,
+          "ui_upper": 4.1
+        },
+        {
+          "exposure": 20,
+          "rr": 2.43,
+          "ui_lower": 1.17,
+          "ui_upper": 5.27
+        },
+        {
+          "exposure": 31.25,
+          "rr": 3.13,
+          "ui_lower": 1.22,
+          "ui_upper": 8.5
+        },
+        {
+          "exposure": 40,
+          "rr": 4.2,
+          "ui_lower": 1.28,
+          "ui_upper": 14.77
+        }
+      ],
+      "p85_exposure": 31.25
+    },
+    {
+      "key": "peptic_ulcer",
+      "label_zh": "消化性溃疡",
+      "printed_label": "Peptic ulcer",
+      "exposure_key": "cigarettes_per_day",
+      "printed_unit": "Cigarettes per day",
+      "reference_age_years": null,
+      "sex": null,
+      "stars": 3,
+      "publication_bias": false,
+      "n_studies": 7,
+      "raw_cells": [
+        "Peptic ulcer",
+        "Cigarettes per day",
+        "1.47 (1.11, 1.97)",
+        "1.79 (1.17, 2.80)",
+        "2.10 (1.22, 3.73)",
+        "2.16 (1.23, 3.92)",
+        "21.94",
+        "2.12 (1.22, 3.80)",
+        "0.18",
+        "1.20",
+        "19.84",
+        "3",
+        "0",
+        "7"
+      ],
+      "points": [
+        {
+          "exposure": 5,
+          "rr": 1.47,
+          "ui_lower": 1.11,
+          "ui_upper": 1.97
+        },
+        {
+          "exposure": 10,
+          "rr": 1.79,
+          "ui_lower": 1.17,
+          "ui_upper": 2.8
+        },
+        {
+          "exposure": 20,
+          "rr": 2.1,
+          "ui_lower": 1.22,
+          "ui_upper": 3.73
+        },
+        {
+          "exposure": 21.94,
+          "rr": 2.12,
+          "ui_lower": 1.22,
+          "ui_upper": 3.8
+        },
+        {
+          "exposure": 40,
+          "rr": 2.16,
+          "ui_lower": 1.23,
+          "ui_upper": 3.92
+        }
+      ],
+      "p85_exposure": 21.94
+    },
+    {
+      "key": "macular_degeneration",
+      "label_zh": "黄斑变性",
+      "printed_label": "Macular degeneration",
+      "exposure_key": "cigarettes_per_day",
+      "printed_unit": "Cigarettes per day",
+      "reference_age_years": null,
+      "sex": null,
+      "stars": 3,
+      "publication_bias": false,
+      "n_studies": 2,
+      "raw_cells": [
+        "Macular degeneration",
+        "Cigarettes per day",
+        "1.33 (1.07, 1.69)",
+        "1.67 (1.12, 2.54)",
+        "2.23 (1.20, 4.31)",
+        "2.42 (1.22, 5.01)",
+        "27.50",
+        "2.41 (1.22, 4.99)",
+        "0.18",
+        "1.19",
+        "19.44",
+        "3",
+        "0",
+        "2"
+      ],
+      "points": [
+        {
+          "exposure": 5,
+          "rr": 1.33,
+          "ui_lower": 1.07,
+          "ui_upper": 1.69
+        },
+        {
+          "exposure": 10,
+          "rr": 1.67,
+          "ui_lower": 1.12,
+          "ui_upper": 2.54
+        },
+        {
+          "exposure": 20,
+          "rr": 2.23,
+          "ui_lower": 1.2,
+          "ui_upper": 4.31
+        },
+        {
+          "exposure": 27.5,
+          "rr": 2.41,
+          "ui_lower": 1.22,
+          "ui_upper": 4.99
+        },
+        {
+          "exposure": 40,
+          "rr": 2.42,
+          "ui_lower": 1.22,
+          "ui_upper": 5.01
+        }
+      ],
+      "p85_exposure": 27.5
+    },
+    {
+      "key": "parkinsons_disease",
+      "label_zh": "帕金森病",
+      "printed_label": "Parkinson's disease (protective risk)",
+      "exposure_key": "cigarettes_per_day",
+      "printed_unit": "Cigarettes per day",
+      "reference_age_years": null,
+      "sex": null,
+      "stars": 3,
+      "publication_bias": true,
+      "n_studies": 14,
+      "raw_cells": [
+        "Parkinson's disease (protective risk)",
+        "Cigarettes per day",
+        "0.79 (0.66, 0.93)",
+        "0.65 (0.47, 0.88)",
+        "0.54 (0.34, 0.84)",
+        "0.49 (0.29, 0.81)",
+        "26.25",
+        "0.51 (0.31, 0.83)",
+        "0.16",
+        "0.85",
+        "−14.88",
+        "3",
+        "1",
+        "14"
+      ],
+      "points": [
+        {
+          "exposure": 5,
+          "rr": 0.79,
+          "ui_lower": 0.66,
+          "ui_upper": 0.93
+        },
+        {
+          "exposure": 10,
+          "rr": 0.65,
+          "ui_lower": 0.47,
+          "ui_upper": 0.88
+        },
+        {
+          "exposure": 20,
+          "rr": 0.54,
+          "ui_lower": 0.34,
+          "ui_upper": 0.84
+        },
+        {
+          "exposure": 26.25,
+          "rr": 0.51,
+          "ui_lower": 0.31,
+          "ui_upper": 0.83
+        },
+        {
+          "exposure": 40,
+          "rr": 0.49,
+          "ui_lower": 0.29,
+          "ui_upper": 0.81
+        }
+      ],
+      "p85_exposure": 26.25
+    },
+    {
+      "key": "stomach_cancer",
+      "label_zh": "胃癌",
+      "printed_label": "Stomach cancer",
+      "exposure_key": "pack_years",
+      "printed_unit": "Pack-years",
+      "reference_age_years": null,
+      "sex": null,
+      "stars": 3,
+      "publication_bias": true,
+      "n_studies": 13,
+      "raw_cells": [
+        "Stomach cancer",
+        "Pack-years",
+        "1.10 (1.06, 1.15)",
+        "1.18 (1.10, 1.27)",
+        "1.29 (1.16, 1.44)",
+        "1.39 (1.22, 1.60)",
+        "51.13",
+        "1.61 (1.32, 1.97)",
+        "0.16",
+        "1.17",
+        "17.39",
+        "3",
+        "1",
+        "13"
+      ],
+      "points": [
+        {
+          "exposure": 5,
+          "rr": 1.1,
+          "ui_lower": 1.06,
+          "ui_upper": 1.15
+        },
+        {
+          "exposure": 10,
+          "rr": 1.18,
+          "ui_lower": 1.1,
+          "ui_upper": 1.27
+        },
+        {
+          "exposure": 20,
+          "rr": 1.29,
+          "ui_lower": 1.16,
+          "ui_upper": 1.44
+        },
+        {
+          "exposure": 40,
+          "rr": 1.39,
+          "ui_lower": 1.22,
+          "ui_upper": 1.6
+        },
+        {
+          "exposure": 51.13,
+          "rr": 1.61,
+          "ui_lower": 1.32,
+          "ui_upper": 1.97
+        }
+      ],
+      "p85_exposure": 51.13
+    },
+    {
+      "key": "stroke",
+      "label_zh": "卒中",
+      "printed_label": "Stroke (ref. age: 55–59)",
+      "exposure_key": "cigarettes_per_day",
+      "printed_unit": "Cigarettes per day",
+      "reference_age_years": [
+        55,
+        59
+      ],
+      "sex": null,
+      "stars": 3,
+      "publication_bias": false,
+      "n_studies": 67,
+      "raw_cells": [
+        "Stroke (ref. age: 55–59)",
+        "Cigarettes per day",
+        "1.40 (1.07, 1.88)",
+        "1.75 (1.11, 2.82)",
+        "2.23 (1.16, 4.45)",
+        "2.43 (1.18, 5.22)",
+        "29.50",
+        "2.42 (1.18, 5.19)",
+        "0.16",
+        "1.17",
+        "16.89",
+        "3",
+        "0",
+        "67"
+      ],
+      "points": [
+        {
+          "exposure": 5,
+          "rr": 1.4,
+          "ui_lower": 1.07,
+          "ui_upper": 1.88
+        },
+        {
+          "exposure": 10,
+          "rr": 1.75,
+          "ui_lower": 1.11,
+          "ui_upper": 2.82
+        },
+        {
+          "exposure": 20,
+          "rr": 2.23,
+          "ui_lower": 1.16,
+          "ui_upper": 4.45
+        },
+        {
+          "exposure": 29.5,
+          "rr": 2.42,
+          "ui_lower": 1.18,
+          "ui_upper": 5.19
+        },
+        {
+          "exposure": 40,
+          "rr": 2.43,
+          "ui_lower": 1.18,
+          "ui_upper": 5.22
+        }
+      ],
+      "p85_exposure": 29.5
+    },
+    {
+      "key": "type_2_diabetes",
+      "label_zh": "2型糖尿病",
+      "printed_label": "Type 2 diabetes",
+      "exposure_key": "cigarettes_per_day",
+      "printed_unit": "Cigarettes per day",
+      "reference_age_years": null,
+      "sex": null,
+      "stars": 3,
+      "publication_bias": true,
+      "n_studies": 28,
+      "raw_cells": [
+        "Type 2 diabetes",
+        "Cigarettes per day",
+        "1.23 (1.09, 1.39)",
+        "1.38 (1.15, 1.68)",
+        "1.49 (1.18, 1.90)",
+        "1.67 (1.24, 2.29)",
+        "26.25",
+        "1.54 (1.20, 2.01)",
+        "0.15",
+        "1.16",
+        "15.76",
+        "3",
+        "1",
+        "28"
+      ],
+      "points": [
+        {
+          "exposure": 5,
+          "rr": 1.23,
+          "ui_lower": 1.09,
+          "ui_upper": 1.39
+        },
+        {
+          "exposure": 10,
+          "rr": 1.38,
+          "ui_lower": 1.15,
+          "ui_upper": 1.68
+        },
+        {
+          "exposure": 20,
+          "rr": 1.49,
+          "ui_lower": 1.18,
+          "ui_upper": 1.9
+        },
+        {
+          "exposure": 26.25,
+          "rr": 1.54,
+          "ui_lower": 1.2,
+          "ui_upper": 2.01
+        },
+        {
+          "exposure": 40,
+          "rr": 1.67,
+          "ui_lower": 1.24,
+          "ui_upper": 2.29
+        }
+      ],
+      "p85_exposure": 26.25
+    },
+    {
+      "key": "cataracts",
+      "label_zh": "白内障",
+      "printed_label": "Cataracts",
+      "exposure_key": "cigarettes_per_day",
+      "printed_unit": "Cigarettes per day",
+      "reference_age_years": null,
+      "sex": null,
+      "stars": 3,
+      "publication_bias": false,
+      "n_studies": 10,
+      "raw_cells": [
+        "Cataracts",
+        "Cigarettes per day",
+        "1.10 (1.08, 1.12)",
+        "1.16 (1.13, 1.19)",
+        "1.29 (1.23, 1.35)",
+        "1.70 (1.54, 1.88)",
+        "25.00",
+        "1.43 (1.34, 1.53)",
+        "0.14",
+        "1.15",
+        "15.47",
+        "3",
+        "0",
+        "10"
+      ],
+      "points": [
+        {
+          "exposure": 5,
+          "rr": 1.1,
+          "ui_lower": 1.08,
+          "ui_upper": 1.12
+        },
+        {
+          "exposure": 10,
+          "rr": 1.16,
+          "ui_lower": 1.13,
+          "ui_upper": 1.19
+        },
+        {
+          "exposure": 20,
+          "rr": 1.29,
+          "ui_lower": 1.23,
+          "ui_upper": 1.35
+        },
+        {
+          "exposure": 25.0,
+          "rr": 1.43,
+          "ui_lower": 1.34,
+          "ui_upper": 1.53
+        },
+        {
+          "exposure": 40,
+          "rr": 1.7,
+          "ui_lower": 1.54,
+          "ui_upper": 1.88
+        }
+      ],
+      "p85_exposure": 25.0
+    },
+    {
+      "key": "nasopharyngeal_cancer",
+      "label_zh": "鼻咽癌",
+      "printed_label": "Nasopharyngeal cancer",
+      "exposure_key": "pack_years",
+      "printed_unit": "Pack-years",
+      "reference_age_years": null,
+      "sex": null,
+      "stars": 2,
+      "publication_bias": true,
+      "n_studies": 12,
+      "raw_cells": [
+        "Nasopharyngeal cancer",
+        "Pack-years",
+        "1.16 (1.04, 1.31)",
+        "1.28 (1.06, 1.56)",
+        "1.39 (1.08, 1.83)",
+        "1.97 (1.17, 3.43)",
+        "50.00",
+        "2.67 (1.26, 5.94)",
+        "0.13",
+        "1.14",
+        "14.29",
+        "2",
+        "1",
+        "12"
+      ],
+      "points": [
+        {
+          "exposure": 5,
+          "rr": 1.16,
+          "ui_lower": 1.04,
+          "ui_upper": 1.31
+        },
+        {
+          "exposure": 10,
+          "rr": 1.28,
+          "ui_lower": 1.06,
+          "ui_upper": 1.56
+        },
+        {
+          "exposure": 20,
+          "rr": 1.39,
+          "ui_lower": 1.08,
+          "ui_upper": 1.83
+        },
+        {
+          "exposure": 40,
+          "rr": 1.97,
+          "ui_lower": 1.17,
+          "ui_upper": 3.43
+        },
+        {
+          "exposure": 50.0,
+          "rr": 2.67,
+          "ui_lower": 1.26,
+          "ui_upper": 5.94
+        }
+      ],
+      "p85_exposure": 50.0
+    },
+    {
+      "key": "dementia",
+      "label_zh": "阿尔茨海默病及其他痴呆",
+      "printed_label": "Alzheimer’s and other dementia",
+      "exposure_key": "cigarettes_per_day",
+      "printed_unit": "Cigarettes per day",
+      "reference_age_years": null,
+      "sex": null,
+      "stars": 2,
+      "publication_bias": true,
+      "n_studies": 8,
+      "raw_cells": [
+        "Alzheimer’s and other dementia",
+        "Cigarettes per day",
+        "1.16 (1.04, 1.30)",
+        "1.29 (1.06, 1.58)",
+        "1.46 (1.10, 1.96)",
+        "1.74 (1.14, 2.70)",
+        "30.00",
+        "1.54 (1.11, 2.18)",
+        "0.09",
+        "1.10",
+        "9.70",
+        "2",
+        "1",
+        "8"
+      ],
+      "points": [
+        {
+          "exposure": 5,
+          "rr": 1.16,
+          "ui_lower": 1.04,
+          "ui_upper": 1.3
+        },
+        {
+          "exposure": 10,
+          "rr": 1.29,
+          "ui_lower": 1.06,
+          "ui_upper": 1.58
+        },
+        {
+          "exposure": 20,
+          "rr": 1.46,
+          "ui_lower": 1.1,
+          "ui_upper": 1.96
+        },
+        {
+          "exposure": 30.0,
+          "rr": 1.54,
+          "ui_lower": 1.11,
+          "ui_upper": 2.18
+        },
+        {
+          "exposure": 40,
+          "rr": 1.74,
+          "ui_lower": 1.14,
+          "ui_upper": 2.7
+        }
+      ],
+      "p85_exposure": 30.0
+    },
+    {
+      "key": "gallbladder_diseases",
+      "label_zh": "胆囊疾病",
+      "printed_label": "Gallbladder diseases",
+      "exposure_key": "cigarettes_per_day",
+      "printed_unit": "Cigarettes per day",
+      "reference_age_years": null,
+      "sex": null,
+      "stars": 2,
+      "publication_bias": false,
+      "n_studies": 4,
+      "raw_cells": [
+        "Gallbladder diseases",
+        "Cigarettes per day",
+        "1.15 (1.03, 1.30)",
+        "1.24 (1.05, 1.49)",
+        "1.29 (1.05, 1.61)",
+        "1.51 (1.09, 2.14)",
+        "27.93",
+        "1.41 (1.07, 1.88)",
+        "0.06",
+        "1.06",
+        "6.34",
+        "2",
+        "0",
+        "4"
+      ],
+      "points": [
+        {
+          "exposure": 5,
+          "rr": 1.15,
+          "ui_lower": 1.03,
+          "ui_upper": 1.3
+        },
+        {
+          "exposure": 10,
+          "rr": 1.24,
+          "ui_lower": 1.05,
+          "ui_upper": 1.49
+        },
+        {
+          "exposure": 20,
+          "rr": 1.29,
+          "ui_lower": 1.05,
+          "ui_upper": 1.61
+        },
+        {
+          "exposure": 27.93,
+          "rr": 1.41,
+          "ui_lower": 1.07,
+          "ui_upper": 1.88
+        },
+        {
+          "exposure": 40,
+          "rr": 1.51,
+          "ui_lower": 1.09,
+          "ui_upper": 2.14
+        }
+      ],
+      "p85_exposure": 27.93
+    },
+    {
+      "key": "atrial_fibrillation_flutter",
+      "label_zh": "心房颤动和扑动",
+      "printed_label": "Atrial fibrillation and flutter (ref. age: 55–59 years)",
+      "exposure_key": "cigarettes_per_day",
+      "printed_unit": "Cigarettes per day",
+      "reference_age_years": [
+        55,
+        59
+      ],
+      "sex": null,
+      "stars": 2,
+      "publication_bias": false,
+      "n_studies": 5,
+      "raw_cells": [
+        "Atrial fibrillation and flutter (ref. age: 55–59 years)",
+        "Cigarettes per day",
+        "1.34 (1.03, 1.78)",
+        "1.40 (1.03, 1.93)",
+        "1.40 (1.03, 1.93)",
+        "1.40 (1.03, 1.93)",
+        "25.00",
+        "1.40 (1.03, 1.93)",
+        "0.06",
+        "1.06",
+        "5.67",
+        "2",
+        "0",
+        "5"
+      ],
+      "points": [
+        {
+          "exposure": 5,
+          "rr": 1.34,
+          "ui_lower": 1.03,
+          "ui_upper": 1.78
+        },
+        {
+          "exposure": 10,
+          "rr": 1.4,
+          "ui_lower": 1.03,
+          "ui_upper": 1.93
+        },
+        {
+          "exposure": 20,
+          "rr": 1.4,
+          "ui_lower": 1.03,
+          "ui_upper": 1.93
+        },
+        {
+          "exposure": 25.0,
+          "rr": 1.4,
+          "ui_lower": 1.03,
+          "ui_upper": 1.93
+        },
+        {
+          "exposure": 40,
+          "rr": 1.4,
+          "ui_lower": 1.03,
+          "ui_upper": 1.93
+        }
+      ],
+      "p85_exposure": 25.0
+    },
+    {
+      "key": "lip_oral_cancer",
+      "label_zh": "唇及口腔癌",
+      "printed_label": "Lip and oral cavity cancer",
+      "exposure_key": "pack_years",
+      "printed_unit": "Pack-years",
+      "reference_age_years": null,
+      "sex": null,
+      "stars": 2,
+      "publication_bias": false,
+      "n_studies": 10,
+      "raw_cells": [
+        "Lip and oral cavity cancer",
+        "Pack-years",
+        "1.15 (1.00, 1.34)",
+        "1.37 (0.99, 1.94)",
+        "2.05 (0.98, 4.50)",
+        "3.50 (0.97, 13.93)",
+        "49.68",
+        "3.91 (0.96, 17.56)",
+        "0.05",
+        "1.05",
+        "4.81",
+        "2",
+        "0",
+        "10"
+      ],
+      "points": [
+        {
+          "exposure": 5,
+          "rr": 1.15,
+          "ui_lower": 1.0,
+          "ui_upper": 1.34
+        },
+        {
+          "exposure": 10,
+          "rr": 1.37,
+          "ui_lower": 0.99,
+          "ui_upper": 1.94
+        },
+        {
+          "exposure": 20,
+          "rr": 2.05,
+          "ui_lower": 0.98,
+          "ui_upper": 4.5
+        },
+        {
+          "exposure": 40,
+          "rr": 3.5,
+          "ui_lower": 0.97,
+          "ui_upper": 13.93
+        },
+        {
+          "exposure": 49.68,
+          "rr": 3.91,
+          "ui_lower": 0.96,
+          "ui_upper": 17.56
+        }
+      ],
+      "p85_exposure": 49.68
+    },
+    {
+      "key": "breast_cancer",
+      "label_zh": "乳腺癌",
+      "printed_label": "Breast cancer",
+      "exposure_key": "pack_years",
+      "printed_unit": "Pack-years",
+      "reference_age_years": null,
+      "sex": "female",
+      "stars": 2,
+      "publication_bias": false,
+      "n_studies": 23,
+      "raw_cells": [
+        "Breast cancer",
+        "Pack-years",
+        "1.08 (1.02, 1.14)",
+        "1.13 (1.04, 1.24)",
+        "1.17 (1.04, 1.31)",
+        "1.17 (1.04, 1.31)",
+        "34.10",
+        "1.17 (1.04, 1.31)",
+        "0.04",
+        "1.04",
+        "4.46",
+        "2",
+        "0",
+        "23"
+      ],
+      "points": [
+        {
+          "exposure": 5,
+          "rr": 1.08,
+          "ui_lower": 1.02,
+          "ui_upper": 1.14
+        },
+        {
+          "exposure": 10,
+          "rr": 1.13,
+          "ui_lower": 1.04,
+          "ui_upper": 1.24
+        },
+        {
+          "exposure": 20,
+          "rr": 1.17,
+          "ui_lower": 1.04,
+          "ui_upper": 1.31
+        },
+        {
+          "exposure": 34.1,
+          "rr": 1.17,
+          "ui_lower": 1.04,
+          "ui_upper": 1.31
+        },
+        {
+          "exposure": 40,
+          "rr": 1.17,
+          "ui_lower": 1.04,
+          "ui_upper": 1.31
+        }
+      ],
+      "p85_exposure": 34.1
+    },
+    {
+      "key": "colorectal_cancer",
+      "label_zh": "结直肠癌",
+      "printed_label": "Colon and rectum cancer",
+      "exposure_key": "pack_years",
+      "printed_unit": "Pack-years",
+      "reference_age_years": null,
+      "sex": null,
+      "stars": 1,
+      "publication_bias": false,
+      "n_studies": 16,
+      "raw_cells": [
+        "Colon and rectum cancer",
+        "Pack-years",
+        "1.07 (0.99, 1.16)",
+        "1.12 (0.98, 1.29)",
+        "1.19 (0.97, 1.46)",
+        "1.20 (0.97,1.50)",
+        "50.00",
+        "1.20 (0.97, 1.50)",
+        "−0.01",
+        "0.99",
+        "N/A",
+        "1",
+        "0",
+        "16"
+      ],
+      "points": [
+        {
+          "exposure": 5,
+          "rr": 1.07,
+          "ui_lower": 0.99,
+          "ui_upper": 1.16
+        },
+        {
+          "exposure": 10,
+          "rr": 1.12,
+          "ui_lower": 0.98,
+          "ui_upper": 1.29
+        },
+        {
+          "exposure": 20,
+          "rr": 1.19,
+          "ui_lower": 0.97,
+          "ui_upper": 1.46
+        },
+        {
+          "exposure": 40,
+          "rr": 1.2,
+          "ui_lower": 0.97,
+          "ui_upper": 1.5
+        },
+        {
+          "exposure": 50.0,
+          "rr": 1.2,
+          "ui_lower": 0.97,
+          "ui_upper": 1.5
+        }
+      ],
+      "p85_exposure": 50.0
+    },
+    {
+      "key": "kidney_cancer",
+      "label_zh": "肾癌",
+      "printed_label": "Kidney cancer",
+      "exposure_key": "pack_years",
+      "printed_unit": "Pack-years",
+      "reference_age_years": null,
+      "sex": null,
+      "stars": 1,
+      "publication_bias": true,
+      "n_studies": 18,
+      "raw_cells": [
+        "Kidney cancer",
+        "Pack-years",
+        "1.01 (1.00, 1.02)",
+        "1.04 (0.99, 1.09)",
+        "1.15 (0.98, 1.36)",
+        "1.52 (0.94, 2.53)",
+        "45.86",
+        "1.59 (0.93, 2.79)",
+        "−0.01",
+        "0.99",
+        "N/A",
+        "1",
+        "1",
+        "18"
+      ],
+      "points": [
+        {
+          "exposure": 5,
+          "rr": 1.01,
+          "ui_lower": 1.0,
+          "ui_upper": 1.02
+        },
+        {
+          "exposure": 10,
+          "rr": 1.04,
+          "ui_lower": 0.99,
+          "ui_upper": 1.09
+        },
+        {
+          "exposure": 20,
+          "rr": 1.15,
+          "ui_lower": 0.98,
+          "ui_upper": 1.36
+        },
+        {
+          "exposure": 40,
+          "rr": 1.52,
+          "ui_lower": 0.94,
+          "ui_upper": 2.53
+        },
+        {
+          "exposure": 45.86,
+          "rr": 1.59,
+          "ui_lower": 0.93,
+          "ui_upper": 2.79
+        }
+      ],
+      "p85_exposure": 45.86
+    },
+    {
+      "key": "leukemia",
+      "label_zh": "白血病",
+      "printed_label": "Leukemia",
+      "exposure_key": "pack_years",
+      "printed_unit": "Pack-years",
+      "reference_age_years": null,
+      "sex": null,
+      "stars": 1,
+      "publication_bias": false,
+      "n_studies": 7,
+      "raw_cells": [
+        "Leukemia",
+        "Pack-years",
+        "1.04 (0.98, 1.11)",
+        "1.07 (0.97, 1.19)",
+        "1.10 (0.95, 1.29)",
+        "1.62 (0.79, 3.47)",
+        "37.50",
+        "1.50 (0.82, 2.80)",
+        "−0.04",
+        "0.96",
+        "N/A",
+        "1",
+        "0",
+        "7"
+      ],
+      "points": [
+        {
+          "exposure": 5,
+          "rr": 1.04,
+          "ui_lower": 0.98,
+          "ui_upper": 1.11
+        },
+        {
+          "exposure": 10,
+          "rr": 1.07,
+          "ui_lower": 0.97,
+          "ui_upper": 1.19
+        },
+        {
+          "exposure": 20,
+          "rr": 1.1,
+          "ui_lower": 0.95,
+          "ui_upper": 1.29
+        },
+        {
+          "exposure": 37.5,
+          "rr": 1.5,
+          "ui_lower": 0.82,
+          "ui_upper": 2.8
+        },
+        {
+          "exposure": 40,
+          "rr": 1.62,
+          "ui_lower": 0.79,
+          "ui_upper": 3.47
+        }
+      ],
+      "p85_exposure": 37.5
+    },
+    {
+      "key": "fracture",
+      "label_zh": "骨折",
+      "printed_label": "Fracture",
+      "exposure_key": null,
+      "printed_unit": "Binary",
+      "reference_age_years": null,
+      "sex": null,
+      "stars": 1,
+      "publication_bias": false,
+      "n_studies": 59,
+      "raw_cells": [
+        "Fracture",
+        "Binary",
+        "N/A",
+        "N/A",
+        "N/A",
+        "N/A",
+        "1 (binary)",
+        "1.34 (0.84, 1.97)",
+        "−0.05",
+        "0.95",
+        "N/A",
+        "1",
+        "0",
+        "59"
+      ],
+      "binary": {
+        "rr": 1.34,
+        "ui_lower": 0.84,
+        "ui_upper": 1.97
+      }
+    },
+    {
+      "key": "prostate_cancer",
+      "label_zh": "前列腺癌",
+      "printed_label": "Prostate cancer",
+      "exposure_key": "cigarettes_per_day",
+      "printed_unit": "Cigarettes per day",
+      "reference_age_years": null,
+      "sex": "male",
+      "stars": 1,
+      "publication_bias": true,
+      "n_studies": 22,
+      "raw_cells": [
+        "Prostate cancer",
+        "Cigarettes per day",
+        "1.03 (0.98, 1.10)",
+        "1.07 (0.95, 1.21)",
+        "1.16 (0.89, 1.53)",
+        "1.30 (0.82, 2.10)",
+        "29.73",
+        "1.25 (0.85, 1.89)",
+        "−0.06",
+        "0.94",
+        "N/A",
+        "1",
+        "1",
+        "22"
+      ],
+      "points": [
+        {
+          "exposure": 5,
+          "rr": 1.03,
+          "ui_lower": 0.98,
+          "ui_upper": 1.1
+        },
+        {
+          "exposure": 10,
+          "rr": 1.07,
+          "ui_lower": 0.95,
+          "ui_upper": 1.21
+        },
+        {
+          "exposure": 20,
+          "rr": 1.16,
+          "ui_lower": 0.89,
+          "ui_upper": 1.53
+        },
+        {
+          "exposure": 29.73,
+          "rr": 1.25,
+          "ui_lower": 0.85,
+          "ui_upper": 1.89
+        },
+        {
+          "exposure": 40,
+          "rr": 1.3,
+          "ui_lower": 0.82,
+          "ui_upper": 2.1
+        }
+      ],
+      "p85_exposure": 29.73
+    },
+    {
+      "key": "liver_cancer",
+      "label_zh": "肝癌",
+      "printed_label": "Liver cancer",
+      "exposure_key": "pack_years",
+      "printed_unit": "Pack-years",
+      "reference_age_years": null,
+      "sex": null,
+      "stars": 1,
+      "publication_bias": false,
+      "n_studies": 11,
+      "raw_cells": [
+        "Liver cancer",
+        "Pack-years",
+        "1.15 (0.84, 1.59)",
+        "1.26 (0.75, 2.19)",
+        "1.39 (0.65, 3.10)",
+        "1.42 (0.64, 3.30)",
+        "62.50",
+        "1.42 (0.64, 3.30)",
+        "−0.32",
+        "0.72",
+        "N/A",
+        "1",
+        "0",
+        "11"
+      ],
+      "points": [
+        {
+          "exposure": 5,
+          "rr": 1.15,
+          "ui_lower": 0.84,
+          "ui_upper": 1.59
+        },
+        {
+          "exposure": 10,
+          "rr": 1.26,
+          "ui_lower": 0.75,
+          "ui_upper": 2.19
+        },
+        {
+          "exposure": 20,
+          "rr": 1.39,
+          "ui_lower": 0.65,
+          "ui_upper": 3.1
+        },
+        {
+          "exposure": 40,
+          "rr": 1.42,
+          "ui_lower": 0.64,
+          "ui_upper": 3.3
+        },
+        {
+          "exposure": 62.5,
+          "rr": 1.42,
+          "ui_lower": 0.64,
+          "ui_upper": 3.3
+        }
+      ],
+      "p85_exposure": 62.5
+    },
+    {
+      "key": "asthma",
+      "label_zh": "哮喘",
+      "printed_label": "Asthma",
+      "exposure_key": "cigarettes_per_day",
+      "printed_unit": "Cigarettes per day",
+      "reference_age_years": null,
+      "sex": null,
+      "stars": 1,
+      "publication_bias": false,
+      "n_studies": 7,
+      "raw_cells": [
+        "Asthma",
+        "Cigarettes per day",
+        "1.41 (0.54, 3.96)",
+        "1.59 (0.43, 6.39)",
+        "1.61 (0.42, 6.74)",
+        "1.64 (0.41, 7.23)",
+        "26.25",
+        "1.63 (0.41, 7.04)",
+        "−0.64",
+        "0.53",
+        "N/A",
+        "1",
+        "0",
+        "7"
+      ],
+      "points": [
+        {
+          "exposure": 5,
+          "rr": 1.41,
+          "ui_lower": 0.54,
+          "ui_upper": 3.96
+        },
+        {
+          "exposure": 10,
+          "rr": 1.59,
+          "ui_lower": 0.43,
+          "ui_upper": 6.39
+        },
+        {
+          "exposure": 20,
+          "rr": 1.61,
+          "ui_lower": 0.42,
+          "ui_upper": 6.74
+        },
+        {
+          "exposure": 26.25,
+          "rr": 1.63,
+          "ui_lower": 0.41,
+          "ui_upper": 7.04
+        },
+        {
+          "exposure": 40,
+          "rr": 1.64,
+          "ui_lower": 0.41,
+          "ui_upper": 7.23
+        }
+      ],
+      "p85_exposure": 26.25
+    }
+  ]
+}

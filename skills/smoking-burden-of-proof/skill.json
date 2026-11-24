@@ -1,0 +1,247 @@
+{
+  "schema": "longevity-skill/1",
+  "name": "smoking-burden-of-proof",
+  "kind": "paper",
+  "tier": "A",
+  "species": [
+    "human"
+  ],
+  "evidence": "method",
+  "domains": [
+    "吸烟与疾病风险"
+  ],
+  "blurb_zh": "用当前吸烟者的每日支数或累计包年，查论文公布的疾病相对风险及不确定区间。",
+  "intents": [
+    "intervention_evidence",
+    "frailty_mortality"
+  ],
+  "triage": {
+    "reason_zh": "人体荟萃重估的表2按个人烟史提供已印出的暴露点与相对风险，可直接复现查表。",
+    "reviewed": false
+  },
+  "paper": {
+    "doi": "10.1038/s41591-022-01978-x",
+    "title": "Health effects associated with smoking: a Burden of Proof study.",
+    "title_zh": "吸烟相关健康效应的证据负担研究",
+    "journal": "Nature Medicine",
+    "year": 2022,
+    "authors": "Dai 等",
+    "article_url": "https://www.nature.com/articles/s41591-022-01978-x",
+    "supplements": [
+      {
+        "label": "表2：风险查表",
+        "url": "https://www.nature.com/articles/s41591-022-01978-x/tables/2"
+      },
+      {
+        "label": "Supplementary Information（表1–11）",
+        "url": "https://static-content.springer.com/esm/art%3A10.1038%2Fs41591-022-01978-x/MediaObjects/41591_2022_1978_MOESM1_ESM.pdf"
+      },
+      {
+        "label": "Reporting summary",
+        "url": "https://static-content.springer.com/esm/art%3A10.1038%2Fs41591-022-01978-x/MediaObjects/41591_2022_1978_MOESM2_ESM.pdf"
+      }
+    ],
+    "code_url": "https://github.com/ihmeuw-msca/burden-of-proof",
+    "card_notes": [
+      "本技能复现已发表的预测值表，不重新拟合 MR-BRT；只在印出的暴露点返回对应 RR，其他输入显示邻近参考点。",
+      "心血管结局只接受表2所列参考年龄；包年表示累计暴露，不能当作吸烟年数。"
+    ],
+    "summary_zh": "这项研究汇总人群中的吸烟与多种疾病资料，重新估计吸烟暴露与疾病风险的关系，并将研究之间的差异计入不确定性。个人报告只按当前吸烟者的烟史查已发表的相对风险表，不计算个人患病概率、预期寿命或改变吸烟后的效果。",
+    "summary_status": "draft"
+  },
+  "entry": {
+    "script": "scripts/personal_report.py",
+    "measurements_flag": "--measurements",
+    "measurements_header": [
+      "marker",
+      "value",
+      "unit"
+    ],
+    "age_flag": "--age",
+    "sex_flag": "--sex",
+    "out_flag": "--out",
+    "result_json": true,
+    "targets_flag": "--targets",
+    "levers_json": true
+  },
+  "population": {
+    "age_years": [
+      30,
+      110
+    ],
+    "note_zh": "论文用于30岁及以上成人疾病终点；110为输入检查上限，不是论文验证上限。仅当前吸烟者；五种心血管结局限各自参考年龄。"
+  },
+  "inputs_status": "verified",
+  "inputs": [
+    {
+      "key": "pack_years",
+      "label_zh": "累计吸烟包年",
+      "aliases": [
+        "pack-years",
+        "pack years",
+        "累计包年",
+        "吸烟包年"
+      ],
+      "unit": "a",
+      "accept": {
+        "year": 1
+      },
+      "range": [
+        0,
+        300
+      ],
+      "unit_required": true,
+      "required": false,
+      "from": "measurements",
+      "note_zh": "仅包年结局必需。a表示固定每天一包强度下的等效暴露年，数值是已知包年，不是实际烟龄。推荐用pack_years键；不自动从每日支数反推累计烟史。"
+    },
+    {
+      "key": "cigarettes_per_day",
+      "label_zh": "每日吸烟支数",
+      "aliases": [
+        "cigarettes per day",
+        "每日支数",
+        "每天吸烟支数",
+        "日吸烟量"
+      ],
+      "unit": "1",
+      "accept": {
+        "1": 1
+      },
+      "range": [
+        0,
+        200
+      ],
+      "unit_required": true,
+      "required": false,
+      "from": "measurements",
+      "note_zh": "仅支/日结局必需。1表示单支计数，时间窗固定为每日；可为每日平均数。只能输入卷烟或已经确认的卷烟当量，不是包数；不自动换算其他烟草。"
+    },
+    {
+      "key": "age",
+      "label_zh": "实足年龄",
+      "unit": "a",
+      "range": [
+        30,
+        110
+      ],
+      "required": true,
+      "from": "profile",
+      "flag": "--age"
+    },
+    {
+      "key": "sex",
+      "label_zh": "论文性别分组",
+      "required": false,
+      "from": "profile",
+      "flag": "--sex",
+      "note_zh": "male/female或男/女；乳腺癌、宫颈癌限female，前列腺癌限male；其他结局不需要。"
+    },
+    {
+      "key": "smoking_status",
+      "label_zh": "吸烟状态",
+      "required": true,
+      "from": "argument",
+      "flag": "--smoking-status",
+      "note_zh": "仅current/当前吸烟。former/已戒烟、never/从不吸烟均不适用。"
+    },
+    {
+      "key": "outcome",
+      "label_zh": "疾病结局",
+      "required": true,
+      "from": "argument",
+      "flag": "--outcome",
+      "note_zh": "见references/outcomes.md；必须明确选择，不默认肺癌。"
+    }
+  ],
+  "outputs": [
+    {
+      "key": "outcome",
+      "label_zh": "疾病结局"
+    },
+    {
+      "key": "lookup_status",
+      "label_zh": "查表状态"
+    },
+    {
+      "key": "exposure",
+      "label_zh": "输入的暴露量",
+      "note_zh": "单位见exposure_unit，不同结局不能互换。"
+    },
+    {
+      "key": "exposure_unit",
+      "label_zh": "论文暴露单位"
+    },
+    {
+      "key": "relative_risk",
+      "label_zh": "表2平均相对风险",
+      "unit": "1"
+    },
+    {
+      "key": "ui_lower",
+      "label_zh": "95%不确定区间下界",
+      "unit": "1"
+    },
+    {
+      "key": "ui_upper",
+      "label_zh": "95%不确定区间上界",
+      "unit": "1"
+    },
+    {
+      "key": "evidence_stars",
+      "label_zh": "研究关联证据星级",
+      "unit": "score",
+      "note_zh": "结局层面的固定证据等级，不是个人严重度。"
+    }
+  ],
+  "data_files": [
+    {
+      "path": "data/table2.json",
+      "source_url": "https://www.nature.com/articles/s41591-022-01978-x/tables/2",
+      "license": "CC-BY-4.0",
+      "redistributable": "yes",
+      "sha256": "b84b20c166eebd7c4843a55c740472b4698f4c4c6aadf5031940dc2959bee61b"
+    }
+  ],
+  "validation": {
+    "status": "reproduced",
+    "examples": [
+      {
+        "locator": "Table 2, Lung cancer, exposure 20 Pack-years",
+        "quote": "Mean risk at different exposure levels\n5\n10\n20\n40\nLung cancer\nPack-years\n1.58 (1.19, 2.15)\n2.48 (1.40, 4.53)\n5.11 (1.84, 14.99)\n11.62 (2.49, 58.73)",
+        "values": [
+          20,
+          5.11,
+          1.84,
+          14.99
+        ],
+        "tolerance": "精确匹配印出的两位小数；只复现查表，不从圆整值重拟合曲线。",
+        "test": "tests/test_manifest.py::test_printed_lung_cancer_20_pack_years"
+      },
+      {
+        "locator": "Table 2, Type 2 diabetes, exposure 20 Cigarettes per day",
+        "quote": "Mean risk at different exposure levels\n5\n10\n20\n40\nType 2 diabetes\nCigarettes per day\n1.23 (1.09, 1.39)\n1.38 (1.15, 1.68)\n1.49 (1.18, 1.90)\n1.67 (1.24, 2.29)",
+        "values": [
+          20,
+          1.49,
+          1.18,
+          1.9
+        ],
+        "tolerance": "精确匹配表内数值。",
+        "test": "tests/test_manifest.py::test_printed_diabetes_20_cigarettes"
+      },
+      {
+        "locator": "Table 2, Lung cancer, 85th percentile risk level",
+        "quote": "50.88\n13.42 (2.63, 74.59)",
+        "values": [
+          50.88,
+          13.42,
+          2.63,
+          74.59
+        ],
+        "tolerance": "精确匹配表内数值。",
+        "test": "tests/test_manifest.py::test_printed_lung_cancer_percentile"
+      }
+    ]
+  }
+}
