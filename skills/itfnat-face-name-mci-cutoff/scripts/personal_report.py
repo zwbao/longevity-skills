@@ -66,7 +66,7 @@ def raw_score_problems(unmatched: list) -> list:
 
 def _result_word(test: str, res: dict) -> str:
     cut = TESTS[test]["cutoff"]
-    return f"≤ {cut:g}（切点以下，提示轻度认知障碍样）" if res["positive"] else f"> {cut:g}（切点以上）"
+    return f"≤ {cut:g}（切点以下，是论文样本里轻度认知障碍组更常见的一侧）" if res["positive"] else f"> {cut:g}（切点以上）"
 
 
 def _category(test: str, res: dict) -> str:
