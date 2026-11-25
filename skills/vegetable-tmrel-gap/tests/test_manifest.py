@@ -71,6 +71,7 @@ def test_gap_and_target_arithmetic(tmp_path, value, status):
     assert text.index("## 论文卡片") < text.index("## 你的摄入记录")
     assert "10.1038/s41591-022-01970-5" in text and presets.BOUNDARY in text
     assert "风险降低" not in text
+    assert presets.POPULATION in text and "4,609,296" in text and "34个国家" in text
 
 
 @pytest.mark.parametrize("value,unit", [(100,"kg"), (3001,"g/d"), (-1,"g/d"), ("NaN","g/d"), (100,""), (None,"g/d")])

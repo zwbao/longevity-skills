@@ -6,7 +6,7 @@ from pathlib import Path
 
 import skillkit
 from paper_card import lines as paper_card_lines
-from presets import (BOUNDARY, FOOD_DEFINITION, INTAKE_KEY, OBSERVED_MAX_G_D,
+from presets import (BOUNDARY, FOOD_DEFINITION, POPULATION, INTAKE_KEY, OBSERVED_MAX_G_D,
                      TMREL_LOWER_G_D, TMREL_UPPER_G_D, UNIT)
 
 
@@ -91,7 +91,7 @@ def main(argv=None):
             f"下端点减摄入量：{result['lower_difference_g_d']:g} 克/日；上端点减摄入量：{result['upper_difference_g_d']:g} 克/日。正数表示低于相应端点，负数表示高于相应端点。", ""]
     if result["shortfall_g_d"] > 0:
         body += [f"与范围下端点的距离为 {result['shortfall_g_d']:g} 克/日。这是记录比较值。", ""]
-    body += ["参考范围来自纳入研究中的高摄入暴露分布；它不是个人最优摄入量，也不是安全上限。高于上端点不等于有害，不代表需要减少摄入。", "", FOOD_DEFINITION, "",
+    body += ["参考范围来自纳入研究中的高摄入暴露分布；它不是个人最优摄入量，也不是安全上限。高于上端点不等于有害，不代表需要减少摄入。", "", POPULATION, "", FOOD_DEFINITION, "",
              "请确认输入是完整记录期间的日均量，记录中的零摄入日也纳入平均；缺失的天不能当作零。论文没有提供统一的生熟重量或干鲜重量换算系数，这里不做这些换算，也不把碗、杯或未称量的份数转换成克。", "",
              "验证状态：仍在验证。论文公布了参考范围，但没有个人摄入差距的独立算例；本报告未复现原研究的风险模型或参考范围估计过程。", ""]
     if x > OBSERVED_MAX_G_D or targets.get(INTAKE_KEY, 0) > OBSERVED_MAX_G_D:
