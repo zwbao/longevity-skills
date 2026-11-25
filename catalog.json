@@ -2,15 +2,15 @@
   "schema": "longevity-catalog/1",
   "version": "2026.48.0",
   "counts": {
-    "skills": 192,
+    "skills": 193,
     "tiers": {
-      "A": 28,
+      "A": 29,
       "B": 83,
       "C": 73,
       "tool": 8
     },
-    "claims": 12543,
-    "claim_entities": 9844
+    "claims": 15332,
+    "claim_entities": 11465
   },
   "intents": [
     {
@@ -1076,6 +1076,144 @@
         "title_zh": "表型年龄",
         "journal": "Aging",
         "year": 2018
+      }
+    },
+    {
+      "name": "age-stratified-step-range",
+      "kind": "paper",
+      "tier": "A",
+      "species": [
+        "human"
+      ],
+      "evidence": "cohort",
+      "domains": [
+        "临床年龄与可穿戴"
+      ],
+      "blurb_zh": "用年龄和设备记录的日均步数，比较所在年龄组的研究平台范围。",
+      "description": "Tier A draft: the paper's printed example is not reproduced yet, so treat the readout as provisional. Compares an adult's device-recorded average daily steps with the age-specific plateau ranges reported in a human cohort meta-analysis. Use when a person asks how their daily steps relate to their age or wants to compare a chosen step-count target. Reports range position and arithmetic differences in Chinese.",
+      "intents": [
+        "frailty_mortality"
+      ],
+      "has_script": true,
+      "validation_status": "draft",
+      "validation_label_zh": "仍在验证",
+      "entry": {
+        "script": "scripts/personal_report.py",
+        "measurements_flag": "--measurements",
+        "measurements_header": [
+          "marker",
+          "value",
+          "unit"
+        ],
+        "age_flag": "--age",
+        "sex_flag": "--sex",
+        "out_flag": "--out",
+        "result_json": true,
+        "targets_flag": "--targets",
+        "levers_json": true
+      },
+      "inputs_status": "draft",
+      "inputs": [
+        {
+          "key": "daily_steps",
+          "label_zh": "日均步数",
+          "aliases": [
+            "每日步数",
+            "平均每日步数",
+            "日平均步数",
+            "步数",
+            "daily step count",
+            "steps per day",
+            "average steps/day",
+            "mean daily steps",
+            "steps"
+          ],
+          "unit": "1",
+          "accept": {},
+          "range": [
+            0,
+            100000
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "固定一日窗口的步数计数，显示为步/日。机器单位1表示计数；只接受已算好的日均数，不能填周总数、步频、距离或万步。上下限仅是软件防错范围。"
+        },
+        {
+          "key": "age",
+          "label_zh": "实足年龄",
+          "aliases": [
+            "年龄",
+            "age",
+            "age in years"
+          ],
+          "unit": "a",
+          "accept": {},
+          "range": [
+            18,
+            130
+          ],
+          "required": true,
+          "from": "profile",
+          "flag": "--age",
+          "note_zh": "以岁填写；18岁来自研究纳入规则，130岁是软件防错上限，不代表研究最大年龄。"
+        },
+        {
+          "key": "sex",
+          "label_zh": "性别",
+          "required": false,
+          "from": "profile",
+          "flag": "--sex",
+          "note_zh": "可选；本范围比较不使用性别。"
+        }
+      ],
+      "outputs": [
+        {
+          "key": "daily_steps",
+          "label_zh": "日均步数（步/日）",
+          "unit": "1",
+          "note_zh": "固定一日窗口的步数计数；不是死亡风险。"
+        },
+        {
+          "key": "reference_low_daily_steps",
+          "label_zh": "研究范围下端（步/日）",
+          "unit": "1",
+          "note_zh": "固定一日窗口的步数计数；不是死亡风险。"
+        },
+        {
+          "key": "reference_high_daily_steps",
+          "label_zh": "研究范围上端（步/日）",
+          "unit": "1",
+          "note_zh": "固定一日窗口的步数计数；不是死亡风险。"
+        },
+        {
+          "key": "difference_from_low_daily_steps",
+          "label_zh": "日均步数减范围下端（步/日）",
+          "unit": "1",
+          "note_zh": "固定一日窗口的步数计数；不是死亡风险。"
+        },
+        {
+          "key": "difference_from_high_daily_steps",
+          "label_zh": "日均步数减范围上端（步/日）",
+          "unit": "1",
+          "note_zh": "固定一日窗口的步数计数；不是死亡风险。"
+        },
+        {
+          "key": "age_group",
+          "label_zh": "论文年龄组",
+          "note_zh": "under_60 或 ge_60。"
+        },
+        {
+          "key": "step_position",
+          "label_zh": "相对研究平台范围的位置",
+          "note_zh": "below、within、above；范围端点均纳入within，仅为显示约定。"
+        }
+      ],
+      "paper": {
+        "doi": "10.1016/s2468-2667(21)00302-9",
+        "title": "Daily steps and all-cause mortality: a meta-analysis of 15 international cohorts.",
+        "title_zh": "每日步数与全因死亡：国际队列荟萃分析",
+        "journal": "The Lancet. Public health",
+        "year": 2022
       }
     },
     {
