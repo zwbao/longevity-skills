@@ -222,6 +222,36 @@
         ],
         "tolerance": "绝对误差不超过 0.05 个百分点，对应正文风险只保留一位小数；不调整已印出的参数。",
         "test": "tests/test_manifest.py::test_printed_main_text_example"
+      },
+      {
+        "locator": "Results, same paragraph (Supplementary Figure S11); also Abstract",
+        "quote": "Similarly, the 10-year risk for a 50-year-old woman with the same risk factor profile ranged from 4.2% in low-risk countries to 13.7% in very high-risk countries",
+        "values": [
+          4.2,
+          13.7
+        ],
+        "tolerance": "绝对误差不超过 0.05 个百分点，对应正文风险只保留一位小数。",
+        "test": "tests/test_manifest.py::test_printed_main_text_example"
+      },
+      {
+        "locator": "Updated Supplementary Material, Supplementary Methods Table 4 (50 岁吸烟者，SBP 140 mmHg，TC 6.3 mmol/L，HDL 1.4 mmol/L)",
+        "quote": "Linear predictor: ∑ = 0.3221 | ∑ = 0.39788; Male 1-0.9605 exp(0.3221)=0.0541 | Female 1-0.9776 exp(0.39788)=0.0332; Low 0.0631 | 0.0434; Moderate 0.0811 | 0.0523; High 0.0881 | 0.0713; Very high 0.1506 | 0.1414",
+        "values": [
+          0.3221,
+          0.39788,
+          0.0541,
+          0.0332,
+          0.0631,
+          0.0811,
+          0.0881,
+          0.1506,
+          0.0434,
+          0.0523,
+          0.0713,
+          0.1414
+        ],
+        "tolerance": "线性预测值 1e-8；未校准风险 0.00005；校准概率 0.00025（原表用四舍五入后的中间风险代入）。",
+        "test": "tests/test_manifest.py::test_printed_methods_table4"
       }
     ]
   }
