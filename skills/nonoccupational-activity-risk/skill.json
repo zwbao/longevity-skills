@@ -1,0 +1,1302 @@
+{
+  "schema": "longevity-skill/1",
+  "name": "nonoccupational-activity-risk",
+  "kind": "paper",
+  "tier": "A",
+  "species": [
+    "human"
+  ],
+  "evidence": "review",
+  "domains": [
+    "运动与慢病风险"
+  ],
+  "blurb_zh": "用每周非职业活动时长查询死亡、心血管病和癌症的人群相对风险，并比较自定目标。",
+  "intents": [
+    "intervention_evidence",
+    "frailty_mortality"
+  ],
+  "triage": {
+    "reason_zh": "一般成年人可用自己的每周非职业活动时长，按公开边际强度及作者风险曲线查询相对风险，且复现表1全部结局。",
+    "reviewed": false
+  },
+  "paper": {
+    "doi": "10.1136/bjsports-2022-105669",
+    "title": "Non-occupational physical activity and risk of cardiovascular disease, cancer and mortality outcomes: a dose-response meta-analysis of large prospective studies.",
+    "title_zh": "非职业身体活动与心血管病、癌症和死亡风险的剂量反应荟萃分析",
+    "journal": "British Journal of Sports Medicine",
+    "year": 2023,
+    "authors": "Garcia 等",
+    "article_url": "https://bjsm.bmj.com/content/57/15/979",
+    "supplements": [
+      {
+        "label": "eMethods 1–6、eFigure 1、eResults 1–4",
+        "url": "https://pmc.ncbi.nlm.nih.gov/articles/instance/10423495/bin/bjsports-2022-105669supp001.pdf"
+      },
+      {
+        "label": "纳入研究与活动量换算明细",
+        "url": "https://osf.io/3nhxe/"
+      },
+      {
+        "label": "排除文章清单",
+        "url": "https://osf.io/6dm3b/"
+      },
+      {
+        "label": "MOOSE checklist",
+        "url": "https://osf.io/4gpr7/"
+      },
+      {
+        "label": "Exposure harmonisation flowchart",
+        "url": "https://osf.io/8wy9f/"
+      }
+    ],
+    "code_url": "https://github.com/meta-analyses/meta-analysis",
+    "card_notes": [
+      "采用总人群主分析公开曲线；未重拟合荟萃模型，未使用补充材料性别分层或敏感性分析结果。",
+      "原文检索截至2019年2月；活动多为自报，手环全天总量、步数或含职业活动的MET不能直接代入。"
+    ],
+    "summary_zh": "这项研究汇总一般成年人的前瞻性队列，发现非职业身体活动较多与较低的死亡及多种慢病风险相关，且关联强弱随活动量和结局而变。个人报告只把每周活动时长换算后对应到研究人群的相对风险，不计算个人绝对风险或寿命。",
+    "summary_status": "draft"
+  },
+  "entry": {
+    "script": "scripts/personal_report.py",
+    "measurements_flag": "--measurements",
+    "measurements_header": [
+      "marker",
+      "value",
+      "unit"
+    ],
+    "age_flag": "--age",
+    "out_flag": "--out",
+    "result_json": true,
+    "targets_flag": "--targets",
+    "levers_json": true
+  },
+  "inputs_status": "verified",
+  "inputs": [
+    {
+      "key": "light_min_week",
+      "label_zh": "每周轻强度非职业活动时长",
+      "aliases": [
+        "非职业轻强度活动分钟/周",
+        "non-occupational light activity minutes per week",
+        "weekly light activity duration"
+      ],
+      "unit": "min",
+      "accept": {
+        "h": 60,
+        "s": 0.016666666666666666
+      },
+      "range": [
+        0,
+        10080
+      ],
+      "unit_required": true,
+      "required": true,
+      "from": "measurements",
+      "note_zh": "填一个通常星期累计的活动时长，排除工作活动、睡眠和静坐；三种强度时段不能重叠。没有该类活动时明确填零，未知不能填零。分钟和小时均指同一星期内累计时长。"
+    },
+    {
+      "key": "moderate_min_week",
+      "label_zh": "每周中等强度非职业活动时长",
+      "aliases": [
+        "非职业中等强度活动分钟/周",
+        "non-occupational moderate activity minutes per week",
+        "weekly moderate activity duration"
+      ],
+      "unit": "min",
+      "accept": {
+        "h": 60,
+        "s": 0.016666666666666666
+      },
+      "range": [
+        0,
+        10080
+      ],
+      "unit_required": true,
+      "required": true,
+      "from": "measurements",
+      "note_zh": "填一个通常星期累计的活动时长，排除工作活动、睡眠和静坐；三种强度时段不能重叠。没有该类活动时明确填零，未知不能填零。分钟和小时均指同一星期内累计时长。"
+    },
+    {
+      "key": "vigorous_min_week",
+      "label_zh": "每周高强度非职业活动时长",
+      "aliases": [
+        "非职业高强度活动分钟/周",
+        "non-occupational vigorous activity minutes per week",
+        "weekly vigorous activity duration"
+      ],
+      "unit": "min",
+      "accept": {
+        "h": 60,
+        "s": 0.016666666666666666
+      },
+      "range": [
+        0,
+        10080
+      ],
+      "unit_required": true,
+      "required": true,
+      "from": "measurements",
+      "note_zh": "填一个通常星期累计的活动时长，排除工作活动、睡眠和静坐；三种强度时段不能重叠。没有该类活动时明确填零，未知不能填零。分钟和小时均指同一星期内累计时长。"
+    },
+    {
+      "key": "age",
+      "label_zh": "实足年龄",
+      "unit": "a",
+      "range": [
+        18,
+        120
+      ],
+      "required": true,
+      "from": "profile",
+      "note_zh": "只用于确认一般成年人适用范围，不参与风险校准；上限为输入检查界限。"
+    }
+  ],
+  "outputs": [
+    {
+      "key": "activity_mmet_h_week",
+      "label_zh": "每周非职业边际活动量",
+      "unit": "mMET-hours/week"
+    },
+    {
+      "key": "all_cause_mortality_rr",
+      "label_zh": "全因死亡：相对风险",
+      "unit": "1",
+      "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+    },
+    {
+      "key": "all_cause_mortality_ci_lower",
+      "label_zh": "全因死亡：95%置信区间下限",
+      "unit": "1",
+      "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+    },
+    {
+      "key": "all_cause_mortality_ci_upper",
+      "label_zh": "全因死亡：95%置信区间上限",
+      "unit": "1",
+      "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+    },
+    {
+      "key": "all_cause_mortality_matched_mmet_h_week",
+      "label_zh": "全因死亡：实际查询网格活动量",
+      "unit": "mMET-hours/week",
+      "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+    },
+    {
+      "key": "cvd_mortality_rr",
+      "label_zh": "心血管疾病死亡：相对风险",
+      "unit": "1",
+      "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+    },
+    {
+      "key": "cvd_mortality_ci_lower",
+      "label_zh": "心血管疾病死亡：95%置信区间下限",
+      "unit": "1",
+      "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+    },
+    {
+      "key": "cvd_mortality_ci_upper",
+      "label_zh": "心血管疾病死亡：95%置信区间上限",
+      "unit": "1",
+      "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+    },
+    {
+      "key": "cvd_mortality_matched_mmet_h_week",
+      "label_zh": "心血管疾病死亡：实际查询网格活动量",
+      "unit": "mMET-hours/week",
+      "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+    },
+    {
+      "key": "cancer_mortality_rr",
+      "label_zh": "癌症死亡：相对风险",
+      "unit": "1",
+      "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+    },
+    {
+      "key": "cancer_mortality_ci_lower",
+      "label_zh": "癌症死亡：95%置信区间下限",
+      "unit": "1",
+      "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+    },
+    {
+      "key": "cancer_mortality_ci_upper",
+      "label_zh": "癌症死亡：95%置信区间上限",
+      "unit": "1",
+      "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+    },
+    {
+      "key": "cancer_mortality_matched_mmet_h_week",
+      "label_zh": "癌症死亡：实际查询网格活动量",
+      "unit": "mMET-hours/week",
+      "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+    },
+    {
+      "key": "cvd_incidence_rr",
+      "label_zh": "总心血管疾病发生：相对风险",
+      "unit": "1",
+      "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+    },
+    {
+      "key": "cvd_incidence_ci_lower",
+      "label_zh": "总心血管疾病发生：95%置信区间下限",
+      "unit": "1",
+      "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+    },
+    {
+      "key": "cvd_incidence_ci_upper",
+      "label_zh": "总心血管疾病发生：95%置信区间上限",
+      "unit": "1",
+      "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+    },
+    {
+      "key": "cvd_incidence_matched_mmet_h_week",
+      "label_zh": "总心血管疾病发生：实际查询网格活动量",
+      "unit": "mMET-hours/week",
+      "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+    },
+    {
+      "key": "chd_incidence_rr",
+      "label_zh": "冠心病发生：相对风险",
+      "unit": "1",
+      "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+    },
+    {
+      "key": "chd_incidence_ci_lower",
+      "label_zh": "冠心病发生：95%置信区间下限",
+      "unit": "1",
+      "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+    },
+    {
+      "key": "chd_incidence_ci_upper",
+      "label_zh": "冠心病发生：95%置信区间上限",
+      "unit": "1",
+      "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+    },
+    {
+      "key": "chd_incidence_matched_mmet_h_week",
+      "label_zh": "冠心病发生：实际查询网格活动量",
+      "unit": "mMET-hours/week",
+      "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+    },
+    {
+      "key": "stroke_incidence_rr",
+      "label_zh": "卒中发生：相对风险",
+      "unit": "1",
+      "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+    },
+    {
+      "key": "stroke_incidence_ci_lower",
+      "label_zh": "卒中发生：95%置信区间下限",
+      "unit": "1",
+      "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+    },
+    {
+      "key": "stroke_incidence_ci_upper",
+      "label_zh": "卒中发生：95%置信区间上限",
+      "unit": "1",
+      "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+    },
+    {
+      "key": "stroke_incidence_matched_mmet_h_week",
+      "label_zh": "卒中发生：实际查询网格活动量",
+      "unit": "mMET-hours/week",
+      "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+    },
+    {
+      "key": "heart_failure_incidence_rr",
+      "label_zh": "心力衰竭发生：相对风险",
+      "unit": "1",
+      "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+    },
+    {
+      "key": "heart_failure_incidence_ci_lower",
+      "label_zh": "心力衰竭发生：95%置信区间下限",
+      "unit": "1",
+      "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+    },
+    {
+      "key": "heart_failure_incidence_ci_upper",
+      "label_zh": "心力衰竭发生：95%置信区间上限",
+      "unit": "1",
+      "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+    },
+    {
+      "key": "heart_failure_incidence_matched_mmet_h_week",
+      "label_zh": "心力衰竭发生：实际查询网格活动量",
+      "unit": "mMET-hours/week",
+      "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+    },
+    {
+      "key": "cancer_incidence_rr",
+      "label_zh": "总癌症发生：相对风险",
+      "unit": "1",
+      "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+    },
+    {
+      "key": "cancer_incidence_ci_lower",
+      "label_zh": "总癌症发生：95%置信区间下限",
+      "unit": "1",
+      "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+    },
+    {
+      "key": "cancer_incidence_ci_upper",
+      "label_zh": "总癌症发生：95%置信区间上限",
+      "unit": "1",
+      "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+    },
+    {
+      "key": "cancer_incidence_matched_mmet_h_week",
+      "label_zh": "总癌症发生：实际查询网格活动量",
+      "unit": "mMET-hours/week",
+      "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+    },
+    {
+      "key": "head_neck_incidence_rr",
+      "label_zh": "头颈部癌发生：相对风险",
+      "unit": "1",
+      "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+    },
+    {
+      "key": "head_neck_incidence_ci_lower",
+      "label_zh": "头颈部癌发生：95%置信区间下限",
+      "unit": "1",
+      "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+    },
+    {
+      "key": "head_neck_incidence_ci_upper",
+      "label_zh": "头颈部癌发生：95%置信区间上限",
+      "unit": "1",
+      "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+    },
+    {
+      "key": "head_neck_incidence_matched_mmet_h_week",
+      "label_zh": "头颈部癌发生：实际查询网格活动量",
+      "unit": "mMET-hours/week",
+      "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+    },
+    {
+      "key": "myeloid_leukaemia_incidence_rr",
+      "label_zh": "髓系白血病发生：相对风险",
+      "unit": "1",
+      "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+    },
+    {
+      "key": "myeloid_leukaemia_incidence_ci_lower",
+      "label_zh": "髓系白血病发生：95%置信区间下限",
+      "unit": "1",
+      "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+    },
+    {
+      "key": "myeloid_leukaemia_incidence_ci_upper",
+      "label_zh": "髓系白血病发生：95%置信区间上限",
+      "unit": "1",
+      "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+    },
+    {
+      "key": "myeloid_leukaemia_incidence_matched_mmet_h_week",
+      "label_zh": "髓系白血病发生：实际查询网格活动量",
+      "unit": "mMET-hours/week",
+      "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+    },
+    {
+      "key": "myeloma_incidence_rr",
+      "label_zh": "骨髓瘤发生：相对风险",
+      "unit": "1",
+      "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+    },
+    {
+      "key": "myeloma_incidence_ci_lower",
+      "label_zh": "骨髓瘤发生：95%置信区间下限",
+      "unit": "1",
+      "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+    },
+    {
+      "key": "myeloma_incidence_ci_upper",
+      "label_zh": "骨髓瘤发生：95%置信区间上限",
+      "unit": "1",
+      "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+    },
+    {
+      "key": "myeloma_incidence_matched_mmet_h_week",
+      "label_zh": "骨髓瘤发生：实际查询网格活动量",
+      "unit": "mMET-hours/week",
+      "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+    },
+    {
+      "key": "gastric_cardia_incidence_rr",
+      "label_zh": "胃贲门癌发生：相对风险",
+      "unit": "1",
+      "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+    },
+    {
+      "key": "gastric_cardia_incidence_ci_lower",
+      "label_zh": "胃贲门癌发生：95%置信区间下限",
+      "unit": "1",
+      "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+    },
+    {
+      "key": "gastric_cardia_incidence_ci_upper",
+      "label_zh": "胃贲门癌发生：95%置信区间上限",
+      "unit": "1",
+      "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+    },
+    {
+      "key": "gastric_cardia_incidence_matched_mmet_h_week",
+      "label_zh": "胃贲门癌发生：实际查询网格活动量",
+      "unit": "mMET-hours/week",
+      "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+    },
+    {
+      "key": "lung_incidence_rr",
+      "label_zh": "肺癌发生：相对风险",
+      "unit": "1",
+      "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+    },
+    {
+      "key": "lung_incidence_ci_lower",
+      "label_zh": "肺癌发生：95%置信区间下限",
+      "unit": "1",
+      "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+    },
+    {
+      "key": "lung_incidence_ci_upper",
+      "label_zh": "肺癌发生：95%置信区间上限",
+      "unit": "1",
+      "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+    },
+    {
+      "key": "lung_incidence_matched_mmet_h_week",
+      "label_zh": "肺癌发生：实际查询网格活动量",
+      "unit": "mMET-hours/week",
+      "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+    },
+    {
+      "key": "liver_incidence_rr",
+      "label_zh": "肝癌发生：相对风险",
+      "unit": "1",
+      "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+    },
+    {
+      "key": "liver_incidence_ci_lower",
+      "label_zh": "肝癌发生：95%置信区间下限",
+      "unit": "1",
+      "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+    },
+    {
+      "key": "liver_incidence_ci_upper",
+      "label_zh": "肝癌发生：95%置信区间上限",
+      "unit": "1",
+      "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+    },
+    {
+      "key": "liver_incidence_matched_mmet_h_week",
+      "label_zh": "肝癌发生：实际查询网格活动量",
+      "unit": "mMET-hours/week",
+      "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+    },
+    {
+      "key": "endometrial_incidence_rr",
+      "label_zh": "子宫内膜癌发生（女性研究）：相对风险",
+      "unit": "1",
+      "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+    },
+    {
+      "key": "endometrial_incidence_ci_lower",
+      "label_zh": "子宫内膜癌发生（女性研究）：95%置信区间下限",
+      "unit": "1",
+      "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+    },
+    {
+      "key": "endometrial_incidence_ci_upper",
+      "label_zh": "子宫内膜癌发生（女性研究）：95%置信区间上限",
+      "unit": "1",
+      "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+    },
+    {
+      "key": "endometrial_incidence_matched_mmet_h_week",
+      "label_zh": "子宫内膜癌发生（女性研究）：实际查询网格活动量",
+      "unit": "mMET-hours/week",
+      "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+    },
+    {
+      "key": "colon_incidence_rr",
+      "label_zh": "结肠癌发生：相对风险",
+      "unit": "1",
+      "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+    },
+    {
+      "key": "colon_incidence_ci_lower",
+      "label_zh": "结肠癌发生：95%置信区间下限",
+      "unit": "1",
+      "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+    },
+    {
+      "key": "colon_incidence_ci_upper",
+      "label_zh": "结肠癌发生：95%置信区间上限",
+      "unit": "1",
+      "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+    },
+    {
+      "key": "colon_incidence_matched_mmet_h_week",
+      "label_zh": "结肠癌发生：实际查询网格活动量",
+      "unit": "mMET-hours/week",
+      "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+    },
+    {
+      "key": "breast_incidence_rr",
+      "label_zh": "乳腺癌发生（女性研究）：相对风险",
+      "unit": "1",
+      "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+    },
+    {
+      "key": "breast_incidence_ci_lower",
+      "label_zh": "乳腺癌发生（女性研究）：95%置信区间下限",
+      "unit": "1",
+      "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+    },
+    {
+      "key": "breast_incidence_ci_upper",
+      "label_zh": "乳腺癌发生（女性研究）：95%置信区间上限",
+      "unit": "1",
+      "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+    },
+    {
+      "key": "breast_incidence_matched_mmet_h_week",
+      "label_zh": "乳腺癌发生（女性研究）：实际查询网格活动量",
+      "unit": "mMET-hours/week",
+      "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+    },
+    {
+      "key": "bladder_incidence_rr",
+      "label_zh": "膀胱癌发生：相对风险",
+      "unit": "1",
+      "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+    },
+    {
+      "key": "bladder_incidence_ci_lower",
+      "label_zh": "膀胱癌发生：95%置信区间下限",
+      "unit": "1",
+      "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+    },
+    {
+      "key": "bladder_incidence_ci_upper",
+      "label_zh": "膀胱癌发生：95%置信区间上限",
+      "unit": "1",
+      "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+    },
+    {
+      "key": "bladder_incidence_matched_mmet_h_week",
+      "label_zh": "膀胱癌发生：实际查询网格活动量",
+      "unit": "mMET-hours/week",
+      "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+    },
+    {
+      "key": "rectum_incidence_rr",
+      "label_zh": "直肠癌发生：相对风险",
+      "unit": "1",
+      "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+    },
+    {
+      "key": "rectum_incidence_ci_lower",
+      "label_zh": "直肠癌发生：95%置信区间下限",
+      "unit": "1",
+      "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+    },
+    {
+      "key": "rectum_incidence_ci_upper",
+      "label_zh": "直肠癌发生：95%置信区间上限",
+      "unit": "1",
+      "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+    },
+    {
+      "key": "rectum_incidence_matched_mmet_h_week",
+      "label_zh": "直肠癌发生：实际查询网格活动量",
+      "unit": "mMET-hours/week",
+      "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+    },
+    {
+      "key": "oesophageal_incidence_rr",
+      "label_zh": "食管癌发生：相对风险",
+      "unit": "1",
+      "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+    },
+    {
+      "key": "oesophageal_incidence_ci_lower",
+      "label_zh": "食管癌发生：95%置信区间下限",
+      "unit": "1",
+      "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+    },
+    {
+      "key": "oesophageal_incidence_ci_upper",
+      "label_zh": "食管癌发生：95%置信区间上限",
+      "unit": "1",
+      "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+    },
+    {
+      "key": "oesophageal_incidence_matched_mmet_h_week",
+      "label_zh": "食管癌发生：实际查询网格活动量",
+      "unit": "mMET-hours/week",
+      "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+    },
+    {
+      "key": "prostate_incidence_rr",
+      "label_zh": "前列腺癌发生（男性研究）：相对风险",
+      "unit": "1",
+      "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+    },
+    {
+      "key": "prostate_incidence_ci_lower",
+      "label_zh": "前列腺癌发生（男性研究）：95%置信区间下限",
+      "unit": "1",
+      "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+    },
+    {
+      "key": "prostate_incidence_ci_upper",
+      "label_zh": "前列腺癌发生（男性研究）：95%置信区间上限",
+      "unit": "1",
+      "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+    },
+    {
+      "key": "prostate_incidence_matched_mmet_h_week",
+      "label_zh": "前列腺癌发生（男性研究）：实际查询网格活动量",
+      "unit": "mMET-hours/week",
+      "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+    },
+    {
+      "key": "kidney_incidence_rr",
+      "label_zh": "肾癌发生：相对风险",
+      "unit": "1",
+      "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+    },
+    {
+      "key": "kidney_incidence_ci_lower",
+      "label_zh": "肾癌发生：95%置信区间下限",
+      "unit": "1",
+      "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+    },
+    {
+      "key": "kidney_incidence_ci_upper",
+      "label_zh": "肾癌发生：95%置信区间上限",
+      "unit": "1",
+      "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+    },
+    {
+      "key": "kidney_incidence_matched_mmet_h_week",
+      "label_zh": "肾癌发生：实际查询网格活动量",
+      "unit": "mMET-hours/week",
+      "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+    }
+  ],
+  "data_files": [
+    {
+      "path": "data/all-cause-mortality-fatal.csv",
+      "source_url": "https://github.com/meta-analyses/meta-analysis/blob/0afc735e57ba7f92e2128b931ebe7e32685d747b/data/csv/MA-DR/0.75/all-cause-mortality-fatal.csv",
+      "license": "Author-released numerical research data; repository has no explicit licence",
+      "redistributable": "unknown",
+      "sha256": "62964adda56a75aeeef573a239abc7fcc8a697560b0bf9a7616ea9224bc3a311"
+    },
+    {
+      "path": "data/all-cause-cvd-fatal.csv",
+      "source_url": "https://github.com/meta-analyses/meta-analysis/blob/0afc735e57ba7f92e2128b931ebe7e32685d747b/data/csv/MA-DR/0.75/all-cause-cvd-fatal.csv",
+      "license": "Author-released numerical research data; repository has no explicit licence",
+      "redistributable": "unknown",
+      "sha256": "cb1e0deaf419a5b7c044cb11af02968616c0f06cd3e0dcc3b2a4ebcd6d9ba883"
+    },
+    {
+      "path": "data/all-cause-cancer-fatal.csv",
+      "source_url": "https://github.com/meta-analyses/meta-analysis/blob/0afc735e57ba7f92e2128b931ebe7e32685d747b/data/csv/MA-DR/0.75/all-cause-cancer-fatal.csv",
+      "license": "Author-released numerical research data; repository has no explicit licence",
+      "redistributable": "unknown",
+      "sha256": "57bab10426ef54f65f9cb472abfad350a23b28b54b623a10a486c24c04ed7c3c"
+    },
+    {
+      "path": "data/all-cause-cvd-fatal-and-non-fatal.csv",
+      "source_url": "https://github.com/meta-analyses/meta-analysis/blob/0afc735e57ba7f92e2128b931ebe7e32685d747b/data/csv/MA-DR/0.75/all-cause-cvd-fatal-and-non-fatal.csv",
+      "license": "Author-released numerical research data; repository has no explicit licence",
+      "redistributable": "unknown",
+      "sha256": "95fc2cd9520bdd77973cf545b1df0b60ac4b240dbfe2978db4af1b9668fb405f"
+    },
+    {
+      "path": "data/coronary-heart-disease-fatal-and-non-fatal.csv",
+      "source_url": "https://github.com/meta-analyses/meta-analysis/blob/0afc735e57ba7f92e2128b931ebe7e32685d747b/data/csv/MA-DR/0.75/coronary-heart-disease-fatal-and-non-fatal.csv",
+      "license": "Author-released numerical research data; repository has no explicit licence",
+      "redistributable": "unknown",
+      "sha256": "457f2b19928c174960bb72a177d9e7616bb20d00c88005e7e07db19fab678436"
+    },
+    {
+      "path": "data/stroke-fatal-and-non-fatal.csv",
+      "source_url": "https://github.com/meta-analyses/meta-analysis/blob/0afc735e57ba7f92e2128b931ebe7e32685d747b/data/csv/MA-DR/0.75/stroke-fatal-and-non-fatal.csv",
+      "license": "Author-released numerical research data; repository has no explicit licence",
+      "redistributable": "unknown",
+      "sha256": "995d1d8b30abece4722de8e44aca0351627e848dece9f6f3981638c64d3b0bf5"
+    },
+    {
+      "path": "data/heart-failure-fatal-and-non-fatal.csv",
+      "source_url": "https://github.com/meta-analyses/meta-analysis/blob/0afc735e57ba7f92e2128b931ebe7e32685d747b/data/csv/MA-DR/0.75/heart-failure-fatal-and-non-fatal.csv",
+      "license": "Author-released numerical research data; repository has no explicit licence",
+      "redistributable": "unknown",
+      "sha256": "2e4d7c10c988ec110bd49c79ebd21bbeb58b3508052eab51e2b007a69dae1d31"
+    },
+    {
+      "path": "data/all-cause-cancer-fatal-and-non-fatal.csv",
+      "source_url": "https://github.com/meta-analyses/meta-analysis/blob/0afc735e57ba7f92e2128b931ebe7e32685d747b/data/csv/MA-DR/0.75/all-cause-cancer-fatal-and-non-fatal.csv",
+      "license": "Author-released numerical research data; repository has no explicit licence",
+      "redistributable": "unknown",
+      "sha256": "479825173275f94a490dab12cc27db27328dccf47327ebd6bf6ae1f993511561"
+    },
+    {
+      "path": "data/head-and-neck-cancer-fatal-and-non-fatal.csv",
+      "source_url": "https://github.com/meta-analyses/meta-analysis/blob/0afc735e57ba7f92e2128b931ebe7e32685d747b/data/csv/MA-DR/0.75/head-and-neck-cancer-fatal-and-non-fatal.csv",
+      "license": "Author-released numerical research data; repository has no explicit licence",
+      "redistributable": "unknown",
+      "sha256": "d604fc0b1030e123332f6284783159fb3f758bfe6ba7802eeb67870168028fa7"
+    },
+    {
+      "path": "data/myeloid-leukemia-fatal-and-non-fatal.csv",
+      "source_url": "https://github.com/meta-analyses/meta-analysis/blob/0afc735e57ba7f92e2128b931ebe7e32685d747b/data/csv/MA-DR/0.75/myeloid-leukemia-fatal-and-non-fatal.csv",
+      "license": "Author-released numerical research data; repository has no explicit licence",
+      "redistributable": "unknown",
+      "sha256": "7387148cdf0de92f76dc942976aeeab80fd74d5c2848ed4dc63eb9b71228eb4e"
+    },
+    {
+      "path": "data/myeloma-fatal-and-non-fatal.csv",
+      "source_url": "https://github.com/meta-analyses/meta-analysis/blob/0afc735e57ba7f92e2128b931ebe7e32685d747b/data/csv/MA-DR/0.75/myeloma-fatal-and-non-fatal.csv",
+      "license": "Author-released numerical research data; repository has no explicit licence",
+      "redistributable": "unknown",
+      "sha256": "cfb37e68b87dd65a51838ca7a068a3fe9159d2b86016dc5492f82c7110dfc57f"
+    },
+    {
+      "path": "data/gastric-cardia-cancer-fatal-and-non-fatal.csv",
+      "source_url": "https://github.com/meta-analyses/meta-analysis/blob/0afc735e57ba7f92e2128b931ebe7e32685d747b/data/csv/MA-DR/0.75/gastric-cardia-cancer-fatal-and-non-fatal.csv",
+      "license": "Author-released numerical research data; repository has no explicit licence",
+      "redistributable": "unknown",
+      "sha256": "e7ca0598aedba69b174318d609fa834e96ff4e12cf3564558ab9266167a22954"
+    },
+    {
+      "path": "data/lung-cancer-fatal-and-non-fatal.csv",
+      "source_url": "https://github.com/meta-analyses/meta-analysis/blob/0afc735e57ba7f92e2128b931ebe7e32685d747b/data/csv/MA-DR/0.75/lung-cancer-fatal-and-non-fatal.csv",
+      "license": "Author-released numerical research data; repository has no explicit licence",
+      "redistributable": "unknown",
+      "sha256": "664ca1056dd162b5916b4be3a39c98dae8621cf360d24b3a19a3ef0024b86e8d"
+    },
+    {
+      "path": "data/liver-cancer-fatal-and-non-fatal.csv",
+      "source_url": "https://github.com/meta-analyses/meta-analysis/blob/0afc735e57ba7f92e2128b931ebe7e32685d747b/data/csv/MA-DR/0.75/liver-cancer-fatal-and-non-fatal.csv",
+      "license": "Author-released numerical research data; repository has no explicit licence",
+      "redistributable": "unknown",
+      "sha256": "9448a3ff268db48cb1b00a607f8a01958fab216b03908d7bfa4cc286c9584777"
+    },
+    {
+      "path": "data/endometrial-cancer-fatal-and-non-fatal.csv",
+      "source_url": "https://github.com/meta-analyses/meta-analysis/blob/0afc735e57ba7f92e2128b931ebe7e32685d747b/data/csv/MA-DR/0.75/endometrial-cancer-fatal-and-non-fatal.csv",
+      "license": "Author-released numerical research data; repository has no explicit licence",
+      "redistributable": "unknown",
+      "sha256": "0cf4c82585860dd813f4385addee6d8715441d7e25c599bd62043c55a4d969fe"
+    },
+    {
+      "path": "data/colon-cancer-fatal-and-non-fatal.csv",
+      "source_url": "https://github.com/meta-analyses/meta-analysis/blob/0afc735e57ba7f92e2128b931ebe7e32685d747b/data/csv/MA-DR/0.75/colon-cancer-fatal-and-non-fatal.csv",
+      "license": "Author-released numerical research data; repository has no explicit licence",
+      "redistributable": "unknown",
+      "sha256": "df1cfe9aaeb81c96fd695601e94ece69757ecaf588c2834590718a28daca8e8d"
+    },
+    {
+      "path": "data/breast-cancer-fatal-and-non-fatal.csv",
+      "source_url": "https://github.com/meta-analyses/meta-analysis/blob/0afc735e57ba7f92e2128b931ebe7e32685d747b/data/csv/MA-DR/0.75/breast-cancer-fatal-and-non-fatal.csv",
+      "license": "Author-released numerical research data; repository has no explicit licence",
+      "redistributable": "unknown",
+      "sha256": "91cd6548e4763c765af45bfaeab59dc057bd65675b7a91271946a54db2b7d8db"
+    },
+    {
+      "path": "data/bladder-cancer-fatal-and-non-fatal.csv",
+      "source_url": "https://github.com/meta-analyses/meta-analysis/blob/0afc735e57ba7f92e2128b931ebe7e32685d747b/data/csv/MA-DR/0.75/bladder-cancer-fatal-and-non-fatal.csv",
+      "license": "Author-released numerical research data; repository has no explicit licence",
+      "redistributable": "unknown",
+      "sha256": "5d26fb3bc6c341abb8b9c4c6efd597104e1cbab7694aefe1da072ad879663956"
+    },
+    {
+      "path": "data/rectum-cancer-fatal-and-non-fatal.csv",
+      "source_url": "https://github.com/meta-analyses/meta-analysis/blob/0afc735e57ba7f92e2128b931ebe7e32685d747b/data/csv/MA-DR/0.75/rectum-cancer-fatal-and-non-fatal.csv",
+      "license": "Author-released numerical research data; repository has no explicit licence",
+      "redistributable": "unknown",
+      "sha256": "783c4bd75c0f9ce49828329e687e9efbf8e26ab1676e26e314bbbb571a4184d5"
+    },
+    {
+      "path": "data/esophageal-cancer-fatal-and-non-fatal.csv",
+      "source_url": "https://github.com/meta-analyses/meta-analysis/blob/0afc735e57ba7f92e2128b931ebe7e32685d747b/data/csv/MA-DR/0.75/esophageal-cancer-fatal-and-non-fatal.csv",
+      "license": "Author-released numerical research data; repository has no explicit licence",
+      "redistributable": "unknown",
+      "sha256": "544b7c90c08c2d481c3263134381bbd49e4b95f587d4ecb068e235a410ed1e21"
+    },
+    {
+      "path": "data/prostate-cancer-fatal-and-non-fatal.csv",
+      "source_url": "https://github.com/meta-analyses/meta-analysis/blob/0afc735e57ba7f92e2128b931ebe7e32685d747b/data/csv/MA-DR/0.75/prostate-cancer-fatal-and-non-fatal.csv",
+      "license": "Author-released numerical research data; repository has no explicit licence",
+      "redistributable": "unknown",
+      "sha256": "1c364692373ddf5ded30c0e7425451a071cf887a7bd65139bb2a5aab1d0023ea"
+    },
+    {
+      "path": "data/kidney-cancer-fatal-and-non-fatal.csv",
+      "source_url": "https://github.com/meta-analyses/meta-analysis/blob/0afc735e57ba7f92e2128b931ebe7e32685d747b/data/csv/MA-DR/0.75/kidney-cancer-fatal-and-non-fatal.csv",
+      "license": "Author-released numerical research data; repository has no explicit licence",
+      "redistributable": "unknown",
+      "sha256": "0455df5043e479bcf0976a347e9a659c452e84f5f2918daaa1a46438c3bbf78c"
+    }
+  ],
+  "validation": {
+    "status": "reproduced",
+    "examples": [
+      {
+        "locator": "Table 1, 全因死亡, RR (95% CI) columns (not PIF)",
+        "quote": "4.375 mMET-hours/week\n8.75 mMET-hours/week\n17.5 mMET-hours/week\nAll-cause mortality\n0.77\n(0.73 to 0.80)\n0.69\n(0.65 to 0.73)\n0.66\n(0.62 to 0.70)",
+        "values": [
+          4.375,
+          8.75,
+          17.5,
+          0.77,
+          0.73,
+          0.8,
+          0.69,
+          0.65,
+          0.73,
+          0.66,
+          0.62,
+          0.7
+        ],
+        "tolerance": "RR和CI各自绝对误差≤0.005，对应原文两位小数四舍五入；按作者server.R::get_ma_table取最近网格点，不插值。",
+        "test": "tests/test_manifest.py::test_table1_all_outcomes"
+      },
+      {
+        "locator": "Table 1, 心血管疾病死亡, RR (95% CI) columns (not PIF)",
+        "quote": "4.375 mMET-hours/week\n8.75 mMET-hours/week\n17.5 mMET-hours/week\nTotal CVD\n0.81\n(0.77 to 0.85)\n0.71\n(0.66 to 0.77)\n0.65\n(0.60 to 0.71)",
+        "values": [
+          4.375,
+          8.75,
+          17.5,
+          0.81,
+          0.77,
+          0.85,
+          0.71,
+          0.66,
+          0.77,
+          0.65,
+          0.6,
+          0.71
+        ],
+        "tolerance": "RR和CI各自绝对误差≤0.005，对应原文两位小数四舍五入；按作者server.R::get_ma_table取最近网格点，不插值。",
+        "test": "tests/test_manifest.py::test_table1_all_outcomes"
+      },
+      {
+        "locator": "Table 1, 癌症死亡, RR (95% CI) columns (not PIF)",
+        "quote": "4.375 mMET-hours/week\n8.75 mMET-hours/week\n17.5 mMET-hours/week\nTotal cancer\n0.90\n(0.88 to 0.93)\n0.85\n(0.81 to 0.89)\n0.82\n(0.78 to 0.86)",
+        "values": [
+          4.375,
+          8.75,
+          17.5,
+          0.9,
+          0.88,
+          0.93,
+          0.85,
+          0.81,
+          0.89,
+          0.82,
+          0.78,
+          0.86
+        ],
+        "tolerance": "RR和CI各自绝对误差≤0.005，对应原文两位小数四舍五入；按作者server.R::get_ma_table取最近网格点，不插值。",
+        "test": "tests/test_manifest.py::test_table1_all_outcomes"
+      },
+      {
+        "locator": "Table 1, 总心血管疾病发生, RR (95% CI) columns (not PIF)",
+        "quote": "4.375 mMET-hours/week\n8.75 mMET-hours/week\n17.5 mMET-hours/week\nTotal CVD\n0.83\n(0.79 to 0.87)\n0.73\n(0.69 to 0.79)\n0.67\n(0.63 to 0.72)",
+        "values": [
+          4.375,
+          8.75,
+          17.5,
+          0.83,
+          0.79,
+          0.87,
+          0.73,
+          0.69,
+          0.79,
+          0.67,
+          0.63,
+          0.72
+        ],
+        "tolerance": "RR和CI各自绝对误差≤0.005，对应原文两位小数四舍五入；按作者server.R::get_ma_table取最近网格点，不插值。",
+        "test": "tests/test_manifest.py::test_table1_all_outcomes"
+      },
+      {
+        "locator": "Table 1, 冠心病发生, RR (95% CI) columns (not PIF)",
+        "quote": "4.375 mMET-hours/week\n8.75 mMET-hours/week\n17.5 mMET-hours/week\nCoronary heart disease\n0.86\n(0.83 to 0.90)\n0.79\n(0.74 to 0.84)\n0.74\n(0.69 to 0.80)",
+        "values": [
+          4.375,
+          8.75,
+          17.5,
+          0.86,
+          0.83,
+          0.9,
+          0.79,
+          0.74,
+          0.84,
+          0.74,
+          0.69,
+          0.8
+        ],
+        "tolerance": "RR和CI各自绝对误差≤0.005，对应原文两位小数四舍五入；按作者server.R::get_ma_table取最近网格点，不插值。",
+        "test": "tests/test_manifest.py::test_table1_all_outcomes"
+      },
+      {
+        "locator": "Table 1, 卒中发生, RR (95% CI) columns (not PIF)",
+        "quote": "4.375 mMET-hours/week\n8.75 mMET-hours/week\n17.5 mMET-hours/week\nStroke\n0.86\n(0.83 to 0.90)\n0.80\n(0.75 to 0.85)\n0.77\n(0.72 to 0.82)",
+        "values": [
+          4.375,
+          8.75,
+          17.5,
+          0.86,
+          0.83,
+          0.9,
+          0.8,
+          0.75,
+          0.85,
+          0.77,
+          0.72,
+          0.82
+        ],
+        "tolerance": "RR和CI各自绝对误差≤0.005，对应原文两位小数四舍五入；按作者server.R::get_ma_table取最近网格点，不插值。",
+        "test": "tests/test_manifest.py::test_table1_all_outcomes"
+      },
+      {
+        "locator": "Table 1, 心力衰竭发生, RR (95% CI) columns (not PIF)",
+        "quote": "4.375 mMET-hours/week\n8.75 mMET-hours/week\n17.5 mMET-hours/week\nHeart failure\n0.90\n(0.85 to 0.96)\n0.84\n(0.75 to 0.93)\n0.77\n(0.68 to 0.87)",
+        "values": [
+          4.375,
+          8.75,
+          17.5,
+          0.9,
+          0.85,
+          0.96,
+          0.84,
+          0.75,
+          0.93,
+          0.77,
+          0.68,
+          0.87
+        ],
+        "tolerance": "RR和CI各自绝对误差≤0.005，对应原文两位小数四舍五入；按作者server.R::get_ma_table取最近网格点，不插值。",
+        "test": "tests/test_manifest.py::test_table1_all_outcomes"
+      },
+      {
+        "locator": "Table 1, 总癌症发生, RR (95% CI) columns (not PIF)",
+        "quote": "4.375 mMET-hours/week\n8.75 mMET-hours/week\n17.5 mMET-hours/week\nTotal cancer\n0.93\n(0.91 to 0.95)\n0.88\n(0.85 to 0.92)\n0.85\n(0.81 to 0.89)",
+        "values": [
+          4.375,
+          8.75,
+          17.5,
+          0.93,
+          0.91,
+          0.95,
+          0.88,
+          0.85,
+          0.92,
+          0.85,
+          0.81,
+          0.89
+        ],
+        "tolerance": "RR和CI各自绝对误差≤0.005，对应原文两位小数四舍五入；按作者server.R::get_ma_table取最近网格点，不插值。",
+        "test": "tests/test_manifest.py::test_table1_all_outcomes"
+      },
+      {
+        "locator": "Table 1, 头颈部癌发生, RR (95% CI) columns (not PIF)",
+        "quote": "4.375 mMET-hours/week\n8.75 mMET-hours/week\n17.5 mMET-hours/week\nHead and neck\n0.74\n(0.59 to 0.94)\n0.65\n(0.46 to 0.91)\n0.63\n(0.42 to 0.94)",
+        "values": [
+          4.375,
+          8.75,
+          17.5,
+          0.74,
+          0.59,
+          0.94,
+          0.65,
+          0.46,
+          0.91,
+          0.63,
+          0.42,
+          0.94
+        ],
+        "tolerance": "RR和CI各自绝对误差≤0.005，对应原文两位小数四舍五入；按作者server.R::get_ma_table取最近网格点，不插值。",
+        "test": "tests/test_manifest.py::test_table1_all_outcomes"
+      },
+      {
+        "locator": "Table 1, 髓系白血病发生, RR (95% CI) columns (not PIF)",
+        "quote": "4.375 mMET-hours/week\n8.75 mMET-hours/week\n17.5 mMET-hours/week\nMyeloid leukaemia\n0.80\n(0.66 to 0.97)\n0.75\n(0.60 to 0.95)\n0.75\n(0.60 to 0.94)",
+        "values": [
+          4.375,
+          8.75,
+          17.5,
+          0.8,
+          0.66,
+          0.97,
+          0.75,
+          0.6,
+          0.95,
+          0.75,
+          0.6,
+          0.94
+        ],
+        "tolerance": "RR和CI各自绝对误差≤0.005，对应原文两位小数四舍五入；按作者server.R::get_ma_table取最近网格点，不插值。",
+        "test": "tests/test_manifest.py::test_table1_all_outcomes"
+      },
+      {
+        "locator": "Table 1, 骨髓瘤发生, RR (95% CI) columns (not PIF)",
+        "quote": "4.375 mMET-hours/week\n8.75 mMET-hours/week\n17.5 mMET-hours/week\nMyeloma\n0.84\n(0.74 to 0.95)\n0.75\n(0.61 to 0.92)\n0.72\n(0.57 to 0.92)",
+        "values": [
+          4.375,
+          8.75,
+          17.5,
+          0.84,
+          0.74,
+          0.95,
+          0.75,
+          0.61,
+          0.92,
+          0.72,
+          0.57,
+          0.92
+        ],
+        "tolerance": "RR和CI各自绝对误差≤0.005，对应原文两位小数四舍五入；按作者server.R::get_ma_table取最近网格点，不插值。",
+        "test": "tests/test_manifest.py::test_table1_all_outcomes"
+      },
+      {
+        "locator": "Table 1, 胃贲门癌发生, RR (95% CI) columns (not PIF)",
+        "quote": "4.375 mMET-hours/week\n8.75 mMET-hours/week\n17.5 mMET-hours/week\nGastric cardia\n0.86\n(0.78 to 0.95)\n0.78\n(0.66 to 0.91)\n0.73\n(0.60 to 0.88)",
+        "values": [
+          4.375,
+          8.75,
+          17.5,
+          0.86,
+          0.78,
+          0.95,
+          0.78,
+          0.66,
+          0.91,
+          0.73,
+          0.6,
+          0.88
+        ],
+        "tolerance": "RR和CI各自绝对误差≤0.005，对应原文两位小数四舍五入；按作者server.R::get_ma_table取最近网格点，不插值。",
+        "test": "tests/test_manifest.py::test_table1_all_outcomes"
+      },
+      {
+        "locator": "Table 1, 肺癌发生, RR (95% CI) columns (not PIF)",
+        "quote": "4.375 mMET-hours/week\n8.75 mMET-hours/week\n17.5 mMET-hours/week\nLung\n0.89\n(0.87 to 0.92)\n0.84\n(0.81 to 0.88)\n0.83\n(0.76 to 0.91)",
+        "values": [
+          4.375,
+          8.75,
+          17.5,
+          0.89,
+          0.87,
+          0.92,
+          0.84,
+          0.81,
+          0.88,
+          0.83,
+          0.76,
+          0.91
+        ],
+        "tolerance": "RR和CI各自绝对误差≤0.005，对应原文两位小数四舍五入；按作者server.R::get_ma_table取最近网格点，不插值。",
+        "test": "tests/test_manifest.py::test_table1_all_outcomes"
+      },
+      {
+        "locator": "Table 1, 肝癌发生, RR (95% CI) columns (not PIF)",
+        "quote": "4.375 mMET-hours/week\n8.75 mMET-hours/week\n17.5 mMET-hours/week\nLiver\n0.90\n(0.83 to 0.98)\n0.84\n(0.73 to 0.96)\n0.78\n(0.66 to 0.93)",
+        "values": [
+          4.375,
+          8.75,
+          17.5,
+          0.9,
+          0.83,
+          0.98,
+          0.84,
+          0.73,
+          0.96,
+          0.78,
+          0.66,
+          0.93
+        ],
+        "tolerance": "RR和CI各自绝对误差≤0.005，对应原文两位小数四舍五入；按作者server.R::get_ma_table取最近网格点，不插值。",
+        "test": "tests/test_manifest.py::test_table1_all_outcomes"
+      },
+      {
+        "locator": "Table 1, 子宫内膜癌发生（女性研究）, RR (95% CI) columns (not PIF)",
+        "quote": "4.375 mMET-hours/week\n8.75 mMET-hours/week\n17.5 mMET-hours/week\nEndometrial\n0.94\n(0.90 to 0.99)\n0.90\n(0.84 to 0.97)\n0.87\n(0.80 to 0.95)",
+        "values": [
+          4.375,
+          8.75,
+          17.5,
+          0.94,
+          0.9,
+          0.99,
+          0.9,
+          0.84,
+          0.97,
+          0.87,
+          0.8,
+          0.95
+        ],
+        "tolerance": "RR和CI各自绝对误差≤0.005，对应原文两位小数四舍五入；按作者server.R::get_ma_table取最近网格点，不插值。",
+        "test": "tests/test_manifest.py::test_table1_all_outcomes"
+      },
+      {
+        "locator": "Table 1, 结肠癌发生, RR (95% CI) columns (not PIF)",
+        "quote": "4.375 mMET-hours/week\n8.75 mMET-hours/week\n17.5 mMET-hours/week\nColon\n0.96\n(0.93 to 0.99)\n0.93\n(0.87 to 0.99)\n0.90\n(0.84 to 0.97)",
+        "values": [
+          4.375,
+          8.75,
+          17.5,
+          0.96,
+          0.93,
+          0.99,
+          0.93,
+          0.87,
+          0.99,
+          0.9,
+          0.84,
+          0.97
+        ],
+        "tolerance": "RR和CI各自绝对误差≤0.005，对应原文两位小数四舍五入；按作者server.R::get_ma_table取最近网格点，不插值。",
+        "test": "tests/test_manifest.py::test_table1_all_outcomes"
+      },
+      {
+        "locator": "Table 1, 乳腺癌发生（女性研究）, RR (95% CI) columns (not PIF)",
+        "quote": "4.375 mMET-hours/week\n8.75 mMET-hours/week\n17.5 mMET-hours/week\nBreast\n0.97\n(0.96 to 0.99)\n0.95\n(0.92 to 0.97)\n0.92\n(0.88 to 0.96)",
+        "values": [
+          4.375,
+          8.75,
+          17.5,
+          0.97,
+          0.96,
+          0.99,
+          0.95,
+          0.92,
+          0.97,
+          0.92,
+          0.88,
+          0.96
+        ],
+        "tolerance": "RR和CI各自绝对误差≤0.005，对应原文两位小数四舍五入；按作者server.R::get_ma_table取最近网格点，不插值。",
+        "test": "tests/test_manifest.py::test_table1_all_outcomes"
+      },
+      {
+        "locator": "Table 1, 膀胱癌发生, RR (95% CI) columns (not PIF)",
+        "quote": "4.375 mMET-hours/week\n8.75 mMET-hours/week\n17.5 mMET-hours/week\nBladder\n0.93\n(0.84 to 1.02)\n0.90\n(0.80 to 1.02)\n0.90\n(0.81 to 1.01)",
+        "values": [
+          4.375,
+          8.75,
+          17.5,
+          0.93,
+          0.84,
+          1.02,
+          0.9,
+          0.8,
+          1.02,
+          0.9,
+          0.81,
+          1.01
+        ],
+        "tolerance": "RR和CI各自绝对误差≤0.005，对应原文两位小数四舍五入；按作者server.R::get_ma_table取最近网格点，不插值。",
+        "test": "tests/test_manifest.py::test_table1_all_outcomes"
+      },
+      {
+        "locator": "Table 1, 直肠癌发生, RR (95% CI) columns (not PIF)",
+        "quote": "4.375 mMET-hours/week\n8.75 mMET-hours/week\n17.5 mMET-hours/week\nRectum\n0.96\n(0.92 to 1.01)\n0.95\n(0.88 to 1.02)\n0.96\n(0.88 to 1.04)",
+        "values": [
+          4.375,
+          8.75,
+          17.5,
+          0.96,
+          0.92,
+          1.01,
+          0.95,
+          0.88,
+          1.02,
+          0.96,
+          0.88,
+          1.04
+        ],
+        "tolerance": "RR和CI各自绝对误差≤0.005，对应原文两位小数四舍五入；按作者server.R::get_ma_table取最近网格点，不插值。",
+        "test": "tests/test_manifest.py::test_table1_all_outcomes"
+      },
+      {
+        "locator": "Table 1, 食管癌发生, RR (95% CI) columns (not PIF)",
+        "quote": "4.375 mMET-hours/week\n8.75 mMET-hours/week\n17.5 mMET-hours/week\nOesophageal\n0.97\n(0.89 to 1.05)\n0.95\n(0.82 to 1.09)\n0.94\n(0.79 to 1.12)",
+        "values": [
+          4.375,
+          8.75,
+          17.5,
+          0.97,
+          0.89,
+          1.05,
+          0.95,
+          0.82,
+          1.09,
+          0.94,
+          0.79,
+          1.12
+        ],
+        "tolerance": "RR和CI各自绝对误差≤0.005，对应原文两位小数四舍五入；按作者server.R::get_ma_table取最近网格点，不插值。",
+        "test": "tests/test_manifest.py::test_table1_all_outcomes"
+      },
+      {
+        "locator": "Table 1, 前列腺癌发生（男性研究）, RR (95% CI) columns (not PIF)",
+        "quote": "4.375 mMET-hours/week\n8.75 mMET-hours/week\n17.5 mMET-hours/week\nProstate\n1.00\n(0.99 to 1.02)\n1.01\n(0.98 to 1.04)\n1.01\n(0.96 to 1.05)",
+        "values": [
+          4.375,
+          8.75,
+          17.5,
+          1.0,
+          0.99,
+          1.02,
+          1.01,
+          0.98,
+          1.04,
+          1.01,
+          0.96,
+          1.05
+        ],
+        "tolerance": "RR和CI各自绝对误差≤0.005，对应原文两位小数四舍五入；按作者server.R::get_ma_table取最近网格点，不插值。",
+        "test": "tests/test_manifest.py::test_table1_all_outcomes"
+      },
+      {
+        "locator": "Table 1, 肾癌发生, RR (95% CI) columns (not PIF)",
+        "quote": "4.375 mMET-hours/week\n8.75 mMET-hours/week\n17.5 mMET-hours/week\nKidney\n1.02\n(0.92 to 1.13)\n1.03\n(0.89 to 1.19)\n1.04\n(0.88 to 1.24)",
+        "values": [
+          4.375,
+          8.75,
+          17.5,
+          1.02,
+          0.92,
+          1.13,
+          1.03,
+          0.89,
+          1.19,
+          1.04,
+          0.88,
+          1.24
+        ],
+        "tolerance": "RR和CI各自绝对误差≤0.005，对应原文两位小数四舍五入；按作者server.R::get_ma_table取最近网格点，不插值。",
+        "test": "tests/test_manifest.py::test_table1_all_outcomes"
+      },
+      {
+        "locator": "Supplement eMethods 5, page 9, worked diagram",
+        "quote": "Example: 2 hours of moderate physical activity\nActivity component\n2 hours * 3.5 MET\n= 7 mMET.hrs",
+        "values": [
+          2,
+          3.5,
+          7
+        ],
+        "tolerance": "按正文中等强度3.5 mMET乘时长，精确相等。",
+        "test": "tests/test_manifest.py::test_emethods5_duration_example"
+      }
+    ]
+  }
+}
