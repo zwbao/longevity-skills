@@ -387,6 +387,10 @@ python3 -m tools.lsk test --changed origin/main   # 只测相对 main 改动过�
 
 - `skills/accelerometry-mortality-dose-response/` — 按符合原文处理定义的加速度计活动或久坐日均值，查全因死亡相对危险比。
 
+## 运动与慢病风险
+
+- `skills/nonoccupational-activity-risk/` — 用每周非职业活动时长查询死亡、心血管病和癌症的人群相对风险，并比较自定目标。
+
 ## 饮食
 
 - `skills/gbd-dietary-intake-gap/` — 见「营养」。
