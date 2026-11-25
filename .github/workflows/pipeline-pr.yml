@@ -71,7 +71,10 @@ jobs:
           python -m tools.lsk test --jobs 4
 
       - name: Drop the trial merge and generated files
-        run: git merge --abort 2>/dev/null; git reset -q --hard "$GITHUB_SHA" && git clean -fdq
+        run: |
+          git merge --abort 2>/dev/null || true
+          git reset -q --hard "$GITHUB_SHA"
+          git clean -fdq
 
       - name: Open the pull request
         id: pr
