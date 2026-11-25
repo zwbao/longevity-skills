@@ -2,9 +2,9 @@
   "schema": "longevity-catalog/1",
   "version": "2026.48.0",
   "counts": {
-    "skills": 218,
+    "skills": 219,
     "tiers": {
-      "A": 54,
+      "A": 55,
       "B": 83,
       "C": 73,
       "tool": 8
@@ -9345,6 +9345,171 @@
         "title_zh": "糖尿病风险评分：预测2型糖尿病风险的实用工具",
         "journal": "Diabetes Care",
         "year": 2003
+      }
+    },
+    {
+      "name": "fnih-sarcopenia-cutpoints",
+      "kind": "paper",
+      "tier": "A",
+      "species": [
+        "human"
+      ],
+      "evidence": "cross_sectional",
+      "domains": [
+        "跌倒与肌肉"
+      ],
+      "blurb_zh": "用最大握力、四肢瘦体重和 BMI 对照 FNIH 老年人切点，分别查看肌力弱与低瘦体重分层。",
+      "description": "Tier A draft: the paper's printed example is not reproduced yet, so treat the readout as provisional. Uses the FNIH sex-specific cutpoints to classify maximum grip strength and appendicular lean mass relative to BMI in community-dwelling older adults. Trigger when a user provides grip strength, DXA appendicular lean mass and BMI and asks about FNIH weakness or low lean mass criteria. Reports recommended and alternate criteria separately in Chinese.",
+      "intents": [
+        "frailty_mortality"
+      ],
+      "has_script": true,
+      "validation_status": "draft",
+      "validation_label_zh": "仍在验证",
+      "entry": {
+        "script": "scripts/personal_report.py",
+        "measurements_flag": "--measurements",
+        "measurements_header": [
+          "marker",
+          "value",
+          "unit"
+        ],
+        "age_flag": "--age",
+        "sex_flag": "--sex",
+        "out_flag": "--out",
+        "result_json": true
+      },
+      "inputs_status": "draft",
+      "inputs": [
+        {
+          "key": "grip_max_kg",
+          "label_zh": "最大握力",
+          "aliases": [
+            "握力",
+            "握力最大值",
+            "handgrip strength",
+            "grip strength",
+            "maximum grip strength",
+            "GSMAX"
+          ],
+          "unit": "kg",
+          "accept": {
+            "g": 0.001,
+            "lb": 0.45359237
+          },
+          "range": [
+            0,
+            150
+          ],
+          "unit_required": true,
+          "required": true,
+          "from": "measurements",
+          "note_zh": "手持测力计双手测量中的最大值；不使用双手平均值。kg 沿用测力计及论文的显示约定。"
+        },
+        {
+          "key": "alm_kg",
+          "label_zh": "四肢去骨瘦体重",
+          "aliases": [
+            "四肢瘦体重",
+            "四肢瘦组织量",
+            "附肢瘦体重",
+            "appendicular lean mass",
+            "appendicular lean body mass",
+            "ALM"
+          ],
+          "unit": "kg",
+          "accept": {
+            "g": 0.001,
+            "lb": 0.45359237
+          },
+          "range": [
+            1,
+            80
+          ],
+          "unit_required": true,
+          "required": true,
+          "from": "measurements",
+          "note_zh": "使用 DXA 双臂及双腿去骨瘦体重之和；不是全身肌肉量、ALM/身高² 或体脂秤估计。"
+        },
+        {
+          "key": "bmi_kg_m2",
+          "label_zh": "体质指数",
+          "aliases": [
+            "BMI",
+            "体重指数",
+            "body mass index"
+          ],
+          "unit": "kg/m^2",
+          "accept": {},
+          "range": [
+            10,
+            80
+          ],
+          "unit_required": true,
+          "required": true,
+          "from": "measurements",
+          "note_zh": "来自同次测量；体重 kg 除以身高 m 的平方。必须给出 BMI 的单位。"
+        },
+        {
+          "key": "age",
+          "label_zh": "实足年龄",
+          "unit": "a",
+          "range": [
+            65,
+            120
+          ],
+          "required": true,
+          "from": "profile",
+          "flag": "--age",
+          "note_zh": "研究排除 65 岁以下者；120 是输入检查上限，不是论文观察年龄上限。年龄不改变切点。"
+        },
+        {
+          "key": "sex",
+          "label_zh": "论文分层性别",
+          "required": true,
+          "from": "profile",
+          "flag": "--sex",
+          "note_zh": "male/男 或 female/女；论文只给这两个分层的切点。"
+        }
+      ],
+      "outputs": [
+        {
+          "key": "alm_bmi",
+          "label_zh": "四肢瘦体重与 BMI 的比值",
+          "note_zh": "ALM(kg) / BMI(kg/m²)，量纲为 m²；沿用表 3 的数值约定。"
+        },
+        {
+          "key": "grip_bmi",
+          "label_zh": "最大握力与 BMI 的比值",
+          "note_zh": "最大握力(kg) / BMI(kg/m²)，沿用表 3 的数值约定。"
+        },
+        {
+          "key": "weakness",
+          "label_zh": "推荐标准的握力分层",
+          "note_zh": "below_cutpoint 为严格低于切点，not_below_cutpoint 为未低于；不等于临床诊断。"
+        },
+        {
+          "key": "low_lean_mass",
+          "label_zh": "推荐标准的低瘦体重分层",
+          "note_zh": "below_cutpoint 为严格低于切点，not_below_cutpoint 为未低于；不等于临床诊断。"
+        },
+        {
+          "key": "weakness_bmi_alternate",
+          "label_zh": "备选标准的握力/BMI 分层",
+          "note_zh": "below_cutpoint 为严格低于切点，not_below_cutpoint 为未低于；不等于临床诊断。"
+        },
+        {
+          "key": "low_lean_mass_alternate",
+          "label_zh": "备选标准的绝对 ALM 分层",
+          "note_zh": "below_cutpoint 为严格低于切点，not_below_cutpoint 为未低于；不等于临床诊断。"
+        }
+      ],
+      "paper": {
+        "doi": "10.1093/gerona/glu010",
+        "title": "The FNIH sarcopenia project: rationale, study description, conference recommendations, and final estimates.",
+        "title_zh": "FNIH 肌少症项目：依据、研究设计、会议建议与最终切点",
+        "journal": "The journals of gerontology. Series A, Biological sciences and medical sciences",
+        "year": 2014
       }
     },
     {
