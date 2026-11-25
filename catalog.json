@@ -2,9 +2,9 @@
   "schema": "longevity-catalog/1",
   "version": "2026.48.0",
   "counts": {
-    "skills": 193,
+    "skills": 194,
     "tiers": {
-      "A": 29,
+      "A": 30,
       "B": 83,
       "C": 73,
       "tool": 8
@@ -5010,6 +5010,105 @@
         "title_zh": "CPIC 药物基因检测结果的标准用语",
         "journal": "Genetics in Medicine",
         "year": 2017
+      }
+    },
+    {
+      "name": "ctt-ldl-relative-risk",
+      "kind": "paper",
+      "tier": "A",
+      "species": [
+        "human"
+      ],
+      "evidence": "rct",
+      "domains": [
+        "心血管与代谢"
+      ],
+      "blurb_zh": "将 LDL-C 绝对降幅换算为主要血管事件的相对发生率情景。",
+      "description": "Tier A personal readout: computes one person's value with the paper's printed method and reproduces a printed example. Converts an absolute LDL cholesterol reduction into a major vascular event rate ratio using the CTT multiplicative relationship. Use for LDL-C reduction scenarios or before-and-after LDL-C comparisons; accepts a measured reduction and an optional target reduction, with explicit units.",
+      "intents": [
+        "lab_meaning",
+        "before_after",
+        "intervention_evidence"
+      ],
+      "has_script": true,
+      "validation_status": "reproduced",
+      "validation_label_zh": "已复现论文",
+      "entry": {
+        "script": "scripts/personal_report.py",
+        "measurements_flag": "--measurements",
+        "measurements_header": [
+          "marker",
+          "value",
+          "unit"
+        ],
+        "out_flag": "--out",
+        "result_json": true,
+        "targets_flag": "--targets",
+        "levers_json": true
+      },
+      "inputs_status": "verified",
+      "inputs": [
+        {
+          "key": "ldl_reduction_mmol_l",
+          "label_zh": "LDL-C 绝对降幅",
+          "aliases": [
+            "LDL-C reduction",
+            "LDL cholesterol reduction",
+            "LDL-C 降幅",
+            "LDL-C 下降值",
+            "低密度脂蛋白胆固醇降幅",
+            "低密度脂蛋白胆固醇下降量",
+            "ΔLDL-C reduction"
+          ],
+          "unit": "mmol/L",
+          "accept": {
+            "mg/dL": 0.02586,
+            "umol/L": 0.001
+          },
+          "molar_mass": 386.69760247486465,
+          "range": [
+            0,
+            3
+          ],
+          "unit_required": true,
+          "required": true,
+          "from": "measurements",
+          "note_zh": "参照值减去比较值的绝对降幅，不是单次 LDL-C 浓度或百分比。mg/dL 因子照 Webtable 1；0–3 是产品计算范围，不是临床正常范围。"
+        }
+      ],
+      "outputs": [
+        {
+          "key": "ldl_reduction_mmol_l",
+          "label_zh": "标准化 LDL-C 绝对降幅",
+          "unit": "mmol/L"
+        },
+        {
+          "key": "major_vascular_rr",
+          "label_zh": "主要血管事件相对发生率（模型情景）",
+          "unit": "1"
+        },
+        {
+          "key": "rr_ci95_lower",
+          "label_zh": "研究系数区间换算下限",
+          "unit": "1"
+        },
+        {
+          "key": "rr_ci95_upper",
+          "label_zh": "研究系数区间换算上限",
+          "unit": "1"
+        },
+        {
+          "key": "relative_reduction_pct",
+          "label_zh": "主要血管事件相对降低比例",
+          "unit": "%"
+        }
+      ],
+      "paper": {
+        "doi": "10.1016/s0140-6736(10)61350-5",
+        "title": "Efficacy and safety of more intensive lowering of LDL cholesterol: a meta-analysis of data from 170,000 participants in 26 randomised trials.",
+        "title_zh": "更大 LDL 胆固醇降幅与血管事件风险：随机试验荟萃分析",
+        "journal": "Lancet (London, England)",
+        "year": 2010
       }
     },
     {
