@@ -364,6 +364,10 @@ python3 -m tools.lsk test --changed origin/main   # 只测相对 main 改动过�
 
 - `skills/accelerometry-mortality-dose-response/` — 按符合原文处理定义的加速度计活动或久坐日均值，查全因死亡相对危险比。
 
+## 饮食与代谢
+
+- `skills/red-meat-burden-of-proof/` — 按未加工红肉日均摄入量查询慢病相对风险与不确定区间，仅支持论文列出的摄入点。
+
 ## 饮食与基因
 
 - `skills/nutrigenetic-variant-panel/` — 基因检测原始数据里和喝酒、叶酸、喝奶有关的三个位点，按要求再看 APOE 与血脂。（名单类）

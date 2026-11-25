@@ -2,9 +2,9 @@
   "schema": "longevity-catalog/1",
   "version": "2026.48.0",
   "counts": {
-    "skills": 206,
+    "skills": 207,
     "tiers": {
-      "A": 42,
+      "A": 43,
       "B": 83,
       "C": 73,
       "tool": 8
@@ -30464,6 +30464,208 @@
         "title_zh": "反应敏捷与运动-认知测评区分有无跌倒史的社区老人：双中心横断面研究",
         "journal": "GeroScience",
         "year": 2026
+      }
+    },
+    {
+      "name": "red-meat-burden-of-proof",
+      "kind": "paper",
+      "tier": "A",
+      "species": [
+        "human"
+      ],
+      "evidence": "review",
+      "domains": [
+        "饮食与代谢"
+      ],
+      "blurb_zh": "按未加工红肉日均摄入量查询慢病相对风险与不确定区间，仅支持论文列出的摄入点。",
+      "description": "Tier A personal readout: computes one person's value with the paper's printed method and reproduces a printed example. Queries printed Burden of Proof estimates for unprocessed red meat intake and six chronic disease outcomes. Use when a person provides habitual daily unprocessed red meat intake and asks what the published population associations mean. Supports only the nine printed intake points from 0 to 200 g/day in 25 g/day steps, with conservative uncertainty intervals and optional comparisons of user-selected intake points.",
+      "intents": [
+        "intervention_evidence"
+      ],
+      "has_script": true,
+      "validation_status": "reproduced",
+      "validation_label_zh": "已复现论文",
+      "entry": {
+        "script": "scripts/personal_report.py",
+        "measurements_flag": "--measurements",
+        "measurements_header": [
+          "marker",
+          "value",
+          "unit"
+        ],
+        "age_flag": "--age",
+        "sex_flag": "--sex",
+        "out_flag": "--out",
+        "result_json": true,
+        "targets_flag": "--targets",
+        "levers_json": true
+      },
+      "inputs_status": "verified",
+      "inputs": [
+        {
+          "key": "unprocessed_red_meat_g_d",
+          "label_zh": "未加工红肉摄入量",
+          "aliases": [
+            "未加工红肉日均摄入量",
+            "未加工红肉",
+            "unprocessed red meat",
+            "unprocessed red meat consumption",
+            "unprocessed red meat intake"
+          ],
+          "unit": "g/d",
+          "accept": {},
+          "range": [
+            0,
+            200
+          ],
+          "unit_required": true,
+          "required": true,
+          "from": "measurements",
+          "note_zh": "只支持0、25、50、75、100、125、150、175、200 g/d；日均未加工牛、羊、猪肉，不含加工肉。不是膳食推荐量。不自动换算份量、生熟重量或每周摄入。"
+        },
+        {
+          "key": "age",
+          "label_zh": "实足年龄",
+          "unit": "a",
+          "range": [
+            25,
+            120
+          ],
+          "required": true,
+          "from": "profile",
+          "flag": "--age",
+          "note_zh": "仅用于适用人群检查，不调整相对风险；研究涵盖25岁至95岁以上，120是输入质量检查上限。"
+        },
+        {
+          "key": "sex",
+          "label_zh": "性别",
+          "required": true,
+          "from": "profile",
+          "flag": "--sex",
+          "note_zh": "female、male、unknown；仅female展示乳腺癌表值。其他结局没有性别分层。"
+        }
+      ],
+      "outputs": [
+        {
+          "key": "intake_g_d",
+          "label_zh": "本次查询摄入量",
+          "unit": "g/d"
+        },
+        {
+          "key": "colorectal_cancer_rr",
+          "label_zh": "结直肠癌相对风险表值",
+          "unit": "1",
+          "note_zh": "补充表7；含研究间异质性，不是个人概率。"
+        },
+        {
+          "key": "colorectal_cancer_ui_lower",
+          "label_zh": "结直肠癌保守95%不确定区间下限",
+          "unit": "1",
+          "note_zh": "补充表7；含研究间异质性，不是个人概率。"
+        },
+        {
+          "key": "colorectal_cancer_ui_upper",
+          "label_zh": "结直肠癌保守95%不确定区间上限",
+          "unit": "1",
+          "note_zh": "补充表7；含研究间异质性，不是个人概率。"
+        },
+        {
+          "key": "breast_cancer_rr",
+          "label_zh": "乳腺癌相对风险表值",
+          "unit": "1",
+          "note_zh": "补充表7；含研究间异质性，不是个人概率。只对female返回数值。"
+        },
+        {
+          "key": "breast_cancer_ui_lower",
+          "label_zh": "乳腺癌保守95%不确定区间下限",
+          "unit": "1",
+          "note_zh": "补充表7；含研究间异质性，不是个人概率。只对female返回数值。"
+        },
+        {
+          "key": "breast_cancer_ui_upper",
+          "label_zh": "乳腺癌保守95%不确定区间上限",
+          "unit": "1",
+          "note_zh": "补充表7；含研究间异质性，不是个人概率。只对female返回数值。"
+        },
+        {
+          "key": "ischemic_heart_disease_rr",
+          "label_zh": "缺血性心脏病相对风险表值",
+          "unit": "1",
+          "note_zh": "补充表7；含研究间异质性，不是个人概率。"
+        },
+        {
+          "key": "ischemic_heart_disease_ui_lower",
+          "label_zh": "缺血性心脏病保守95%不确定区间下限",
+          "unit": "1",
+          "note_zh": "补充表7；含研究间异质性，不是个人概率。"
+        },
+        {
+          "key": "ischemic_heart_disease_ui_upper",
+          "label_zh": "缺血性心脏病保守95%不确定区间上限",
+          "unit": "1",
+          "note_zh": "补充表7；含研究间异质性，不是个人概率。"
+        },
+        {
+          "key": "type_2_diabetes_rr",
+          "label_zh": "2型糖尿病相对风险表值",
+          "unit": "1",
+          "note_zh": "补充表7；含研究间异质性，不是个人概率。"
+        },
+        {
+          "key": "type_2_diabetes_ui_lower",
+          "label_zh": "2型糖尿病保守95%不确定区间下限",
+          "unit": "1",
+          "note_zh": "补充表7；含研究间异质性，不是个人概率。"
+        },
+        {
+          "key": "type_2_diabetes_ui_upper",
+          "label_zh": "2型糖尿病保守95%不确定区间上限",
+          "unit": "1",
+          "note_zh": "补充表7；含研究间异质性，不是个人概率。"
+        },
+        {
+          "key": "ischemic_stroke_rr",
+          "label_zh": "缺血性卒中相对风险表值",
+          "unit": "1",
+          "note_zh": "补充表7；含研究间异质性，不是个人概率。"
+        },
+        {
+          "key": "ischemic_stroke_ui_lower",
+          "label_zh": "缺血性卒中保守95%不确定区间下限",
+          "unit": "1",
+          "note_zh": "补充表7；含研究间异质性，不是个人概率。"
+        },
+        {
+          "key": "ischemic_stroke_ui_upper",
+          "label_zh": "缺血性卒中保守95%不确定区间上限",
+          "unit": "1",
+          "note_zh": "补充表7；含研究间异质性，不是个人概率。"
+        },
+        {
+          "key": "hemorrhagic_stroke_rr",
+          "label_zh": "出血性卒中相对风险表值",
+          "unit": "1",
+          "note_zh": "补充表7；含研究间异质性，不是个人概率。"
+        },
+        {
+          "key": "hemorrhagic_stroke_ui_lower",
+          "label_zh": "出血性卒中保守95%不确定区间下限",
+          "unit": "1",
+          "note_zh": "补充表7；含研究间异质性，不是个人概率。"
+        },
+        {
+          "key": "hemorrhagic_stroke_ui_upper",
+          "label_zh": "出血性卒中保守95%不确定区间上限",
+          "unit": "1",
+          "note_zh": "补充表7；含研究间异质性，不是个人概率。"
+        }
+      ],
+      "paper": {
+        "doi": "10.1038/s41591-022-01968-z",
+        "title": "Health effects associated with consumption of unprocessed red meat: a Burden of Proof study.",
+        "title_zh": "未加工红肉摄入与慢性病的证据负担研究",
+        "journal": "Nature Medicine",
+        "year": 2022
       }
     },
     {
