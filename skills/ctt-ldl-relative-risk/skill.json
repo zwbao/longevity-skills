@@ -1,0 +1,129 @@
+{
+  "schema": "longevity-skill/1",
+  "name": "ctt-ldl-relative-risk",
+  "kind": "paper",
+  "tier": "A",
+  "species": [
+    "human"
+  ],
+  "evidence": "rct",
+  "domains": [
+    "心血管与代谢"
+  ],
+  "blurb_zh": "将 LDL-C 绝对降幅换算为主要血管事件的相对发生率情景。",
+  "intents": [
+    "lab_meaning",
+    "before_after",
+    "intervention_evidence"
+  ],
+  "triage": {
+    "reason_zh": "人体随机试验荟萃分析印出每 mmol/L 的风险比及乘法外推示例，可用个人 LDL-C 降幅复现。",
+    "reviewed": false
+  },
+  "paper": {
+    "doi": "10.1016/s0140-6736(10)61350-5",
+    "title": "Efficacy and safety of more intensive lowering of LDL cholesterol: a meta-analysis of data from 170,000 participants in 26 randomised trials.",
+    "title_zh": "更大 LDL 胆固醇降幅与血管事件风险：随机试验荟萃分析",
+    "journal": "Lancet (London, England)",
+    "year": 2010,
+    "authors": "Baigent 等（CTT Collaboration）",
+    "article_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC2988224/",
+    "supplements": [
+      {
+        "label": "Supplementary webappendix（Webtable 1 单位换算）",
+        "url": "https://pmc.ncbi.nlm.nih.gov/articles/instance/2988224/bin/mmc1.pdf"
+      }
+    ],
+    "summary_zh": "这项研究汇总成人他汀随机试验，发现 LDL 胆固醇降低更多时，主要血管事件的相对发生率进一步下降。个人报告只按你提供的 LDL 胆固醇绝对降幅换算相对发生率及其研究系数区间，不计算个人绝对发病概率或用药方案。",
+    "summary_status": "draft",
+    "card_notes": [
+      "这是随机试验个体数据荟萃分析，包含强化与常规他汀、他汀与对照两类比较；不是个体风险预测模型。",
+      "采用合并试验的总体关系；不将总体估计替换为某个亚组系数。正文及附录未链接公开分析代码或可下载的个体数据。"
+    ]
+  },
+  "entry": {
+    "script": "scripts/personal_report.py",
+    "measurements_flag": "--measurements",
+    "measurements_header": [
+      "marker",
+      "value",
+      "unit"
+    ],
+    "out_flag": "--out",
+    "result_json": true,
+    "targets_flag": "--targets",
+    "levers_json": true
+  },
+  "inputs_status": "verified",
+  "inputs": [
+    {
+      "key": "ldl_reduction_mmol_l",
+      "label_zh": "LDL-C 绝对降幅",
+      "aliases": [
+        "LDL-C reduction",
+        "LDL cholesterol reduction",
+        "LDL-C 降幅",
+        "LDL-C 下降值",
+        "低密度脂蛋白胆固醇降幅",
+        "低密度脂蛋白胆固醇下降量",
+        "ΔLDL-C reduction"
+      ],
+      "unit": "mmol/L",
+      "accept": {
+        "mg/dL": 0.02586,
+        "umol/L": 0.001
+      },
+      "molar_mass": 386.69760247486465,
+      "range": [
+        0,
+        3
+      ],
+      "unit_required": true,
+      "required": true,
+      "from": "measurements",
+      "note_zh": "参照值减去比较值的绝对降幅，不是单次 LDL-C 浓度或百分比。mg/dL 因子照 Webtable 1；0–3 是产品计算范围，不是临床正常范围。"
+    }
+  ],
+  "outputs": [
+    {
+      "key": "ldl_reduction_mmol_l",
+      "label_zh": "标准化 LDL-C 绝对降幅",
+      "unit": "mmol/L"
+    },
+    {
+      "key": "major_vascular_rr",
+      "label_zh": "主要血管事件相对发生率（模型情景）",
+      "unit": "1"
+    },
+    {
+      "key": "rr_ci95_lower",
+      "label_zh": "研究系数区间换算下限",
+      "unit": "1"
+    },
+    {
+      "key": "rr_ci95_upper",
+      "label_zh": "研究系数区间换算上限",
+      "unit": "1"
+    },
+    {
+      "key": "relative_reduction_pct",
+      "label_zh": "主要血管事件相对降低比例",
+      "unit": "%"
+    }
+  ],
+  "validation": {
+    "status": "reproduced",
+    "examples": [
+      {
+        "locator": "Discussion，包含 2 mmol/L 乘法外推的段落",
+        "quote": "2 mmol/L reduction would reduce the risk by about 40% (since the combination of risk ratios of 0·78×0·78 yields a risk ratio of about 0·6)",
+        "values": [
+          2,
+          0.6
+        ],
+        "tolerance": "RR 绝对误差不超过 0.05：原文将结果写成约 0.6、仅一位小数；脚本保留原始幂运算精度，不反推系数。",
+        "test": "tests/test_manifest.py::test_printed_two_mmol_example"
+      }
+    ]
+  }
+}

@@ -1,0 +1,157 @@
+{
+  "schema": "longevity-skill/1",
+  "name": "age-stratified-step-range",
+  "kind": "paper",
+  "tier": "A",
+  "species": [
+    "human"
+  ],
+  "evidence": "cohort",
+  "domains": [
+    "临床年龄与可穿戴"
+  ],
+  "blurb_zh": "用年龄和设备记录的日均步数，比较所在年龄组的研究平台范围。",
+  "intents": [
+    "frailty_mortality"
+  ],
+  "triage": {
+    "reason_zh": "人体队列荟萃分析印出年龄分界及日均步数平台范围，可用个人年龄和步数做范围比较；没有个人算例，暂标验证草稿。",
+    "reviewed": false
+  },
+  "paper": {
+    "doi": "10.1016/s2468-2667(21)00302-9",
+    "title": "Daily steps and all-cause mortality: a meta-analysis of 15 international cohorts.",
+    "title_zh": "每日步数与全因死亡：国际队列荟萃分析",
+    "journal": "The Lancet. Public health",
+    "year": 2022,
+    "authors": "Paluch 等",
+    "article_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC9289978/",
+    "supplements": [
+      {
+        "label": "Supplementary appendix（图 S2c，第19页）",
+        "url": "https://ars.els-cdn.com/content/image/1-s2.0-S2468266721003029-mmc1.pdf"
+      }
+    ],
+    "card_notes": [
+      "本方法使用正文 Results 与附录图 S2c 印出的年龄分组和约略平台范围。",
+      "论文未提供公开代码仓库链接；Data sharing 说明汇总数据、方案与分析代码须经作者及协作组批准后提供。本技能不重建样条风险模型。"
+    ],
+    "summary_zh": "这项研究汇总多个人体前瞻性队列，发现日均步数较多与较低的全因死亡风险相关，且关联趋于平台的步数范围随年龄组而不同。个人报告只比较你的日均步数与所属年龄组的研究范围，并显示相对端点的差值，不计算个人死亡概率或增加步数的获益。",
+    "summary_status": "draft"
+  },
+  "entry": {
+    "script": "scripts/personal_report.py",
+    "measurements_flag": "--measurements",
+    "measurements_header": [
+      "marker",
+      "value",
+      "unit"
+    ],
+    "age_flag": "--age",
+    "sex_flag": "--sex",
+    "out_flag": "--out",
+    "result_json": true,
+    "targets_flag": "--targets",
+    "levers_json": true
+  },
+  "inputs_status": "draft",
+  "inputs": [
+    {
+      "key": "daily_steps",
+      "label_zh": "日均步数",
+      "aliases": [
+        "每日步数",
+        "平均每日步数",
+        "日平均步数",
+        "步数",
+        "daily step count",
+        "steps per day",
+        "average steps/day",
+        "mean daily steps",
+        "steps"
+      ],
+      "unit": "1",
+      "accept": {},
+      "range": [
+        0,
+        100000
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "固定一日窗口的步数计数，显示为步/日。机器单位1表示计数；只接受已算好的日均数，不能填周总数、步频、距离或万步。上下限仅是软件防错范围。"
+    },
+    {
+      "key": "age",
+      "label_zh": "实足年龄",
+      "aliases": [
+        "年龄",
+        "age",
+        "age in years"
+      ],
+      "unit": "a",
+      "accept": {},
+      "range": [
+        18,
+        130
+      ],
+      "required": true,
+      "from": "profile",
+      "flag": "--age",
+      "note_zh": "以岁填写；18岁来自研究纳入规则，130岁是软件防错上限，不代表研究最大年龄。"
+    },
+    {
+      "key": "sex",
+      "label_zh": "性别",
+      "required": false,
+      "from": "profile",
+      "flag": "--sex",
+      "note_zh": "可选；本范围比较不使用性别。"
+    }
+  ],
+  "outputs": [
+    {
+      "key": "daily_steps",
+      "label_zh": "日均步数（步/日）",
+      "unit": "1",
+      "note_zh": "固定一日窗口的步数计数；不是死亡风险。"
+    },
+    {
+      "key": "reference_low_daily_steps",
+      "label_zh": "研究范围下端（步/日）",
+      "unit": "1",
+      "note_zh": "固定一日窗口的步数计数；不是死亡风险。"
+    },
+    {
+      "key": "reference_high_daily_steps",
+      "label_zh": "研究范围上端（步/日）",
+      "unit": "1",
+      "note_zh": "固定一日窗口的步数计数；不是死亡风险。"
+    },
+    {
+      "key": "difference_from_low_daily_steps",
+      "label_zh": "日均步数减范围下端（步/日）",
+      "unit": "1",
+      "note_zh": "固定一日窗口的步数计数；不是死亡风险。"
+    },
+    {
+      "key": "difference_from_high_daily_steps",
+      "label_zh": "日均步数减范围上端（步/日）",
+      "unit": "1",
+      "note_zh": "固定一日窗口的步数计数；不是死亡风险。"
+    },
+    {
+      "key": "age_group",
+      "label_zh": "论文年龄组",
+      "note_zh": "under_60 或 ge_60。"
+    },
+    {
+      "key": "step_position",
+      "label_zh": "相对研究平台范围的位置",
+      "note_zh": "below、within、above；范围端点均纳入within，仅为显示约定。"
+    }
+  ],
+  "validation": {
+    "status": "draft",
+    "gap_zh": "已核查正文 Results、图2–4、唯一附录全部60个编号页（含图S2b/S2c和第34–60页研究方案及空白表壳）、Data sharing；年龄分界与6000–8000、8000–10000步/日范围均已印出，但没有个人年龄与步数对应分档或端点差值的算例。范围常量和程序边界测试不是独立的论文算例复现；不拟合图形或把群体HR当个人预测。"
+  }
+}

@@ -174,7 +174,7 @@ def marker_names(row: Dict[str, Any], marker: Dict[str, Any]) -> List[str]:
 
 
 def sign_shown(quote: str, value: float) -> bool:
-    text = fold(quote)
+    text = _DECIMAL_POINT.sub(".", fold(quote))
     digits = f"{abs(value):.10f}".rstrip("0").rstrip(".")
     if re.search(rf"-\s?{re.escape(digits)}(?:\.?0*)(?!\d)", text):
         return True
@@ -182,11 +182,13 @@ def sign_shown(quote: str, value: float) -> bool:
 
 
 _NUMBER = re.compile(r"\d+(?:\.\d+)?")
+# The Lancet journals print a raised decimal point; PDF text gives it as one of these characters.
+_DECIMAL_POINT = re.compile("(?<=\\d)[\u00b7\u22c5\u2219\u2027](?=\\d)")
 
 
 def numbers_missing(quote: str, wanted: List[Any]) -> List[float]:
     """Numbers (sign aside) that do not appear in a verbatim quote."""
-    text = str(quote).replace("\u00b7", ".").replace("\u2212", "-")
+    text = _DECIMAL_POINT.sub(".", str(quote)).replace("\u2212", "-")
     have = {float(item) for item in _NUMBER.findall(text)}
     return [abs(item) for item in wanted if isinstance(item, (int, float)) and not any(abs(abs(item) - seen) < 1e-9 for seen in have)]
 
