@@ -1,0 +1,181 @@
+{
+  "schema": "longevity-skill/1",
+  "name": "nut-intake-mortality-contrast",
+  "kind": "paper",
+  "tier": "A",
+  "species": [
+    "human"
+  ],
+  "evidence": "review",
+  "domains": [
+    "饮食与营养"
+  ],
+  "blurb_zh": "把两份坚果摄入记录的差换算为研究中的全因死亡相对关联。",
+  "intents": [
+    "intervention_evidence",
+    "before_after"
+  ],
+  "triage": {
+    "reason_zh": "人体前瞻性研究荟萃分析印出了总坚果摄入的对数线性斜率尺度及风险比，可用个人摄入差计算人群关联对照值。",
+    "reviewed": false
+  },
+  "paper": {
+    "doi": "10.1186/s12916-016-0730-3",
+    "title": "Nut consumption and risk of cardiovascular disease, total cancer, all-cause and cause-specific mortality: a systematic review and dose-response meta-analysis of prospective studies.",
+    "title_zh": "坚果摄入与疾病及死亡风险的剂量反应荟萃分析",
+    "journal": "BMC Medicine",
+    "year": 2016,
+    "authors": "Aune 等",
+    "article_url": "https://link.springer.com/article/10.1186/s12916-016-0730-3",
+    "supplements": [
+      {
+        "label": "Additional file 1：补充图表",
+        "url": "https://static-content.springer.com/esm/art%3A10.1186%2Fs12916-016-0730-3/MediaObjects/12916_2016_730_MOESM1_ESM.pdf"
+      }
+    ],
+    "summary_zh": "这项研究汇总人群前瞻性研究，发现较高坚果摄入与较低的心血管疾病、总癌症及全因死亡风险相关。个人报告只把摄入量之差换算为研究线性模型中的全因死亡相对关联，不计算个人绝对风险或寿命。",
+    "summary_status": "draft",
+    "card_notes": [
+      "本技能仅实现总坚果的线性关联换算；不重建非线性曲线。"
+    ]
+  },
+  "entry": {
+    "script": "scripts/personal_report.py",
+    "measurements_flag": "--measurements",
+    "measurements_header": [
+      "marker",
+      "value",
+      "unit"
+    ],
+    "age_flag": "--age",
+    "sex_flag": "--sex",
+    "out_flag": "--out",
+    "result_json": true,
+    "targets_flag": "--targets",
+    "levers_json": true
+  },
+  "inputs_status": "verified",
+  "inputs": [
+    {
+      "key": "nut_intake_g_d",
+      "label_zh": "总坚果摄入量",
+      "aliases": [
+        "nuts",
+        "total nuts",
+        "nut intake",
+        "坚果摄入量",
+        "平均每日坚果摄入量"
+      ],
+      "unit": "g/d",
+      "accept": {},
+      "range": [
+        0,
+        100
+      ],
+      "unit_required": true,
+      "required": true,
+      "from": "measurements",
+      "note_zh": "用饮食记录的可食部分日均克数；仅接受 g/d。范围是输入质量检查，不是安全范围或模型验证范围；比较基准须明确提供，不自动取零。"
+    },
+    {
+      "key": "reference_intake_g_d",
+      "label_zh": "比较基准摄入量",
+      "aliases": [
+        "reference nut intake",
+        "reference intake",
+        "基准坚果摄入量",
+        "此前坚果摄入量"
+      ],
+      "unit": "g/d",
+      "accept": {},
+      "range": [
+        0,
+        100
+      ],
+      "unit_required": true,
+      "required": true,
+      "from": "measurements",
+      "note_zh": "用饮食记录的可食部分日均克数；仅接受 g/d。范围是输入质量检查，不是安全范围或模型验证范围；比较基准须明确提供，不自动取零。"
+    },
+    {
+      "key": "age",
+      "label_zh": "实足年龄",
+      "unit": "a",
+      "range": [
+        18,
+        110
+      ],
+      "required": false,
+      "from": "profile",
+      "flag": "--age",
+      "note_zh": "可选，仅作成人人群适用性检查，不进入公式。"
+    },
+    {
+      "key": "sex",
+      "label_zh": "性别",
+      "required": false,
+      "from": "profile",
+      "flag": "--sex",
+      "note_zh": "可选上下文，不进入公式。"
+    }
+  ],
+  "outputs": [
+    {
+      "key": "intake_difference_g_d",
+      "label_zh": "输入摄入量减比较基准",
+      "unit": "g/d",
+      "note_zh": "基于人群观察性关联的数学换算，不是个人预后。"
+    },
+    {
+      "key": "linear_rr",
+      "label_zh": "全因死亡线性关联风险比",
+      "unit": "1",
+      "note_zh": "基于人群观察性关联的数学换算，不是个人预后。"
+    },
+    {
+      "key": "linear_rr_lower",
+      "label_zh": "线性关联风险比95%区间下限",
+      "unit": "1",
+      "note_zh": "基于人群观察性关联的数学换算，不是个人预后。"
+    },
+    {
+      "key": "linear_rr_upper",
+      "label_zh": "线性关联风险比95%区间上限",
+      "unit": "1",
+      "note_zh": "基于人群观察性关联的数学换算，不是个人预后。"
+    },
+    {
+      "key": "relative_difference_pct",
+      "label_zh": "线性关联相对差（非绝对风险差）",
+      "unit": "%",
+      "note_zh": "基于人群观察性关联的数学换算，不是个人预后。"
+    }
+  ],
+  "validation": {
+    "status": "reproduced",
+    "examples": [
+      {
+        "locator": "Table 1, All-cause mortality / Total nuts, dose-response column and footnote b",
+        "quote": "0.78 (0.72–0.84)\nThe increment for the dose-response analysis is 28 g/d for total nuts and 10 g/d for tree nuts and peanuts",
+        "values": [
+          28,
+          0.78,
+          0.72,
+          0.84
+        ],
+        "tolerance": "1e-12；仅复现论文印出的单个增量的线性换算，不声称重新汇总原始研究。",
+        "test": "tests/test_manifest.py::test_printed_linear_increment"
+      },
+      {
+        "locator": "Discussion, opening paragraph",
+        "quote": "In the dose–response analysis there was a 29%, 7%, 21%, 15%, and 22% reduction in the relative risk for a one serving per day increase in nut intake (one serving = 28 grams), respectively, although the association for stroke was not statistically significant in the linear dose–response analysis.",
+        "values": [
+          22,
+          28
+        ],
+        "tolerance": "1e-10 个百分点；计算 (RR-1)*100=-22，对应论文的 22% reduction。",
+        "test": "tests/test_manifest.py::test_printed_linear_increment"
+      }
+    ]
+  }
+}
