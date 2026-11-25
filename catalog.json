@@ -2,9 +2,9 @@
   "schema": "longevity-catalog/1",
   "version": "2026.48.0",
   "counts": {
-    "skills": 211,
+    "skills": 213,
     "tiers": {
-      "A": 47,
+      "A": 49,
       "B": 83,
       "C": 73,
       "tool": 8
@@ -9925,6 +9925,647 @@
         "title_zh": "按饮酒量、地区、年龄、性别及年份分析人群饮酒风险：全球疾病负担研究",
         "journal": "Lancet (London, England)",
         "year": 2022
+      }
+    },
+    {
+      "name": "gbd-dietary-intake-gap",
+      "kind": "paper",
+      "tier": "A",
+      "species": [
+        "human"
+      ],
+      "evidence": "method",
+      "domains": [
+        "营养",
+        "饮食"
+      ],
+      "blurb_zh": "把每日食物、营养素和24小时尿钠记录换算为相对GBD饮食参考值的差值与比例。",
+      "description": "Tier A personal readout: computes one person's value with the paper's printed method and reproduces a printed example. Compares a person's daily food and nutrient records and 24-hour urinary sodium with the fifteen printed GBD 2017 dietary reference values. Computes signed intake gaps, reference percentages, and positions relative to the reference uncertainty ranges. Use for dietary intake comparisons or explicit target scenarios; it does not predict individual disease risk or prescribe a diet.",
+      "intents": [
+        "intervention_evidence",
+        "before_after"
+      ],
+      "has_script": true,
+      "validation_status": "reproduced",
+      "validation_label_zh": "已复现论文",
+      "entry": {
+        "script": "scripts/personal_report.py",
+        "measurements_flag": "--measurements",
+        "measurements_header": [
+          "marker",
+          "value",
+          "unit"
+        ],
+        "age_flag": "--age",
+        "sex_flag": "--sex",
+        "out_flag": "--out",
+        "result_json": true,
+        "targets_flag": "--targets",
+        "levers_json": true
+      },
+      "inputs_status": "verified",
+      "inputs": [
+        {
+          "key": "age",
+          "label_zh": "年龄",
+          "aliases": [
+            "年龄",
+            "age",
+            "chronological age"
+          ],
+          "unit": "a",
+          "accept": {
+            "years": 1
+          },
+          "range": [
+            25,
+            120
+          ],
+          "required": true,
+          "from": "argument",
+          "flag": "--age",
+          "note_zh": "研究人群为25岁及以上；120岁为输入检查上限，不是论文上限。"
+        },
+        {
+          "key": "fruits_g_d",
+          "label_zh": "水果",
+          "aliases": [
+            "fruits",
+            "fruit intake",
+            "水果摄入量"
+          ],
+          "unit": "g/d",
+          "accept": {
+            "g/d": 1
+          },
+          "range": [
+            0,
+            5000
+          ],
+          "unit_required": true,
+          "required": true,
+          "from": "measurements",
+          "note_zh": "鲜、冻、熟、罐装或干水果；排除果汁及盐渍、腌制水果。"
+        },
+        {
+          "key": "vegetables_g_d",
+          "label_zh": "蔬菜",
+          "aliases": [
+            "vegetables",
+            "vegetable intake",
+            "蔬菜摄入量"
+          ],
+          "unit": "g/d",
+          "accept": {
+            "g/d": 1
+          },
+          "range": [
+            0,
+            5000
+          ],
+          "unit_required": true,
+          "required": true,
+          "from": "measurements",
+          "note_zh": "排除豆类、盐渍或腌制蔬菜、蔬菜汁、坚果、种子及土豆、玉米等淀粉类蔬菜。"
+        },
+        {
+          "key": "legumes_g_d",
+          "label_zh": "豆类",
+          "aliases": [
+            "legumes",
+            "legume intake",
+            "豆类摄入量"
+          ],
+          "unit": "g/d",
+          "accept": {
+            "g/d": 1
+          },
+          "range": [
+            0,
+            3000
+          ],
+          "unit_required": true,
+          "required": true,
+          "from": "measurements",
+          "note_zh": "鲜、冻、熟、罐装或干豆类；须记录采用的食物形态，不自动换算干重、熟重。"
+        },
+        {
+          "key": "whole_grains_g_d",
+          "label_zh": "全谷物",
+          "aliases": [
+            "whole grains",
+            "whole grain intake",
+            "全谷物摄入量"
+          ],
+          "unit": "g/d",
+          "accept": {
+            "g/d": 1
+          },
+          "range": [
+            0,
+            3000
+          ],
+          "unit_required": true,
+          "required": true,
+          "from": "measurements",
+          "note_zh": "麸皮、胚芽和胚乳保持天然比例的全谷物部分；不能把混合食品总重全部计入。"
+        },
+        {
+          "key": "nuts_seeds_g_d",
+          "label_zh": "坚果和种子",
+          "aliases": [
+            "nuts and seeds",
+            "坚果及种子",
+            "坚果种子摄入量"
+          ],
+          "unit": "g/d",
+          "accept": {
+            "g/d": 1
+          },
+          "range": [
+            0,
+            1000
+          ],
+          "unit_required": true,
+          "required": true,
+          "from": "measurements",
+          "note_zh": "坚果及种子类食物。"
+        },
+        {
+          "key": "milk_g_d",
+          "label_zh": "牛奶",
+          "aliases": [
+            "milk",
+            "牛奶摄入量",
+            "奶类饮用量"
+          ],
+          "unit": "g/d",
+          "accept": {
+            "g/d": 1
+          },
+          "range": [
+            0,
+            10000
+          ],
+          "unit_required": true,
+          "required": true,
+          "from": "measurements",
+          "note_zh": "包括脱脂、低脂和全脂奶；不包括豆奶和其他植物饮品，不以全部乳制品代替。"
+        },
+        {
+          "key": "red_meat_g_d",
+          "label_zh": "红肉",
+          "aliases": [
+            "red meat",
+            "红肉摄入量"
+          ],
+          "unit": "g/d",
+          "accept": {
+            "g/d": 1
+          },
+          "range": [
+            0,
+            3000
+          ],
+          "unit_required": true,
+          "required": true,
+          "from": "measurements",
+          "note_zh": "牛、猪、绵羊、山羊肉；排除禽、鱼、蛋及所有加工肉。"
+        },
+        {
+          "key": "processed_meat_g_d",
+          "label_zh": "加工肉",
+          "aliases": [
+            "processed meat",
+            "加工肉摄入量"
+          ],
+          "unit": "g/d",
+          "accept": {
+            "g/d": 1
+          },
+          "range": [
+            0,
+            2000
+          ],
+          "unit_required": true,
+          "required": true,
+          "from": "measurements",
+          "note_zh": "经烟熏、腌制、盐渍或添加化学防腐剂保存的肉。"
+        },
+        {
+          "key": "sugar_sweetened_beverages_g_d",
+          "label_zh": "含糖饮料",
+          "aliases": [
+            "sugar-sweetened beverages",
+            "SSB",
+            "含糖饮料摄入量"
+          ],
+          "unit": "g/d",
+          "accept": {
+            "g/d": 1
+          },
+          "range": [
+            0,
+            15000
+          ],
+          "unit_required": true,
+          "required": true,
+          "from": "measurements",
+          "note_zh": "每226.8克一份含至少50千卡的饮料，包括汽水、能量饮料及果味饮料；排除纯果蔬汁。单位是饮料总质量，不是糖质量。"
+        },
+        {
+          "key": "fibre_g_d",
+          "label_zh": "膳食纤维",
+          "aliases": [
+            "fibre",
+            "fiber",
+            "dietary fibre",
+            "dietary fiber",
+            "膳食纤维摄入量"
+          ],
+          "unit": "g/d",
+          "accept": {
+            "g/d": 1
+          },
+          "range": [
+            0,
+            200
+          ],
+          "unit_required": true,
+          "required": true,
+          "from": "measurements",
+          "note_zh": "所有来源的膳食纤维总摄入量。"
+        },
+        {
+          "key": "calcium_g_d",
+          "label_zh": "膳食钙",
+          "aliases": [
+            "dietary calcium",
+            "calcium intake",
+            "钙摄入量"
+          ],
+          "unit": "g/d",
+          "accept": {
+            "g/d": 1
+          },
+          "range": [
+            0,
+            10
+          ],
+          "unit_required": true,
+          "required": true,
+          "from": "measurements",
+          "note_zh": "所有来源的钙摄入量；不是血钙。若原记录为mg/d，先按1000 mg = 1 g整理为g/d。"
+        },
+        {
+          "key": "seafood_omega3_g_d",
+          "label_zh": "海产品EPA和DHA",
+          "aliases": [
+            "seafood omega-3 fatty acids",
+            "EPA+DHA",
+            "EPA和DHA摄入量"
+          ],
+          "unit": "g/d",
+          "accept": {
+            "g/d": 1
+          },
+          "range": [
+            0,
+            20
+          ],
+          "unit_required": true,
+          "required": true,
+          "from": "measurements",
+          "note_zh": "海产品来源EPA与DHA合计；不是鱼肉重量、鱼油总重或ALA。原表250 mg/d精确换算为0.250 g/d。"
+        },
+        {
+          "key": "omega6_energy_pct",
+          "label_zh": "Omega-6供能比",
+          "aliases": [
+            "omega-6 energy percent",
+            "omega6 energy percent",
+            "ω-6供能比"
+          ],
+          "unit": "%",
+          "accept": {
+            "1": 100
+          },
+          "range": [
+            0,
+            100
+          ],
+          "unit_required": true,
+          "required": true,
+          "from": "measurements",
+          "note_zh": "Omega-6脂肪酸占每日总能量的百分比；不是全部脂肪供能比，也不是食物质量百分比。"
+        },
+        {
+          "key": "trans_fat_energy_pct",
+          "label_zh": "反式脂肪供能比",
+          "aliases": [
+            "trans fat energy percent",
+            "trans fatty acids energy percent",
+            "反式脂肪酸供能比"
+          ],
+          "unit": "%",
+          "accept": {
+            "1": 100
+          },
+          "range": [
+            0,
+            100
+          ],
+          "unit_required": true,
+          "required": true,
+          "from": "measurements",
+          "note_zh": "所有来源反式脂肪酸占每日总能量的百分比。与Omega-6供能比之和不能超过100%。"
+        },
+        {
+          "key": "urinary_sodium_g_d",
+          "label_zh": "24小时尿钠",
+          "aliases": [
+            "24 h urinary sodium",
+            "24-hour urinary sodium",
+            "24h尿钠",
+            "24小时尿钠排泄量"
+          ],
+          "unit": "g/d",
+          "accept": {
+            "g/d": 1
+          },
+          "range": [
+            0,
+            30
+          ],
+          "unit_required": true,
+          "required": true,
+          "from": "measurements",
+          "note_zh": "完整24小时尿钠排泄质量；不是尿钠浓度、随机尿、膳食钠或食盐。论文的膳食钠转尿钠系数未印出，不做此转换。"
+        }
+      ],
+      "outputs": [
+        {
+          "key": "fruits_delta",
+          "label_zh": "水果相对参考点差值",
+          "unit": "g/d",
+          "note_zh": "记录值减参考点；百分比输入的差值单位为百分点。负值/正值只表示不足/超量，不是医疗分档。"
+        },
+        {
+          "key": "fruits_ratio_pct",
+          "label_zh": "水果占参考点比例",
+          "unit": "%",
+          "note_zh": "记录值÷参考点×100，不截断、不加权，不是健康或达标评分。"
+        },
+        {
+          "key": "fruits_range_position",
+          "label_zh": "水果相对参考范围位置",
+          "note_zh": "below / within / above；含上下边界；范围是参考值不确定性，不是个人安全区间。"
+        },
+        {
+          "key": "vegetables_delta",
+          "label_zh": "蔬菜相对参考点差值",
+          "unit": "g/d",
+          "note_zh": "记录值减参考点；百分比输入的差值单位为百分点。负值/正值只表示不足/超量，不是医疗分档。"
+        },
+        {
+          "key": "vegetables_ratio_pct",
+          "label_zh": "蔬菜占参考点比例",
+          "unit": "%",
+          "note_zh": "记录值÷参考点×100，不截断、不加权，不是健康或达标评分。"
+        },
+        {
+          "key": "vegetables_range_position",
+          "label_zh": "蔬菜相对参考范围位置",
+          "note_zh": "below / within / above；含上下边界；范围是参考值不确定性，不是个人安全区间。"
+        },
+        {
+          "key": "legumes_delta",
+          "label_zh": "豆类相对参考点差值",
+          "unit": "g/d",
+          "note_zh": "记录值减参考点；百分比输入的差值单位为百分点。负值/正值只表示不足/超量，不是医疗分档。"
+        },
+        {
+          "key": "legumes_ratio_pct",
+          "label_zh": "豆类占参考点比例",
+          "unit": "%",
+          "note_zh": "记录值÷参考点×100，不截断、不加权，不是健康或达标评分。"
+        },
+        {
+          "key": "legumes_range_position",
+          "label_zh": "豆类相对参考范围位置",
+          "note_zh": "below / within / above；含上下边界；范围是参考值不确定性，不是个人安全区间。"
+        },
+        {
+          "key": "whole_grains_delta",
+          "label_zh": "全谷物相对参考点差值",
+          "unit": "g/d",
+          "note_zh": "记录值减参考点；百分比输入的差值单位为百分点。负值/正值只表示不足/超量，不是医疗分档。"
+        },
+        {
+          "key": "whole_grains_ratio_pct",
+          "label_zh": "全谷物占参考点比例",
+          "unit": "%",
+          "note_zh": "记录值÷参考点×100，不截断、不加权，不是健康或达标评分。"
+        },
+        {
+          "key": "whole_grains_range_position",
+          "label_zh": "全谷物相对参考范围位置",
+          "note_zh": "below / within / above；含上下边界；范围是参考值不确定性，不是个人安全区间。"
+        },
+        {
+          "key": "nuts_seeds_delta",
+          "label_zh": "坚果和种子相对参考点差值",
+          "unit": "g/d",
+          "note_zh": "记录值减参考点；百分比输入的差值单位为百分点。负值/正值只表示不足/超量，不是医疗分档。"
+        },
+        {
+          "key": "nuts_seeds_ratio_pct",
+          "label_zh": "坚果和种子占参考点比例",
+          "unit": "%",
+          "note_zh": "记录值÷参考点×100，不截断、不加权，不是健康或达标评分。"
+        },
+        {
+          "key": "nuts_seeds_range_position",
+          "label_zh": "坚果和种子相对参考范围位置",
+          "note_zh": "below / within / above；含上下边界；范围是参考值不确定性，不是个人安全区间。"
+        },
+        {
+          "key": "milk_delta",
+          "label_zh": "牛奶相对参考点差值",
+          "unit": "g/d",
+          "note_zh": "记录值减参考点；百分比输入的差值单位为百分点。负值/正值只表示不足/超量，不是医疗分档。"
+        },
+        {
+          "key": "milk_ratio_pct",
+          "label_zh": "牛奶占参考点比例",
+          "unit": "%",
+          "note_zh": "记录值÷参考点×100，不截断、不加权，不是健康或达标评分。"
+        },
+        {
+          "key": "milk_range_position",
+          "label_zh": "牛奶相对参考范围位置",
+          "note_zh": "below / within / above；含上下边界；范围是参考值不确定性，不是个人安全区间。"
+        },
+        {
+          "key": "red_meat_delta",
+          "label_zh": "红肉相对参考点差值",
+          "unit": "g/d",
+          "note_zh": "记录值减参考点；百分比输入的差值单位为百分点。负值/正值只表示不足/超量，不是医疗分档。"
+        },
+        {
+          "key": "red_meat_ratio_pct",
+          "label_zh": "红肉占参考点比例",
+          "unit": "%",
+          "note_zh": "记录值÷参考点×100，不截断、不加权，不是健康或达标评分。"
+        },
+        {
+          "key": "red_meat_range_position",
+          "label_zh": "红肉相对参考范围位置",
+          "note_zh": "below / within / above；含上下边界；范围是参考值不确定性，不是个人安全区间。"
+        },
+        {
+          "key": "processed_meat_delta",
+          "label_zh": "加工肉相对参考点差值",
+          "unit": "g/d",
+          "note_zh": "记录值减参考点；百分比输入的差值单位为百分点。负值/正值只表示不足/超量，不是医疗分档。"
+        },
+        {
+          "key": "processed_meat_ratio_pct",
+          "label_zh": "加工肉占参考点比例",
+          "unit": "%",
+          "note_zh": "记录值÷参考点×100，不截断、不加权，不是健康或达标评分。"
+        },
+        {
+          "key": "processed_meat_range_position",
+          "label_zh": "加工肉相对参考范围位置",
+          "note_zh": "below / within / above；含上下边界；范围是参考值不确定性，不是个人安全区间。"
+        },
+        {
+          "key": "sugar_sweetened_beverages_delta",
+          "label_zh": "含糖饮料相对参考点差值",
+          "unit": "g/d",
+          "note_zh": "记录值减参考点；百分比输入的差值单位为百分点。负值/正值只表示不足/超量，不是医疗分档。"
+        },
+        {
+          "key": "sugar_sweetened_beverages_ratio_pct",
+          "label_zh": "含糖饮料占参考点比例",
+          "unit": "%",
+          "note_zh": "记录值÷参考点×100，不截断、不加权，不是健康或达标评分。"
+        },
+        {
+          "key": "sugar_sweetened_beverages_range_position",
+          "label_zh": "含糖饮料相对参考范围位置",
+          "note_zh": "below / within / above；含上下边界；范围是参考值不确定性，不是个人安全区间。"
+        },
+        {
+          "key": "fibre_delta",
+          "label_zh": "膳食纤维相对参考点差值",
+          "unit": "g/d",
+          "note_zh": "记录值减参考点；百分比输入的差值单位为百分点。负值/正值只表示不足/超量，不是医疗分档。"
+        },
+        {
+          "key": "fibre_ratio_pct",
+          "label_zh": "膳食纤维占参考点比例",
+          "unit": "%",
+          "note_zh": "记录值÷参考点×100，不截断、不加权，不是健康或达标评分。"
+        },
+        {
+          "key": "fibre_range_position",
+          "label_zh": "膳食纤维相对参考范围位置",
+          "note_zh": "below / within / above；含上下边界；范围是参考值不确定性，不是个人安全区间。"
+        },
+        {
+          "key": "calcium_delta",
+          "label_zh": "膳食钙相对参考点差值",
+          "unit": "g/d",
+          "note_zh": "记录值减参考点；百分比输入的差值单位为百分点。负值/正值只表示不足/超量，不是医疗分档。"
+        },
+        {
+          "key": "calcium_ratio_pct",
+          "label_zh": "膳食钙占参考点比例",
+          "unit": "%",
+          "note_zh": "记录值÷参考点×100，不截断、不加权，不是健康或达标评分。"
+        },
+        {
+          "key": "calcium_range_position",
+          "label_zh": "膳食钙相对参考范围位置",
+          "note_zh": "below / within / above；含上下边界；范围是参考值不确定性，不是个人安全区间。"
+        },
+        {
+          "key": "seafood_omega3_delta",
+          "label_zh": "海产品EPA和DHA相对参考点差值",
+          "unit": "g/d",
+          "note_zh": "记录值减参考点；百分比输入的差值单位为百分点。负值/正值只表示不足/超量，不是医疗分档。"
+        },
+        {
+          "key": "seafood_omega3_ratio_pct",
+          "label_zh": "海产品EPA和DHA占参考点比例",
+          "unit": "%",
+          "note_zh": "记录值÷参考点×100，不截断、不加权，不是健康或达标评分。"
+        },
+        {
+          "key": "seafood_omega3_range_position",
+          "label_zh": "海产品EPA和DHA相对参考范围位置",
+          "note_zh": "below / within / above；含上下边界；范围是参考值不确定性，不是个人安全区间。"
+        },
+        {
+          "key": "omega6_delta",
+          "label_zh": "Omega-6供能比相对参考点差值",
+          "unit": "%",
+          "note_zh": "记录值减参考点；百分比输入的差值单位为百分点。负值/正值只表示不足/超量，不是医疗分档。"
+        },
+        {
+          "key": "omega6_ratio_pct",
+          "label_zh": "Omega-6供能比占参考点比例",
+          "unit": "%",
+          "note_zh": "记录值÷参考点×100，不截断、不加权，不是健康或达标评分。"
+        },
+        {
+          "key": "omega6_range_position",
+          "label_zh": "Omega-6供能比相对参考范围位置",
+          "note_zh": "below / within / above；含上下边界；范围是参考值不确定性，不是个人安全区间。"
+        },
+        {
+          "key": "trans_fat_delta",
+          "label_zh": "反式脂肪供能比相对参考点差值",
+          "unit": "%",
+          "note_zh": "记录值减参考点；百分比输入的差值单位为百分点。负值/正值只表示不足/超量，不是医疗分档。"
+        },
+        {
+          "key": "trans_fat_ratio_pct",
+          "label_zh": "反式脂肪供能比占参考点比例",
+          "unit": "%",
+          "note_zh": "记录值÷参考点×100，不截断、不加权，不是健康或达标评分。"
+        },
+        {
+          "key": "trans_fat_range_position",
+          "label_zh": "反式脂肪供能比相对参考范围位置",
+          "note_zh": "below / within / above；含上下边界；范围是参考值不确定性，不是个人安全区间。"
+        },
+        {
+          "key": "urinary_sodium_delta",
+          "label_zh": "24小时尿钠相对参考点差值",
+          "unit": "g/d",
+          "note_zh": "记录值减参考点；百分比输入的差值单位为百分点。负值/正值只表示不足/超量，不是医疗分档。"
+        },
+        {
+          "key": "urinary_sodium_ratio_pct",
+          "label_zh": "24小时尿钠占参考点比例",
+          "unit": "%",
+          "note_zh": "记录值÷参考点×100，不截断、不加权，不是健康或达标评分。"
+        },
+        {
+          "key": "urinary_sodium_range_position",
+          "label_zh": "24小时尿钠相对参考范围位置",
+          "note_zh": "below / within / above；含上下边界；范围是参考值不确定性，不是个人安全区间。"
+        }
+      ],
+      "paper": {
+        "doi": "10.1016/s0140-6736(19)30041-8",
+        "title": "Health effects of dietary risks in 195 countries, 1990-2017: a systematic analysis for the Global Burden of Disease Study 2017.",
+        "title_zh": "全球疾病负担研究中的饮食风险与健康影响",
+        "journal": "Lancet (London, England)",
+        "year": 2019
       }
     },
     {
@@ -35166,6 +35807,185 @@
         "title_zh": "睡眠时长分组",
         "journal": "Nature",
         "year": 2026
+      }
+    },
+    {
+      "name": "sleep-duration-risk-lookup",
+      "kind": "paper",
+      "tier": "A",
+      "species": [
+        "human"
+      ],
+      "evidence": "review",
+      "domains": [
+        "睡眠",
+        "心血管",
+        "死亡风险"
+      ],
+      "blurb_zh": "用通常睡眠时长匹配论文整数小时查表值，查看全因死亡、心血管疾病、冠心病和卒中的人群相对风险。",
+      "description": "Tier A personal readout: computes one person's value with the paper's printed method and reproduces a printed example. 按通常睡眠时长匹配前瞻性队列荟萃分析正文表2中已印出的非线性相对风险，展示全因死亡、总心血管疾病、冠心病和卒中的人群关联与置信区间。适用于询问每天睡几个小时与死亡或心血管风险的关系；仅接受已印出的整数小时点，可比较用户指定的目标情景，不预测个人概率或干预获益。",
+      "intents": [
+        "wearable_sleep",
+        "frailty_mortality"
+      ],
+      "has_script": true,
+      "validation_status": "reproduced",
+      "validation_label_zh": "已复现论文",
+      "entry": {
+        "script": "scripts/personal_report.py",
+        "measurements_flag": "--measurements",
+        "measurements_header": [
+          "item",
+          "value",
+          "unit"
+        ],
+        "age_flag": "--age",
+        "sex_flag": "--sex",
+        "out_flag": "--out",
+        "result_json": true,
+        "targets_flag": "--targets",
+        "levers_json": true
+      },
+      "inputs_status": "verified",
+      "inputs": [
+        {
+          "key": "sleep_duration_h",
+          "label_zh": "通常的睡眠时长",
+          "aliases": [
+            "睡眠时长",
+            "每日睡眠时长",
+            "平均睡眠时长",
+            "睡眠时间",
+            "sleep duration",
+            "habitual sleep duration",
+            "average sleep duration",
+            "sleep length"
+          ],
+          "unit": "h",
+          "accept": {
+            "min": 0.016666666666666666
+          },
+          "range": [
+            0,
+            24
+          ],
+          "unit_required": true,
+          "required": true,
+          "from": "measurements",
+          "note_zh": "每天通常的睡眠小时数，不是卧床时间或单晚记录。0–24 是生理输入检查；方法只接受表2已印出的3至11整数小时点，不对非整数取整。研究混合夜间与全天睡眠，不能进行口径专属校准。"
+        },
+        {
+          "key": "age",
+          "label_zh": "年龄",
+          "unit": "a",
+          "range": [
+            18,
+            120
+          ],
+          "required": false,
+          "from": "profile",
+          "flag": "--age",
+          "note_zh": "可选背景；18–120是本工具成人使用范围而非论文拟合切点，不参与表2查表。"
+        },
+        {
+          "key": "sex",
+          "label_zh": "性别",
+          "required": false,
+          "from": "profile",
+          "flag": "--sex",
+          "note_zh": "可选 male/female，仅作接口兼容；不对总体查表结果作性别调整。"
+        }
+      ],
+      "outputs": [
+        {
+          "key": "sleep_duration_h",
+          "label_zh": "已匹配的通常睡眠时长",
+          "unit": "h"
+        },
+        {
+          "key": "reference_sleep_h",
+          "label_zh": "参照睡眠时长",
+          "unit": "h"
+        },
+        {
+          "key": "all_cause_mortality_rr",
+          "label_zh": "全因死亡人群相对风险",
+          "unit": "1",
+          "note_zh": "正文表2，相对每日7小时；未印出的单元格为null。心血管疾病结局混合发病与死亡；不是个人概率。"
+        },
+        {
+          "key": "all_cause_mortality_ci_lower",
+          "label_zh": "全因死亡人群95%置信区间下限",
+          "unit": "1",
+          "note_zh": "正文表2，相对每日7小时；未印出的单元格为null。心血管疾病结局混合发病与死亡；不是个人概率。"
+        },
+        {
+          "key": "all_cause_mortality_ci_upper",
+          "label_zh": "全因死亡人群95%置信区间上限",
+          "unit": "1",
+          "note_zh": "正文表2，相对每日7小时；未印出的单元格为null。心血管疾病结局混合发病与死亡；不是个人概率。"
+        },
+        {
+          "key": "total_cvd_rr",
+          "label_zh": "总心血管疾病人群相对风险",
+          "unit": "1",
+          "note_zh": "正文表2，相对每日7小时；未印出的单元格为null。心血管疾病结局混合发病与死亡；不是个人概率。"
+        },
+        {
+          "key": "total_cvd_ci_lower",
+          "label_zh": "总心血管疾病人群95%置信区间下限",
+          "unit": "1",
+          "note_zh": "正文表2，相对每日7小时；未印出的单元格为null。心血管疾病结局混合发病与死亡；不是个人概率。"
+        },
+        {
+          "key": "total_cvd_ci_upper",
+          "label_zh": "总心血管疾病人群95%置信区间上限",
+          "unit": "1",
+          "note_zh": "正文表2，相对每日7小时；未印出的单元格为null。心血管疾病结局混合发病与死亡；不是个人概率。"
+        },
+        {
+          "key": "chd_rr",
+          "label_zh": "冠心病人群相对风险",
+          "unit": "1",
+          "note_zh": "正文表2，相对每日7小时；未印出的单元格为null。心血管疾病结局混合发病与死亡；不是个人概率。"
+        },
+        {
+          "key": "chd_ci_lower",
+          "label_zh": "冠心病人群95%置信区间下限",
+          "unit": "1",
+          "note_zh": "正文表2，相对每日7小时；未印出的单元格为null。心血管疾病结局混合发病与死亡；不是个人概率。"
+        },
+        {
+          "key": "chd_ci_upper",
+          "label_zh": "冠心病人群95%置信区间上限",
+          "unit": "1",
+          "note_zh": "正文表2，相对每日7小时；未印出的单元格为null。心血管疾病结局混合发病与死亡；不是个人概率。"
+        },
+        {
+          "key": "stroke_rr",
+          "label_zh": "卒中人群相对风险",
+          "unit": "1",
+          "note_zh": "正文表2，相对每日7小时；未印出的单元格为null。心血管疾病结局混合发病与死亡；不是个人概率。"
+        },
+        {
+          "key": "stroke_ci_lower",
+          "label_zh": "卒中人群95%置信区间下限",
+          "unit": "1",
+          "note_zh": "正文表2，相对每日7小时；未印出的单元格为null。心血管疾病结局混合发病与死亡；不是个人概率。"
+        },
+        {
+          "key": "stroke_ci_upper",
+          "label_zh": "卒中人群95%置信区间上限",
+          "unit": "1",
+          "note_zh": "正文表2，相对每日7小时；未印出的单元格为null。心血管疾病结局混合发病与死亡；不是个人概率。"
+        }
+      ],
+      "paper": {
+        "doi": "10.1161/jaha.117.005947",
+        "title": "Relationship of Sleep Duration With All-Cause Mortality and Cardiovascular Events: A Systematic Review and Dose-Response Meta-Analysis of Prospective Cohort Studies.",
+        "title_zh": "睡眠时长与全因死亡及心血管事件：前瞻性队列的剂量反应荟萃分析",
+        "journal": "Journal of the American Heart Association",
+        "year": 2017
       }
     },
     {

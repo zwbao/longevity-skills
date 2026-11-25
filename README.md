@@ -305,6 +305,7 @@ python3 -m tools.lsk test --changed origin/main   # 只测相对 main 改动过�
 
 - `skills/china-par-ascvd-risk/` — 收缩压、血脂、腰围、年龄和几个是否项到齐时，按 China-PAR 算中国成人的 10 年心血管病风险，男女都算。
 - `skills/pooled-cohort-ascvd-risk/` — 用年龄、血脂、血压、吸烟和糖尿病状态，按原始 PCE 方程估计十年首次心血管病风险。
+- `skills/sleep-duration-risk-lookup/` — 见「睡眠」。
 
 ## 心血管与代谢
 
@@ -326,6 +327,7 @@ python3 -m tools.lsk test --changed origin/main   # 只测相对 main 改动过�
 ## 死亡风险
 
 - `skills/accelerometry-mortality-dose-response/` — 见「身体活动」。
+- `skills/sleep-duration-risk-lookup/` — 见「睡眠」。
 
 ## 生活方式与健康风险
 
@@ -343,6 +345,10 @@ python3 -m tools.lsk test --changed origin/main   # 只测相对 main 改动过�
 
 - `skills/alcohol-burden-of-proof/` — 见「饮食与营养」。
 
+## 睡眠
+
+- `skills/sleep-duration-risk-lookup/` — 用通常睡眠时长匹配论文整数小时查表值，查看全因死亡、心血管疾病、冠心病和卒中的人群相对风险。
+
 ## 糖代谢
 
 - `skills/elsa-hba1c-model-a/` — 用糖化血红蛋白、年龄、性别和随访间隔计算 ELSA Model A 的糖尿病检出概率（预印本研究模型）。
@@ -354,6 +360,10 @@ python3 -m tools.lsk test --changed origin/main   # 只测相对 main 改动过�
 ## 肾脏
 
 - `skills/ckd-epi-2021-egfr/` — 血肌酐、年龄和性别算肾小球滤过率估计值（eGFR），有胱抑素 C 时用肌酐加胱抑素 C 方程，按 KDIGO 分 G1–G5；有尿白蛋白/肌酐比时再分 A1–A3。
+
+## 营养
+
+- `skills/gbd-dietary-intake-gap/` — 把每日食物、营养素和24小时尿钠记录换算为相对GBD饮食参考值的差值与比例。
 
 ## 血液测序
 
@@ -376,6 +386,10 @@ python3 -m tools.lsk test --changed origin/main   # 只测相对 main 改动过�
 ## 身体活动
 
 - `skills/accelerometry-mortality-dose-response/` — 按符合原文处理定义的加速度计活动或久坐日均值，查全因死亡相对危险比。
+
+## 饮食
+
+- `skills/gbd-dietary-intake-gap/` — 见「营养」。
 
 ## 饮食与代谢
 
