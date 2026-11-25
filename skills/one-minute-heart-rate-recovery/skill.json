@@ -1,0 +1,151 @@
+{
+  "schema": "longevity-skill/1",
+  "name": "one-minute-heart-rate-recovery",
+  "kind": "paper",
+  "tier": "A",
+  "species": [
+    "human"
+  ],
+  "evidence": "cohort",
+  "domains": [
+    "心血管与运动"
+  ],
+  "blurb_zh": "用运动试验的峰值和主动恢复1分钟心率，计算心率下降量并按原文切点分档。",
+  "intents": [
+    "lab_meaning",
+    "frailty_mortality"
+  ],
+  "triage": {
+    "reason_zh": "人体队列正文印出心率恢复差值定义及主动恢复1分钟下降≤12次/分切点，可用于个人分档，但没有个人数值示例。",
+    "reviewed": false
+  },
+  "paper": {
+    "doi": "10.1056/nejm199910283411804",
+    "title": "Heart-rate recovery immediately after exercise as a predictor of mortality.",
+    "title_zh": "运动后即刻心率恢复与死亡风险",
+    "journal": "The New England Journal of Medicine",
+    "year": 1999,
+    "authors": "Cole 等",
+    "article_url": "https://www.nejm.org/doi/full/10.1056/NEJM199910283411804",
+    "supplements": [],
+    "card_notes": [
+      "原文为跑台主动恢复测量，不能直接替代坐位或卧位恢复、任意手环记录的解释。",
+      "仅实现正文的主切点分档，不重建 Cox 风险模型；未找到个人计算示例，验证状态为暂定。"
+    ],
+    "summary_zh": "这项研究发现，在转诊接受运动试验的成年人中，运动后心率下降较慢与后续全因死亡相关，考虑运动能力及其他风险因素后仍存在关联。个人报告只计算规定恢复方案下的心率下降量和原文分档，不预测个人死亡概率或寿命。",
+    "summary_status": "draft"
+  },
+  "entry": {
+    "script": "scripts/personal_report.py",
+    "measurements_flag": "--measurements",
+    "measurements_header": [
+      "marker",
+      "value",
+      "unit"
+    ],
+    "age_flag": "--age",
+    "sex_flag": "--sex",
+    "out_flag": "--out",
+    "result_json": true
+  },
+  "inputs_status": "draft",
+  "inputs": [
+    {
+      "key": "peak_hr_bpm",
+      "label_zh": "峰值心率",
+      "aliases": [
+        "运动峰值心率",
+        "运动最大心率",
+        "peak heart rate",
+        "peak HR",
+        "HR peak"
+      ],
+      "unit": "/min",
+      "accept": {
+        "bpm": 1,
+        "次/分": 1,
+        "次/分钟": 1
+      },
+      "range": [
+        20,
+        300
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "须为同一次症状限制性运动试验的实测峰值，不用年龄预测的最大心率。"
+    },
+    {
+      "key": "recovery_hr_1min_bpm",
+      "label_zh": "恢复1分钟心率",
+      "aliases": [
+        "运动后1分钟心率",
+        "恢复期1分钟心率",
+        "1-min recovery heart rate",
+        "heart rate at 1 minute recovery",
+        "HR at 1 min recovery"
+      ],
+      "unit": "/min",
+      "accept": {
+        "bpm": 1,
+        "次/分": 1,
+        "次/分钟": 1
+      },
+      "range": [
+        20,
+        300
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "峰值运动结束后第1分钟，按原文跑台慢走主动恢复时的心率；不是两分钟心率或一分钟下降量。"
+    },
+    {
+      "key": "age",
+      "label_zh": "实足年龄",
+      "aliases": [
+        "年龄",
+        "age"
+      ],
+      "unit": "a",
+      "range": [
+        18,
+        120
+      ],
+      "required": true,
+      "from": "profile",
+      "flag": "--age",
+      "note_zh": "仅作成年人范围检查；上限为输入合理性保护，不是论文实测最大年龄。"
+    },
+    {
+      "key": "sex",
+      "label_zh": "性别",
+      "required": false,
+      "from": "profile",
+      "flag": "--sex",
+      "note_zh": "可选背景信息，不参与差值或分档。"
+    },
+    {
+      "key": "protocol",
+      "label_zh": "测量方案",
+      "required": true,
+      "from": "argument",
+      "flag": "--protocol",
+      "note_zh": "核实症状限制性跑台试验后以约2.4 km/h（原文1.5 mi/h）、2.5%坡度主动恢复至少2分钟，取第1分钟心率，才填写 cole-1999。其他或未知方案返回输入问题。"
+    }
+  ],
+  "outputs": [
+    {
+      "key": "hrr_1min_bpm",
+      "label_zh": "主动恢复1分钟心率下降量",
+      "unit": "/min"
+    },
+    {
+      "key": "hrr_category",
+      "label_zh": "原文主切点分档",
+      "note_zh": "abnormal：下降量≤12次/分；normal：下降量>12次/分。"
+    }
+  ],
+  "validation": {
+    "status": "draft",
+    "gap_zh": "已阅读全文第1351–1357页、Table 1–3及Figure 1–2；定义和≤12次/分切点齐全，但没有同时印出个人峰值心率、恢复1分钟心率与计算结果的示例。图为队列关联，不能当个人预测例子。正文未点名补充文件或公开代码/数据；出版社页面受403限制，全文由医疗机构公开PDF核对，未能独立核查出版社当前附件列表。测试只覆盖定义、印出切点及合成工程病例，不声称复现个人示例。"
+  }
+}

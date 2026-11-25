@@ -1,0 +1,164 @@
+{
+  "schema": "longevity-skill/1",
+  "name": "relative-fat-mass",
+  "kind": "paper",
+  "tier": "A",
+  "species": [
+    "human"
+  ],
+  "evidence": "cross_sectional",
+  "domains": [
+    "体脂与人体测量"
+  ],
+  "blurb_zh": "用身高、腰围和性别估算成人全身体脂率。",
+  "intents": [
+    "body_fat_waist"
+  ],
+  "triage": {
+    "reason_zh": "人体研究公开最终 RFM 方程的全部系数，可用个人身高、腰围与性别计算全身体脂率估计。",
+    "reviewed": false
+  },
+  "paper": {
+    "doi": "10.1038/s41598-018-29362-1",
+    "title": "Relative fat mass (RFM) as a new estimator of whole-body fat percentage ─ A cross-sectional study in American adult individuals.",
+    "title_zh": "相对脂肪量：用身高和腰围估算成人体脂率",
+    "journal": "Scientific Reports",
+    "year": 2018,
+    "authors": "Woolcott 与 Bergman",
+    "article_url": "https://www.nature.com/articles/s41598-018-29362-1",
+    "supplements": [
+      {
+        "label": "Supplementary Material（方法、图 1–10、表 1–16）",
+        "url": "https://static-content.springer.com/esm/art%3A10.1038%2Fs41598-018-29362-1/MediaObjects/41598_2018_29362_MOESM1_ESM.pdf"
+      }
+    ],
+    "card_notes": [
+      "采用正文最终简化方程；论文未链接作者代码仓库。",
+      "暂定版本：已核对全文及补充材料中的公式，未找到印出的个人输入—输出计算示例。"
+    ],
+    "summary_zh": "这项研究在美国成年人中发现，用身高、腰围和性别构成的相对脂肪量公式估算全身体脂率，总体表现优于体质指数。个人报告只计算体脂率估计和用户指定腰围目标下的公式变化，不作肥胖诊断或预测寿命。",
+    "summary_status": "draft"
+  },
+  "entry": {
+    "script": "scripts/personal_report.py",
+    "measurements_flag": "--measurements",
+    "measurements_header": [
+      "marker",
+      "value",
+      "unit"
+    ],
+    "age_flag": "--age",
+    "sex_flag": "--sex",
+    "out_flag": "--out",
+    "result_json": true,
+    "targets_flag": "--targets",
+    "levers_json": true
+  },
+  "population": {
+    "age_years": [
+      20,
+      85
+    ],
+    "note_zh": "推导样本年龄编码为 20–85 岁（85 岁及以上统一编码 85）；独立验证为 20–69 岁。美国人群；分族群分析限墨西哥裔、欧洲裔、非洲裔。"
+  },
+  "inputs_status": "draft",
+  "inputs": [
+    {
+      "key": "height_cm",
+      "label_zh": "身高",
+      "aliases": [
+        "height",
+        "Height (cm)",
+        "body height",
+        "stature",
+        "BMXHT"
+      ],
+      "unit": "cm",
+      "accept": {
+        "m": 100,
+        "mm": 0.1,
+        "in": 2.54
+      },
+      "range": [
+        80,
+        250
+      ],
+      "unit_required": true,
+      "required": true,
+      "from": "measurements",
+      "note_zh": "站立身高；范围仅作录入检查，不代表研究覆盖范围。"
+    },
+    {
+      "key": "waist_cm",
+      "label_zh": "腰围",
+      "aliases": [
+        "waist",
+        "waist circumference",
+        "WC",
+        "BMXWAIST",
+        "腹围"
+      ],
+      "unit": "cm",
+      "accept": {
+        "m": 100,
+        "mm": 0.1,
+        "in": 2.54
+      },
+      "range": [
+        30,
+        250
+      ],
+      "unit_required": true,
+      "required": true,
+      "from": "measurements",
+      "note_zh": "按论文在右侧髂骨上缘水平、站立呼气末测量；其他部位的腹围不能直接视为同一测量。"
+    },
+    {
+      "key": "age",
+      "label_zh": "实足年龄",
+      "aliases": [
+        "年龄",
+        "age",
+        "age years"
+      ],
+      "unit": "a",
+      "range": [
+        20,
+        110
+      ],
+      "required": true,
+      "from": "profile",
+      "flag": "--age",
+      "note_zh": "只用于适用范围提示，不进入公式；20 岁以下不运行。"
+    },
+    {
+      "key": "sex",
+      "label_zh": "论文性别编码",
+      "aliases": [
+        "性别",
+        "sex"
+      ],
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "profile",
+      "flag": "--sex",
+      "note_zh": "只接受 male/m/男/0 或 female/f/女/1；论文男=0、女=1，不从姓名推断，不能直接使用 NHANES 原始 1/2 编码。"
+    }
+  ],
+  "outputs": [
+    {
+      "key": "rfm_pct",
+      "label_zh": "RFM 全身体脂率估计",
+      "unit": "%",
+      "note_zh": "全身体脂百分比估计，不是脂肪公斤数、DXA 实测值或肥胖诊断。"
+    }
+  ],
+  "validation": {
+    "status": "draft",
+    "gap_zh": "已核对出版社全文（公式 1–3、表 1–3、图 1–3）、完整 Supplementary Material（补充方法、图 1–10、表 1–16，尤其表 5 脚注与表 7）。最终方程全部常数已公开，但未找到同时印出个人身高、腰围、性别及其 RFM 输出的计算示例；表 1 是人群均值及 DXA 测量均值，不能当作个人预测值。图中注释及其余表格是人群统计量，未重跑 NHANES 全队列分析。现有测试检验公式、单位、输入错误及目标情景，不宣称复现论文示例。"
+  }
+}
