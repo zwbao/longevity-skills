@@ -63,6 +63,7 @@ class TestManifest(unittest.TestCase):
                 self.assertLess(report.index('10.1038/s41591-022-01968-z'), report.index('你的摄入量'))
                 self.assertIn('边界', report)
                 self.assertIn('缺血性卒中', report)
+                self.assertIn('25岁及以上成人', report)
 
     def test_supplementary_table7_all_printed_cells(self):
         for index, intake in enumerate([0, 25, 50, 75, 100, 125, 150, 175, 200]):
