@@ -1,0 +1,6 @@
+predictor,transformation,mean,sd,coefficient_model_a
+Intercept,none,,,-4.053
+HbA1c mmol/mol,none,38.74,3.47,1.469
+Age years,none,67.71,7.30,-0.147
+Female sex,0/1,0.57,0.50,-0.067
+Years to next visit,ln,1.56,0.26,0.507
