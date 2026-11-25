@@ -320,6 +320,7 @@ python3 -m tools.lsk test --changed origin/main   # 只测相对 main 改动过�
 
 ## 心血管健康
 
+- `skills/alcohol-burden-of-proof/` — 见「饮食与营养」。
 - `skills/lifes-essential-8/` — 用饮食、运动、吸烟、睡眠和体检数据计算成人心血管健康八项评分。
 
 ## 死亡风险
@@ -329,6 +330,10 @@ python3 -m tools.lsk test --changed origin/main   # 只测相对 main 改动过�
 ## 用药与基因
 
 - `skills/cpic-pharmacogenomics/` — 基因检测原始数据里的药物代谢基因，对照 CPIC 用药指南看哪些药要先问医生。（名单类）
+
+## 癌症风险
+
+- `skills/alcohol-burden-of-proof/` — 见「饮食与营养」。
 
 ## 糖代谢
 
@@ -375,6 +380,7 @@ python3 -m tools.lsk test --changed origin/main   # 只测相对 main 改动过�
 
 ## 饮食与营养
 
+- `skills/alcohol-burden-of-proof/` — 用自己的每日平均纯酒精摄入量，查阅论文中各疾病相对于无饮酒的风险比及不确定性区间；不推算个人患病概率。
 - `skills/vegetable-tmrel-gap/` — 用饮食记录中的蔬菜日均克数，计算与论文蔬菜摄入参考范围的差距。
 
 ## 只收录，不参与个人调度
