@@ -1,0 +1,270 @@
+{
+  "schema": "longevity-skill/1",
+  "name": "cigarette-smoking-mortality-hr",
+  "kind": "paper",
+  "tier": "A",
+  "species": [
+    "human"
+  ],
+  "evidence": "cohort",
+  "domains": [
+    "生活方式",
+    "死亡风险"
+  ],
+  "blurb_zh": "用吸烟史和每日卷烟支数匹配研究分档，查全因、癌症和心血管死亡的人群风险比。",
+  "intents": [
+    "frailty_mortality"
+  ],
+  "triage": {
+    "reason_zh": "正文表2与补充eTable 1完整公布卷烟吸烟史和每日支数分档的死亡HR及置信区间，可从个人问卷输入直接分档查表；不计算缺饮食切点的生活方式总分。",
+    "reviewed": false
+  },
+  "paper": {
+    "doi": "10.1161/circulationaha.117.032047",
+    "title": "Impact of Healthy Lifestyle Factors on Life Expectancies in the US Population.",
+    "title_zh": "健康生活方式因素与美国人群预期寿命",
+    "journal": "Circulation",
+    "year": 2018,
+    "authors": "Li 等",
+    "article_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6207481/",
+    "supplements": [
+      {
+        "label": "Supplementary Appendix（作者存档，已读）",
+        "url": "https://www.repository.cam.ac.uk/bitstreams/acf48157-a4bd-4ec7-9413-a091e37fb17d/download"
+      },
+      {
+        "label": "Final Supplement（PMC 原链接）",
+        "url": "https://pmc.ncbi.nlm.nih.gov/articles/instance/6207481/bin/NIHMS949333-supplement-Final_Supplement.pdf"
+      }
+    ],
+    "card_notes": [
+      "本技能只使用正文 Table 2 和补充 eTable 1 的卷烟吸烟分档；补充材料经剑桥大学作者存档读取，PMC 附件下载受限。",
+      "研究数据和分析方法声明为向通讯作者合理申请；未列公开成品代码仓库。"
+    ],
+    "summary_zh": "这项研究在美国人群队列中发现，较健康的生活方式与较低死亡风险及较长人群预期寿命相关。个人报告只根据卷烟吸烟史与每日支数匹配研究分组并显示该组死亡风险比，不计算个人寿命或完整生活方式总分。",
+    "summary_status": "draft"
+  },
+  "entry": {
+    "script": "scripts/personal_report.py",
+    "measurements_flag": "--measurements",
+    "measurements_header": [
+      "marker",
+      "value",
+      "unit"
+    ],
+    "age_flag": "--age",
+    "sex_flag": "--sex",
+    "out_flag": "--out",
+    "result_json": true,
+    "targets_flag": "--targets",
+    "levers_json": true
+  },
+  "inputs_status": "verified",
+  "inputs": [
+    {
+      "key": "cigarettes_per_day",
+      "label_zh": "每日卷烟支数",
+      "aliases": [
+        "cigarettes/day",
+        "cigarettes per day",
+        "每日吸烟量",
+        "每天吸烟支数"
+      ],
+      "unit": "1",
+      "accept": {},
+      "range": [
+        0,
+        200
+      ],
+      "required": false,
+      "from": "measurements",
+      "note_zh": "每日卷烟的支数计数（单位1），只接受整数；currently smoking时必填且至少1支。不是包/天或包年，不假定每包支数。0–200为输入合理性护栏，不是论文切点。"
+    },
+    {
+      "key": "smoking_status",
+      "label_zh": "卷烟吸烟史",
+      "aliases": [
+        "smoking status",
+        "吸烟状态"
+      ],
+      "required": true,
+      "from": "argument",
+      "flag": "--smoking-status",
+      "note_zh": "never/从未吸烟、past/已戒烟、current/目前吸烟；必须明确，不能由零支推定从未吸烟。"
+    },
+    {
+      "key": "age",
+      "label_zh": "实足年龄",
+      "unit": "a",
+      "range": [
+        18,
+        110
+      ],
+      "required": false,
+      "from": "profile",
+      "flag": "--age",
+      "note_zh": "仅上下文，不按年龄更换表格或校准HR；18–110为输入护栏。"
+    },
+    {
+      "key": "sex",
+      "label_zh": "性别",
+      "required": false,
+      "from": "profile",
+      "flag": "--sex",
+      "note_zh": "female/male/女/男；仅上下文，使用合并表。"
+    }
+  ],
+  "outputs": [
+    {
+      "key": "smoking_category",
+      "label_zh": "卷烟吸烟分档"
+    },
+    {
+      "key": "all_cause_hr",
+      "label_zh": "主分析全因死亡HR",
+      "unit": "1",
+      "note_zh": "该分组相对从未吸烟组的人群关联；参照组CI未印，输出null。"
+    },
+    {
+      "key": "all_cause_ci_low",
+      "label_zh": "主分析全因死亡95%CI下限",
+      "unit": "1",
+      "note_zh": "该分组相对从未吸烟组的人群关联；参照组CI未印，输出null。"
+    },
+    {
+      "key": "all_cause_ci_high",
+      "label_zh": "主分析全因死亡95%CI上限",
+      "unit": "1",
+      "note_zh": "该分组相对从未吸烟组的人群关联；参照组CI未印，输出null。"
+    },
+    {
+      "key": "cancer_hr",
+      "label_zh": "主分析癌症死亡HR",
+      "unit": "1",
+      "note_zh": "该分组相对从未吸烟组的人群关联；参照组CI未印，输出null。"
+    },
+    {
+      "key": "cancer_ci_low",
+      "label_zh": "主分析癌症死亡95%CI下限",
+      "unit": "1",
+      "note_zh": "该分组相对从未吸烟组的人群关联；参照组CI未印，输出null。"
+    },
+    {
+      "key": "cancer_ci_high",
+      "label_zh": "主分析癌症死亡95%CI上限",
+      "unit": "1",
+      "note_zh": "该分组相对从未吸烟组的人群关联；参照组CI未印，输出null。"
+    },
+    {
+      "key": "cvd_hr",
+      "label_zh": "主分析心血管死亡HR",
+      "unit": "1",
+      "note_zh": "该分组相对从未吸烟组的人群关联；参照组CI未印，输出null。"
+    },
+    {
+      "key": "cvd_ci_low",
+      "label_zh": "主分析心血管死亡95%CI下限",
+      "unit": "1",
+      "note_zh": "该分组相对从未吸烟组的人群关联；参照组CI未印，输出null。"
+    },
+    {
+      "key": "cvd_ci_high",
+      "label_zh": "主分析心血管死亡95%CI上限",
+      "unit": "1",
+      "note_zh": "该分组相对从未吸烟组的人群关联；参照组CI未印，输出null。"
+    },
+    {
+      "key": "before75_all_cause_hr",
+      "label_zh": "75岁之前随访敏感性分析全因死亡HR",
+      "unit": "1",
+      "note_zh": "该分组相对从未吸烟组的人群关联；参照组CI未印，输出null。"
+    },
+    {
+      "key": "before75_all_cause_ci_low",
+      "label_zh": "75岁之前随访敏感性分析全因死亡95%CI下限",
+      "unit": "1",
+      "note_zh": "该分组相对从未吸烟组的人群关联；参照组CI未印，输出null。"
+    },
+    {
+      "key": "before75_all_cause_ci_high",
+      "label_zh": "75岁之前随访敏感性分析全因死亡95%CI上限",
+      "unit": "1",
+      "note_zh": "该分组相对从未吸烟组的人群关联；参照组CI未印，输出null。"
+    },
+    {
+      "key": "before75_cancer_hr",
+      "label_zh": "75岁之前随访敏感性分析癌症死亡HR",
+      "unit": "1",
+      "note_zh": "该分组相对从未吸烟组的人群关联；参照组CI未印，输出null。"
+    },
+    {
+      "key": "before75_cancer_ci_low",
+      "label_zh": "75岁之前随访敏感性分析癌症死亡95%CI下限",
+      "unit": "1",
+      "note_zh": "该分组相对从未吸烟组的人群关联；参照组CI未印，输出null。"
+    },
+    {
+      "key": "before75_cancer_ci_high",
+      "label_zh": "75岁之前随访敏感性分析癌症死亡95%CI上限",
+      "unit": "1",
+      "note_zh": "该分组相对从未吸烟组的人群关联；参照组CI未印，输出null。"
+    },
+    {
+      "key": "before75_cvd_hr",
+      "label_zh": "75岁之前随访敏感性分析心血管死亡HR",
+      "unit": "1",
+      "note_zh": "该分组相对从未吸烟组的人群关联；参照组CI未印，输出null。"
+    },
+    {
+      "key": "before75_cvd_ci_low",
+      "label_zh": "75岁之前随访敏感性分析心血管死亡95%CI下限",
+      "unit": "1",
+      "note_zh": "该分组相对从未吸烟组的人群关联；参照组CI未印，输出null。"
+    },
+    {
+      "key": "before75_cvd_ci_high",
+      "label_zh": "75岁之前随访敏感性分析心血管死亡95%CI上限",
+      "unit": "1",
+      "note_zh": "该分组相对从未吸烟组的人群关联；参照组CI未印，输出null。"
+    }
+  ],
+  "validation": {
+    "status": "reproduced",
+    "examples": [
+      {
+        "locator": "Table 2, Cigarette smoking, Current 15–24/day",
+        "quote": "Current 15–24/day 163678 1756 2.33 (2.21–2.45) 729 2.28 (2.11–2.48) 428 2.62 (2.37–2.91)",
+        "values": [
+          2.33,
+          2.21,
+          2.45,
+          2.28,
+          2.11,
+          2.48,
+          2.62,
+          2.37,
+          2.91
+        ],
+        "tolerance": "精确查表；数字保留论文两位小数，无拟合、插值或反推。",
+        "test": "tests/test_manifest.py::test_table2_current_15_24"
+      },
+      {
+        "locator": "Supplementary Appendix, eTable 1, p. 6, Current 15-24/day",
+        "quote": "Current 15-24/day 157531 1286 2.46 (2.31-2.61) 584 2.13 (1.95-2.34) 335 3.32 (2.94-3.76)",
+        "values": [
+          2.46,
+          2.31,
+          2.61,
+          2.13,
+          1.95,
+          2.34,
+          3.32,
+          2.94,
+          3.76
+        ],
+        "tolerance": "精确查表，原表两位小数；与正文主分析独立标注。",
+        "test": "tests/test_manifest.py::test_etable1_current_15_24"
+      }
+    ]
+  }
+}
