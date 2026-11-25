@@ -2,9 +2,9 @@
   "schema": "longevity-catalog/1",
   "version": "2026.48.0",
   "counts": {
-    "skills": 213,
+    "skills": 214,
     "tiers": {
-      "A": 49,
+      "A": 50,
       "B": 83,
       "C": 73,
       "tool": 8
@@ -28874,6 +28874,664 @@
         "title_zh": "痰液白细胞介素的变化",
         "journal": "Nature Aging",
         "year": 2024
+      }
+    },
+    {
+      "name": "nonoccupational-activity-risk",
+      "kind": "paper",
+      "tier": "A",
+      "species": [
+        "human"
+      ],
+      "evidence": "review",
+      "domains": [
+        "运动与慢病风险"
+      ],
+      "blurb_zh": "用每周非职业活动时长查询死亡、心血管病和癌症的人群相对风险，并比较自定目标。",
+      "description": "Tier A personal readout: computes one person's value with the paper's printed method and reproduces a printed example. Converts an adult's usual weekly non-occupational activity durations into marginal activity volume and looks up population relative risks for mortality, cardiovascular disease and cancer from published dose-response curves. Use for questions about weekly leisure activity and chronic-disease associations, or comparisons with a person's own activity targets. 适用于每周非职业活动量与慢病、死亡风险关联查询。",
+      "intents": [
+        "intervention_evidence",
+        "frailty_mortality"
+      ],
+      "has_script": true,
+      "validation_status": "reproduced",
+      "validation_label_zh": "已复现论文",
+      "entry": {
+        "script": "scripts/personal_report.py",
+        "measurements_flag": "--measurements",
+        "measurements_header": [
+          "marker",
+          "value",
+          "unit"
+        ],
+        "age_flag": "--age",
+        "out_flag": "--out",
+        "result_json": true,
+        "targets_flag": "--targets",
+        "levers_json": true
+      },
+      "inputs_status": "verified",
+      "inputs": [
+        {
+          "key": "light_min_week",
+          "label_zh": "每周轻强度非职业活动时长",
+          "aliases": [
+            "非职业轻强度活动分钟/周",
+            "non-occupational light activity minutes per week",
+            "weekly light activity duration"
+          ],
+          "unit": "min",
+          "accept": {
+            "h": 60,
+            "s": 0.016666666666666666
+          },
+          "range": [
+            0,
+            10080
+          ],
+          "unit_required": true,
+          "required": true,
+          "from": "measurements",
+          "note_zh": "填一个通常星期累计的活动时长，排除工作活动、睡眠和静坐；三种强度时段不能重叠。没有该类活动时明确填零，未知不能填零。分钟和小时均指同一星期内累计时长。"
+        },
+        {
+          "key": "moderate_min_week",
+          "label_zh": "每周中等强度非职业活动时长",
+          "aliases": [
+            "非职业中等强度活动分钟/周",
+            "non-occupational moderate activity minutes per week",
+            "weekly moderate activity duration"
+          ],
+          "unit": "min",
+          "accept": {
+            "h": 60,
+            "s": 0.016666666666666666
+          },
+          "range": [
+            0,
+            10080
+          ],
+          "unit_required": true,
+          "required": true,
+          "from": "measurements",
+          "note_zh": "填一个通常星期累计的活动时长，排除工作活动、睡眠和静坐；三种强度时段不能重叠。没有该类活动时明确填零，未知不能填零。分钟和小时均指同一星期内累计时长。"
+        },
+        {
+          "key": "vigorous_min_week",
+          "label_zh": "每周高强度非职业活动时长",
+          "aliases": [
+            "非职业高强度活动分钟/周",
+            "non-occupational vigorous activity minutes per week",
+            "weekly vigorous activity duration"
+          ],
+          "unit": "min",
+          "accept": {
+            "h": 60,
+            "s": 0.016666666666666666
+          },
+          "range": [
+            0,
+            10080
+          ],
+          "unit_required": true,
+          "required": true,
+          "from": "measurements",
+          "note_zh": "填一个通常星期累计的活动时长，排除工作活动、睡眠和静坐；三种强度时段不能重叠。没有该类活动时明确填零，未知不能填零。分钟和小时均指同一星期内累计时长。"
+        },
+        {
+          "key": "age",
+          "label_zh": "实足年龄",
+          "unit": "a",
+          "range": [
+            18,
+            120
+          ],
+          "required": true,
+          "from": "profile",
+          "note_zh": "只用于确认一般成年人适用范围，不参与风险校准；上限为输入检查界限。"
+        }
+      ],
+      "outputs": [
+        {
+          "key": "activity_mmet_h_week",
+          "label_zh": "每周非职业边际活动量",
+          "unit": "mMET-hours/week"
+        },
+        {
+          "key": "all_cause_mortality_rr",
+          "label_zh": "全因死亡：相对风险",
+          "unit": "1",
+          "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+        },
+        {
+          "key": "all_cause_mortality_ci_lower",
+          "label_zh": "全因死亡：95%置信区间下限",
+          "unit": "1",
+          "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+        },
+        {
+          "key": "all_cause_mortality_ci_upper",
+          "label_zh": "全因死亡：95%置信区间上限",
+          "unit": "1",
+          "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+        },
+        {
+          "key": "all_cause_mortality_matched_mmet_h_week",
+          "label_zh": "全因死亡：实际查询网格活动量",
+          "unit": "mMET-hours/week",
+          "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+        },
+        {
+          "key": "cvd_mortality_rr",
+          "label_zh": "心血管疾病死亡：相对风险",
+          "unit": "1",
+          "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+        },
+        {
+          "key": "cvd_mortality_ci_lower",
+          "label_zh": "心血管疾病死亡：95%置信区间下限",
+          "unit": "1",
+          "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+        },
+        {
+          "key": "cvd_mortality_ci_upper",
+          "label_zh": "心血管疾病死亡：95%置信区间上限",
+          "unit": "1",
+          "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+        },
+        {
+          "key": "cvd_mortality_matched_mmet_h_week",
+          "label_zh": "心血管疾病死亡：实际查询网格活动量",
+          "unit": "mMET-hours/week",
+          "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+        },
+        {
+          "key": "cancer_mortality_rr",
+          "label_zh": "癌症死亡：相对风险",
+          "unit": "1",
+          "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+        },
+        {
+          "key": "cancer_mortality_ci_lower",
+          "label_zh": "癌症死亡：95%置信区间下限",
+          "unit": "1",
+          "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+        },
+        {
+          "key": "cancer_mortality_ci_upper",
+          "label_zh": "癌症死亡：95%置信区间上限",
+          "unit": "1",
+          "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+        },
+        {
+          "key": "cancer_mortality_matched_mmet_h_week",
+          "label_zh": "癌症死亡：实际查询网格活动量",
+          "unit": "mMET-hours/week",
+          "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+        },
+        {
+          "key": "cvd_incidence_rr",
+          "label_zh": "总心血管疾病发生：相对风险",
+          "unit": "1",
+          "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+        },
+        {
+          "key": "cvd_incidence_ci_lower",
+          "label_zh": "总心血管疾病发生：95%置信区间下限",
+          "unit": "1",
+          "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+        },
+        {
+          "key": "cvd_incidence_ci_upper",
+          "label_zh": "总心血管疾病发生：95%置信区间上限",
+          "unit": "1",
+          "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+        },
+        {
+          "key": "cvd_incidence_matched_mmet_h_week",
+          "label_zh": "总心血管疾病发生：实际查询网格活动量",
+          "unit": "mMET-hours/week",
+          "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+        },
+        {
+          "key": "chd_incidence_rr",
+          "label_zh": "冠心病发生：相对风险",
+          "unit": "1",
+          "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+        },
+        {
+          "key": "chd_incidence_ci_lower",
+          "label_zh": "冠心病发生：95%置信区间下限",
+          "unit": "1",
+          "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+        },
+        {
+          "key": "chd_incidence_ci_upper",
+          "label_zh": "冠心病发生：95%置信区间上限",
+          "unit": "1",
+          "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+        },
+        {
+          "key": "chd_incidence_matched_mmet_h_week",
+          "label_zh": "冠心病发生：实际查询网格活动量",
+          "unit": "mMET-hours/week",
+          "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+        },
+        {
+          "key": "stroke_incidence_rr",
+          "label_zh": "卒中发生：相对风险",
+          "unit": "1",
+          "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+        },
+        {
+          "key": "stroke_incidence_ci_lower",
+          "label_zh": "卒中发生：95%置信区间下限",
+          "unit": "1",
+          "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+        },
+        {
+          "key": "stroke_incidence_ci_upper",
+          "label_zh": "卒中发生：95%置信区间上限",
+          "unit": "1",
+          "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+        },
+        {
+          "key": "stroke_incidence_matched_mmet_h_week",
+          "label_zh": "卒中发生：实际查询网格活动量",
+          "unit": "mMET-hours/week",
+          "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+        },
+        {
+          "key": "heart_failure_incidence_rr",
+          "label_zh": "心力衰竭发生：相对风险",
+          "unit": "1",
+          "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+        },
+        {
+          "key": "heart_failure_incidence_ci_lower",
+          "label_zh": "心力衰竭发生：95%置信区间下限",
+          "unit": "1",
+          "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+        },
+        {
+          "key": "heart_failure_incidence_ci_upper",
+          "label_zh": "心力衰竭发生：95%置信区间上限",
+          "unit": "1",
+          "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+        },
+        {
+          "key": "heart_failure_incidence_matched_mmet_h_week",
+          "label_zh": "心力衰竭发生：实际查询网格活动量",
+          "unit": "mMET-hours/week",
+          "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+        },
+        {
+          "key": "cancer_incidence_rr",
+          "label_zh": "总癌症发生：相对风险",
+          "unit": "1",
+          "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+        },
+        {
+          "key": "cancer_incidence_ci_lower",
+          "label_zh": "总癌症发生：95%置信区间下限",
+          "unit": "1",
+          "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+        },
+        {
+          "key": "cancer_incidence_ci_upper",
+          "label_zh": "总癌症发生：95%置信区间上限",
+          "unit": "1",
+          "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+        },
+        {
+          "key": "cancer_incidence_matched_mmet_h_week",
+          "label_zh": "总癌症发生：实际查询网格活动量",
+          "unit": "mMET-hours/week",
+          "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+        },
+        {
+          "key": "head_neck_incidence_rr",
+          "label_zh": "头颈部癌发生：相对风险",
+          "unit": "1",
+          "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+        },
+        {
+          "key": "head_neck_incidence_ci_lower",
+          "label_zh": "头颈部癌发生：95%置信区间下限",
+          "unit": "1",
+          "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+        },
+        {
+          "key": "head_neck_incidence_ci_upper",
+          "label_zh": "头颈部癌发生：95%置信区间上限",
+          "unit": "1",
+          "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+        },
+        {
+          "key": "head_neck_incidence_matched_mmet_h_week",
+          "label_zh": "头颈部癌发生：实际查询网格活动量",
+          "unit": "mMET-hours/week",
+          "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+        },
+        {
+          "key": "myeloid_leukaemia_incidence_rr",
+          "label_zh": "髓系白血病发生：相对风险",
+          "unit": "1",
+          "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+        },
+        {
+          "key": "myeloid_leukaemia_incidence_ci_lower",
+          "label_zh": "髓系白血病发生：95%置信区间下限",
+          "unit": "1",
+          "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+        },
+        {
+          "key": "myeloid_leukaemia_incidence_ci_upper",
+          "label_zh": "髓系白血病发生：95%置信区间上限",
+          "unit": "1",
+          "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+        },
+        {
+          "key": "myeloid_leukaemia_incidence_matched_mmet_h_week",
+          "label_zh": "髓系白血病发生：实际查询网格活动量",
+          "unit": "mMET-hours/week",
+          "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+        },
+        {
+          "key": "myeloma_incidence_rr",
+          "label_zh": "骨髓瘤发生：相对风险",
+          "unit": "1",
+          "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+        },
+        {
+          "key": "myeloma_incidence_ci_lower",
+          "label_zh": "骨髓瘤发生：95%置信区间下限",
+          "unit": "1",
+          "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+        },
+        {
+          "key": "myeloma_incidence_ci_upper",
+          "label_zh": "骨髓瘤发生：95%置信区间上限",
+          "unit": "1",
+          "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+        },
+        {
+          "key": "myeloma_incidence_matched_mmet_h_week",
+          "label_zh": "骨髓瘤发生：实际查询网格活动量",
+          "unit": "mMET-hours/week",
+          "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+        },
+        {
+          "key": "gastric_cardia_incidence_rr",
+          "label_zh": "胃贲门癌发生：相对风险",
+          "unit": "1",
+          "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+        },
+        {
+          "key": "gastric_cardia_incidence_ci_lower",
+          "label_zh": "胃贲门癌发生：95%置信区间下限",
+          "unit": "1",
+          "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+        },
+        {
+          "key": "gastric_cardia_incidence_ci_upper",
+          "label_zh": "胃贲门癌发生：95%置信区间上限",
+          "unit": "1",
+          "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+        },
+        {
+          "key": "gastric_cardia_incidence_matched_mmet_h_week",
+          "label_zh": "胃贲门癌发生：实际查询网格活动量",
+          "unit": "mMET-hours/week",
+          "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+        },
+        {
+          "key": "lung_incidence_rr",
+          "label_zh": "肺癌发生：相对风险",
+          "unit": "1",
+          "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+        },
+        {
+          "key": "lung_incidence_ci_lower",
+          "label_zh": "肺癌发生：95%置信区间下限",
+          "unit": "1",
+          "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+        },
+        {
+          "key": "lung_incidence_ci_upper",
+          "label_zh": "肺癌发生：95%置信区间上限",
+          "unit": "1",
+          "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+        },
+        {
+          "key": "lung_incidence_matched_mmet_h_week",
+          "label_zh": "肺癌发生：实际查询网格活动量",
+          "unit": "mMET-hours/week",
+          "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+        },
+        {
+          "key": "liver_incidence_rr",
+          "label_zh": "肝癌发生：相对风险",
+          "unit": "1",
+          "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+        },
+        {
+          "key": "liver_incidence_ci_lower",
+          "label_zh": "肝癌发生：95%置信区间下限",
+          "unit": "1",
+          "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+        },
+        {
+          "key": "liver_incidence_ci_upper",
+          "label_zh": "肝癌发生：95%置信区间上限",
+          "unit": "1",
+          "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+        },
+        {
+          "key": "liver_incidence_matched_mmet_h_week",
+          "label_zh": "肝癌发生：实际查询网格活动量",
+          "unit": "mMET-hours/week",
+          "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+        },
+        {
+          "key": "endometrial_incidence_rr",
+          "label_zh": "子宫内膜癌发生（女性研究）：相对风险",
+          "unit": "1",
+          "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+        },
+        {
+          "key": "endometrial_incidence_ci_lower",
+          "label_zh": "子宫内膜癌发生（女性研究）：95%置信区间下限",
+          "unit": "1",
+          "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+        },
+        {
+          "key": "endometrial_incidence_ci_upper",
+          "label_zh": "子宫内膜癌发生（女性研究）：95%置信区间上限",
+          "unit": "1",
+          "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+        },
+        {
+          "key": "endometrial_incidence_matched_mmet_h_week",
+          "label_zh": "子宫内膜癌发生（女性研究）：实际查询网格活动量",
+          "unit": "mMET-hours/week",
+          "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+        },
+        {
+          "key": "colon_incidence_rr",
+          "label_zh": "结肠癌发生：相对风险",
+          "unit": "1",
+          "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+        },
+        {
+          "key": "colon_incidence_ci_lower",
+          "label_zh": "结肠癌发生：95%置信区间下限",
+          "unit": "1",
+          "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+        },
+        {
+          "key": "colon_incidence_ci_upper",
+          "label_zh": "结肠癌发生：95%置信区间上限",
+          "unit": "1",
+          "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+        },
+        {
+          "key": "colon_incidence_matched_mmet_h_week",
+          "label_zh": "结肠癌发生：实际查询网格活动量",
+          "unit": "mMET-hours/week",
+          "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+        },
+        {
+          "key": "breast_incidence_rr",
+          "label_zh": "乳腺癌发生（女性研究）：相对风险",
+          "unit": "1",
+          "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+        },
+        {
+          "key": "breast_incidence_ci_lower",
+          "label_zh": "乳腺癌发生（女性研究）：95%置信区间下限",
+          "unit": "1",
+          "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+        },
+        {
+          "key": "breast_incidence_ci_upper",
+          "label_zh": "乳腺癌发生（女性研究）：95%置信区间上限",
+          "unit": "1",
+          "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+        },
+        {
+          "key": "breast_incidence_matched_mmet_h_week",
+          "label_zh": "乳腺癌发生（女性研究）：实际查询网格活动量",
+          "unit": "mMET-hours/week",
+          "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+        },
+        {
+          "key": "bladder_incidence_rr",
+          "label_zh": "膀胱癌发生：相对风险",
+          "unit": "1",
+          "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+        },
+        {
+          "key": "bladder_incidence_ci_lower",
+          "label_zh": "膀胱癌发生：95%置信区间下限",
+          "unit": "1",
+          "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+        },
+        {
+          "key": "bladder_incidence_ci_upper",
+          "label_zh": "膀胱癌发生：95%置信区间上限",
+          "unit": "1",
+          "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+        },
+        {
+          "key": "bladder_incidence_matched_mmet_h_week",
+          "label_zh": "膀胱癌发生：实际查询网格活动量",
+          "unit": "mMET-hours/week",
+          "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+        },
+        {
+          "key": "rectum_incidence_rr",
+          "label_zh": "直肠癌发生：相对风险",
+          "unit": "1",
+          "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+        },
+        {
+          "key": "rectum_incidence_ci_lower",
+          "label_zh": "直肠癌发生：95%置信区间下限",
+          "unit": "1",
+          "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+        },
+        {
+          "key": "rectum_incidence_ci_upper",
+          "label_zh": "直肠癌发生：95%置信区间上限",
+          "unit": "1",
+          "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+        },
+        {
+          "key": "rectum_incidence_matched_mmet_h_week",
+          "label_zh": "直肠癌发生：实际查询网格活动量",
+          "unit": "mMET-hours/week",
+          "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+        },
+        {
+          "key": "oesophageal_incidence_rr",
+          "label_zh": "食管癌发生：相对风险",
+          "unit": "1",
+          "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+        },
+        {
+          "key": "oesophageal_incidence_ci_lower",
+          "label_zh": "食管癌发生：95%置信区间下限",
+          "unit": "1",
+          "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+        },
+        {
+          "key": "oesophageal_incidence_ci_upper",
+          "label_zh": "食管癌发生：95%置信区间上限",
+          "unit": "1",
+          "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+        },
+        {
+          "key": "oesophageal_incidence_matched_mmet_h_week",
+          "label_zh": "食管癌发生：实际查询网格活动量",
+          "unit": "mMET-hours/week",
+          "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+        },
+        {
+          "key": "prostate_incidence_rr",
+          "label_zh": "前列腺癌发生（男性研究）：相对风险",
+          "unit": "1",
+          "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+        },
+        {
+          "key": "prostate_incidence_ci_lower",
+          "label_zh": "前列腺癌发生（男性研究）：95%置信区间下限",
+          "unit": "1",
+          "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+        },
+        {
+          "key": "prostate_incidence_ci_upper",
+          "label_zh": "前列腺癌发生（男性研究）：95%置信区间上限",
+          "unit": "1",
+          "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+        },
+        {
+          "key": "prostate_incidence_matched_mmet_h_week",
+          "label_zh": "前列腺癌发生（男性研究）：实际查询网格活动量",
+          "unit": "mMET-hours/week",
+          "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+        },
+        {
+          "key": "kidney_incidence_rr",
+          "label_zh": "肾癌发生：相对风险",
+          "unit": "1",
+          "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+        },
+        {
+          "key": "kidney_incidence_ci_lower",
+          "label_zh": "肾癌发生：95%置信区间下限",
+          "unit": "1",
+          "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+        },
+        {
+          "key": "kidney_incidence_ci_upper",
+          "label_zh": "肾癌发生：95%置信区间上限",
+          "unit": "1",
+          "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+        },
+        {
+          "key": "kidney_incidence_matched_mmet_h_week",
+          "label_zh": "肾癌发生：实际查询网格活动量",
+          "unit": "mMET-hours/week",
+          "note_zh": "相对零非职业活动量的人群估计；超过该曲线发布范围时为空。"
+        }
+      ],
+      "paper": {
+        "doi": "10.1136/bjsports-2022-105669",
+        "title": "Non-occupational physical activity and risk of cardiovascular disease, cancer and mortality outcomes: a dose-response meta-analysis of large prospective studies.",
+        "title_zh": "非职业身体活动与心血管病、癌症和死亡风险的剂量反应荟萃分析",
+        "journal": "British Journal of Sports Medicine",
+        "year": 2023
       }
     },
     {
