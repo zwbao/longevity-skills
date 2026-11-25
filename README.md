@@ -111,8 +111,10 @@ python3 -m tools.lsk test --changed origin/main   # 只测相对 main 改动过�
 
 - `skills/blood-epigenetic-intrinsic-capacity/` — 血液甲基化芯片的 91 个位点 β 值，按论文补充表 1 算甲基化内在能力（认知、行走、情绪、感官和活力的综合）。
 - `skills/calerie-methylation-clocks/` — 限食试验里的时钟数值。（名单类）
+- `skills/edisea-dietary-index/` — 用茶、全谷物、水果、薯条、酒、加工肉、甜饮料等十类食物每天的份数，算与表观衰老较慢相关的饮食指数 EDISEA。
 - `skills/epigenetic-clock-reliability/` — 同一个时钟两次年龄的差，只做相减，不计算论文的主成分时钟。（名单类）
 - `skills/epigenetic-frailty-risk-score/` — 甲基化数值，可带衰弱指数。
+- `skills/methylation-variability-aging-score/` — 血液甲基化芯片（450K 或 EPIC）的 β 值，按论文补充表和作者代码算把甲基化水平和变异性合在一起的衰老评分。
 - `skills/nanopore-parent-origin-methylation/` — 已标准化的甲基化套论文系数，或两数相减（个人原始甲基化比例做不出标准化）。（名单类）
 - `skills/omniage-mitotic-clonal-hematopoiesis/` — 探针甲基化对应的干细胞分裂次数。
 - `skills/semaglutide-epigenetic-aging-trial/` — 同一时钟第 32 周减基线（只做减法，旁边附论文组间差）。（名单类）
@@ -133,6 +135,7 @@ python3 -m tools.lsk test --changed origin/main   # 只测相对 main 改动过�
 - `skills/plasma-proteomics-brain-immune/` — 研究用：把已在一批样本内 z 分数化的血浆蛋白乘补充表系数得出器官预测年龄，或标出你交来的器官 z；单个人的化验值没法直接套。（名单类）
 - `skills/proteomic-aging-clock/` — 你已有的蛋白质年龄减去实足年龄，只做相减，不从蛋白量重算论文的时钟。（名单类）
 - `skills/proteomic-clocks-eye-aging/` — 已经算好的 ProAge 或 cProAge。（名单类）
+- `skills/sasp-senescence-score/` — 见「细胞衰老」。
 - `skills/structural-signature-plasma-proteins/` — 照录你交来的三个肽段结构可及性；不做阿尔茨海默病分组。（名单类）
 
 ## 影像
@@ -165,6 +168,7 @@ python3 -m tools.lsk test --changed origin/main   # 只测相对 main 改动过�
 - `skills/cerebrospinal-fluid-molecular-subtypes/` — 脑脊液蛋白。分型载荷不在已读材料里时，报告停在蛋白读出。（名单类）
 - `skills/dissecting-genetic-proteomic-risk/` — 谵妄相关蛋白，以及两个 APOE 位点的基因型。（名单类）
 - `skills/hippocampal-neurogenesis-adulthood-ageing/` — 核对年龄和情景记忆比较是否合乎“记忆超常高龄者”的入组写法；不评估大脑。（名单类）
+- `skills/itfnat-face-name-mci-cutoff/` — 把自己做过的意大利人脸-姓名联想记忆测验（ItFNAT）延迟自由回忆校正分和 MoCA 校正分对到论文的轻度认知障碍切点，给出切点哪一侧和对应的似然比。
 - `skills/neurodegeneration-proteomics-biomarker/` — 神经退行相关血浆蛋白的符号和数值。（名单类）
 - `skills/plasma-proteome-dementia-biomarkers/` — 痴呆相关血浆蛋白的符号和数值。（名单类）
 - `skills/plasma-proteome-future-dementia/` — 四个血浆蛋白的数值。梯度提升树的权重没有印出。（名单类）
@@ -176,10 +180,13 @@ python3 -m tools.lsk test --changed origin/main   # 只测相对 main 改动过�
 ## 衰弱与死亡风险
 
 - `skills/circadian-frailty-older-adults/` — 用最活跃十小时和最不活跃五小时的活动量算相对振幅，并把两道疲劳题相加；不判断衰弱。（名单类）
+- `skills/edisea-dietary-index/` — 见「甲基化」。
 - `skills/environmental-genetic-aging-mortality/` — 暴露回答。（名单类）
 - `skills/epigenetic-frailty-risk-score/` — 见「甲基化」。
 - `skills/genome-wide-proteomics-frailty/` — 已经算好的医院衰弱风险分。
 - `skills/metabolomic-frailty-subtypes/` — 十一项核磁代谢物离哪个已发表亚型均值最近（近似，不是论文的分型）。（名单类）
+- `skills/methylation-variability-aging-score/` — 见「甲基化」。
+- `skills/modifiable-risk-factor-score/` — 数一数 11 项可改变的危险因素（教育、抑郁、吸烟、饮酒、运动、饮食、睡眠、体重、血糖、血压、血脂）有几项，并给出你所在年龄段每多一项对应的全因死亡风险比。
 - `skills/one-year-mortality-aging-marker/` — 年龄和性别。一年死亡概率的回归系数没有印出。（名单类）
 - `skills/plasma-protein-risk-score/` — 按论文系数把你交来的标准化蛋白值加权求和，可算足跟超声骨密度；不是你的骨折风险。（名单类）
 - `skills/sleep-study-life-expectancy/` — 你已有的睡眠年龄估计减去实足年龄，只做相减，不跑论文的深度网络。（名单类）
@@ -197,6 +204,10 @@ python3 -m tools.lsk test --changed origin/main   # 只测相对 main 改动过�
 ## 自噬
 
 - `skills/ulk1-autophagy-alzheimers/` — 见「脑、认知与痴呆」。
+
+## 细胞衰老
+
+- `skills/sasp-senescence-score/` — 38 个血浆蛋白（Olink 蛋白组 NPX）算细胞衰老分泌表型（SASP）评分。
 
 ## 骨骼肌
 
@@ -259,6 +270,7 @@ python3 -m tools.lsk test --changed origin/main   # 只测相对 main 改动过�
 ## 跌倒与肌肉
 
 - `skills/calf-circumference-decline-falls/` — 用前后两次自己量的小腿围算绝对和相对减少量，按论文切点分档，给出中国老人队列里该档与小腿围没减少者相比的跌倒比值比。
+- `skills/reactive-agility-fall-history/` — 用 SKILLCOURT 反应敏捷测试（随机星形跑完成时间、站立踏步简单和选择反应时）的成绩，对照论文印出的探索性切点，看落在有跌倒史一侧还是没有跌倒史一侧。
 
 ## 饮食与基因
 
