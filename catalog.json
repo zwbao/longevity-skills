@@ -2,9 +2,9 @@
   "schema": "longevity-catalog/1",
   "version": "2026.48.0",
   "counts": {
-    "skills": 195,
+    "skills": 197,
     "tiers": {
-      "A": 31,
+      "A": 33,
       "B": 83,
       "C": 73,
       "tool": 8
@@ -7728,6 +7728,251 @@
         "title_zh": "临床生物年龄的前后差",
         "journal": "Nature Communications",
         "year": 2024
+      }
+    },
+    {
+      "name": "finnish-diabetes-risk-score",
+      "kind": "paper",
+      "tier": "A",
+      "species": [
+        "human"
+      ],
+      "evidence": "cohort",
+      "domains": [
+        "代谢与心血管"
+      ],
+      "blurb_zh": "用年龄、腰围、BMI和四项问卷计算原版七项糖尿病风险筛查分数。",
+      "description": "Tier A personal readout: computes one person's value with the paper's printed method and reproduces a printed example. Computes the original seven-item Finnish Diabetes Risk Score from age, sex-specific waist circumference, BMI, and questionnaire answers. Use for a non-laboratory diabetes risk screening score or user-supplied BMI, waist, activity, and diet target scenarios in adults within the paper's population. Reports Chinese component scores and the screening cutoff; does not estimate an individual's diabetes probability.",
+      "intents": [
+        "lab_meaning",
+        "body_fat_waist",
+        "before_after"
+      ],
+      "has_script": true,
+      "validation_status": "reproduced",
+      "validation_label_zh": "已复现论文",
+      "entry": {
+        "script": "scripts/personal_report.py",
+        "measurements_flag": "--measurements",
+        "measurements_header": [
+          "marker",
+          "value",
+          "unit"
+        ],
+        "age_flag": "--age",
+        "sex_flag": "--sex",
+        "out_flag": "--out",
+        "result_json": true,
+        "targets_flag": "--targets",
+        "levers_json": true
+      },
+      "inputs_status": "verified",
+      "inputs": [
+        {
+          "key": "bmi_kg_m2",
+          "label_zh": "体质指数",
+          "aliases": [
+            "BMI",
+            "body mass index",
+            "体重指数"
+          ],
+          "unit": "kg/m^2",
+          "range": [
+            10,
+            80
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "按体重kg除以身高m的平方计算；原版BMI>25至30记1分，>30记3分。"
+        },
+        {
+          "key": "waist_cm",
+          "label_zh": "腰围",
+          "aliases": [
+            "waist",
+            "waist circumference",
+            "WC"
+          ],
+          "unit": "cm",
+          "range": [
+            40,
+            200
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "最低肋骨与髂嵴之间的中点测量；男性和女性使用原文不同阈值。",
+          "accept": {
+            "m": 100,
+            "mm": 0.1,
+            "in": 2.54
+          }
+        },
+        {
+          "key": "bp_medication_ever",
+          "label_zh": "曾用降压药",
+          "aliases": [
+            "ever used blood pressure medication",
+            "history of antihypertensive drug treatment",
+            "降压药使用史"
+          ],
+          "unit": "1",
+          "range": [
+            0,
+            1
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "0=从未，1=曾经；不是仅问现在是否服药，不能通过停药改变此病史。"
+        },
+        {
+          "key": "high_glucose_history",
+          "label_zh": "血糖升高史",
+          "aliases": [
+            "history of high blood glucose",
+            "高血糖史"
+          ],
+          "unit": "1",
+          "range": [
+            0,
+            1
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "0=无，1=曾由医务人员告知糖尿病或潜在糖尿病，含暂时/临界血糖升高、妊娠糖尿病和仅饮食治疗的糖尿病；不是本次血糖数值。"
+        },
+        {
+          "key": "low_activity",
+          "label_zh": "原文低活动类别",
+          "aliases": [
+            "physical inactivity",
+            "低体力活动",
+            "low physical activity"
+          ],
+          "unit": "1",
+          "range": [
+            0,
+            1
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "1=闲暇以阅读、看电视及不费力家务为主、活动不足4小时/周且工作以坐位为主无需多走动；0=不符合该低活动类别。恰4小时按表1脚注的至少4小时类别记0；不要替换为后来的每日30分钟问题。"
+        },
+        {
+          "key": "daily_produce",
+          "label_zh": "每天吃蔬菜水果或浆果",
+          "aliases": [
+            "daily vegetables fruits or berries",
+            "daily consumption of vegetables fruits or berries",
+            "每日蔬果"
+          ],
+          "unit": "1",
+          "range": [
+            0,
+            1
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "1=每天吃至少其中一类，0=不是每天吃；按第727页正文每天吃记0分。"
+        },
+        {
+          "key": "antidiabetic_treatment",
+          "label_zh": "评估时接受降糖药治疗",
+          "aliases": [
+            "antidiabetic drug treatment",
+            "降糖药治疗"
+          ],
+          "unit": "1",
+          "range": [
+            0,
+            1
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "0=否，1=是；仅作适用性检查，1时停止，不计入七项得分。"
+        },
+        {
+          "key": "age",
+          "label_zh": "实足年龄",
+          "aliases": [
+            "年龄",
+            "age years"
+          ],
+          "unit": "a",
+          "range": [
+            35,
+            64
+          ],
+          "required": true,
+          "from": "profile",
+          "note_zh": "填写已满周岁整数；不向研究年龄范围外推。",
+          "flag": "--age"
+        },
+        {
+          "key": "sex",
+          "label_zh": "性别",
+          "aliases": [
+            "sex",
+            "性别"
+          ],
+          "required": true,
+          "from": "profile",
+          "flag": "--sex",
+          "note_zh": "male/男或female/女，只用于原文腰围阈值，不另加性别分。"
+        }
+      ],
+      "outputs": [
+        {
+          "key": "age_score",
+          "label_zh": "年龄得分",
+          "unit": "score"
+        },
+        {
+          "key": "bmi_score",
+          "label_zh": "BMI得分",
+          "unit": "score"
+        },
+        {
+          "key": "waist_score",
+          "label_zh": "腰围得分",
+          "unit": "score"
+        },
+        {
+          "key": "bp_medication_score",
+          "label_zh": "曾用降压药得分",
+          "unit": "score"
+        },
+        {
+          "key": "high_glucose_score",
+          "label_zh": "血糖升高史得分",
+          "unit": "score"
+        },
+        {
+          "key": "activity_score",
+          "label_zh": "活动得分",
+          "unit": "score"
+        },
+        {
+          "key": "produce_score",
+          "label_zh": "蔬果得分",
+          "unit": "score"
+        },
+        {
+          "key": "total_score",
+          "label_zh": "原版糖尿病风险总分",
+          "unit": "score"
+        },
+        {
+          "key": "cutoff_category",
+          "label_zh": "是否达到原文筛查切点",
+          "note_zh": "below_cutoff为<9分；at_or_above_cutoff为≥9分；不是诊断或个人概率。"
+        }
+      ],
+      "paper": {
+        "doi": "10.2337/diacare.26.3.725",
+        "title": "The diabetes risk score: a practical tool to predict type 2 diabetes risk.",
+        "title_zh": "糖尿病风险评分：预测2型糖尿病风险的实用工具",
+        "journal": "Diabetes Care",
+        "year": 2003
       }
     },
     {
@@ -25392,6 +25637,230 @@
         "title_zh": "神经元预测年龄",
         "journal": "Nature Aging",
         "year": 2026
+      }
+    },
+    {
+      "name": "new-chinese-diabetes-risk-score",
+      "kind": "paper",
+      "tier": "A",
+      "species": [
+        "human"
+      ],
+      "evidence": "cross_sectional",
+      "domains": [
+        "糖尿病风险筛查"
+      ],
+      "blurb_zh": "用年龄、性别、腰围、BMI、收缩压和家族史计算糖尿病筛查分数。",
+      "description": "Tier A personal readout: computes one person's value with the paper's printed method and reproduces a printed example. Uses age, sex, waist circumference, BMI, systolic blood pressure and first-degree family history to calculate the New Chinese Diabetes Risk Score for adults without diagnosed diabetes. Use for nonlaboratory diabetes screening, 新中国糖尿病风险评分, or asking how personal measurements affect this score. Reports points and the published screening threshold in Chinese, with optional user-supplied target scenarios.",
+      "intents": [
+        "lab_meaning",
+        "body_fat_waist"
+      ],
+      "has_script": true,
+      "validation_status": "reproduced",
+      "validation_label_zh": "已复现论文",
+      "entry": {
+        "script": "scripts/personal_report.py",
+        "measurements_flag": "--measurements",
+        "measurements_header": [
+          "marker",
+          "value",
+          "unit"
+        ],
+        "age_flag": "--age",
+        "sex_flag": "--sex",
+        "out_flag": "--out",
+        "result_json": true,
+        "targets_flag": "--targets",
+        "levers_json": true
+      },
+      "population": {
+        "age_years": [
+          20,
+          74
+        ],
+        "note_zh": "中国未确诊糖尿病成人；推导为全国横断面调查，外部验证限青岛35–74岁人群；已确诊者不计算。"
+      },
+      "inputs_status": "verified",
+      "inputs": [
+        {
+          "key": "age",
+          "label_zh": "年龄",
+          "aliases": [
+            "年龄（岁）",
+            "age",
+            "Age (years)"
+          ],
+          "unit": "a",
+          "range": [
+            20,
+            74
+          ],
+          "required": true,
+          "from": "argument",
+          "flag": "--age",
+          "note_zh": "已满周岁整数；不向20–74岁之外外推。"
+        },
+        {
+          "key": "sex",
+          "label_zh": "性别",
+          "aliases": [
+            "sex",
+            "Sex"
+          ],
+          "unit": "1",
+          "range": [
+            0,
+            1
+          ],
+          "required": true,
+          "from": "argument",
+          "flag": "--sex",
+          "note_zh": "命令行 male/female 或 男/女，对应论文 Men/Women；内部编码男1、女0。"
+        },
+        {
+          "key": "waist_cm",
+          "label_zh": "腰围",
+          "aliases": [
+            "waist",
+            "WC",
+            "waist circumference",
+            "腹围"
+          ],
+          "unit": "cm",
+          "accept": {
+            "m": 100,
+            "mm": 0.1,
+            "in": 2.54
+          },
+          "unit_required": true,
+          "range": [
+            40,
+            200
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "下肋缘与髂嵴之间中点处测量；不是裤子尺码。"
+        },
+        {
+          "key": "bmi_kg_m2",
+          "label_zh": "体质指数",
+          "aliases": [
+            "BMI",
+            "body mass index",
+            "身体质量指数"
+          ],
+          "unit": "kg/m^2",
+          "range": [
+            10,
+            70
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "体重kg除以身高m的平方。"
+        },
+        {
+          "key": "sbp_mmhg",
+          "label_zh": "收缩压",
+          "aliases": [
+            "SBP",
+            "systolic blood pressure",
+            "高压"
+          ],
+          "unit": "mmHg",
+          "accept": {
+            "kPa": 7.500617
+          },
+          "range": [
+            60,
+            260
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "使用测量均值；论文推导组取两次、验证组取三次血压测量的均值。"
+        },
+        {
+          "key": "family_history",
+          "label_zh": "一级亲属糖尿病史",
+          "aliases": [
+            "family history of diabetes",
+            "糖尿病家族史",
+            "diabetes family history"
+          ],
+          "unit": "1",
+          "range": [
+            0,
+            1
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "父母、兄弟姐妹或子女有糖尿病填1，无填0；未知不当作无。"
+        },
+        {
+          "key": "known_diabetes",
+          "label_zh": "已经确诊糖尿病",
+          "aliases": [
+            "known diabetes",
+            "既往糖尿病诊断"
+          ],
+          "unit": "1",
+          "range": [
+            0,
+            1
+          ],
+          "required": true,
+          "from": "argument",
+          "flag": "--known-diabetes",
+          "note_zh": "yes/no 或 是/否；适用性核对，不加减评分。yes时退出3。"
+        }
+      ],
+      "outputs": [
+        {
+          "key": "total_score",
+          "label_zh": "糖尿病筛查总分",
+          "unit": "score"
+        },
+        {
+          "key": "screening_category",
+          "label_zh": "筛查分层"
+        },
+        {
+          "key": "age_points",
+          "label_zh": "年龄得分",
+          "unit": "score"
+        },
+        {
+          "key": "sex_points",
+          "label_zh": "性别得分",
+          "unit": "score"
+        },
+        {
+          "key": "waist_cm_points",
+          "label_zh": "腰围得分",
+          "unit": "score"
+        },
+        {
+          "key": "bmi_kg_m2_points",
+          "label_zh": "体质指数得分",
+          "unit": "score"
+        },
+        {
+          "key": "sbp_mmhg_points",
+          "label_zh": "收缩压得分",
+          "unit": "score"
+        },
+        {
+          "key": "family_history_points",
+          "label_zh": "一级亲属糖尿病史得分",
+          "unit": "score"
+        }
+      ],
+      "paper": {
+        "doi": "10.2337/dc13-0593",
+        "title": "Nonlaboratory-Based Risk Assessment Algorithm for Undiagnosed Type 2 Diabetes Developed on a Nation-Wide Diabetes Survey",
+        "title_zh": "新中国糖尿病风险评分",
+        "journal": "Diabetes Care",
+        "year": 2013
       }
     },
     {
