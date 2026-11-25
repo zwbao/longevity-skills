@@ -441,3 +441,12 @@ def test_dispatch_check_is_skipped_without_the_repositories(tmp_path, monkeypatc
     errors, skipped = dispatch.check({})
     assert errors == [] and len(skipped) == 2
     assert dispatch.whitelists("X_SKILLS = ['a', 'b']\nY = {'c'}\nZ_SKILLS: tuple = ('d',)\n") == {"X_SKILLS": ["a", "b"], "Z_SKILLS": ["d"]}
+
+
+def test_raised_decimal_points_count_as_decimal_points():
+    from tools.lsk import datasets
+    quote = "Bodyweight \u22121\u22c53 (4\u22c59) 0\u22c51 (\u22120\u22c56 to 0\u22c57)"
+    assert datasets.numbers_missing(quote, [0.1, -0.6, 0.7]) == []
+    assert datasets.numbers_missing("HR 0\u00b782 (0\u00b771\u20130\u00b794)", [0.82, 0.71, 0.94]) == []
+    assert datasets.numbers_missing("3 \u00b7 5 items", [3.5]) == [3.5]
+    assert datasets.sign_shown("MD \u22120\u22c544 (\u22120\u22c559 to \u22120\u22c529)", -0.44)
