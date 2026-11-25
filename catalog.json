@@ -2,9 +2,9 @@
   "schema": "longevity-catalog/1",
   "version": "2026.48.0",
   "counts": {
-    "skills": 187,
+    "skills": 190,
     "tiers": {
-      "A": 23,
+      "A": 26,
       "B": 83,
       "C": 73,
       "tool": 8
@@ -7266,6 +7266,264 @@
         "title_zh": "用 p53 与 FOXO3 调节肥胖引起的骨关节炎",
         "journal": "Nature Communications",
         "year": 2025
+      }
+    },
+    {
+      "name": "framingham-general-cvd-risk",
+      "kind": "paper",
+      "tier": "A",
+      "species": [
+        "human"
+      ],
+      "evidence": "cohort",
+      "domains": [
+        "临床年龄与可穿戴"
+      ],
+      "blurb_zh": "用年龄、血压、血脂或体质指数估算十年总体心血管风险和等价心脏年龄。",
+      "description": "Tier A personal readout: computes one person's value with the paper's printed method and reproduces a printed example. Calculates the Framingham general cardiovascular disease ten-year risk and continuous heart/vascular age from personal blood pressure and lipids or BMI. Use for Framingham 2008 risk, 总体心血管风险、心脏年龄、血管年龄, or comparing user-supplied blood pressure and lipid targets in adults aged 30–74 without prior cardiovascular disease.",
+      "intents": [
+        "lab_meaning",
+        "biological_age"
+      ],
+      "has_script": true,
+      "validation_status": "reproduced",
+      "validation_label_zh": "已复现论文",
+      "entry": {
+        "script": "scripts/personal_report.py",
+        "measurements_flag": "--measurements",
+        "measurements_header": [
+          "marker",
+          "value",
+          "unit"
+        ],
+        "age_flag": "--age",
+        "sex_flag": "--sex",
+        "out_flag": "--out",
+        "result_json": true,
+        "targets_flag": "--targets",
+        "levers_json": true
+      },
+      "population": {
+        "age_years": [
+          30,
+          74
+        ],
+        "note_zh": "以白人为主的Framingham原始及子代队列，基线无心血管病；超出年龄范围或已有CVD时不计算。"
+      },
+      "inputs_status": "verified",
+      "inputs": [
+        {
+          "key": "sbp_mmhg",
+          "label_zh": "收缩压",
+          "aliases": [
+            "SBP",
+            "systolic blood pressure",
+            "高压",
+            "收缩期血压"
+          ],
+          "unit": "mmHg",
+          "accept": {
+            "kPa": 7.500617
+          },
+          "range": [
+            60,
+            300
+          ],
+          "required": true,
+          "from": "measurements",
+          "unit_required": true
+        },
+        {
+          "key": "tc_mg_dl",
+          "label_zh": "总胆固醇",
+          "aliases": [
+            "TC",
+            "TCHO",
+            "CHOL",
+            "total cholesterol",
+            "血清总胆固醇"
+          ],
+          "unit": "mg/dL",
+          "accept": {
+            "mmol/L": 38.665
+          },
+          "molar_mass": 386.65,
+          "range": [
+            50,
+            1000
+          ],
+          "required": false,
+          "from": "measurements",
+          "unit_required": true,
+          "note_zh": "血脂版必需；BMI版不使用。"
+        },
+        {
+          "key": "hdl_mg_dl",
+          "label_zh": "高密度脂蛋白胆固醇",
+          "aliases": [
+            "HDL",
+            "HDL-C",
+            "HDLC",
+            "HDL cholesterol",
+            "高密度脂蛋白胆固醇(HDL-C)"
+          ],
+          "unit": "mg/dL",
+          "accept": {
+            "mmol/L": 38.665
+          },
+          "molar_mass": 386.65,
+          "range": [
+            5,
+            200
+          ],
+          "required": false,
+          "from": "measurements",
+          "unit_required": true,
+          "note_zh": "血脂版必需；不是LDL或总胆固醇。"
+        },
+        {
+          "key": "bmi_kg_m2",
+          "label_zh": "体质指数",
+          "aliases": [
+            "BMI",
+            "body mass index",
+            "体重指数"
+          ],
+          "unit": "kg/m^2",
+          "range": [
+            10,
+            80
+          ],
+          "required": false,
+          "from": "measurements",
+          "note_zh": "只在 --model bmi 时必需；不与血脂同时进入方程。"
+        },
+        {
+          "key": "age",
+          "label_zh": "实足年龄",
+          "aliases": [
+            "年龄",
+            "age"
+          ],
+          "unit": "a",
+          "range": [
+            30,
+            74
+          ],
+          "required": true,
+          "from": "profile",
+          "flag": "--age"
+        },
+        {
+          "key": "sex",
+          "label_zh": "模型分层性别",
+          "aliases": [
+            "性别",
+            "sex"
+          ],
+          "required": true,
+          "from": "profile",
+          "flag": "--sex",
+          "note_zh": "male/男 或 female/女；按论文男女方程选择。"
+        },
+        {
+          "key": "treated",
+          "label_zh": "正在接受降压治疗",
+          "aliases": [
+            "antihypertensive treatment",
+            "TRTBP",
+            "降压药使用"
+          ],
+          "required": true,
+          "from": "argument",
+          "flag": "--treated",
+          "note_zh": "明确填写 yes/是 或 no/否；未知不能填否。"
+        },
+        {
+          "key": "smoker",
+          "label_zh": "当前吸烟",
+          "aliases": [
+            "current smoker",
+            "smoking",
+            "吸烟"
+          ],
+          "required": true,
+          "from": "argument",
+          "flag": "--smoker",
+          "note_zh": "明确填写 yes/是 或 no/否；未知不能填否。"
+        },
+        {
+          "key": "diabetes",
+          "label_zh": "已有糖尿病",
+          "aliases": [
+            "diabetes mellitus",
+            "DM",
+            "糖尿病"
+          ],
+          "required": true,
+          "from": "argument",
+          "flag": "--diabetes",
+          "note_zh": "明确填写 yes/是 或 no/否；未知不能填否。"
+        },
+        {
+          "key": "prior_cvd",
+          "label_zh": "既往心血管病",
+          "aliases": [
+            "prevalent CVD",
+            "CVD history",
+            "既往CVD"
+          ],
+          "required": true,
+          "from": "argument",
+          "flag": "--prior-cvd",
+          "note_zh": "明确填写 yes/是 或 no/否；未知不能填否。必须为否才计算首次事件风险。"
+        },
+        {
+          "key": "model",
+          "label_zh": "方程版本",
+          "required": false,
+          "from": "argument",
+          "flag": "--model",
+          "note_zh": "默认 lipids；无血脂时明确选择 bmi。"
+        }
+      ],
+      "outputs": [
+        {
+          "key": "model",
+          "label_zh": "方程版本"
+        },
+        {
+          "key": "risk_10y_pct",
+          "label_zh": "十年首次总体心血管风险",
+          "unit": "%"
+        },
+        {
+          "key": "linear_predictor",
+          "label_zh": "Cox个人线性预测和",
+          "unit": "1"
+        },
+        {
+          "key": "normal_risk_10y_pct",
+          "label_zh": "同龄同性别参考状态的十年风险",
+          "unit": "%"
+        },
+        {
+          "key": "heart_age_years",
+          "label_zh": "连续方程等价心脏年龄",
+          "unit": "a"
+        },
+        {
+          "key": "heart_age_difference_years",
+          "label_zh": "等价心脏年龄减实足年龄",
+          "unit": "a"
+        }
+      ],
+      "paper": {
+        "doi": "10.1161/circulationaha.107.699579",
+        "title": "General cardiovascular risk profile for use in primary care: the Framingham Heart Study.",
+        "title_zh": "Framingham 十年总体心血管风险",
+        "journal": "Circulation",
+        "year": 2008
       }
     },
     {
@@ -24350,6 +24608,143 @@
       }
     },
     {
+      "name": "one-minute-heart-rate-recovery",
+      "kind": "paper",
+      "tier": "A",
+      "species": [
+        "human"
+      ],
+      "evidence": "cohort",
+      "domains": [
+        "心血管与运动"
+      ],
+      "blurb_zh": "用运动试验的峰值和主动恢复1分钟心率，计算心率下降量并按原文切点分档。",
+      "description": "Tier A draft: the paper's printed example is not reproduced yet, so treat the readout as provisional. Calculates the fall from peak exercise heart rate to one minute of active treadmill recovery and applies the Cole 1999 primary cutoff. Use when an adult brings an existing symptom-limited exercise-test report with both heart rates and a verified recovery protocol, or asks what that heart-rate recovery measurement means.",
+      "intents": [
+        "lab_meaning",
+        "frailty_mortality"
+      ],
+      "has_script": true,
+      "validation_status": "draft",
+      "validation_label_zh": "仍在验证",
+      "entry": {
+        "script": "scripts/personal_report.py",
+        "measurements_flag": "--measurements",
+        "measurements_header": [
+          "marker",
+          "value",
+          "unit"
+        ],
+        "age_flag": "--age",
+        "sex_flag": "--sex",
+        "out_flag": "--out",
+        "result_json": true
+      },
+      "inputs_status": "draft",
+      "inputs": [
+        {
+          "key": "peak_hr_bpm",
+          "label_zh": "峰值心率",
+          "aliases": [
+            "运动峰值心率",
+            "运动最大心率",
+            "peak heart rate",
+            "peak HR",
+            "HR peak"
+          ],
+          "unit": "/min",
+          "accept": {
+            "bpm": 1,
+            "次/分": 1,
+            "次/分钟": 1
+          },
+          "range": [
+            20,
+            300
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "须为同一次症状限制性运动试验的实测峰值，不用年龄预测的最大心率。"
+        },
+        {
+          "key": "recovery_hr_1min_bpm",
+          "label_zh": "恢复1分钟心率",
+          "aliases": [
+            "运动后1分钟心率",
+            "恢复期1分钟心率",
+            "1-min recovery heart rate",
+            "heart rate at 1 minute recovery",
+            "HR at 1 min recovery"
+          ],
+          "unit": "/min",
+          "accept": {
+            "bpm": 1,
+            "次/分": 1,
+            "次/分钟": 1
+          },
+          "range": [
+            20,
+            300
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "峰值运动结束后第1分钟，按原文跑台慢走主动恢复时的心率；不是两分钟心率或一分钟下降量。"
+        },
+        {
+          "key": "age",
+          "label_zh": "实足年龄",
+          "aliases": [
+            "年龄",
+            "age"
+          ],
+          "unit": "a",
+          "range": [
+            18,
+            120
+          ],
+          "required": true,
+          "from": "profile",
+          "flag": "--age",
+          "note_zh": "仅作成年人范围检查；上限为输入合理性保护，不是论文实测最大年龄。"
+        },
+        {
+          "key": "sex",
+          "label_zh": "性别",
+          "required": false,
+          "from": "profile",
+          "flag": "--sex",
+          "note_zh": "可选背景信息，不参与差值或分档。"
+        },
+        {
+          "key": "protocol",
+          "label_zh": "测量方案",
+          "required": true,
+          "from": "argument",
+          "flag": "--protocol",
+          "note_zh": "核实症状限制性跑台试验后以约2.4 km/h（原文1.5 mi/h）、2.5%坡度主动恢复至少2分钟，取第1分钟心率，才填写 cole-1999。其他或未知方案返回输入问题。"
+        }
+      ],
+      "outputs": [
+        {
+          "key": "hrr_1min_bpm",
+          "label_zh": "主动恢复1分钟心率下降量",
+          "unit": "/min"
+        },
+        {
+          "key": "hrr_category",
+          "label_zh": "原文主切点分档",
+          "note_zh": "abnormal：下降量≤12次/分；normal：下降量>12次/分。"
+        }
+      ],
+      "paper": {
+        "doi": "10.1056/nejm199910283411804",
+        "title": "Heart-rate recovery immediately after exercise as a predictor of mortality.",
+        "title_zh": "运动后即刻心率恢复与死亡风险",
+        "journal": "The New England Journal of Medicine",
+        "year": 1999
+      }
+    },
+    {
       "name": "one-year-mortality-aging-marker",
       "kind": "paper",
       "tier": "B",
@@ -28253,6 +28648,205 @@
         "title_zh": "单细胞甲基化周龄",
         "journal": "Nature Communications",
         "year": 2024
+      }
+    },
+    {
+      "name": "score2-cvd-risk",
+      "kind": "paper",
+      "tier": "A",
+      "species": [
+        "human"
+      ],
+      "evidence": "cohort",
+      "domains": [
+        "心血管与代谢风险"
+      ],
+      "blurb_zh": "用血压、血脂和吸烟状态估计欧洲成人十年心血管风险。",
+      "description": "Tier A personal readout: computes one person's value with the paper's printed method and reproduces a printed example. Estimates SCORE2 ten-year first-onset fatal and non-fatal cardiovascular risk from age, sex, smoking, blood pressure and cholesterol in adults aged 40–69 without prior CVD or diabetes in the paper's European risk regions. Use for SCORE2、欧洲心血管风险、血压血脂风险 and user-specified target scenarios.",
+      "intents": [
+        "lab_meaning"
+      ],
+      "has_script": true,
+      "validation_status": "reproduced",
+      "validation_label_zh": "已复现论文",
+      "entry": {
+        "script": "scripts/personal_report.py",
+        "measurements_flag": "--measurements",
+        "measurements_header": [
+          "marker",
+          "value",
+          "unit"
+        ],
+        "age_flag": "--age",
+        "sex_flag": "--sex",
+        "out_flag": "--out",
+        "result_json": true,
+        "targets_flag": "--targets",
+        "levers_json": true
+      },
+      "population": {
+        "age_years": [
+          40,
+          79
+        ],
+        "note_zh": "模型推导年龄 40–79 岁；个人用途仅 40–69 岁，无既往心血管病且无糖尿病，按欧洲风险地区校准。"
+      },
+      "inputs_status": "verified",
+      "inputs": [
+        {
+          "key": "sbp_mmhg",
+          "label_zh": "收缩压",
+          "aliases": [
+            "SBP",
+            "systolic blood pressure",
+            "收缩期血压",
+            "高压"
+          ],
+          "unit": "mmHg",
+          "range": [
+            70,
+            250
+          ],
+          "required": true,
+          "from": "measurements",
+          "accept": {
+            "kPa": 7.500617
+          },
+          "unit_required": true
+        },
+        {
+          "key": "tc_mmol_l",
+          "label_zh": "总胆固醇",
+          "aliases": [
+            "TC",
+            "TCHO",
+            "total cholesterol",
+            "总胆固醇(TC)"
+          ],
+          "unit": "mmol/L",
+          "range": [
+            1,
+            15
+          ],
+          "required": true,
+          "from": "measurements",
+          "accept": {
+            "mg/dL": 0.025863183757920603,
+            "mg/L": 0.00258631837579206
+          },
+          "molar_mass": 386.65,
+          "unit_required": true
+        },
+        {
+          "key": "hdl_mmol_l",
+          "label_zh": "高密度脂蛋白胆固醇",
+          "aliases": [
+            "HDL-C",
+            "HDL cholesterol",
+            "HDL",
+            "高密度脂蛋白胆固醇(HDL-C)"
+          ],
+          "unit": "mmol/L",
+          "range": [
+            0.2,
+            5
+          ],
+          "required": true,
+          "from": "measurements",
+          "accept": {
+            "mg/dL": 0.025863183757920603,
+            "mg/L": 0.00258631837579206
+          },
+          "molar_mass": 386.65,
+          "unit_required": true
+        },
+        {
+          "key": "smoker",
+          "label_zh": "当前吸烟",
+          "aliases": [
+            "smoking",
+            "current smoking",
+            "吸烟状态"
+          ],
+          "unit": "1",
+          "range": [
+            0,
+            1
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "只能为 1（当前吸烟）或 0（其他），不是吸烟比例。"
+        },
+        {
+          "key": "age",
+          "label_zh": "实足年龄",
+          "aliases": [
+            "年龄",
+            "age"
+          ],
+          "unit": "a",
+          "range": [
+            40,
+            69
+          ],
+          "required": true,
+          "from": "profile",
+          "flag": "--age"
+        },
+        {
+          "key": "sex",
+          "label_zh": "模型性别",
+          "required": true,
+          "from": "profile",
+          "flag": "--sex",
+          "note_zh": "male 或 female，选择论文相应的性别模型。"
+        },
+        {
+          "key": "region",
+          "label_zh": "SCORE2 风险地区",
+          "required": true,
+          "from": "argument",
+          "flag": "--region",
+          "note_zh": "low、moderate、high、very_high；按论文 Table S6，不按个人风险高低选择。"
+        },
+        {
+          "key": "europe",
+          "label_zh": "属于论文欧洲风险地区",
+          "required": true,
+          "from": "argument",
+          "flag": "--europe",
+          "note_zh": "yes 或 no；这里的欧洲风险地区指 Table S6 列出的校准国家，含部分邻近国家。"
+        },
+        {
+          "key": "prior_cvd",
+          "label_zh": "既往心血管病",
+          "required": true,
+          "from": "argument",
+          "flag": "--prior-cvd",
+          "note_zh": "yes 或 no；yes 时不计算。"
+        },
+        {
+          "key": "diabetes",
+          "label_zh": "糖尿病",
+          "required": true,
+          "from": "argument",
+          "flag": "--diabetes",
+          "note_zh": "yes 或 no；yes 时不计算。"
+        }
+      ],
+      "outputs": [
+        {
+          "key": "risk_10y_pct",
+          "label_zh": "十年首次心血管事件风险（模型估计）",
+          "unit": "%"
+        }
+      ],
+      "paper": {
+        "doi": "10.1093/eurheartj/ehab309",
+        "title": "SCORE2 risk prediction algorithms: new models to estimate 10-year risk of cardiovascular disease in Europe.",
+        "title_zh": "SCORE2：欧洲成人十年心血管风险",
+        "journal": "European Heart Journal",
+        "year": 2021
       }
     },
     {
