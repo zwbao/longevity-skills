@@ -333,6 +333,7 @@ python3 -m tools.lsk test --changed origin/main   # 只测相对 main 改动过�
 - `skills/accelerometry-mortality-dose-response/` — 见「身体活动」。
 - `skills/bmi-mortality-category/` — 见「体重」。
 - `skills/sleep-duration-risk-lookup/` — 见「睡眠」。
+- `skills/whole-grain-dose-response/` — 见「饮食与营养」。
 
 ## 生活方式与健康风险
 
@@ -421,6 +422,7 @@ python3 -m tools.lsk test --changed origin/main   # 只测相对 main 改动过�
 
 - `skills/alcohol-burden-of-proof/` — 用自己的每日平均纯酒精摄入量，查阅论文中各疾病相对于无饮酒的风险比及不确定性区间；不推算个人患病概率。
 - `skills/vegetable-tmrel-gap/` — 用饮食记录中的蔬菜日均克数，计算与论文蔬菜摄入参考范围的差距。
+- `skills/whole-grain-dose-response/` — 按每日全谷物食品摄入量匹配论文中的群体相对风险及置信区间。
 
 ## 只收录，不参与个人调度
 
