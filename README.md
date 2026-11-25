@@ -101,6 +101,7 @@ python3 -m tools.lsk test --changed origin/main   # 只测相对 main 改动过�
 - `skills/aging-biomarker-framework/` — 把你已经算好的时钟预测年龄减去实足年龄（简单相减），再标出这个时钟在论文评测里的队列结果。（名单类）
 - `skills/biological-aging-generational-shifts/` — 你交来的 PhenoAge 减去年龄的未标准化差和出生年；不是论文的标准化年龄差。（名单类）
 - `skills/blood-protein-assessment/` — 研究用：把已在一批样本内秩逆正态变换、缩放好的血液蛋白量乘论文系数加总；单个人的化验值没法直接套，糖化血红蛋白只作对照。（名单类）
+- `skills/deficit-accumulation-frailty-index/` — 用已评估的健康缺陷计数算虚弱指数，附原论文的探索性生存模型。
 - `skills/face-aging-rate-cancer/` — 你交来的两次面容年龄之差除以相隔年数；不从照片算面容年龄。（名单类）
 - `skills/fasting-mimicking-diet/` — 两次已经算好的生物年龄相减（不从化验重算生物年龄）。（名单类）
 - `skills/framingham-general-cvd-risk/` — 用年龄、血压、血脂或体质指数估算十年总体心血管风险和等价心脏年龄。
