@@ -1,0 +1,195 @@
+{
+  "schema": "longevity-skill/1",
+  "name": "protein-intake-breakpoint",
+  "kind": "paper",
+  "tier": "A",
+  "species": [
+    "human"
+  ],
+  "evidence": "review",
+  "domains": [
+    "营养与运动"
+  ],
+  "blurb_zh": "用每日总蛋白质和体重查看与抗阻训练研究中摄入拐点的位置。",
+  "intents": [
+    "intervention_evidence"
+  ],
+  "triage": {
+    "reason_zh": "人体试验荟萃分析印出总蛋白摄入拐点，可用个人摄入量除以体重作位置比较；缺少个人计算示例，保留暂定验证。",
+    "reviewed": false
+  },
+  "paper": {
+    "doi": "10.1136/bjsports-2017-097608",
+    "title": "A systematic review, meta-analysis and meta-regression of the effect of protein supplementation on resistance training-induced gains in muscle mass and strength in healthy adults.",
+    "title_zh": "蛋白质补充与抗阻训练后的肌肉和力量变化",
+    "journal": "British Journal of Sports Medicine",
+    "year": 2018,
+    "authors": "Morton 等",
+    "article_url": "https://bjsm.bmj.com/content/52/6/376",
+    "supplements": [
+      {
+        "label": "Supplementary Appendix 1",
+        "url": "https://pmc.ncbi.nlm.nih.gov/articles/instance/5867436/bin/bjsports-2017-097608supp001.pdf"
+      },
+      {
+        "label": "Supplementary Appendix 2",
+        "url": "https://pmc.ncbi.nlm.nih.gov/articles/instance/5867436/bin/bjsports-2017-097608supp002.pdf"
+      },
+      {
+        "label": "Supplementary Table 1",
+        "url": "https://pmc.ncbi.nlm.nih.gov/articles/instance/5867436/bin/bjsports-2017-097608supp003.pdf"
+      },
+      {
+        "label": "Supplementary Table 2",
+        "url": "https://pmc.ncbi.nlm.nih.gov/articles/instance/5867436/bin/bjsports-2017-097608supp004.pdf"
+      },
+      {
+        "label": "Supplementary Figure 1",
+        "url": "https://pmc.ncbi.nlm.nih.gov/articles/instance/5867436/bin/bjsports-2017-097608supp005.jpg"
+      },
+      {
+        "label": "Supplementary Figure 2",
+        "url": "https://pmc.ncbi.nlm.nih.gov/articles/instance/5867436/bin/bjsports-2017-097608supp006.jpg"
+      },
+      {
+        "label": "Supplementary Figure 3",
+        "url": "https://pmc.ncbi.nlm.nih.gov/articles/instance/5867436/bin/bjsports-2017-097608supp007.jpg"
+      },
+      {
+        "label": "Supplementary Table 3",
+        "url": "https://pmc.ncbi.nlm.nih.gov/articles/instance/5867436/bin/bjsports-2017-097608supp008.pdf"
+      },
+      {
+        "label": "Supplementary Figure 4",
+        "url": "https://pmc.ncbi.nlm.nih.gov/articles/instance/5867436/bin/bjsports-2017-097608supp009.jpg"
+      }
+    ],
+    "card_notes": [
+      "本技能使用正文 Figure 5 的组水平拐点；全文及九份附件已核对，未发现作者发布的计算代码仓库。",
+      "更正公告补充作者与 Dymatize Nutrition 的顾问关系：https://doi.org/10.1136/bjsports-2017-097608corr1 。"
+    ],
+    "summary_zh": "这项研究汇总健康成人抗阻训练试验，发现补充蛋白质与额外的肌肉和力量增益有关，总蛋白摄入与去脂体重增益的关系可能存在平台。个人报告只计算记录的相对摄入量及其与研究拐点的位置，不计算个人增肌量、蛋白需要量或寿命变化。",
+    "summary_status": "draft"
+  },
+  "entry": {
+    "script": "scripts/personal_report.py",
+    "measurements_flag": "--measurements",
+    "measurements_header": [
+      "marker",
+      "value",
+      "unit"
+    ],
+    "age_flag": "--age",
+    "sex_flag": "--sex",
+    "out_flag": "--out",
+    "result_json": true,
+    "targets_flag": "--targets",
+    "levers_json": true
+  },
+  "inputs_status": "draft",
+  "inputs": [
+    {
+      "key": "protein_g_day",
+      "label_zh": "每日总蛋白质",
+      "aliases": [
+        "总蛋白质摄入量",
+        "膳食蛋白质摄入量",
+        "每日蛋白质摄入",
+        "total protein intake",
+        "daily protein intake",
+        "dietary protein intake"
+      ],
+      "unit": "g/d",
+      "range": [
+        0,
+        1000
+      ],
+      "unit_required": true,
+      "required": true,
+      "from": "measurements",
+      "note_zh": "同一记录期间的每日平均总量，包含食物与补充来源；不是蛋白粉重量、补充量、血清总蛋白或单餐摄入。"
+    },
+    {
+      "key": "weight_kg",
+      "label_zh": "体重",
+      "aliases": [
+        "体质量",
+        "body weight",
+        "body mass",
+        "weight"
+      ],
+      "unit": "kg",
+      "accept": {
+        "g": 0.001,
+        "lb": 0.45359237
+      },
+      "range": [
+        20,
+        350
+      ],
+      "unit_required": true,
+      "required": true,
+      "from": "measurements",
+      "note_zh": "与摄入记录同一时期的实际体重，不用目标体重、理想体重或去脂体重代替。"
+    },
+    {
+      "key": "age",
+      "label_zh": "实足年龄",
+      "aliases": [
+        "年龄",
+        "age"
+      ],
+      "unit": "a",
+      "range": [
+        18,
+        110
+      ],
+      "required": true,
+      "from": "profile",
+      "flag": "--age",
+      "note_zh": "成人范围为工程适用性检查，不是论文的个体年龄范围，也不用于年龄校正。"
+    },
+    {
+      "key": "sex",
+      "label_zh": "性别",
+      "required": false,
+      "from": "profile",
+      "flag": "--sex",
+      "note_zh": "可选上下文，不参与计算。"
+    },
+    {
+      "key": "context",
+      "label_zh": "研究情境",
+      "required": true,
+      "from": "argument",
+      "flag": "--context",
+      "note_zh": "healthy-ret：健康、非能量限制、抗阻训练至少六周且每周至少两次；other：不符合；unknown：未确认。"
+    }
+  ],
+  "outputs": [
+    {
+      "key": "protein_g_kg_day",
+      "label_zh": "记录的相对总蛋白摄入量",
+      "unit": "g/kg/day"
+    },
+    {
+      "key": "breakpoint_difference",
+      "label_zh": "相对摄入量减研究拐点",
+      "unit": "g/kg/day",
+      "note_zh": "带符号的数学差，不是需要补足的量；不适用时为空。"
+    },
+    {
+      "key": "position",
+      "label_zh": "相对研究拐点的位置",
+      "note_zh": "低于、等于或高于印出拐点；不适用时为空，不是个人增肌平台诊断。"
+    },
+    {
+      "key": "scope",
+      "label_zh": "研究比较适用性"
+    }
+  ],
+  "validation": {
+    "status": "draft",
+    "gap_zh": "已阅读正文 Methods、Table 1、Figure 5、Discussion，以及 Supplementary Appendices 1–2、Tables 1–3、Figures 1–4（九份文件）。拐点、置信区间及研究摄入范围均已印出，但未发现个人体重和每日总蛋白量对应换算结果的完整示例。Figure 5 是未标注个体坐标的组水平散点图；只核对拐点常数不等于复现个人示例，也不以自造输入或读图拟合冒充验证。"
+  }
+}
