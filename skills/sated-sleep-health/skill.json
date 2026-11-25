@@ -1,0 +1,223 @@
+{
+  "schema": "longevity-skill/1",
+  "name": "sated-sleep-health",
+  "kind": "paper",
+  "tier": "A",
+  "species": [
+    "human"
+  ],
+  "evidence": "method",
+  "domains": [
+    "临床年龄与可穿戴"
+  ],
+  "blurb_zh": "用五个睡眠自评回答计算原始 SATED 分数，区分计分复现与量表临床验证。",
+  "intents": [
+    "wearable_sleep"
+  ],
+  "triage": {
+    "reason_zh": "论文补图印出五个自评维度的选项分值及加总规则，可计算个人睡眠健康分数；原论文尚未验证量表。",
+    "reviewed": false
+  },
+  "paper": {
+    "doi": "10.5665/sleep.3298",
+    "title": "Sleep health: can we define it? Does it matter?",
+    "title_zh": "睡眠健康：能否定义，是否重要？",
+    "journal": "Sleep",
+    "year": 2014,
+    "authors": "Buysse",
+    "article_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC3902880/",
+    "supplements": [
+      {
+        "label": "补充正文及 Figure S1（PDF 第 10–12 页，图在第 11 页）",
+        "url": "https://www.med.upenn.edu/cbti/assets/user-content/uploads/PMF%202024/Buysse%202014%20Sleep%20Health%20Can%20we%20Define%20it.pdf"
+      },
+      {
+        "label": "Figure S1 原始 TIFF 链接（本次下载受限）",
+        "url": "https://pmc.ncbi.nlm.nih.gov/articles/instance/3902880/bin/aasm.37.1.9s1.tif"
+      }
+    ],
+    "card_notes": [
+      "已核对原文补图的逐项计分；这不等于完成量表心理测量学或临床验证。",
+      "使用 2014 年原始五项 SATED，不混用后来增加规律性维度的 RU-SATED。"
+    ],
+    "summary_zh": "这项研究围绕成人睡眠健康提出多维定义，并基于既有人体研究提出简短的自评计分方法。个人报告只汇总自己的睡眠自评回答，不估算疾病风险或寿命。",
+    "summary_status": "draft"
+  },
+  "entry": {
+    "script": "scripts/personal_report.py",
+    "measurements_flag": "--measurements",
+    "measurements_header": [
+      "marker",
+      "value",
+      "unit"
+    ],
+    "age_flag": "--age",
+    "sex_flag": "--sex",
+    "out_flag": "--out",
+    "result_json": true,
+    "targets_flag": "--targets",
+    "levers_json": true
+  },
+  "inputs_status": "verified",
+  "inputs": [
+    {
+      "key": "satisfaction_score",
+      "label_zh": "睡眠满意度",
+      "aliases": [
+        "Satisfaction",
+        "SATED-S",
+        "睡眠满意"
+      ],
+      "unit": "score",
+      "accept": {},
+      "range": [
+        0,
+        2
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "你对自己的睡眠感到满意吗？ 输入回答档位：0=很少／从不，1=有时，2=通常／总是。只接受整数；不能填写原始小时或分钟。"
+    },
+    {
+      "key": "alertness_score",
+      "label_zh": "白天清醒度",
+      "aliases": [
+        "Alertness",
+        "SATED-A",
+        "日间清醒度"
+      ],
+      "unit": "score",
+      "accept": {},
+      "range": [
+        0,
+        2
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "你能整天保持清醒而不打瞌睡吗？ 输入回答档位：0=很少／从不，1=有时，2=通常／总是。只接受整数；不能填写原始小时或分钟。"
+    },
+    {
+      "key": "timing_score",
+      "label_zh": "睡眠时间安排",
+      "aliases": [
+        "Timing",
+        "SATED-T",
+        "睡眠时机"
+      ],
+      "unit": "score",
+      "accept": {},
+      "range": [
+        0,
+        2
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "凌晨 2:00 至 4:00 之间，你在睡觉或尝试入睡吗？ 输入回答档位：0=很少／从不，1=有时，2=通常／总是。只接受整数；不能填写原始小时或分钟。"
+    },
+    {
+      "key": "efficiency_score",
+      "label_zh": "睡眠效率",
+      "aliases": [
+        "Efficiency",
+        "SATED-E",
+        "夜间清醒时间题"
+      ],
+      "unit": "score",
+      "accept": {},
+      "range": [
+        0,
+        2
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "你夜间清醒的总时间少于 30 分钟吗（包括入睡所需时间和睡后醒来的时间）？ 输入回答档位：0=很少／从不，1=有时，2=通常／总是。只接受整数；不能填写原始小时或分钟。"
+    },
+    {
+      "key": "duration_score",
+      "label_zh": "睡眠时长",
+      "aliases": [
+        "Duration",
+        "SATED-D",
+        "睡眠时长题"
+      ],
+      "unit": "score",
+      "accept": {},
+      "range": [
+        0,
+        2
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "你每天睡眠在 6 至 8 小时之间吗？ 输入回答档位：0=很少／从不，1=有时，2=通常／总是。只接受整数；不能填写原始小时或分钟。"
+    },
+    {
+      "key": "age",
+      "label_zh": "年龄",
+      "unit": "a",
+      "range": [
+        18,
+        120
+      ],
+      "required": false,
+      "from": "profile",
+      "flag": "--age",
+      "note_zh": "可选背景；不进入计分。成人限制是本实现的使用范围，120 是输入校验上限而非论文阈值。"
+    },
+    {
+      "key": "sex",
+      "label_zh": "性别",
+      "required": false,
+      "from": "profile",
+      "flag": "--sex",
+      "note_zh": "可选背景，不进入计分。"
+    }
+  ],
+  "outputs": [
+    {
+      "key": "satisfaction_score",
+      "label_zh": "睡眠满意度分值",
+      "unit": "score"
+    },
+    {
+      "key": "alertness_score",
+      "label_zh": "白天清醒度分值",
+      "unit": "score"
+    },
+    {
+      "key": "timing_score",
+      "label_zh": "睡眠时间安排分值",
+      "unit": "score"
+    },
+    {
+      "key": "efficiency_score",
+      "label_zh": "睡眠效率分值",
+      "unit": "score"
+    },
+    {
+      "key": "duration_score",
+      "label_zh": "睡眠时长分值",
+      "unit": "score"
+    },
+    {
+      "key": "sated_total_score",
+      "label_zh": "SATED 总分",
+      "unit": "score"
+    }
+  ],
+  "validation": {
+    "status": "reproduced",
+    "examples": [
+      {
+        "locator": "Figure S1, p. 17B, response column headings",
+        "quote": "Rarely/Never (0) Sometimes (1) Usually/Always (2)",
+        "values": [
+          0,
+          1,
+          2
+        ],
+        "tolerance": "整数精确相等；只复现原图逐项选项分值，不声称有已填答的个人总分示例，也不声称临床验证。",
+        "test": "tests/test_manifest.py::test_figure_s1_printed_item_scores"
+      }
+    ]
+  }
+}
