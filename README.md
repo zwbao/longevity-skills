@@ -311,6 +311,10 @@ python3 -m tools.lsk test --changed origin/main   # 只测相对 main 改动过�
 
 - `skills/elsa-hba1c-model-a/` — 用糖化血红蛋白、年龄、性别和随访间隔计算 ELSA Model A 的糖尿病检出概率（预印本研究模型）。
 
+## 糖尿病风险筛查
+
+- `skills/new-chinese-diabetes-risk-score/` — 用年龄、性别、腰围、BMI、收缩压和家族史计算糖尿病筛查分数。
+
 ## 肾脏
 
 - `skills/ckd-epi-2021-egfr/` — 血肌酐、年龄和性别算肾小球滤过率估计值（eGFR），有胱抑素 C 时用肌酐加胱抑素 C 方程，按 KDIGO 分 G1–G5；有尿白蛋白/肌酐比时再分 A1–A3。
@@ -318,6 +322,10 @@ python3 -m tools.lsk test --changed origin/main   # 只测相对 main 改动过�
 ## 血液测序
 
 - `skills/hotspot-somatic-sweep/` — 见「克隆性造血」。
+
+## 衰弱与功能
+
+- `skills/frail-scale/` — 用疲劳、上楼和步行困难、疾病种数及一年体重变化计算FRAIL衰弱筛查分数。
 
 ## 认知与神经
 
