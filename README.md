@@ -255,6 +255,14 @@ python3 -m tools.lsk test --changed origin/main   # 只测相对 main 改动过�
 - `skills/digital-telomere-measurement-sequencing/` — 一批端粒长度的通用分布统计（不套论文的分类模型）。（名单类）
 - `skills/leukocyte-telomere-length/` — 你交来的英国生物银行式 z 标准化端粒放进四分位档；自己测的 T/S 比值不能分档。（名单类）
 
+## cardiovascular
+
+- `skills/medas-mediterranean-diet-adherence/` — 见「nutrition」。
+
+## nutrition
+
+- `skills/medas-mediterranean-diet-adherence/` — 用14项饮食问卷计算地中海饮食依从性总分及逐项得分。
+
 ## 久坐
 
 - `skills/accelerometry-mortality-dose-response/` — 见「身体活动」。
