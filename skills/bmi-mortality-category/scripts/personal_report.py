@@ -20,7 +20,9 @@ def lookup(bmi):
 
 
 def compute(values):
-    bmi = values["weight_kg"] / (values["height_cm"] / 100) ** 2
+    # Round away binary floating-point error so a BMI exactly on a printed
+    # cutpoint (e.g. 64 kg / 1.60 m = 25.0) falls in the upper, inclusive band.
+    bmi = round(values["weight_kg"] / (values["height_cm"] / 100) ** 2, 9)
     lower, upper, hr, low, high = lookup(bmi)
     return {"bmi_kg_m2": bmi, "bmi_category": f"{lower:.1f}–<{upper:.1f}",
             "category_hr": hr, "category_hr_ci_low": low, "category_hr_ci_high": high}

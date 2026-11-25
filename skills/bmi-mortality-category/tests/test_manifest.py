@@ -130,3 +130,20 @@ def test_missing_arguments_are_structured(tmp_path):
     assert proc.returncode == 3
     problems = json.loads((tmp_path / "out/problems.json").read_text())["problems"]
     assert {p["key"] for p in problems} >= {"height_cm", "weight_kg", "age", "smoking", "chronic_disease"}
+
+
+@pytest.mark.parametrize("height,weight,hr,low,high", [
+    # Exact printed Table 2 lower cutpoints reached by real height/weight pairs;
+    # the lower bound is inclusive, so the HR is the upper band's printed cell.
+    ("160", "64", 1.07, 1.07, 1.08),     # BMI 25.0 -> 25.0-<27.5
+    ("160", "57.6", 1.00, 0.99, 1.01),   # BMI 22.5 -> 22.5-<25.0
+    ("155", "48.05", 1.00, 0.98, 1.02),  # BMI 20.0 -> 20.0-<22.5
+    ("160", "38.4", 1.51, 1.43, 1.59),   # BMI 15.0 -> 15.0-<18.5 (in range)
+])
+def test_exact_cutpoints_use_inclusive_lower_band(tmp_path, height, weight, hr, low, high):
+    rows = f"height_cm,{height},cm\nweight_kg,{weight},kg\n"
+    assert run(tmp_path, rows).returncode == 0
+    data = json.loads((tmp_path / "out/result.json").read_text())["outputs"]
+    assert data["category_hr"]["value"] == hr
+    assert data["category_hr_ci_low"]["value"] == low
+    assert data["category_hr_ci_high"]["value"] == high
