@@ -121,3 +121,16 @@ def test_missing_file(tmp_path):
                            "--out", str(tmp_path / "out")], capture_output=True)
     assert proc.returncode == 3
     assert (tmp_path / "out/problems.json").exists()
+
+
+@pytest.mark.parametrize("marker", ["daily_steps", "steps", "步数"])
+def test_unitless_daily_count_accepted(tmp_path, marker):
+    proc, out = run(tmp_path, f"{marker},7000,\n", "65")
+    assert proc.returncode == 0, proc.stderr
+    assert outputs(out)["step_position"] == "within"
+
+
+@pytest.mark.parametrize("unit", ["步/周", "steps/week", "万步", "steps/day"])
+def test_weekly_or_scaled_units_rejected(tmp_path, unit):
+    proc, out = run(tmp_path, f"daily_steps,49000,{unit}\n", "65")
+    assert proc.returncode == 3

@@ -67,7 +67,8 @@
         "daily step count",
         "steps per day",
         "average steps/day",
-        "mean daily steps"
+        "mean daily steps",
+        "steps"
       ],
       "unit": "1",
       "accept": {},
