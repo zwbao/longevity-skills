@@ -2,15 +2,15 @@
   "schema": "longevity-catalog/1",
   "version": "2026.48.0",
   "counts": {
-    "skills": 183,
+    "skills": 187,
     "tiers": {
-      "A": 19,
+      "A": 23,
       "B": 83,
       "C": 73,
       "tool": 8
     },
-    "claims": 8927,
-    "claim_entities": 7482
+    "claims": 12543,
+    "claim_entities": 9844
   },
   "intents": [
     {
@@ -5344,6 +5344,432 @@
       }
     },
     {
+      "name": "elsa-hba1c-model-a",
+      "kind": "paper",
+      "tier": "A",
+      "species": [
+        "human"
+      ],
+      "evidence": "cohort",
+      "domains": [
+        "糖代谢"
+      ],
+      "blurb_zh": "用糖化血红蛋白、年龄、性别和随访间隔计算 ELSA Model A 的糖尿病检出概率（预印本研究模型）。",
+      "description": "Tier A draft: the paper's printed example is not reproduced yet, so treat the readout as provisional. Computes the printed final ELSA HbA1c Model A probability of diabetes detected by the next health visit from HbA1c, age, sex and a specified visit interval. Use for research interpretation of a diabetes-free older adult's HbA1c or a user-specified HbA1c scenario. Preserves preprint and validation limitations.",
+      "intents": [
+        "lab_meaning"
+      ],
+      "has_script": true,
+      "validation_status": "draft",
+      "validation_label_zh": "仍在验证",
+      "entry": {
+        "script": "scripts/personal_report.py",
+        "measurements_flag": "--measurements",
+        "measurements_header": [
+          "marker",
+          "value",
+          "unit"
+        ],
+        "age_flag": "--age",
+        "sex_flag": "--sex",
+        "out_flag": "--out",
+        "result_json": true,
+        "targets_flag": "--targets",
+        "levers_json": true
+      },
+      "inputs_status": "draft",
+      "inputs": [
+        {
+          "key": "hba1c_pct",
+          "label_zh": "糖化血红蛋白",
+          "aliases": [
+            "HbA1c",
+            "HbA1c (%)",
+            "糖化血红蛋白A1c",
+            "糖化血红蛋白百分比",
+            "glycated haemoglobin",
+            "hemoglobin A1c",
+            "A1C"
+          ],
+          "unit": "%",
+          "range": [
+            3,
+            25
+          ],
+          "required": true,
+          "from": "measurements",
+          "unit_required": true,
+          "note_zh": "仅接受 DCCT/NGSP 百分数；mmol/mol 与百分数之间有截距，不能用单一倍数换算，本接口拒绝 mmol/mol。内部按正文 2.1 换算为 IFCC。达到研究排除阈值时不计算。"
+        },
+        {
+          "key": "age",
+          "label_zh": "基线实足年龄",
+          "aliases": [
+            "年龄",
+            "age"
+          ],
+          "unit": "a",
+          "range": [
+            50,
+            110
+          ],
+          "required": true,
+          "from": "profile",
+          "flag": "--age",
+          "note_zh": "50–110 是接口适用性保护范围，不是论文报告的样本最小值和最大值。"
+        },
+        {
+          "key": "sex",
+          "label_zh": "模型性别编码",
+          "unit": "1",
+          "range": [
+            0,
+            1
+          ],
+          "required": true,
+          "from": "profile",
+          "flag": "--sex",
+          "note_zh": "female/女/1 对应女性=1；male/男/0 对应男性=0，必须明确提供。"
+        },
+        {
+          "key": "years_next",
+          "label_zh": "到下一次健康访视的间隔",
+          "aliases": [
+            "随访间隔",
+            "years to next visit"
+          ],
+          "unit": "a",
+          "range": [
+            0.25,
+            20
+          ],
+          "required": true,
+          "from": "argument",
+          "flag": "--years-next",
+          "note_zh": "必须指定年数；论文通常约四年或七年，区间外会提示外推。范围仅为输入保护。"
+        },
+        {
+          "key": "eligible_baseline",
+          "label_zh": "已确认符合基线条件",
+          "unit": "1",
+          "range": [
+            0,
+            1
+          ],
+          "required": true,
+          "from": "argument",
+          "flag": "--eligible-baseline",
+          "note_zh": "仅接受 1：此前及当前无论文定义的糖尿病，并有至少三个月前的无糖尿病 HbA1c 测量；0 或未知不计算。此项不进入方程。"
+        }
+      ],
+      "outputs": [
+        {
+          "key": "diabetes_probability_pct",
+          "label_zh": "下一健康访视前糖尿病检出概率（Model A 研究估计）",
+          "unit": "%"
+        },
+        {
+          "key": "linear_predictor",
+          "label_zh": "Model A 线性预测值",
+          "unit": "1"
+        }
+      ],
+      "paper": {
+        "doi": "10.64898/2026.11.20.26368578",
+        "title": "Personal HbA1c trajectories and incident diabetes: association, prediction and observability in the English Longitudinal Study of Ageing",
+        "title_zh": "个人糖化血红蛋白轨迹与新发糖尿病：关联、预测和可观测性",
+        "journal": "medRxiv",
+        "year": 2026
+      }
+    },
+    {
+      "name": "emfra-factor-scores",
+      "kind": "paper",
+      "tier": "A",
+      "species": [
+        "human"
+      ],
+      "evidence": "cross_sectional",
+      "domains": [
+        "功能与衰弱",
+        "心理与认知"
+      ],
+      "blurb_zh": "用已评定的 EMFRA 九项分数分别计算老年自主性和心理困扰分数。",
+      "description": "Tier A draft: the paper's printed example is not reproduced yet, so treat the readout as provisional. Computes separate EMFRA Autonomy and Psychological Distress scores from nine previously administered original EMFRA item scores. Use when an older adult provides EMFRA item ratings or asks to calculate the two EMFRA factors. Requires the original 0–2 item coding and applies factor-specific reversal. Reports in Chinese without a total score or clinical classification.",
+      "intents": [
+        "frailty_mortality"
+      ],
+      "has_script": true,
+      "validation_status": "draft",
+      "validation_label_zh": "仍在验证",
+      "entry": {
+        "script": "scripts/personal_report.py",
+        "measurements_flag": "--measurements",
+        "measurements_header": [
+          "marker",
+          "value",
+          "unit"
+        ],
+        "age_flag": "--age",
+        "sex_flag": "--sex",
+        "out_flag": "--out",
+        "result_json": true
+      },
+      "population": {
+        "age_years": [
+          65,
+          99
+        ],
+        "note_zh": "西班牙马德里社区、日间照护中心及养老机构；纳入年龄至少65岁、无医生确诊痴呆者，实际样本65–99岁；无外部验证。"
+      },
+      "inputs_status": "verified",
+      "inputs": [
+        {
+          "key": "emfra_item1_score",
+          "label_zh": "EMFRA 第1项：握力评分",
+          "aliases": [
+            "EMFRA_item1_trait",
+            "EMFRA 握力评分",
+            "Item 1. Hand-grip strength",
+            "EMFRA Grip strength",
+            "HGS"
+          ],
+          "unit": "score",
+          "accept": {},
+          "range": [
+            0,
+            2
+          ],
+          "unit_required": true,
+          "required": true,
+          "from": "measurements",
+          "note_zh": "只接受原版 EMFRA 已评定、尚未反向计分的整数条目分数 0、1、2；不把原始测量值或自由描述换成分数。"
+        },
+        {
+          "key": "emfra_item2_score",
+          "label_zh": "EMFRA 第2项：步速评分",
+          "aliases": [
+            "EMFRA_item2_trait",
+            "EMFRA 步速评分",
+            "Item 2. Gait speed",
+            "EMFRA Gait speed",
+            "GS"
+          ],
+          "unit": "score",
+          "accept": {},
+          "range": [
+            0,
+            2
+          ],
+          "unit_required": true,
+          "required": true,
+          "from": "measurements",
+          "note_zh": "只接受原版 EMFRA 已评定、尚未反向计分的整数条目分数 0、1、2；不把原始测量值或自由描述换成分数。"
+        },
+        {
+          "key": "emfra_item5_score",
+          "label_zh": "EMFRA 第5项：疲劳评分",
+          "aliases": [
+            "EMFRA_item5_trait",
+            "EMFRA 疲劳评分",
+            "Item 5. Fatigue",
+            "EMFRA Fatigue",
+            "FAT"
+          ],
+          "unit": "score",
+          "accept": {},
+          "range": [
+            0,
+            2
+          ],
+          "unit_required": true,
+          "required": true,
+          "from": "measurements",
+          "note_zh": "只接受原版 EMFRA 已评定、尚未反向计分的整数条目分数 0、1、2；不把原始测量值或自由描述换成分数。"
+        },
+        {
+          "key": "emfra_item6_score",
+          "label_zh": "EMFRA 第6项：钱币算术评分",
+          "aliases": [
+            "EMFRA_item6_trait",
+            "EMFRA 钱币算术评分",
+            "Item 6. Arithmetics for money",
+            "EMFRA Arithmetic money",
+            "AM"
+          ],
+          "unit": "score",
+          "accept": {},
+          "range": [
+            0,
+            2
+          ],
+          "unit_required": true,
+          "required": true,
+          "from": "measurements",
+          "note_zh": "只接受原版 EMFRA 已评定、尚未反向计分的整数条目分数 0、1、2；不把原始测量值或自由描述换成分数。"
+        },
+        {
+          "key": "emfra_item7_score",
+          "label_zh": "EMFRA 第7项：注意与抑制评分",
+          "aliases": [
+            "EMFRA_item7_trait",
+            "EMFRA 注意与抑制评分",
+            "Item 7. Attention-inhibition",
+            "EMFRA Atten-Inhib",
+            "AttIn"
+          ],
+          "unit": "score",
+          "accept": {},
+          "range": [
+            0,
+            2
+          ],
+          "unit_required": true,
+          "required": true,
+          "from": "measurements",
+          "note_zh": "只接受原版 EMFRA 已评定、尚未反向计分的整数条目分数 0、1、2；不把原始测量值或自由描述换成分数。"
+        },
+        {
+          "key": "emfra_item11_score",
+          "label_zh": "EMFRA 第11项：孤独感评分",
+          "aliases": [
+            "EMFRA_item11_trait",
+            "EMFRA 孤独感评分",
+            "Item 11. Loneliness",
+            "EMFRA Loneliness",
+            "LON"
+          ],
+          "unit": "score",
+          "accept": {},
+          "range": [
+            0,
+            2
+          ],
+          "unit_required": true,
+          "required": true,
+          "from": "measurements",
+          "note_zh": "只接受原版 EMFRA 已评定、尚未反向计分的整数条目分数 0、1、2；不把原始测量值或自由描述换成分数。"
+        },
+        {
+          "key": "emfra_item12_score",
+          "label_zh": "EMFRA 第12项：悲伤评分",
+          "aliases": [
+            "EMFRA_item12_trait",
+            "EMFRA 悲伤评分",
+            "Item 12. Sadness",
+            "EMFRA Sadness",
+            "SAD"
+          ],
+          "unit": "score",
+          "accept": {},
+          "range": [
+            0,
+            2
+          ],
+          "unit_required": true,
+          "required": true,
+          "from": "measurements",
+          "note_zh": "只接受原版 EMFRA 已评定、尚未反向计分的整数条目分数 0、1、2；不把原始测量值或自由描述换成分数。"
+        },
+        {
+          "key": "emfra_item15_score",
+          "label_zh": "EMFRA 第15项：生活满意度评分",
+          "aliases": [
+            "EMFRA_item15_trait",
+            "EMFRA 生活满意度评分",
+            "Item 15. Life satisfaction",
+            "EMFRA Life satisf.",
+            "LS"
+          ],
+          "unit": "score",
+          "accept": {},
+          "range": [
+            0,
+            2
+          ],
+          "unit_required": true,
+          "required": true,
+          "from": "measurements",
+          "note_zh": "只接受原版 EMFRA 已评定、尚未反向计分的整数条目分数 0、1、2；不把原始测量值或自由描述换成分数。"
+        },
+        {
+          "key": "emfra_item19_score",
+          "label_zh": "EMFRA 第19项：社交娱乐活动评分",
+          "aliases": [
+            "EMFRA_item19_trait",
+            "EMFRA 社交娱乐活动评分",
+            "Item 19. Social-ludic activities",
+            "EMFRA Socio-Ludic act.",
+            "SLA"
+          ],
+          "unit": "score",
+          "accept": {},
+          "range": [
+            0,
+            2
+          ],
+          "unit_required": true,
+          "required": true,
+          "from": "measurements",
+          "note_zh": "只接受原版 EMFRA 已评定、尚未反向计分的整数条目分数 0、1、2；不把原始测量值或自由描述换成分数。"
+        },
+        {
+          "key": "age",
+          "label_zh": "实足年龄",
+          "aliases": [
+            "年龄",
+            "Age"
+          ],
+          "unit": "a",
+          "range": [
+            65,
+            120
+          ],
+          "required": true,
+          "from": "profile",
+          "flag": "--age",
+          "note_zh": "仅核对人群，不进入公式；研究实际年龄为65–99岁，120岁是录入合理性上限。"
+        },
+        {
+          "key": "sex",
+          "label_zh": "性别",
+          "required": false,
+          "from": "profile",
+          "flag": "--sex",
+          "note_zh": "可选背景，不进入因子公式。"
+        },
+        {
+          "key": "dementia_diagnosis",
+          "label_zh": "医生确诊痴呆情况",
+          "required": true,
+          "from": "argument",
+          "flag": "--dementia-diagnosis",
+          "note_zh": "no=没有医生确诊痴呆；yes=已有诊断；未知不能当作no。yes时不计算，不通过本技能诊断痴呆。"
+        }
+      ],
+      "outputs": [
+        {
+          "key": "autonomy_score",
+          "label_zh": "EMFRA 自主性分数",
+          "unit": "score",
+          "note_zh": "独立因子，越高表示该因子所描述的自主性越强；保留两位小数，不设分档。"
+        },
+        {
+          "key": "psychological_distress_score",
+          "label_zh": "EMFRA 心理困扰分数",
+          "unit": "score",
+          "note_zh": "独立因子，越高表示该因子所描述的困扰越多；保留两位小数，不设分档。"
+        }
+      ],
+      "paper": {
+        "doi": "10.64898/2026.11.11.26367642",
+        "title": "Psychometric analysis of the Evaluation of Multidimensional Functioning and Risks in Aging (EMFRA) scale: reliability, structural validity, and concurrent validity.",
+        "title_zh": "EMFRA 老年多维功能与风险量表的信度和效度分析",
+        "journal": "medRxiv",
+        "year": 2026
+      }
+    },
+    {
       "name": "endothelial-cebpb-aep-nampt",
       "kind": "paper",
       "tier": "C",
@@ -9262,6 +9688,151 @@
         "title_zh": "感染与晚年癫痫",
         "journal": "Nature Aging",
         "year": 2025
+      }
+    },
+    {
+      "name": "hotspot-somatic-sweep",
+      "kind": "paper",
+      "tier": "A",
+      "species": [
+        "human"
+      ],
+      "evidence": "case_control",
+      "domains": [
+        "克隆性造血",
+        "血液测序"
+      ],
+      "blurb_zh": "用一条血液变异的读段计数计算 VAF，核对是否满足论文热点名单、支持读段和克隆扫荡阈值；不估算个人白血病概率。",
+      "description": "Tier A personal readout: computes one person's value with the paper's printed method and reproduces a printed example. Calculates the variant allele fraction of one quality-controlled blood SNV from total and alternate read counts, then checks the published clonal-haematopoiesis hotspot somatic-sweep screen. Use for a blood sequencing report with a gene, protein substitution and read counts, or questions about a hotspot VAF above 30%. Reports a record-level research classification, not an AML diagnosis or personal cancer probability.",
+      "intents": [
+        "gene_variant"
+      ],
+      "has_script": true,
+      "validation_status": "reproduced",
+      "validation_label_zh": "已复现论文",
+      "entry": {
+        "script": "scripts/personal_report.py",
+        "measurements_flag": "--measurements",
+        "measurements_header": [
+          "item",
+          "value",
+          "unit"
+        ],
+        "age_flag": "--age",
+        "sex_flag": "--sex",
+        "out_flag": "--out",
+        "result_json": true
+      },
+      "population": {
+        "age_years": [
+          40,
+          70
+        ],
+        "note_zh": "图 5f 的 UK Biobank 人群年龄约 40–70 岁；UKCTOCS 的纵向发现来自入组时 50–74 岁绝经后女性。这里仅核对单条变异，不作年龄或性别风险校准。"
+      },
+      "inputs_status": "verified",
+      "inputs": [
+        {
+          "key": "total_reads_count",
+          "label_zh": "同一位点总读段数",
+          "aliases": [
+            "Total depth",
+            "DP",
+            "总读段数",
+            "总测序深度",
+            "Total read depth"
+          ],
+          "unit": "1",
+          "accept": {},
+          "range": [
+            1,
+            1000000000
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "经实验室质控后、与替换支持计数使用同一过滤口径的整数。不能用平均面板深度替代。范围上限是输入保护，不是论文临床切点。"
+        },
+        {
+          "key": "variant_reads_count",
+          "label_zh": "该替换支持读段数",
+          "aliases": [
+            "Variant depth",
+            "ALT read count",
+            "突变支持读段数",
+            "变异支持读数",
+            "突变读段数"
+          ],
+          "unit": "1",
+          "accept": {},
+          "range": [
+            0,
+            1000000000
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "只计这一个 ALT 的支持读段；不得超过总读段数。若读数来自 VCF，需核对 AD/DP 的过滤口径，不自动拆分多等位记录。"
+        },
+        {
+          "key": "variant",
+          "label_zh": "基因与蛋白改变",
+          "aliases": [
+            "Gene and amino acid change",
+            "基因及蛋白变异"
+          ],
+          "required": true,
+          "from": "argument",
+          "flag": "--variant",
+          "note_zh": "如 SF3B1 p.K700E；单字母蛋白替换，* 与末位 X 均表示终止。需事先确认与论文蛋白注释一致；不从 rs 编号或未注释坐标猜测。"
+        },
+        {
+          "key": "age",
+          "label_zh": "实足年龄",
+          "unit": "a",
+          "range": [
+            0,
+            120
+          ],
+          "required": false,
+          "from": "profile",
+          "flag": "--age",
+          "note_zh": "仅作适用人群提示，不参与分类。"
+        },
+        {
+          "key": "sex",
+          "label_zh": "性别",
+          "required": false,
+          "from": "profile",
+          "flag": "--sex",
+          "note_zh": "女/female 或男/male；仅作背景，不参与分类。"
+        }
+      ],
+      "outputs": [
+        {
+          "key": "variant",
+          "label_zh": "标准化的基因与蛋白改变"
+        },
+        {
+          "key": "vaf_fraction",
+          "label_zh": "该变异等位基因频率（比例）",
+          "unit": "1"
+        },
+        {
+          "key": "vaf_pct",
+          "label_zh": "该变异等位基因频率（百分比）",
+          "unit": "%"
+        },
+        {
+          "key": "screen_status",
+          "label_zh": "单条变异的论文筛查条件状态",
+          "note_zh": "meets_screen、below_or_equal_cutoff、insufficient_support 或 outside_panel；都不是个人诊断。"
+        }
+      ],
+      "paper": {
+        "doi": "10.1038/s41586-026-11269-x",
+        "title": "Evolutionary dynamics in the years preceding acute myeloid leukaemia.",
+        "title_zh": "急性髓系白血病发生前数年的克隆演化动力学",
+        "journal": "Nature",
+        "year": 2026
       }
     },
     {
@@ -28123,6 +28694,496 @@
         "title": "Sex-specific trajectories of nonlinear immune aging at single-cell level",
         "title_zh": "单细胞免疫衰老轨迹",
         "journal": "Nature Communications",
+        "year": 2026
+      }
+    },
+    {
+      "name": "share-intrinsic-capacity-domains",
+      "kind": "paper",
+      "tier": "A",
+      "species": [
+        "human"
+      ],
+      "evidence": "cohort",
+      "domains": [
+        "认知与神经",
+        "跌倒与肌肉",
+        "临床年龄与可穿戴"
+      ],
+      "blurb_zh": "用认知测验、行走困难和视听自评，计算 SHARE 内在能力的三个分域分数，并可比较两次变化；不算完整总分。",
+      "description": "Tier A personal readout: computes one person's value with the paper's printed method and reproduces a printed example. Calculates SHARE intrinsic-capacity cognition, locomotion and sensory domain scores from personal test results and questionnaire responses, and optionally compares two observations. Use for 内在能力分域、认知计分、行走困难、视听自评或两次功能测量变化。 Accepts any complete supported domain; excludes vitality, psychological scores and the composite IC score because their published rules are incomplete.",
+      "intents": [
+        "cognition_dementia",
+        "frailty_mortality",
+        "before_after"
+      ],
+      "has_script": true,
+      "validation_status": "reproduced",
+      "validation_label_zh": "已复现论文",
+      "entry": {
+        "script": "scripts/personal_report.py",
+        "measurements_flag": "--measurements",
+        "measurements_header": [
+          "item",
+          "value",
+          "unit"
+        ],
+        "age_flag": "--age",
+        "sex_flag": "--sex",
+        "out_flag": "--out",
+        "result_json": true
+      },
+      "population": {
+        "age_years": [
+          50,
+          95
+        ],
+        "note_zh": "SHARE Wave 6（2015）至 Wave 9（2021–2022）的完整病例，基线实际年龄 50–95 岁；尚未外部验证临床诊断切点。"
+      },
+      "inputs_status": "verified",
+      "inputs": [
+        {
+          "key": "orientation_correct_count",
+          "label_zh": "时间定向正确数",
+          "aliases": [
+            "orient_i",
+            "date orientation",
+            "时间定向"
+          ],
+          "unit": "1",
+          "range": [
+            0,
+            4
+          ],
+          "accept": {},
+          "required": false,
+          "from": "measurements",
+          "group": "cognition",
+          "note_zh": "星期、日、月、年四题的正确数；不是年龄或日期数字。 至少提供一个完整分域；某分域一旦提供任一项就必须补齐。仅接受整数，单位 1 表示无量纲计数或类别编码，不能换算百分比。"
+        },
+        {
+          "key": "animal_fluency_count",
+          "label_zh": "动物命名正确词数",
+          "aliases": [
+            "cf010_",
+            "semantic verbal fluency",
+            "动物词语流畅性"
+          ],
+          "unit": "1",
+          "range": [
+            0,
+            200
+          ],
+          "accept": {},
+          "required": false,
+          "from": "measurements",
+          "group": "cognition",
+          "note_zh": "SHARE 语义流畅性测试的有效动物名称个数，不是已换算的分数；200 仅为录入防错上限。 至少提供一个完整分域；某分域一旦提供任一项就必须补齐。仅接受整数，单位 1 表示无量纲计数或类别编码，不能换算百分比。"
+        },
+        {
+          "key": "serial_sevens_correct_count",
+          "label_zh": "连续减七正确数",
+          "aliases": [
+            "numeracy2",
+            "subtract 7",
+            "连续减7"
+          ],
+          "unit": "1",
+          "range": [
+            0,
+            5
+          ],
+          "accept": {},
+          "required": false,
+          "from": "measurements",
+          "group": "cognition",
+          "note_zh": "SHARE 连续减七五次作答的正确数，不是最后算出的数。 至少提供一个完整分域；某分域一旦提供任一项就必须补齐。仅接受整数，单位 1 表示无量纲计数或类别编码，不能换算百分比。"
+        },
+        {
+          "key": "delayed_recall_count",
+          "label_zh": "延迟词表回忆正确词数",
+          "aliases": [
+            "cf113tot",
+            "cf116tot",
+            "delayed word list recall",
+            "延迟回忆"
+          ],
+          "unit": "1",
+          "range": [
+            0,
+            10
+          ],
+          "accept": {},
+          "required": false,
+          "from": "measurements",
+          "group": "cognition",
+          "note_zh": "SHARE 十词词表的延迟回忆正确数；cf113tot、cf116tot 是表 1 所列相应变量名，不相加，不用即时回忆替代。 至少提供一个完整分域；某分域一旦提供任一项就必须补齐。仅接受整数，单位 1 表示无量纲计数或类别编码，不能换算百分比。"
+        },
+        {
+          "key": "stoop_difficulty_binary",
+          "label_zh": "弯腰跪蹲困难",
+          "aliases": [
+            "ph048d6",
+            "difficulty stooping kneeling crouching"
+          ],
+          "unit": "1",
+          "range": [
+            0,
+            1
+          ],
+          "accept": {},
+          "required": false,
+          "from": "measurements",
+          "group": "locomotion",
+          "note_zh": "有困难填 1，无困难填 0。 至少提供一个完整分域；某分域一旦提供任一项就必须补齐。仅接受整数，单位 1 表示无量纲计数或类别编码，不能换算百分比。"
+        },
+        {
+          "key": "room_walk_difficulty_binary",
+          "label_zh": "穿过房间行走困难",
+          "aliases": [
+            "ph049d2",
+            "difficulty walking across the room"
+          ],
+          "unit": "1",
+          "range": [
+            0,
+            1
+          ],
+          "accept": {},
+          "required": false,
+          "from": "measurements",
+          "group": "locomotion",
+          "note_zh": "有困难填 1，无困难填 0。 至少提供一个完整分域；某分域一旦提供任一项就必须补齐。仅接受整数，单位 1 表示无量纲计数或类别编码，不能换算百分比。"
+        },
+        {
+          "key": "walk_100m_difficulty_binary",
+          "label_zh": "步行一百米困难",
+          "aliases": [
+            "ph048d1",
+            "difficulty walking 100 m"
+          ],
+          "unit": "1",
+          "range": [
+            0,
+            1
+          ],
+          "accept": {},
+          "required": false,
+          "from": "measurements",
+          "group": "locomotion",
+          "note_zh": "有困难填 1，无困难填 0。 至少提供一个完整分域；某分域一旦提供任一项就必须补齐。仅接受整数，单位 1 表示无量纲计数或类别编码，不能换算百分比。"
+        },
+        {
+          "key": "one_flight_difficulty_binary",
+          "label_zh": "爬一层楼梯困难",
+          "aliases": [
+            "ph048d5",
+            "difficulty climbing one flight of stairs"
+          ],
+          "unit": "1",
+          "range": [
+            0,
+            1
+          ],
+          "accept": {},
+          "required": false,
+          "from": "measurements",
+          "group": "locomotion",
+          "note_zh": "有困难填 1，无困难填 0。 至少提供一个完整分域；某分域一旦提供任一项就必须补齐。仅接受整数，单位 1 表示无量纲计数或类别编码，不能换算百分比。"
+        },
+        {
+          "key": "several_flights_difficulty_binary",
+          "label_zh": "爬数层楼梯困难",
+          "aliases": [
+            "ph048d4",
+            "difficulty climbing several flights of stairs"
+          ],
+          "unit": "1",
+          "range": [
+            0,
+            1
+          ],
+          "accept": {},
+          "required": false,
+          "from": "measurements",
+          "group": "locomotion",
+          "note_zh": "有困难填 1，无困难填 0。 至少提供一个完整分域；某分域一旦提供任一项就必须补齐。仅接受整数，单位 1 表示无量纲计数或类别编码，不能换算百分比。"
+        },
+        {
+          "key": "distance_vision_rating",
+          "label_zh": "远距离视力自评分档",
+          "aliases": [
+            "PH043_EyeSightDist",
+            "distance vision rating",
+            "远视力自评"
+          ],
+          "unit": "1",
+          "range": [
+            1,
+            5
+          ],
+          "accept": {},
+          "required": false,
+          "from": "measurements",
+          "group": "sensory",
+          "note_zh": "SHARE 原有五级自评编码，1 为 excellent，5 为 poor；不是小数视力或眼科视力表数值。 至少提供一个完整分域；某分域一旦提供任一项就必须补齐。仅接受整数，单位 1 表示无量纲计数或类别编码，不能换算百分比。"
+        },
+        {
+          "key": "reading_vision_rating",
+          "label_zh": "阅读视力自评分档",
+          "aliases": [
+            "PH044_EyeSightPap",
+            "reading vision rating",
+            "阅读视力自评"
+          ],
+          "unit": "1",
+          "range": [
+            1,
+            5
+          ],
+          "accept": {},
+          "required": false,
+          "from": "measurements",
+          "group": "sensory",
+          "note_zh": "SHARE 原有五级自评编码，1 为 excellent，5 为 poor；不是小数视力。 至少提供一个完整分域；某分域一旦提供任一项就必须补齐。仅接受整数，单位 1 表示无量纲计数或类别编码，不能换算百分比。"
+        },
+        {
+          "key": "hearing_rating",
+          "label_zh": "听力自评分档",
+          "aliases": [
+            "PH046_Hearing",
+            "hearing ability rating",
+            "听力自评"
+          ],
+          "unit": "1",
+          "range": [
+            1,
+            5
+          ],
+          "accept": {},
+          "required": false,
+          "from": "measurements",
+          "group": "sensory",
+          "note_zh": "SHARE 原有五级自评编码，1 为 excellent，5 为 poor；不是听阈分贝。 至少提供一个完整分域；某分域一旦提供任一项就必须补齐。仅接受整数，单位 1 表示无量纲计数或类别编码，不能换算百分比。"
+        },
+        {
+          "key": "glasses_use_binary",
+          "label_zh": "是否使用眼镜",
+          "aliases": [
+            "ph041",
+            "using glasses",
+            "戴眼镜"
+          ],
+          "unit": "1",
+          "range": [
+            0,
+            1
+          ],
+          "accept": {},
+          "required": false,
+          "from": "measurements",
+          "group": "sensory",
+          "note_zh": "使用填 1，不使用填 0；计分不是停用眼镜的理由。 至少提供一个完整分域；某分域一旦提供任一项就必须补齐。仅接受整数，单位 1 表示无量纲计数或类别编码，不能换算百分比。"
+        },
+        {
+          "key": "hearing_aid_use_binary",
+          "label_zh": "是否使用助听器",
+          "aliases": [
+            "ph045_",
+            "PH745_HaveHearingAid",
+            "using a hearing aid",
+            "使用助听器"
+          ],
+          "unit": "1",
+          "range": [
+            0,
+            1
+          ],
+          "accept": {},
+          "required": false,
+          "from": "measurements",
+          "group": "sensory",
+          "note_zh": "使用填 1，不使用填 0；计分不是停用助听器的理由。 至少提供一个完整分域；某分域一旦提供任一项就必须补齐。仅接受整数，单位 1 表示无量纲计数或类别编码，不能换算百分比。"
+        },
+        {
+          "key": "age",
+          "label_zh": "实足年龄",
+          "aliases": [
+            "年龄",
+            "age"
+          ],
+          "unit": "a",
+          "range": [
+            18,
+            120
+          ],
+          "required": false,
+          "from": "profile",
+          "flag": "--age",
+          "note_zh": "仅提示研究人群适用范围，不参与计分。"
+        },
+        {
+          "key": "sex",
+          "label_zh": "性别",
+          "aliases": [
+            "sex",
+            "性别"
+          ],
+          "required": false,
+          "from": "profile",
+          "flag": "--sex",
+          "note_zh": "仅作背景，可不填，不参与这三个分域计分。"
+        }
+      ],
+      "outputs": [
+        {
+          "key": "orientation_correct_count_points",
+          "label_zh": "时间定向正确数逐项得分",
+          "unit": "score"
+        },
+        {
+          "key": "animal_fluency_count_points",
+          "label_zh": "动物命名正确词数逐项得分",
+          "unit": "score"
+        },
+        {
+          "key": "serial_sevens_correct_count_points",
+          "label_zh": "连续减七正确数逐项得分",
+          "unit": "score"
+        },
+        {
+          "key": "delayed_recall_count_points",
+          "label_zh": "延迟词表回忆正确词数逐项得分",
+          "unit": "score"
+        },
+        {
+          "key": "stoop_difficulty_binary_points",
+          "label_zh": "弯腰跪蹲困难逐项得分",
+          "unit": "score"
+        },
+        {
+          "key": "room_walk_difficulty_binary_points",
+          "label_zh": "穿过房间行走困难逐项得分",
+          "unit": "score"
+        },
+        {
+          "key": "walk_100m_difficulty_binary_points",
+          "label_zh": "步行一百米困难逐项得分",
+          "unit": "score"
+        },
+        {
+          "key": "one_flight_difficulty_binary_points",
+          "label_zh": "爬一层楼梯困难逐项得分",
+          "unit": "score"
+        },
+        {
+          "key": "several_flights_difficulty_binary_points",
+          "label_zh": "爬数层楼梯困难逐项得分",
+          "unit": "score"
+        },
+        {
+          "key": "distance_vision_rating_points",
+          "label_zh": "远距离视力自评分档逐项得分",
+          "unit": "score"
+        },
+        {
+          "key": "reading_vision_rating_points",
+          "label_zh": "阅读视力自评分档逐项得分",
+          "unit": "score"
+        },
+        {
+          "key": "hearing_rating_points",
+          "label_zh": "听力自评分档逐项得分",
+          "unit": "score"
+        },
+        {
+          "key": "glasses_use_binary_points",
+          "label_zh": "是否使用眼镜逐项得分",
+          "unit": "score"
+        },
+        {
+          "key": "hearing_aid_use_binary_points",
+          "label_zh": "是否使用助听器逐项得分",
+          "unit": "score"
+        },
+        {
+          "key": "cognition_raw",
+          "label_zh": "认知原始分",
+          "unit": "score",
+          "note_zh": "未提供该分域或上次测量时，对应输出为 null。"
+        },
+        {
+          "key": "cognition_score",
+          "label_zh": "认知标准化分",
+          "unit": "score",
+          "note_zh": "未提供该分域或上次测量时，对应输出为 null。"
+        },
+        {
+          "key": "cognition_baseline_score",
+          "label_zh": "认知上次标准化分",
+          "unit": "score",
+          "note_zh": "未提供该分域或上次测量时，对应输出为 null。"
+        },
+        {
+          "key": "cognition_change",
+          "label_zh": "认知本次减上次分差",
+          "unit": "score",
+          "note_zh": "未提供该分域或上次测量时，对应输出为 null。"
+        },
+        {
+          "key": "locomotion_raw",
+          "label_zh": "行动原始分",
+          "unit": "score",
+          "note_zh": "未提供该分域或上次测量时，对应输出为 null。"
+        },
+        {
+          "key": "locomotion_score",
+          "label_zh": "行动标准化分",
+          "unit": "score",
+          "note_zh": "未提供该分域或上次测量时，对应输出为 null。"
+        },
+        {
+          "key": "locomotion_baseline_score",
+          "label_zh": "行动上次标准化分",
+          "unit": "score",
+          "note_zh": "未提供该分域或上次测量时，对应输出为 null。"
+        },
+        {
+          "key": "locomotion_change",
+          "label_zh": "行动本次减上次分差",
+          "unit": "score",
+          "note_zh": "未提供该分域或上次测量时，对应输出为 null。"
+        },
+        {
+          "key": "sensory_raw",
+          "label_zh": "感官原始分",
+          "unit": "score",
+          "note_zh": "未提供该分域或上次测量时，对应输出为 null。"
+        },
+        {
+          "key": "sensory_score",
+          "label_zh": "感官标准化分",
+          "unit": "score",
+          "note_zh": "未提供该分域或上次测量时，对应输出为 null。"
+        },
+        {
+          "key": "sensory_baseline_score",
+          "label_zh": "感官上次标准化分",
+          "unit": "score",
+          "note_zh": "未提供该分域或上次测量时，对应输出为 null。"
+        },
+        {
+          "key": "sensory_change",
+          "label_zh": "感官本次减上次分差",
+          "unit": "score",
+          "note_zh": "未提供该分域或上次测量时，对应输出为 null。"
+        }
+      ],
+      "paper": {
+        "doi": "10.1007/s11357-026-02456-9",
+        "title": "Understanding temporal changes in intrinsic capacity: analysis of domain-specific intrinsic capacity using SHARE data.",
+        "title_zh": "使用 SHARE 数据观察内在能力各分域的时间变化",
+        "journal": "GeroScience",
         "year": 2026
       }
     },
