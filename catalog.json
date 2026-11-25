@@ -2,9 +2,9 @@
   "schema": "longevity-catalog/1",
   "version": "2026.48.0",
   "counts": {
-    "skills": 205,
+    "skills": 207,
     "tiers": {
-      "A": 41,
+      "A": 43,
       "B": 83,
       "C": 73,
       "tool": 8
@@ -30467,6 +30467,208 @@
       }
     },
     {
+      "name": "red-meat-burden-of-proof",
+      "kind": "paper",
+      "tier": "A",
+      "species": [
+        "human"
+      ],
+      "evidence": "review",
+      "domains": [
+        "饮食与代谢"
+      ],
+      "blurb_zh": "按未加工红肉日均摄入量查询慢病相对风险与不确定区间，仅支持论文列出的摄入点。",
+      "description": "Tier A personal readout: computes one person's value with the paper's printed method and reproduces a printed example. Queries printed Burden of Proof estimates for unprocessed red meat intake and six chronic disease outcomes. Use when a person provides habitual daily unprocessed red meat intake and asks what the published population associations mean. Supports only the nine printed intake points from 0 to 200 g/day in 25 g/day steps, with conservative uncertainty intervals and optional comparisons of user-selected intake points.",
+      "intents": [
+        "intervention_evidence"
+      ],
+      "has_script": true,
+      "validation_status": "reproduced",
+      "validation_label_zh": "已复现论文",
+      "entry": {
+        "script": "scripts/personal_report.py",
+        "measurements_flag": "--measurements",
+        "measurements_header": [
+          "marker",
+          "value",
+          "unit"
+        ],
+        "age_flag": "--age",
+        "sex_flag": "--sex",
+        "out_flag": "--out",
+        "result_json": true,
+        "targets_flag": "--targets",
+        "levers_json": true
+      },
+      "inputs_status": "verified",
+      "inputs": [
+        {
+          "key": "unprocessed_red_meat_g_d",
+          "label_zh": "未加工红肉摄入量",
+          "aliases": [
+            "未加工红肉日均摄入量",
+            "未加工红肉",
+            "unprocessed red meat",
+            "unprocessed red meat consumption",
+            "unprocessed red meat intake"
+          ],
+          "unit": "g/d",
+          "accept": {},
+          "range": [
+            0,
+            200
+          ],
+          "unit_required": true,
+          "required": true,
+          "from": "measurements",
+          "note_zh": "只支持0、25、50、75、100、125、150、175、200 g/d；日均未加工牛、羊、猪肉，不含加工肉。不是膳食推荐量。不自动换算份量、生熟重量或每周摄入。"
+        },
+        {
+          "key": "age",
+          "label_zh": "实足年龄",
+          "unit": "a",
+          "range": [
+            25,
+            120
+          ],
+          "required": true,
+          "from": "profile",
+          "flag": "--age",
+          "note_zh": "仅用于适用人群检查，不调整相对风险；研究涵盖25岁至95岁以上，120是输入质量检查上限。"
+        },
+        {
+          "key": "sex",
+          "label_zh": "性别",
+          "required": true,
+          "from": "profile",
+          "flag": "--sex",
+          "note_zh": "female、male、unknown；仅female展示乳腺癌表值。其他结局没有性别分层。"
+        }
+      ],
+      "outputs": [
+        {
+          "key": "intake_g_d",
+          "label_zh": "本次查询摄入量",
+          "unit": "g/d"
+        },
+        {
+          "key": "colorectal_cancer_rr",
+          "label_zh": "结直肠癌相对风险表值",
+          "unit": "1",
+          "note_zh": "补充表7；含研究间异质性，不是个人概率。"
+        },
+        {
+          "key": "colorectal_cancer_ui_lower",
+          "label_zh": "结直肠癌保守95%不确定区间下限",
+          "unit": "1",
+          "note_zh": "补充表7；含研究间异质性，不是个人概率。"
+        },
+        {
+          "key": "colorectal_cancer_ui_upper",
+          "label_zh": "结直肠癌保守95%不确定区间上限",
+          "unit": "1",
+          "note_zh": "补充表7；含研究间异质性，不是个人概率。"
+        },
+        {
+          "key": "breast_cancer_rr",
+          "label_zh": "乳腺癌相对风险表值",
+          "unit": "1",
+          "note_zh": "补充表7；含研究间异质性，不是个人概率。只对female返回数值。"
+        },
+        {
+          "key": "breast_cancer_ui_lower",
+          "label_zh": "乳腺癌保守95%不确定区间下限",
+          "unit": "1",
+          "note_zh": "补充表7；含研究间异质性，不是个人概率。只对female返回数值。"
+        },
+        {
+          "key": "breast_cancer_ui_upper",
+          "label_zh": "乳腺癌保守95%不确定区间上限",
+          "unit": "1",
+          "note_zh": "补充表7；含研究间异质性，不是个人概率。只对female返回数值。"
+        },
+        {
+          "key": "ischemic_heart_disease_rr",
+          "label_zh": "缺血性心脏病相对风险表值",
+          "unit": "1",
+          "note_zh": "补充表7；含研究间异质性，不是个人概率。"
+        },
+        {
+          "key": "ischemic_heart_disease_ui_lower",
+          "label_zh": "缺血性心脏病保守95%不确定区间下限",
+          "unit": "1",
+          "note_zh": "补充表7；含研究间异质性，不是个人概率。"
+        },
+        {
+          "key": "ischemic_heart_disease_ui_upper",
+          "label_zh": "缺血性心脏病保守95%不确定区间上限",
+          "unit": "1",
+          "note_zh": "补充表7；含研究间异质性，不是个人概率。"
+        },
+        {
+          "key": "type_2_diabetes_rr",
+          "label_zh": "2型糖尿病相对风险表值",
+          "unit": "1",
+          "note_zh": "补充表7；含研究间异质性，不是个人概率。"
+        },
+        {
+          "key": "type_2_diabetes_ui_lower",
+          "label_zh": "2型糖尿病保守95%不确定区间下限",
+          "unit": "1",
+          "note_zh": "补充表7；含研究间异质性，不是个人概率。"
+        },
+        {
+          "key": "type_2_diabetes_ui_upper",
+          "label_zh": "2型糖尿病保守95%不确定区间上限",
+          "unit": "1",
+          "note_zh": "补充表7；含研究间异质性，不是个人概率。"
+        },
+        {
+          "key": "ischemic_stroke_rr",
+          "label_zh": "缺血性卒中相对风险表值",
+          "unit": "1",
+          "note_zh": "补充表7；含研究间异质性，不是个人概率。"
+        },
+        {
+          "key": "ischemic_stroke_ui_lower",
+          "label_zh": "缺血性卒中保守95%不确定区间下限",
+          "unit": "1",
+          "note_zh": "补充表7；含研究间异质性，不是个人概率。"
+        },
+        {
+          "key": "ischemic_stroke_ui_upper",
+          "label_zh": "缺血性卒中保守95%不确定区间上限",
+          "unit": "1",
+          "note_zh": "补充表7；含研究间异质性，不是个人概率。"
+        },
+        {
+          "key": "hemorrhagic_stroke_rr",
+          "label_zh": "出血性卒中相对风险表值",
+          "unit": "1",
+          "note_zh": "补充表7；含研究间异质性，不是个人概率。"
+        },
+        {
+          "key": "hemorrhagic_stroke_ui_lower",
+          "label_zh": "出血性卒中保守95%不确定区间下限",
+          "unit": "1",
+          "note_zh": "补充表7；含研究间异质性，不是个人概率。"
+        },
+        {
+          "key": "hemorrhagic_stroke_ui_upper",
+          "label_zh": "出血性卒中保守95%不确定区间上限",
+          "unit": "1",
+          "note_zh": "补充表7；含研究间异质性，不是个人概率。"
+        }
+      ],
+      "paper": {
+        "doi": "10.1038/s41591-022-01968-z",
+        "title": "Health effects associated with consumption of unprocessed red meat: a Burden of Proof study.",
+        "title_zh": "未加工红肉摄入与慢性病的证据负担研究",
+        "journal": "Nature Medicine",
+        "year": 2022
+      }
+    },
+    {
       "name": "relative-fat-mass",
       "kind": "paper",
       "tier": "A",
@@ -34309,6 +34511,114 @@
         "title_zh": "尿液衰老探针",
         "journal": "Nature Aging",
         "year": 2026
+      }
+    },
+    {
+      "name": "vegetable-tmrel-gap",
+      "kind": "paper",
+      "tier": "A",
+      "species": [
+        "human"
+      ],
+      "evidence": "cohort",
+      "domains": [
+        "饮食与营养"
+      ],
+      "blurb_zh": "用饮食记录中的蔬菜日均克数，计算与论文蔬菜摄入参考范围的差距。",
+      "description": "Tier A draft: the paper's printed example is not reproduced yet, so treat the readout as provisional. Compares a person's recorded average daily vegetable intake with the published Burden of Proof theoretical minimum risk exposure range, reporting signed differences in grams per day and optional user-supplied intake scenarios. Use when a person asks how their vegetable intake compares with this study or wants to compare dietary records. Applies the paper's vegetable definition.",
+      "intents": [
+        "intervention_evidence",
+        "before_after"
+      ],
+      "has_script": true,
+      "validation_status": "draft",
+      "validation_label_zh": "仍在验证",
+      "entry": {
+        "script": "scripts/personal_report.py",
+        "measurements_flag": "--intake",
+        "measurements_header": [
+          "marker",
+          "value",
+          "unit"
+        ],
+        "age_flag": "--age",
+        "sex_flag": "--sex",
+        "out_flag": "--out",
+        "result_json": true,
+        "targets_flag": "--targets",
+        "levers_json": true
+      },
+      "inputs_status": "draft",
+      "inputs": [
+        {
+          "key": "vegetables_g_d",
+          "label_zh": "蔬菜日均摄入量",
+          "aliases": [
+            "蔬菜摄入量",
+            "日均蔬菜摄入量",
+            "蔬菜",
+            "vegetable consumption",
+            "vegetable intake",
+            "vegetables",
+            "average daily vegetable consumption"
+          ],
+          "unit": "g/d",
+          "accept": {
+            "g/d": 1
+          },
+          "range": [
+            0,
+            3000
+          ],
+          "unit_required": true,
+          "required": true,
+          "from": "measurements",
+          "note_zh": "完整饮食记录的日均克数；排除豆类、腌菜、汁、坚果种子及土豆玉米等淀粉类蔬菜。仅接受g/d，份、杯及生熟重量不自动换算；0–3000是输入防错范围，不是论文阈值。"
+        }
+      ],
+      "outputs": [
+        {
+          "key": "vegetables_g_d",
+          "label_zh": "记录的蔬菜日均摄入量",
+          "unit": "g/d"
+        },
+        {
+          "key": "tmrel_lower_g_d",
+          "label_zh": "论文参考范围下端点",
+          "unit": "g/d"
+        },
+        {
+          "key": "tmrel_upper_g_d",
+          "label_zh": "论文参考范围上端点",
+          "unit": "g/d"
+        },
+        {
+          "key": "lower_difference_g_d",
+          "label_zh": "下端点减摄入量",
+          "unit": "g/d"
+        },
+        {
+          "key": "upper_difference_g_d",
+          "label_zh": "上端点减摄入量",
+          "unit": "g/d"
+        },
+        {
+          "key": "shortfall_g_d",
+          "label_zh": "低于下端点的距离",
+          "unit": "g/d"
+        },
+        {
+          "key": "position",
+          "label_zh": "相对参考范围的位置",
+          "note_zh": "below/within/above；两端点计入范围，不是风险分级或营养诊断。"
+        }
+      ],
+      "paper": {
+        "doi": "10.1038/s41591-022-01970-5",
+        "title": "Health effects associated with vegetable consumption: a Burden of Proof study",
+        "title_zh": "蔬菜摄入与健康：证据负担研究",
+        "journal": "Nature Medicine",
+        "year": 2022
       }
     },
     {
