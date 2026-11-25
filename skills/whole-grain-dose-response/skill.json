@@ -1,0 +1,734 @@
+{
+  "schema": "longevity-skill/1",
+  "name": "whole-grain-dose-response",
+  "kind": "paper",
+  "tier": "A",
+  "species": [
+    "human"
+  ],
+  "evidence": "review",
+  "domains": [
+    "饮食与营养",
+    "死亡风险"
+  ],
+  "blurb_zh": "按每日全谷物食品摄入量匹配论文中的群体相对风险及置信区间。",
+  "intents": [
+    "frailty_mortality",
+    "intervention_evidence"
+  ],
+  "triage": {
+    "reason_zh": "人体前瞻性队列荟萃分析补表 S13、S14 印出摄入量与相对风险，可用个人摄入量匹配原表点及相邻行。",
+    "reviewed": false
+  },
+  "paper": {
+    "doi": "10.1136/bmj.i2716",
+    "title": "Whole grain consumption and risk of cardiovascular disease, cancer, and all cause and cause specific mortality: systematic review and dose-response meta-analysis of prospective studies.",
+    "title_zh": "全谷物摄入与心血管疾病、癌症及死亡风险的剂量反应荟萃分析",
+    "journal": "BMJ (Clinical research ed.)",
+    "year": 2016,
+    "authors": "Aune 等",
+    "article_url": "https://www.bmj.com/content/353/bmj.i2716",
+    "supplements": [
+      {
+        "label": "附录1：补表 S1–S21（使用 S13、S14）",
+        "url": "https://pmc.ncbi.nlm.nih.gov/articles/instance/4908315/bin/aund029745.ww1_default.pdf"
+      },
+      {
+        "label": "附录2：补图 S1–S109",
+        "url": "https://pmc.ncbi.nlm.nih.gov/articles/instance/4908315/bin/aund029745.ww2_default.pdf"
+      }
+    ],
+    "card_notes": [
+      "全文与两份附录经 Europe PMC 开放全文接口核查；食品重量口径及各结局参照量不同，报告逐项保留。"
+    ],
+    "summary_zh": "这项研究汇总人群前瞻性队列，发现较高全谷物摄入与较低的心血管疾病、癌症死亡及全因死亡风险相关，但不同结局的关联存在差异。个人报告只将每日全谷物食品摄入量匹配到论文表中的群体相对风险与置信区间，不计算个人死亡概率或寿命。",
+    "summary_status": "draft"
+  },
+  "entry": {
+    "script": "scripts/personal_report.py",
+    "measurements_flag": "--measurements",
+    "measurements_header": [
+      "marker",
+      "value",
+      "unit"
+    ],
+    "age_flag": "--age",
+    "sex_flag": "--sex",
+    "out_flag": "--out",
+    "result_json": true,
+    "targets_flag": "--targets",
+    "levers_json": true
+  },
+  "inputs_status": "verified",
+  "inputs": [
+    {
+      "key": "whole_grain_food_g_d",
+      "label_zh": "全谷物食品摄入量",
+      "aliases": [
+        "whole grain food intake",
+        "whole grain products",
+        "whole grains",
+        "全谷物产品摄入量",
+        "每日全谷物食品摄入量"
+      ],
+      "unit": "g/d",
+      "accept": {
+        "g/d": 1
+      },
+      "range": [
+        0,
+        1500
+      ],
+      "unit_required": true,
+      "required": true,
+      "from": "measurements",
+      "note_zh": "饮食记录的日均全谷物食品/产品重量；不是纯全谷物原料干重或膳食纤维。只接受 g/d，精确系数 1；不接受不确定份量、kg/day、干湿重换算。0–1500 是输入排错范围，非临床切点；表值支持范围按结局单独处理。"
+    }
+  ],
+  "outputs": [
+    {
+      "key": "whole_grain_food_g_d",
+      "label_zh": "输入的全谷物食品摄入量",
+      "unit": "g/d"
+    },
+    {
+      "key": "coronary_heart_disease_status",
+      "label_zh": "冠心病（发病或死亡）查表状态",
+      "note_zh": "exact=原表点；bracketed=相邻两点；outside_table=超出该结局表范围。"
+    },
+    {
+      "key": "coronary_heart_disease_reference_g_d",
+      "label_zh": "冠心病（发病或死亡）参照摄入量",
+      "unit": "g/d"
+    },
+    {
+      "key": "coronary_heart_disease_lower_g_d",
+      "label_zh": "冠心病（发病或死亡）较低摄入量原表点摄入量",
+      "unit": "g/d",
+      "note_zh": "原表已印值；非表点不插值。超范围或原表未给值时为 null。"
+    },
+    {
+      "key": "coronary_heart_disease_lower_rr",
+      "label_zh": "冠心病（发病或死亡）较低摄入量原表点群体相对风险",
+      "unit": "1",
+      "note_zh": "原表已印值；非表点不插值。超范围或原表未给值时为 null。"
+    },
+    {
+      "key": "coronary_heart_disease_lower_ci_low",
+      "label_zh": "冠心病（发病或死亡）较低摄入量原表点95% CI 下限",
+      "unit": "1",
+      "note_zh": "原表已印值；非表点不插值。超范围或原表未给值时为 null。"
+    },
+    {
+      "key": "coronary_heart_disease_lower_ci_high",
+      "label_zh": "冠心病（发病或死亡）较低摄入量原表点95% CI 上限",
+      "unit": "1",
+      "note_zh": "原表已印值；非表点不插值。超范围或原表未给值时为 null。"
+    },
+    {
+      "key": "coronary_heart_disease_upper_g_d",
+      "label_zh": "冠心病（发病或死亡）较高摄入量原表点摄入量",
+      "unit": "g/d",
+      "note_zh": "原表已印值；非表点不插值。超范围或原表未给值时为 null。"
+    },
+    {
+      "key": "coronary_heart_disease_upper_rr",
+      "label_zh": "冠心病（发病或死亡）较高摄入量原表点群体相对风险",
+      "unit": "1",
+      "note_zh": "原表已印值；非表点不插值。超范围或原表未给值时为 null。"
+    },
+    {
+      "key": "coronary_heart_disease_upper_ci_low",
+      "label_zh": "冠心病（发病或死亡）较高摄入量原表点95% CI 下限",
+      "unit": "1",
+      "note_zh": "原表已印值；非表点不插值。超范围或原表未给值时为 null。"
+    },
+    {
+      "key": "coronary_heart_disease_upper_ci_high",
+      "label_zh": "冠心病（发病或死亡）较高摄入量原表点95% CI 上限",
+      "unit": "1",
+      "note_zh": "原表已印值；非表点不插值。超范围或原表未给值时为 null。"
+    },
+    {
+      "key": "stroke_status",
+      "label_zh": "卒中（发病或死亡）查表状态",
+      "note_zh": "exact=原表点；bracketed=相邻两点；outside_table=超出该结局表范围。"
+    },
+    {
+      "key": "stroke_reference_g_d",
+      "label_zh": "卒中（发病或死亡）参照摄入量",
+      "unit": "g/d"
+    },
+    {
+      "key": "stroke_lower_g_d",
+      "label_zh": "卒中（发病或死亡）较低摄入量原表点摄入量",
+      "unit": "g/d",
+      "note_zh": "原表已印值；非表点不插值。超范围或原表未给值时为 null。"
+    },
+    {
+      "key": "stroke_lower_rr",
+      "label_zh": "卒中（发病或死亡）较低摄入量原表点群体相对风险",
+      "unit": "1",
+      "note_zh": "原表已印值；非表点不插值。超范围或原表未给值时为 null。"
+    },
+    {
+      "key": "stroke_lower_ci_low",
+      "label_zh": "卒中（发病或死亡）较低摄入量原表点95% CI 下限",
+      "unit": "1",
+      "note_zh": "原表已印值；非表点不插值。超范围或原表未给值时为 null。"
+    },
+    {
+      "key": "stroke_lower_ci_high",
+      "label_zh": "卒中（发病或死亡）较低摄入量原表点95% CI 上限",
+      "unit": "1",
+      "note_zh": "原表已印值；非表点不插值。超范围或原表未给值时为 null。"
+    },
+    {
+      "key": "stroke_upper_g_d",
+      "label_zh": "卒中（发病或死亡）较高摄入量原表点摄入量",
+      "unit": "g/d",
+      "note_zh": "原表已印值；非表点不插值。超范围或原表未给值时为 null。"
+    },
+    {
+      "key": "stroke_upper_rr",
+      "label_zh": "卒中（发病或死亡）较高摄入量原表点群体相对风险",
+      "unit": "1",
+      "note_zh": "原表已印值；非表点不插值。超范围或原表未给值时为 null。"
+    },
+    {
+      "key": "stroke_upper_ci_low",
+      "label_zh": "卒中（发病或死亡）较高摄入量原表点95% CI 下限",
+      "unit": "1",
+      "note_zh": "原表已印值；非表点不插值。超范围或原表未给值时为 null。"
+    },
+    {
+      "key": "stroke_upper_ci_high",
+      "label_zh": "卒中（发病或死亡）较高摄入量原表点95% CI 上限",
+      "unit": "1",
+      "note_zh": "原表已印值；非表点不插值。超范围或原表未给值时为 null。"
+    },
+    {
+      "key": "cardiovascular_disease_status",
+      "label_zh": "心血管疾病（发病或死亡）查表状态",
+      "note_zh": "exact=原表点；bracketed=相邻两点；outside_table=超出该结局表范围。"
+    },
+    {
+      "key": "cardiovascular_disease_reference_g_d",
+      "label_zh": "心血管疾病（发病或死亡）参照摄入量",
+      "unit": "g/d"
+    },
+    {
+      "key": "cardiovascular_disease_lower_g_d",
+      "label_zh": "心血管疾病（发病或死亡）较低摄入量原表点摄入量",
+      "unit": "g/d",
+      "note_zh": "原表已印值；非表点不插值。超范围或原表未给值时为 null。"
+    },
+    {
+      "key": "cardiovascular_disease_lower_rr",
+      "label_zh": "心血管疾病（发病或死亡）较低摄入量原表点群体相对风险",
+      "unit": "1",
+      "note_zh": "原表已印值；非表点不插值。超范围或原表未给值时为 null。"
+    },
+    {
+      "key": "cardiovascular_disease_lower_ci_low",
+      "label_zh": "心血管疾病（发病或死亡）较低摄入量原表点95% CI 下限",
+      "unit": "1",
+      "note_zh": "原表已印值；非表点不插值。超范围或原表未给值时为 null。"
+    },
+    {
+      "key": "cardiovascular_disease_lower_ci_high",
+      "label_zh": "心血管疾病（发病或死亡）较低摄入量原表点95% CI 上限",
+      "unit": "1",
+      "note_zh": "原表已印值；非表点不插值。超范围或原表未给值时为 null。"
+    },
+    {
+      "key": "cardiovascular_disease_upper_g_d",
+      "label_zh": "心血管疾病（发病或死亡）较高摄入量原表点摄入量",
+      "unit": "g/d",
+      "note_zh": "原表已印值；非表点不插值。超范围或原表未给值时为 null。"
+    },
+    {
+      "key": "cardiovascular_disease_upper_rr",
+      "label_zh": "心血管疾病（发病或死亡）较高摄入量原表点群体相对风险",
+      "unit": "1",
+      "note_zh": "原表已印值；非表点不插值。超范围或原表未给值时为 null。"
+    },
+    {
+      "key": "cardiovascular_disease_upper_ci_low",
+      "label_zh": "心血管疾病（发病或死亡）较高摄入量原表点95% CI 下限",
+      "unit": "1",
+      "note_zh": "原表已印值；非表点不插值。超范围或原表未给值时为 null。"
+    },
+    {
+      "key": "cardiovascular_disease_upper_ci_high",
+      "label_zh": "心血管疾病（发病或死亡）较高摄入量原表点95% CI 上限",
+      "unit": "1",
+      "note_zh": "原表已印值；非表点不插值。超范围或原表未给值时为 null。"
+    },
+    {
+      "key": "cancer_mortality_status",
+      "label_zh": "癌症死亡查表状态",
+      "note_zh": "exact=原表点；bracketed=相邻两点；outside_table=超出该结局表范围。"
+    },
+    {
+      "key": "cancer_mortality_reference_g_d",
+      "label_zh": "癌症死亡参照摄入量",
+      "unit": "g/d"
+    },
+    {
+      "key": "cancer_mortality_lower_g_d",
+      "label_zh": "癌症死亡较低摄入量原表点摄入量",
+      "unit": "g/d",
+      "note_zh": "原表已印值；非表点不插值。超范围或原表未给值时为 null。"
+    },
+    {
+      "key": "cancer_mortality_lower_rr",
+      "label_zh": "癌症死亡较低摄入量原表点群体相对风险",
+      "unit": "1",
+      "note_zh": "原表已印值；非表点不插值。超范围或原表未给值时为 null。"
+    },
+    {
+      "key": "cancer_mortality_lower_ci_low",
+      "label_zh": "癌症死亡较低摄入量原表点95% CI 下限",
+      "unit": "1",
+      "note_zh": "原表已印值；非表点不插值。超范围或原表未给值时为 null。"
+    },
+    {
+      "key": "cancer_mortality_lower_ci_high",
+      "label_zh": "癌症死亡较低摄入量原表点95% CI 上限",
+      "unit": "1",
+      "note_zh": "原表已印值；非表点不插值。超范围或原表未给值时为 null。"
+    },
+    {
+      "key": "cancer_mortality_upper_g_d",
+      "label_zh": "癌症死亡较高摄入量原表点摄入量",
+      "unit": "g/d",
+      "note_zh": "原表已印值；非表点不插值。超范围或原表未给值时为 null。"
+    },
+    {
+      "key": "cancer_mortality_upper_rr",
+      "label_zh": "癌症死亡较高摄入量原表点群体相对风险",
+      "unit": "1",
+      "note_zh": "原表已印值；非表点不插值。超范围或原表未给值时为 null。"
+    },
+    {
+      "key": "cancer_mortality_upper_ci_low",
+      "label_zh": "癌症死亡较高摄入量原表点95% CI 下限",
+      "unit": "1",
+      "note_zh": "原表已印值；非表点不插值。超范围或原表未给值时为 null。"
+    },
+    {
+      "key": "cancer_mortality_upper_ci_high",
+      "label_zh": "癌症死亡较高摄入量原表点95% CI 上限",
+      "unit": "1",
+      "note_zh": "原表已印值；非表点不插值。超范围或原表未给值时为 null。"
+    },
+    {
+      "key": "all_cause_mortality_status",
+      "label_zh": "全因死亡查表状态",
+      "note_zh": "exact=原表点；bracketed=相邻两点；outside_table=超出该结局表范围。"
+    },
+    {
+      "key": "all_cause_mortality_reference_g_d",
+      "label_zh": "全因死亡参照摄入量",
+      "unit": "g/d"
+    },
+    {
+      "key": "all_cause_mortality_lower_g_d",
+      "label_zh": "全因死亡较低摄入量原表点摄入量",
+      "unit": "g/d",
+      "note_zh": "原表已印值；非表点不插值。超范围或原表未给值时为 null。"
+    },
+    {
+      "key": "all_cause_mortality_lower_rr",
+      "label_zh": "全因死亡较低摄入量原表点群体相对风险",
+      "unit": "1",
+      "note_zh": "原表已印值；非表点不插值。超范围或原表未给值时为 null。"
+    },
+    {
+      "key": "all_cause_mortality_lower_ci_low",
+      "label_zh": "全因死亡较低摄入量原表点95% CI 下限",
+      "unit": "1",
+      "note_zh": "原表已印值；非表点不插值。超范围或原表未给值时为 null。"
+    },
+    {
+      "key": "all_cause_mortality_lower_ci_high",
+      "label_zh": "全因死亡较低摄入量原表点95% CI 上限",
+      "unit": "1",
+      "note_zh": "原表已印值；非表点不插值。超范围或原表未给值时为 null。"
+    },
+    {
+      "key": "all_cause_mortality_upper_g_d",
+      "label_zh": "全因死亡较高摄入量原表点摄入量",
+      "unit": "g/d",
+      "note_zh": "原表已印值；非表点不插值。超范围或原表未给值时为 null。"
+    },
+    {
+      "key": "all_cause_mortality_upper_rr",
+      "label_zh": "全因死亡较高摄入量原表点群体相对风险",
+      "unit": "1",
+      "note_zh": "原表已印值；非表点不插值。超范围或原表未给值时为 null。"
+    },
+    {
+      "key": "all_cause_mortality_upper_ci_low",
+      "label_zh": "全因死亡较高摄入量原表点95% CI 下限",
+      "unit": "1",
+      "note_zh": "原表已印值；非表点不插值。超范围或原表未给值时为 null。"
+    },
+    {
+      "key": "all_cause_mortality_upper_ci_high",
+      "label_zh": "全因死亡较高摄入量原表点95% CI 上限",
+      "unit": "1",
+      "note_zh": "原表已印值；非表点不插值。超范围或原表未给值时为 null。"
+    },
+    {
+      "key": "respiratory_mortality_status",
+      "label_zh": "呼吸系统疾病死亡查表状态",
+      "note_zh": "exact=原表点；bracketed=相邻两点；outside_table=超出该结局表范围。"
+    },
+    {
+      "key": "respiratory_mortality_reference_g_d",
+      "label_zh": "呼吸系统疾病死亡参照摄入量",
+      "unit": "g/d"
+    },
+    {
+      "key": "respiratory_mortality_lower_g_d",
+      "label_zh": "呼吸系统疾病死亡较低摄入量原表点摄入量",
+      "unit": "g/d",
+      "note_zh": "原表已印值；非表点不插值。超范围或原表未给值时为 null。"
+    },
+    {
+      "key": "respiratory_mortality_lower_rr",
+      "label_zh": "呼吸系统疾病死亡较低摄入量原表点群体相对风险",
+      "unit": "1",
+      "note_zh": "原表已印值；非表点不插值。超范围或原表未给值时为 null。"
+    },
+    {
+      "key": "respiratory_mortality_lower_ci_low",
+      "label_zh": "呼吸系统疾病死亡较低摄入量原表点95% CI 下限",
+      "unit": "1",
+      "note_zh": "原表已印值；非表点不插值。超范围或原表未给值时为 null。"
+    },
+    {
+      "key": "respiratory_mortality_lower_ci_high",
+      "label_zh": "呼吸系统疾病死亡较低摄入量原表点95% CI 上限",
+      "unit": "1",
+      "note_zh": "原表已印值；非表点不插值。超范围或原表未给值时为 null。"
+    },
+    {
+      "key": "respiratory_mortality_upper_g_d",
+      "label_zh": "呼吸系统疾病死亡较高摄入量原表点摄入量",
+      "unit": "g/d",
+      "note_zh": "原表已印值；非表点不插值。超范围或原表未给值时为 null。"
+    },
+    {
+      "key": "respiratory_mortality_upper_rr",
+      "label_zh": "呼吸系统疾病死亡较高摄入量原表点群体相对风险",
+      "unit": "1",
+      "note_zh": "原表已印值；非表点不插值。超范围或原表未给值时为 null。"
+    },
+    {
+      "key": "respiratory_mortality_upper_ci_low",
+      "label_zh": "呼吸系统疾病死亡较高摄入量原表点95% CI 下限",
+      "unit": "1",
+      "note_zh": "原表已印值；非表点不插值。超范围或原表未给值时为 null。"
+    },
+    {
+      "key": "respiratory_mortality_upper_ci_high",
+      "label_zh": "呼吸系统疾病死亡较高摄入量原表点95% CI 上限",
+      "unit": "1",
+      "note_zh": "原表已印值；非表点不插值。超范围或原表未给值时为 null。"
+    },
+    {
+      "key": "diabetes_mortality_status",
+      "label_zh": "糖尿病死亡查表状态",
+      "note_zh": "exact=原表点；bracketed=相邻两点；outside_table=超出该结局表范围。"
+    },
+    {
+      "key": "diabetes_mortality_reference_g_d",
+      "label_zh": "糖尿病死亡参照摄入量",
+      "unit": "g/d"
+    },
+    {
+      "key": "diabetes_mortality_lower_g_d",
+      "label_zh": "糖尿病死亡较低摄入量原表点摄入量",
+      "unit": "g/d",
+      "note_zh": "原表已印值；非表点不插值。超范围或原表未给值时为 null。"
+    },
+    {
+      "key": "diabetes_mortality_lower_rr",
+      "label_zh": "糖尿病死亡较低摄入量原表点群体相对风险",
+      "unit": "1",
+      "note_zh": "原表已印值；非表点不插值。超范围或原表未给值时为 null。"
+    },
+    {
+      "key": "diabetes_mortality_lower_ci_low",
+      "label_zh": "糖尿病死亡较低摄入量原表点95% CI 下限",
+      "unit": "1",
+      "note_zh": "原表已印值；非表点不插值。超范围或原表未给值时为 null。"
+    },
+    {
+      "key": "diabetes_mortality_lower_ci_high",
+      "label_zh": "糖尿病死亡较低摄入量原表点95% CI 上限",
+      "unit": "1",
+      "note_zh": "原表已印值；非表点不插值。超范围或原表未给值时为 null。"
+    },
+    {
+      "key": "diabetes_mortality_upper_g_d",
+      "label_zh": "糖尿病死亡较高摄入量原表点摄入量",
+      "unit": "g/d",
+      "note_zh": "原表已印值；非表点不插值。超范围或原表未给值时为 null。"
+    },
+    {
+      "key": "diabetes_mortality_upper_rr",
+      "label_zh": "糖尿病死亡较高摄入量原表点群体相对风险",
+      "unit": "1",
+      "note_zh": "原表已印值；非表点不插值。超范围或原表未给值时为 null。"
+    },
+    {
+      "key": "diabetes_mortality_upper_ci_low",
+      "label_zh": "糖尿病死亡较高摄入量原表点95% CI 下限",
+      "unit": "1",
+      "note_zh": "原表已印值；非表点不插值。超范围或原表未给值时为 null。"
+    },
+    {
+      "key": "diabetes_mortality_upper_ci_high",
+      "label_zh": "糖尿病死亡较高摄入量原表点95% CI 上限",
+      "unit": "1",
+      "note_zh": "原表已印值；非表点不插值。超范围或原表未给值时为 null。"
+    },
+    {
+      "key": "infectious_mortality_status",
+      "label_zh": "感染性疾病死亡查表状态",
+      "note_zh": "exact=原表点；bracketed=相邻两点；outside_table=超出该结局表范围。"
+    },
+    {
+      "key": "infectious_mortality_reference_g_d",
+      "label_zh": "感染性疾病死亡参照摄入量",
+      "unit": "g/d"
+    },
+    {
+      "key": "infectious_mortality_lower_g_d",
+      "label_zh": "感染性疾病死亡较低摄入量原表点摄入量",
+      "unit": "g/d",
+      "note_zh": "原表已印值；非表点不插值。超范围或原表未给值时为 null。"
+    },
+    {
+      "key": "infectious_mortality_lower_rr",
+      "label_zh": "感染性疾病死亡较低摄入量原表点群体相对风险",
+      "unit": "1",
+      "note_zh": "原表已印值；非表点不插值。超范围或原表未给值时为 null。"
+    },
+    {
+      "key": "infectious_mortality_lower_ci_low",
+      "label_zh": "感染性疾病死亡较低摄入量原表点95% CI 下限",
+      "unit": "1",
+      "note_zh": "原表已印值；非表点不插值。超范围或原表未给值时为 null。"
+    },
+    {
+      "key": "infectious_mortality_lower_ci_high",
+      "label_zh": "感染性疾病死亡较低摄入量原表点95% CI 上限",
+      "unit": "1",
+      "note_zh": "原表已印值；非表点不插值。超范围或原表未给值时为 null。"
+    },
+    {
+      "key": "infectious_mortality_upper_g_d",
+      "label_zh": "感染性疾病死亡较高摄入量原表点摄入量",
+      "unit": "g/d",
+      "note_zh": "原表已印值；非表点不插值。超范围或原表未给值时为 null。"
+    },
+    {
+      "key": "infectious_mortality_upper_rr",
+      "label_zh": "感染性疾病死亡较高摄入量原表点群体相对风险",
+      "unit": "1",
+      "note_zh": "原表已印值；非表点不插值。超范围或原表未给值时为 null。"
+    },
+    {
+      "key": "infectious_mortality_upper_ci_low",
+      "label_zh": "感染性疾病死亡较高摄入量原表点95% CI 下限",
+      "unit": "1",
+      "note_zh": "原表已印值；非表点不插值。超范围或原表未给值时为 null。"
+    },
+    {
+      "key": "infectious_mortality_upper_ci_high",
+      "label_zh": "感染性疾病死亡较高摄入量原表点95% CI 上限",
+      "unit": "1",
+      "note_zh": "原表已印值；非表点不插值。超范围或原表未给值时为 null。"
+    },
+    {
+      "key": "nervous_system_mortality_status",
+      "label_zh": "神经系统疾病死亡查表状态",
+      "note_zh": "exact=原表点；bracketed=相邻两点；outside_table=超出该结局表范围。"
+    },
+    {
+      "key": "nervous_system_mortality_reference_g_d",
+      "label_zh": "神经系统疾病死亡参照摄入量",
+      "unit": "g/d"
+    },
+    {
+      "key": "nervous_system_mortality_lower_g_d",
+      "label_zh": "神经系统疾病死亡较低摄入量原表点摄入量",
+      "unit": "g/d",
+      "note_zh": "原表已印值；非表点不插值。超范围或原表未给值时为 null。"
+    },
+    {
+      "key": "nervous_system_mortality_lower_rr",
+      "label_zh": "神经系统疾病死亡较低摄入量原表点群体相对风险",
+      "unit": "1",
+      "note_zh": "原表已印值；非表点不插值。超范围或原表未给值时为 null。"
+    },
+    {
+      "key": "nervous_system_mortality_lower_ci_low",
+      "label_zh": "神经系统疾病死亡较低摄入量原表点95% CI 下限",
+      "unit": "1",
+      "note_zh": "原表已印值；非表点不插值。超范围或原表未给值时为 null。"
+    },
+    {
+      "key": "nervous_system_mortality_lower_ci_high",
+      "label_zh": "神经系统疾病死亡较低摄入量原表点95% CI 上限",
+      "unit": "1",
+      "note_zh": "原表已印值；非表点不插值。超范围或原表未给值时为 null。"
+    },
+    {
+      "key": "nervous_system_mortality_upper_g_d",
+      "label_zh": "神经系统疾病死亡较高摄入量原表点摄入量",
+      "unit": "g/d",
+      "note_zh": "原表已印值；非表点不插值。超范围或原表未给值时为 null。"
+    },
+    {
+      "key": "nervous_system_mortality_upper_rr",
+      "label_zh": "神经系统疾病死亡较高摄入量原表点群体相对风险",
+      "unit": "1",
+      "note_zh": "原表已印值；非表点不插值。超范围或原表未给值时为 null。"
+    },
+    {
+      "key": "nervous_system_mortality_upper_ci_low",
+      "label_zh": "神经系统疾病死亡较高摄入量原表点95% CI 下限",
+      "unit": "1",
+      "note_zh": "原表已印值；非表点不插值。超范围或原表未给值时为 null。"
+    },
+    {
+      "key": "nervous_system_mortality_upper_ci_high",
+      "label_zh": "神经系统疾病死亡较高摄入量原表点95% CI 上限",
+      "unit": "1",
+      "note_zh": "原表已印值；非表点不插值。超范围或原表未给值时为 null。"
+    },
+    {
+      "key": "non_cvd_non_cancer_mortality_status",
+      "label_zh": "非心血管、非癌症原因死亡查表状态",
+      "note_zh": "exact=原表点；bracketed=相邻两点；outside_table=超出该结局表范围。"
+    },
+    {
+      "key": "non_cvd_non_cancer_mortality_reference_g_d",
+      "label_zh": "非心血管、非癌症原因死亡参照摄入量",
+      "unit": "g/d"
+    },
+    {
+      "key": "non_cvd_non_cancer_mortality_lower_g_d",
+      "label_zh": "非心血管、非癌症原因死亡较低摄入量原表点摄入量",
+      "unit": "g/d",
+      "note_zh": "原表已印值；非表点不插值。超范围或原表未给值时为 null。"
+    },
+    {
+      "key": "non_cvd_non_cancer_mortality_lower_rr",
+      "label_zh": "非心血管、非癌症原因死亡较低摄入量原表点群体相对风险",
+      "unit": "1",
+      "note_zh": "原表已印值；非表点不插值。超范围或原表未给值时为 null。"
+    },
+    {
+      "key": "non_cvd_non_cancer_mortality_lower_ci_low",
+      "label_zh": "非心血管、非癌症原因死亡较低摄入量原表点95% CI 下限",
+      "unit": "1",
+      "note_zh": "原表已印值；非表点不插值。超范围或原表未给值时为 null。"
+    },
+    {
+      "key": "non_cvd_non_cancer_mortality_lower_ci_high",
+      "label_zh": "非心血管、非癌症原因死亡较低摄入量原表点95% CI 上限",
+      "unit": "1",
+      "note_zh": "原表已印值；非表点不插值。超范围或原表未给值时为 null。"
+    },
+    {
+      "key": "non_cvd_non_cancer_mortality_upper_g_d",
+      "label_zh": "非心血管、非癌症原因死亡较高摄入量原表点摄入量",
+      "unit": "g/d",
+      "note_zh": "原表已印值；非表点不插值。超范围或原表未给值时为 null。"
+    },
+    {
+      "key": "non_cvd_non_cancer_mortality_upper_rr",
+      "label_zh": "非心血管、非癌症原因死亡较高摄入量原表点群体相对风险",
+      "unit": "1",
+      "note_zh": "原表已印值；非表点不插值。超范围或原表未给值时为 null。"
+    },
+    {
+      "key": "non_cvd_non_cancer_mortality_upper_ci_low",
+      "label_zh": "非心血管、非癌症原因死亡较高摄入量原表点95% CI 下限",
+      "unit": "1",
+      "note_zh": "原表已印值；非表点不插值。超范围或原表未给值时为 null。"
+    },
+    {
+      "key": "non_cvd_non_cancer_mortality_upper_ci_high",
+      "label_zh": "非心血管、非癌症原因死亡较高摄入量原表点95% CI 上限",
+      "unit": "1",
+      "note_zh": "原表已印值；非表点不插值。超范围或原表未给值时为 null。"
+    }
+  ],
+  "data_files": [
+    {
+      "path": "data/nonlinear_rr.csv",
+      "source_url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC4908315/supplementaryFiles",
+      "license": "CC-BY-3.0; Aune et al., BMJ 2016;353:i2716, Appendix 1, Tables S13–S14",
+      "sha256": "0b1cd5fe0fa8b661320893068e62691efd9a4a0c4ecce5c97e3f045064e264bf",
+      "redistributable": "yes"
+    }
+  ],
+  "validation": {
+    "status": "reproduced",
+    "examples": [
+      {
+        "locator": "Appendix 1, Table S13, PDF page 69, 90 g/d row (five outcome columns)",
+        "quote": "90 0.72 (0.69-0.76) 90 0.73 (0.66-0.79) 90 0.79 (0.76-0.82) 90 0.87 (0.84-0.91) 90 0.81 (0.79-0.83)",
+        "values": [
+          90,
+          0.72,
+          0.69,
+          0.76,
+          0.73,
+          0.66,
+          0.79,
+          0.82,
+          0.87,
+          0.84,
+          0.91,
+          0.81,
+          0.83
+        ],
+        "tolerance": "精确匹配原表两位小数，不重建非线性曲线。",
+        "test": "tests/test_manifest.py::test_printed_s13_90"
+      },
+      {
+        "locator": "Appendix 1, Table S14, PDF page 70, 90 g/d row (five outcome columns)",
+        "quote": "90 0.73 (0.67-0.80) 90 0.42 (0.37-0.48) 90 0.76 (0.68-0.85) 90 1.05 (0.93-1.17) 90 0.79 (0.77-0.82)",
+        "values": [
+          90,
+          0.73,
+          0.67,
+          0.8,
+          0.42,
+          0.37,
+          0.48,
+          0.76,
+          0.68,
+          0.85,
+          1.05,
+          0.93,
+          1.17,
+          0.79,
+          0.77,
+          0.82
+        ],
+        "tolerance": "精确匹配原表两位小数；该表前四项参照量为 4.8 g/d。",
+        "test": "tests/test_manifest.py::test_printed_s14_90"
+      }
+    ]
+  }
+}

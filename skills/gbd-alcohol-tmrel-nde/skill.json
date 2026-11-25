@@ -1,0 +1,276 @@
+{
+  "schema": "longevity-skill/1",
+  "name": "gbd-alcohol-tmrel-nde",
+  "kind": "paper",
+  "tier": "A",
+  "species": [
+    "human"
+  ],
+  "evidence": "method",
+  "domains": [
+    "生活方式与健康风险"
+  ],
+  "blurb_zh": "把自己的平均每日纯酒精摄入量与按年龄、性别、地区和历史年份分层的 GBD 人群阈值比较，显示差值及所在侧，不给安全饮酒量。",
+  "intents": [
+    "intervention_evidence"
+  ],
+  "triage": {
+    "reason_zh": "更正版附录 2 表 S1 印出各分层 TMREL 与 NDE；个人摄入量可按正文标准杯定义换算并与阈值比较。",
+    "reviewed": false
+  },
+  "paper": {
+    "doi": "10.1016/s0140-6736(22)00847-9",
+    "title": "Population-level risks of alcohol consumption by amount, geography, age, sex, and year: a systematic analysis for the Global Burden of Disease Study 2020.",
+    "title_zh": "按饮酒量、地区、年龄、性别及年份分析人群饮酒风险：全球疾病负担研究",
+    "journal": "Lancet (London, England)",
+    "year": 2022,
+    "authors": "GBD 2020 Alcohol Collaborators",
+    "article_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC9289789/",
+    "supplements": [
+      {
+        "label": "附录 1：方法、地区映射、敏感性分析及 GATHER 清单（更正版）",
+        "url": "https://ars.els-cdn.com/content/image/1-s2.0-S0140673622008479-mmc1.pdf"
+      },
+      {
+        "label": "附录 2：表 S1 TMREL/NDE、图 S1–S5、表 S2–S3（更正版）",
+        "url": "https://ars.els-cdn.com/content/image/1-s2.0-S0140673622008479-mmc2.pdf"
+      }
+    ],
+    "card_notes": [
+      "使用 2022 年 7 月 19 日更正的附录 2 表 S1；输入参考年份默认 2020，不代表当前年份的估计。",
+      "全部 21 个 GBD 地区、1990/2000/2010/2020 四年、15–79 岁五岁档及 80 plus 合并档；男女分列。每标准杯为 10 g 纯乙醇。",
+      "技能读取已发表阈值，不重建疾病负担加权风险曲线；附录的旧代码入口现跳转 IHME 数据访问说明，正文的特定分析数据注明需联系作者。"
+    ],
+    "summary_zh": "这项研究通过整合人类观察性研究与疾病负担数据，发现饮酒相关综合风险的人群阈值随年龄和地区而变化，年轻人的阈值较低。个人报告只比较自己的平均每日纯酒精摄入量与对应历史人群阈值的差值及所在侧，不估算个人患病概率、寿命或饮酒收益。",
+    "summary_status": "draft"
+  },
+  "entry": {
+    "script": "scripts/personal_report.py",
+    "measurements_flag": "--measurements",
+    "measurements_header": [
+      "item",
+      "value",
+      "unit"
+    ],
+    "age_flag": "--age",
+    "sex_flag": "--sex",
+    "out_flag": "--out",
+    "result_json": true,
+    "targets_flag": "--targets",
+    "levers_json": true
+  },
+  "inputs_status": "verified",
+  "inputs": [
+    {
+      "key": "ethanol_g_day",
+      "label_zh": "平均每日纯酒精摄入量",
+      "aliases": [
+        "平均每日纯酒精摄入量",
+        "每日纯酒精摄入量",
+        "日均纯乙醇摄入量",
+        "alcohol consumption",
+        "ethanol intake",
+        "pure alcohol intake",
+        "mean daily alcohol consumption"
+      ],
+      "unit": "g/d",
+      "accept": {
+        "g/d": 1
+      },
+      "range": [
+        0,
+        100
+      ],
+      "unit_required": true,
+      "required": true,
+      "from": "measurements",
+      "note_zh": "按全部日历日计算的平均量，不是仅饮酒日的量；范围对应正文曲线 0–100 g/d。只接受纯乙醇 g/d，不接受含义不明的杯、mL 或各国标准杯。"
+    },
+    {
+      "key": "age",
+      "label_zh": "年龄",
+      "aliases": [
+        "年龄",
+        "age"
+      ],
+      "unit": "a",
+      "range": [
+        15,
+        120
+      ],
+      "required": true,
+      "from": "argument",
+      "flag": "--age",
+      "note_zh": "80 岁及以上使用原表 80 plus 合并档；120 是输入合理性上限，不是研究样本最大年龄。"
+    },
+    {
+      "key": "sex",
+      "label_zh": "论文分层性别",
+      "aliases": [
+        "性别",
+        "sex"
+      ],
+      "required": true,
+      "from": "argument",
+      "flag": "--sex",
+      "note_zh": "male/男/m 或 female/女/f，不推断。"
+    },
+    {
+      "key": "region",
+      "label_zh": "GBD 地区",
+      "aliases": [
+        "地区",
+        "region"
+      ],
+      "required": true,
+      "from": "argument",
+      "flag": "--region",
+      "note_zh": "21 个 GBD 地区的英文名或中文名，见 references/regions.md；不接受全球均值代替。"
+    },
+    {
+      "key": "year",
+      "label_zh": "参照年份",
+      "aliases": [
+        "年份",
+        "year"
+      ],
+      "range": [
+        1990,
+        2020
+      ],
+      "required": false,
+      "from": "argument",
+      "flag": "--year",
+      "note_zh": "只支持 1990、2000、2010、2020，默认 2020；不插值，不外推。"
+    }
+  ],
+  "outputs": [
+    {
+      "key": "ethanol_g_day",
+      "label_zh": "平均每日纯酒精摄入量",
+      "unit": "g/d"
+    },
+    {
+      "key": "standard_drinks_day",
+      "label_zh": "本论文标准杯数",
+      "unit": "standard drinks/day"
+    },
+    {
+      "key": "tmrel_standard_drinks_day",
+      "label_zh": "TMREL 人群阈值均值",
+      "unit": "standard drinks/day"
+    },
+    {
+      "key": "tmrel_ui_low",
+      "label_zh": "TMREL 95% 不确定区间下限",
+      "unit": "standard drinks/day"
+    },
+    {
+      "key": "tmrel_ui_high",
+      "label_zh": "TMREL 95% 不确定区间上限",
+      "unit": "standard drinks/day"
+    },
+    {
+      "key": "nde_standard_drinks_day",
+      "label_zh": "NDE 人群阈值均值",
+      "unit": "standard drinks/day"
+    },
+    {
+      "key": "nde_ui_low",
+      "label_zh": "NDE 95% 不确定区间下限",
+      "unit": "standard drinks/day"
+    },
+    {
+      "key": "nde_ui_high",
+      "label_zh": "NDE 95% 不确定区间上限",
+      "unit": "standard drinks/day"
+    },
+    {
+      "key": "tmrel_gap_g_day",
+      "label_zh": "摄入量减 TMREL",
+      "unit": "g/d"
+    },
+    {
+      "key": "nde_gap_g_day",
+      "label_zh": "摄入量减 NDE",
+      "unit": "g/d"
+    },
+    {
+      "key": "tmrel_side",
+      "label_zh": "相对 TMREL 均值的位置",
+      "unit": ""
+    },
+    {
+      "key": "nde_side",
+      "label_zh": "相对 NDE 均值的位置",
+      "unit": ""
+    },
+    {
+      "key": "reference_region",
+      "label_zh": "参照 GBD 地区",
+      "unit": ""
+    },
+    {
+      "key": "reference_year",
+      "label_zh": "参照年份",
+      "unit": ""
+    },
+    {
+      "key": "reference_age_group",
+      "label_zh": "参照年龄档",
+      "unit": ""
+    },
+    {
+      "key": "reference_sex",
+      "label_zh": "参照性别",
+      "unit": ""
+    }
+  ],
+  "data_files": [
+    {
+      "path": "data/table_s1.csv",
+      "source_url": "https://ars.els-cdn.com/content/image/1-s2.0-S0140673622008479-mmc2.pdf",
+      "license": "CC BY 4.0; extracted numeric facts, attribution to GBD 2020 Alcohol Collaborators (2022)",
+      "sha256": "76e76c41fd2056e87553b8d493bbdd66586b8a7f227e6d86f4fc178178123014",
+      "redistributable": "yes"
+    }
+  ],
+  "validation": {
+    "status": "reproduced",
+    "examples": [
+      {
+        "locator": "Appendix 2, corrected Table S1, appendix p 3 / PDF p 4, Central Asia 15 to 19, 1990; Female and Male TMREL/NDE columns",
+        "quote": "Female Male\nRegion Age Group Year TMREL NDE TMREL NDE\n0·0735 0·126 0·00280 0·00480\nCentral Asia 15 to 19 1990 (0–0·300) (0–0·600) (0–0) (0–0)",
+        "values": [
+          0.0735,
+          0,
+          0.3,
+          0.126,
+          0.6,
+          0.0028,
+          0.0048
+        ],
+        "tolerance": "逐项完全等于表 S1 印出的均值和区间端点；只将小数中点转为点号，不重新估计。",
+        "test": "tests/test_manifest.py::test_printed_central_asia_1990"
+      },
+      {
+        "locator": "Appendix 2, corrected Table S1, appendix p 23 / PDF p 24, East Asia 50 to 54, 2020; Female and Male TMREL/NDE columns",
+        "quote": "0·505 1·79 0·459 1·51\nEast Asia 50 to 54 2020 (0·400–0·600) (1·00–2·50) (0·400–0·600) (0·800–2·30)",
+        "values": [
+          0.505,
+          0.4,
+          0.6,
+          1.79,
+          1.0,
+          2.5,
+          0.459,
+          1.51,
+          0.8,
+          2.3
+        ],
+        "tolerance": "查表及 CLI result.json 中逐项等于打印值；验证的是已发表分层预测值的选择，不是从原始研究重建风险曲线。",
+        "test": "tests/test_manifest.py::test_printed_east_asia_2020"
+      }
+    ]
+  }
+}
