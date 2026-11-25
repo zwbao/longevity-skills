@@ -2,9 +2,9 @@
   "schema": "longevity-catalog/1",
   "version": "2026.48.0",
   "counts": {
-    "skills": 201,
+    "skills": 204,
     "tiers": {
-      "A": 37,
+      "A": 40,
       "B": 83,
       "C": 73,
       "tool": 8
@@ -11839,6 +11839,300 @@
       }
     },
     {
+      "name": "lee-mortality-index",
+      "kind": "paper",
+      "tier": "A",
+      "species": [
+        "human"
+      ],
+      "evidence": "cohort",
+      "domains": [
+        "衰弱与死亡风险"
+      ],
+      "blurb_zh": "用年龄、病史和日常功能问卷计算Lee四年死亡风险指数。",
+      "description": "Tier A personal readout: computes one person's value with the paper's printed method and reproduces a printed example. Calculates the Lee four-year mortality point index from age, sex, BMI, self-reported diagnoses, smoking, and functional difficulties, and maps the score to the published validation-cohort mortality percentage. Use for community-dwelling adults aged 50 or older asking about the Lee index or questionnaire-based mortality risk. Reports in Chinese and supports explicit target scenarios without interpreting them as treatment effects.",
+      "intents": [
+        "frailty_mortality"
+      ],
+      "has_script": true,
+      "validation_status": "reproduced",
+      "validation_label_zh": "已复现论文",
+      "entry": {
+        "script": "scripts/personal_report.py",
+        "measurements_flag": "--measurements",
+        "measurements_header": [
+          "marker",
+          "value",
+          "unit"
+        ],
+        "age_flag": "--age",
+        "sex_flag": "--sex",
+        "out_flag": "--out",
+        "result_json": true,
+        "targets_flag": "--targets",
+        "levers_json": true
+      },
+      "inputs_status": "verified",
+      "inputs": [
+        {
+          "key": "bmi_kg_m2",
+          "label_zh": "体质指数",
+          "aliases": [
+            "BMI",
+            "body mass index",
+            "体重指数"
+          ],
+          "unit": "kg/m^2",
+          "accept": {
+            "kg/m2": 1
+          },
+          "range": [
+            10,
+            80
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "使用本人身高体重计算的BMI；低于25加分不是增重建议。"
+        },
+        {
+          "key": "community_dwelling",
+          "label_zh": "社区居住",
+          "aliases": [
+            "community dwelling",
+            "是否社区居住"
+          ],
+          "unit": "1",
+          "accept": {},
+          "range": [
+            0,
+            1
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "适用性检查，1=社区居住，0=养老院或其他机构照护；不进入评分。 1=是，0=否；未知须补问，不得填0。"
+        },
+        {
+          "key": "diabetes",
+          "label_zh": "糖尿病或高血糖诊断史",
+          "aliases": [
+            "diabetes",
+            "diabetes mellitus",
+            "糖尿病"
+          ],
+          "unit": "1",
+          "accept": {},
+          "range": [
+            0,
+            1
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "医生曾告知糖尿病或高血糖；不是凭一次血糖值自行诊断。 1=是，0=否；未知须补问，不得填0。"
+        },
+        {
+          "key": "cancer",
+          "label_zh": "癌症诊断史（排除轻微皮肤癌）",
+          "aliases": [
+            "cancer",
+            "malignant tumor",
+            "癌症病史"
+          ],
+          "unit": "1",
+          "accept": {},
+          "range": [
+            0,
+            1
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "医生曾告知癌症或恶性肿瘤，排除轻微皮肤癌；不排除黑色素瘤。 1=是，0=否；未知须补问，不得填0。"
+        },
+        {
+          "key": "lung_disease",
+          "label_zh": "限制活动或需居家氧疗的慢性肺病",
+          "aliases": [
+            "lung disease",
+            "chronic lung disease",
+            "慢性肺病"
+          ],
+          "unit": "1",
+          "accept": {},
+          "range": [
+            0,
+            1
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "慢性肺病限制日常活动，或使本人需要居家氧疗；不能只按任意肺病诊断填是。 1=是，0=否；未知须补问，不得填0。"
+        },
+        {
+          "key": "heart_failure",
+          "label_zh": "充血性心力衰竭诊断史",
+          "aliases": [
+            "heart failure",
+            "congestive heart failure",
+            "CHF",
+            "心衰"
+          ],
+          "unit": "1",
+          "accept": {},
+          "range": [
+            0,
+            1
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "医生曾告知充血性心力衰竭。 1=是，0=否；未知须补问，不得填0。"
+        },
+        {
+          "key": "current_smoker",
+          "label_zh": "过去一周吸烟",
+          "aliases": [
+            "current smoker",
+            "current tobacco use",
+            "当前吸烟"
+          ],
+          "unit": "1",
+          "accept": {},
+          "range": [
+            0,
+            1
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "Box问卷：过去一周是否吸过香烟；不是累计吸烟史。 1=是，0=否；未知须补问，不得填0。"
+        },
+        {
+          "key": "bathing_difficulty",
+          "label_zh": "洗澡困难",
+          "aliases": [
+            "bathing",
+            "bathing difficulty",
+            "洗澡或淋浴困难"
+          ],
+          "unit": "1",
+          "accept": {},
+          "range": [
+            0,
+            1
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "因健康或记忆问题，洗澡或淋浴有任何困难。 1=是，0=否；未知须补问，不得填0。"
+        },
+        {
+          "key": "finances_difficulty",
+          "label_zh": "管理钱财困难",
+          "aliases": [
+            "managing finances",
+            "managing money",
+            "财务管理困难"
+          ],
+          "unit": "1",
+          "accept": {},
+          "range": [
+            0,
+            1
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "因健康或记忆问题，支付账单、记录支出等钱财管理有困难。 1=是，0=否；未知须补问，不得填0。"
+        },
+        {
+          "key": "walking_difficulty",
+          "label_zh": "步行数个街区困难",
+          "aliases": [
+            "walking several blocks",
+            "步行困难"
+          ],
+          "unit": "1",
+          "accept": {},
+          "range": [
+            0,
+            1
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "因健康问题，步行数个街区有困难；不自行换成固定米数。 1=是，0=否；未知须补问，不得填0。"
+        },
+        {
+          "key": "pushing_difficulty",
+          "label_zh": "推拉大件物品困难",
+          "aliases": [
+            "pushing/pulling heavy objects",
+            "pulling or pushing large objects",
+            "推拉重物困难"
+          ],
+          "unit": "1",
+          "accept": {},
+          "range": [
+            0,
+            1
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "因健康问题，推拉客厅椅子等大件物品有困难。 1=是，0=否；未知须补问，不得填0。"
+        },
+        {
+          "key": "age",
+          "label_zh": "实足年龄",
+          "aliases": [
+            "age",
+            "年龄"
+          ],
+          "unit": "a",
+          "accept": {
+            "years": 1
+          },
+          "range": [
+            50,
+            120
+          ],
+          "required": true,
+          "from": "profile",
+          "flag": "--age",
+          "note_zh": "填整数周岁；120是软件合理性上界，并非原队列最大年龄。"
+        },
+        {
+          "key": "sex",
+          "label_zh": "论文二分类性别",
+          "aliases": [
+            "sex",
+            "性别"
+          ],
+          "unit": "1",
+          "accept": {},
+          "range": [
+            0,
+            1
+          ],
+          "required": true,
+          "from": "profile",
+          "flag": "--sex",
+          "note_zh": "male/男/1，female/女/0；不从姓名推断。"
+        }
+      ],
+      "outputs": [
+        {
+          "key": "lee_score",
+          "label_zh": "Lee指数总分",
+          "unit": "1"
+        },
+        {
+          "key": "mortality_4y_pct",
+          "label_zh": "表4验证队列同分组四年死亡率",
+          "unit": "%"
+        }
+      ],
+      "paper": {
+        "doi": "10.1001/jama.295.7.801",
+        "title": "Development and validation of a prognostic index for 4-year mortality in older adults.",
+        "title_zh": "老年人四年死亡风险预后指数的开发与验证",
+        "journal": "JAMA",
+        "year": 2006
+      }
+    },
+    {
       "name": "lensage-index-biological-age",
       "kind": "paper",
       "tier": "B",
@@ -12920,6 +13214,426 @@
         "title_zh": "认知域读出",
         "journal": "npj Digital Medicine",
         "year": 2026
+      }
+    },
+    {
+      "name": "medas-mediterranean-diet-adherence",
+      "kind": "paper",
+      "tier": "A",
+      "species": [
+        "human"
+      ],
+      "evidence": "cross_sectional",
+      "domains": [
+        "nutrition",
+        "cardiovascular"
+      ],
+      "blurb_zh": "用14项饮食问卷计算地中海饮食依从性总分及逐项得分。",
+      "description": "Tier A personal readout: computes one person's value with the paper's printed method and reproduces a printed example. Calculates the original 2011 MEDAS Mediterranean diet adherence score from fourteen personal dietary questionnaire answers, with item scores and user-specified target comparisons. Use for MEDAS、地中海饮食评分、饮食依从性问卷 or repeated adherence measurements. Preserves the original food definitions and reports in Chinese; does not estimate personal cardiovascular risk.",
+      "intents": [
+        "before_after"
+      ],
+      "has_script": true,
+      "validation_status": "reproduced",
+      "validation_label_zh": "已复现论文",
+      "entry": {
+        "script": "scripts/personal_report.py",
+        "measurements_flag": "--measurements",
+        "measurements_header": [
+          "item",
+          "value",
+          "unit"
+        ],
+        "age_flag": "--age",
+        "sex_flag": "--sex",
+        "out_flag": "--out",
+        "result_json": true,
+        "targets_flag": "--targets",
+        "levers_json": true
+      },
+      "population": {
+        "age_years": [
+          55,
+          80
+        ],
+        "note_zh": "正文报告为西班牙冠心病高风险、无已知心血管病的55–80岁参与者，分析的是干预前问卷；不等于一般人群验证。"
+      },
+      "inputs_status": "verified",
+      "inputs": [
+        {
+          "key": "olive_oil_main_yes",
+          "label_zh": "橄榄油是否为主要烹调用油",
+          "aliases": [
+            "olive oil principal cooking fat",
+            "MEDAS Q1"
+          ],
+          "unit": "1",
+          "accept": {},
+          "range": [
+            0,
+            1
+          ],
+          "required": true,
+          "from": "measurements",
+          "group": "questionnaire",
+          "note_zh": "只能填 0 或 1；询问主要烹调用油，不是是否偶尔使用。 表中单位填1，表示项目名指定日/周内的份、个、杯或次数；不接受跨周期或克/毫升的隐式换算。"
+        },
+        {
+          "key": "olive_oil_tbsp_day",
+          "label_zh": "每日橄榄油汤匙数",
+          "aliases": [
+            "olive oil tablespoons per day",
+            "MEDAS Q2"
+          ],
+          "unit": "1",
+          "accept": {},
+          "range": [
+            0,
+            30
+          ],
+          "required": true,
+          "from": "measurements",
+          "group": "questionnaire",
+          "note_zh": "含煎炸、沙拉、外食等全部橄榄油；论文 1 汤匙=13.5 g，不用家用勺容量推算。 表中单位填1，表示项目名指定日/周内的份、个、杯或次数；不接受跨周期或克/毫升的隐式换算。"
+        },
+        {
+          "key": "vegetables_servings_day",
+          "label_zh": "每日蔬菜份数",
+          "aliases": [
+            "vegetable servings per day",
+            "MEDAS Q3"
+          ],
+          "unit": "1",
+          "accept": {},
+          "range": [
+            0,
+            30
+          ],
+          "required": true,
+          "from": "measurements",
+          "group": "questionnaire",
+          "note_zh": "1 完整份=200 g；配菜或装饰菜按半份计入摄入量，最终该题仍只得 0 或 1 分。 表中单位填1，表示项目名指定日/周内的份、个、杯或次数；不接受跨周期或克/毫升的隐式换算。"
+        },
+        {
+          "key": "fruit_pieces_day",
+          "label_zh": "每日水果个数",
+          "aliases": [
+            "fruit pieces per day",
+            "MEDAS Q4"
+          ],
+          "unit": "1",
+          "accept": {},
+          "range": [
+            0,
+            30
+          ],
+          "required": true,
+          "from": "measurements",
+          "group": "questionnaire",
+          "note_zh": "原问题包含鲜榨果汁；论文未规定果汁每份毫升数，不能自动把毫升换算成果实个数。 表中单位填1，表示项目名指定日/周内的份、个、杯或次数；不接受跨周期或克/毫升的隐式换算。"
+        },
+        {
+          "key": "red_meat_servings_day",
+          "label_zh": "每日红肉汉堡香肠份数",
+          "aliases": [
+            "red meat hamburger sausage servings per day",
+            "MEDAS Q5"
+          ],
+          "unit": "1",
+          "accept": {},
+          "range": [
+            0,
+            20
+          ],
+          "required": true,
+          "from": "measurements",
+          "group": "questionnaire",
+          "note_zh": "包括红肉、汉堡、香肠；完整份为 100–150 g，须按问卷报告份数，不能取区间中点转换。 表中单位填1，表示项目名指定日/周内的份、个、杯或次数；不接受跨周期或克/毫升的隐式换算。"
+        },
+        {
+          "key": "butter_margarine_cream_servings_day",
+          "label_zh": "每日黄油人造黄油奶油份数",
+          "aliases": [
+            "butter margarine cream servings per day",
+            "MEDAS Q6"
+          ],
+          "unit": "1",
+          "accept": {},
+          "range": [
+            0,
+            40
+          ],
+          "required": true,
+          "from": "measurements",
+          "group": "questionnaire",
+          "note_zh": "三者合计；每份 12 g。按 Table 2 明确列举的食品计，不泛化成所有动物脂肪。 表中单位填1，表示项目名指定日/周内的份、个、杯或次数；不接受跨周期或克/毫升的隐式换算。"
+        },
+        {
+          "key": "sweet_carbonated_drinks_cups_day",
+          "label_zh": "每日碳酸或含糖饮料杯数",
+          "aliases": [
+            "carbonated sugar sweetened beverages per day",
+            "MEDAS Q7"
+          ],
+          "unit": "1",
+          "accept": {},
+          "range": [
+            0,
+            100
+          ],
+          "required": true,
+          "from": "measurements",
+          "group": "questionnaire",
+          "note_zh": "按 Table 2 的碳酸和/或含糖饮料问题记录；正文规定 1 杯=100 mL，不按常见大杯计。 表中单位填1，表示项目名指定日/周内的份、个、杯或次数；不接受跨周期或克/毫升的隐式换算。"
+        },
+        {
+          "key": "wine_cups_week",
+          "label_zh": "每周葡萄酒杯数",
+          "aliases": [
+            "wine cups per week",
+            "MEDAS Q8"
+          ],
+          "unit": "1",
+          "accept": {},
+          "range": [
+            0,
+            140
+          ],
+          "required": true,
+          "from": "measurements",
+          "group": "questionnaire",
+          "note_zh": "Table 2 写 wine；正文写 red wine。采用 Table 2 原题，1 杯=100 mL；不把啤酒或白酒折算成葡萄酒，不作为饮酒建议。 表中单位填1，表示项目名指定日/周内的份、个、杯或次数；不接受跨周期或克/毫升的隐式换算。"
+        },
+        {
+          "key": "pulses_servings_week",
+          "label_zh": "每周豆类份数",
+          "aliases": [
+            "pulses servings per week",
+            "legumes servings per week",
+            "MEDAS Q9"
+          ],
+          "unit": "1",
+          "accept": {},
+          "range": [
+            0,
+            50
+          ],
+          "required": true,
+          "from": "measurements",
+          "group": "questionnaire",
+          "note_zh": "每份 150 g；不自行将豆浆或其他豆制品折算成该问卷的豆类份数。 表中单位填1，表示项目名指定日/周内的份、个、杯或次数；不接受跨周期或克/毫升的隐式换算。"
+        },
+        {
+          "key": "fish_seafood_servings_week",
+          "label_zh": "每周鱼或海鲜份数",
+          "aliases": [
+            "fish seafood servings per week",
+            "MEDAS Q10"
+          ],
+          "unit": "1",
+          "accept": {},
+          "range": [
+            0,
+            50
+          ],
+          "required": true,
+          "from": "measurements",
+          "group": "questionnaire",
+          "note_zh": "每份鱼 100–150 g；海鲜为 4–5 个或 200 g。混合记录先按原问卷确认份数，不猜统一克重。 表中单位填1，表示项目名指定日/周内的份、个、杯或次数；不接受跨周期或克/毫升的隐式换算。"
+        },
+        {
+          "key": "commercial_pastry_times_week",
+          "label_zh": "每周商业糕点次数",
+          "aliases": [
+            "commercial pastry times per week",
+            "MEDAS Q11"
+          ],
+          "unit": "1",
+          "accept": {},
+          "range": [
+            0,
+            100
+          ],
+          "required": true,
+          "from": "measurements",
+          "group": "questionnaire",
+          "note_zh": "仅商业制作（非自制）的饼干、蛋糕等；本论文是每周少于 2 次，不套用其他版本阈值。 表中单位填1，表示项目名指定日/周内的份、个、杯或次数；不接受跨周期或克/毫升的隐式换算。"
+        },
+        {
+          "key": "nuts_servings_week",
+          "label_zh": "每周坚果份数",
+          "aliases": [
+            "nuts servings per week",
+            "MEDAS Q12"
+          ],
+          "unit": "1",
+          "accept": {},
+          "range": [
+            0,
+            100
+          ],
+          "required": true,
+          "from": "measurements",
+          "group": "questionnaire",
+          "note_zh": "每份 30 g；本论文阈值为每周至少 3 份。 表中单位填1，表示项目名指定日/周内的份、个、杯或次数；不接受跨周期或克/毫升的隐式换算。"
+        },
+        {
+          "key": "white_meat_preferred_yes",
+          "label_zh": "是否更偏好鸡火鸡兔肉",
+          "aliases": [
+            "prefer chicken turkey rabbit",
+            "MEDAS Q13"
+          ],
+          "unit": "1",
+          "accept": {},
+          "range": [
+            0,
+            1
+          ],
+          "required": true,
+          "from": "measurements",
+          "group": "questionnaire",
+          "note_zh": "相对于牛肉、猪肉、汉堡或香肠，是否更偏好鸡、火鸡或兔肉；只能填 0 或 1。 表中单位填1，表示项目名指定日/周内的份、个、杯或次数；不接受跨周期或克/毫升的隐式换算。"
+        },
+        {
+          "key": "sofrito_times_week",
+          "label_zh": "每周橄榄油番茄蒜洋葱酱菜肴次数",
+          "aliases": [
+            "sofrito times per week",
+            "MEDAS Q14"
+          ],
+          "unit": "1",
+          "accept": {},
+          "range": [
+            0,
+            100
+          ],
+          "required": true,
+          "from": "measurements",
+          "group": "questionnaire",
+          "note_zh": "指配有以橄榄油炒制番茄、蒜、洋葱或韭葱酱汁的蔬菜、意面、米饭等；不是任意含番茄的菜肴。 表中单位填1，表示项目名指定日/周内的份、个、杯或次数；不接受跨周期或克/毫升的隐式换算。"
+        },
+        {
+          "key": "age",
+          "label_zh": "实足年龄",
+          "unit": "a",
+          "accept": {},
+          "range": [
+            0,
+            120
+          ],
+          "required": false,
+          "from": "profile",
+          "flag": "--age",
+          "note_zh": "可选，仅用于提示是否超出研究年龄范围，不进评分。"
+        },
+        {
+          "key": "sex",
+          "label_zh": "性别",
+          "required": false,
+          "from": "profile",
+          "flag": "--sex",
+          "note_zh": "可选，接受male或female，不进评分。"
+        }
+      ],
+      "outputs": [
+        {
+          "key": "medas_total",
+          "label_zh": "MEDAS总分",
+          "unit": "score",
+          "note_zh": "14个二元得分等权求和，范围0–14，不划分疾病风险等级。"
+        },
+        {
+          "key": "item_01_score",
+          "label_zh": "橄榄油是否为主要烹调用油得分",
+          "unit": "score",
+          "note_zh": "满足Table 2条件得1分，否则0分。"
+        },
+        {
+          "key": "item_02_score",
+          "label_zh": "每日橄榄油汤匙数得分",
+          "unit": "score",
+          "note_zh": "满足Table 2条件得1分，否则0分。"
+        },
+        {
+          "key": "item_03_score",
+          "label_zh": "每日蔬菜份数得分",
+          "unit": "score",
+          "note_zh": "满足Table 2条件得1分，否则0分。"
+        },
+        {
+          "key": "item_04_score",
+          "label_zh": "每日水果个数得分",
+          "unit": "score",
+          "note_zh": "满足Table 2条件得1分，否则0分。"
+        },
+        {
+          "key": "item_05_score",
+          "label_zh": "每日红肉汉堡香肠份数得分",
+          "unit": "score",
+          "note_zh": "满足Table 2条件得1分，否则0分。"
+        },
+        {
+          "key": "item_06_score",
+          "label_zh": "每日黄油人造黄油奶油份数得分",
+          "unit": "score",
+          "note_zh": "满足Table 2条件得1分，否则0分。"
+        },
+        {
+          "key": "item_07_score",
+          "label_zh": "每日碳酸或含糖饮料杯数得分",
+          "unit": "score",
+          "note_zh": "满足Table 2条件得1分，否则0分。"
+        },
+        {
+          "key": "item_08_score",
+          "label_zh": "每周葡萄酒杯数得分",
+          "unit": "score",
+          "note_zh": "满足Table 2条件得1分，否则0分。"
+        },
+        {
+          "key": "item_09_score",
+          "label_zh": "每周豆类份数得分",
+          "unit": "score",
+          "note_zh": "满足Table 2条件得1分，否则0分。"
+        },
+        {
+          "key": "item_10_score",
+          "label_zh": "每周鱼或海鲜份数得分",
+          "unit": "score",
+          "note_zh": "满足Table 2条件得1分，否则0分。"
+        },
+        {
+          "key": "item_11_score",
+          "label_zh": "每周商业糕点次数得分",
+          "unit": "score",
+          "note_zh": "满足Table 2条件得1分，否则0分。"
+        },
+        {
+          "key": "item_12_score",
+          "label_zh": "每周坚果份数得分",
+          "unit": "score",
+          "note_zh": "满足Table 2条件得1分，否则0分。"
+        },
+        {
+          "key": "item_13_score",
+          "label_zh": "是否更偏好鸡火鸡兔肉得分",
+          "unit": "score",
+          "note_zh": "满足Table 2条件得1分，否则0分。"
+        },
+        {
+          "key": "item_14_score",
+          "label_zh": "每周橄榄油番茄蒜洋葱酱菜肴次数得分",
+          "unit": "score",
+          "note_zh": "满足Table 2条件得1分，否则0分。"
+        }
+      ],
+      "paper": {
+        "doi": "10.3945/jn.110.135566",
+        "title": "A short screener is valid for assessing Mediterranean diet adherence among older Spanish men and women.",
+        "title_zh": "简短问卷可评估西班牙中老年人的地中海饮食依从性",
+        "journal": "The Journal of Nutrition",
+        "year": 2011
       }
     },
     {
@@ -30675,6 +31389,321 @@
         "title_zh": "单细胞甲基化周龄",
         "journal": "Nature Communications",
         "year": 2024
+      }
+    },
+    {
+      "name": "schonberg-mortality-index",
+      "kind": "paper",
+      "tier": "A",
+      "species": [
+        "human"
+      ],
+      "evidence": "cohort",
+      "domains": [
+        "衰弱与死亡风险"
+      ],
+      "blurb_zh": "用年龄、体重指数及自报健康情况计算Schonberg五年死亡风险积分。",
+      "description": "Tier A personal readout: computes one person's value with the paper's printed method and reproduces a printed example. Computes the original Schonberg mortality index from eleven self-reported factors and looks up five-year mortality in the published validation cohort. Use when a community-dwelling adult aged 65 or older asks about the Schonberg score or questionnaire-based mortality risk. Reports Chinese explanations, per-factor points, grouped risk and confidence limits, and optional user-specified scenarios.",
+      "intents": [
+        "frailty_mortality"
+      ],
+      "has_script": true,
+      "validation_status": "reproduced",
+      "validation_label_zh": "已复现论文",
+      "entry": {
+        "script": "scripts/personal_report.py",
+        "measurements_flag": "--measurements",
+        "measurements_header": [
+          "marker",
+          "value",
+          "unit"
+        ],
+        "age_flag": "--age",
+        "sex_flag": "--sex",
+        "out_flag": "--out",
+        "result_json": true,
+        "targets_flag": "--targets",
+        "levers_json": true
+      },
+      "inputs_status": "verified",
+      "inputs": [
+        {
+          "key": "bmi_kg_m2",
+          "label_zh": "体质指数",
+          "aliases": [
+            "BMI",
+            "Body mass index",
+            "体重指数"
+          ],
+          "unit": "kg/m^2",
+          "range": [
+            10,
+            80
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "提供已计算的 BMI；小于25计分，等于25不计分。",
+          "accept": {
+            "kg/m2": 1
+          }
+        },
+        {
+          "key": "health_code",
+          "label_zh": "自评健康",
+          "aliases": [
+            "Perceived health",
+            "self rated health",
+            "总体健康状况"
+          ],
+          "unit": "1",
+          "range": [
+            0,
+            2
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "整数编码：0=excellent/very good（极好/很好），1=good（好），2=fair/poor（一般/差）。"
+        },
+        {
+          "key": "copd_history",
+          "label_zh": "肺气肿或慢性支气管炎史",
+          "aliases": [
+            "COPD",
+            "emphysema",
+            "chronic bronchitis",
+            "肺气肿",
+            "慢性支气管炎"
+          ],
+          "unit": "1",
+          "range": [
+            0,
+            1
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "0=否，1=曾由医生或其他卫生专业人员告知患肺气肿或慢性支气管炎；不将其他肺病自动合并。"
+        },
+        {
+          "key": "cancer_history",
+          "label_zh": "癌症史",
+          "aliases": [
+            "cancer",
+            "cancer history",
+            "肿瘤病史"
+          ],
+          "unit": "1",
+          "range": [
+            0,
+            1
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "0=否，1=曾被告知患癌；非黑色素瘤皮肤癌不算，黑色素瘤算。"
+        },
+        {
+          "key": "diabetes_history",
+          "label_zh": "糖尿病史",
+          "aliases": [
+            "diabetes",
+            "diabetes mellitus",
+            "borderline diabetes",
+            "临界糖尿病"
+          ],
+          "unit": "1",
+          "range": [
+            0,
+            1
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "0=否，1=曾被告知患糖尿病，包括原问卷的 borderline diabetes；不根据单次血糖自行诊断。"
+        },
+        {
+          "key": "iadl_help",
+          "label_zh": "日常事务需他人帮助",
+          "aliases": [
+            "IADL dependency",
+            "dependent in at least one IADL",
+            "工具性日常生活活动依赖"
+          ],
+          "unit": "1",
+          "range": [
+            0,
+            1
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "因身体、精神或情绪问题，家务、办事、购物或外出等至少一项需要他人帮助：1=是，0=否；不是IADL量表总分。"
+        },
+        {
+          "key": "walking_difficulty",
+          "label_zh": "步行四分之一英里困难",
+          "aliases": [
+            "difficulty walking",
+            "difficulty walking a quarter mile",
+            "步行约三个街区困难"
+          ],
+          "unit": "1",
+          "range": [
+            0,
+            1
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "独自且不使用辅助设备走四分之一英里（约三个街区）：0=完全不困难，1=有任何困难、不能走或不走。"
+        },
+        {
+          "key": "smoking_code",
+          "label_zh": "吸烟状态",
+          "aliases": [
+            "smoking status",
+            "cigarette use",
+            "吸烟史"
+          ],
+          "unit": "1",
+          "range": [
+            0,
+            2
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "0=从未吸烟（终生少于100支），1=既往吸烟，2=目前每天或部分日子吸烟。编码2不是积分2。"
+        },
+        {
+          "key": "hospitalizations_count",
+          "label_zh": "过去一年过夜住院次数",
+          "aliases": [
+            "overnight hospitalizations in past year",
+            "hospitalizations",
+            "过去12个月住院次数"
+          ],
+          "unit": "1",
+          "range": [
+            0,
+            365
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "过去12个月过夜住院的整数次数；0次、1次、至少2次分别分组，不能填住院天数。365为输入合理性上限，不是研究上限。"
+        },
+        {
+          "key": "age_years",
+          "label_zh": "实足年龄",
+          "aliases": [
+            "age",
+            "年龄",
+            "周岁"
+          ],
+          "unit": "a",
+          "range": [
+            65,
+            120
+          ],
+          "required": true,
+          "from": "argument",
+          "flag": "--age",
+          "note_zh": "已满周岁整数；原研究65岁及以上，85岁及以上合并；120只是输入检查上限，并非已知研究最高年龄。"
+        },
+        {
+          "key": "sex",
+          "label_zh": "研究使用的性别分类",
+          "aliases": [
+            "sex",
+            "性别"
+          ],
+          "required": true,
+          "from": "profile",
+          "flag": "--sex",
+          "note_zh": "female/女或male/男；按论文二分类计分，其他值不猜测。"
+        }
+      ],
+      "outputs": [
+        {
+          "key": "total_score",
+          "label_zh": "总积分",
+          "unit": "score"
+        },
+        {
+          "key": "risk_band",
+          "label_zh": "表3积分档位"
+        },
+        {
+          "key": "mortality_5y_pct",
+          "label_zh": "五年死亡风险（验证队列同分档估计）",
+          "unit": "%"
+        },
+        {
+          "key": "mortality_5y_ci_low_pct",
+          "label_zh": "同分档风险95%置信区间下限",
+          "unit": "%"
+        },
+        {
+          "key": "mortality_5y_ci_high_pct",
+          "label_zh": "同分档风险95%置信区间上限",
+          "unit": "%"
+        },
+        {
+          "key": "age_years_points",
+          "label_zh": "年龄积分",
+          "unit": "score"
+        },
+        {
+          "key": "male_points",
+          "label_zh": "性别积分",
+          "unit": "score"
+        },
+        {
+          "key": "bmi_kg_m2_points",
+          "label_zh": "体质指数积分",
+          "unit": "score"
+        },
+        {
+          "key": "health_code_points",
+          "label_zh": "自评健康积分",
+          "unit": "score"
+        },
+        {
+          "key": "copd_history_points",
+          "label_zh": "肺气肿或慢性支气管炎史积分",
+          "unit": "score"
+        },
+        {
+          "key": "cancer_history_points",
+          "label_zh": "癌症史积分",
+          "unit": "score"
+        },
+        {
+          "key": "diabetes_history_points",
+          "label_zh": "糖尿病史积分",
+          "unit": "score"
+        },
+        {
+          "key": "iadl_help_points",
+          "label_zh": "日常事务需他人帮助积分",
+          "unit": "score"
+        },
+        {
+          "key": "walking_difficulty_points",
+          "label_zh": "步行四分之一英里困难积分",
+          "unit": "score"
+        },
+        {
+          "key": "smoking_code_points",
+          "label_zh": "吸烟状态积分",
+          "unit": "score"
+        },
+        {
+          "key": "hospitalizations_count_points",
+          "label_zh": "过去一年过夜住院次数积分",
+          "unit": "score"
+        }
+      ],
+      "paper": {
+        "doi": "10.1007/s11606-009-1073-y",
+        "title": "Index to Predict 5-Year Mortality of Community-Dwelling Adults Aged 65 and Older Using Data from the National Health Interview Survey",
+        "title_zh": "社区老年人的Schonberg五年死亡风险指数",
+        "journal": "Journal of General Internal Medicine",
+        "year": 2009
       }
     },
     {

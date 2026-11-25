@@ -1,0 +1,446 @@
+{
+  "$schema": "../../schema/skill.schema.json",
+  "schema": "longevity-skill/1",
+  "name": "medas-mediterranean-diet-adherence",
+  "kind": "paper",
+  "tier": "A",
+  "species": [
+    "human"
+  ],
+  "evidence": "cross_sectional",
+  "domains": [
+    "nutrition",
+    "cardiovascular"
+  ],
+  "blurb_zh": "用14项饮食问卷计算地中海饮食依从性总分及逐项得分。",
+  "intents": [
+    "before_after"
+  ],
+  "triage": {
+    "reason_zh": "人体基线验证研究完整公布MEDAS的14项二元切点与求和规则，可用个人问卷回答计算评分。",
+    "reviewed": false
+  },
+  "paper": {
+    "doi": "10.3945/jn.110.135566",
+    "title": "A short screener is valid for assessing Mediterranean diet adherence among older Spanish men and women.",
+    "title_zh": "简短问卷可评估西班牙中老年人的地中海饮食依从性",
+    "journal": "The Journal of Nutrition",
+    "year": 2011,
+    "authors": "Schröder 等",
+    "article_url": "https://doi.org/10.3945/jn.110.135566",
+    "supplements": [],
+    "card_notes": [
+      "采用2011年论文Table 2的原版问卷；份数须按该问卷定义确认。"
+    ],
+    "summary_zh": "这项研究在西班牙冠心病高风险中老年人中发现，简短饮食问卷与较长的食物频率问卷具有一定一致性，评分也与部分心血管代谢指标相关。个人报告只计算地中海饮食依从性总分和逐项得分，不计算个人疾病风险或寿命。",
+    "summary_status": "draft"
+  },
+  "entry": {
+    "script": "scripts/personal_report.py",
+    "measurements_flag": "--measurements",
+    "measurements_header": [
+      "item",
+      "value",
+      "unit"
+    ],
+    "age_flag": "--age",
+    "sex_flag": "--sex",
+    "out_flag": "--out",
+    "result_json": true,
+    "targets_flag": "--targets",
+    "levers_json": true
+  },
+  "population": {
+    "age_years": [
+      55,
+      80
+    ],
+    "note_zh": "正文报告为西班牙冠心病高风险、无已知心血管病的55–80岁参与者，分析的是干预前问卷；不等于一般人群验证。"
+  },
+  "inputs_status": "verified",
+  "inputs": [
+    {
+      "key": "olive_oil_main_yes",
+      "label_zh": "橄榄油是否为主要烹调用油",
+      "aliases": [
+        "olive oil principal cooking fat",
+        "MEDAS Q1"
+      ],
+      "unit": "1",
+      "accept": {},
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "questionnaire",
+      "note_zh": "只能填 0 或 1；询问主要烹调用油，不是是否偶尔使用。 表中单位填1，表示项目名指定日/周内的份、个、杯或次数；不接受跨周期或克/毫升的隐式换算。"
+    },
+    {
+      "key": "olive_oil_tbsp_day",
+      "label_zh": "每日橄榄油汤匙数",
+      "aliases": [
+        "olive oil tablespoons per day",
+        "MEDAS Q2"
+      ],
+      "unit": "1",
+      "accept": {},
+      "range": [
+        0,
+        30
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "questionnaire",
+      "note_zh": "含煎炸、沙拉、外食等全部橄榄油；论文 1 汤匙=13.5 g，不用家用勺容量推算。 表中单位填1，表示项目名指定日/周内的份、个、杯或次数；不接受跨周期或克/毫升的隐式换算。"
+    },
+    {
+      "key": "vegetables_servings_day",
+      "label_zh": "每日蔬菜份数",
+      "aliases": [
+        "vegetable servings per day",
+        "MEDAS Q3"
+      ],
+      "unit": "1",
+      "accept": {},
+      "range": [
+        0,
+        30
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "questionnaire",
+      "note_zh": "1 完整份=200 g；配菜或装饰菜按半份计入摄入量，最终该题仍只得 0 或 1 分。 表中单位填1，表示项目名指定日/周内的份、个、杯或次数；不接受跨周期或克/毫升的隐式换算。"
+    },
+    {
+      "key": "fruit_pieces_day",
+      "label_zh": "每日水果个数",
+      "aliases": [
+        "fruit pieces per day",
+        "MEDAS Q4"
+      ],
+      "unit": "1",
+      "accept": {},
+      "range": [
+        0,
+        30
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "questionnaire",
+      "note_zh": "原问题包含鲜榨果汁；论文未规定果汁每份毫升数，不能自动把毫升换算成果实个数。 表中单位填1，表示项目名指定日/周内的份、个、杯或次数；不接受跨周期或克/毫升的隐式换算。"
+    },
+    {
+      "key": "red_meat_servings_day",
+      "label_zh": "每日红肉汉堡香肠份数",
+      "aliases": [
+        "red meat hamburger sausage servings per day",
+        "MEDAS Q5"
+      ],
+      "unit": "1",
+      "accept": {},
+      "range": [
+        0,
+        20
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "questionnaire",
+      "note_zh": "包括红肉、汉堡、香肠；完整份为 100–150 g，须按问卷报告份数，不能取区间中点转换。 表中单位填1，表示项目名指定日/周内的份、个、杯或次数；不接受跨周期或克/毫升的隐式换算。"
+    },
+    {
+      "key": "butter_margarine_cream_servings_day",
+      "label_zh": "每日黄油人造黄油奶油份数",
+      "aliases": [
+        "butter margarine cream servings per day",
+        "MEDAS Q6"
+      ],
+      "unit": "1",
+      "accept": {},
+      "range": [
+        0,
+        40
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "questionnaire",
+      "note_zh": "三者合计；每份 12 g。按 Table 2 明确列举的食品计，不泛化成所有动物脂肪。 表中单位填1，表示项目名指定日/周内的份、个、杯或次数；不接受跨周期或克/毫升的隐式换算。"
+    },
+    {
+      "key": "sweet_carbonated_drinks_cups_day",
+      "label_zh": "每日碳酸或含糖饮料杯数",
+      "aliases": [
+        "carbonated sugar sweetened beverages per day",
+        "MEDAS Q7"
+      ],
+      "unit": "1",
+      "accept": {},
+      "range": [
+        0,
+        100
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "questionnaire",
+      "note_zh": "按 Table 2 的碳酸和/或含糖饮料问题记录；正文规定 1 杯=100 mL，不按常见大杯计。 表中单位填1，表示项目名指定日/周内的份、个、杯或次数；不接受跨周期或克/毫升的隐式换算。"
+    },
+    {
+      "key": "wine_cups_week",
+      "label_zh": "每周葡萄酒杯数",
+      "aliases": [
+        "wine cups per week",
+        "MEDAS Q8"
+      ],
+      "unit": "1",
+      "accept": {},
+      "range": [
+        0,
+        140
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "questionnaire",
+      "note_zh": "Table 2 写 wine；正文写 red wine。采用 Table 2 原题，1 杯=100 mL；不把啤酒或白酒折算成葡萄酒，不作为饮酒建议。 表中单位填1，表示项目名指定日/周内的份、个、杯或次数；不接受跨周期或克/毫升的隐式换算。"
+    },
+    {
+      "key": "pulses_servings_week",
+      "label_zh": "每周豆类份数",
+      "aliases": [
+        "pulses servings per week",
+        "legumes servings per week",
+        "MEDAS Q9"
+      ],
+      "unit": "1",
+      "accept": {},
+      "range": [
+        0,
+        50
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "questionnaire",
+      "note_zh": "每份 150 g；不自行将豆浆或其他豆制品折算成该问卷的豆类份数。 表中单位填1，表示项目名指定日/周内的份、个、杯或次数；不接受跨周期或克/毫升的隐式换算。"
+    },
+    {
+      "key": "fish_seafood_servings_week",
+      "label_zh": "每周鱼或海鲜份数",
+      "aliases": [
+        "fish seafood servings per week",
+        "MEDAS Q10"
+      ],
+      "unit": "1",
+      "accept": {},
+      "range": [
+        0,
+        50
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "questionnaire",
+      "note_zh": "每份鱼 100–150 g；海鲜为 4–5 个或 200 g。混合记录先按原问卷确认份数，不猜统一克重。 表中单位填1，表示项目名指定日/周内的份、个、杯或次数；不接受跨周期或克/毫升的隐式换算。"
+    },
+    {
+      "key": "commercial_pastry_times_week",
+      "label_zh": "每周商业糕点次数",
+      "aliases": [
+        "commercial pastry times per week",
+        "MEDAS Q11"
+      ],
+      "unit": "1",
+      "accept": {},
+      "range": [
+        0,
+        100
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "questionnaire",
+      "note_zh": "仅商业制作（非自制）的饼干、蛋糕等；本论文是每周少于 2 次，不套用其他版本阈值。 表中单位填1，表示项目名指定日/周内的份、个、杯或次数；不接受跨周期或克/毫升的隐式换算。"
+    },
+    {
+      "key": "nuts_servings_week",
+      "label_zh": "每周坚果份数",
+      "aliases": [
+        "nuts servings per week",
+        "MEDAS Q12"
+      ],
+      "unit": "1",
+      "accept": {},
+      "range": [
+        0,
+        100
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "questionnaire",
+      "note_zh": "每份 30 g；本论文阈值为每周至少 3 份。 表中单位填1，表示项目名指定日/周内的份、个、杯或次数；不接受跨周期或克/毫升的隐式换算。"
+    },
+    {
+      "key": "white_meat_preferred_yes",
+      "label_zh": "是否更偏好鸡火鸡兔肉",
+      "aliases": [
+        "prefer chicken turkey rabbit",
+        "MEDAS Q13"
+      ],
+      "unit": "1",
+      "accept": {},
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "questionnaire",
+      "note_zh": "相对于牛肉、猪肉、汉堡或香肠，是否更偏好鸡、火鸡或兔肉；只能填 0 或 1。 表中单位填1，表示项目名指定日/周内的份、个、杯或次数；不接受跨周期或克/毫升的隐式换算。"
+    },
+    {
+      "key": "sofrito_times_week",
+      "label_zh": "每周橄榄油番茄蒜洋葱酱菜肴次数",
+      "aliases": [
+        "sofrito times per week",
+        "MEDAS Q14"
+      ],
+      "unit": "1",
+      "accept": {},
+      "range": [
+        0,
+        100
+      ],
+      "required": true,
+      "from": "measurements",
+      "group": "questionnaire",
+      "note_zh": "指配有以橄榄油炒制番茄、蒜、洋葱或韭葱酱汁的蔬菜、意面、米饭等；不是任意含番茄的菜肴。 表中单位填1，表示项目名指定日/周内的份、个、杯或次数；不接受跨周期或克/毫升的隐式换算。"
+    },
+    {
+      "key": "age",
+      "label_zh": "实足年龄",
+      "unit": "a",
+      "accept": {},
+      "range": [
+        0,
+        120
+      ],
+      "required": false,
+      "from": "profile",
+      "flag": "--age",
+      "note_zh": "可选，仅用于提示是否超出研究年龄范围，不进评分。"
+    },
+    {
+      "key": "sex",
+      "label_zh": "性别",
+      "required": false,
+      "from": "profile",
+      "flag": "--sex",
+      "note_zh": "可选，接受male或female，不进评分。"
+    }
+  ],
+  "outputs": [
+    {
+      "key": "medas_total",
+      "label_zh": "MEDAS总分",
+      "unit": "score",
+      "note_zh": "14个二元得分等权求和，范围0–14，不划分疾病风险等级。"
+    },
+    {
+      "key": "item_01_score",
+      "label_zh": "橄榄油是否为主要烹调用油得分",
+      "unit": "score",
+      "note_zh": "满足Table 2条件得1分，否则0分。"
+    },
+    {
+      "key": "item_02_score",
+      "label_zh": "每日橄榄油汤匙数得分",
+      "unit": "score",
+      "note_zh": "满足Table 2条件得1分，否则0分。"
+    },
+    {
+      "key": "item_03_score",
+      "label_zh": "每日蔬菜份数得分",
+      "unit": "score",
+      "note_zh": "满足Table 2条件得1分，否则0分。"
+    },
+    {
+      "key": "item_04_score",
+      "label_zh": "每日水果个数得分",
+      "unit": "score",
+      "note_zh": "满足Table 2条件得1分，否则0分。"
+    },
+    {
+      "key": "item_05_score",
+      "label_zh": "每日红肉汉堡香肠份数得分",
+      "unit": "score",
+      "note_zh": "满足Table 2条件得1分，否则0分。"
+    },
+    {
+      "key": "item_06_score",
+      "label_zh": "每日黄油人造黄油奶油份数得分",
+      "unit": "score",
+      "note_zh": "满足Table 2条件得1分，否则0分。"
+    },
+    {
+      "key": "item_07_score",
+      "label_zh": "每日碳酸或含糖饮料杯数得分",
+      "unit": "score",
+      "note_zh": "满足Table 2条件得1分，否则0分。"
+    },
+    {
+      "key": "item_08_score",
+      "label_zh": "每周葡萄酒杯数得分",
+      "unit": "score",
+      "note_zh": "满足Table 2条件得1分，否则0分。"
+    },
+    {
+      "key": "item_09_score",
+      "label_zh": "每周豆类份数得分",
+      "unit": "score",
+      "note_zh": "满足Table 2条件得1分，否则0分。"
+    },
+    {
+      "key": "item_10_score",
+      "label_zh": "每周鱼或海鲜份数得分",
+      "unit": "score",
+      "note_zh": "满足Table 2条件得1分，否则0分。"
+    },
+    {
+      "key": "item_11_score",
+      "label_zh": "每周商业糕点次数得分",
+      "unit": "score",
+      "note_zh": "满足Table 2条件得1分，否则0分。"
+    },
+    {
+      "key": "item_12_score",
+      "label_zh": "每周坚果份数得分",
+      "unit": "score",
+      "note_zh": "满足Table 2条件得1分，否则0分。"
+    },
+    {
+      "key": "item_13_score",
+      "label_zh": "是否更偏好鸡火鸡兔肉得分",
+      "unit": "score",
+      "note_zh": "满足Table 2条件得1分，否则0分。"
+    },
+    {
+      "key": "item_14_score",
+      "label_zh": "每周橄榄油番茄蒜洋葱酱菜肴次数得分",
+      "unit": "score",
+      "note_zh": "满足Table 2条件得1分，否则0分。"
+    }
+  ],
+  "validation": {
+    "status": "reproduced",
+    "examples": [
+      {
+        "locator": "Table 2, row 2 Frequency column and footnote 1 (PDF page 4)",
+        "quote": "≥4 Tbsp\nCriterion to score 1 point. Otherwise, 0 recorded.",
+        "values": [
+          0,
+          1,
+          4
+        ],
+        "tolerance": "精确相等；复现的是表中明确打印的逐项二元得分，不声称复现受试者总分或队列统计量。",
+        "test": "tests/test_manifest.py::test_table2_olive_oil_condition_and_otherwise"
+      }
+    ]
+  }
+}

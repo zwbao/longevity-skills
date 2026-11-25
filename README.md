@@ -188,11 +188,13 @@ python3 -m tools.lsk test --changed origin/main   # 只测相对 main 改动过�
 - `skills/environmental-genetic-aging-mortality/` — 暴露回答。（名单类）
 - `skills/epigenetic-frailty-risk-score/` — 见「甲基化」。
 - `skills/genome-wide-proteomics-frailty/` — 已经算好的医院衰弱风险分。
+- `skills/lee-mortality-index/` — 用年龄、病史和日常功能问卷计算Lee四年死亡风险指数。
 - `skills/metabolomic-frailty-subtypes/` — 十一项核磁代谢物离哪个已发表亚型均值最近（近似，不是论文的分型）。（名单类）
 - `skills/methylation-variability-aging-score/` — 见「甲基化」。
 - `skills/modifiable-risk-factor-score/` — 数一数 11 项可改变的危险因素（教育、抑郁、吸烟、饮酒、运动、饮食、睡眠、体重、血糖、血压、血脂）有几项，并给出你所在年龄段每多一项对应的全因死亡风险比。
 - `skills/one-year-mortality-aging-marker/` — 年龄和性别。一年死亡概率的回归系数没有印出。（名单类）
 - `skills/plasma-protein-risk-score/` — 按论文系数把你交来的标准化蛋白值加权求和，可算足跟超声骨密度；不是你的骨折风险。（名单类）
+- `skills/schonberg-mortality-index/` — 用年龄、体重指数及自报健康情况计算Schonberg五年死亡风险积分。
 - `skills/sleep-study-life-expectancy/` — 你已有的睡眠年龄估计减去实足年龄，只做相减，不跑论文的深度网络。（名单类）
 
 ## 线粒体
@@ -254,6 +256,14 @@ python3 -m tools.lsk test --changed origin/main   # 只测相对 main 改动过�
 
 - `skills/digital-telomere-measurement-sequencing/` — 一批端粒长度的通用分布统计（不套论文的分类模型）。（名单类）
 - `skills/leukocyte-telomere-length/` — 你交来的英国生物银行式 z 标准化端粒放进四分位档；自己测的 T/S 比值不能分档。（名单类）
+
+## cardiovascular
+
+- `skills/medas-mediterranean-diet-adherence/` — 见「nutrition」。
+
+## nutrition
+
+- `skills/medas-mediterranean-diet-adherence/` — 用14项饮食问卷计算地中海饮食依从性总分及逐项得分。
 
 ## 久坐
 
