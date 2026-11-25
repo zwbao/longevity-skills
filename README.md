@@ -281,6 +281,10 @@ python3 -m tools.lsk test --changed origin/main   # 只测相对 main 改动过�
 
 - `skills/short-physical-performance-battery/` — 根据半串联与并足或全串联站立、8英尺常速步行和五次起立记录，计算原版 SPPB 三项得分及总分。
 
+## 体脂与人体测量
+
+- `skills/relative-fat-mass/` — 用身高、腰围和性别估算成人全身体脂率。
+
 ## 体脂与腰围
 
 - `skills/navy-circumference-body-fat/` — 用身高、颈围、腰围（女性加臀围）按美国海军围度方程估算体脂率，再算腰围身高比、腰臀比，并按国家标准看是否中心型肥胖。
