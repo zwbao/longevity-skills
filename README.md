@@ -188,6 +188,7 @@ python3 -m tools.lsk test --changed origin/main   # 只测相对 main 改动过�
 - `skills/environmental-genetic-aging-mortality/` — 暴露回答。（名单类）
 - `skills/epigenetic-frailty-risk-score/` — 见「甲基化」。
 - `skills/genome-wide-proteomics-frailty/` — 已经算好的医院衰弱风险分。
+- `skills/lee-mortality-index/` — 用年龄、病史和日常功能问卷计算Lee四年死亡风险指数。
 - `skills/metabolomic-frailty-subtypes/` — 十一项核磁代谢物离哪个已发表亚型均值最近（近似，不是论文的分型）。（名单类）
 - `skills/methylation-variability-aging-score/` — 见「甲基化」。
 - `skills/modifiable-risk-factor-score/` — 数一数 11 项可改变的危险因素（教育、抑郁、吸烟、饮酒、运动、饮食、睡眠、体重、血糖、血压、血脂）有几项，并给出你所在年龄段每多一项对应的全因死亡风险比。
