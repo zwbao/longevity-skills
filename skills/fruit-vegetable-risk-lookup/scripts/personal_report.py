@@ -138,7 +138,7 @@ def main(argv=None):
         lines += ["", "## 自设目标的表格对比", "", *result_lines(scenario["targets"])]
         delta = scenario["targets"]["rr_delta"]
         lines += [f"目标行 RR 减当前行 RR：{delta:+.2f}。这个差不是绝对风险下降或治疗效果。" if delta is not None else "当前值或目标值没有对应印出行，因此不计算 RR 差。"]
-    lines += ["", MODEL_NOTE, "", "未按年龄、性别或既往病史校准；研究以成人队列为主。食物定义和测量方式在各队列间不同，重量状态不明确时应先核实饮食记录。", "", f"边界：{BOUNDARY}"]
+    lines += ["", MODEL_NOTE, "", "适用人群：数值来自95项前瞻性研究（142篇出版物）的荟萃分析，主要为欧洲、美国、亚洲和澳大利亚的成人队列；未按年龄、性别或既往病史校准。食物定义和测量方式在各队列间不同，重量状态不明确时应先核实饮食记录。", "", f"边界：{BOUNDARY}"]
     (args.out / "report.md").write_text("\n\n".join(line for line in lines if line) + "\n", encoding="utf-8")
     skillkit.write_result(args.out, manifest, output_values(current))
     (args.out / "levers.json").write_text(json.dumps(scenario, ensure_ascii=False, indent=2, allow_nan=False) + "\n", encoding="utf-8")
