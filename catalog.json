@@ -2,9 +2,9 @@
   "schema": "longevity-catalog/1",
   "version": "2026.48.0",
   "counts": {
-    "skills": 207,
+    "skills": 208,
     "tiers": {
-      "A": 43,
+      "A": 44,
       "B": 83,
       "C": 73,
       "tool": 8
@@ -3979,6 +3979,244 @@
         "title": "Evidence for improved DNA repair in the long-lived bowhead whale",
         "title_zh": "弓头鲸的 DNA 修复",
         "journal": "Nature",
+        "year": 2025
+      }
+    },
+    {
+      "name": "burden-of-proof-dietary-risk",
+      "kind": "paper",
+      "tier": "A",
+      "species": [
+        "human"
+      ],
+      "evidence": "cohort",
+      "domains": [
+        "饮食与代谢"
+      ],
+      "blurb_zh": "用加工肉、含糖饮料或反式脂肪的日常摄入量，读取已发表摄入量点对应的慢病相对风险及不确定区间。",
+      "description": "Tier A personal readout: computes one person's value with the paper's printed method and reproduces a printed example. Reads published Burden of Proof relative risks for processed meat, sugar-sweetened beverages and trans-fat energy intake at the exact exposure points in Supplementary Tables 13–16. Use for an adult asking what their habitual intake corresponds to in these population associations, or comparing user-specified intake scenarios. Reports uncertainty including between-study heterogeneity; does not interpolate or calculate individual absolute risk.",
+      "intents": [
+        "intervention_evidence",
+        "before_after"
+      ],
+      "has_script": true,
+      "validation_status": "reproduced",
+      "validation_label_zh": "已复现论文",
+      "entry": {
+        "script": "scripts/personal_report.py",
+        "measurements_flag": "--measurements",
+        "measurements_header": [
+          "marker",
+          "value",
+          "unit"
+        ],
+        "age_flag": "--age",
+        "sex_flag": "--sex",
+        "out_flag": "--out",
+        "result_json": true,
+        "targets_flag": "--targets",
+        "levers_json": true
+      },
+      "inputs_status": "verified",
+      "inputs": [
+        {
+          "key": "processed_meat_g_d",
+          "label_zh": "加工肉",
+          "aliases": [
+            "加工肉摄入量",
+            "加工肉类",
+            "processed meat",
+            "Processed meat consumption"
+          ],
+          "unit": "g/d",
+          "range": [
+            0,
+            400
+          ],
+          "note_zh": "日常平均摄入的食物质量，不是蛋白质或钠的质量。只接受已发表点：0、25、50、75、100、150、200、250、300、350、400；其中 25、75 只有缺血性心脏病读数，150 没有该结局读数。",
+          "required": false,
+          "unit_required": true,
+          "from": "measurements"
+        },
+        {
+          "key": "ssb_g_d",
+          "label_zh": "含糖饮料",
+          "aliases": [
+            "含糖饮料摄入量",
+            "SSB",
+            "SSBs",
+            "sugar-sweetened beverages",
+            "SSB consumption"
+          ],
+          "unit": "g/d",
+          "range": [
+            0,
+            1000
+          ],
+          "note_zh": "饮料总质量，不是其中糖的质量；不能把 mL 或瓶数直接当作克。只接受已发表点：0、250、500、750、1000。",
+          "required": false,
+          "unit_required": true,
+          "from": "measurements"
+        },
+        {
+          "key": "tfa_energy_pct",
+          "label_zh": "反式脂肪供能占比",
+          "aliases": [
+            "反式脂肪酸供能百分比",
+            "TFA energy percentage",
+            "trans fat percent energy",
+            "Trans fat consumption"
+          ],
+          "unit": "%",
+          "accept": {
+            "1": 100
+          },
+          "range": [
+            0,
+            6
+          ],
+          "note_zh": "反式脂肪提供的能量占每日总能量的百分比，不是食物重量百分比或每日克数。1% 输入 1；若用能量比例 0.01，单位填 1。只接受 0、1、2、3、4、5、6；零为参照定义。",
+          "required": false,
+          "unit_required": true,
+          "from": "measurements"
+        },
+        {
+          "key": "age",
+          "label_zh": "实足年龄",
+          "unit": "a",
+          "range": [
+            18,
+            120
+          ],
+          "required": true,
+          "from": "profile",
+          "flag": "--age",
+          "note_zh": "只核对成年人适用范围；18–120 是输入检查范围，不是模型训练年龄上下界。年龄不改变表格读数。"
+        },
+        {
+          "key": "sex",
+          "label_zh": "性别",
+          "required": false,
+          "from": "profile",
+          "flag": "--sex",
+          "note_zh": "可选上下文，不改变读数。"
+        }
+      ],
+      "outputs": [
+        {
+          "key": "meat_t2d_rr",
+          "label_zh": "加工肉—2 型糖尿病 相对风险",
+          "unit": "1",
+          "note_zh": "相对于零摄入的群体关联。未提供摄入量或该结局没有该摄入量的已发表表格点时为 null；零参照的区间也为 null。"
+        },
+        {
+          "key": "meat_t2d_ui_lower",
+          "label_zh": "加工肉—2 型糖尿病 95% 不确定区间下限（含异质性）",
+          "unit": "1",
+          "note_zh": "相对于零摄入的群体关联。未提供摄入量或该结局没有该摄入量的已发表表格点时为 null；零参照的区间也为 null。"
+        },
+        {
+          "key": "meat_t2d_ui_upper",
+          "label_zh": "加工肉—2 型糖尿病 95% 不确定区间上限（含异质性）",
+          "unit": "1",
+          "note_zh": "相对于零摄入的群体关联。未提供摄入量或该结局没有该摄入量的已发表表格点时为 null；零参照的区间也为 null。"
+        },
+        {
+          "key": "meat_crc_rr",
+          "label_zh": "加工肉—结直肠癌 相对风险",
+          "unit": "1",
+          "note_zh": "相对于零摄入的群体关联。未提供摄入量或该结局没有该摄入量的已发表表格点时为 null；零参照的区间也为 null。"
+        },
+        {
+          "key": "meat_crc_ui_lower",
+          "label_zh": "加工肉—结直肠癌 95% 不确定区间下限（含异质性）",
+          "unit": "1",
+          "note_zh": "相对于零摄入的群体关联。未提供摄入量或该结局没有该摄入量的已发表表格点时为 null；零参照的区间也为 null。"
+        },
+        {
+          "key": "meat_crc_ui_upper",
+          "label_zh": "加工肉—结直肠癌 95% 不确定区间上限（含异质性）",
+          "unit": "1",
+          "note_zh": "相对于零摄入的群体关联。未提供摄入量或该结局没有该摄入量的已发表表格点时为 null；零参照的区间也为 null。"
+        },
+        {
+          "key": "meat_ihd_rr",
+          "label_zh": "加工肉—缺血性心脏病 相对风险",
+          "unit": "1",
+          "note_zh": "相对于零摄入的群体关联。未提供摄入量或该结局没有该摄入量的已发表表格点时为 null；零参照的区间也为 null。"
+        },
+        {
+          "key": "meat_ihd_ui_lower",
+          "label_zh": "加工肉—缺血性心脏病 95% 不确定区间下限（含异质性）",
+          "unit": "1",
+          "note_zh": "相对于零摄入的群体关联。未提供摄入量或该结局没有该摄入量的已发表表格点时为 null；零参照的区间也为 null。"
+        },
+        {
+          "key": "meat_ihd_ui_upper",
+          "label_zh": "加工肉—缺血性心脏病 95% 不确定区间上限（含异质性）",
+          "unit": "1",
+          "note_zh": "相对于零摄入的群体关联。未提供摄入量或该结局没有该摄入量的已发表表格点时为 null；零参照的区间也为 null。"
+        },
+        {
+          "key": "ssb_t2d_rr",
+          "label_zh": "含糖饮料—2 型糖尿病 相对风险",
+          "unit": "1",
+          "note_zh": "相对于零摄入的群体关联。未提供摄入量或该结局没有该摄入量的已发表表格点时为 null；零参照的区间也为 null。"
+        },
+        {
+          "key": "ssb_t2d_ui_lower",
+          "label_zh": "含糖饮料—2 型糖尿病 95% 不确定区间下限（含异质性）",
+          "unit": "1",
+          "note_zh": "相对于零摄入的群体关联。未提供摄入量或该结局没有该摄入量的已发表表格点时为 null；零参照的区间也为 null。"
+        },
+        {
+          "key": "ssb_t2d_ui_upper",
+          "label_zh": "含糖饮料—2 型糖尿病 95% 不确定区间上限（含异质性）",
+          "unit": "1",
+          "note_zh": "相对于零摄入的群体关联。未提供摄入量或该结局没有该摄入量的已发表表格点时为 null；零参照的区间也为 null。"
+        },
+        {
+          "key": "ssb_ihd_rr",
+          "label_zh": "含糖饮料—缺血性心脏病 相对风险",
+          "unit": "1",
+          "note_zh": "相对于零摄入的群体关联。未提供摄入量或该结局没有该摄入量的已发表表格点时为 null；零参照的区间也为 null。"
+        },
+        {
+          "key": "ssb_ihd_ui_lower",
+          "label_zh": "含糖饮料—缺血性心脏病 95% 不确定区间下限（含异质性）",
+          "unit": "1",
+          "note_zh": "相对于零摄入的群体关联。未提供摄入量或该结局没有该摄入量的已发表表格点时为 null；零参照的区间也为 null。"
+        },
+        {
+          "key": "ssb_ihd_ui_upper",
+          "label_zh": "含糖饮料—缺血性心脏病 95% 不确定区间上限（含异质性）",
+          "unit": "1",
+          "note_zh": "相对于零摄入的群体关联。未提供摄入量或该结局没有该摄入量的已发表表格点时为 null；零参照的区间也为 null。"
+        },
+        {
+          "key": "tfa_ihd_rr",
+          "label_zh": "反式脂肪—缺血性心脏病 相对风险",
+          "unit": "1",
+          "note_zh": "相对于零摄入的群体关联。未提供摄入量或该结局没有该摄入量的已发表表格点时为 null；零参照的区间也为 null。"
+        },
+        {
+          "key": "tfa_ihd_ui_lower",
+          "label_zh": "反式脂肪—缺血性心脏病 95% 不确定区间下限（含异质性）",
+          "unit": "1",
+          "note_zh": "相对于零摄入的群体关联。未提供摄入量或该结局没有该摄入量的已发表表格点时为 null；零参照的区间也为 null。"
+        },
+        {
+          "key": "tfa_ihd_ui_upper",
+          "label_zh": "反式脂肪—缺血性心脏病 95% 不确定区间上限（含异质性）",
+          "unit": "1",
+          "note_zh": "相对于零摄入的群体关联。未提供摄入量或该结局没有该摄入量的已发表表格点时为 null；零参照的区间也为 null。"
+        }
+      ],
+      "paper": {
+        "doi": "10.1038/s41591-025-03775-8",
+        "title": "Health effects associated with consumption of processed meat, sugar-sweetened beverages and trans fatty acids: a Burden of Proof study",
+        "title_zh": "加工肉、含糖饮料和反式脂肪摄入的健康关联",
+        "journal": "Nature Medicine",
         "year": 2025
       }
     },

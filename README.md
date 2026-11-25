@@ -366,6 +366,7 @@ python3 -m tools.lsk test --changed origin/main   # 只测相对 main 改动过�
 
 ## 饮食与代谢
 
+- `skills/burden-of-proof-dietary-risk/` — 用加工肉、含糖饮料或反式脂肪的日常摄入量，读取已发表摄入量点对应的慢病相对风险及不确定区间。
 - `skills/red-meat-burden-of-proof/` — 按未加工红肉日均摄入量查询慢病相对风险与不确定区间，仅支持论文列出的摄入点。
 
 ## 饮食与基因
