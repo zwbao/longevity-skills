@@ -1,0 +1,340 @@
+{
+  "schema": "longevity-skill/1",
+  "name": "ckb-diet-score",
+  "kind": "paper",
+  "tier": "A",
+  "species": [
+    "human"
+  ],
+  "evidence": "cohort",
+  "domains": [
+    "饮食与生活方式"
+  ],
+  "blurb_zh": "用五类食物的通常食用频率计算饮食得分，并查看对应的队列死亡风险关联。",
+  "intents": [
+    "frailty_mortality",
+    "before_after"
+  ],
+  "triage": {
+    "reason_zh": "正文给出五项饮食计分规则，表 1 和附录表 S3、S4 给出各得分档的死亡 HR，可由个人饮食记录评分并核对原表。",
+    "reviewed": false
+  },
+  "paper": {
+    "doi": "10.1016/s2468-2667(22)00110-4",
+    "title": "Healthy lifestyle and life expectancy at age 30 years in the Chinese population: an observational study.",
+    "title_zh": "中国人群的健康生活方式与三十岁时预期寿命",
+    "journal": "The Lancet Public Health",
+    "year": 2022,
+    "authors": "Sun 等",
+    "article_url": "https://doi.org/10.1016/S2468-2667(22)00110-4",
+    "supplements": [
+      {
+        "label": "Supplementary appendix（表 S3、S4）",
+        "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7615002/bin/EMS185043-supplement-Supplementary_file.pdf"
+      }
+    ],
+    "card_notes": [
+      "个人读出采用正文的饮食规则以及表 1、补充表 S3 和 S4 的 Cox HR；不计算完整生活方式总分或生命表。",
+      "未列出独立的公开计算代码仓库；来源核查及表格范围见 references/contract.md。"
+    ],
+    "summary_zh": "这项研究结合中国成人队列、全国营养调查和死亡率资料，发现较健康的生活方式与较低死亡风险及更长人群预期寿命相关。个人报告只计算饮食记录对应的得分、分档及队列关联，不估计个人寿命或改变饮食后的收益。",
+    "summary_status": "draft"
+  },
+  "entry": {
+    "script": "scripts/personal_report.py",
+    "measurements_flag": "--diet",
+    "measurements_header": [
+      "marker",
+      "value",
+      "unit"
+    ],
+    "age_flag": "--age",
+    "sex_flag": "--sex",
+    "out_flag": "--out",
+    "result_json": true,
+    "targets_flag": "--targets",
+    "levers_json": true
+  },
+  "population": {
+    "age_years": [
+      30,
+      79
+    ],
+    "note_zh": "中国 CKB 队列，主分析排除基线冠心病、脑卒中和癌症；年龄不参与饮食加分，超出范围仅作规则演示。"
+  },
+  "inputs_status": "verified",
+  "inputs": [
+    {
+      "key": "fresh_vegetables_days_per_week",
+      "label_zh": "新鲜蔬菜通常食用天数/周",
+      "aliases": [
+        "fresh vegetables",
+        "新鲜蔬菜食用天数",
+        "新鲜蔬菜"
+      ],
+      "unit": "d",
+      "accept": {},
+      "range": [
+        0,
+        7
+      ],
+      "unit_required": true,
+      "required": true,
+      "from": "measurements",
+      "note_zh": "过去 12 个月的通常每周食用天数。d 表示固定七天一周中有食用的天数，不是次数、份数或进食持续时间；不把次数/周换算为天数/周。可填明确的平均天数，不四舍五入；每天填 7。"
+    },
+    {
+      "key": "fresh_fruit_days_per_week",
+      "label_zh": "新鲜水果通常食用天数/周",
+      "aliases": [
+        "fresh fruits",
+        "fresh fruit",
+        "新鲜水果食用天数",
+        "新鲜水果"
+      ],
+      "unit": "d",
+      "accept": {},
+      "range": [
+        0,
+        7
+      ],
+      "unit_required": true,
+      "required": true,
+      "from": "measurements",
+      "note_zh": "过去 12 个月的通常每周食用天数。d 表示固定七天一周中有食用的天数，不是次数、份数或进食持续时间；不把次数/周换算为天数/周。可填明确的平均天数，不四舍五入；每天填 7。"
+    },
+    {
+      "key": "red_meat_days_per_week",
+      "label_zh": "红肉通常食用天数/周",
+      "aliases": [
+        "red meat",
+        "红肉食用天数",
+        "红肉"
+      ],
+      "unit": "d",
+      "accept": {},
+      "range": [
+        0,
+        7
+      ],
+      "unit_required": true,
+      "required": true,
+      "from": "measurements",
+      "note_zh": "过去 12 个月的通常每周食用天数。d 表示固定七天一周中有食用的天数，不是次数、份数或进食持续时间；不把次数/周换算为天数/周。可填明确的平均天数，不四舍五入；每天填 7。"
+    },
+    {
+      "key": "legumes_days_per_week",
+      "label_zh": "豆类通常食用天数/周",
+      "aliases": [
+        "legumes",
+        "豆类食用天数",
+        "豆类"
+      ],
+      "unit": "d",
+      "accept": {},
+      "range": [
+        0,
+        7
+      ],
+      "unit_required": true,
+      "required": true,
+      "from": "measurements",
+      "note_zh": "过去 12 个月的通常每周食用天数。d 表示固定七天一周中有食用的天数，不是次数、份数或进食持续时间；不把次数/周换算为天数/周。可填明确的平均天数，不四舍五入；每天填 7。"
+    },
+    {
+      "key": "fish_days_per_week",
+      "label_zh": "鱼通常食用天数/周",
+      "aliases": [
+        "fish",
+        "鱼类",
+        "鱼食用天数",
+        "鱼"
+      ],
+      "unit": "d",
+      "accept": {},
+      "range": [
+        0,
+        7
+      ],
+      "unit_required": true,
+      "required": true,
+      "from": "measurements",
+      "note_zh": "过去 12 个月的通常每周食用天数。d 表示固定七天一周中有食用的天数，不是次数、份数或进食持续时间；不把次数/周换算为天数/周。可填明确的平均天数，不四舍五入；每天填 7。"
+    },
+    {
+      "key": "age",
+      "label_zh": "实足年龄",
+      "aliases": [
+        "age",
+        "年龄"
+      ],
+      "unit": "a",
+      "range": [
+        18,
+        110
+      ],
+      "required": false,
+      "from": "profile",
+      "flag": "--age",
+      "note_zh": "只提示是否处于研究入组年龄 30–79 岁，不进入评分。18–110 是软件输入防错范围，不是研究验证范围。"
+    },
+    {
+      "key": "sex",
+      "label_zh": "研究性别分层",
+      "required": false,
+      "from": "profile",
+      "flag": "--sex",
+      "note_zh": "male 查 S3，female 查 S4，未提供或 pooled 查表 1；不猜测性别。"
+    }
+  ],
+  "outputs": [
+    {
+      "key": "fresh_vegetables_points",
+      "label_zh": "新鲜蔬菜项得分",
+      "unit": "score"
+    },
+    {
+      "key": "fresh_fruit_points",
+      "label_zh": "新鲜水果项得分",
+      "unit": "score"
+    },
+    {
+      "key": "red_meat_points",
+      "label_zh": "红肉项得分",
+      "unit": "score"
+    },
+    {
+      "key": "legumes_points",
+      "label_zh": "豆类项得分",
+      "unit": "score"
+    },
+    {
+      "key": "fish_points",
+      "label_zh": "鱼项得分",
+      "unit": "score"
+    },
+    {
+      "key": "diet_score",
+      "label_zh": "饮食总分",
+      "unit": "score"
+    },
+    {
+      "key": "diet_category",
+      "label_zh": "论文饮食分档"
+    },
+    {
+      "key": "low_risk_diet",
+      "label_zh": "达到论文低风险饮食定义（1=是，0=否）",
+      "unit": "1"
+    },
+    {
+      "key": "reference_population",
+      "label_zh": "查表人群"
+    },
+    {
+      "key": "source_table",
+      "label_zh": "查表来源"
+    },
+    {
+      "key": "all_cause_hr",
+      "label_zh": "全因死亡人群调整后 HR",
+      "unit": "1",
+      "note_zh": "相对于同一表中饮食得分 0–1 分的队列关联；不是个人死亡概率。参照组未印出 CI，返回 null。"
+    },
+    {
+      "key": "all_cause_ci_lower",
+      "label_zh": "全因死亡人群HR 的 95% CI 下限",
+      "unit": "1",
+      "note_zh": "相对于同一表中饮食得分 0–1 分的队列关联；不是个人死亡概率。参照组未印出 CI，返回 null。"
+    },
+    {
+      "key": "all_cause_ci_upper",
+      "label_zh": "全因死亡人群HR 的 95% CI 上限",
+      "unit": "1",
+      "note_zh": "相对于同一表中饮食得分 0–1 分的队列关联；不是个人死亡概率。参照组未印出 CI，返回 null。"
+    },
+    {
+      "key": "cvd_hr",
+      "label_zh": "心血管病死亡人群调整后 HR",
+      "unit": "1",
+      "note_zh": "相对于同一表中饮食得分 0–1 分的队列关联；不是个人死亡概率。参照组未印出 CI，返回 null。"
+    },
+    {
+      "key": "cvd_ci_lower",
+      "label_zh": "心血管病死亡人群HR 的 95% CI 下限",
+      "unit": "1",
+      "note_zh": "相对于同一表中饮食得分 0–1 分的队列关联；不是个人死亡概率。参照组未印出 CI，返回 null。"
+    },
+    {
+      "key": "cvd_ci_upper",
+      "label_zh": "心血管病死亡人群HR 的 95% CI 上限",
+      "unit": "1",
+      "note_zh": "相对于同一表中饮食得分 0–1 分的队列关联；不是个人死亡概率。参照组未印出 CI，返回 null。"
+    },
+    {
+      "key": "cancer_hr",
+      "label_zh": "癌症死亡人群调整后 HR",
+      "unit": "1",
+      "note_zh": "相对于同一表中饮食得分 0–1 分的队列关联；不是个人死亡概率。参照组未印出 CI，返回 null。"
+    },
+    {
+      "key": "cancer_ci_lower",
+      "label_zh": "癌症死亡人群HR 的 95% CI 下限",
+      "unit": "1",
+      "note_zh": "相对于同一表中饮食得分 0–1 分的队列关联；不是个人死亡概率。参照组未印出 CI，返回 null。"
+    },
+    {
+      "key": "cancer_ci_upper",
+      "label_zh": "癌症死亡人群HR 的 95% CI 上限",
+      "unit": "1",
+      "note_zh": "相对于同一表中饮食得分 0–1 分的队列关联；不是个人死亡概率。参照组未印出 CI，返回 null。"
+    }
+  ],
+  "validation": {
+    "status": "reproduced",
+    "examples": [
+      {
+        "locator": "Table 1, Diet score = 5; All causes, Cardiovascular diseases, Cancer: HR (95% CI)",
+        "quote": "Diet score\n5\n0.74 (0.65-0.85)\n0.62 (0.49-0.80)\n0.80 (0.64-0.99)",
+        "values": [
+          5,
+          0.74,
+          0.65,
+          0.85,
+          0.62,
+          0.49,
+          0.8,
+          0.64,
+          0.99
+        ],
+        "tolerance": "按原表两位小数精确查表；不重拟合 Cox 模型。参照组 CI 未印出，返回 null。",
+        "test": "tests/test_manifest.py::test_table1_printed_diet_rows"
+      },
+      {
+        "locator": "Supplementary appendix, Table S3 p16 and Table S4 p18, Diet score = 5",
+        "quote": "Diet score\n5\n0.78 (0.65-0.94)\n0.64 (0.46-0.89)\n0.90 (0.68-1.20)\nDiet score\n5\n0.71 (0.58-0.88)\n0.64 (0.44-0.93)\n0.67 (0.48-0.93)",
+        "values": [
+          5,
+          0.78,
+          0.65,
+          0.94,
+          0.64,
+          0.46,
+          0.89,
+          0.9,
+          0.68,
+          1.2,
+          0.71,
+          0.58,
+          0.88,
+          0.44,
+          0.93,
+          0.67,
+          0.48
+        ],
+        "tolerance": "两个性别表各自精确匹配印出的两位小数；没有插值或合并性别。",
+        "test": "tests/test_manifest.py::test_sex_specific_printed_diet_rows"
+      }
+    ]
+  }
+}
