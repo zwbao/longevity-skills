@@ -101,6 +101,7 @@ python3 -m tools.lsk test --changed origin/main   # 只测相对 main 改动过�
 - `skills/aging-biomarker-framework/` — 把你已经算好的时钟预测年龄减去实足年龄（简单相减），再标出这个时钟在论文评测里的队列结果。（名单类）
 - `skills/biological-aging-generational-shifts/` — 你交来的 PhenoAge 减去年龄的未标准化差和出生年；不是论文的标准化年龄差。（名单类）
 - `skills/blood-protein-assessment/` — 研究用：把已在一批样本内秩逆正态变换、缩放好的血液蛋白量乘论文系数加总；单个人的化验值没法直接套，糖化血红蛋白只作对照。（名单类）
+- `skills/deficit-accumulation-frailty-index/` — 用已评估的健康缺陷计数算虚弱指数，附原论文的探索性生存模型。
 - `skills/face-aging-rate-cancer/` — 你交来的两次面容年龄之差除以相隔年数；不从照片算面容年龄。（名单类）
 - `skills/fasting-mimicking-diet/` — 两次已经算好的生物年龄相减（不从化验重算生物年龄）。（名单类）
 - `skills/framingham-general-cvd-risk/` — 用年龄、血压、血脂或体质指数估算十年总体心血管风险和等价心脏年龄。
@@ -262,6 +263,10 @@ python3 -m tools.lsk test --changed origin/main   # 只测相对 main 改动过�
 
 - `skills/finnish-diabetes-risk-score/` — 用年龄、腰围、BMI和四项问卷计算原版七项糖尿病风险筛查分数。
 
+## 体能与独立生活
+
+- `skills/senior-fitness-independence/` — 按年龄和性别比较起立、弯举、步行、踏步及起立行走成绩与独立生活体能参考标准。
+
 ## 体脂与腰围
 
 - `skills/navy-circumference-body-fat/` — 用身高、颈围、腰围（女性加臀围）按美国海军围度方程估算体脂率，再算腰围身高比、腰臀比，并按国家标准看是否中心型肥胖。
@@ -322,6 +327,10 @@ python3 -m tools.lsk test --changed origin/main   # 只测相对 main 改动过�
 ## 血液测序
 
 - `skills/hotspot-somatic-sweep/` — 见「克隆性造血」。
+
+## 衰弱与功能
+
+- `skills/frail-scale/` — 用疲劳、上楼和步行困难、疾病种数及一年体重变化计算FRAIL衰弱筛查分数。
 
 ## 认知与神经
 
