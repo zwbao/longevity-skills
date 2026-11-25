@@ -1,0 +1,296 @@
+{
+  "schema": "longevity-skill/1",
+  "name": "senior-fitness-independence",
+  "kind": "paper",
+  "tier": "A",
+  "species": [
+    "human"
+  ],
+  "evidence": "method",
+  "domains": [
+    "体能与独立生活"
+  ],
+  "blurb_zh": "按年龄和性别比较起立、弯举、步行、踏步及起立行走成绩与独立生活体能参考标准。",
+  "intents": [
+    "frailty_mortality",
+    "lab_meaning",
+    "before_after"
+  ],
+  "triage": {
+    "reason_zh": "人体研究正文表4印出按性别和年龄分组的全部体能切点，能用个人标准化测量比较，并复现正文实例。",
+    "reviewed": false
+  },
+  "paper": {
+    "doi": "10.1093/geront/gns071",
+    "title": "Development and validation of criterion-referenced clinically relevant fitness standards for maintaining physical independence in later years.",
+    "title_zh": "维持晚年独立生活的体能参考标准：开发与验证",
+    "journal": "The Gerontologist",
+    "year": 2013,
+    "authors": "Rikli 与 Jones",
+    "article_url": "https://academic.oup.com/gerontologist/article/53/2/255/560735",
+    "supplements": [],
+    "summary_zh": "这项研究利用美国社区老年人的体能测量与既有纵向研究，建立并验证了与晚年独立生活能力相关的年龄和性别分组参考标准。个人报告只比较标准化体能成绩与对应切点，显示逐项差距和达标情况，不计算未来失能概率。",
+    "summary_status": "draft",
+    "card_notes": [
+      "计算使用正文表 4；两种耐力测试为替代选择，分别比较，不形成总分。",
+      "已读完整期刊 PDF；正文与期刊本期目录未列出该文补充材料或代码。来源与访问限制见 references/contract.md。"
+    ]
+  },
+  "entry": {
+    "script": "scripts/personal_report.py",
+    "measurements_flag": "--measurements",
+    "measurements_header": [
+      "marker",
+      "value",
+      "unit"
+    ],
+    "age_flag": "--age",
+    "sex_flag": "--sex",
+    "out_flag": "--out",
+    "result_json": true,
+    "targets_flag": "--targets",
+    "levers_json": true
+  },
+  "inputs_status": "verified",
+  "inputs": [
+    {
+      "key": "chair_stand_count",
+      "label_zh": "30 秒椅子起立",
+      "aliases": [
+        "30-s chair stand",
+        "chair stand",
+        "30秒椅子起立",
+        "30秒坐站测试"
+      ],
+      "unit": "1",
+      "range": [
+        0,
+        100
+      ],
+      "required": false,
+      "from": "measurements",
+      "note_zh": "五项中至少提供一项；仅评估已测项目。次数的单位 1 表示次数，须为整数。"
+    },
+    {
+      "key": "arm_curl_count",
+      "label_zh": "30 秒手臂弯举",
+      "aliases": [
+        "30-s arm curl",
+        "arm curl",
+        "30秒手臂弯举"
+      ],
+      "unit": "1",
+      "range": [
+        0,
+        150
+      ],
+      "required": false,
+      "from": "measurements",
+      "note_zh": "五项中至少提供一项；仅评估已测项目。次数的单位 1 表示次数，须为整数。"
+    },
+    {
+      "key": "walk_6min_m",
+      "label_zh": "6 分钟步行",
+      "aliases": [
+        "6-min walk",
+        "6MWT",
+        "6分钟步行距离"
+      ],
+      "unit": "m",
+      "range": [
+        0,
+        1500
+      ],
+      "required": false,
+      "from": "measurements",
+      "note_zh": "按原 SFT 路线完成的六分钟步行距离；输入米或厘米。原表码数按 1 码 = 0.9144 米精确转换，不能改变测试路线。",
+      "accept": {
+        "cm": 0.01
+      },
+      "unit_required": true
+    },
+    {
+      "key": "step_2min_count",
+      "label_zh": "2 分钟原地踏步（右膝达标次数）",
+      "aliases": [
+        "2-min step test",
+        "2分钟踏步",
+        "右膝达标次数"
+      ],
+      "unit": "1",
+      "range": [
+        0,
+        400
+      ],
+      "required": false,
+      "from": "measurements",
+      "note_zh": "五项中至少提供一项；仅评估已测项目。次数的单位 1 表示次数，须为整数。"
+    },
+    {
+      "key": "up_go_s",
+      "label_zh": "8 英尺起立行走",
+      "aliases": [
+        "8-foot up-and-go",
+        "8英尺起立行走",
+        "8英尺起立走"
+      ],
+      "unit": "s",
+      "range": [
+        0.5,
+        300
+      ],
+      "required": false,
+      "from": "measurements",
+      "note_zh": "8 英尺（2.4384 米）起立行走计时；不可用 3 米 TUG 代替。",
+      "accept": {
+        "min": 60
+      },
+      "unit_required": true
+    },
+    {
+      "key": "age",
+      "label_zh": "实足年龄",
+      "unit": "a",
+      "range": [
+        60,
+        94
+      ],
+      "required": true,
+      "from": "profile",
+      "flag": "--age",
+      "note_zh": "整数周岁；不插值、不外推。"
+    },
+    {
+      "key": "sex",
+      "label_zh": "论文分组性别",
+      "required": true,
+      "from": "profile",
+      "flag": "--sex",
+      "note_zh": "male/female 或男/女；不推断分组。"
+    }
+  ],
+  "outputs": [
+    {
+      "key": "age_band",
+      "label_zh": "论文年龄组"
+    },
+    {
+      "key": "chair_stand_value",
+      "label_zh": "30 秒椅子起立测量值",
+      "unit": "1"
+    },
+    {
+      "key": "chair_stand_cutoff",
+      "label_zh": "30 秒椅子起立参考切点",
+      "unit": "1"
+    },
+    {
+      "key": "chair_stand_margin",
+      "label_zh": "30 秒椅子起立有利方向差距",
+      "unit": "1"
+    },
+    {
+      "key": "chair_stand_status",
+      "label_zh": "30 秒椅子起立达标情况",
+      "note_zh": "meets_standard / below_standard；未测为 null。"
+    },
+    {
+      "key": "arm_curl_value",
+      "label_zh": "30 秒手臂弯举测量值",
+      "unit": "1"
+    },
+    {
+      "key": "arm_curl_cutoff",
+      "label_zh": "30 秒手臂弯举参考切点",
+      "unit": "1"
+    },
+    {
+      "key": "arm_curl_margin",
+      "label_zh": "30 秒手臂弯举有利方向差距",
+      "unit": "1"
+    },
+    {
+      "key": "arm_curl_status",
+      "label_zh": "30 秒手臂弯举达标情况",
+      "note_zh": "meets_standard / below_standard；未测为 null。"
+    },
+    {
+      "key": "walk_6min_value",
+      "label_zh": "6 分钟步行测量值",
+      "unit": "m"
+    },
+    {
+      "key": "walk_6min_cutoff",
+      "label_zh": "6 分钟步行参考切点",
+      "unit": "m"
+    },
+    {
+      "key": "walk_6min_margin",
+      "label_zh": "6 分钟步行有利方向差距",
+      "unit": "m"
+    },
+    {
+      "key": "walk_6min_status",
+      "label_zh": "6 分钟步行达标情况",
+      "note_zh": "meets_standard / below_standard；未测为 null。"
+    },
+    {
+      "key": "step_2min_value",
+      "label_zh": "2 分钟原地踏步（右膝达标次数）测量值",
+      "unit": "1"
+    },
+    {
+      "key": "step_2min_cutoff",
+      "label_zh": "2 分钟原地踏步（右膝达标次数）参考切点",
+      "unit": "1"
+    },
+    {
+      "key": "step_2min_margin",
+      "label_zh": "2 分钟原地踏步（右膝达标次数）有利方向差距",
+      "unit": "1"
+    },
+    {
+      "key": "step_2min_status",
+      "label_zh": "2 分钟原地踏步（右膝达标次数）达标情况",
+      "note_zh": "meets_standard / below_standard；未测为 null。"
+    },
+    {
+      "key": "up_go_value",
+      "label_zh": "8 英尺起立行走测量值",
+      "unit": "s"
+    },
+    {
+      "key": "up_go_cutoff",
+      "label_zh": "8 英尺起立行走参考切点",
+      "unit": "s"
+    },
+    {
+      "key": "up_go_margin",
+      "label_zh": "8 英尺起立行走有利方向差距",
+      "unit": "s"
+    },
+    {
+      "key": "up_go_status",
+      "label_zh": "8 英尺起立行走达标情况",
+      "note_zh": "meets_standard / below_standard；未测为 null。"
+    }
+  ],
+  "validation": {
+    "status": "reproduced",
+    "examples": [
+      {
+        "locator": "Table 4, p. 262, Men, age 70–74: chair stand, arm curl, 6-min walk (yards), 2-min step, 8-foot up-and-go (s)",
+        "quote": "70–74\n15\n17\n620\n95\n5.5",
+        "values": [
+          15,
+          17,
+          620,
+          95,
+          5.5
+        ],
+        "tolerance": "表格单元格按印刷值核对；次数和分档完全相同，步行先按 1 码 = 0.9144 米换算，浮点误差限 1e-7。该测试亦复现 pp.262–263 的 73 岁男性例子：两项力量达标、步行未达标。",
+        "test": "tests/test_manifest.py::test_printed_example"
+      }
+    ]
+  }
+}

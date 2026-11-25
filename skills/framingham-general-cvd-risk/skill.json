@@ -1,0 +1,312 @@
+{
+  "schema": "longevity-skill/1",
+  "name": "framingham-general-cvd-risk",
+  "kind": "paper",
+  "tier": "A",
+  "species": [
+    "human"
+  ],
+  "evidence": "cohort",
+  "domains": [
+    "临床年龄与可穿戴"
+  ],
+  "blurb_zh": "用年龄、血压、血脂或体质指数估算十年总体心血管风险和等价心脏年龄。",
+  "intents": [
+    "lab_meaning",
+    "biological_age"
+  ],
+  "triage": {
+    "reason_zh": "人体队列公开了男女血脂版及非化验版完整风险方程，可用个人测量复现内附录的男女计算示例。",
+    "reviewed": false
+  },
+  "paper": {
+    "doi": "10.1161/circulationaha.107.699579",
+    "title": "General cardiovascular risk profile for use in primary care: the Framingham Heart Study.",
+    "title_zh": "Framingham 十年总体心血管风险",
+    "journal": "Circulation",
+    "year": 2008,
+    "authors": "D’Agostino 等",
+    "article_url": "https://www.ahajournals.org/doi/10.1161/CIRCULATIONAHA.107.699579",
+    "supplements": [
+      {
+        "label": "研究官网：完整参数表",
+        "url": "https://www.framinghamheartstudy.org/fhs-for-researchers/fhs-risk-functions/cardiovascular-disease-10-year-risk/"
+      },
+      {
+        "label": "官方血脂版工作簿",
+        "url": "https://www.framinghamheartstudy.org/files/2017/08/gencardio_lipids.xls"
+      },
+      {
+        "label": "官方BMI版工作簿",
+        "url": "https://www.framinghamheartstudy.org/files/2017/08/gencardio_bmi.xls"
+      },
+      {
+        "label": "原在线补充材料（访问受限，未读取）",
+        "url": "https://circ.ahajournals.org/content/suppl/2008/01/22/CIRCULATIONAHA.107.699579.DC1.html"
+      }
+    ],
+    "card_notes": [
+      "血脂版参数来自正文表2与内附录；BMI版参数来自研究官网，工作簿已核对。原在线补充表访问受限，未将其声称为已读取。",
+      "使用连续Cox方程；心脏年龄是连续反解结果，与整数积分查表值有差异。未实现分项疾病风险或整数积分表。"
+    ],
+    "summary_zh": "这项研究在基线没有心血管病的成年人中发现，年龄、血压、血脂、吸烟和糖尿病信息可共同预测首次总体心血管事件，用体质指数替代血脂也能进行估计。个人报告只计算所选方程的十年总体风险、等价心脏年龄及用户给定测量目标下的模型变化，不计算个人寿命或用药方案。",
+    "summary_status": "draft"
+  },
+  "entry": {
+    "script": "scripts/personal_report.py",
+    "measurements_flag": "--measurements",
+    "measurements_header": [
+      "marker",
+      "value",
+      "unit"
+    ],
+    "age_flag": "--age",
+    "sex_flag": "--sex",
+    "out_flag": "--out",
+    "result_json": true,
+    "targets_flag": "--targets",
+    "levers_json": true
+  },
+  "population": {
+    "age_years": [
+      30,
+      74
+    ],
+    "note_zh": "以白人为主的Framingham原始及子代队列，基线无心血管病；超出年龄范围或已有CVD时不计算。"
+  },
+  "inputs_status": "verified",
+  "inputs": [
+    {
+      "key": "sbp_mmhg",
+      "label_zh": "收缩压",
+      "aliases": [
+        "SBP",
+        "systolic blood pressure",
+        "高压",
+        "收缩期血压"
+      ],
+      "unit": "mmHg",
+      "accept": {
+        "kPa": 7.500617
+      },
+      "range": [
+        60,
+        300
+      ],
+      "required": true,
+      "from": "measurements",
+      "unit_required": true
+    },
+    {
+      "key": "tc_mg_dl",
+      "label_zh": "总胆固醇",
+      "aliases": [
+        "TC",
+        "TCHO",
+        "CHOL",
+        "total cholesterol",
+        "血清总胆固醇"
+      ],
+      "unit": "mg/dL",
+      "accept": {
+        "mmol/L": 38.665
+      },
+      "molar_mass": 386.65,
+      "range": [
+        50,
+        1000
+      ],
+      "required": false,
+      "from": "measurements",
+      "unit_required": true,
+      "note_zh": "血脂版必需；BMI版不使用。"
+    },
+    {
+      "key": "hdl_mg_dl",
+      "label_zh": "高密度脂蛋白胆固醇",
+      "aliases": [
+        "HDL",
+        "HDL-C",
+        "HDLC",
+        "HDL cholesterol",
+        "高密度脂蛋白胆固醇(HDL-C)"
+      ],
+      "unit": "mg/dL",
+      "accept": {
+        "mmol/L": 38.665
+      },
+      "molar_mass": 386.65,
+      "range": [
+        5,
+        200
+      ],
+      "required": false,
+      "from": "measurements",
+      "unit_required": true,
+      "note_zh": "血脂版必需；不是LDL或总胆固醇。"
+    },
+    {
+      "key": "bmi_kg_m2",
+      "label_zh": "体质指数",
+      "aliases": [
+        "BMI",
+        "body mass index",
+        "体重指数"
+      ],
+      "unit": "kg/m^2",
+      "range": [
+        10,
+        80
+      ],
+      "required": false,
+      "from": "measurements",
+      "note_zh": "只在 --model bmi 时必需；不与血脂同时进入方程。"
+    },
+    {
+      "key": "age",
+      "label_zh": "实足年龄",
+      "aliases": [
+        "年龄",
+        "age"
+      ],
+      "unit": "a",
+      "range": [
+        30,
+        74
+      ],
+      "required": true,
+      "from": "profile",
+      "flag": "--age"
+    },
+    {
+      "key": "sex",
+      "label_zh": "模型分层性别",
+      "aliases": [
+        "性别",
+        "sex"
+      ],
+      "required": true,
+      "from": "profile",
+      "flag": "--sex",
+      "note_zh": "male/男 或 female/女；按论文男女方程选择。"
+    },
+    {
+      "key": "treated",
+      "label_zh": "正在接受降压治疗",
+      "aliases": [
+        "antihypertensive treatment",
+        "TRTBP",
+        "降压药使用"
+      ],
+      "required": true,
+      "from": "argument",
+      "flag": "--treated",
+      "note_zh": "明确填写 yes/是 或 no/否；未知不能填否。"
+    },
+    {
+      "key": "smoker",
+      "label_zh": "当前吸烟",
+      "aliases": [
+        "current smoker",
+        "smoking",
+        "吸烟"
+      ],
+      "required": true,
+      "from": "argument",
+      "flag": "--smoker",
+      "note_zh": "明确填写 yes/是 或 no/否；未知不能填否。"
+    },
+    {
+      "key": "diabetes",
+      "label_zh": "已有糖尿病",
+      "aliases": [
+        "diabetes mellitus",
+        "DM",
+        "糖尿病"
+      ],
+      "required": true,
+      "from": "argument",
+      "flag": "--diabetes",
+      "note_zh": "明确填写 yes/是 或 no/否；未知不能填否。"
+    },
+    {
+      "key": "prior_cvd",
+      "label_zh": "既往心血管病",
+      "aliases": [
+        "prevalent CVD",
+        "CVD history",
+        "既往CVD"
+      ],
+      "required": true,
+      "from": "argument",
+      "flag": "--prior-cvd",
+      "note_zh": "明确填写 yes/是 或 no/否；未知不能填否。必须为否才计算首次事件风险。"
+    },
+    {
+      "key": "model",
+      "label_zh": "方程版本",
+      "required": false,
+      "from": "argument",
+      "flag": "--model",
+      "note_zh": "默认 lipids；无血脂时明确选择 bmi。"
+    }
+  ],
+  "outputs": [
+    {
+      "key": "model",
+      "label_zh": "方程版本"
+    },
+    {
+      "key": "risk_10y_pct",
+      "label_zh": "十年首次总体心血管风险",
+      "unit": "%"
+    },
+    {
+      "key": "linear_predictor",
+      "label_zh": "Cox个人线性预测和",
+      "unit": "1"
+    },
+    {
+      "key": "normal_risk_10y_pct",
+      "label_zh": "同龄同性别参考状态的十年风险",
+      "unit": "%"
+    },
+    {
+      "key": "heart_age_years",
+      "label_zh": "连续方程等价心脏年龄",
+      "unit": "a"
+    },
+    {
+      "key": "heart_age_difference_years",
+      "label_zh": "等价心脏年龄减实足年龄",
+      "unit": "a"
+    }
+  ],
+  "validation": {
+    "status": "reproduced",
+    "examples": [
+      {
+        "locator": "Appendix, Case 1—Women, p.751 (Table 11 inputs)",
+        "quote": "2.32888*log(61)⫹1.20904*log(180) ⫺0.70833*log(47)⫹2.76157*log(124)⫹2.82263*0 ⫹0.52873*1⫹0.69154*0⫽26.9653. ⫽0.1048 ⬇ 10.5%\nnormal risk is 6.7%.",
+        "values": [
+          26.9653,
+          10.5,
+          6.7
+        ],
+        "tolerance": "线性预测和绝对误差≤0.0001；百分数误差≤0.05个百分点，对应原文四位小数与一位小数的舍入。",
+        "test": "tests/test_manifest.py::test_appendix_woman"
+      },
+      {
+        "locator": "Appendix, Case 2—Men, pp.751–752 (Table 12 inputs)",
+        "quote": "3.06117*log(53)⫹1.12370*log(161) ⫺0.93263*log(55)⫹1.93303*0⫹1.99881*log(125) ⫹0.65451*0⫹0.57367*1⫽24.3509. ⫽0.1562⬇15.6%\nnormal risk is 9.1%.",
+        "values": [
+          24.3509,
+          15.6,
+          9.1
+        ],
+        "tolerance": "线性预测和绝对误差≤0.0001；百分数误差≤0.05个百分点，对应原文四位小数与一位小数的舍入。",
+        "test": "tests/test_manifest.py::test_appendix_man"
+      }
+    ]
+  }
+}

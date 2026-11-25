@@ -2,15 +2,15 @@
   "schema": "longevity-catalog/1",
   "version": "2026.48.0",
   "counts": {
-    "skills": 183,
+    "skills": 201,
     "tiers": {
-      "A": 19,
+      "A": 37,
       "B": 83,
       "C": 73,
       "tool": 8
     },
-    "claims": 8927,
-    "claim_entities": 7482
+    "claims": 15332,
+    "claim_entities": 11465
   },
   "intents": [
     {
@@ -1076,6 +1076,440 @@
         "title_zh": "表型年龄",
         "journal": "Aging",
         "year": 2018
+      }
+    },
+    {
+      "name": "accelerometry-mortality-dose-response",
+      "kind": "paper",
+      "tier": "A",
+      "species": [
+        "human"
+      ],
+      "evidence": "review",
+      "domains": [
+        "身体活动",
+        "久坐",
+        "死亡风险"
+      ],
+      "blurb_zh": "按符合原文处理定义的加速度计活动或久坐日均值，查全因死亡相对危险比。",
+      "description": "Tier A personal readout: computes one person's value with the paper's printed method and reproduces a printed example. Reads the published accelerometry dose-response table for total activity, light, low-light, high-light or moderate-to-vigorous activity, or sedentary time, and reports cohort hazard ratios with confidence intervals. Use when a person aged at least 40 has daily averages processed with the paper's trunk-worn accelerometer protocol and asks how their activity or sedentary time corresponds to mortality associations, or supplies a target scenario. Between printed doses it shows the two neighbouring rows without interpolation.",
+      "intents": [
+        "frailty_mortality"
+      ],
+      "has_script": true,
+      "validation_status": "reproduced",
+      "validation_label_zh": "已复现论文",
+      "entry": {
+        "script": "scripts/personal_report.py",
+        "measurements_flag": "--measurements",
+        "measurements_header": [
+          "marker",
+          "value",
+          "unit"
+        ],
+        "age_flag": "--age",
+        "sex_flag": "--sex",
+        "out_flag": "--out",
+        "result_json": true,
+        "targets_flag": "--targets",
+        "levers_json": true
+      },
+      "inputs_status": "verified",
+      "inputs": [
+        {
+          "key": "total_activity_cpm",
+          "label_zh": "总身体活动",
+          "aliases": [
+            "Total PA",
+            "Total physical activity",
+            "CPM",
+            "总活动计数"
+          ],
+          "unit": "/min",
+          "accept": {},
+          "range": [
+            75,
+            375
+          ],
+          "unit_required": true,
+          "required": false,
+          "from": "measurements",
+          "note_zh": "每次只提供六项中的一项。时长均为有效佩戴日的每日平均；范围是补表5的可查范围，不是生理正常范围。总活动/min是设备计数率，不是步频。"
+        },
+        {
+          "key": "light_min_day",
+          "label_zh": "轻强度活动",
+          "aliases": [
+            "LPA",
+            "Light physical activity",
+            "轻体力活动时间"
+          ],
+          "unit": "min",
+          "accept": {
+            "h": 60
+          },
+          "range": [
+            150,
+            450
+          ],
+          "unit_required": true,
+          "required": false,
+          "from": "measurements",
+          "note_zh": "每次只提供六项中的一项。时长均为有效佩戴日的每日平均；范围是补表5的可查范围，不是生理正常范围。总活动/min是设备计数率，不是步频。"
+        },
+        {
+          "key": "low_light_min_day",
+          "label_zh": "低轻强度活动",
+          "aliases": [
+            "Low LPA",
+            "Low light physical activity",
+            "低轻度活动时间"
+          ],
+          "unit": "min",
+          "accept": {
+            "h": 60
+          },
+          "range": [
+            100,
+            325
+          ],
+          "unit_required": true,
+          "required": false,
+          "from": "measurements",
+          "note_zh": "每次只提供六项中的一项。时长均为有效佩戴日的每日平均；范围是补表5的可查范围，不是生理正常范围。总活动/min是设备计数率，不是步频。"
+        },
+        {
+          "key": "high_light_min_day",
+          "label_zh": "高轻强度活动",
+          "aliases": [
+            "High LPA",
+            "High light physical activity",
+            "高轻度活动时间"
+          ],
+          "unit": "min",
+          "accept": {
+            "h": 60
+          },
+          "range": [
+            10,
+            120
+          ],
+          "unit_required": true,
+          "required": false,
+          "from": "measurements",
+          "note_zh": "每次只提供六项中的一项。时长均为有效佩戴日的每日平均；范围是补表5的可查范围，不是生理正常范围。总活动/min是设备计数率，不是步频。"
+        },
+        {
+          "key": "mvpa_min_day",
+          "label_zh": "中高强度活动",
+          "aliases": [
+            "MVPA",
+            "Moderate-to-vigorous physical activity",
+            "中高强度活动时间"
+          ],
+          "unit": "min",
+          "accept": {
+            "h": 60
+          },
+          "range": [
+            0,
+            24
+          ],
+          "unit_required": true,
+          "required": false,
+          "from": "measurements",
+          "note_zh": "每次只提供六项中的一项。时长均为有效佩戴日的每日平均；范围是补表5的可查范围，不是生理正常范围。总活动/min是设备计数率，不是步频。"
+        },
+        {
+          "key": "sedentary_h_day",
+          "label_zh": "久坐时间",
+          "aliases": [
+            "Sedentary",
+            "Sedentary time",
+            "每日久坐时间"
+          ],
+          "unit": "h",
+          "accept": {
+            "min": 0.016666666666666666
+          },
+          "range": [
+            6,
+            12
+          ],
+          "unit_required": true,
+          "required": false,
+          "from": "measurements",
+          "note_zh": "每次只提供六项中的一项。时长均为有效佩戴日的每日平均；范围是补表5的可查范围，不是生理正常范围。总活动/min是设备计数率，不是步频。"
+        },
+        {
+          "key": "age",
+          "label_zh": "年龄",
+          "aliases": [
+            "Age",
+            "实足年龄"
+          ],
+          "unit": "a",
+          "range": [
+            40,
+            120
+          ],
+          "required": true,
+          "from": "argument",
+          "flag": "--age",
+          "note_zh": "原文纳入40岁及以上；120是输入合理性上限，不是研究年龄上限。"
+        },
+        {
+          "key": "sex",
+          "label_zh": "性别",
+          "required": false,
+          "from": "argument",
+          "flag": "--sex",
+          "note_zh": "可填male/female/男/女；本表不是性别特异模型。"
+        },
+        {
+          "key": "device",
+          "label_zh": "设备",
+          "required": true,
+          "from": "argument",
+          "flag": "--device",
+          "note_zh": "actigraph或actical；Actical仅适用MVPA，均为躯干部位佩戴。"
+        },
+        {
+          "key": "protocol",
+          "label_zh": "已核实的处理协议",
+          "required": true,
+          "from": "argument",
+          "flag": "--protocol",
+          "note_zh": "仅在确认SKILL.md中全部处理要求后填vertical-60s-harmonised，不可自动假定。"
+        }
+      ],
+      "outputs": [
+        {
+          "key": "metric",
+          "label_zh": "本次查表指标"
+        },
+        {
+          "key": "exposure",
+          "label_zh": "输入的每日平均暴露"
+        },
+        {
+          "key": "exposure_unit",
+          "label_zh": "本次暴露单位"
+        },
+        {
+          "key": "lookup_mode",
+          "label_zh": "exact为表格点，bracket为相邻两行"
+        },
+        {
+          "key": "hazard_ratio",
+          "label_zh": "输入点的印出HR；非表格点为空",
+          "unit": "1"
+        },
+        {
+          "key": "ci_low",
+          "label_zh": "输入点HR置信下限",
+          "unit": "1"
+        },
+        {
+          "key": "ci_high",
+          "label_zh": "输入点HR置信上限",
+          "unit": "1"
+        },
+        {
+          "key": "reference_dose",
+          "label_zh": "该列印出参照剂量"
+        },
+        {
+          "key": "lower_dose",
+          "label_zh": "较低暴露行剂量",
+          "note_zh": "lower/upper指暴露大小，不是HR排序；剂量单位见exposure_unit。"
+        },
+        {
+          "key": "lower_hr",
+          "label_zh": "较低暴露行HR",
+          "unit": "1",
+          "note_zh": "lower/upper指暴露大小，不是HR排序；剂量单位见exposure_unit。"
+        },
+        {
+          "key": "lower_ci_low",
+          "label_zh": "较低暴露行HR置信下限",
+          "unit": "1",
+          "note_zh": "lower/upper指暴露大小，不是HR排序；剂量单位见exposure_unit。"
+        },
+        {
+          "key": "lower_ci_high",
+          "label_zh": "较低暴露行HR置信上限",
+          "unit": "1",
+          "note_zh": "lower/upper指暴露大小，不是HR排序；剂量单位见exposure_unit。"
+        },
+        {
+          "key": "upper_dose",
+          "label_zh": "较高暴露行剂量",
+          "note_zh": "lower/upper指暴露大小，不是HR排序；剂量单位见exposure_unit。"
+        },
+        {
+          "key": "upper_hr",
+          "label_zh": "较高暴露行HR",
+          "unit": "1",
+          "note_zh": "lower/upper指暴露大小，不是HR排序；剂量单位见exposure_unit。"
+        },
+        {
+          "key": "upper_ci_low",
+          "label_zh": "较高暴露行HR置信下限",
+          "unit": "1",
+          "note_zh": "lower/upper指暴露大小，不是HR排序；剂量单位见exposure_unit。"
+        },
+        {
+          "key": "upper_ci_high",
+          "label_zh": "较高暴露行HR置信上限",
+          "unit": "1",
+          "note_zh": "lower/upper指暴露大小，不是HR排序；剂量单位见exposure_unit。"
+        }
+      ],
+      "paper": {
+        "doi": "10.1136/bmj.l4570",
+        "title": "Dose-response associations between accelerometry measured physical activity and sedentary time and all cause mortality: systematic review and harmonised meta-analysis.",
+        "title_zh": "加速度计测量的活动、久坐与全因死亡的剂量反应关联",
+        "journal": "BMJ (Clinical research ed.)",
+        "year": 2019
+      }
+    },
+    {
+      "name": "age-stratified-step-range",
+      "kind": "paper",
+      "tier": "A",
+      "species": [
+        "human"
+      ],
+      "evidence": "cohort",
+      "domains": [
+        "临床年龄与可穿戴"
+      ],
+      "blurb_zh": "用年龄和设备记录的日均步数，比较所在年龄组的研究平台范围。",
+      "description": "Tier A draft: the paper's printed example is not reproduced yet, so treat the readout as provisional. Compares an adult's device-recorded average daily steps with the age-specific plateau ranges reported in a human cohort meta-analysis. Use when a person asks how their daily steps relate to their age or wants to compare a chosen step-count target. Reports range position and arithmetic differences in Chinese.",
+      "intents": [
+        "frailty_mortality"
+      ],
+      "has_script": true,
+      "validation_status": "draft",
+      "validation_label_zh": "仍在验证",
+      "entry": {
+        "script": "scripts/personal_report.py",
+        "measurements_flag": "--measurements",
+        "measurements_header": [
+          "marker",
+          "value",
+          "unit"
+        ],
+        "age_flag": "--age",
+        "sex_flag": "--sex",
+        "out_flag": "--out",
+        "result_json": true,
+        "targets_flag": "--targets",
+        "levers_json": true
+      },
+      "inputs_status": "draft",
+      "inputs": [
+        {
+          "key": "daily_steps",
+          "label_zh": "日均步数",
+          "aliases": [
+            "每日步数",
+            "平均每日步数",
+            "日平均步数",
+            "步数",
+            "daily step count",
+            "steps per day",
+            "average steps/day",
+            "mean daily steps",
+            "steps"
+          ],
+          "unit": "1",
+          "accept": {},
+          "range": [
+            0,
+            100000
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "固定一日窗口的步数计数，显示为步/日。机器单位1表示计数；只接受已算好的日均数，不能填周总数、步频、距离或万步。上下限仅是软件防错范围。"
+        },
+        {
+          "key": "age",
+          "label_zh": "实足年龄",
+          "aliases": [
+            "年龄",
+            "age",
+            "age in years"
+          ],
+          "unit": "a",
+          "accept": {},
+          "range": [
+            18,
+            130
+          ],
+          "required": true,
+          "from": "profile",
+          "flag": "--age",
+          "note_zh": "以岁填写；18岁来自研究纳入规则，130岁是软件防错上限，不代表研究最大年龄。"
+        },
+        {
+          "key": "sex",
+          "label_zh": "性别",
+          "required": false,
+          "from": "profile",
+          "flag": "--sex",
+          "note_zh": "可选；本范围比较不使用性别。"
+        }
+      ],
+      "outputs": [
+        {
+          "key": "daily_steps",
+          "label_zh": "日均步数（步/日）",
+          "unit": "1",
+          "note_zh": "固定一日窗口的步数计数；不是死亡风险。"
+        },
+        {
+          "key": "reference_low_daily_steps",
+          "label_zh": "研究范围下端（步/日）",
+          "unit": "1",
+          "note_zh": "固定一日窗口的步数计数；不是死亡风险。"
+        },
+        {
+          "key": "reference_high_daily_steps",
+          "label_zh": "研究范围上端（步/日）",
+          "unit": "1",
+          "note_zh": "固定一日窗口的步数计数；不是死亡风险。"
+        },
+        {
+          "key": "difference_from_low_daily_steps",
+          "label_zh": "日均步数减范围下端（步/日）",
+          "unit": "1",
+          "note_zh": "固定一日窗口的步数计数；不是死亡风险。"
+        },
+        {
+          "key": "difference_from_high_daily_steps",
+          "label_zh": "日均步数减范围上端（步/日）",
+          "unit": "1",
+          "note_zh": "固定一日窗口的步数计数；不是死亡风险。"
+        },
+        {
+          "key": "age_group",
+          "label_zh": "论文年龄组",
+          "note_zh": "under_60 或 ge_60。"
+        },
+        {
+          "key": "step_position",
+          "label_zh": "相对研究平台范围的位置",
+          "note_zh": "below、within、above；范围端点均纳入within，仅为显示约定。"
+        }
+      ],
+      "paper": {
+        "doi": "10.1016/s2468-2667(21)00302-9",
+        "title": "Daily steps and all-cause mortality: a meta-analysis of 15 international cohorts.",
+        "title_zh": "每日步数与全因死亡：国际队列荟萃分析",
+        "journal": "The Lancet. Public health",
+        "year": 2022
       }
     },
     {
@@ -4875,6 +5309,105 @@
       }
     },
     {
+      "name": "ctt-ldl-relative-risk",
+      "kind": "paper",
+      "tier": "A",
+      "species": [
+        "human"
+      ],
+      "evidence": "rct",
+      "domains": [
+        "心血管与代谢"
+      ],
+      "blurb_zh": "将 LDL-C 绝对降幅换算为主要血管事件的相对发生率情景。",
+      "description": "Tier A personal readout: computes one person's value with the paper's printed method and reproduces a printed example. Converts an absolute LDL cholesterol reduction into a major vascular event rate ratio using the CTT multiplicative relationship. Use for LDL-C reduction scenarios or before-and-after LDL-C comparisons; accepts a measured reduction and an optional target reduction, with explicit units.",
+      "intents": [
+        "lab_meaning",
+        "before_after",
+        "intervention_evidence"
+      ],
+      "has_script": true,
+      "validation_status": "reproduced",
+      "validation_label_zh": "已复现论文",
+      "entry": {
+        "script": "scripts/personal_report.py",
+        "measurements_flag": "--measurements",
+        "measurements_header": [
+          "marker",
+          "value",
+          "unit"
+        ],
+        "out_flag": "--out",
+        "result_json": true,
+        "targets_flag": "--targets",
+        "levers_json": true
+      },
+      "inputs_status": "verified",
+      "inputs": [
+        {
+          "key": "ldl_reduction_mmol_l",
+          "label_zh": "LDL-C 绝对降幅",
+          "aliases": [
+            "LDL-C reduction",
+            "LDL cholesterol reduction",
+            "LDL-C 降幅",
+            "LDL-C 下降值",
+            "低密度脂蛋白胆固醇降幅",
+            "低密度脂蛋白胆固醇下降量",
+            "ΔLDL-C reduction"
+          ],
+          "unit": "mmol/L",
+          "accept": {
+            "mg/dL": 0.02586,
+            "umol/L": 0.001
+          },
+          "molar_mass": 386.69760247486465,
+          "range": [
+            0,
+            3
+          ],
+          "unit_required": true,
+          "required": true,
+          "from": "measurements",
+          "note_zh": "参照值减去比较值的绝对降幅，不是单次 LDL-C 浓度或百分比。mg/dL 因子照 Webtable 1；0–3 是产品计算范围，不是临床正常范围。"
+        }
+      ],
+      "outputs": [
+        {
+          "key": "ldl_reduction_mmol_l",
+          "label_zh": "标准化 LDL-C 绝对降幅",
+          "unit": "mmol/L"
+        },
+        {
+          "key": "major_vascular_rr",
+          "label_zh": "主要血管事件相对发生率（模型情景）",
+          "unit": "1"
+        },
+        {
+          "key": "rr_ci95_lower",
+          "label_zh": "研究系数区间换算下限",
+          "unit": "1"
+        },
+        {
+          "key": "rr_ci95_upper",
+          "label_zh": "研究系数区间换算上限",
+          "unit": "1"
+        },
+        {
+          "key": "relative_reduction_pct",
+          "label_zh": "主要血管事件相对降低比例",
+          "unit": "%"
+        }
+      ],
+      "paper": {
+        "doi": "10.1016/s0140-6736(10)61350-5",
+        "title": "Efficacy and safety of more intensive lowering of LDL cholesterol: a meta-analysis of data from 170,000 participants in 26 randomised trials.",
+        "title_zh": "更大 LDL 胆固醇降幅与血管事件风险：随机试验荟萃分析",
+        "journal": "Lancet (London, England)",
+        "year": 2010
+      }
+    },
+    {
       "name": "ddx5-cartilage-fibrosis",
       "kind": "paper",
       "tier": "C",
@@ -4906,6 +5439,141 @@
         "title_zh": "软骨纤维化解旋酶",
         "journal": "Nature Aging",
         "year": 2024
+      }
+    },
+    {
+      "name": "deficit-accumulation-frailty-index",
+      "kind": "paper",
+      "tier": "A",
+      "species": [
+        "human"
+      ],
+      "evidence": "method",
+      "domains": [
+        "临床年龄与可穿戴"
+      ],
+      "blurb_zh": "用已评估的健康缺陷计数算虚弱指数，附原论文的探索性生存模型。",
+      "description": "Tier A personal readout: computes one person's value with the paper's printed method and reproduces a printed example. 根据已完成评估的健康缺陷数与已评估项数，计算缺陷累积虚弱指数，并重算原论文的探索性生存模型。当用户已有二元缺陷评估、希望了解缺陷比例或比较同一评估集合的假设计数时使用。输入为计数，不从原始化验单推断异常，不用于估计个人实际寿命。",
+      "intents": [
+        "biological_age"
+      ],
+      "has_script": true,
+      "validation_status": "reproduced",
+      "validation_label_zh": "已复现论文",
+      "entry": {
+        "script": "scripts/personal_report.py",
+        "measurements_flag": "--measurements",
+        "measurements_header": [
+          "marker",
+          "value",
+          "unit"
+        ],
+        "age_flag": "--age",
+        "sex_flag": "--sex",
+        "out_flag": "--out",
+        "result_json": true,
+        "targets_flag": "--targets",
+        "levers_json": true
+      },
+      "population": {
+        "age_years": [
+          65,
+          106
+        ],
+        "note_zh": "加拿大健康与衰老研究临床样本；认知筛查异常者及筛查正常者的随机子样本。没有外部验证队列。"
+      },
+      "inputs_status": "verified",
+      "inputs": [
+        {
+          "key": "deficits_count",
+          "label_zh": "缺陷数",
+          "aliases": [
+            "存在缺陷项数",
+            "健康缺陷数",
+            "number of deficits",
+            "deficits present"
+          ],
+          "unit": "1",
+          "accept": {},
+          "range": [
+            0,
+            92
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "整数计数，仅统计已经判定存在的二元缺陷；不是百分比或加权评分。分子与分母必须来自同一次附录项目评估。"
+        },
+        {
+          "key": "assessed_count",
+          "label_zh": "已评估项数",
+          "aliases": [
+            "已检查项数",
+            "评估项目数",
+            "number of deficits assessed",
+            "tests performed"
+          ],
+          "unit": "1",
+          "accept": {},
+          "range": [
+            1,
+            92
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "整数，包含存在和不存在的已评估项目；缺失或未评估项目不计入分母。仅接受原文92项集合中的计数。"
+        },
+        {
+          "key": "age",
+          "label_zh": "实足年龄",
+          "aliases": [
+            "年龄",
+            "age",
+            "chronological age"
+          ],
+          "unit": "a",
+          "range": [
+            65,
+            106
+          ],
+          "required": true,
+          "from": "profile",
+          "flag": "--age",
+          "note_zh": "用于研究年龄范围检查，不进入虚弱指数或生存公式。"
+        },
+        {
+          "key": "sex",
+          "label_zh": "性别",
+          "required": false,
+          "from": "profile",
+          "flag": "--sex",
+          "note_zh": "可选背景信息，不进入公式或改变结果。"
+        }
+      ],
+      "outputs": [
+        {
+          "key": "frailty_index",
+          "label_zh": "缺陷累积虚弱指数",
+          "unit": "1"
+        },
+        {
+          "key": "historical_survival_24mo_pct",
+          "label_zh": "原论文24个月探索性模型生存概率",
+          "unit": "%",
+          "note_zh": "非个人临床预测；q=0时不报告。"
+        },
+        {
+          "key": "historical_survival_60mo_pct",
+          "label_zh": "原论文60个月探索性模型生存概率",
+          "unit": "%",
+          "note_zh": "非个人临床预测；q=0时不报告。"
+        }
+      ],
+      "paper": {
+        "doi": "10.1100/tsw.2001.58",
+        "title": "Accumulation of deficits as a proxy measure of aging.",
+        "title_zh": "以缺陷累积衡量衰老",
+        "journal": "TheScientificWorldJournal",
+        "year": 2001
       }
     },
     {
@@ -5341,6 +6009,432 @@
         "title_zh": "弹性蛋白片段",
         "journal": "Nature Aging",
         "year": 2025
+      }
+    },
+    {
+      "name": "elsa-hba1c-model-a",
+      "kind": "paper",
+      "tier": "A",
+      "species": [
+        "human"
+      ],
+      "evidence": "cohort",
+      "domains": [
+        "糖代谢"
+      ],
+      "blurb_zh": "用糖化血红蛋白、年龄、性别和随访间隔计算 ELSA Model A 的糖尿病检出概率（预印本研究模型）。",
+      "description": "Tier A draft: the paper's printed example is not reproduced yet, so treat the readout as provisional. Computes the printed final ELSA HbA1c Model A probability of diabetes detected by the next health visit from HbA1c, age, sex and a specified visit interval. Use for research interpretation of a diabetes-free older adult's HbA1c or a user-specified HbA1c scenario. Preserves preprint and validation limitations.",
+      "intents": [
+        "lab_meaning"
+      ],
+      "has_script": true,
+      "validation_status": "draft",
+      "validation_label_zh": "仍在验证",
+      "entry": {
+        "script": "scripts/personal_report.py",
+        "measurements_flag": "--measurements",
+        "measurements_header": [
+          "marker",
+          "value",
+          "unit"
+        ],
+        "age_flag": "--age",
+        "sex_flag": "--sex",
+        "out_flag": "--out",
+        "result_json": true,
+        "targets_flag": "--targets",
+        "levers_json": true
+      },
+      "inputs_status": "draft",
+      "inputs": [
+        {
+          "key": "hba1c_pct",
+          "label_zh": "糖化血红蛋白",
+          "aliases": [
+            "HbA1c",
+            "HbA1c (%)",
+            "糖化血红蛋白A1c",
+            "糖化血红蛋白百分比",
+            "glycated haemoglobin",
+            "hemoglobin A1c",
+            "A1C"
+          ],
+          "unit": "%",
+          "range": [
+            3,
+            25
+          ],
+          "required": true,
+          "from": "measurements",
+          "unit_required": true,
+          "note_zh": "仅接受 DCCT/NGSP 百分数；mmol/mol 与百分数之间有截距，不能用单一倍数换算，本接口拒绝 mmol/mol。内部按正文 2.1 换算为 IFCC。达到研究排除阈值时不计算。"
+        },
+        {
+          "key": "age",
+          "label_zh": "基线实足年龄",
+          "aliases": [
+            "年龄",
+            "age"
+          ],
+          "unit": "a",
+          "range": [
+            50,
+            110
+          ],
+          "required": true,
+          "from": "profile",
+          "flag": "--age",
+          "note_zh": "50–110 是接口适用性保护范围，不是论文报告的样本最小值和最大值。"
+        },
+        {
+          "key": "sex",
+          "label_zh": "模型性别编码",
+          "unit": "1",
+          "range": [
+            0,
+            1
+          ],
+          "required": true,
+          "from": "profile",
+          "flag": "--sex",
+          "note_zh": "female/女/1 对应女性=1；male/男/0 对应男性=0，必须明确提供。"
+        },
+        {
+          "key": "years_next",
+          "label_zh": "到下一次健康访视的间隔",
+          "aliases": [
+            "随访间隔",
+            "years to next visit"
+          ],
+          "unit": "a",
+          "range": [
+            0.25,
+            20
+          ],
+          "required": true,
+          "from": "argument",
+          "flag": "--years-next",
+          "note_zh": "必须指定年数；论文通常约四年或七年，区间外会提示外推。范围仅为输入保护。"
+        },
+        {
+          "key": "eligible_baseline",
+          "label_zh": "已确认符合基线条件",
+          "unit": "1",
+          "range": [
+            0,
+            1
+          ],
+          "required": true,
+          "from": "argument",
+          "flag": "--eligible-baseline",
+          "note_zh": "仅接受 1：此前及当前无论文定义的糖尿病，并有至少三个月前的无糖尿病 HbA1c 测量；0 或未知不计算。此项不进入方程。"
+        }
+      ],
+      "outputs": [
+        {
+          "key": "diabetes_probability_pct",
+          "label_zh": "下一健康访视前糖尿病检出概率（Model A 研究估计）",
+          "unit": "%"
+        },
+        {
+          "key": "linear_predictor",
+          "label_zh": "Model A 线性预测值",
+          "unit": "1"
+        }
+      ],
+      "paper": {
+        "doi": "10.64898/2026.11.20.26368578",
+        "title": "Personal HbA1c trajectories and incident diabetes: association, prediction and observability in the English Longitudinal Study of Ageing",
+        "title_zh": "个人糖化血红蛋白轨迹与新发糖尿病：关联、预测和可观测性",
+        "journal": "medRxiv",
+        "year": 2026
+      }
+    },
+    {
+      "name": "emfra-factor-scores",
+      "kind": "paper",
+      "tier": "A",
+      "species": [
+        "human"
+      ],
+      "evidence": "cross_sectional",
+      "domains": [
+        "功能与衰弱",
+        "心理与认知"
+      ],
+      "blurb_zh": "用已评定的 EMFRA 九项分数分别计算老年自主性和心理困扰分数。",
+      "description": "Tier A draft: the paper's printed example is not reproduced yet, so treat the readout as provisional. Computes separate EMFRA Autonomy and Psychological Distress scores from nine previously administered original EMFRA item scores. Use when an older adult provides EMFRA item ratings or asks to calculate the two EMFRA factors. Requires the original 0–2 item coding and applies factor-specific reversal. Reports in Chinese without a total score or clinical classification.",
+      "intents": [
+        "frailty_mortality"
+      ],
+      "has_script": true,
+      "validation_status": "draft",
+      "validation_label_zh": "仍在验证",
+      "entry": {
+        "script": "scripts/personal_report.py",
+        "measurements_flag": "--measurements",
+        "measurements_header": [
+          "marker",
+          "value",
+          "unit"
+        ],
+        "age_flag": "--age",
+        "sex_flag": "--sex",
+        "out_flag": "--out",
+        "result_json": true
+      },
+      "population": {
+        "age_years": [
+          65,
+          99
+        ],
+        "note_zh": "西班牙马德里社区、日间照护中心及养老机构；纳入年龄至少65岁、无医生确诊痴呆者，实际样本65–99岁；无外部验证。"
+      },
+      "inputs_status": "verified",
+      "inputs": [
+        {
+          "key": "emfra_item1_score",
+          "label_zh": "EMFRA 第1项：握力评分",
+          "aliases": [
+            "EMFRA_item1_trait",
+            "EMFRA 握力评分",
+            "Item 1. Hand-grip strength",
+            "EMFRA Grip strength",
+            "HGS"
+          ],
+          "unit": "score",
+          "accept": {},
+          "range": [
+            0,
+            2
+          ],
+          "unit_required": true,
+          "required": true,
+          "from": "measurements",
+          "note_zh": "只接受原版 EMFRA 已评定、尚未反向计分的整数条目分数 0、1、2；不把原始测量值或自由描述换成分数。"
+        },
+        {
+          "key": "emfra_item2_score",
+          "label_zh": "EMFRA 第2项：步速评分",
+          "aliases": [
+            "EMFRA_item2_trait",
+            "EMFRA 步速评分",
+            "Item 2. Gait speed",
+            "EMFRA Gait speed",
+            "GS"
+          ],
+          "unit": "score",
+          "accept": {},
+          "range": [
+            0,
+            2
+          ],
+          "unit_required": true,
+          "required": true,
+          "from": "measurements",
+          "note_zh": "只接受原版 EMFRA 已评定、尚未反向计分的整数条目分数 0、1、2；不把原始测量值或自由描述换成分数。"
+        },
+        {
+          "key": "emfra_item5_score",
+          "label_zh": "EMFRA 第5项：疲劳评分",
+          "aliases": [
+            "EMFRA_item5_trait",
+            "EMFRA 疲劳评分",
+            "Item 5. Fatigue",
+            "EMFRA Fatigue",
+            "FAT"
+          ],
+          "unit": "score",
+          "accept": {},
+          "range": [
+            0,
+            2
+          ],
+          "unit_required": true,
+          "required": true,
+          "from": "measurements",
+          "note_zh": "只接受原版 EMFRA 已评定、尚未反向计分的整数条目分数 0、1、2；不把原始测量值或自由描述换成分数。"
+        },
+        {
+          "key": "emfra_item6_score",
+          "label_zh": "EMFRA 第6项：钱币算术评分",
+          "aliases": [
+            "EMFRA_item6_trait",
+            "EMFRA 钱币算术评分",
+            "Item 6. Arithmetics for money",
+            "EMFRA Arithmetic money",
+            "AM"
+          ],
+          "unit": "score",
+          "accept": {},
+          "range": [
+            0,
+            2
+          ],
+          "unit_required": true,
+          "required": true,
+          "from": "measurements",
+          "note_zh": "只接受原版 EMFRA 已评定、尚未反向计分的整数条目分数 0、1、2；不把原始测量值或自由描述换成分数。"
+        },
+        {
+          "key": "emfra_item7_score",
+          "label_zh": "EMFRA 第7项：注意与抑制评分",
+          "aliases": [
+            "EMFRA_item7_trait",
+            "EMFRA 注意与抑制评分",
+            "Item 7. Attention-inhibition",
+            "EMFRA Atten-Inhib",
+            "AttIn"
+          ],
+          "unit": "score",
+          "accept": {},
+          "range": [
+            0,
+            2
+          ],
+          "unit_required": true,
+          "required": true,
+          "from": "measurements",
+          "note_zh": "只接受原版 EMFRA 已评定、尚未反向计分的整数条目分数 0、1、2；不把原始测量值或自由描述换成分数。"
+        },
+        {
+          "key": "emfra_item11_score",
+          "label_zh": "EMFRA 第11项：孤独感评分",
+          "aliases": [
+            "EMFRA_item11_trait",
+            "EMFRA 孤独感评分",
+            "Item 11. Loneliness",
+            "EMFRA Loneliness",
+            "LON"
+          ],
+          "unit": "score",
+          "accept": {},
+          "range": [
+            0,
+            2
+          ],
+          "unit_required": true,
+          "required": true,
+          "from": "measurements",
+          "note_zh": "只接受原版 EMFRA 已评定、尚未反向计分的整数条目分数 0、1、2；不把原始测量值或自由描述换成分数。"
+        },
+        {
+          "key": "emfra_item12_score",
+          "label_zh": "EMFRA 第12项：悲伤评分",
+          "aliases": [
+            "EMFRA_item12_trait",
+            "EMFRA 悲伤评分",
+            "Item 12. Sadness",
+            "EMFRA Sadness",
+            "SAD"
+          ],
+          "unit": "score",
+          "accept": {},
+          "range": [
+            0,
+            2
+          ],
+          "unit_required": true,
+          "required": true,
+          "from": "measurements",
+          "note_zh": "只接受原版 EMFRA 已评定、尚未反向计分的整数条目分数 0、1、2；不把原始测量值或自由描述换成分数。"
+        },
+        {
+          "key": "emfra_item15_score",
+          "label_zh": "EMFRA 第15项：生活满意度评分",
+          "aliases": [
+            "EMFRA_item15_trait",
+            "EMFRA 生活满意度评分",
+            "Item 15. Life satisfaction",
+            "EMFRA Life satisf.",
+            "LS"
+          ],
+          "unit": "score",
+          "accept": {},
+          "range": [
+            0,
+            2
+          ],
+          "unit_required": true,
+          "required": true,
+          "from": "measurements",
+          "note_zh": "只接受原版 EMFRA 已评定、尚未反向计分的整数条目分数 0、1、2；不把原始测量值或自由描述换成分数。"
+        },
+        {
+          "key": "emfra_item19_score",
+          "label_zh": "EMFRA 第19项：社交娱乐活动评分",
+          "aliases": [
+            "EMFRA_item19_trait",
+            "EMFRA 社交娱乐活动评分",
+            "Item 19. Social-ludic activities",
+            "EMFRA Socio-Ludic act.",
+            "SLA"
+          ],
+          "unit": "score",
+          "accept": {},
+          "range": [
+            0,
+            2
+          ],
+          "unit_required": true,
+          "required": true,
+          "from": "measurements",
+          "note_zh": "只接受原版 EMFRA 已评定、尚未反向计分的整数条目分数 0、1、2；不把原始测量值或自由描述换成分数。"
+        },
+        {
+          "key": "age",
+          "label_zh": "实足年龄",
+          "aliases": [
+            "年龄",
+            "Age"
+          ],
+          "unit": "a",
+          "range": [
+            65,
+            120
+          ],
+          "required": true,
+          "from": "profile",
+          "flag": "--age",
+          "note_zh": "仅核对人群，不进入公式；研究实际年龄为65–99岁，120岁是录入合理性上限。"
+        },
+        {
+          "key": "sex",
+          "label_zh": "性别",
+          "required": false,
+          "from": "profile",
+          "flag": "--sex",
+          "note_zh": "可选背景，不进入因子公式。"
+        },
+        {
+          "key": "dementia_diagnosis",
+          "label_zh": "医生确诊痴呆情况",
+          "required": true,
+          "from": "argument",
+          "flag": "--dementia-diagnosis",
+          "note_zh": "no=没有医生确诊痴呆；yes=已有诊断；未知不能当作no。yes时不计算，不通过本技能诊断痴呆。"
+        }
+      ],
+      "outputs": [
+        {
+          "key": "autonomy_score",
+          "label_zh": "EMFRA 自主性分数",
+          "unit": "score",
+          "note_zh": "独立因子，越高表示该因子所描述的自主性越强；保留两位小数，不设分档。"
+        },
+        {
+          "key": "psychological_distress_score",
+          "label_zh": "EMFRA 心理困扰分数",
+          "unit": "score",
+          "note_zh": "独立因子，越高表示该因子所描述的困扰越多；保留两位小数，不设分档。"
+        }
+      ],
+      "paper": {
+        "doi": "10.64898/2026.11.11.26367642",
+        "title": "Psychometric analysis of the Evaluation of Multidimensional Functioning and Risks in Aging (EMFRA) scale: reliability, structural validity, and concurrent validity.",
+        "title_zh": "EMFRA 老年多维功能与风险量表的信度和效度分析",
+        "journal": "medRxiv",
+        "year": 2026
       }
     },
     {
@@ -6772,6 +7866,251 @@
       }
     },
     {
+      "name": "finnish-diabetes-risk-score",
+      "kind": "paper",
+      "tier": "A",
+      "species": [
+        "human"
+      ],
+      "evidence": "cohort",
+      "domains": [
+        "代谢与心血管"
+      ],
+      "blurb_zh": "用年龄、腰围、BMI和四项问卷计算原版七项糖尿病风险筛查分数。",
+      "description": "Tier A personal readout: computes one person's value with the paper's printed method and reproduces a printed example. Computes the original seven-item Finnish Diabetes Risk Score from age, sex-specific waist circumference, BMI, and questionnaire answers. Use for a non-laboratory diabetes risk screening score or user-supplied BMI, waist, activity, and diet target scenarios in adults within the paper's population. Reports Chinese component scores and the screening cutoff; does not estimate an individual's diabetes probability.",
+      "intents": [
+        "lab_meaning",
+        "body_fat_waist",
+        "before_after"
+      ],
+      "has_script": true,
+      "validation_status": "reproduced",
+      "validation_label_zh": "已复现论文",
+      "entry": {
+        "script": "scripts/personal_report.py",
+        "measurements_flag": "--measurements",
+        "measurements_header": [
+          "marker",
+          "value",
+          "unit"
+        ],
+        "age_flag": "--age",
+        "sex_flag": "--sex",
+        "out_flag": "--out",
+        "result_json": true,
+        "targets_flag": "--targets",
+        "levers_json": true
+      },
+      "inputs_status": "verified",
+      "inputs": [
+        {
+          "key": "bmi_kg_m2",
+          "label_zh": "体质指数",
+          "aliases": [
+            "BMI",
+            "body mass index",
+            "体重指数"
+          ],
+          "unit": "kg/m^2",
+          "range": [
+            10,
+            80
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "按体重kg除以身高m的平方计算；原版BMI>25至30记1分，>30记3分。"
+        },
+        {
+          "key": "waist_cm",
+          "label_zh": "腰围",
+          "aliases": [
+            "waist",
+            "waist circumference",
+            "WC"
+          ],
+          "unit": "cm",
+          "range": [
+            40,
+            200
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "最低肋骨与髂嵴之间的中点测量；男性和女性使用原文不同阈值。",
+          "accept": {
+            "m": 100,
+            "mm": 0.1,
+            "in": 2.54
+          }
+        },
+        {
+          "key": "bp_medication_ever",
+          "label_zh": "曾用降压药",
+          "aliases": [
+            "ever used blood pressure medication",
+            "history of antihypertensive drug treatment",
+            "降压药使用史"
+          ],
+          "unit": "1",
+          "range": [
+            0,
+            1
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "0=从未，1=曾经；不是仅问现在是否服药，不能通过停药改变此病史。"
+        },
+        {
+          "key": "high_glucose_history",
+          "label_zh": "血糖升高史",
+          "aliases": [
+            "history of high blood glucose",
+            "高血糖史"
+          ],
+          "unit": "1",
+          "range": [
+            0,
+            1
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "0=无，1=曾由医务人员告知糖尿病或潜在糖尿病，含暂时/临界血糖升高、妊娠糖尿病和仅饮食治疗的糖尿病；不是本次血糖数值。"
+        },
+        {
+          "key": "low_activity",
+          "label_zh": "原文低活动类别",
+          "aliases": [
+            "physical inactivity",
+            "低体力活动",
+            "low physical activity"
+          ],
+          "unit": "1",
+          "range": [
+            0,
+            1
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "1=闲暇以阅读、看电视及不费力家务为主、活动不足4小时/周且工作以坐位为主无需多走动；0=不符合该低活动类别。恰4小时按表1脚注的至少4小时类别记0；不要替换为后来的每日30分钟问题。"
+        },
+        {
+          "key": "daily_produce",
+          "label_zh": "每天吃蔬菜水果或浆果",
+          "aliases": [
+            "daily vegetables fruits or berries",
+            "daily consumption of vegetables fruits or berries",
+            "每日蔬果"
+          ],
+          "unit": "1",
+          "range": [
+            0,
+            1
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "1=每天吃至少其中一类，0=不是每天吃；按第727页正文每天吃记0分。"
+        },
+        {
+          "key": "antidiabetic_treatment",
+          "label_zh": "评估时接受降糖药治疗",
+          "aliases": [
+            "antidiabetic drug treatment",
+            "降糖药治疗"
+          ],
+          "unit": "1",
+          "range": [
+            0,
+            1
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "0=否，1=是；仅作适用性检查，1时停止，不计入七项得分。"
+        },
+        {
+          "key": "age",
+          "label_zh": "实足年龄",
+          "aliases": [
+            "年龄",
+            "age years"
+          ],
+          "unit": "a",
+          "range": [
+            35,
+            64
+          ],
+          "required": true,
+          "from": "profile",
+          "note_zh": "填写已满周岁整数；不向研究年龄范围外推。",
+          "flag": "--age"
+        },
+        {
+          "key": "sex",
+          "label_zh": "性别",
+          "aliases": [
+            "sex",
+            "性别"
+          ],
+          "required": true,
+          "from": "profile",
+          "flag": "--sex",
+          "note_zh": "male/男或female/女，只用于原文腰围阈值，不另加性别分。"
+        }
+      ],
+      "outputs": [
+        {
+          "key": "age_score",
+          "label_zh": "年龄得分",
+          "unit": "score"
+        },
+        {
+          "key": "bmi_score",
+          "label_zh": "BMI得分",
+          "unit": "score"
+        },
+        {
+          "key": "waist_score",
+          "label_zh": "腰围得分",
+          "unit": "score"
+        },
+        {
+          "key": "bp_medication_score",
+          "label_zh": "曾用降压药得分",
+          "unit": "score"
+        },
+        {
+          "key": "high_glucose_score",
+          "label_zh": "血糖升高史得分",
+          "unit": "score"
+        },
+        {
+          "key": "activity_score",
+          "label_zh": "活动得分",
+          "unit": "score"
+        },
+        {
+          "key": "produce_score",
+          "label_zh": "蔬果得分",
+          "unit": "score"
+        },
+        {
+          "key": "total_score",
+          "label_zh": "原版糖尿病风险总分",
+          "unit": "score"
+        },
+        {
+          "key": "cutoff_category",
+          "label_zh": "是否达到原文筛查切点",
+          "note_zh": "below_cutoff为<9分；at_or_above_cutoff为≥9分；不是诊断或个人概率。"
+        }
+      ],
+      "paper": {
+        "doi": "10.2337/diacare.26.3.725",
+        "title": "The diabetes risk score: a practical tool to predict type 2 diabetes risk.",
+        "title_zh": "糖尿病风险评分：预测2型糖尿病风险的实用工具",
+        "journal": "Diabetes Care",
+        "year": 2003
+      }
+    },
+    {
       "name": "foxo-oser1-oxidative-lifespan",
       "kind": "paper",
       "tier": "B",
@@ -6840,6 +8179,488 @@
         "title_zh": "用 p53 与 FOXO3 调节肥胖引起的骨关节炎",
         "journal": "Nature Communications",
         "year": 2025
+      }
+    },
+    {
+      "name": "frail-scale",
+      "kind": "paper",
+      "tier": "A",
+      "species": [
+        "human"
+      ],
+      "evidence": "cohort",
+      "domains": [
+        "衰弱与功能"
+      ],
+      "blurb_zh": "用疲劳、上楼和步行困难、疾病种数及一年体重变化计算FRAIL衰弱筛查分数。",
+      "description": "Tier A personal readout: computes one person's value with the paper's printed method and reproduces a printed example. Calculates the FRAIL questionnaire total and screening category from fatigue, stair and walking difficulty, specified illnesses, and one-year weight change. Use for FRAIL scoring, 衰弱问卷, or 衰弱筛查 when personal questionnaire answers and current and prior-year weights are available.",
+      "intents": [
+        "frailty_mortality"
+      ],
+      "has_script": true,
+      "validation_status": "reproduced",
+      "validation_label_zh": "已复现论文",
+      "entry": {
+        "script": "scripts/personal_report.py",
+        "measurements_flag": "--measurements",
+        "measurements_header": [
+          "marker",
+          "value",
+          "unit"
+        ],
+        "age_flag": "--age",
+        "sex_flag": "--sex",
+        "out_flag": "--out",
+        "result_json": true
+      },
+      "population": {
+        "age_years": [
+          49,
+          65
+        ],
+        "note_zh": "美国圣路易斯社区非裔成年人；两个按基线ADL状态排除的重叠分析样本，不能视为两个独立验证队列。"
+      },
+      "inputs_status": "verified",
+      "inputs": [
+        {
+          "key": "fatigue_response_code",
+          "label_zh": "过去四周疲劳频度编码",
+          "aliases": [
+            "疲劳频度",
+            "Fatigue response",
+            "Fatigue"
+          ],
+          "unit": "score",
+          "range": [
+            1,
+            5
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "过去4周感到疲劳的时间：1一直，2大部分，3有些时候，4少部分，5从不；填原回答编码，不能填已折算的0/1分。"
+        },
+        {
+          "key": "resistance_difficulty_binary",
+          "label_zh": "独自连续上十级台阶有困难",
+          "aliases": [
+            "上楼困难",
+            "Resistance",
+            "Difficulty walking up 10 steps"
+          ],
+          "unit": "1",
+          "range": [
+            0,
+            1
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "独自、不用辅助器具、不休息走上10级台阶是否有任何困难：1是，0否。"
+        },
+        {
+          "key": "ambulation_difficulty_binary",
+          "label_zh": "独自步行数百码有困难",
+          "aliases": [
+            "步行困难",
+            "Ambulation",
+            "Difficulty walking several hundred yards"
+          ],
+          "unit": "1",
+          "range": [
+            0,
+            1
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "独自、不用辅助器具步行数百码是否有任何困难：1是，0否；保留本研究题干，不替换成一个街区。"
+        },
+        {
+          "key": "illnesses_count",
+          "label_zh": "医生告知的指定疾病种数",
+          "aliases": [
+            "疾病种数",
+            "Illnesses",
+            "Illness count"
+          ],
+          "unit": "1",
+          "range": [
+            0,
+            11
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "只数11类：高血压、糖尿病、癌症（不含轻微皮肤癌）、慢性肺病、心肌梗死、充血性心力衰竭、心绞痛、哮喘、关节炎、卒中、肾病；每类最多一次。"
+        },
+        {
+          "key": "weight_current_kg",
+          "label_zh": "当前体重",
+          "aliases": [
+            "现在体重",
+            "Current weight"
+          ],
+          "unit": "kg",
+          "range": [
+            15,
+            500
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "穿衣、不穿鞋的当前体重。15–500 kg是输入错误防护范围，不是论文的临床切点。",
+          "accept": {
+            "lb": 0.45359237,
+            "g": 0.001
+          },
+          "unit_required": true
+        },
+        {
+          "key": "weight_year_ago_kg",
+          "label_zh": "一年前体重",
+          "aliases": [
+            "去年体重",
+            "Weight 1 year ago"
+          ],
+          "unit": "kg",
+          "range": [
+            15,
+            500
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "一年前穿衣、不穿鞋的体重，不能用半年前体重代替；不知道则保持缺失。",
+          "accept": {
+            "lb": 0.45359237,
+            "g": 0.001
+          },
+          "unit_required": true
+        },
+        {
+          "key": "age",
+          "label_zh": "实足年龄",
+          "unit": "a",
+          "range": [
+            18,
+            120
+          ],
+          "required": false,
+          "from": "profile",
+          "flag": "--age",
+          "note_zh": "仅用于提示是否超出研究49–65岁基线范围，不改变分数。"
+        },
+        {
+          "key": "sex",
+          "label_zh": "性别",
+          "required": false,
+          "from": "profile",
+          "flag": "--sex",
+          "note_zh": "可选上下文，不进入评分；男/女/其他/未知或male/female/other/unknown。"
+        }
+      ],
+      "outputs": [
+        {
+          "key": "fatigue_score",
+          "label_zh": "疲劳项得分",
+          "unit": "score"
+        },
+        {
+          "key": "resistance_score",
+          "label_zh": "上楼困难项得分",
+          "unit": "score"
+        },
+        {
+          "key": "ambulation_score",
+          "label_zh": "步行困难项得分",
+          "unit": "score"
+        },
+        {
+          "key": "illnesses_score",
+          "label_zh": "疾病项得分",
+          "unit": "score"
+        },
+        {
+          "key": "weight_loss_score",
+          "label_zh": "体重下降项得分",
+          "unit": "score"
+        },
+        {
+          "key": "frail_total_score",
+          "label_zh": "FRAIL总分",
+          "unit": "score"
+        },
+        {
+          "key": "weight_loss_pct",
+          "label_zh": "过去一年体重下降百分比",
+          "unit": "%",
+          "note_zh": "增加体重为负数。"
+        },
+        {
+          "key": "frail_category",
+          "label_zh": "FRAIL筛查分层",
+          "note_zh": "robust=健壮，prefrail=衰弱前期，frail=衰弱。"
+        }
+      ],
+      "paper": {
+        "doi": "10.1007/s12603-012-0084-2",
+        "title": "A simple frailty questionnaire (FRAIL) predicts outcomes in middle aged African Americans.",
+        "title_zh": "FRAIL简易衰弱问卷的社区人群验证",
+        "journal": "The journal of nutrition, health & aging",
+        "year": 2012
+      }
+    },
+    {
+      "name": "framingham-general-cvd-risk",
+      "kind": "paper",
+      "tier": "A",
+      "species": [
+        "human"
+      ],
+      "evidence": "cohort",
+      "domains": [
+        "临床年龄与可穿戴"
+      ],
+      "blurb_zh": "用年龄、血压、血脂或体质指数估算十年总体心血管风险和等价心脏年龄。",
+      "description": "Tier A personal readout: computes one person's value with the paper's printed method and reproduces a printed example. Calculates the Framingham general cardiovascular disease ten-year risk and continuous heart/vascular age from personal blood pressure and lipids or BMI. Use for Framingham 2008 risk, 总体心血管风险、心脏年龄、血管年龄, or comparing user-supplied blood pressure and lipid targets in adults aged 30–74 without prior cardiovascular disease.",
+      "intents": [
+        "lab_meaning",
+        "biological_age"
+      ],
+      "has_script": true,
+      "validation_status": "reproduced",
+      "validation_label_zh": "已复现论文",
+      "entry": {
+        "script": "scripts/personal_report.py",
+        "measurements_flag": "--measurements",
+        "measurements_header": [
+          "marker",
+          "value",
+          "unit"
+        ],
+        "age_flag": "--age",
+        "sex_flag": "--sex",
+        "out_flag": "--out",
+        "result_json": true,
+        "targets_flag": "--targets",
+        "levers_json": true
+      },
+      "population": {
+        "age_years": [
+          30,
+          74
+        ],
+        "note_zh": "以白人为主的Framingham原始及子代队列，基线无心血管病；超出年龄范围或已有CVD时不计算。"
+      },
+      "inputs_status": "verified",
+      "inputs": [
+        {
+          "key": "sbp_mmhg",
+          "label_zh": "收缩压",
+          "aliases": [
+            "SBP",
+            "systolic blood pressure",
+            "高压",
+            "收缩期血压"
+          ],
+          "unit": "mmHg",
+          "accept": {
+            "kPa": 7.500617
+          },
+          "range": [
+            60,
+            300
+          ],
+          "required": true,
+          "from": "measurements",
+          "unit_required": true
+        },
+        {
+          "key": "tc_mg_dl",
+          "label_zh": "总胆固醇",
+          "aliases": [
+            "TC",
+            "TCHO",
+            "CHOL",
+            "total cholesterol",
+            "血清总胆固醇"
+          ],
+          "unit": "mg/dL",
+          "accept": {
+            "mmol/L": 38.665
+          },
+          "molar_mass": 386.65,
+          "range": [
+            50,
+            1000
+          ],
+          "required": false,
+          "from": "measurements",
+          "unit_required": true,
+          "note_zh": "血脂版必需；BMI版不使用。"
+        },
+        {
+          "key": "hdl_mg_dl",
+          "label_zh": "高密度脂蛋白胆固醇",
+          "aliases": [
+            "HDL",
+            "HDL-C",
+            "HDLC",
+            "HDL cholesterol",
+            "高密度脂蛋白胆固醇(HDL-C)"
+          ],
+          "unit": "mg/dL",
+          "accept": {
+            "mmol/L": 38.665
+          },
+          "molar_mass": 386.65,
+          "range": [
+            5,
+            200
+          ],
+          "required": false,
+          "from": "measurements",
+          "unit_required": true,
+          "note_zh": "血脂版必需；不是LDL或总胆固醇。"
+        },
+        {
+          "key": "bmi_kg_m2",
+          "label_zh": "体质指数",
+          "aliases": [
+            "BMI",
+            "body mass index",
+            "体重指数"
+          ],
+          "unit": "kg/m^2",
+          "range": [
+            10,
+            80
+          ],
+          "required": false,
+          "from": "measurements",
+          "note_zh": "只在 --model bmi 时必需；不与血脂同时进入方程。"
+        },
+        {
+          "key": "age",
+          "label_zh": "实足年龄",
+          "aliases": [
+            "年龄",
+            "age"
+          ],
+          "unit": "a",
+          "range": [
+            30,
+            74
+          ],
+          "required": true,
+          "from": "profile",
+          "flag": "--age"
+        },
+        {
+          "key": "sex",
+          "label_zh": "模型分层性别",
+          "aliases": [
+            "性别",
+            "sex"
+          ],
+          "required": true,
+          "from": "profile",
+          "flag": "--sex",
+          "note_zh": "male/男 或 female/女；按论文男女方程选择。"
+        },
+        {
+          "key": "treated",
+          "label_zh": "正在接受降压治疗",
+          "aliases": [
+            "antihypertensive treatment",
+            "TRTBP",
+            "降压药使用"
+          ],
+          "required": true,
+          "from": "argument",
+          "flag": "--treated",
+          "note_zh": "明确填写 yes/是 或 no/否；未知不能填否。"
+        },
+        {
+          "key": "smoker",
+          "label_zh": "当前吸烟",
+          "aliases": [
+            "current smoker",
+            "smoking",
+            "吸烟"
+          ],
+          "required": true,
+          "from": "argument",
+          "flag": "--smoker",
+          "note_zh": "明确填写 yes/是 或 no/否；未知不能填否。"
+        },
+        {
+          "key": "diabetes",
+          "label_zh": "已有糖尿病",
+          "aliases": [
+            "diabetes mellitus",
+            "DM",
+            "糖尿病"
+          ],
+          "required": true,
+          "from": "argument",
+          "flag": "--diabetes",
+          "note_zh": "明确填写 yes/是 或 no/否；未知不能填否。"
+        },
+        {
+          "key": "prior_cvd",
+          "label_zh": "既往心血管病",
+          "aliases": [
+            "prevalent CVD",
+            "CVD history",
+            "既往CVD"
+          ],
+          "required": true,
+          "from": "argument",
+          "flag": "--prior-cvd",
+          "note_zh": "明确填写 yes/是 或 no/否；未知不能填否。必须为否才计算首次事件风险。"
+        },
+        {
+          "key": "model",
+          "label_zh": "方程版本",
+          "required": false,
+          "from": "argument",
+          "flag": "--model",
+          "note_zh": "默认 lipids；无血脂时明确选择 bmi。"
+        }
+      ],
+      "outputs": [
+        {
+          "key": "model",
+          "label_zh": "方程版本"
+        },
+        {
+          "key": "risk_10y_pct",
+          "label_zh": "十年首次总体心血管风险",
+          "unit": "%"
+        },
+        {
+          "key": "linear_predictor",
+          "label_zh": "Cox个人线性预测和",
+          "unit": "1"
+        },
+        {
+          "key": "normal_risk_10y_pct",
+          "label_zh": "同龄同性别参考状态的十年风险",
+          "unit": "%"
+        },
+        {
+          "key": "heart_age_years",
+          "label_zh": "连续方程等价心脏年龄",
+          "unit": "a"
+        },
+        {
+          "key": "heart_age_difference_years",
+          "label_zh": "等价心脏年龄减实足年龄",
+          "unit": "a"
+        }
+      ],
+      "paper": {
+        "doi": "10.1161/circulationaha.107.699579",
+        "title": "General cardiovascular risk profile for use in primary care: the Framingham Heart Study.",
+        "title_zh": "Framingham 十年总体心血管风险",
+        "journal": "Circulation",
+        "year": 2008
       }
     },
     {
@@ -9265,6 +11086,151 @@
       }
     },
     {
+      "name": "hotspot-somatic-sweep",
+      "kind": "paper",
+      "tier": "A",
+      "species": [
+        "human"
+      ],
+      "evidence": "case_control",
+      "domains": [
+        "克隆性造血",
+        "血液测序"
+      ],
+      "blurb_zh": "用一条血液变异的读段计数计算 VAF，核对是否满足论文热点名单、支持读段和克隆扫荡阈值；不估算个人白血病概率。",
+      "description": "Tier A personal readout: computes one person's value with the paper's printed method and reproduces a printed example. Calculates the variant allele fraction of one quality-controlled blood SNV from total and alternate read counts, then checks the published clonal-haematopoiesis hotspot somatic-sweep screen. Use for a blood sequencing report with a gene, protein substitution and read counts, or questions about a hotspot VAF above 30%. Reports a record-level research classification, not an AML diagnosis or personal cancer probability.",
+      "intents": [
+        "gene_variant"
+      ],
+      "has_script": true,
+      "validation_status": "reproduced",
+      "validation_label_zh": "已复现论文",
+      "entry": {
+        "script": "scripts/personal_report.py",
+        "measurements_flag": "--measurements",
+        "measurements_header": [
+          "item",
+          "value",
+          "unit"
+        ],
+        "age_flag": "--age",
+        "sex_flag": "--sex",
+        "out_flag": "--out",
+        "result_json": true
+      },
+      "population": {
+        "age_years": [
+          40,
+          70
+        ],
+        "note_zh": "图 5f 的 UK Biobank 人群年龄约 40–70 岁；UKCTOCS 的纵向发现来自入组时 50–74 岁绝经后女性。这里仅核对单条变异，不作年龄或性别风险校准。"
+      },
+      "inputs_status": "verified",
+      "inputs": [
+        {
+          "key": "total_reads_count",
+          "label_zh": "同一位点总读段数",
+          "aliases": [
+            "Total depth",
+            "DP",
+            "总读段数",
+            "总测序深度",
+            "Total read depth"
+          ],
+          "unit": "1",
+          "accept": {},
+          "range": [
+            1,
+            1000000000
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "经实验室质控后、与替换支持计数使用同一过滤口径的整数。不能用平均面板深度替代。范围上限是输入保护，不是论文临床切点。"
+        },
+        {
+          "key": "variant_reads_count",
+          "label_zh": "该替换支持读段数",
+          "aliases": [
+            "Variant depth",
+            "ALT read count",
+            "突变支持读段数",
+            "变异支持读数",
+            "突变读段数"
+          ],
+          "unit": "1",
+          "accept": {},
+          "range": [
+            0,
+            1000000000
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "只计这一个 ALT 的支持读段；不得超过总读段数。若读数来自 VCF，需核对 AD/DP 的过滤口径，不自动拆分多等位记录。"
+        },
+        {
+          "key": "variant",
+          "label_zh": "基因与蛋白改变",
+          "aliases": [
+            "Gene and amino acid change",
+            "基因及蛋白变异"
+          ],
+          "required": true,
+          "from": "argument",
+          "flag": "--variant",
+          "note_zh": "如 SF3B1 p.K700E；单字母蛋白替换，* 与末位 X 均表示终止。需事先确认与论文蛋白注释一致；不从 rs 编号或未注释坐标猜测。"
+        },
+        {
+          "key": "age",
+          "label_zh": "实足年龄",
+          "unit": "a",
+          "range": [
+            0,
+            120
+          ],
+          "required": false,
+          "from": "profile",
+          "flag": "--age",
+          "note_zh": "仅作适用人群提示，不参与分类。"
+        },
+        {
+          "key": "sex",
+          "label_zh": "性别",
+          "required": false,
+          "from": "profile",
+          "flag": "--sex",
+          "note_zh": "女/female 或男/male；仅作背景，不参与分类。"
+        }
+      ],
+      "outputs": [
+        {
+          "key": "variant",
+          "label_zh": "标准化的基因与蛋白改变"
+        },
+        {
+          "key": "vaf_fraction",
+          "label_zh": "该变异等位基因频率（比例）",
+          "unit": "1"
+        },
+        {
+          "key": "vaf_pct",
+          "label_zh": "该变异等位基因频率（百分比）",
+          "unit": "%"
+        },
+        {
+          "key": "screen_status",
+          "label_zh": "单条变异的论文筛查条件状态",
+          "note_zh": "meets_screen、below_or_equal_cutoff、insufficient_support 或 outside_panel；都不是个人诊断。"
+        }
+      ],
+      "paper": {
+        "doi": "10.1038/s41586-026-11269-x",
+        "title": "Evolutionary dynamics in the years preceding acute myeloid leukaemia.",
+        "title_zh": "急性髓系白血病发生前数年的克隆演化动力学",
+        "journal": "Nature",
+        "year": 2026
+      }
+    },
+    {
       "name": "hsc-inflammatory-memory",
       "kind": "paper",
       "tier": "B",
@@ -10238,6 +12204,446 @@
         "title_zh": "临床时钟对照",
         "journal": "Nature Medicine",
         "year": 2025
+      }
+    },
+    {
+      "name": "lifes-essential-8",
+      "kind": "paper",
+      "tier": "A",
+      "species": [
+        "human"
+      ],
+      "evidence": "consensus",
+      "domains": [
+        "心血管健康"
+      ],
+      "blurb_zh": "用饮食、运动、吸烟、睡眠和体检数据计算成人心血管健康八项评分。",
+      "description": "Tier A personal readout: computes one person's value with the paper's printed method and reproduces a printed example. Calculates adult Life’s Essential 8 cardiovascular health scores from a completed MEPA diet score, activity, nicotine exposure, sleep and routine measurements. Use for an adult asking about LE8, 心血管健康八要素, or changes in these scores. Supports explicit target scenarios; does not estimate disease risk or prescribe treatment.",
+      "intents": [
+        "lab_meaning",
+        "before_after",
+        "wearable_sleep",
+        "body_fat_waist"
+      ],
+      "has_script": true,
+      "validation_status": "reproduced",
+      "validation_label_zh": "已复现论文",
+      "entry": {
+        "script": "scripts/personal_report.py",
+        "measurements_flag": "--measurements",
+        "measurements_header": [
+          "marker",
+          "value",
+          "unit"
+        ],
+        "age_flag": "--age",
+        "sex_flag": "--sex",
+        "out_flag": "--out",
+        "result_json": true,
+        "targets_flag": "--targets",
+        "levers_json": true
+      },
+      "inputs_status": "verified",
+      "inputs": [
+        {
+          "key": "mepa_score",
+          "label_zh": "成人MEPA总分",
+          "unit": "score",
+          "range": [
+            0,
+            16
+          ],
+          "aliases": [
+            "MEPA",
+            "MEPA score"
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "已完成的成人16项MEPA整数总分；不是14项MEDAS，也不是LE8饮食分。"
+        },
+        {
+          "key": "moderate_min_week",
+          "label_zh": "每周中等强度活动分钟数",
+          "unit": "min",
+          "range": [
+            0,
+            10080
+          ],
+          "aliases": [
+            "moderate activity minutes per week"
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "填写过去一周该强度的整数分钟数，两种强度不能重复计数。单位 min 表示一周累计。",
+          "accept": {
+            "h": 60
+          }
+        },
+        {
+          "key": "vigorous_min_week",
+          "label_zh": "每周高强度活动分钟数",
+          "unit": "min",
+          "range": [
+            0,
+            10080
+          ],
+          "aliases": [
+            "vigorous activity minutes per week"
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "填写过去一周该强度的整数分钟数，两种强度不能重复计数。单位 min 表示一周累计。",
+          "accept": {
+            "h": 60
+          }
+        },
+        {
+          "key": "smoking_status",
+          "label_zh": "吸烟状态编码",
+          "unit": "1",
+          "range": [
+            0,
+            4
+          ],
+          "aliases": [
+            "smoking status"
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "0=从不吸烟，1=戒烟至少5年，2=戒烟1至不足5年，3=戒烟不足1年，4=当前吸烟。"
+        },
+        {
+          "key": "inhaled_nicotine",
+          "label_zh": "当前使用吸入式尼古丁产品",
+          "unit": "1",
+          "range": [
+            0,
+            1
+          ],
+          "aliases": [
+            "vaping",
+            "电子烟"
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "0=否，1=是；不能把未知填成0。"
+        },
+        {
+          "key": "indoor_smoke",
+          "label_zh": "家中室内二手烟暴露",
+          "unit": "1",
+          "range": [
+            0,
+            1
+          ],
+          "aliases": [
+            "secondhand smoke"
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "0=否，1=是；不能把未知填成0。"
+        },
+        {
+          "key": "sleep_h",
+          "label_zh": "平均每晚睡眠时长",
+          "unit": "h",
+          "range": [
+            0,
+            24
+          ],
+          "aliases": [
+            "sleep duration",
+            "睡眠小时数"
+          ],
+          "required": true,
+          "from": "measurements",
+          "accept": {
+            "min": 0.016666666666666666
+          }
+        },
+        {
+          "key": "bmi_kg_m2",
+          "label_zh": "体质指数",
+          "unit": "kg/m^2",
+          "range": [
+            10,
+            100
+          ],
+          "aliases": [
+            "BMI",
+            "body mass index",
+            "体重指数"
+          ],
+          "required": true,
+          "from": "measurements"
+        },
+        {
+          "key": "bmi_asian_scale",
+          "label_zh": "是否需要亚洲太平洋祖源BMI调整",
+          "unit": "1",
+          "range": [
+            0,
+            1
+          ],
+          "aliases": [
+            "Asian BMI scale"
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "0=否，按Table 1通用成人尺度；1=是，原文未印出该人群分档，本技能停算并请医生判断；不能把未知填成0。"
+        },
+        {
+          "key": "non_hdl_mg_dl",
+          "label_zh": "非高密度脂蛋白胆固醇",
+          "unit": "mg/dL",
+          "range": [
+            10,
+            1000
+          ],
+          "aliases": [
+            "non-HDL-C",
+            "non-HDL cholesterol",
+            "非HDL胆固醇"
+          ],
+          "required": true,
+          "from": "measurements",
+          "accept": {
+            "mmol/L": 38.665
+          },
+          "molar_mass": 386.65,
+          "unit_required": true
+        },
+        {
+          "key": "lipid_treated",
+          "label_zh": "血脂为药物治疗后测量值",
+          "unit": "1",
+          "range": [
+            0,
+            1
+          ],
+          "aliases": [
+            "lipid treatment"
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "0=否，1=是；不能把未知填成0。"
+        },
+        {
+          "key": "diabetes",
+          "label_zh": "已确诊糖尿病史",
+          "unit": "1",
+          "range": [
+            0,
+            1
+          ],
+          "aliases": [
+            "diabetes history"
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "0=否，1=是；不能把未知填成0。"
+        },
+        {
+          "key": "fasting_glucose_mg_dl",
+          "label_zh": "空腹血糖",
+          "unit": "mg/dL",
+          "range": [
+            20,
+            1000
+          ],
+          "aliases": [
+            "FPG",
+            "FBG",
+            "fasting blood glucose",
+            "空腹血葡萄糖"
+          ],
+          "required": false,
+          "from": "measurements",
+          "accept": {
+            "mmol/L": 18.016
+          },
+          "molar_mass": 180.16,
+          "unit_required": true
+        },
+        {
+          "key": "hba1c_pct",
+          "label_zh": "糖化血红蛋白",
+          "unit": "%",
+          "range": [
+            2,
+            25
+          ],
+          "aliases": [
+            "HbA1c",
+            "hemoglobin A1c"
+          ],
+          "required": false,
+          "from": "measurements"
+        },
+        {
+          "key": "sbp_mmhg",
+          "label_zh": "收缩压",
+          "unit": "mmHg",
+          "range": [
+            50,
+            300
+          ],
+          "aliases": [
+            "SBP",
+            "systolic blood pressure"
+          ],
+          "required": true,
+          "from": "measurements",
+          "accept": {
+            "kPa": 7.500617
+          }
+        },
+        {
+          "key": "dbp_mmhg",
+          "label_zh": "舒张压",
+          "unit": "mmHg",
+          "range": [
+            20,
+            200
+          ],
+          "aliases": [
+            "DBP",
+            "diastolic blood pressure"
+          ],
+          "required": true,
+          "from": "measurements",
+          "accept": {
+            "kPa": 7.500617
+          }
+        },
+        {
+          "key": "bp_treated",
+          "label_zh": "血压为药物治疗后测量值",
+          "unit": "1",
+          "range": [
+            0,
+            1
+          ],
+          "aliases": [
+            "antihypertensive treatment"
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "0=否，1=是；不能把未知填成0。"
+        },
+        {
+          "key": "sleep_apnea_penalty",
+          "label_zh": "医生决定应用睡眠呼吸暂停扣分",
+          "unit": "1",
+          "range": [
+            0,
+            1
+          ],
+          "aliases": [
+            "sleep apnea penalty"
+          ],
+          "required": false,
+          "from": "measurements",
+          "note_zh": "仅填写医生已明确决定的酌情扣分；省略表示本次不应用该可选修正，不表示不存在相关疾病。"
+        },
+        {
+          "key": "prediabetes_penalty",
+          "label_zh": "医生决定应用治疗后正常血糖的糖尿病前期扣分",
+          "unit": "1",
+          "range": [
+            0,
+            1
+          ],
+          "aliases": [
+            "prediabetes penalty"
+          ],
+          "required": false,
+          "from": "measurements",
+          "note_zh": "仅填写医生已明确决定的酌情扣分；省略表示本次不应用该可选修正，不表示不存在相关疾病。"
+        },
+        {
+          "key": "age",
+          "label_zh": "实足年龄",
+          "unit": "a",
+          "range": [
+            20,
+            120
+          ],
+          "required": true,
+          "from": "profile",
+          "flag": "--age"
+        },
+        {
+          "key": "sex",
+          "label_zh": "性别",
+          "required": false,
+          "from": "profile",
+          "flag": "--sex",
+          "note_zh": "不进入已计分MEPA和成人LE8计算。"
+        }
+      ],
+      "outputs": [
+        {
+          "key": "diet_score",
+          "label_zh": "饮食得分",
+          "unit": "score"
+        },
+        {
+          "key": "activity_score",
+          "label_zh": "体力活动得分",
+          "unit": "score"
+        },
+        {
+          "key": "nicotine_score",
+          "label_zh": "尼古丁暴露得分",
+          "unit": "score"
+        },
+        {
+          "key": "sleep_score",
+          "label_zh": "睡眠得分",
+          "unit": "score"
+        },
+        {
+          "key": "bmi_score",
+          "label_zh": "体质指数得分",
+          "unit": "score"
+        },
+        {
+          "key": "lipids_score",
+          "label_zh": "血脂得分",
+          "unit": "score"
+        },
+        {
+          "key": "glucose_score",
+          "label_zh": "血糖得分",
+          "unit": "score"
+        },
+        {
+          "key": "bp_score",
+          "label_zh": "血压得分",
+          "unit": "score"
+        },
+        {
+          "key": "score_sum",
+          "label_zh": "八项分数之和",
+          "unit": "score"
+        },
+        {
+          "key": "le8_score",
+          "label_zh": "LE8综合得分",
+          "unit": "score"
+        },
+        {
+          "key": "cvh_category",
+          "label_zh": "心血管健康分档"
+        }
+      ],
+      "paper": {
+        "doi": "10.1161/cir.0000000000001078",
+        "title": "Life's Essential 8: Updating and Enhancing the American Heart Association's Construct of Cardiovascular Health: A Presidential Advisory From the American Heart Association.",
+        "title_zh": "生命必需八要素：更新心血管健康评价框架",
+        "journal": "Circulation",
+        "year": 2022
       }
     },
     {
@@ -23593,6 +25999,230 @@
       }
     },
     {
+      "name": "new-chinese-diabetes-risk-score",
+      "kind": "paper",
+      "tier": "A",
+      "species": [
+        "human"
+      ],
+      "evidence": "cross_sectional",
+      "domains": [
+        "糖尿病风险筛查"
+      ],
+      "blurb_zh": "用年龄、性别、腰围、BMI、收缩压和家族史计算糖尿病筛查分数。",
+      "description": "Tier A personal readout: computes one person's value with the paper's printed method and reproduces a printed example. Uses age, sex, waist circumference, BMI, systolic blood pressure and first-degree family history to calculate the New Chinese Diabetes Risk Score for adults without diagnosed diabetes. Use for nonlaboratory diabetes screening, 新中国糖尿病风险评分, or asking how personal measurements affect this score. Reports points and the published screening threshold in Chinese, with optional user-supplied target scenarios.",
+      "intents": [
+        "lab_meaning",
+        "body_fat_waist"
+      ],
+      "has_script": true,
+      "validation_status": "reproduced",
+      "validation_label_zh": "已复现论文",
+      "entry": {
+        "script": "scripts/personal_report.py",
+        "measurements_flag": "--measurements",
+        "measurements_header": [
+          "marker",
+          "value",
+          "unit"
+        ],
+        "age_flag": "--age",
+        "sex_flag": "--sex",
+        "out_flag": "--out",
+        "result_json": true,
+        "targets_flag": "--targets",
+        "levers_json": true
+      },
+      "population": {
+        "age_years": [
+          20,
+          74
+        ],
+        "note_zh": "中国未确诊糖尿病成人；推导为全国横断面调查，外部验证限青岛35–74岁人群；已确诊者不计算。"
+      },
+      "inputs_status": "verified",
+      "inputs": [
+        {
+          "key": "age",
+          "label_zh": "年龄",
+          "aliases": [
+            "年龄（岁）",
+            "age",
+            "Age (years)"
+          ],
+          "unit": "a",
+          "range": [
+            20,
+            74
+          ],
+          "required": true,
+          "from": "argument",
+          "flag": "--age",
+          "note_zh": "已满周岁整数；不向20–74岁之外外推。"
+        },
+        {
+          "key": "sex",
+          "label_zh": "性别",
+          "aliases": [
+            "sex",
+            "Sex"
+          ],
+          "unit": "1",
+          "range": [
+            0,
+            1
+          ],
+          "required": true,
+          "from": "argument",
+          "flag": "--sex",
+          "note_zh": "命令行 male/female 或 男/女，对应论文 Men/Women；内部编码男1、女0。"
+        },
+        {
+          "key": "waist_cm",
+          "label_zh": "腰围",
+          "aliases": [
+            "waist",
+            "WC",
+            "waist circumference",
+            "腹围"
+          ],
+          "unit": "cm",
+          "accept": {
+            "m": 100,
+            "mm": 0.1,
+            "in": 2.54
+          },
+          "unit_required": true,
+          "range": [
+            40,
+            200
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "下肋缘与髂嵴之间中点处测量；不是裤子尺码。"
+        },
+        {
+          "key": "bmi_kg_m2",
+          "label_zh": "体质指数",
+          "aliases": [
+            "BMI",
+            "body mass index",
+            "身体质量指数"
+          ],
+          "unit": "kg/m^2",
+          "range": [
+            10,
+            70
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "体重kg除以身高m的平方。"
+        },
+        {
+          "key": "sbp_mmhg",
+          "label_zh": "收缩压",
+          "aliases": [
+            "SBP",
+            "systolic blood pressure",
+            "高压"
+          ],
+          "unit": "mmHg",
+          "accept": {
+            "kPa": 7.500617
+          },
+          "range": [
+            60,
+            260
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "使用测量均值；论文推导组取两次、验证组取三次血压测量的均值。"
+        },
+        {
+          "key": "family_history",
+          "label_zh": "一级亲属糖尿病史",
+          "aliases": [
+            "family history of diabetes",
+            "糖尿病家族史",
+            "diabetes family history"
+          ],
+          "unit": "1",
+          "range": [
+            0,
+            1
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "父母、兄弟姐妹或子女有糖尿病填1，无填0；未知不当作无。"
+        },
+        {
+          "key": "known_diabetes",
+          "label_zh": "已经确诊糖尿病",
+          "aliases": [
+            "known diabetes",
+            "既往糖尿病诊断"
+          ],
+          "unit": "1",
+          "range": [
+            0,
+            1
+          ],
+          "required": true,
+          "from": "argument",
+          "flag": "--known-diabetes",
+          "note_zh": "yes/no 或 是/否；适用性核对，不加减评分。yes时退出3。"
+        }
+      ],
+      "outputs": [
+        {
+          "key": "total_score",
+          "label_zh": "糖尿病筛查总分",
+          "unit": "score"
+        },
+        {
+          "key": "screening_category",
+          "label_zh": "筛查分层"
+        },
+        {
+          "key": "age_points",
+          "label_zh": "年龄得分",
+          "unit": "score"
+        },
+        {
+          "key": "sex_points",
+          "label_zh": "性别得分",
+          "unit": "score"
+        },
+        {
+          "key": "waist_cm_points",
+          "label_zh": "腰围得分",
+          "unit": "score"
+        },
+        {
+          "key": "bmi_kg_m2_points",
+          "label_zh": "体质指数得分",
+          "unit": "score"
+        },
+        {
+          "key": "sbp_mmhg_points",
+          "label_zh": "收缩压得分",
+          "unit": "score"
+        },
+        {
+          "key": "family_history_points",
+          "label_zh": "一级亲属糖尿病史得分",
+          "unit": "score"
+        }
+      ],
+      "paper": {
+        "doi": "10.2337/dc13-0593",
+        "title": "Nonlaboratory-Based Risk Assessment Algorithm for Undiagnosed Type 2 Diabetes Developed on a Nation-Wide Diabetes Survey",
+        "title_zh": "新中国糖尿病风险评分",
+        "journal": "Diabetes Care",
+        "year": 2013
+      }
+    },
+    {
       "name": "nicotinamide-riboside-airway-inflammation",
       "kind": "paper",
       "tier": "B",
@@ -23776,6 +26406,143 @@
         "title_zh": "干细胞分裂次数",
         "journal": "Nature Communications",
         "year": 2026
+      }
+    },
+    {
+      "name": "one-minute-heart-rate-recovery",
+      "kind": "paper",
+      "tier": "A",
+      "species": [
+        "human"
+      ],
+      "evidence": "cohort",
+      "domains": [
+        "心血管与运动"
+      ],
+      "blurb_zh": "用运动试验的峰值和主动恢复1分钟心率，计算心率下降量并按原文切点分档。",
+      "description": "Tier A draft: the paper's printed example is not reproduced yet, so treat the readout as provisional. Calculates the fall from peak exercise heart rate to one minute of active treadmill recovery and applies the Cole 1999 primary cutoff. Use when an adult brings an existing symptom-limited exercise-test report with both heart rates and a verified recovery protocol, or asks what that heart-rate recovery measurement means.",
+      "intents": [
+        "lab_meaning",
+        "frailty_mortality"
+      ],
+      "has_script": true,
+      "validation_status": "draft",
+      "validation_label_zh": "仍在验证",
+      "entry": {
+        "script": "scripts/personal_report.py",
+        "measurements_flag": "--measurements",
+        "measurements_header": [
+          "marker",
+          "value",
+          "unit"
+        ],
+        "age_flag": "--age",
+        "sex_flag": "--sex",
+        "out_flag": "--out",
+        "result_json": true
+      },
+      "inputs_status": "draft",
+      "inputs": [
+        {
+          "key": "peak_hr_bpm",
+          "label_zh": "峰值心率",
+          "aliases": [
+            "运动峰值心率",
+            "运动最大心率",
+            "peak heart rate",
+            "peak HR",
+            "HR peak"
+          ],
+          "unit": "/min",
+          "accept": {
+            "bpm": 1,
+            "次/分": 1,
+            "次/分钟": 1
+          },
+          "range": [
+            20,
+            300
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "须为同一次症状限制性运动试验的实测峰值，不用年龄预测的最大心率。"
+        },
+        {
+          "key": "recovery_hr_1min_bpm",
+          "label_zh": "恢复1分钟心率",
+          "aliases": [
+            "运动后1分钟心率",
+            "恢复期1分钟心率",
+            "1-min recovery heart rate",
+            "heart rate at 1 minute recovery",
+            "HR at 1 min recovery"
+          ],
+          "unit": "/min",
+          "accept": {
+            "bpm": 1,
+            "次/分": 1,
+            "次/分钟": 1
+          },
+          "range": [
+            20,
+            300
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "峰值运动结束后第1分钟，按原文跑台慢走主动恢复时的心率；不是两分钟心率或一分钟下降量。"
+        },
+        {
+          "key": "age",
+          "label_zh": "实足年龄",
+          "aliases": [
+            "年龄",
+            "age"
+          ],
+          "unit": "a",
+          "range": [
+            18,
+            120
+          ],
+          "required": true,
+          "from": "profile",
+          "flag": "--age",
+          "note_zh": "仅作成年人范围检查；上限为输入合理性保护，不是论文实测最大年龄。"
+        },
+        {
+          "key": "sex",
+          "label_zh": "性别",
+          "required": false,
+          "from": "profile",
+          "flag": "--sex",
+          "note_zh": "可选背景信息，不参与差值或分档。"
+        },
+        {
+          "key": "protocol",
+          "label_zh": "测量方案",
+          "required": true,
+          "from": "argument",
+          "flag": "--protocol",
+          "note_zh": "核实症状限制性跑台试验后以约2.4 km/h（原文1.5 mi/h）、2.5%坡度主动恢复至少2分钟，取第1分钟心率，才填写 cole-1999。其他或未知方案返回输入问题。"
+        }
+      ],
+      "outputs": [
+        {
+          "key": "hrr_1min_bpm",
+          "label_zh": "主动恢复1分钟心率下降量",
+          "unit": "/min"
+        },
+        {
+          "key": "hrr_category",
+          "label_zh": "原文主切点分档",
+          "note_zh": "abnormal：下降量≤12次/分；normal：下降量>12次/分。"
+        }
+      ],
+      "paper": {
+        "doi": "10.1056/nejm199910283411804",
+        "title": "Heart-rate recovery immediately after exercise as a predictor of mortality.",
+        "title_zh": "运动后即刻心率恢复与死亡风险",
+        "journal": "The New England Journal of Medicine",
+        "year": 1999
       }
     },
     {
@@ -24396,6 +27163,232 @@
         "title_zh": "多基因与肠道菌群",
         "journal": "Nature Aging",
         "year": 2024
+      }
+    },
+    {
+      "name": "pooled-cohort-ascvd-risk",
+      "kind": "paper",
+      "tier": "A",
+      "species": [
+        "human"
+      ],
+      "evidence": "consensus",
+      "domains": [
+        "心血管"
+      ],
+      "blurb_zh": "用年龄、血脂、血压、吸烟和糖尿病状态，按原始 PCE 方程估计十年首次心血管病风险。",
+      "description": "Tier A personal readout: computes one person's value with the paper's printed method and reproduces a printed example. Computes the original Pooled Cohort Equations ten-year risk of a first hard ASCVD event from age, sex, explicitly selected population equation, cholesterol, blood pressure, treatment, smoking and diabetes. Use for requests about PCE or the 2013 ACC/AHA risk equation and user-specified target scenarios. Produces a Chinese report with applicability limits and structured input problems.",
+      "intents": [
+        "frailty_mortality",
+        "lab_meaning"
+      ],
+      "has_script": true,
+      "validation_status": "reproduced",
+      "validation_label_zh": "已复现论文",
+      "entry": {
+        "script": "scripts/personal_report.py",
+        "measurements_flag": "--measurements",
+        "measurements_header": [
+          "item",
+          "value",
+          "unit"
+        ],
+        "age_flag": "--age",
+        "sex_flag": "--sex",
+        "out_flag": "--out",
+        "result_json": true,
+        "targets_flag": "--targets",
+        "levers_json": true
+      },
+      "population": {
+        "age_years": [
+          40,
+          79
+        ],
+        "note_zh": "美国非西班牙裔白人及非裔美国人，且无既往心肌梗死、卒中、心衰、冠脉血运重建或房颤；其他族群未由本模型充分验证。"
+      },
+      "inputs_status": "verified",
+      "inputs": [
+        {
+          "key": "tc_mg_dl",
+          "label_zh": "总胆固醇",
+          "aliases": [
+            "TC",
+            "TCHO",
+            "CHOL",
+            "Total cholesterol",
+            "血清总胆固醇"
+          ],
+          "unit": "mg/dL",
+          "range": [
+            130,
+            320
+          ],
+          "required": true,
+          "unit_required": true,
+          "from": "measurements",
+          "accept": {
+            "mmol/L": 38.665,
+            "mg/L": 0.1
+          },
+          "molar_mass": 386.65,
+          "note_zh": "接受范围采用原论文随附官方 Excel 的 Omnibus 页；超出时不外推。"
+        },
+        {
+          "key": "hdl_mg_dl",
+          "label_zh": "高密度脂蛋白胆固醇",
+          "aliases": [
+            "HDL-C",
+            "HDL cholesterol",
+            "HDLC",
+            "高密度脂蛋白胆固醇测定"
+          ],
+          "unit": "mg/dL",
+          "range": [
+            20,
+            100
+          ],
+          "required": true,
+          "unit_required": true,
+          "from": "measurements",
+          "accept": {
+            "mmol/L": 38.665,
+            "mg/L": 0.1
+          },
+          "molar_mass": 386.65,
+          "note_zh": "接受范围采用原论文随附官方 Excel 的 Omnibus 页；超出时不外推。"
+        },
+        {
+          "key": "sbp_mmhg",
+          "label_zh": "收缩压",
+          "aliases": [
+            "SBP",
+            "Systolic blood pressure",
+            "高压"
+          ],
+          "unit": "mmHg",
+          "range": [
+            90,
+            200
+          ],
+          "required": true,
+          "unit_required": true,
+          "from": "measurements",
+          "accept": {
+            "kPa": 7.500617
+          },
+          "note_zh": "接受范围采用原论文随附官方 Excel 的 Omnibus 页；超出时不外推。"
+        },
+        {
+          "key": "treated",
+          "label_zh": "正在接受降压治疗",
+          "aliases": [
+            "BP treatment",
+            "Treatment for High Blood Pressure",
+            "降压治疗"
+          ],
+          "unit": "1",
+          "range": [
+            0,
+            1
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "仅接受 0=否、1=是；未知不能填 0。"
+        },
+        {
+          "key": "smoker",
+          "label_zh": "当前吸烟",
+          "aliases": [
+            "Current smoker",
+            "Smoker",
+            "吸烟"
+          ],
+          "unit": "1",
+          "range": [
+            0,
+            1
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "仅接受 0=否、1=是；未知不能填 0。"
+        },
+        {
+          "key": "diabetes",
+          "label_zh": "糖尿病",
+          "aliases": [
+            "Diabetes mellitus",
+            "DM",
+            "糖尿病史"
+          ],
+          "unit": "1",
+          "range": [
+            0,
+            1
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "仅接受 0=否、1=是；未知不能填 0。"
+        },
+        {
+          "key": "age",
+          "label_zh": "实足年龄",
+          "unit": "a",
+          "range": [
+            40,
+            79
+          ],
+          "required": true,
+          "from": "profile",
+          "flag": "--age"
+        },
+        {
+          "key": "sex",
+          "label_zh": "原方程性别",
+          "required": true,
+          "from": "profile",
+          "flag": "--sex",
+          "note_zh": "male/female，也接受 m/f、男/女。"
+        },
+        {
+          "key": "race",
+          "label_zh": "原方程族群",
+          "required": true,
+          "from": "argument",
+          "flag": "--race",
+          "note_zh": "仅 white 或 african_american；不可从姓名、国籍或语言推断。"
+        },
+        {
+          "key": "eligible",
+          "label_zh": "首次事件模型适用性",
+          "required": true,
+          "from": "argument",
+          "flag": "--eligible",
+          "note_zh": "yes：无心血管症状且无心梗、卒中、心衰、冠脉介入/搭桥或房颤史；no 或未知不计算。"
+        }
+      ],
+      "outputs": [
+        {
+          "key": "risk_10y_pct",
+          "label_zh": "十年首次 ASCVD 风险（原方程未截断值）",
+          "unit": "%",
+          "note_zh": "边缘范围可能不稳定；给人展示时使用 risk_display。"
+        },
+        {
+          "key": "risk_display",
+          "label_zh": "按论文边界显示的风险"
+        },
+        {
+          "key": "equation_group",
+          "label_zh": "采用的原方程组"
+        }
+      ],
+      "paper": {
+        "doi": "10.1016/j.jacc.2013.11.005",
+        "title": "2013 ACC/AHA guideline on the assessment of cardiovascular risk: a report of the American College of Cardiology/American Heart Association Task Force on Practice Guidelines.",
+        "title_zh": "2013 ACC/AHA 心血管风险评估指南与 PCE 方程",
+        "journal": "Journal of the American College of Cardiology",
+        "year": 2014
       }
     },
     {
@@ -27685,6 +30678,205 @@
       }
     },
     {
+      "name": "score2-cvd-risk",
+      "kind": "paper",
+      "tier": "A",
+      "species": [
+        "human"
+      ],
+      "evidence": "cohort",
+      "domains": [
+        "心血管与代谢风险"
+      ],
+      "blurb_zh": "用血压、血脂和吸烟状态估计欧洲成人十年心血管风险。",
+      "description": "Tier A personal readout: computes one person's value with the paper's printed method and reproduces a printed example. Estimates SCORE2 ten-year first-onset fatal and non-fatal cardiovascular risk from age, sex, smoking, blood pressure and cholesterol in adults aged 40–69 without prior CVD or diabetes in the paper's European risk regions. Use for SCORE2、欧洲心血管风险、血压血脂风险 and user-specified target scenarios.",
+      "intents": [
+        "lab_meaning"
+      ],
+      "has_script": true,
+      "validation_status": "reproduced",
+      "validation_label_zh": "已复现论文",
+      "entry": {
+        "script": "scripts/personal_report.py",
+        "measurements_flag": "--measurements",
+        "measurements_header": [
+          "marker",
+          "value",
+          "unit"
+        ],
+        "age_flag": "--age",
+        "sex_flag": "--sex",
+        "out_flag": "--out",
+        "result_json": true,
+        "targets_flag": "--targets",
+        "levers_json": true
+      },
+      "population": {
+        "age_years": [
+          40,
+          79
+        ],
+        "note_zh": "模型推导年龄 40–79 岁；个人用途仅 40–69 岁，无既往心血管病且无糖尿病，按欧洲风险地区校准。"
+      },
+      "inputs_status": "verified",
+      "inputs": [
+        {
+          "key": "sbp_mmhg",
+          "label_zh": "收缩压",
+          "aliases": [
+            "SBP",
+            "systolic blood pressure",
+            "收缩期血压",
+            "高压"
+          ],
+          "unit": "mmHg",
+          "range": [
+            70,
+            250
+          ],
+          "required": true,
+          "from": "measurements",
+          "accept": {
+            "kPa": 7.500617
+          },
+          "unit_required": true
+        },
+        {
+          "key": "tc_mmol_l",
+          "label_zh": "总胆固醇",
+          "aliases": [
+            "TC",
+            "TCHO",
+            "total cholesterol",
+            "总胆固醇(TC)"
+          ],
+          "unit": "mmol/L",
+          "range": [
+            1,
+            15
+          ],
+          "required": true,
+          "from": "measurements",
+          "accept": {
+            "mg/dL": 0.025863183757920603,
+            "mg/L": 0.00258631837579206
+          },
+          "molar_mass": 386.65,
+          "unit_required": true
+        },
+        {
+          "key": "hdl_mmol_l",
+          "label_zh": "高密度脂蛋白胆固醇",
+          "aliases": [
+            "HDL-C",
+            "HDL cholesterol",
+            "HDL",
+            "高密度脂蛋白胆固醇(HDL-C)"
+          ],
+          "unit": "mmol/L",
+          "range": [
+            0.2,
+            5
+          ],
+          "required": true,
+          "from": "measurements",
+          "accept": {
+            "mg/dL": 0.025863183757920603,
+            "mg/L": 0.00258631837579206
+          },
+          "molar_mass": 386.65,
+          "unit_required": true
+        },
+        {
+          "key": "smoker",
+          "label_zh": "当前吸烟",
+          "aliases": [
+            "smoking",
+            "current smoking",
+            "吸烟状态"
+          ],
+          "unit": "1",
+          "range": [
+            0,
+            1
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "只能为 1（当前吸烟）或 0（其他），不是吸烟比例。"
+        },
+        {
+          "key": "age",
+          "label_zh": "实足年龄",
+          "aliases": [
+            "年龄",
+            "age"
+          ],
+          "unit": "a",
+          "range": [
+            40,
+            69
+          ],
+          "required": true,
+          "from": "profile",
+          "flag": "--age"
+        },
+        {
+          "key": "sex",
+          "label_zh": "模型性别",
+          "required": true,
+          "from": "profile",
+          "flag": "--sex",
+          "note_zh": "male 或 female，选择论文相应的性别模型。"
+        },
+        {
+          "key": "region",
+          "label_zh": "SCORE2 风险地区",
+          "required": true,
+          "from": "argument",
+          "flag": "--region",
+          "note_zh": "low、moderate、high、very_high；按论文 Table S6，不按个人风险高低选择。"
+        },
+        {
+          "key": "europe",
+          "label_zh": "属于论文欧洲风险地区",
+          "required": true,
+          "from": "argument",
+          "flag": "--europe",
+          "note_zh": "yes 或 no；这里的欧洲风险地区指 Table S6 列出的校准国家，含部分邻近国家。"
+        },
+        {
+          "key": "prior_cvd",
+          "label_zh": "既往心血管病",
+          "required": true,
+          "from": "argument",
+          "flag": "--prior-cvd",
+          "note_zh": "yes 或 no；yes 时不计算。"
+        },
+        {
+          "key": "diabetes",
+          "label_zh": "糖尿病",
+          "required": true,
+          "from": "argument",
+          "flag": "--diabetes",
+          "note_zh": "yes 或 no；yes 时不计算。"
+        }
+      ],
+      "outputs": [
+        {
+          "key": "risk_10y_pct",
+          "label_zh": "十年首次心血管事件风险（模型估计）",
+          "unit": "%"
+        }
+      ],
+      "paper": {
+        "doi": "10.1093/eurheartj/ehab309",
+        "title": "SCORE2 risk prediction algorithms: new models to estimate 10-year risk of cardiovascular disease in Europe.",
+        "title_zh": "SCORE2：欧洲成人十年心血管风险",
+        "journal": "European Heart Journal",
+        "year": 2021
+      }
+    },
+    {
       "name": "selective-senolytic-platform",
       "kind": "paper",
       "tier": "C",
@@ -27996,6 +31188,274 @@
       }
     },
     {
+      "name": "senior-fitness-independence",
+      "kind": "paper",
+      "tier": "A",
+      "species": [
+        "human"
+      ],
+      "evidence": "method",
+      "domains": [
+        "体能与独立生活"
+      ],
+      "blurb_zh": "按年龄和性别比较起立、弯举、步行、踏步及起立行走成绩与独立生活体能参考标准。",
+      "description": "Tier A personal readout: computes one person's value with the paper's printed method and reproduces a printed example. Compares standardized Senior Fitness Test measurements with age- and sex-specific criterion standards for physical independence in adults aged 60–94. Use for chair stand, arm curl, six-minute walk, two-minute step, or eight-foot up-and-go results, their distance from published standards, and hypothetical target comparisons.",
+      "intents": [
+        "frailty_mortality",
+        "lab_meaning",
+        "before_after"
+      ],
+      "has_script": true,
+      "validation_status": "reproduced",
+      "validation_label_zh": "已复现论文",
+      "entry": {
+        "script": "scripts/personal_report.py",
+        "measurements_flag": "--measurements",
+        "measurements_header": [
+          "marker",
+          "value",
+          "unit"
+        ],
+        "age_flag": "--age",
+        "sex_flag": "--sex",
+        "out_flag": "--out",
+        "result_json": true,
+        "targets_flag": "--targets",
+        "levers_json": true
+      },
+      "inputs_status": "verified",
+      "inputs": [
+        {
+          "key": "chair_stand_count",
+          "label_zh": "30 秒椅子起立",
+          "aliases": [
+            "30-s chair stand",
+            "chair stand",
+            "30秒椅子起立",
+            "30秒坐站测试"
+          ],
+          "unit": "1",
+          "range": [
+            0,
+            100
+          ],
+          "required": false,
+          "from": "measurements",
+          "note_zh": "五项中至少提供一项；仅评估已测项目。次数的单位 1 表示次数，须为整数。"
+        },
+        {
+          "key": "arm_curl_count",
+          "label_zh": "30 秒手臂弯举",
+          "aliases": [
+            "30-s arm curl",
+            "arm curl",
+            "30秒手臂弯举"
+          ],
+          "unit": "1",
+          "range": [
+            0,
+            150
+          ],
+          "required": false,
+          "from": "measurements",
+          "note_zh": "五项中至少提供一项；仅评估已测项目。次数的单位 1 表示次数，须为整数。"
+        },
+        {
+          "key": "walk_6min_m",
+          "label_zh": "6 分钟步行",
+          "aliases": [
+            "6-min walk",
+            "6MWT",
+            "6分钟步行距离"
+          ],
+          "unit": "m",
+          "range": [
+            0,
+            1500
+          ],
+          "required": false,
+          "from": "measurements",
+          "note_zh": "按原 SFT 路线完成的六分钟步行距离；输入米或厘米。原表码数按 1 码 = 0.9144 米精确转换，不能改变测试路线。",
+          "accept": {
+            "cm": 0.01
+          },
+          "unit_required": true
+        },
+        {
+          "key": "step_2min_count",
+          "label_zh": "2 分钟原地踏步（右膝达标次数）",
+          "aliases": [
+            "2-min step test",
+            "2分钟踏步",
+            "右膝达标次数"
+          ],
+          "unit": "1",
+          "range": [
+            0,
+            400
+          ],
+          "required": false,
+          "from": "measurements",
+          "note_zh": "五项中至少提供一项；仅评估已测项目。次数的单位 1 表示次数，须为整数。"
+        },
+        {
+          "key": "up_go_s",
+          "label_zh": "8 英尺起立行走",
+          "aliases": [
+            "8-foot up-and-go",
+            "8英尺起立行走",
+            "8英尺起立走"
+          ],
+          "unit": "s",
+          "range": [
+            0.5,
+            300
+          ],
+          "required": false,
+          "from": "measurements",
+          "note_zh": "8 英尺（2.4384 米）起立行走计时；不可用 3 米 TUG 代替。",
+          "accept": {
+            "min": 60
+          },
+          "unit_required": true
+        },
+        {
+          "key": "age",
+          "label_zh": "实足年龄",
+          "unit": "a",
+          "range": [
+            60,
+            94
+          ],
+          "required": true,
+          "from": "profile",
+          "flag": "--age",
+          "note_zh": "整数周岁；不插值、不外推。"
+        },
+        {
+          "key": "sex",
+          "label_zh": "论文分组性别",
+          "required": true,
+          "from": "profile",
+          "flag": "--sex",
+          "note_zh": "male/female 或男/女；不推断分组。"
+        }
+      ],
+      "outputs": [
+        {
+          "key": "age_band",
+          "label_zh": "论文年龄组"
+        },
+        {
+          "key": "chair_stand_value",
+          "label_zh": "30 秒椅子起立测量值",
+          "unit": "1"
+        },
+        {
+          "key": "chair_stand_cutoff",
+          "label_zh": "30 秒椅子起立参考切点",
+          "unit": "1"
+        },
+        {
+          "key": "chair_stand_margin",
+          "label_zh": "30 秒椅子起立有利方向差距",
+          "unit": "1"
+        },
+        {
+          "key": "chair_stand_status",
+          "label_zh": "30 秒椅子起立达标情况",
+          "note_zh": "meets_standard / below_standard；未测为 null。"
+        },
+        {
+          "key": "arm_curl_value",
+          "label_zh": "30 秒手臂弯举测量值",
+          "unit": "1"
+        },
+        {
+          "key": "arm_curl_cutoff",
+          "label_zh": "30 秒手臂弯举参考切点",
+          "unit": "1"
+        },
+        {
+          "key": "arm_curl_margin",
+          "label_zh": "30 秒手臂弯举有利方向差距",
+          "unit": "1"
+        },
+        {
+          "key": "arm_curl_status",
+          "label_zh": "30 秒手臂弯举达标情况",
+          "note_zh": "meets_standard / below_standard；未测为 null。"
+        },
+        {
+          "key": "walk_6min_value",
+          "label_zh": "6 分钟步行测量值",
+          "unit": "m"
+        },
+        {
+          "key": "walk_6min_cutoff",
+          "label_zh": "6 分钟步行参考切点",
+          "unit": "m"
+        },
+        {
+          "key": "walk_6min_margin",
+          "label_zh": "6 分钟步行有利方向差距",
+          "unit": "m"
+        },
+        {
+          "key": "walk_6min_status",
+          "label_zh": "6 分钟步行达标情况",
+          "note_zh": "meets_standard / below_standard；未测为 null。"
+        },
+        {
+          "key": "step_2min_value",
+          "label_zh": "2 分钟原地踏步（右膝达标次数）测量值",
+          "unit": "1"
+        },
+        {
+          "key": "step_2min_cutoff",
+          "label_zh": "2 分钟原地踏步（右膝达标次数）参考切点",
+          "unit": "1"
+        },
+        {
+          "key": "step_2min_margin",
+          "label_zh": "2 分钟原地踏步（右膝达标次数）有利方向差距",
+          "unit": "1"
+        },
+        {
+          "key": "step_2min_status",
+          "label_zh": "2 分钟原地踏步（右膝达标次数）达标情况",
+          "note_zh": "meets_standard / below_standard；未测为 null。"
+        },
+        {
+          "key": "up_go_value",
+          "label_zh": "8 英尺起立行走测量值",
+          "unit": "s"
+        },
+        {
+          "key": "up_go_cutoff",
+          "label_zh": "8 英尺起立行走参考切点",
+          "unit": "s"
+        },
+        {
+          "key": "up_go_margin",
+          "label_zh": "8 英尺起立行走有利方向差距",
+          "unit": "s"
+        },
+        {
+          "key": "up_go_status",
+          "label_zh": "8 英尺起立行走达标情况",
+          "note_zh": "meets_standard / below_standard；未测为 null。"
+        }
+      ],
+      "paper": {
+        "doi": "10.1093/geront/gns071",
+        "title": "Development and validation of criterion-referenced clinically relevant fitness standards for maintaining physical independence in later years.",
+        "title_zh": "维持晚年独立生活的体能参考标准：开发与验证",
+        "journal": "The Gerontologist",
+        "year": 2013
+      }
+    },
+    {
       "name": "senolytic-car-t-metabolic",
       "kind": "paper",
       "tier": "C",
@@ -28124,6 +31584,743 @@
         "title_zh": "单细胞免疫衰老轨迹",
         "journal": "Nature Communications",
         "year": 2026
+      }
+    },
+    {
+      "name": "share-intrinsic-capacity-domains",
+      "kind": "paper",
+      "tier": "A",
+      "species": [
+        "human"
+      ],
+      "evidence": "cohort",
+      "domains": [
+        "认知与神经",
+        "跌倒与肌肉",
+        "临床年龄与可穿戴"
+      ],
+      "blurb_zh": "用认知测验、行走困难和视听自评，计算 SHARE 内在能力的三个分域分数，并可比较两次变化；不算完整总分。",
+      "description": "Tier A personal readout: computes one person's value with the paper's printed method and reproduces a printed example. Calculates SHARE intrinsic-capacity cognition, locomotion and sensory domain scores from personal test results and questionnaire responses, and optionally compares two observations. Use for 内在能力分域、认知计分、行走困难、视听自评或两次功能测量变化。 Accepts any complete supported domain; excludes vitality, psychological scores and the composite IC score because their published rules are incomplete.",
+      "intents": [
+        "cognition_dementia",
+        "frailty_mortality",
+        "before_after"
+      ],
+      "has_script": true,
+      "validation_status": "reproduced",
+      "validation_label_zh": "已复现论文",
+      "entry": {
+        "script": "scripts/personal_report.py",
+        "measurements_flag": "--measurements",
+        "measurements_header": [
+          "item",
+          "value",
+          "unit"
+        ],
+        "age_flag": "--age",
+        "sex_flag": "--sex",
+        "out_flag": "--out",
+        "result_json": true
+      },
+      "population": {
+        "age_years": [
+          50,
+          95
+        ],
+        "note_zh": "SHARE Wave 6（2015）至 Wave 9（2021–2022）的完整病例，基线实际年龄 50–95 岁；尚未外部验证临床诊断切点。"
+      },
+      "inputs_status": "verified",
+      "inputs": [
+        {
+          "key": "orientation_correct_count",
+          "label_zh": "时间定向正确数",
+          "aliases": [
+            "orient_i",
+            "date orientation",
+            "时间定向"
+          ],
+          "unit": "1",
+          "range": [
+            0,
+            4
+          ],
+          "accept": {},
+          "required": false,
+          "from": "measurements",
+          "group": "cognition",
+          "note_zh": "星期、日、月、年四题的正确数；不是年龄或日期数字。 至少提供一个完整分域；某分域一旦提供任一项就必须补齐。仅接受整数，单位 1 表示无量纲计数或类别编码，不能换算百分比。"
+        },
+        {
+          "key": "animal_fluency_count",
+          "label_zh": "动物命名正确词数",
+          "aliases": [
+            "cf010_",
+            "semantic verbal fluency",
+            "动物词语流畅性"
+          ],
+          "unit": "1",
+          "range": [
+            0,
+            200
+          ],
+          "accept": {},
+          "required": false,
+          "from": "measurements",
+          "group": "cognition",
+          "note_zh": "SHARE 语义流畅性测试的有效动物名称个数，不是已换算的分数；200 仅为录入防错上限。 至少提供一个完整分域；某分域一旦提供任一项就必须补齐。仅接受整数，单位 1 表示无量纲计数或类别编码，不能换算百分比。"
+        },
+        {
+          "key": "serial_sevens_correct_count",
+          "label_zh": "连续减七正确数",
+          "aliases": [
+            "numeracy2",
+            "subtract 7",
+            "连续减7"
+          ],
+          "unit": "1",
+          "range": [
+            0,
+            5
+          ],
+          "accept": {},
+          "required": false,
+          "from": "measurements",
+          "group": "cognition",
+          "note_zh": "SHARE 连续减七五次作答的正确数，不是最后算出的数。 至少提供一个完整分域；某分域一旦提供任一项就必须补齐。仅接受整数，单位 1 表示无量纲计数或类别编码，不能换算百分比。"
+        },
+        {
+          "key": "delayed_recall_count",
+          "label_zh": "延迟词表回忆正确词数",
+          "aliases": [
+            "cf113tot",
+            "cf116tot",
+            "delayed word list recall",
+            "延迟回忆"
+          ],
+          "unit": "1",
+          "range": [
+            0,
+            10
+          ],
+          "accept": {},
+          "required": false,
+          "from": "measurements",
+          "group": "cognition",
+          "note_zh": "SHARE 十词词表的延迟回忆正确数；cf113tot、cf116tot 是表 1 所列相应变量名，不相加，不用即时回忆替代。 至少提供一个完整分域；某分域一旦提供任一项就必须补齐。仅接受整数，单位 1 表示无量纲计数或类别编码，不能换算百分比。"
+        },
+        {
+          "key": "stoop_difficulty_binary",
+          "label_zh": "弯腰跪蹲困难",
+          "aliases": [
+            "ph048d6",
+            "difficulty stooping kneeling crouching"
+          ],
+          "unit": "1",
+          "range": [
+            0,
+            1
+          ],
+          "accept": {},
+          "required": false,
+          "from": "measurements",
+          "group": "locomotion",
+          "note_zh": "有困难填 1，无困难填 0。 至少提供一个完整分域；某分域一旦提供任一项就必须补齐。仅接受整数，单位 1 表示无量纲计数或类别编码，不能换算百分比。"
+        },
+        {
+          "key": "room_walk_difficulty_binary",
+          "label_zh": "穿过房间行走困难",
+          "aliases": [
+            "ph049d2",
+            "difficulty walking across the room"
+          ],
+          "unit": "1",
+          "range": [
+            0,
+            1
+          ],
+          "accept": {},
+          "required": false,
+          "from": "measurements",
+          "group": "locomotion",
+          "note_zh": "有困难填 1，无困难填 0。 至少提供一个完整分域；某分域一旦提供任一项就必须补齐。仅接受整数，单位 1 表示无量纲计数或类别编码，不能换算百分比。"
+        },
+        {
+          "key": "walk_100m_difficulty_binary",
+          "label_zh": "步行一百米困难",
+          "aliases": [
+            "ph048d1",
+            "difficulty walking 100 m"
+          ],
+          "unit": "1",
+          "range": [
+            0,
+            1
+          ],
+          "accept": {},
+          "required": false,
+          "from": "measurements",
+          "group": "locomotion",
+          "note_zh": "有困难填 1，无困难填 0。 至少提供一个完整分域；某分域一旦提供任一项就必须补齐。仅接受整数，单位 1 表示无量纲计数或类别编码，不能换算百分比。"
+        },
+        {
+          "key": "one_flight_difficulty_binary",
+          "label_zh": "爬一层楼梯困难",
+          "aliases": [
+            "ph048d5",
+            "difficulty climbing one flight of stairs"
+          ],
+          "unit": "1",
+          "range": [
+            0,
+            1
+          ],
+          "accept": {},
+          "required": false,
+          "from": "measurements",
+          "group": "locomotion",
+          "note_zh": "有困难填 1，无困难填 0。 至少提供一个完整分域；某分域一旦提供任一项就必须补齐。仅接受整数，单位 1 表示无量纲计数或类别编码，不能换算百分比。"
+        },
+        {
+          "key": "several_flights_difficulty_binary",
+          "label_zh": "爬数层楼梯困难",
+          "aliases": [
+            "ph048d4",
+            "difficulty climbing several flights of stairs"
+          ],
+          "unit": "1",
+          "range": [
+            0,
+            1
+          ],
+          "accept": {},
+          "required": false,
+          "from": "measurements",
+          "group": "locomotion",
+          "note_zh": "有困难填 1，无困难填 0。 至少提供一个完整分域；某分域一旦提供任一项就必须补齐。仅接受整数，单位 1 表示无量纲计数或类别编码，不能换算百分比。"
+        },
+        {
+          "key": "distance_vision_rating",
+          "label_zh": "远距离视力自评分档",
+          "aliases": [
+            "PH043_EyeSightDist",
+            "distance vision rating",
+            "远视力自评"
+          ],
+          "unit": "1",
+          "range": [
+            1,
+            5
+          ],
+          "accept": {},
+          "required": false,
+          "from": "measurements",
+          "group": "sensory",
+          "note_zh": "SHARE 原有五级自评编码，1 为 excellent，5 为 poor；不是小数视力或眼科视力表数值。 至少提供一个完整分域；某分域一旦提供任一项就必须补齐。仅接受整数，单位 1 表示无量纲计数或类别编码，不能换算百分比。"
+        },
+        {
+          "key": "reading_vision_rating",
+          "label_zh": "阅读视力自评分档",
+          "aliases": [
+            "PH044_EyeSightPap",
+            "reading vision rating",
+            "阅读视力自评"
+          ],
+          "unit": "1",
+          "range": [
+            1,
+            5
+          ],
+          "accept": {},
+          "required": false,
+          "from": "measurements",
+          "group": "sensory",
+          "note_zh": "SHARE 原有五级自评编码，1 为 excellent，5 为 poor；不是小数视力。 至少提供一个完整分域；某分域一旦提供任一项就必须补齐。仅接受整数，单位 1 表示无量纲计数或类别编码，不能换算百分比。"
+        },
+        {
+          "key": "hearing_rating",
+          "label_zh": "听力自评分档",
+          "aliases": [
+            "PH046_Hearing",
+            "hearing ability rating",
+            "听力自评"
+          ],
+          "unit": "1",
+          "range": [
+            1,
+            5
+          ],
+          "accept": {},
+          "required": false,
+          "from": "measurements",
+          "group": "sensory",
+          "note_zh": "SHARE 原有五级自评编码，1 为 excellent，5 为 poor；不是听阈分贝。 至少提供一个完整分域；某分域一旦提供任一项就必须补齐。仅接受整数，单位 1 表示无量纲计数或类别编码，不能换算百分比。"
+        },
+        {
+          "key": "glasses_use_binary",
+          "label_zh": "是否使用眼镜",
+          "aliases": [
+            "ph041",
+            "using glasses",
+            "戴眼镜"
+          ],
+          "unit": "1",
+          "range": [
+            0,
+            1
+          ],
+          "accept": {},
+          "required": false,
+          "from": "measurements",
+          "group": "sensory",
+          "note_zh": "使用填 1，不使用填 0；计分不是停用眼镜的理由。 至少提供一个完整分域；某分域一旦提供任一项就必须补齐。仅接受整数，单位 1 表示无量纲计数或类别编码，不能换算百分比。"
+        },
+        {
+          "key": "hearing_aid_use_binary",
+          "label_zh": "是否使用助听器",
+          "aliases": [
+            "ph045_",
+            "PH745_HaveHearingAid",
+            "using a hearing aid",
+            "使用助听器"
+          ],
+          "unit": "1",
+          "range": [
+            0,
+            1
+          ],
+          "accept": {},
+          "required": false,
+          "from": "measurements",
+          "group": "sensory",
+          "note_zh": "使用填 1，不使用填 0；计分不是停用助听器的理由。 至少提供一个完整分域；某分域一旦提供任一项就必须补齐。仅接受整数，单位 1 表示无量纲计数或类别编码，不能换算百分比。"
+        },
+        {
+          "key": "age",
+          "label_zh": "实足年龄",
+          "aliases": [
+            "年龄",
+            "age"
+          ],
+          "unit": "a",
+          "range": [
+            18,
+            120
+          ],
+          "required": false,
+          "from": "profile",
+          "flag": "--age",
+          "note_zh": "仅提示研究人群适用范围，不参与计分。"
+        },
+        {
+          "key": "sex",
+          "label_zh": "性别",
+          "aliases": [
+            "sex",
+            "性别"
+          ],
+          "required": false,
+          "from": "profile",
+          "flag": "--sex",
+          "note_zh": "仅作背景，可不填，不参与这三个分域计分。"
+        }
+      ],
+      "outputs": [
+        {
+          "key": "orientation_correct_count_points",
+          "label_zh": "时间定向正确数逐项得分",
+          "unit": "score"
+        },
+        {
+          "key": "animal_fluency_count_points",
+          "label_zh": "动物命名正确词数逐项得分",
+          "unit": "score"
+        },
+        {
+          "key": "serial_sevens_correct_count_points",
+          "label_zh": "连续减七正确数逐项得分",
+          "unit": "score"
+        },
+        {
+          "key": "delayed_recall_count_points",
+          "label_zh": "延迟词表回忆正确词数逐项得分",
+          "unit": "score"
+        },
+        {
+          "key": "stoop_difficulty_binary_points",
+          "label_zh": "弯腰跪蹲困难逐项得分",
+          "unit": "score"
+        },
+        {
+          "key": "room_walk_difficulty_binary_points",
+          "label_zh": "穿过房间行走困难逐项得分",
+          "unit": "score"
+        },
+        {
+          "key": "walk_100m_difficulty_binary_points",
+          "label_zh": "步行一百米困难逐项得分",
+          "unit": "score"
+        },
+        {
+          "key": "one_flight_difficulty_binary_points",
+          "label_zh": "爬一层楼梯困难逐项得分",
+          "unit": "score"
+        },
+        {
+          "key": "several_flights_difficulty_binary_points",
+          "label_zh": "爬数层楼梯困难逐项得分",
+          "unit": "score"
+        },
+        {
+          "key": "distance_vision_rating_points",
+          "label_zh": "远距离视力自评分档逐项得分",
+          "unit": "score"
+        },
+        {
+          "key": "reading_vision_rating_points",
+          "label_zh": "阅读视力自评分档逐项得分",
+          "unit": "score"
+        },
+        {
+          "key": "hearing_rating_points",
+          "label_zh": "听力自评分档逐项得分",
+          "unit": "score"
+        },
+        {
+          "key": "glasses_use_binary_points",
+          "label_zh": "是否使用眼镜逐项得分",
+          "unit": "score"
+        },
+        {
+          "key": "hearing_aid_use_binary_points",
+          "label_zh": "是否使用助听器逐项得分",
+          "unit": "score"
+        },
+        {
+          "key": "cognition_raw",
+          "label_zh": "认知原始分",
+          "unit": "score",
+          "note_zh": "未提供该分域或上次测量时，对应输出为 null。"
+        },
+        {
+          "key": "cognition_score",
+          "label_zh": "认知标准化分",
+          "unit": "score",
+          "note_zh": "未提供该分域或上次测量时，对应输出为 null。"
+        },
+        {
+          "key": "cognition_baseline_score",
+          "label_zh": "认知上次标准化分",
+          "unit": "score",
+          "note_zh": "未提供该分域或上次测量时，对应输出为 null。"
+        },
+        {
+          "key": "cognition_change",
+          "label_zh": "认知本次减上次分差",
+          "unit": "score",
+          "note_zh": "未提供该分域或上次测量时，对应输出为 null。"
+        },
+        {
+          "key": "locomotion_raw",
+          "label_zh": "行动原始分",
+          "unit": "score",
+          "note_zh": "未提供该分域或上次测量时，对应输出为 null。"
+        },
+        {
+          "key": "locomotion_score",
+          "label_zh": "行动标准化分",
+          "unit": "score",
+          "note_zh": "未提供该分域或上次测量时，对应输出为 null。"
+        },
+        {
+          "key": "locomotion_baseline_score",
+          "label_zh": "行动上次标准化分",
+          "unit": "score",
+          "note_zh": "未提供该分域或上次测量时，对应输出为 null。"
+        },
+        {
+          "key": "locomotion_change",
+          "label_zh": "行动本次减上次分差",
+          "unit": "score",
+          "note_zh": "未提供该分域或上次测量时，对应输出为 null。"
+        },
+        {
+          "key": "sensory_raw",
+          "label_zh": "感官原始分",
+          "unit": "score",
+          "note_zh": "未提供该分域或上次测量时，对应输出为 null。"
+        },
+        {
+          "key": "sensory_score",
+          "label_zh": "感官标准化分",
+          "unit": "score",
+          "note_zh": "未提供该分域或上次测量时，对应输出为 null。"
+        },
+        {
+          "key": "sensory_baseline_score",
+          "label_zh": "感官上次标准化分",
+          "unit": "score",
+          "note_zh": "未提供该分域或上次测量时，对应输出为 null。"
+        },
+        {
+          "key": "sensory_change",
+          "label_zh": "感官本次减上次分差",
+          "unit": "score",
+          "note_zh": "未提供该分域或上次测量时，对应输出为 null。"
+        }
+      ],
+      "paper": {
+        "doi": "10.1007/s11357-026-02456-9",
+        "title": "Understanding temporal changes in intrinsic capacity: analysis of domain-specific intrinsic capacity using SHARE data.",
+        "title_zh": "使用 SHARE 数据观察内在能力各分域的时间变化",
+        "journal": "GeroScience",
+        "year": 2026
+      }
+    },
+    {
+      "name": "short-physical-performance-battery",
+      "kind": "paper",
+      "tier": "A",
+      "species": [
+        "human"
+      ],
+      "evidence": "cohort",
+      "domains": [
+        "体能与衰弱"
+      ],
+      "blurb_zh": "根据半串联与并足或全串联站立、8英尺常速步行和五次起立记录，计算原版 SPPB 三项得分及总分。",
+      "description": "Tier A personal readout: computes one person's value with the paper's printed method and reproduces a printed example. Computes the original 1994 Short Physical Performance Battery (SPPB) from standing-balance records, two usual-speed 8-foot walks, and five repeated chair stands. Use when a person asks to score their SPPB, lower-extremity physical performance, walking and chair-rise tests, or 简易体能测试. Reports three component scores and their sum in Chinese, with optional target-score scenarios and explicit protocol and input checks.",
+      "intents": [
+        "frailty_mortality"
+      ],
+      "has_script": true,
+      "validation_status": "reproduced",
+      "validation_label_zh": "已复现论文",
+      "entry": {
+        "script": "scripts/personal_report.py",
+        "measurements_flag": "--measurements",
+        "measurements_header": [
+          "item",
+          "value",
+          "unit"
+        ],
+        "age_flag": "--age",
+        "out_flag": "--out",
+        "result_json": true,
+        "targets_flag": "--targets",
+        "levers_json": true
+      },
+      "inputs_status": "verified",
+      "inputs": [
+        {
+          "key": "semi_tandem_s",
+          "label_zh": "半串联站立保持时间",
+          "aliases": [
+            "Semi-tandem stand",
+            "半前后脚站立",
+            "半串联站立"
+          ],
+          "unit": "s",
+          "range": [
+            0,
+            10
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "按表 1 的整秒记录，范围 0–10；0 可表示确认无法完成或因安全原因未尝试，不能表示缺测。不要把更精细的原始记录自行四舍五入。先测此项。",
+          "accept": {
+            "ms": 0.001,
+            "min": 60
+          },
+          "unit_required": true
+        },
+        {
+          "key": "side_by_side_s",
+          "label_zh": "并足站立保持时间",
+          "aliases": [
+            "Side-by-side stand",
+            "并足站立",
+            "双脚并拢站立"
+          ],
+          "unit": "s",
+          "range": [
+            0,
+            10
+          ],
+          "required": false,
+          "from": "measurements",
+          "note_zh": "按表 1 的整秒记录，范围 0–10；0 可表示确认无法完成或因安全原因未尝试，不能表示缺测。不要把更精细的原始记录自行四舍五入。半串联不足 10 秒时必填；半串联满 10 秒时省略。",
+          "accept": {
+            "ms": 0.001,
+            "min": 60
+          },
+          "unit_required": true
+        },
+        {
+          "key": "full_tandem_s",
+          "label_zh": "全串联站立保持时间",
+          "aliases": [
+            "Full tandem stand",
+            "Tandem stand",
+            "前后脚站立",
+            "全串联站立"
+          ],
+          "unit": "s",
+          "range": [
+            0,
+            10
+          ],
+          "required": false,
+          "from": "measurements",
+          "note_zh": "按表 1 的整秒记录，范围 0–10；0 可表示确认无法完成或因安全原因未尝试，不能表示缺测。不要把更精细的原始记录自行四舍五入。半串联满 10 秒时必填，否则省略。",
+          "accept": {
+            "ms": 0.001,
+            "min": 60
+          },
+          "unit_required": true
+        },
+        {
+          "key": "walk_completed",
+          "label_zh": "8英尺步行完成状态",
+          "aliases": [
+            "8-foot walk completed",
+            "8英尺步行完成"
+          ],
+          "unit": "1",
+          "range": [
+            0,
+            1
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "仅接受 0 或 1：1 为按原文方案完成；0 为已确认无法完成或因安全原因未尝试。缺测、拒测、器材问题不能填 0。1 时必须提供两次常速步行时间；0 时不填时间。"
+        },
+        {
+          "key": "walk_8ft_trial1_s",
+          "label_zh": "8英尺步行第一次时间",
+          "aliases": [
+            "8-foot walk trial 1",
+            "8英尺步行第一次时间"
+          ],
+          "unit": "s",
+          "range": [
+            0.5,
+            300
+          ],
+          "required": false,
+          "from": "measurements",
+          "note_zh": "按 0.1 秒记录；8 英尺常速，两次取快者，可用助行器；不能用 4 米步行时间代替。",
+          "accept": {
+            "ms": 0.001,
+            "min": 60
+          },
+          "unit_required": true
+        },
+        {
+          "key": "walk_8ft_trial2_s",
+          "label_zh": "8英尺步行第二次时间",
+          "aliases": [
+            "8-foot walk trial 2",
+            "8英尺步行第二次时间"
+          ],
+          "unit": "s",
+          "range": [
+            0.5,
+            300
+          ],
+          "required": false,
+          "from": "measurements",
+          "note_zh": "按 0.1 秒记录；8 英尺常速，两次取快者，可用助行器；不能用 4 米步行时间代替。",
+          "accept": {
+            "ms": 0.001,
+            "min": 60
+          },
+          "unit_required": true
+        },
+        {
+          "key": "chair_completed",
+          "label_zh": "五次起立完成状态",
+          "aliases": [
+            "Repeated chair stands completed",
+            "五次起立完成"
+          ],
+          "unit": "1",
+          "range": [
+            0,
+            1
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "仅接受 0 或 1：1 为按原文方案完成；0 为已确认无法完成或因安全原因未尝试。缺测、拒测、器材问题不能填 0。完成须先通过单次起立，再双臂交叉完成五次；1 时必填计时，0 时不填时间。"
+        },
+        {
+          "key": "five_chair_stands_s",
+          "label_zh": "五次起立时间",
+          "aliases": [
+            "Timed repeat chair stands",
+            "Five chair stands",
+            "五次坐站时间",
+            "五次起立"
+          ],
+          "unit": "s",
+          "range": [
+            1,
+            600
+          ],
+          "required": false,
+          "from": "measurements",
+          "note_zh": "按 0.1 秒记录；直背椅靠墙、双臂交叉，从坐位开始计时，到第 5 次完全站直停止。没有原文规定的 60 秒零分规则。",
+          "accept": {
+            "ms": 0.001,
+            "min": 60
+          },
+          "unit_required": true
+        },
+        {
+          "key": "age",
+          "label_zh": "实足年龄",
+          "aliases": [
+            "年龄",
+            "Age"
+          ],
+          "unit": "a",
+          "range": [
+            18,
+            120
+          ],
+          "required": false,
+          "from": "profile",
+          "flag": "--age",
+          "note_zh": "仅用于提示原研究为 71 岁及以上社区老人，不调整评分。"
+        }
+      ],
+      "outputs": [
+        {
+          "key": "balance_score",
+          "label_zh": "平衡得分",
+          "unit": "score"
+        },
+        {
+          "key": "walk_score",
+          "label_zh": "8英尺步行得分",
+          "unit": "score"
+        },
+        {
+          "key": "chair_score",
+          "label_zh": "五次起立得分",
+          "unit": "score"
+        },
+        {
+          "key": "sppb_score",
+          "label_zh": "原版 SPPB 总分",
+          "unit": "score"
+        }
+      ],
+      "paper": {
+        "doi": "10.1093/geronj/49.2.m85",
+        "title": "A short physical performance battery assessing lower extremity function: association with self-reported disability and prediction of mortality and nursing home admission.",
+        "title_zh": "评估下肢功能的简易体能测试组合：与自报失能的关联及对死亡和入住养老机构的预测",
+        "journal": "Journal of Gerontology",
+        "year": 1994
       }
     },
     {
