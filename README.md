@@ -355,6 +355,10 @@ python3 -m tools.lsk test --changed origin/main   # 只测相对 main 改动过�
 
 - `skills/ckd-epi-2021-egfr/` — 血肌酐、年龄和性别算肾小球滤过率估计值（eGFR），有胱抑素 C 时用肌酐加胱抑素 C 方程，按 KDIGO 分 G1–G5；有尿白蛋白/肌酐比时再分 A1–A3。
 
+## 营养
+
+- `skills/gbd-dietary-intake-gap/` — 把每日食物、营养素和24小时尿钠记录换算为相对GBD饮食参考值的差值与比例。
+
 ## 血液测序
 
 - `skills/hotspot-somatic-sweep/` — 见「克隆性造血」。
@@ -376,6 +380,10 @@ python3 -m tools.lsk test --changed origin/main   # 只测相对 main 改动过�
 ## 身体活动
 
 - `skills/accelerometry-mortality-dose-response/` — 按符合原文处理定义的加速度计活动或久坐日均值，查全因死亡相对危险比。
+
+## 饮食
+
+- `skills/gbd-dietary-intake-gap/` — 见「营养」。
 
 ## 饮食与代谢
 
