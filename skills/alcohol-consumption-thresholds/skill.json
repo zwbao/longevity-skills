@@ -33,7 +33,7 @@
       }
     ],
     "card_notes": [
-      "按原文已公布的分档读取研究结果；未重建附录中的生存曲线模型。验证例子为原文酒精单位换算。"
+      "按原文已公布的分档读取研究结果；未重建附录中的生存曲线模型。验证例子为原文酒精单位换算及摘要印出的分档与40岁寿命差。"
     ],
     "summary_zh": "这项研究发现，高收入国家当前饮酒且没有既往心血管病的人群中，饮酒量与死亡及不同心血管结局存在不同方向的关联。个人报告只换算每周纯酒精总量并匹配研究分档及其人群寿命差，不预测个人寿命或患病概率。",
     "summary_status": "draft"
@@ -148,6 +148,17 @@
         ],
         "tolerance": "单位换算是精确算术：100/8=12.5，零容差；此验证不声称重建寿命模型。",
         "test": "tests/test_manifest.py::test_paper_unit_example"
+      },
+      {
+        "locator": "Summary (Findings), p1513; Results p1520 and Figure 4",
+        "quote": "In comparison to those who reported drinking >0–≤100 g per week, those who reported drinking >100–≤200 g per week, >200–≤350 g per week, or >350 g per week had lower life expectancy at age 40 years of approximately 6 months, 1–2 years, or 4–5 years, respectively.",
+        "values": [
+          100,
+          200,
+          350
+        ],
+        "tolerance": "分档上界为右闭区间，按印出切点精确匹配；寿命差为原文近似文字，原样输出，不插值。",
+        "test": "tests/test_manifest.py::test_printed_category_boundaries"
       }
     ]
   }
