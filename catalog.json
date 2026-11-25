@@ -2,9 +2,9 @@
   "schema": "longevity-catalog/1",
   "version": "2026.48.0",
   "counts": {
-    "skills": 208,
+    "skills": 211,
     "tiers": {
-      "A": 44,
+      "A": 47,
       "B": 83,
       "C": 73,
       "tool": 8
@@ -2104,6 +2104,823 @@
         "upstream": "https://github.com/forever-healthy/AI4L",
         "version": "1.3.29",
         "commit": "c3ea3e9"
+      }
+    },
+    {
+      "name": "alcohol-burden-of-proof",
+      "kind": "paper",
+      "tier": "A",
+      "species": [
+        "human"
+      ],
+      "evidence": "review",
+      "domains": [
+        "饮食与营养",
+        "心血管健康",
+        "癌症风险"
+      ],
+      "blurb_zh": "用自己的每日平均纯酒精摄入量，查阅论文中各疾病相对于无饮酒的风险比及不确定性区间；不推算个人患病概率。",
+      "description": "Tier A personal readout: computes one person's value with the paper's printed method and reproduces a printed example. Uses a person's average daily pure-alcohol intake to look up published relative risks and uncertainty intervals for twenty health outcomes in the alcohol Burden of Proof method. Triggers on 饮酒量、酒精摄入、喝酒与癌症风险、 alcohol intake and requests to compare user-specified intake scenarios. Shows adjacent printed exposure nodes for off-grid inputs without interpolation.",
+      "intents": [
+        "intervention_evidence"
+      ],
+      "has_script": true,
+      "validation_status": "reproduced",
+      "validation_label_zh": "已复现论文",
+      "entry": {
+        "script": "scripts/personal_report.py",
+        "measurements_flag": "--measurements",
+        "measurements_header": [
+          "marker",
+          "value",
+          "unit"
+        ],
+        "out_flag": "--out",
+        "result_json": true,
+        "targets_flag": "--targets",
+        "levers_json": true
+      },
+      "inputs_status": "verified",
+      "inputs": [
+        {
+          "key": "alcohol_g_day",
+          "label_zh": "每日纯酒精摄入量",
+          "aliases": [
+            "alcohol consumption",
+            "alcohol intake",
+            "ethanol intake",
+            "pure alcohol intake",
+            "饮酒量",
+            "酒精摄入量",
+            "每日酒精摄入量",
+            "纯乙醇摄入量"
+          ],
+          "unit": "g/d",
+          "accept": {
+            "g/d": 1
+          },
+          "range": [
+            0,
+            100
+          ],
+          "unit_required": true,
+          "required": true,
+          "from": "measurements",
+          "note_zh": "自己通常的每日平均纯乙醇克数；0–100 是查表支持范围而非生理正常范围。只接受 g/d，不猜测杯的大小，不将 g/week、mL/d 或单次饮酒量当作 g/d。规范键名已包含单位时可省略 unit；别名必须填写单位。"
+        }
+      ],
+      "outputs": [
+        {
+          "key": "alcohol_g_day",
+          "label_zh": "输入的每日平均纯酒精摄入量",
+          "unit": "g/d"
+        },
+        {
+          "key": "lower_exposure_g_day",
+          "label_zh": "相邻较低摄入量节点",
+          "unit": "g/d"
+        },
+        {
+          "key": "upper_exposure_g_day",
+          "label_zh": "相邻较高摄入量节点",
+          "unit": "g/d"
+        },
+        {
+          "key": "lookup_mode",
+          "label_zh": "查表方式",
+          "note_zh": "exact：印出节点；bracket：相邻节点；reference：无饮酒参照。lower/upper 只指摄入量，不是风险上下限。"
+        },
+        {
+          "key": "breast_cancer_lower_rr",
+          "label_zh": "乳腺癌（女性研究）：较低摄入量节点平均相对风险",
+          "unit": "1"
+        },
+        {
+          "key": "breast_cancer_lower_ui_low",
+          "label_zh": "乳腺癌（女性研究）：较低摄入量节点95% 不确定性区间下限",
+          "unit": "1"
+        },
+        {
+          "key": "breast_cancer_lower_ui_high",
+          "label_zh": "乳腺癌（女性研究）：较低摄入量节点95% 不确定性区间上限",
+          "unit": "1"
+        },
+        {
+          "key": "breast_cancer_upper_rr",
+          "label_zh": "乳腺癌（女性研究）：较高摄入量节点平均相对风险",
+          "unit": "1"
+        },
+        {
+          "key": "breast_cancer_upper_ui_low",
+          "label_zh": "乳腺癌（女性研究）：较高摄入量节点95% 不确定性区间下限",
+          "unit": "1"
+        },
+        {
+          "key": "breast_cancer_upper_ui_high",
+          "label_zh": "乳腺癌（女性研究）：较高摄入量节点95% 不确定性区间上限",
+          "unit": "1"
+        },
+        {
+          "key": "colorectal_cancer_lower_rr",
+          "label_zh": "结直肠癌：较低摄入量节点平均相对风险",
+          "unit": "1"
+        },
+        {
+          "key": "colorectal_cancer_lower_ui_low",
+          "label_zh": "结直肠癌：较低摄入量节点95% 不确定性区间下限",
+          "unit": "1"
+        },
+        {
+          "key": "colorectal_cancer_lower_ui_high",
+          "label_zh": "结直肠癌：较低摄入量节点95% 不确定性区间上限",
+          "unit": "1"
+        },
+        {
+          "key": "colorectal_cancer_upper_rr",
+          "label_zh": "结直肠癌：较高摄入量节点平均相对风险",
+          "unit": "1"
+        },
+        {
+          "key": "colorectal_cancer_upper_ui_low",
+          "label_zh": "结直肠癌：较高摄入量节点95% 不确定性区间下限",
+          "unit": "1"
+        },
+        {
+          "key": "colorectal_cancer_upper_ui_high",
+          "label_zh": "结直肠癌：较高摄入量节点95% 不确定性区间上限",
+          "unit": "1"
+        },
+        {
+          "key": "oesophageal_cancer_lower_rr",
+          "label_zh": "食管癌：较低摄入量节点平均相对风险",
+          "unit": "1"
+        },
+        {
+          "key": "oesophageal_cancer_lower_ui_low",
+          "label_zh": "食管癌：较低摄入量节点95% 不确定性区间下限",
+          "unit": "1"
+        },
+        {
+          "key": "oesophageal_cancer_lower_ui_high",
+          "label_zh": "食管癌：较低摄入量节点95% 不确定性区间上限",
+          "unit": "1"
+        },
+        {
+          "key": "oesophageal_cancer_upper_rr",
+          "label_zh": "食管癌：较高摄入量节点平均相对风险",
+          "unit": "1"
+        },
+        {
+          "key": "oesophageal_cancer_upper_ui_low",
+          "label_zh": "食管癌：较高摄入量节点95% 不确定性区间下限",
+          "unit": "1"
+        },
+        {
+          "key": "oesophageal_cancer_upper_ui_high",
+          "label_zh": "食管癌：较高摄入量节点95% 不确定性区间上限",
+          "unit": "1"
+        },
+        {
+          "key": "laryngeal_cancer_lower_rr",
+          "label_zh": "喉癌：较低摄入量节点平均相对风险",
+          "unit": "1"
+        },
+        {
+          "key": "laryngeal_cancer_lower_ui_low",
+          "label_zh": "喉癌：较低摄入量节点95% 不确定性区间下限",
+          "unit": "1"
+        },
+        {
+          "key": "laryngeal_cancer_lower_ui_high",
+          "label_zh": "喉癌：较低摄入量节点95% 不确定性区间上限",
+          "unit": "1"
+        },
+        {
+          "key": "laryngeal_cancer_upper_rr",
+          "label_zh": "喉癌：较高摄入量节点平均相对风险",
+          "unit": "1"
+        },
+        {
+          "key": "laryngeal_cancer_upper_ui_low",
+          "label_zh": "喉癌：较高摄入量节点95% 不确定性区间下限",
+          "unit": "1"
+        },
+        {
+          "key": "laryngeal_cancer_upper_ui_high",
+          "label_zh": "喉癌：较高摄入量节点95% 不确定性区间上限",
+          "unit": "1"
+        },
+        {
+          "key": "lip_oral_cavity_cancer_lower_rr",
+          "label_zh": "唇及口腔癌：较低摄入量节点平均相对风险",
+          "unit": "1"
+        },
+        {
+          "key": "lip_oral_cavity_cancer_lower_ui_low",
+          "label_zh": "唇及口腔癌：较低摄入量节点95% 不确定性区间下限",
+          "unit": "1"
+        },
+        {
+          "key": "lip_oral_cavity_cancer_lower_ui_high",
+          "label_zh": "唇及口腔癌：较低摄入量节点95% 不确定性区间上限",
+          "unit": "1"
+        },
+        {
+          "key": "lip_oral_cavity_cancer_upper_rr",
+          "label_zh": "唇及口腔癌：较高摄入量节点平均相对风险",
+          "unit": "1"
+        },
+        {
+          "key": "lip_oral_cavity_cancer_upper_ui_low",
+          "label_zh": "唇及口腔癌：较高摄入量节点95% 不确定性区间下限",
+          "unit": "1"
+        },
+        {
+          "key": "lip_oral_cavity_cancer_upper_ui_high",
+          "label_zh": "唇及口腔癌：较高摄入量节点95% 不确定性区间上限",
+          "unit": "1"
+        },
+        {
+          "key": "liver_cancer_lower_rr",
+          "label_zh": "肝癌：较低摄入量节点平均相对风险",
+          "unit": "1"
+        },
+        {
+          "key": "liver_cancer_lower_ui_low",
+          "label_zh": "肝癌：较低摄入量节点95% 不确定性区间下限",
+          "unit": "1"
+        },
+        {
+          "key": "liver_cancer_lower_ui_high",
+          "label_zh": "肝癌：较低摄入量节点95% 不确定性区间上限",
+          "unit": "1"
+        },
+        {
+          "key": "liver_cancer_upper_rr",
+          "label_zh": "肝癌：较高摄入量节点平均相对风险",
+          "unit": "1"
+        },
+        {
+          "key": "liver_cancer_upper_ui_low",
+          "label_zh": "肝癌：较高摄入量节点95% 不确定性区间下限",
+          "unit": "1"
+        },
+        {
+          "key": "liver_cancer_upper_ui_high",
+          "label_zh": "肝癌：较高摄入量节点95% 不确定性区间上限",
+          "unit": "1"
+        },
+        {
+          "key": "pancreatic_cancer_lower_rr",
+          "label_zh": "胰腺癌：较低摄入量节点平均相对风险",
+          "unit": "1"
+        },
+        {
+          "key": "pancreatic_cancer_lower_ui_low",
+          "label_zh": "胰腺癌：较低摄入量节点95% 不确定性区间下限",
+          "unit": "1"
+        },
+        {
+          "key": "pancreatic_cancer_lower_ui_high",
+          "label_zh": "胰腺癌：较低摄入量节点95% 不确定性区间上限",
+          "unit": "1"
+        },
+        {
+          "key": "pancreatic_cancer_upper_rr",
+          "label_zh": "胰腺癌：较高摄入量节点平均相对风险",
+          "unit": "1"
+        },
+        {
+          "key": "pancreatic_cancer_upper_ui_low",
+          "label_zh": "胰腺癌：较高摄入量节点95% 不确定性区间下限",
+          "unit": "1"
+        },
+        {
+          "key": "pancreatic_cancer_upper_ui_high",
+          "label_zh": "胰腺癌：较高摄入量节点95% 不确定性区间上限",
+          "unit": "1"
+        },
+        {
+          "key": "other_pharyngeal_cancer_lower_rr",
+          "label_zh": "其他咽癌（不含鼻咽癌）：较低摄入量节点平均相对风险",
+          "unit": "1"
+        },
+        {
+          "key": "other_pharyngeal_cancer_lower_ui_low",
+          "label_zh": "其他咽癌（不含鼻咽癌）：较低摄入量节点95% 不确定性区间下限",
+          "unit": "1"
+        },
+        {
+          "key": "other_pharyngeal_cancer_lower_ui_high",
+          "label_zh": "其他咽癌（不含鼻咽癌）：较低摄入量节点95% 不确定性区间上限",
+          "unit": "1"
+        },
+        {
+          "key": "other_pharyngeal_cancer_upper_rr",
+          "label_zh": "其他咽癌（不含鼻咽癌）：较高摄入量节点平均相对风险",
+          "unit": "1"
+        },
+        {
+          "key": "other_pharyngeal_cancer_upper_ui_low",
+          "label_zh": "其他咽癌（不含鼻咽癌）：较高摄入量节点95% 不确定性区间下限",
+          "unit": "1"
+        },
+        {
+          "key": "other_pharyngeal_cancer_upper_ui_high",
+          "label_zh": "其他咽癌（不含鼻咽癌）：较高摄入量节点95% 不确定性区间上限",
+          "unit": "1"
+        },
+        {
+          "key": "prostate_cancer_lower_rr",
+          "label_zh": "前列腺癌（男性研究）：较低摄入量节点平均相对风险",
+          "unit": "1"
+        },
+        {
+          "key": "prostate_cancer_lower_ui_low",
+          "label_zh": "前列腺癌（男性研究）：较低摄入量节点95% 不确定性区间下限",
+          "unit": "1"
+        },
+        {
+          "key": "prostate_cancer_lower_ui_high",
+          "label_zh": "前列腺癌（男性研究）：较低摄入量节点95% 不确定性区间上限",
+          "unit": "1"
+        },
+        {
+          "key": "prostate_cancer_upper_rr",
+          "label_zh": "前列腺癌（男性研究）：较高摄入量节点平均相对风险",
+          "unit": "1"
+        },
+        {
+          "key": "prostate_cancer_upper_ui_low",
+          "label_zh": "前列腺癌（男性研究）：较高摄入量节点95% 不确定性区间下限",
+          "unit": "1"
+        },
+        {
+          "key": "prostate_cancer_upper_ui_high",
+          "label_zh": "前列腺癌（男性研究）：较高摄入量节点95% 不确定性区间上限",
+          "unit": "1"
+        },
+        {
+          "key": "stomach_cancer_lower_rr",
+          "label_zh": "胃癌：较低摄入量节点平均相对风险",
+          "unit": "1"
+        },
+        {
+          "key": "stomach_cancer_lower_ui_low",
+          "label_zh": "胃癌：较低摄入量节点95% 不确定性区间下限",
+          "unit": "1"
+        },
+        {
+          "key": "stomach_cancer_lower_ui_high",
+          "label_zh": "胃癌：较低摄入量节点95% 不确定性区间上限",
+          "unit": "1"
+        },
+        {
+          "key": "stomach_cancer_upper_rr",
+          "label_zh": "胃癌：较高摄入量节点平均相对风险",
+          "unit": "1"
+        },
+        {
+          "key": "stomach_cancer_upper_ui_low",
+          "label_zh": "胃癌：较高摄入量节点95% 不确定性区间下限",
+          "unit": "1"
+        },
+        {
+          "key": "stomach_cancer_upper_ui_high",
+          "label_zh": "胃癌：较高摄入量节点95% 不确定性区间上限",
+          "unit": "1"
+        },
+        {
+          "key": "atrial_fibrillation_flutter_lower_rr",
+          "label_zh": "心房颤动及扑动：较低摄入量节点平均相对风险",
+          "unit": "1"
+        },
+        {
+          "key": "atrial_fibrillation_flutter_lower_ui_low",
+          "label_zh": "心房颤动及扑动：较低摄入量节点95% 不确定性区间下限",
+          "unit": "1"
+        },
+        {
+          "key": "atrial_fibrillation_flutter_lower_ui_high",
+          "label_zh": "心房颤动及扑动：较低摄入量节点95% 不确定性区间上限",
+          "unit": "1"
+        },
+        {
+          "key": "atrial_fibrillation_flutter_upper_rr",
+          "label_zh": "心房颤动及扑动：较高摄入量节点平均相对风险",
+          "unit": "1"
+        },
+        {
+          "key": "atrial_fibrillation_flutter_upper_ui_low",
+          "label_zh": "心房颤动及扑动：较高摄入量节点95% 不确定性区间下限",
+          "unit": "1"
+        },
+        {
+          "key": "atrial_fibrillation_flutter_upper_ui_high",
+          "label_zh": "心房颤动及扑动：较高摄入量节点95% 不确定性区间上限",
+          "unit": "1"
+        },
+        {
+          "key": "ischaemic_heart_disease_lower_rr",
+          "label_zh": "缺血性心脏病：较低摄入量节点平均相对风险",
+          "unit": "1"
+        },
+        {
+          "key": "ischaemic_heart_disease_lower_ui_low",
+          "label_zh": "缺血性心脏病：较低摄入量节点95% 不确定性区间下限",
+          "unit": "1"
+        },
+        {
+          "key": "ischaemic_heart_disease_lower_ui_high",
+          "label_zh": "缺血性心脏病：较低摄入量节点95% 不确定性区间上限",
+          "unit": "1"
+        },
+        {
+          "key": "ischaemic_heart_disease_upper_rr",
+          "label_zh": "缺血性心脏病：较高摄入量节点平均相对风险",
+          "unit": "1"
+        },
+        {
+          "key": "ischaemic_heart_disease_upper_ui_low",
+          "label_zh": "缺血性心脏病：较高摄入量节点95% 不确定性区间下限",
+          "unit": "1"
+        },
+        {
+          "key": "ischaemic_heart_disease_upper_ui_high",
+          "label_zh": "缺血性心脏病：较高摄入量节点95% 不确定性区间上限",
+          "unit": "1"
+        },
+        {
+          "key": "ischaemic_stroke_lower_rr",
+          "label_zh": "缺血性卒中：较低摄入量节点平均相对风险",
+          "unit": "1"
+        },
+        {
+          "key": "ischaemic_stroke_lower_ui_low",
+          "label_zh": "缺血性卒中：较低摄入量节点95% 不确定性区间下限",
+          "unit": "1"
+        },
+        {
+          "key": "ischaemic_stroke_lower_ui_high",
+          "label_zh": "缺血性卒中：较低摄入量节点95% 不确定性区间上限",
+          "unit": "1"
+        },
+        {
+          "key": "ischaemic_stroke_upper_rr",
+          "label_zh": "缺血性卒中：较高摄入量节点平均相对风险",
+          "unit": "1"
+        },
+        {
+          "key": "ischaemic_stroke_upper_ui_low",
+          "label_zh": "缺血性卒中：较高摄入量节点95% 不确定性区间下限",
+          "unit": "1"
+        },
+        {
+          "key": "ischaemic_stroke_upper_ui_high",
+          "label_zh": "缺血性卒中：较高摄入量节点95% 不确定性区间上限",
+          "unit": "1"
+        },
+        {
+          "key": "haemorrhagic_stroke_lower_rr",
+          "label_zh": "出血性卒中：较低摄入量节点平均相对风险",
+          "unit": "1"
+        },
+        {
+          "key": "haemorrhagic_stroke_lower_ui_low",
+          "label_zh": "出血性卒中：较低摄入量节点95% 不确定性区间下限",
+          "unit": "1"
+        },
+        {
+          "key": "haemorrhagic_stroke_lower_ui_high",
+          "label_zh": "出血性卒中：较低摄入量节点95% 不确定性区间上限",
+          "unit": "1"
+        },
+        {
+          "key": "haemorrhagic_stroke_upper_rr",
+          "label_zh": "出血性卒中：较高摄入量节点平均相对风险",
+          "unit": "1"
+        },
+        {
+          "key": "haemorrhagic_stroke_upper_ui_low",
+          "label_zh": "出血性卒中：较高摄入量节点95% 不确定性区间下限",
+          "unit": "1"
+        },
+        {
+          "key": "haemorrhagic_stroke_upper_ui_high",
+          "label_zh": "出血性卒中：较高摄入量节点95% 不确定性区间上限",
+          "unit": "1"
+        },
+        {
+          "key": "alzheimers_other_dementias_lower_rr",
+          "label_zh": "阿尔茨海默病及其他痴呆：较低摄入量节点平均相对风险",
+          "unit": "1"
+        },
+        {
+          "key": "alzheimers_other_dementias_lower_ui_low",
+          "label_zh": "阿尔茨海默病及其他痴呆：较低摄入量节点95% 不确定性区间下限",
+          "unit": "1"
+        },
+        {
+          "key": "alzheimers_other_dementias_lower_ui_high",
+          "label_zh": "阿尔茨海默病及其他痴呆：较低摄入量节点95% 不确定性区间上限",
+          "unit": "1"
+        },
+        {
+          "key": "alzheimers_other_dementias_upper_rr",
+          "label_zh": "阿尔茨海默病及其他痴呆：较高摄入量节点平均相对风险",
+          "unit": "1"
+        },
+        {
+          "key": "alzheimers_other_dementias_upper_ui_low",
+          "label_zh": "阿尔茨海默病及其他痴呆：较高摄入量节点95% 不确定性区间下限",
+          "unit": "1"
+        },
+        {
+          "key": "alzheimers_other_dementias_upper_ui_high",
+          "label_zh": "阿尔茨海默病及其他痴呆：较高摄入量节点95% 不确定性区间上限",
+          "unit": "1"
+        },
+        {
+          "key": "cirrhosis_chronic_liver_diseases_lower_rr",
+          "label_zh": "肝硬化及其他慢性肝病：较低摄入量节点平均相对风险",
+          "unit": "1"
+        },
+        {
+          "key": "cirrhosis_chronic_liver_diseases_lower_ui_low",
+          "label_zh": "肝硬化及其他慢性肝病：较低摄入量节点95% 不确定性区间下限",
+          "unit": "1"
+        },
+        {
+          "key": "cirrhosis_chronic_liver_diseases_lower_ui_high",
+          "label_zh": "肝硬化及其他慢性肝病：较低摄入量节点95% 不确定性区间上限",
+          "unit": "1"
+        },
+        {
+          "key": "cirrhosis_chronic_liver_diseases_upper_rr",
+          "label_zh": "肝硬化及其他慢性肝病：较高摄入量节点平均相对风险",
+          "unit": "1"
+        },
+        {
+          "key": "cirrhosis_chronic_liver_diseases_upper_ui_low",
+          "label_zh": "肝硬化及其他慢性肝病：较高摄入量节点95% 不确定性区间下限",
+          "unit": "1"
+        },
+        {
+          "key": "cirrhosis_chronic_liver_diseases_upper_ui_high",
+          "label_zh": "肝硬化及其他慢性肝病：较高摄入量节点95% 不确定性区间上限",
+          "unit": "1"
+        },
+        {
+          "key": "type_2_diabetes_lower_rr",
+          "label_zh": "2 型糖尿病：较低摄入量节点平均相对风险",
+          "unit": "1"
+        },
+        {
+          "key": "type_2_diabetes_lower_ui_low",
+          "label_zh": "2 型糖尿病：较低摄入量节点95% 不确定性区间下限",
+          "unit": "1"
+        },
+        {
+          "key": "type_2_diabetes_lower_ui_high",
+          "label_zh": "2 型糖尿病：较低摄入量节点95% 不确定性区间上限",
+          "unit": "1"
+        },
+        {
+          "key": "type_2_diabetes_upper_rr",
+          "label_zh": "2 型糖尿病：较高摄入量节点平均相对风险",
+          "unit": "1"
+        },
+        {
+          "key": "type_2_diabetes_upper_ui_low",
+          "label_zh": "2 型糖尿病：较高摄入量节点95% 不确定性区间下限",
+          "unit": "1"
+        },
+        {
+          "key": "type_2_diabetes_upper_ui_high",
+          "label_zh": "2 型糖尿病：较高摄入量节点95% 不确定性区间上限",
+          "unit": "1"
+        },
+        {
+          "key": "lower_respiratory_infections_lower_rr",
+          "label_zh": "下呼吸道感染：较低摄入量节点平均相对风险",
+          "unit": "1"
+        },
+        {
+          "key": "lower_respiratory_infections_lower_ui_low",
+          "label_zh": "下呼吸道感染：较低摄入量节点95% 不确定性区间下限",
+          "unit": "1"
+        },
+        {
+          "key": "lower_respiratory_infections_lower_ui_high",
+          "label_zh": "下呼吸道感染：较低摄入量节点95% 不确定性区间上限",
+          "unit": "1"
+        },
+        {
+          "key": "lower_respiratory_infections_upper_rr",
+          "label_zh": "下呼吸道感染：较高摄入量节点平均相对风险",
+          "unit": "1"
+        },
+        {
+          "key": "lower_respiratory_infections_upper_ui_low",
+          "label_zh": "下呼吸道感染：较高摄入量节点95% 不确定性区间下限",
+          "unit": "1"
+        },
+        {
+          "key": "lower_respiratory_infections_upper_ui_high",
+          "label_zh": "下呼吸道感染：较高摄入量节点95% 不确定性区间上限",
+          "unit": "1"
+        },
+        {
+          "key": "pancreatitis_lower_rr",
+          "label_zh": "胰腺炎：较低摄入量节点平均相对风险",
+          "unit": "1"
+        },
+        {
+          "key": "pancreatitis_lower_ui_low",
+          "label_zh": "胰腺炎：较低摄入量节点95% 不确定性区间下限",
+          "unit": "1"
+        },
+        {
+          "key": "pancreatitis_lower_ui_high",
+          "label_zh": "胰腺炎：较低摄入量节点95% 不确定性区间上限",
+          "unit": "1"
+        },
+        {
+          "key": "pancreatitis_upper_rr",
+          "label_zh": "胰腺炎：较高摄入量节点平均相对风险",
+          "unit": "1"
+        },
+        {
+          "key": "pancreatitis_upper_ui_low",
+          "label_zh": "胰腺炎：较高摄入量节点95% 不确定性区间下限",
+          "unit": "1"
+        },
+        {
+          "key": "pancreatitis_upper_ui_high",
+          "label_zh": "胰腺炎：较高摄入量节点95% 不确定性区间上限",
+          "unit": "1"
+        },
+        {
+          "key": "tuberculosis_lower_rr",
+          "label_zh": "结核病：较低摄入量节点平均相对风险",
+          "unit": "1"
+        },
+        {
+          "key": "tuberculosis_lower_ui_low",
+          "label_zh": "结核病：较低摄入量节点95% 不确定性区间下限",
+          "unit": "1"
+        },
+        {
+          "key": "tuberculosis_lower_ui_high",
+          "label_zh": "结核病：较低摄入量节点95% 不确定性区间上限",
+          "unit": "1"
+        },
+        {
+          "key": "tuberculosis_upper_rr",
+          "label_zh": "结核病：较高摄入量节点平均相对风险",
+          "unit": "1"
+        },
+        {
+          "key": "tuberculosis_upper_ui_low",
+          "label_zh": "结核病：较高摄入量节点95% 不确定性区间下限",
+          "unit": "1"
+        },
+        {
+          "key": "tuberculosis_upper_ui_high",
+          "label_zh": "结核病：较高摄入量节点95% 不确定性区间上限",
+          "unit": "1"
+        }
+      ],
+      "paper": {
+        "doi": "10.1038/s44360-026-00139-5",
+        "title": "Health effects associated with alcohol consumption: a Burden of Proof study.",
+        "title_zh": "酒精摄入相关健康效应：证据负担研究",
+        "journal": "Nature Health",
+        "year": 2026
+      }
+    },
+    {
+      "name": "alcohol-consumption-thresholds",
+      "kind": "paper",
+      "tier": "A",
+      "species": [
+        "human"
+      ],
+      "evidence": "cohort",
+      "domains": [
+        "生活方式与寿命"
+      ],
+      "blurb_zh": "用每周纯酒精总量匹配论文分档，查看对应研究人群的寿命差。",
+      "description": "Tier A personal readout: computes one person's value with the paper's printed method and reproduces a printed example. Maps a person's reported weekly ethanol mass to the published alcohol-consumption categories in Wood et al. (Lancet 2018), converts grams to UK alcohol units, and describes the corresponding population life-expectancy differences at age 40. Use when a current drinker asks how their weekly alcohol amount compares with this study. Does not estimate personal survival or a safe drinking allowance.",
+      "intents": [
+        "frailty_mortality"
+      ],
+      "has_script": true,
+      "validation_status": "reproduced",
+      "validation_label_zh": "已复现论文",
+      "entry": {
+        "script": "scripts/personal_report.py",
+        "measurements_flag": "--measurements",
+        "measurements_header": [
+          "marker",
+          "value",
+          "unit"
+        ],
+        "out_flag": "--out",
+        "result_json": true,
+        "targets_flag": "--targets",
+        "levers_json": true
+      },
+      "inputs_status": "verified",
+      "inputs": [
+        {
+          "key": "alcohol_g_week",
+          "label_zh": "每周纯酒精总量",
+          "aliases": [
+            "每周酒精摄入量",
+            "每周乙醇总量",
+            "weekly alcohol intake",
+            "weekly ethanol mass",
+            "alcohol grams per week"
+          ],
+          "unit": "g",
+          "accept": {
+            "kg": 1000
+          },
+          "range": [
+            0,
+            3500
+          ],
+          "unit_required": true,
+          "required": true,
+          "from": "measurements",
+          "note_zh": "填写代表平时饮酒习惯的一周纯乙醇总质量，单位列g或kg；不是饮料质量、毫升、每日克数或杯数。时间窗固定为一周，故单位为质量。3500克是输入防错上限，不是论文风险切点。"
+        },
+        {
+          "key": "current_drinker",
+          "label_zh": "当前是否饮酒",
+          "aliases": [
+            "current drinker",
+            "当前饮酒"
+          ],
+          "unit": "1",
+          "range": [
+            0,
+            1
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "1=是，0=否；既往饮酒但已不饮酒填0。"
+        },
+        {
+          "key": "cvd_history",
+          "label_zh": "是否有既往心血管病",
+          "aliases": [
+            "history of cardiovascular disease",
+            "心血管病史"
+          ],
+          "unit": "1",
+          "range": [
+            0,
+            1
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "1=是，0=否；包括冠心病、其他心脏病、卒中、短暂性脑缺血发作、外周动脉病或心血管手术。未知则先补充病史，不能默认为0。"
+        }
+      ],
+      "outputs": [
+        {
+          "key": "reported_alcohol_g_week",
+          "label_zh": "自报一周纯酒精总质量",
+          "unit": "g"
+        },
+        {
+          "key": "uk_units_per_week",
+          "label_zh": "每周英国酒精单位数",
+          "unit": "1",
+          "note_zh": "1英国单位=8克纯乙醇。"
+        },
+        {
+          "key": "scope_status",
+          "label_zh": "与主要研究人群的适用性"
+        },
+        {
+          "key": "consumption_band",
+          "label_zh": "论文自报周饮酒量分档"
+        },
+        {
+          "key": "study_loss_at_40",
+          "label_zh": "该档研究人群40岁起算的近似寿命差",
+          "note_zh": "与>0–≤100克/周档相比的群体预期寿命缩短，不是个人寿命；参照档不代表零风险。"
+        }
+      ],
+      "paper": {
+        "doi": "10.1016/s0140-6736(18)30134-x",
+        "title": "Risk thresholds for alcohol consumption: combined analysis of individual-participant data for 599 912 current drinkers in 83 prospective studies.",
+        "title_zh": "每周饮酒量分档与研究人群寿命差",
+        "journal": "Lancet (London, England)",
+        "year": 2018
       }
     },
     {
@@ -8899,6 +9716,215 @@
         "title_zh": "Framingham 十年总体心血管风险",
         "journal": "Circulation",
         "year": 2008
+      }
+    },
+    {
+      "name": "gbd-alcohol-tmrel-nde",
+      "kind": "paper",
+      "tier": "A",
+      "species": [
+        "human"
+      ],
+      "evidence": "method",
+      "domains": [
+        "生活方式与健康风险"
+      ],
+      "blurb_zh": "把自己的平均每日纯酒精摄入量与按年龄、性别、地区和历史年份分层的 GBD 人群阈值比较，显示差值及所在侧，不给安全饮酒量。",
+      "description": "Tier A personal readout: computes one person's value with the paper's printed method and reproduces a printed example. Compares a person's mean daily pure ethanol intake with the GBD alcohol theoretical minimum risk exposure level (TMREL) and non-drinker equivalence (NDE) printed for their age group, sex, region and reference year. Use for drinking-amount comparisons against this published population model. Reports historical thresholds, uncertainty intervals and signed differences in Chinese; does not estimate individual disease risk or recommend drinking targets.",
+      "intents": [
+        "intervention_evidence"
+      ],
+      "has_script": true,
+      "validation_status": "reproduced",
+      "validation_label_zh": "已复现论文",
+      "entry": {
+        "script": "scripts/personal_report.py",
+        "measurements_flag": "--measurements",
+        "measurements_header": [
+          "item",
+          "value",
+          "unit"
+        ],
+        "age_flag": "--age",
+        "sex_flag": "--sex",
+        "out_flag": "--out",
+        "result_json": true,
+        "targets_flag": "--targets",
+        "levers_json": true
+      },
+      "inputs_status": "verified",
+      "inputs": [
+        {
+          "key": "ethanol_g_day",
+          "label_zh": "平均每日纯酒精摄入量",
+          "aliases": [
+            "平均每日纯酒精摄入量",
+            "每日纯酒精摄入量",
+            "日均纯乙醇摄入量",
+            "alcohol consumption",
+            "ethanol intake",
+            "pure alcohol intake",
+            "mean daily alcohol consumption"
+          ],
+          "unit": "g/d",
+          "accept": {
+            "g/d": 1
+          },
+          "range": [
+            0,
+            100
+          ],
+          "unit_required": true,
+          "required": true,
+          "from": "measurements",
+          "note_zh": "按全部日历日计算的平均量，不是仅饮酒日的量；范围对应正文曲线 0–100 g/d。只接受纯乙醇 g/d，不接受含义不明的杯、mL 或各国标准杯。"
+        },
+        {
+          "key": "age",
+          "label_zh": "年龄",
+          "aliases": [
+            "年龄",
+            "age"
+          ],
+          "unit": "a",
+          "range": [
+            15,
+            120
+          ],
+          "required": true,
+          "from": "argument",
+          "flag": "--age",
+          "note_zh": "80 岁及以上使用原表 80 plus 合并档；120 是输入合理性上限，不是研究样本最大年龄。"
+        },
+        {
+          "key": "sex",
+          "label_zh": "论文分层性别",
+          "aliases": [
+            "性别",
+            "sex"
+          ],
+          "required": true,
+          "from": "argument",
+          "flag": "--sex",
+          "note_zh": "male/男/m 或 female/女/f，不推断。"
+        },
+        {
+          "key": "region",
+          "label_zh": "GBD 地区",
+          "aliases": [
+            "地区",
+            "region"
+          ],
+          "required": true,
+          "from": "argument",
+          "flag": "--region",
+          "note_zh": "21 个 GBD 地区的英文名或中文名，见 references/regions.md；不接受全球均值代替。"
+        },
+        {
+          "key": "year",
+          "label_zh": "参照年份",
+          "aliases": [
+            "年份",
+            "year"
+          ],
+          "range": [
+            1990,
+            2020
+          ],
+          "required": false,
+          "from": "argument",
+          "flag": "--year",
+          "note_zh": "只支持 1990、2000、2010、2020，默认 2020；不插值，不外推。"
+        }
+      ],
+      "outputs": [
+        {
+          "key": "ethanol_g_day",
+          "label_zh": "平均每日纯酒精摄入量",
+          "unit": "g/d"
+        },
+        {
+          "key": "standard_drinks_day",
+          "label_zh": "本论文标准杯数",
+          "unit": "standard drinks/day"
+        },
+        {
+          "key": "tmrel_standard_drinks_day",
+          "label_zh": "TMREL 人群阈值均值",
+          "unit": "standard drinks/day"
+        },
+        {
+          "key": "tmrel_ui_low",
+          "label_zh": "TMREL 95% 不确定区间下限",
+          "unit": "standard drinks/day"
+        },
+        {
+          "key": "tmrel_ui_high",
+          "label_zh": "TMREL 95% 不确定区间上限",
+          "unit": "standard drinks/day"
+        },
+        {
+          "key": "nde_standard_drinks_day",
+          "label_zh": "NDE 人群阈值均值",
+          "unit": "standard drinks/day"
+        },
+        {
+          "key": "nde_ui_low",
+          "label_zh": "NDE 95% 不确定区间下限",
+          "unit": "standard drinks/day"
+        },
+        {
+          "key": "nde_ui_high",
+          "label_zh": "NDE 95% 不确定区间上限",
+          "unit": "standard drinks/day"
+        },
+        {
+          "key": "tmrel_gap_g_day",
+          "label_zh": "摄入量减 TMREL",
+          "unit": "g/d"
+        },
+        {
+          "key": "nde_gap_g_day",
+          "label_zh": "摄入量减 NDE",
+          "unit": "g/d"
+        },
+        {
+          "key": "tmrel_side",
+          "label_zh": "相对 TMREL 均值的位置",
+          "unit": ""
+        },
+        {
+          "key": "nde_side",
+          "label_zh": "相对 NDE 均值的位置",
+          "unit": ""
+        },
+        {
+          "key": "reference_region",
+          "label_zh": "参照 GBD 地区",
+          "unit": ""
+        },
+        {
+          "key": "reference_year",
+          "label_zh": "参照年份",
+          "unit": ""
+        },
+        {
+          "key": "reference_age_group",
+          "label_zh": "参照年龄档",
+          "unit": ""
+        },
+        {
+          "key": "reference_sex",
+          "label_zh": "参照性别",
+          "unit": ""
+        }
+      ],
+      "paper": {
+        "doi": "10.1016/s0140-6736(22)00847-9",
+        "title": "Population-level risks of alcohol consumption by amount, geography, age, sex, and year: a systematic analysis for the Global Burden of Disease Study 2020.",
+        "title_zh": "按饮酒量、地区、年龄、性别及年份分析人群饮酒风险：全球疾病负担研究",
+        "journal": "Lancet (London, England)",
+        "year": 2022
       }
     },
     {
