@@ -1,0 +1,362 @@
+[
+  {
+    "table": 8,
+    "pdf_page": 158,
+    "food_group": "combined",
+    "outcome": "coronary_heart_disease",
+    "endpoint": "mixed",
+    "reference_g_d": 35.6
+  },
+  {
+    "table": 8,
+    "pdf_page": 158,
+    "food_group": "combined",
+    "outcome": "coronary_heart_disease",
+    "endpoint": "incidence",
+    "reference_g_d": 35.6
+  },
+  {
+    "table": 8,
+    "pdf_page": 158,
+    "food_group": "combined",
+    "outcome": "coronary_heart_disease",
+    "endpoint": "mortality",
+    "reference_g_d": 35.6
+  },
+  {
+    "table": 9,
+    "pdf_page": 159,
+    "food_group": "fruit",
+    "outcome": "coronary_heart_disease",
+    "endpoint": "mixed",
+    "reference_g_d": 0.0
+  },
+  {
+    "table": 9,
+    "pdf_page": 159,
+    "food_group": "fruit",
+    "outcome": "coronary_heart_disease",
+    "endpoint": "incidence",
+    "reference_g_d": 0.0
+  },
+  {
+    "table": 9,
+    "pdf_page": 159,
+    "food_group": "fruit",
+    "outcome": "coronary_heart_disease",
+    "endpoint": "mortality",
+    "reference_g_d": 5.7
+  },
+  {
+    "table": 9,
+    "pdf_page": 159,
+    "food_group": "vegetables",
+    "outcome": "coronary_heart_disease",
+    "endpoint": "mixed",
+    "reference_g_d": 0.0
+  },
+  {
+    "table": 9,
+    "pdf_page": 159,
+    "food_group": "vegetables",
+    "outcome": "coronary_heart_disease",
+    "endpoint": "incidence",
+    "reference_g_d": 0.0
+  },
+  {
+    "table": 9,
+    "pdf_page": 159,
+    "food_group": "vegetables",
+    "outcome": "coronary_heart_disease",
+    "endpoint": "mortality",
+    "reference_g_d": 11.4
+  },
+  {
+    "table": 10,
+    "pdf_page": 160,
+    "food_group": "combined",
+    "outcome": "stroke",
+    "endpoint": "mixed",
+    "reference_g_d": 34.3
+  },
+  {
+    "table": 10,
+    "pdf_page": 160,
+    "food_group": "combined",
+    "outcome": "stroke",
+    "endpoint": "incidence",
+    "reference_g_d": 34.3
+  },
+  {
+    "table": 10,
+    "pdf_page": 160,
+    "food_group": "combined",
+    "outcome": "stroke",
+    "endpoint": "mortality",
+    "reference_g_d": 35.6
+  },
+  {
+    "table": 11,
+    "pdf_page": 161,
+    "food_group": "fruit",
+    "outcome": "stroke",
+    "endpoint": "mixed",
+    "reference_g_d": 0.0
+  },
+  {
+    "table": 11,
+    "pdf_page": 161,
+    "food_group": "fruit",
+    "outcome": "stroke",
+    "endpoint": "incidence",
+    "reference_g_d": 0.0
+  },
+  {
+    "table": 11,
+    "pdf_page": 161,
+    "food_group": "fruit",
+    "outcome": "stroke",
+    "endpoint": "mortality",
+    "reference_g_d": 5.7
+  },
+  {
+    "table": 11,
+    "pdf_page": 161,
+    "food_group": "vegetables",
+    "outcome": "stroke",
+    "endpoint": "mixed",
+    "reference_g_d": 5.1
+  },
+  {
+    "table": 11,
+    "pdf_page": 161,
+    "food_group": "vegetables",
+    "outcome": "stroke",
+    "endpoint": "incidence",
+    "reference_g_d": 5.1
+  },
+  {
+    "table": 11,
+    "pdf_page": 161,
+    "food_group": "vegetables",
+    "outcome": "stroke",
+    "endpoint": "mortality",
+    "reference_g_d": 11.4
+  },
+  {
+    "table": 12,
+    "pdf_page": 162,
+    "food_group": "combined",
+    "outcome": "ischemic_stroke",
+    "endpoint": "mixed",
+    "reference_g_d": 35.6
+  },
+  {
+    "table": 12,
+    "pdf_page": 162,
+    "food_group": "fruit",
+    "outcome": "ischemic_stroke",
+    "endpoint": "mixed",
+    "reference_g_d": 5.1
+  },
+  {
+    "table": 12,
+    "pdf_page": 162,
+    "food_group": "vegetables",
+    "outcome": "ischemic_stroke",
+    "endpoint": "mixed",
+    "reference_g_d": 5.1
+  },
+  {
+    "table": 13,
+    "pdf_page": 163,
+    "food_group": "combined",
+    "outcome": "hemorrhagic_stroke",
+    "endpoint": "mixed",
+    "reference_g_d": null
+  },
+  {
+    "table": 13,
+    "pdf_page": 163,
+    "food_group": "fruit",
+    "outcome": "hemorrhagic_stroke",
+    "endpoint": "mixed",
+    "reference_g_d": 5.1
+  },
+  {
+    "table": 13,
+    "pdf_page": 163,
+    "food_group": "vegetables",
+    "outcome": "hemorrhagic_stroke",
+    "endpoint": "mixed",
+    "reference_g_d": 5.1
+  },
+  {
+    "table": 14,
+    "pdf_page": 164,
+    "food_group": "combined",
+    "outcome": "cardiovascular_disease",
+    "endpoint": "mixed",
+    "reference_g_d": 35.6
+  },
+  {
+    "table": 14,
+    "pdf_page": 164,
+    "food_group": "combined",
+    "outcome": "cardiovascular_disease",
+    "endpoint": "incidence",
+    "reference_g_d": 86.8
+  },
+  {
+    "table": 14,
+    "pdf_page": 164,
+    "food_group": "combined",
+    "outcome": "cardiovascular_disease",
+    "endpoint": "mortality",
+    "reference_g_d": 35.6
+  },
+  {
+    "table": 15,
+    "pdf_page": 165,
+    "food_group": "fruit",
+    "outcome": "cardiovascular_disease",
+    "endpoint": "mixed",
+    "reference_g_d": 0.0
+  },
+  {
+    "table": 15,
+    "pdf_page": 165,
+    "food_group": "fruit",
+    "outcome": "cardiovascular_disease",
+    "endpoint": "incidence",
+    "reference_g_d": 32.8
+  },
+  {
+    "table": 15,
+    "pdf_page": 165,
+    "food_group": "fruit",
+    "outcome": "cardiovascular_disease",
+    "endpoint": "mortality",
+    "reference_g_d": 0.0
+  },
+  {
+    "table": 15,
+    "pdf_page": 165,
+    "food_group": "vegetables",
+    "outcome": "cardiovascular_disease",
+    "endpoint": "mixed",
+    "reference_g_d": 13.7
+  },
+  {
+    "table": 15,
+    "pdf_page": 165,
+    "food_group": "vegetables",
+    "outcome": "cardiovascular_disease",
+    "endpoint": "incidence",
+    "reference_g_d": 51.6
+  },
+  {
+    "table": 15,
+    "pdf_page": 165,
+    "food_group": "vegetables",
+    "outcome": "cardiovascular_disease",
+    "endpoint": "mortality",
+    "reference_g_d": 13.7
+  },
+  {
+    "table": 16,
+    "pdf_page": 166,
+    "food_group": "combined",
+    "outcome": "total_cancer",
+    "endpoint": "mixed",
+    "reference_g_d": 40.0
+  },
+  {
+    "table": 16,
+    "pdf_page": 166,
+    "food_group": "combined",
+    "outcome": "total_cancer",
+    "endpoint": "incidence",
+    "reference_g_d": 50.0
+  },
+  {
+    "table": 16,
+    "pdf_page": 166,
+    "food_group": "combined",
+    "outcome": "total_cancer",
+    "endpoint": "mortality",
+    "reference_g_d": 40.0
+  },
+  {
+    "table": 17,
+    "pdf_page": 167,
+    "food_group": "fruit",
+    "outcome": "total_cancer",
+    "endpoint": "mixed",
+    "reference_g_d": 5.7
+  },
+  {
+    "table": 17,
+    "pdf_page": 167,
+    "food_group": "fruit",
+    "outcome": "total_cancer",
+    "endpoint": "incidence",
+    "reference_g_d": 24.5
+  },
+  {
+    "table": 17,
+    "pdf_page": 167,
+    "food_group": "fruit",
+    "outcome": "total_cancer",
+    "endpoint": "mortality",
+    "reference_g_d": 5.7
+  },
+  {
+    "table": 17,
+    "pdf_page": 167,
+    "food_group": "vegetables",
+    "outcome": "total_cancer",
+    "endpoint": "mixed",
+    "reference_g_d": 20.0
+  },
+  {
+    "table": 17,
+    "pdf_page": 167,
+    "food_group": "vegetables",
+    "outcome": "total_cancer",
+    "endpoint": "incidence",
+    "reference_g_d": 27.8
+  },
+  {
+    "table": 17,
+    "pdf_page": 167,
+    "food_group": "vegetables",
+    "outcome": "total_cancer",
+    "endpoint": "mortality",
+    "reference_g_d": 20.0
+  },
+  {
+    "table": 18,
+    "pdf_page": 168,
+    "food_group": "combined",
+    "outcome": "all_cause_mortality",
+    "endpoint": "mortality",
+    "reference_g_d": 0.0
+  },
+  {
+    "table": 18,
+    "pdf_page": 168,
+    "food_group": "fruit",
+    "outcome": "all_cause_mortality",
+    "endpoint": "mortality",
+    "reference_g_d": 0.0
+  },
+  {
+    "table": 18,
+    "pdf_page": 168,
+    "food_group": "vegetables",
+    "outcome": "all_cause_mortality",
+    "endpoint": "mortality",
+    "reference_g_d": 0.0
+  }
+]
