@@ -1,0 +1,168 @@
+{
+  "schema": "longevity-skill/1",
+  "name": "strength-training-diabetes-association",
+  "kind": "paper",
+  "tier": "A",
+  "species": [
+    "human"
+  ],
+  "evidence": "review",
+  "domains": [
+    "运动与代谢健康"
+  ],
+  "blurb_zh": "按每周力量训练时长及自定目标，换算论文中糖尿病的线性相对关联。",
+  "intents": [
+    "intervention_evidence",
+    "before_after"
+  ],
+  "triage": {
+    "reason_zh": "人体队列荟萃分析表1公开每周时长每增加10分钟的糖尿病RR及区间，可按个人时长差换算。",
+    "reviewed": false
+  },
+  "paper": {
+    "doi": "10.1136/bjsports-2021-105061",
+    "title": "Muscle-strengthening activities are associated with lower risk and mortality in major non-communicable diseases: a systematic review and meta-analysis of cohort studies",
+    "title_zh": "力量训练与主要慢性病及死亡风险的队列研究荟萃分析",
+    "journal": "British Journal of Sports Medicine",
+    "year": 2022,
+    "authors": "Momma 等",
+    "article_url": "https://bjsm.bmj.com/content/56/13/755",
+    "supplements": [
+      {
+        "label": "补充材料：Appendix Tables 1–6、Figures 1–7",
+        "url": "https://bjsm.bmj.com/content/bjsports/early/2022/01/19/bjsports-2021-105061/DC1/embed/inline-supplementary-material-1.pdf?download=true"
+      }
+    ],
+    "card_notes": [
+      "采用正文表1糖尿病行的线性估计；非线性曲线未实现。全文及附录没有给出本研究公开代码仓库链接。"
+    ],
+    "summary_zh": "这项研究汇总成人前瞻性队列，发现力量训练与较低的多种慢性病及死亡风险相关，糖尿病的时长关联同时呈现非线性。个人报告只按每周力量训练时长和自定目标换算糖尿病的线性相对关联，不计算个人发病概率或最佳训练时长。",
+    "summary_status": "draft"
+  },
+  "population": {
+    "age_years": [
+      36,
+      97.8
+    ],
+    "note_zh": "糖尿病时长分析的三项美国研究：HPFS男性、NHS/NHSII女性及WHS女性；年龄跨度为各研究入组年龄的并集，不代表已验证所有年龄与性别组合。"
+  },
+  "entry": {
+    "script": "scripts/personal_report.py",
+    "measurements_flag": "--measurements",
+    "measurements_header": [
+      "marker",
+      "value",
+      "unit"
+    ],
+    "age_flag": "--age",
+    "sex_flag": "--sex",
+    "out_flag": "--out",
+    "result_json": true,
+    "targets_flag": "--targets",
+    "levers_json": true
+  },
+  "inputs_status": "verified",
+  "inputs": [
+    {
+      "key": "strength_min_week",
+      "label_zh": "每周力量训练时长",
+      "aliases": [
+        "每周抗阻训练时长",
+        "每周举重时长",
+        "weekly strength training",
+        "muscle-strengthening activities",
+        "resistance training minutes per week",
+        "weight training minutes per week"
+      ],
+      "unit": "min",
+      "accept": {
+        "h": 60,
+        "s": 0.016666666666666666
+      },
+      "unit_required": true,
+      "range": [
+        0,
+        10080
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "数值是每周总时长，单位列填 min、h 或 s；不是每日时长、次数或MET。10080仅是一周总分钟数的输入上限，不是验证范围或推荐量。"
+    },
+    {
+      "key": "age",
+      "label_zh": "实足年龄",
+      "unit": "a",
+      "range": [
+        18,
+        120
+      ],
+      "required": true,
+      "from": "profile",
+      "flag": "--age",
+      "note_zh": "只检查成人适用性，不进入斜率计算；120是输入合理性上限，不是论文切点。"
+    },
+    {
+      "key": "sex",
+      "label_zh": "性别",
+      "required": false,
+      "from": "profile",
+      "flag": "--sex",
+      "note_zh": "可选背景信息，不进入公式；没有可计算的性别专属斜率。"
+    }
+  ],
+  "outputs": [
+    {
+      "key": "rr_vs_none",
+      "label_zh": "当前时长相对零时长的线性关联RR",
+      "unit": "1"
+    },
+    {
+      "key": "rr_vs_none_ci_lower",
+      "label_zh": "当前线性关联RR的95%区间下界",
+      "unit": "1"
+    },
+    {
+      "key": "rr_vs_none_ci_upper",
+      "label_zh": "当前线性关联RR的95%区间上界",
+      "unit": "1"
+    },
+    {
+      "key": "target_delta_min_week",
+      "label_zh": "目标减当前的每周时长差",
+      "unit": "min",
+      "note_zh": "仅在提供目标时输出。"
+    },
+    {
+      "key": "target_vs_current_rr",
+      "label_zh": "目标相对当前的线性关联RR",
+      "unit": "1"
+    },
+    {
+      "key": "target_vs_current_ci_lower",
+      "label_zh": "目标相对当前RR的95%区间下界",
+      "unit": "1"
+    },
+    {
+      "key": "target_vs_current_ci_upper",
+      "label_zh": "目标相对当前RR的95%区间上界",
+      "unit": "1"
+    }
+  ],
+  "validation": {
+    "status": "reproduced",
+    "examples": [
+      {
+        "locator": "Table 1, Dose–response meta-analysis (10 min/week increase), Diabetes row; Figure 3",
+        "quote": "Dose–response meta-analysis (10 min/week increase)\nDiabetes\n0.98 (0.97 to 0.99)",
+        "values": [
+          10,
+          0.98,
+          0.97,
+          0.99
+        ],
+        "tolerance": "绝对误差≤1e-12：直接使用论文印出的两位小数，10分钟增量的指数为1；仅检验该发表增量，不声称独立验证其他时长或非线性曲线。",
+        "test": "tests/test_manifest.py::test_table1_printed_ten_minute_increment"
+      }
+    ]
+  }
+}
