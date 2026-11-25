@@ -320,6 +320,7 @@ python3 -m tools.lsk test --changed origin/main   # 只测相对 main 改动过�
 
 ## 心血管健康
 
+- `skills/alcohol-burden-of-proof/` — 见「饮食与营养」。
 - `skills/lifes-essential-8/` — 用饮食、运动、吸烟、睡眠和体检数据计算成人心血管健康八项评分。
 
 ## 死亡风险
@@ -329,6 +330,10 @@ python3 -m tools.lsk test --changed origin/main   # 只测相对 main 改动过�
 ## 用药与基因
 
 - `skills/cpic-pharmacogenomics/` — 基因检测原始数据里的药物代谢基因，对照 CPIC 用药指南看哪些药要先问医生。（名单类）
+
+## 癌症风险
+
+- `skills/alcohol-burden-of-proof/` — 见「饮食与营养」。
 
 ## 糖代谢
 
@@ -364,12 +369,18 @@ python3 -m tools.lsk test --changed origin/main   # 只测相对 main 改动过�
 
 - `skills/accelerometry-mortality-dose-response/` — 按符合原文处理定义的加速度计活动或久坐日均值，查全因死亡相对危险比。
 
+## 饮食与代谢
+
+- `skills/burden-of-proof-dietary-risk/` — 用加工肉、含糖饮料或反式脂肪的日常摄入量，读取已发表摄入量点对应的慢病相对风险及不确定区间。
+- `skills/red-meat-burden-of-proof/` — 按未加工红肉日均摄入量查询慢病相对风险与不确定区间，仅支持论文列出的摄入点。
+
 ## 饮食与基因
 
 - `skills/nutrigenetic-variant-panel/` — 基因检测原始数据里和喝酒、叶酸、喝奶有关的三个位点，按要求再看 APOE 与血脂。（名单类）
 
 ## 饮食与营养
 
+- `skills/alcohol-burden-of-proof/` — 用自己的每日平均纯酒精摄入量，查阅论文中各疾病相对于无饮酒的风险比及不确定性区间；不推算个人患病概率。
 - `skills/vegetable-tmrel-gap/` — 用饮食记录中的蔬菜日均克数，计算与论文蔬菜摄入参考范围的差距。
 
 ## 只收录，不参与个人调度

@@ -2,9 +2,9 @@
   "schema": "longevity-catalog/1",
   "version": "2026.48.0",
   "counts": {
-    "skills": 206,
+    "skills": 209,
     "tiers": {
-      "A": 42,
+      "A": 45,
       "B": 83,
       "C": 73,
       "tool": 8
@@ -2107,6 +2107,699 @@
       }
     },
     {
+      "name": "alcohol-burden-of-proof",
+      "kind": "paper",
+      "tier": "A",
+      "species": [
+        "human"
+      ],
+      "evidence": "review",
+      "domains": [
+        "饮食与营养",
+        "心血管健康",
+        "癌症风险"
+      ],
+      "blurb_zh": "用自己的每日平均纯酒精摄入量，查阅论文中各疾病相对于无饮酒的风险比及不确定性区间；不推算个人患病概率。",
+      "description": "Tier A personal readout: computes one person's value with the paper's printed method and reproduces a printed example. Uses a person's average daily pure-alcohol intake to look up published relative risks and uncertainty intervals for twenty health outcomes in the alcohol Burden of Proof method. Triggers on 饮酒量、酒精摄入、喝酒与癌症风险、 alcohol intake and requests to compare user-specified intake scenarios. Shows adjacent printed exposure nodes for off-grid inputs without interpolation.",
+      "intents": [
+        "intervention_evidence"
+      ],
+      "has_script": true,
+      "validation_status": "reproduced",
+      "validation_label_zh": "已复现论文",
+      "entry": {
+        "script": "scripts/personal_report.py",
+        "measurements_flag": "--measurements",
+        "measurements_header": [
+          "marker",
+          "value",
+          "unit"
+        ],
+        "out_flag": "--out",
+        "result_json": true,
+        "targets_flag": "--targets",
+        "levers_json": true
+      },
+      "inputs_status": "verified",
+      "inputs": [
+        {
+          "key": "alcohol_g_day",
+          "label_zh": "每日纯酒精摄入量",
+          "aliases": [
+            "alcohol consumption",
+            "alcohol intake",
+            "ethanol intake",
+            "pure alcohol intake",
+            "饮酒量",
+            "酒精摄入量",
+            "每日酒精摄入量",
+            "纯乙醇摄入量"
+          ],
+          "unit": "g/d",
+          "accept": {
+            "g/d": 1
+          },
+          "range": [
+            0,
+            100
+          ],
+          "unit_required": true,
+          "required": true,
+          "from": "measurements",
+          "note_zh": "自己通常的每日平均纯乙醇克数；0–100 是查表支持范围而非生理正常范围。只接受 g/d，不猜测杯的大小，不将 g/week、mL/d 或单次饮酒量当作 g/d。规范键名已包含单位时可省略 unit；别名必须填写单位。"
+        }
+      ],
+      "outputs": [
+        {
+          "key": "alcohol_g_day",
+          "label_zh": "输入的每日平均纯酒精摄入量",
+          "unit": "g/d"
+        },
+        {
+          "key": "lower_exposure_g_day",
+          "label_zh": "相邻较低摄入量节点",
+          "unit": "g/d"
+        },
+        {
+          "key": "upper_exposure_g_day",
+          "label_zh": "相邻较高摄入量节点",
+          "unit": "g/d"
+        },
+        {
+          "key": "lookup_mode",
+          "label_zh": "查表方式",
+          "note_zh": "exact：印出节点；bracket：相邻节点；reference：无饮酒参照。lower/upper 只指摄入量，不是风险上下限。"
+        },
+        {
+          "key": "breast_cancer_lower_rr",
+          "label_zh": "乳腺癌（女性研究）：较低摄入量节点平均相对风险",
+          "unit": "1"
+        },
+        {
+          "key": "breast_cancer_lower_ui_low",
+          "label_zh": "乳腺癌（女性研究）：较低摄入量节点95% 不确定性区间下限",
+          "unit": "1"
+        },
+        {
+          "key": "breast_cancer_lower_ui_high",
+          "label_zh": "乳腺癌（女性研究）：较低摄入量节点95% 不确定性区间上限",
+          "unit": "1"
+        },
+        {
+          "key": "breast_cancer_upper_rr",
+          "label_zh": "乳腺癌（女性研究）：较高摄入量节点平均相对风险",
+          "unit": "1"
+        },
+        {
+          "key": "breast_cancer_upper_ui_low",
+          "label_zh": "乳腺癌（女性研究）：较高摄入量节点95% 不确定性区间下限",
+          "unit": "1"
+        },
+        {
+          "key": "breast_cancer_upper_ui_high",
+          "label_zh": "乳腺癌（女性研究）：较高摄入量节点95% 不确定性区间上限",
+          "unit": "1"
+        },
+        {
+          "key": "colorectal_cancer_lower_rr",
+          "label_zh": "结直肠癌：较低摄入量节点平均相对风险",
+          "unit": "1"
+        },
+        {
+          "key": "colorectal_cancer_lower_ui_low",
+          "label_zh": "结直肠癌：较低摄入量节点95% 不确定性区间下限",
+          "unit": "1"
+        },
+        {
+          "key": "colorectal_cancer_lower_ui_high",
+          "label_zh": "结直肠癌：较低摄入量节点95% 不确定性区间上限",
+          "unit": "1"
+        },
+        {
+          "key": "colorectal_cancer_upper_rr",
+          "label_zh": "结直肠癌：较高摄入量节点平均相对风险",
+          "unit": "1"
+        },
+        {
+          "key": "colorectal_cancer_upper_ui_low",
+          "label_zh": "结直肠癌：较高摄入量节点95% 不确定性区间下限",
+          "unit": "1"
+        },
+        {
+          "key": "colorectal_cancer_upper_ui_high",
+          "label_zh": "结直肠癌：较高摄入量节点95% 不确定性区间上限",
+          "unit": "1"
+        },
+        {
+          "key": "oesophageal_cancer_lower_rr",
+          "label_zh": "食管癌：较低摄入量节点平均相对风险",
+          "unit": "1"
+        },
+        {
+          "key": "oesophageal_cancer_lower_ui_low",
+          "label_zh": "食管癌：较低摄入量节点95% 不确定性区间下限",
+          "unit": "1"
+        },
+        {
+          "key": "oesophageal_cancer_lower_ui_high",
+          "label_zh": "食管癌：较低摄入量节点95% 不确定性区间上限",
+          "unit": "1"
+        },
+        {
+          "key": "oesophageal_cancer_upper_rr",
+          "label_zh": "食管癌：较高摄入量节点平均相对风险",
+          "unit": "1"
+        },
+        {
+          "key": "oesophageal_cancer_upper_ui_low",
+          "label_zh": "食管癌：较高摄入量节点95% 不确定性区间下限",
+          "unit": "1"
+        },
+        {
+          "key": "oesophageal_cancer_upper_ui_high",
+          "label_zh": "食管癌：较高摄入量节点95% 不确定性区间上限",
+          "unit": "1"
+        },
+        {
+          "key": "laryngeal_cancer_lower_rr",
+          "label_zh": "喉癌：较低摄入量节点平均相对风险",
+          "unit": "1"
+        },
+        {
+          "key": "laryngeal_cancer_lower_ui_low",
+          "label_zh": "喉癌：较低摄入量节点95% 不确定性区间下限",
+          "unit": "1"
+        },
+        {
+          "key": "laryngeal_cancer_lower_ui_high",
+          "label_zh": "喉癌：较低摄入量节点95% 不确定性区间上限",
+          "unit": "1"
+        },
+        {
+          "key": "laryngeal_cancer_upper_rr",
+          "label_zh": "喉癌：较高摄入量节点平均相对风险",
+          "unit": "1"
+        },
+        {
+          "key": "laryngeal_cancer_upper_ui_low",
+          "label_zh": "喉癌：较高摄入量节点95% 不确定性区间下限",
+          "unit": "1"
+        },
+        {
+          "key": "laryngeal_cancer_upper_ui_high",
+          "label_zh": "喉癌：较高摄入量节点95% 不确定性区间上限",
+          "unit": "1"
+        },
+        {
+          "key": "lip_oral_cavity_cancer_lower_rr",
+          "label_zh": "唇及口腔癌：较低摄入量节点平均相对风险",
+          "unit": "1"
+        },
+        {
+          "key": "lip_oral_cavity_cancer_lower_ui_low",
+          "label_zh": "唇及口腔癌：较低摄入量节点95% 不确定性区间下限",
+          "unit": "1"
+        },
+        {
+          "key": "lip_oral_cavity_cancer_lower_ui_high",
+          "label_zh": "唇及口腔癌：较低摄入量节点95% 不确定性区间上限",
+          "unit": "1"
+        },
+        {
+          "key": "lip_oral_cavity_cancer_upper_rr",
+          "label_zh": "唇及口腔癌：较高摄入量节点平均相对风险",
+          "unit": "1"
+        },
+        {
+          "key": "lip_oral_cavity_cancer_upper_ui_low",
+          "label_zh": "唇及口腔癌：较高摄入量节点95% 不确定性区间下限",
+          "unit": "1"
+        },
+        {
+          "key": "lip_oral_cavity_cancer_upper_ui_high",
+          "label_zh": "唇及口腔癌：较高摄入量节点95% 不确定性区间上限",
+          "unit": "1"
+        },
+        {
+          "key": "liver_cancer_lower_rr",
+          "label_zh": "肝癌：较低摄入量节点平均相对风险",
+          "unit": "1"
+        },
+        {
+          "key": "liver_cancer_lower_ui_low",
+          "label_zh": "肝癌：较低摄入量节点95% 不确定性区间下限",
+          "unit": "1"
+        },
+        {
+          "key": "liver_cancer_lower_ui_high",
+          "label_zh": "肝癌：较低摄入量节点95% 不确定性区间上限",
+          "unit": "1"
+        },
+        {
+          "key": "liver_cancer_upper_rr",
+          "label_zh": "肝癌：较高摄入量节点平均相对风险",
+          "unit": "1"
+        },
+        {
+          "key": "liver_cancer_upper_ui_low",
+          "label_zh": "肝癌：较高摄入量节点95% 不确定性区间下限",
+          "unit": "1"
+        },
+        {
+          "key": "liver_cancer_upper_ui_high",
+          "label_zh": "肝癌：较高摄入量节点95% 不确定性区间上限",
+          "unit": "1"
+        },
+        {
+          "key": "pancreatic_cancer_lower_rr",
+          "label_zh": "胰腺癌：较低摄入量节点平均相对风险",
+          "unit": "1"
+        },
+        {
+          "key": "pancreatic_cancer_lower_ui_low",
+          "label_zh": "胰腺癌：较低摄入量节点95% 不确定性区间下限",
+          "unit": "1"
+        },
+        {
+          "key": "pancreatic_cancer_lower_ui_high",
+          "label_zh": "胰腺癌：较低摄入量节点95% 不确定性区间上限",
+          "unit": "1"
+        },
+        {
+          "key": "pancreatic_cancer_upper_rr",
+          "label_zh": "胰腺癌：较高摄入量节点平均相对风险",
+          "unit": "1"
+        },
+        {
+          "key": "pancreatic_cancer_upper_ui_low",
+          "label_zh": "胰腺癌：较高摄入量节点95% 不确定性区间下限",
+          "unit": "1"
+        },
+        {
+          "key": "pancreatic_cancer_upper_ui_high",
+          "label_zh": "胰腺癌：较高摄入量节点95% 不确定性区间上限",
+          "unit": "1"
+        },
+        {
+          "key": "other_pharyngeal_cancer_lower_rr",
+          "label_zh": "其他咽癌（不含鼻咽癌）：较低摄入量节点平均相对风险",
+          "unit": "1"
+        },
+        {
+          "key": "other_pharyngeal_cancer_lower_ui_low",
+          "label_zh": "其他咽癌（不含鼻咽癌）：较低摄入量节点95% 不确定性区间下限",
+          "unit": "1"
+        },
+        {
+          "key": "other_pharyngeal_cancer_lower_ui_high",
+          "label_zh": "其他咽癌（不含鼻咽癌）：较低摄入量节点95% 不确定性区间上限",
+          "unit": "1"
+        },
+        {
+          "key": "other_pharyngeal_cancer_upper_rr",
+          "label_zh": "其他咽癌（不含鼻咽癌）：较高摄入量节点平均相对风险",
+          "unit": "1"
+        },
+        {
+          "key": "other_pharyngeal_cancer_upper_ui_low",
+          "label_zh": "其他咽癌（不含鼻咽癌）：较高摄入量节点95% 不确定性区间下限",
+          "unit": "1"
+        },
+        {
+          "key": "other_pharyngeal_cancer_upper_ui_high",
+          "label_zh": "其他咽癌（不含鼻咽癌）：较高摄入量节点95% 不确定性区间上限",
+          "unit": "1"
+        },
+        {
+          "key": "prostate_cancer_lower_rr",
+          "label_zh": "前列腺癌（男性研究）：较低摄入量节点平均相对风险",
+          "unit": "1"
+        },
+        {
+          "key": "prostate_cancer_lower_ui_low",
+          "label_zh": "前列腺癌（男性研究）：较低摄入量节点95% 不确定性区间下限",
+          "unit": "1"
+        },
+        {
+          "key": "prostate_cancer_lower_ui_high",
+          "label_zh": "前列腺癌（男性研究）：较低摄入量节点95% 不确定性区间上限",
+          "unit": "1"
+        },
+        {
+          "key": "prostate_cancer_upper_rr",
+          "label_zh": "前列腺癌（男性研究）：较高摄入量节点平均相对风险",
+          "unit": "1"
+        },
+        {
+          "key": "prostate_cancer_upper_ui_low",
+          "label_zh": "前列腺癌（男性研究）：较高摄入量节点95% 不确定性区间下限",
+          "unit": "1"
+        },
+        {
+          "key": "prostate_cancer_upper_ui_high",
+          "label_zh": "前列腺癌（男性研究）：较高摄入量节点95% 不确定性区间上限",
+          "unit": "1"
+        },
+        {
+          "key": "stomach_cancer_lower_rr",
+          "label_zh": "胃癌：较低摄入量节点平均相对风险",
+          "unit": "1"
+        },
+        {
+          "key": "stomach_cancer_lower_ui_low",
+          "label_zh": "胃癌：较低摄入量节点95% 不确定性区间下限",
+          "unit": "1"
+        },
+        {
+          "key": "stomach_cancer_lower_ui_high",
+          "label_zh": "胃癌：较低摄入量节点95% 不确定性区间上限",
+          "unit": "1"
+        },
+        {
+          "key": "stomach_cancer_upper_rr",
+          "label_zh": "胃癌：较高摄入量节点平均相对风险",
+          "unit": "1"
+        },
+        {
+          "key": "stomach_cancer_upper_ui_low",
+          "label_zh": "胃癌：较高摄入量节点95% 不确定性区间下限",
+          "unit": "1"
+        },
+        {
+          "key": "stomach_cancer_upper_ui_high",
+          "label_zh": "胃癌：较高摄入量节点95% 不确定性区间上限",
+          "unit": "1"
+        },
+        {
+          "key": "atrial_fibrillation_flutter_lower_rr",
+          "label_zh": "心房颤动及扑动：较低摄入量节点平均相对风险",
+          "unit": "1"
+        },
+        {
+          "key": "atrial_fibrillation_flutter_lower_ui_low",
+          "label_zh": "心房颤动及扑动：较低摄入量节点95% 不确定性区间下限",
+          "unit": "1"
+        },
+        {
+          "key": "atrial_fibrillation_flutter_lower_ui_high",
+          "label_zh": "心房颤动及扑动：较低摄入量节点95% 不确定性区间上限",
+          "unit": "1"
+        },
+        {
+          "key": "atrial_fibrillation_flutter_upper_rr",
+          "label_zh": "心房颤动及扑动：较高摄入量节点平均相对风险",
+          "unit": "1"
+        },
+        {
+          "key": "atrial_fibrillation_flutter_upper_ui_low",
+          "label_zh": "心房颤动及扑动：较高摄入量节点95% 不确定性区间下限",
+          "unit": "1"
+        },
+        {
+          "key": "atrial_fibrillation_flutter_upper_ui_high",
+          "label_zh": "心房颤动及扑动：较高摄入量节点95% 不确定性区间上限",
+          "unit": "1"
+        },
+        {
+          "key": "ischaemic_heart_disease_lower_rr",
+          "label_zh": "缺血性心脏病：较低摄入量节点平均相对风险",
+          "unit": "1"
+        },
+        {
+          "key": "ischaemic_heart_disease_lower_ui_low",
+          "label_zh": "缺血性心脏病：较低摄入量节点95% 不确定性区间下限",
+          "unit": "1"
+        },
+        {
+          "key": "ischaemic_heart_disease_lower_ui_high",
+          "label_zh": "缺血性心脏病：较低摄入量节点95% 不确定性区间上限",
+          "unit": "1"
+        },
+        {
+          "key": "ischaemic_heart_disease_upper_rr",
+          "label_zh": "缺血性心脏病：较高摄入量节点平均相对风险",
+          "unit": "1"
+        },
+        {
+          "key": "ischaemic_heart_disease_upper_ui_low",
+          "label_zh": "缺血性心脏病：较高摄入量节点95% 不确定性区间下限",
+          "unit": "1"
+        },
+        {
+          "key": "ischaemic_heart_disease_upper_ui_high",
+          "label_zh": "缺血性心脏病：较高摄入量节点95% 不确定性区间上限",
+          "unit": "1"
+        },
+        {
+          "key": "ischaemic_stroke_lower_rr",
+          "label_zh": "缺血性卒中：较低摄入量节点平均相对风险",
+          "unit": "1"
+        },
+        {
+          "key": "ischaemic_stroke_lower_ui_low",
+          "label_zh": "缺血性卒中：较低摄入量节点95% 不确定性区间下限",
+          "unit": "1"
+        },
+        {
+          "key": "ischaemic_stroke_lower_ui_high",
+          "label_zh": "缺血性卒中：较低摄入量节点95% 不确定性区间上限",
+          "unit": "1"
+        },
+        {
+          "key": "ischaemic_stroke_upper_rr",
+          "label_zh": "缺血性卒中：较高摄入量节点平均相对风险",
+          "unit": "1"
+        },
+        {
+          "key": "ischaemic_stroke_upper_ui_low",
+          "label_zh": "缺血性卒中：较高摄入量节点95% 不确定性区间下限",
+          "unit": "1"
+        },
+        {
+          "key": "ischaemic_stroke_upper_ui_high",
+          "label_zh": "缺血性卒中：较高摄入量节点95% 不确定性区间上限",
+          "unit": "1"
+        },
+        {
+          "key": "haemorrhagic_stroke_lower_rr",
+          "label_zh": "出血性卒中：较低摄入量节点平均相对风险",
+          "unit": "1"
+        },
+        {
+          "key": "haemorrhagic_stroke_lower_ui_low",
+          "label_zh": "出血性卒中：较低摄入量节点95% 不确定性区间下限",
+          "unit": "1"
+        },
+        {
+          "key": "haemorrhagic_stroke_lower_ui_high",
+          "label_zh": "出血性卒中：较低摄入量节点95% 不确定性区间上限",
+          "unit": "1"
+        },
+        {
+          "key": "haemorrhagic_stroke_upper_rr",
+          "label_zh": "出血性卒中：较高摄入量节点平均相对风险",
+          "unit": "1"
+        },
+        {
+          "key": "haemorrhagic_stroke_upper_ui_low",
+          "label_zh": "出血性卒中：较高摄入量节点95% 不确定性区间下限",
+          "unit": "1"
+        },
+        {
+          "key": "haemorrhagic_stroke_upper_ui_high",
+          "label_zh": "出血性卒中：较高摄入量节点95% 不确定性区间上限",
+          "unit": "1"
+        },
+        {
+          "key": "alzheimers_other_dementias_lower_rr",
+          "label_zh": "阿尔茨海默病及其他痴呆：较低摄入量节点平均相对风险",
+          "unit": "1"
+        },
+        {
+          "key": "alzheimers_other_dementias_lower_ui_low",
+          "label_zh": "阿尔茨海默病及其他痴呆：较低摄入量节点95% 不确定性区间下限",
+          "unit": "1"
+        },
+        {
+          "key": "alzheimers_other_dementias_lower_ui_high",
+          "label_zh": "阿尔茨海默病及其他痴呆：较低摄入量节点95% 不确定性区间上限",
+          "unit": "1"
+        },
+        {
+          "key": "alzheimers_other_dementias_upper_rr",
+          "label_zh": "阿尔茨海默病及其他痴呆：较高摄入量节点平均相对风险",
+          "unit": "1"
+        },
+        {
+          "key": "alzheimers_other_dementias_upper_ui_low",
+          "label_zh": "阿尔茨海默病及其他痴呆：较高摄入量节点95% 不确定性区间下限",
+          "unit": "1"
+        },
+        {
+          "key": "alzheimers_other_dementias_upper_ui_high",
+          "label_zh": "阿尔茨海默病及其他痴呆：较高摄入量节点95% 不确定性区间上限",
+          "unit": "1"
+        },
+        {
+          "key": "cirrhosis_chronic_liver_diseases_lower_rr",
+          "label_zh": "肝硬化及其他慢性肝病：较低摄入量节点平均相对风险",
+          "unit": "1"
+        },
+        {
+          "key": "cirrhosis_chronic_liver_diseases_lower_ui_low",
+          "label_zh": "肝硬化及其他慢性肝病：较低摄入量节点95% 不确定性区间下限",
+          "unit": "1"
+        },
+        {
+          "key": "cirrhosis_chronic_liver_diseases_lower_ui_high",
+          "label_zh": "肝硬化及其他慢性肝病：较低摄入量节点95% 不确定性区间上限",
+          "unit": "1"
+        },
+        {
+          "key": "cirrhosis_chronic_liver_diseases_upper_rr",
+          "label_zh": "肝硬化及其他慢性肝病：较高摄入量节点平均相对风险",
+          "unit": "1"
+        },
+        {
+          "key": "cirrhosis_chronic_liver_diseases_upper_ui_low",
+          "label_zh": "肝硬化及其他慢性肝病：较高摄入量节点95% 不确定性区间下限",
+          "unit": "1"
+        },
+        {
+          "key": "cirrhosis_chronic_liver_diseases_upper_ui_high",
+          "label_zh": "肝硬化及其他慢性肝病：较高摄入量节点95% 不确定性区间上限",
+          "unit": "1"
+        },
+        {
+          "key": "type_2_diabetes_lower_rr",
+          "label_zh": "2 型糖尿病：较低摄入量节点平均相对风险",
+          "unit": "1"
+        },
+        {
+          "key": "type_2_diabetes_lower_ui_low",
+          "label_zh": "2 型糖尿病：较低摄入量节点95% 不确定性区间下限",
+          "unit": "1"
+        },
+        {
+          "key": "type_2_diabetes_lower_ui_high",
+          "label_zh": "2 型糖尿病：较低摄入量节点95% 不确定性区间上限",
+          "unit": "1"
+        },
+        {
+          "key": "type_2_diabetes_upper_rr",
+          "label_zh": "2 型糖尿病：较高摄入量节点平均相对风险",
+          "unit": "1"
+        },
+        {
+          "key": "type_2_diabetes_upper_ui_low",
+          "label_zh": "2 型糖尿病：较高摄入量节点95% 不确定性区间下限",
+          "unit": "1"
+        },
+        {
+          "key": "type_2_diabetes_upper_ui_high",
+          "label_zh": "2 型糖尿病：较高摄入量节点95% 不确定性区间上限",
+          "unit": "1"
+        },
+        {
+          "key": "lower_respiratory_infections_lower_rr",
+          "label_zh": "下呼吸道感染：较低摄入量节点平均相对风险",
+          "unit": "1"
+        },
+        {
+          "key": "lower_respiratory_infections_lower_ui_low",
+          "label_zh": "下呼吸道感染：较低摄入量节点95% 不确定性区间下限",
+          "unit": "1"
+        },
+        {
+          "key": "lower_respiratory_infections_lower_ui_high",
+          "label_zh": "下呼吸道感染：较低摄入量节点95% 不确定性区间上限",
+          "unit": "1"
+        },
+        {
+          "key": "lower_respiratory_infections_upper_rr",
+          "label_zh": "下呼吸道感染：较高摄入量节点平均相对风险",
+          "unit": "1"
+        },
+        {
+          "key": "lower_respiratory_infections_upper_ui_low",
+          "label_zh": "下呼吸道感染：较高摄入量节点95% 不确定性区间下限",
+          "unit": "1"
+        },
+        {
+          "key": "lower_respiratory_infections_upper_ui_high",
+          "label_zh": "下呼吸道感染：较高摄入量节点95% 不确定性区间上限",
+          "unit": "1"
+        },
+        {
+          "key": "pancreatitis_lower_rr",
+          "label_zh": "胰腺炎：较低摄入量节点平均相对风险",
+          "unit": "1"
+        },
+        {
+          "key": "pancreatitis_lower_ui_low",
+          "label_zh": "胰腺炎：较低摄入量节点95% 不确定性区间下限",
+          "unit": "1"
+        },
+        {
+          "key": "pancreatitis_lower_ui_high",
+          "label_zh": "胰腺炎：较低摄入量节点95% 不确定性区间上限",
+          "unit": "1"
+        },
+        {
+          "key": "pancreatitis_upper_rr",
+          "label_zh": "胰腺炎：较高摄入量节点平均相对风险",
+          "unit": "1"
+        },
+        {
+          "key": "pancreatitis_upper_ui_low",
+          "label_zh": "胰腺炎：较高摄入量节点95% 不确定性区间下限",
+          "unit": "1"
+        },
+        {
+          "key": "pancreatitis_upper_ui_high",
+          "label_zh": "胰腺炎：较高摄入量节点95% 不确定性区间上限",
+          "unit": "1"
+        },
+        {
+          "key": "tuberculosis_lower_rr",
+          "label_zh": "结核病：较低摄入量节点平均相对风险",
+          "unit": "1"
+        },
+        {
+          "key": "tuberculosis_lower_ui_low",
+          "label_zh": "结核病：较低摄入量节点95% 不确定性区间下限",
+          "unit": "1"
+        },
+        {
+          "key": "tuberculosis_lower_ui_high",
+          "label_zh": "结核病：较低摄入量节点95% 不确定性区间上限",
+          "unit": "1"
+        },
+        {
+          "key": "tuberculosis_upper_rr",
+          "label_zh": "结核病：较高摄入量节点平均相对风险",
+          "unit": "1"
+        },
+        {
+          "key": "tuberculosis_upper_ui_low",
+          "label_zh": "结核病：较高摄入量节点95% 不确定性区间下限",
+          "unit": "1"
+        },
+        {
+          "key": "tuberculosis_upper_ui_high",
+          "label_zh": "结核病：较高摄入量节点95% 不确定性区间上限",
+          "unit": "1"
+        }
+      ],
+      "paper": {
+        "doi": "10.1038/s44360-026-00139-5",
+        "title": "Health effects associated with alcohol consumption: a Burden of Proof study.",
+        "title_zh": "酒精摄入相关健康效应：证据负担研究",
+        "journal": "Nature Health",
+        "year": 2026
+      }
+    },
+    {
       "name": "amino-acid-biological-age",
       "kind": "paper",
       "tier": "B",
@@ -3979,6 +4672,244 @@
         "title": "Evidence for improved DNA repair in the long-lived bowhead whale",
         "title_zh": "弓头鲸的 DNA 修复",
         "journal": "Nature",
+        "year": 2025
+      }
+    },
+    {
+      "name": "burden-of-proof-dietary-risk",
+      "kind": "paper",
+      "tier": "A",
+      "species": [
+        "human"
+      ],
+      "evidence": "cohort",
+      "domains": [
+        "饮食与代谢"
+      ],
+      "blurb_zh": "用加工肉、含糖饮料或反式脂肪的日常摄入量，读取已发表摄入量点对应的慢病相对风险及不确定区间。",
+      "description": "Tier A personal readout: computes one person's value with the paper's printed method and reproduces a printed example. Reads published Burden of Proof relative risks for processed meat, sugar-sweetened beverages and trans-fat energy intake at the exact exposure points in Supplementary Tables 13–16. Use for an adult asking what their habitual intake corresponds to in these population associations, or comparing user-specified intake scenarios. Reports uncertainty including between-study heterogeneity; does not interpolate or calculate individual absolute risk.",
+      "intents": [
+        "intervention_evidence",
+        "before_after"
+      ],
+      "has_script": true,
+      "validation_status": "reproduced",
+      "validation_label_zh": "已复现论文",
+      "entry": {
+        "script": "scripts/personal_report.py",
+        "measurements_flag": "--measurements",
+        "measurements_header": [
+          "marker",
+          "value",
+          "unit"
+        ],
+        "age_flag": "--age",
+        "sex_flag": "--sex",
+        "out_flag": "--out",
+        "result_json": true,
+        "targets_flag": "--targets",
+        "levers_json": true
+      },
+      "inputs_status": "verified",
+      "inputs": [
+        {
+          "key": "processed_meat_g_d",
+          "label_zh": "加工肉",
+          "aliases": [
+            "加工肉摄入量",
+            "加工肉类",
+            "processed meat",
+            "Processed meat consumption"
+          ],
+          "unit": "g/d",
+          "range": [
+            0,
+            400
+          ],
+          "note_zh": "日常平均摄入的食物质量，不是蛋白质或钠的质量。只接受已发表点：0、25、50、75、100、150、200、250、300、350、400；其中 25、75 只有缺血性心脏病读数，150 没有该结局读数。",
+          "required": false,
+          "unit_required": true,
+          "from": "measurements"
+        },
+        {
+          "key": "ssb_g_d",
+          "label_zh": "含糖饮料",
+          "aliases": [
+            "含糖饮料摄入量",
+            "SSB",
+            "SSBs",
+            "sugar-sweetened beverages",
+            "SSB consumption"
+          ],
+          "unit": "g/d",
+          "range": [
+            0,
+            1000
+          ],
+          "note_zh": "饮料总质量，不是其中糖的质量；不能把 mL 或瓶数直接当作克。只接受已发表点：0、250、500、750、1000。",
+          "required": false,
+          "unit_required": true,
+          "from": "measurements"
+        },
+        {
+          "key": "tfa_energy_pct",
+          "label_zh": "反式脂肪供能占比",
+          "aliases": [
+            "反式脂肪酸供能百分比",
+            "TFA energy percentage",
+            "trans fat percent energy",
+            "Trans fat consumption"
+          ],
+          "unit": "%",
+          "accept": {
+            "1": 100
+          },
+          "range": [
+            0,
+            6
+          ],
+          "note_zh": "反式脂肪提供的能量占每日总能量的百分比，不是食物重量百分比或每日克数。1% 输入 1；若用能量比例 0.01，单位填 1。只接受 0、1、2、3、4、5、6；零为参照定义。",
+          "required": false,
+          "unit_required": true,
+          "from": "measurements"
+        },
+        {
+          "key": "age",
+          "label_zh": "实足年龄",
+          "unit": "a",
+          "range": [
+            18,
+            120
+          ],
+          "required": true,
+          "from": "profile",
+          "flag": "--age",
+          "note_zh": "只核对成年人适用范围；18–120 是输入检查范围，不是模型训练年龄上下界。年龄不改变表格读数。"
+        },
+        {
+          "key": "sex",
+          "label_zh": "性别",
+          "required": false,
+          "from": "profile",
+          "flag": "--sex",
+          "note_zh": "可选上下文，不改变读数。"
+        }
+      ],
+      "outputs": [
+        {
+          "key": "meat_t2d_rr",
+          "label_zh": "加工肉—2 型糖尿病 相对风险",
+          "unit": "1",
+          "note_zh": "相对于零摄入的群体关联。未提供摄入量或该结局没有该摄入量的已发表表格点时为 null；零参照的区间也为 null。"
+        },
+        {
+          "key": "meat_t2d_ui_lower",
+          "label_zh": "加工肉—2 型糖尿病 95% 不确定区间下限（含异质性）",
+          "unit": "1",
+          "note_zh": "相对于零摄入的群体关联。未提供摄入量或该结局没有该摄入量的已发表表格点时为 null；零参照的区间也为 null。"
+        },
+        {
+          "key": "meat_t2d_ui_upper",
+          "label_zh": "加工肉—2 型糖尿病 95% 不确定区间上限（含异质性）",
+          "unit": "1",
+          "note_zh": "相对于零摄入的群体关联。未提供摄入量或该结局没有该摄入量的已发表表格点时为 null；零参照的区间也为 null。"
+        },
+        {
+          "key": "meat_crc_rr",
+          "label_zh": "加工肉—结直肠癌 相对风险",
+          "unit": "1",
+          "note_zh": "相对于零摄入的群体关联。未提供摄入量或该结局没有该摄入量的已发表表格点时为 null；零参照的区间也为 null。"
+        },
+        {
+          "key": "meat_crc_ui_lower",
+          "label_zh": "加工肉—结直肠癌 95% 不确定区间下限（含异质性）",
+          "unit": "1",
+          "note_zh": "相对于零摄入的群体关联。未提供摄入量或该结局没有该摄入量的已发表表格点时为 null；零参照的区间也为 null。"
+        },
+        {
+          "key": "meat_crc_ui_upper",
+          "label_zh": "加工肉—结直肠癌 95% 不确定区间上限（含异质性）",
+          "unit": "1",
+          "note_zh": "相对于零摄入的群体关联。未提供摄入量或该结局没有该摄入量的已发表表格点时为 null；零参照的区间也为 null。"
+        },
+        {
+          "key": "meat_ihd_rr",
+          "label_zh": "加工肉—缺血性心脏病 相对风险",
+          "unit": "1",
+          "note_zh": "相对于零摄入的群体关联。未提供摄入量或该结局没有该摄入量的已发表表格点时为 null；零参照的区间也为 null。"
+        },
+        {
+          "key": "meat_ihd_ui_lower",
+          "label_zh": "加工肉—缺血性心脏病 95% 不确定区间下限（含异质性）",
+          "unit": "1",
+          "note_zh": "相对于零摄入的群体关联。未提供摄入量或该结局没有该摄入量的已发表表格点时为 null；零参照的区间也为 null。"
+        },
+        {
+          "key": "meat_ihd_ui_upper",
+          "label_zh": "加工肉—缺血性心脏病 95% 不确定区间上限（含异质性）",
+          "unit": "1",
+          "note_zh": "相对于零摄入的群体关联。未提供摄入量或该结局没有该摄入量的已发表表格点时为 null；零参照的区间也为 null。"
+        },
+        {
+          "key": "ssb_t2d_rr",
+          "label_zh": "含糖饮料—2 型糖尿病 相对风险",
+          "unit": "1",
+          "note_zh": "相对于零摄入的群体关联。未提供摄入量或该结局没有该摄入量的已发表表格点时为 null；零参照的区间也为 null。"
+        },
+        {
+          "key": "ssb_t2d_ui_lower",
+          "label_zh": "含糖饮料—2 型糖尿病 95% 不确定区间下限（含异质性）",
+          "unit": "1",
+          "note_zh": "相对于零摄入的群体关联。未提供摄入量或该结局没有该摄入量的已发表表格点时为 null；零参照的区间也为 null。"
+        },
+        {
+          "key": "ssb_t2d_ui_upper",
+          "label_zh": "含糖饮料—2 型糖尿病 95% 不确定区间上限（含异质性）",
+          "unit": "1",
+          "note_zh": "相对于零摄入的群体关联。未提供摄入量或该结局没有该摄入量的已发表表格点时为 null；零参照的区间也为 null。"
+        },
+        {
+          "key": "ssb_ihd_rr",
+          "label_zh": "含糖饮料—缺血性心脏病 相对风险",
+          "unit": "1",
+          "note_zh": "相对于零摄入的群体关联。未提供摄入量或该结局没有该摄入量的已发表表格点时为 null；零参照的区间也为 null。"
+        },
+        {
+          "key": "ssb_ihd_ui_lower",
+          "label_zh": "含糖饮料—缺血性心脏病 95% 不确定区间下限（含异质性）",
+          "unit": "1",
+          "note_zh": "相对于零摄入的群体关联。未提供摄入量或该结局没有该摄入量的已发表表格点时为 null；零参照的区间也为 null。"
+        },
+        {
+          "key": "ssb_ihd_ui_upper",
+          "label_zh": "含糖饮料—缺血性心脏病 95% 不确定区间上限（含异质性）",
+          "unit": "1",
+          "note_zh": "相对于零摄入的群体关联。未提供摄入量或该结局没有该摄入量的已发表表格点时为 null；零参照的区间也为 null。"
+        },
+        {
+          "key": "tfa_ihd_rr",
+          "label_zh": "反式脂肪—缺血性心脏病 相对风险",
+          "unit": "1",
+          "note_zh": "相对于零摄入的群体关联。未提供摄入量或该结局没有该摄入量的已发表表格点时为 null；零参照的区间也为 null。"
+        },
+        {
+          "key": "tfa_ihd_ui_lower",
+          "label_zh": "反式脂肪—缺血性心脏病 95% 不确定区间下限（含异质性）",
+          "unit": "1",
+          "note_zh": "相对于零摄入的群体关联。未提供摄入量或该结局没有该摄入量的已发表表格点时为 null；零参照的区间也为 null。"
+        },
+        {
+          "key": "tfa_ihd_ui_upper",
+          "label_zh": "反式脂肪—缺血性心脏病 95% 不确定区间上限（含异质性）",
+          "unit": "1",
+          "note_zh": "相对于零摄入的群体关联。未提供摄入量或该结局没有该摄入量的已发表表格点时为 null；零参照的区间也为 null。"
+        }
+      ],
+      "paper": {
+        "doi": "10.1038/s41591-025-03775-8",
+        "title": "Health effects associated with consumption of processed meat, sugar-sweetened beverages and trans fatty acids: a Burden of Proof study",
+        "title_zh": "加工肉、含糖饮料和反式脂肪摄入的健康关联",
+        "journal": "Nature Medicine",
         "year": 2025
       }
     },
@@ -30464,6 +31395,208 @@
         "title_zh": "反应敏捷与运动-认知测评区分有无跌倒史的社区老人：双中心横断面研究",
         "journal": "GeroScience",
         "year": 2026
+      }
+    },
+    {
+      "name": "red-meat-burden-of-proof",
+      "kind": "paper",
+      "tier": "A",
+      "species": [
+        "human"
+      ],
+      "evidence": "review",
+      "domains": [
+        "饮食与代谢"
+      ],
+      "blurb_zh": "按未加工红肉日均摄入量查询慢病相对风险与不确定区间，仅支持论文列出的摄入点。",
+      "description": "Tier A personal readout: computes one person's value with the paper's printed method and reproduces a printed example. Queries printed Burden of Proof estimates for unprocessed red meat intake and six chronic disease outcomes. Use when a person provides habitual daily unprocessed red meat intake and asks what the published population associations mean. Supports only the nine printed intake points from 0 to 200 g/day in 25 g/day steps, with conservative uncertainty intervals and optional comparisons of user-selected intake points.",
+      "intents": [
+        "intervention_evidence"
+      ],
+      "has_script": true,
+      "validation_status": "reproduced",
+      "validation_label_zh": "已复现论文",
+      "entry": {
+        "script": "scripts/personal_report.py",
+        "measurements_flag": "--measurements",
+        "measurements_header": [
+          "marker",
+          "value",
+          "unit"
+        ],
+        "age_flag": "--age",
+        "sex_flag": "--sex",
+        "out_flag": "--out",
+        "result_json": true,
+        "targets_flag": "--targets",
+        "levers_json": true
+      },
+      "inputs_status": "verified",
+      "inputs": [
+        {
+          "key": "unprocessed_red_meat_g_d",
+          "label_zh": "未加工红肉摄入量",
+          "aliases": [
+            "未加工红肉日均摄入量",
+            "未加工红肉",
+            "unprocessed red meat",
+            "unprocessed red meat consumption",
+            "unprocessed red meat intake"
+          ],
+          "unit": "g/d",
+          "accept": {},
+          "range": [
+            0,
+            200
+          ],
+          "unit_required": true,
+          "required": true,
+          "from": "measurements",
+          "note_zh": "只支持0、25、50、75、100、125、150、175、200 g/d；日均未加工牛、羊、猪肉，不含加工肉。不是膳食推荐量。不自动换算份量、生熟重量或每周摄入。"
+        },
+        {
+          "key": "age",
+          "label_zh": "实足年龄",
+          "unit": "a",
+          "range": [
+            25,
+            120
+          ],
+          "required": true,
+          "from": "profile",
+          "flag": "--age",
+          "note_zh": "仅用于适用人群检查，不调整相对风险；研究涵盖25岁至95岁以上，120是输入质量检查上限。"
+        },
+        {
+          "key": "sex",
+          "label_zh": "性别",
+          "required": true,
+          "from": "profile",
+          "flag": "--sex",
+          "note_zh": "female、male、unknown；仅female展示乳腺癌表值。其他结局没有性别分层。"
+        }
+      ],
+      "outputs": [
+        {
+          "key": "intake_g_d",
+          "label_zh": "本次查询摄入量",
+          "unit": "g/d"
+        },
+        {
+          "key": "colorectal_cancer_rr",
+          "label_zh": "结直肠癌相对风险表值",
+          "unit": "1",
+          "note_zh": "补充表7；含研究间异质性，不是个人概率。"
+        },
+        {
+          "key": "colorectal_cancer_ui_lower",
+          "label_zh": "结直肠癌保守95%不确定区间下限",
+          "unit": "1",
+          "note_zh": "补充表7；含研究间异质性，不是个人概率。"
+        },
+        {
+          "key": "colorectal_cancer_ui_upper",
+          "label_zh": "结直肠癌保守95%不确定区间上限",
+          "unit": "1",
+          "note_zh": "补充表7；含研究间异质性，不是个人概率。"
+        },
+        {
+          "key": "breast_cancer_rr",
+          "label_zh": "乳腺癌相对风险表值",
+          "unit": "1",
+          "note_zh": "补充表7；含研究间异质性，不是个人概率。只对female返回数值。"
+        },
+        {
+          "key": "breast_cancer_ui_lower",
+          "label_zh": "乳腺癌保守95%不确定区间下限",
+          "unit": "1",
+          "note_zh": "补充表7；含研究间异质性，不是个人概率。只对female返回数值。"
+        },
+        {
+          "key": "breast_cancer_ui_upper",
+          "label_zh": "乳腺癌保守95%不确定区间上限",
+          "unit": "1",
+          "note_zh": "补充表7；含研究间异质性，不是个人概率。只对female返回数值。"
+        },
+        {
+          "key": "ischemic_heart_disease_rr",
+          "label_zh": "缺血性心脏病相对风险表值",
+          "unit": "1",
+          "note_zh": "补充表7；含研究间异质性，不是个人概率。"
+        },
+        {
+          "key": "ischemic_heart_disease_ui_lower",
+          "label_zh": "缺血性心脏病保守95%不确定区间下限",
+          "unit": "1",
+          "note_zh": "补充表7；含研究间异质性，不是个人概率。"
+        },
+        {
+          "key": "ischemic_heart_disease_ui_upper",
+          "label_zh": "缺血性心脏病保守95%不确定区间上限",
+          "unit": "1",
+          "note_zh": "补充表7；含研究间异质性，不是个人概率。"
+        },
+        {
+          "key": "type_2_diabetes_rr",
+          "label_zh": "2型糖尿病相对风险表值",
+          "unit": "1",
+          "note_zh": "补充表7；含研究间异质性，不是个人概率。"
+        },
+        {
+          "key": "type_2_diabetes_ui_lower",
+          "label_zh": "2型糖尿病保守95%不确定区间下限",
+          "unit": "1",
+          "note_zh": "补充表7；含研究间异质性，不是个人概率。"
+        },
+        {
+          "key": "type_2_diabetes_ui_upper",
+          "label_zh": "2型糖尿病保守95%不确定区间上限",
+          "unit": "1",
+          "note_zh": "补充表7；含研究间异质性，不是个人概率。"
+        },
+        {
+          "key": "ischemic_stroke_rr",
+          "label_zh": "缺血性卒中相对风险表值",
+          "unit": "1",
+          "note_zh": "补充表7；含研究间异质性，不是个人概率。"
+        },
+        {
+          "key": "ischemic_stroke_ui_lower",
+          "label_zh": "缺血性卒中保守95%不确定区间下限",
+          "unit": "1",
+          "note_zh": "补充表7；含研究间异质性，不是个人概率。"
+        },
+        {
+          "key": "ischemic_stroke_ui_upper",
+          "label_zh": "缺血性卒中保守95%不确定区间上限",
+          "unit": "1",
+          "note_zh": "补充表7；含研究间异质性，不是个人概率。"
+        },
+        {
+          "key": "hemorrhagic_stroke_rr",
+          "label_zh": "出血性卒中相对风险表值",
+          "unit": "1",
+          "note_zh": "补充表7；含研究间异质性，不是个人概率。"
+        },
+        {
+          "key": "hemorrhagic_stroke_ui_lower",
+          "label_zh": "出血性卒中保守95%不确定区间下限",
+          "unit": "1",
+          "note_zh": "补充表7；含研究间异质性，不是个人概率。"
+        },
+        {
+          "key": "hemorrhagic_stroke_ui_upper",
+          "label_zh": "出血性卒中保守95%不确定区间上限",
+          "unit": "1",
+          "note_zh": "补充表7；含研究间异质性，不是个人概率。"
+        }
+      ],
+      "paper": {
+        "doi": "10.1038/s41591-022-01968-z",
+        "title": "Health effects associated with consumption of unprocessed red meat: a Burden of Proof study.",
+        "title_zh": "未加工红肉摄入与慢性病的证据负担研究",
+        "journal": "Nature Medicine",
+        "year": 2022
       }
     },
     {
