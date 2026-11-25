@@ -2,9 +2,9 @@
   "schema": "longevity-catalog/1",
   "version": "2026.48.0",
   "counts": {
-    "skills": 199,
+    "skills": 201,
     "tiers": {
-      "A": 35,
+      "A": 37,
       "B": 83,
       "C": 73,
       "tool": 8
@@ -31188,6 +31188,274 @@
       }
     },
     {
+      "name": "senior-fitness-independence",
+      "kind": "paper",
+      "tier": "A",
+      "species": [
+        "human"
+      ],
+      "evidence": "method",
+      "domains": [
+        "体能与独立生活"
+      ],
+      "blurb_zh": "按年龄和性别比较起立、弯举、步行、踏步及起立行走成绩与独立生活体能参考标准。",
+      "description": "Tier A personal readout: computes one person's value with the paper's printed method and reproduces a printed example. Compares standardized Senior Fitness Test measurements with age- and sex-specific criterion standards for physical independence in adults aged 60–94. Use for chair stand, arm curl, six-minute walk, two-minute step, or eight-foot up-and-go results, their distance from published standards, and hypothetical target comparisons.",
+      "intents": [
+        "frailty_mortality",
+        "lab_meaning",
+        "before_after"
+      ],
+      "has_script": true,
+      "validation_status": "reproduced",
+      "validation_label_zh": "已复现论文",
+      "entry": {
+        "script": "scripts/personal_report.py",
+        "measurements_flag": "--measurements",
+        "measurements_header": [
+          "marker",
+          "value",
+          "unit"
+        ],
+        "age_flag": "--age",
+        "sex_flag": "--sex",
+        "out_flag": "--out",
+        "result_json": true,
+        "targets_flag": "--targets",
+        "levers_json": true
+      },
+      "inputs_status": "verified",
+      "inputs": [
+        {
+          "key": "chair_stand_count",
+          "label_zh": "30 秒椅子起立",
+          "aliases": [
+            "30-s chair stand",
+            "chair stand",
+            "30秒椅子起立",
+            "30秒坐站测试"
+          ],
+          "unit": "1",
+          "range": [
+            0,
+            100
+          ],
+          "required": false,
+          "from": "measurements",
+          "note_zh": "五项中至少提供一项；仅评估已测项目。次数的单位 1 表示次数，须为整数。"
+        },
+        {
+          "key": "arm_curl_count",
+          "label_zh": "30 秒手臂弯举",
+          "aliases": [
+            "30-s arm curl",
+            "arm curl",
+            "30秒手臂弯举"
+          ],
+          "unit": "1",
+          "range": [
+            0,
+            150
+          ],
+          "required": false,
+          "from": "measurements",
+          "note_zh": "五项中至少提供一项；仅评估已测项目。次数的单位 1 表示次数，须为整数。"
+        },
+        {
+          "key": "walk_6min_m",
+          "label_zh": "6 分钟步行",
+          "aliases": [
+            "6-min walk",
+            "6MWT",
+            "6分钟步行距离"
+          ],
+          "unit": "m",
+          "range": [
+            0,
+            1500
+          ],
+          "required": false,
+          "from": "measurements",
+          "note_zh": "按原 SFT 路线完成的六分钟步行距离；输入米或厘米。原表码数按 1 码 = 0.9144 米精确转换，不能改变测试路线。",
+          "accept": {
+            "cm": 0.01
+          },
+          "unit_required": true
+        },
+        {
+          "key": "step_2min_count",
+          "label_zh": "2 分钟原地踏步（右膝达标次数）",
+          "aliases": [
+            "2-min step test",
+            "2分钟踏步",
+            "右膝达标次数"
+          ],
+          "unit": "1",
+          "range": [
+            0,
+            400
+          ],
+          "required": false,
+          "from": "measurements",
+          "note_zh": "五项中至少提供一项；仅评估已测项目。次数的单位 1 表示次数，须为整数。"
+        },
+        {
+          "key": "up_go_s",
+          "label_zh": "8 英尺起立行走",
+          "aliases": [
+            "8-foot up-and-go",
+            "8英尺起立行走",
+            "8英尺起立走"
+          ],
+          "unit": "s",
+          "range": [
+            0.5,
+            300
+          ],
+          "required": false,
+          "from": "measurements",
+          "note_zh": "8 英尺（2.4384 米）起立行走计时；不可用 3 米 TUG 代替。",
+          "accept": {
+            "min": 60
+          },
+          "unit_required": true
+        },
+        {
+          "key": "age",
+          "label_zh": "实足年龄",
+          "unit": "a",
+          "range": [
+            60,
+            94
+          ],
+          "required": true,
+          "from": "profile",
+          "flag": "--age",
+          "note_zh": "整数周岁；不插值、不外推。"
+        },
+        {
+          "key": "sex",
+          "label_zh": "论文分组性别",
+          "required": true,
+          "from": "profile",
+          "flag": "--sex",
+          "note_zh": "male/female 或男/女；不推断分组。"
+        }
+      ],
+      "outputs": [
+        {
+          "key": "age_band",
+          "label_zh": "论文年龄组"
+        },
+        {
+          "key": "chair_stand_value",
+          "label_zh": "30 秒椅子起立测量值",
+          "unit": "1"
+        },
+        {
+          "key": "chair_stand_cutoff",
+          "label_zh": "30 秒椅子起立参考切点",
+          "unit": "1"
+        },
+        {
+          "key": "chair_stand_margin",
+          "label_zh": "30 秒椅子起立有利方向差距",
+          "unit": "1"
+        },
+        {
+          "key": "chair_stand_status",
+          "label_zh": "30 秒椅子起立达标情况",
+          "note_zh": "meets_standard / below_standard；未测为 null。"
+        },
+        {
+          "key": "arm_curl_value",
+          "label_zh": "30 秒手臂弯举测量值",
+          "unit": "1"
+        },
+        {
+          "key": "arm_curl_cutoff",
+          "label_zh": "30 秒手臂弯举参考切点",
+          "unit": "1"
+        },
+        {
+          "key": "arm_curl_margin",
+          "label_zh": "30 秒手臂弯举有利方向差距",
+          "unit": "1"
+        },
+        {
+          "key": "arm_curl_status",
+          "label_zh": "30 秒手臂弯举达标情况",
+          "note_zh": "meets_standard / below_standard；未测为 null。"
+        },
+        {
+          "key": "walk_6min_value",
+          "label_zh": "6 分钟步行测量值",
+          "unit": "m"
+        },
+        {
+          "key": "walk_6min_cutoff",
+          "label_zh": "6 分钟步行参考切点",
+          "unit": "m"
+        },
+        {
+          "key": "walk_6min_margin",
+          "label_zh": "6 分钟步行有利方向差距",
+          "unit": "m"
+        },
+        {
+          "key": "walk_6min_status",
+          "label_zh": "6 分钟步行达标情况",
+          "note_zh": "meets_standard / below_standard；未测为 null。"
+        },
+        {
+          "key": "step_2min_value",
+          "label_zh": "2 分钟原地踏步（右膝达标次数）测量值",
+          "unit": "1"
+        },
+        {
+          "key": "step_2min_cutoff",
+          "label_zh": "2 分钟原地踏步（右膝达标次数）参考切点",
+          "unit": "1"
+        },
+        {
+          "key": "step_2min_margin",
+          "label_zh": "2 分钟原地踏步（右膝达标次数）有利方向差距",
+          "unit": "1"
+        },
+        {
+          "key": "step_2min_status",
+          "label_zh": "2 分钟原地踏步（右膝达标次数）达标情况",
+          "note_zh": "meets_standard / below_standard；未测为 null。"
+        },
+        {
+          "key": "up_go_value",
+          "label_zh": "8 英尺起立行走测量值",
+          "unit": "s"
+        },
+        {
+          "key": "up_go_cutoff",
+          "label_zh": "8 英尺起立行走参考切点",
+          "unit": "s"
+        },
+        {
+          "key": "up_go_margin",
+          "label_zh": "8 英尺起立行走有利方向差距",
+          "unit": "s"
+        },
+        {
+          "key": "up_go_status",
+          "label_zh": "8 英尺起立行走达标情况",
+          "note_zh": "meets_standard / below_standard；未测为 null。"
+        }
+      ],
+      "paper": {
+        "doi": "10.1093/geront/gns071",
+        "title": "Development and validation of criterion-referenced clinically relevant fitness standards for maintaining physical independence in later years.",
+        "title_zh": "维持晚年独立生活的体能参考标准：开发与验证",
+        "journal": "The Gerontologist",
+        "year": 2013
+      }
+    },
+    {
       "name": "senolytic-car-t-metabolic",
       "kind": "paper",
       "tier": "C",
@@ -31806,6 +32074,253 @@
         "title_zh": "使用 SHARE 数据观察内在能力各分域的时间变化",
         "journal": "GeroScience",
         "year": 2026
+      }
+    },
+    {
+      "name": "short-physical-performance-battery",
+      "kind": "paper",
+      "tier": "A",
+      "species": [
+        "human"
+      ],
+      "evidence": "cohort",
+      "domains": [
+        "体能与衰弱"
+      ],
+      "blurb_zh": "根据半串联与并足或全串联站立、8英尺常速步行和五次起立记录，计算原版 SPPB 三项得分及总分。",
+      "description": "Tier A personal readout: computes one person's value with the paper's printed method and reproduces a printed example. Computes the original 1994 Short Physical Performance Battery (SPPB) from standing-balance records, two usual-speed 8-foot walks, and five repeated chair stands. Use when a person asks to score their SPPB, lower-extremity physical performance, walking and chair-rise tests, or 简易体能测试. Reports three component scores and their sum in Chinese, with optional target-score scenarios and explicit protocol and input checks.",
+      "intents": [
+        "frailty_mortality"
+      ],
+      "has_script": true,
+      "validation_status": "reproduced",
+      "validation_label_zh": "已复现论文",
+      "entry": {
+        "script": "scripts/personal_report.py",
+        "measurements_flag": "--measurements",
+        "measurements_header": [
+          "item",
+          "value",
+          "unit"
+        ],
+        "age_flag": "--age",
+        "out_flag": "--out",
+        "result_json": true,
+        "targets_flag": "--targets",
+        "levers_json": true
+      },
+      "inputs_status": "verified",
+      "inputs": [
+        {
+          "key": "semi_tandem_s",
+          "label_zh": "半串联站立保持时间",
+          "aliases": [
+            "Semi-tandem stand",
+            "半前后脚站立",
+            "半串联站立"
+          ],
+          "unit": "s",
+          "range": [
+            0,
+            10
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "按表 1 的整秒记录，范围 0–10；0 可表示确认无法完成或因安全原因未尝试，不能表示缺测。不要把更精细的原始记录自行四舍五入。先测此项。",
+          "accept": {
+            "ms": 0.001,
+            "min": 60
+          },
+          "unit_required": true
+        },
+        {
+          "key": "side_by_side_s",
+          "label_zh": "并足站立保持时间",
+          "aliases": [
+            "Side-by-side stand",
+            "并足站立",
+            "双脚并拢站立"
+          ],
+          "unit": "s",
+          "range": [
+            0,
+            10
+          ],
+          "required": false,
+          "from": "measurements",
+          "note_zh": "按表 1 的整秒记录，范围 0–10；0 可表示确认无法完成或因安全原因未尝试，不能表示缺测。不要把更精细的原始记录自行四舍五入。半串联不足 10 秒时必填；半串联满 10 秒时省略。",
+          "accept": {
+            "ms": 0.001,
+            "min": 60
+          },
+          "unit_required": true
+        },
+        {
+          "key": "full_tandem_s",
+          "label_zh": "全串联站立保持时间",
+          "aliases": [
+            "Full tandem stand",
+            "Tandem stand",
+            "前后脚站立",
+            "全串联站立"
+          ],
+          "unit": "s",
+          "range": [
+            0,
+            10
+          ],
+          "required": false,
+          "from": "measurements",
+          "note_zh": "按表 1 的整秒记录，范围 0–10；0 可表示确认无法完成或因安全原因未尝试，不能表示缺测。不要把更精细的原始记录自行四舍五入。半串联满 10 秒时必填，否则省略。",
+          "accept": {
+            "ms": 0.001,
+            "min": 60
+          },
+          "unit_required": true
+        },
+        {
+          "key": "walk_completed",
+          "label_zh": "8英尺步行完成状态",
+          "aliases": [
+            "8-foot walk completed",
+            "8英尺步行完成"
+          ],
+          "unit": "1",
+          "range": [
+            0,
+            1
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "仅接受 0 或 1：1 为按原文方案完成；0 为已确认无法完成或因安全原因未尝试。缺测、拒测、器材问题不能填 0。1 时必须提供两次常速步行时间；0 时不填时间。"
+        },
+        {
+          "key": "walk_8ft_trial1_s",
+          "label_zh": "8英尺步行第一次时间",
+          "aliases": [
+            "8-foot walk trial 1",
+            "8英尺步行第一次时间"
+          ],
+          "unit": "s",
+          "range": [
+            0.5,
+            300
+          ],
+          "required": false,
+          "from": "measurements",
+          "note_zh": "按 0.1 秒记录；8 英尺常速，两次取快者，可用助行器；不能用 4 米步行时间代替。",
+          "accept": {
+            "ms": 0.001,
+            "min": 60
+          },
+          "unit_required": true
+        },
+        {
+          "key": "walk_8ft_trial2_s",
+          "label_zh": "8英尺步行第二次时间",
+          "aliases": [
+            "8-foot walk trial 2",
+            "8英尺步行第二次时间"
+          ],
+          "unit": "s",
+          "range": [
+            0.5,
+            300
+          ],
+          "required": false,
+          "from": "measurements",
+          "note_zh": "按 0.1 秒记录；8 英尺常速，两次取快者，可用助行器；不能用 4 米步行时间代替。",
+          "accept": {
+            "ms": 0.001,
+            "min": 60
+          },
+          "unit_required": true
+        },
+        {
+          "key": "chair_completed",
+          "label_zh": "五次起立完成状态",
+          "aliases": [
+            "Repeated chair stands completed",
+            "五次起立完成"
+          ],
+          "unit": "1",
+          "range": [
+            0,
+            1
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "仅接受 0 或 1：1 为按原文方案完成；0 为已确认无法完成或因安全原因未尝试。缺测、拒测、器材问题不能填 0。完成须先通过单次起立，再双臂交叉完成五次；1 时必填计时，0 时不填时间。"
+        },
+        {
+          "key": "five_chair_stands_s",
+          "label_zh": "五次起立时间",
+          "aliases": [
+            "Timed repeat chair stands",
+            "Five chair stands",
+            "五次坐站时间",
+            "五次起立"
+          ],
+          "unit": "s",
+          "range": [
+            1,
+            600
+          ],
+          "required": false,
+          "from": "measurements",
+          "note_zh": "按 0.1 秒记录；直背椅靠墙、双臂交叉，从坐位开始计时，到第 5 次完全站直停止。没有原文规定的 60 秒零分规则。",
+          "accept": {
+            "ms": 0.001,
+            "min": 60
+          },
+          "unit_required": true
+        },
+        {
+          "key": "age",
+          "label_zh": "实足年龄",
+          "aliases": [
+            "年龄",
+            "Age"
+          ],
+          "unit": "a",
+          "range": [
+            18,
+            120
+          ],
+          "required": false,
+          "from": "profile",
+          "flag": "--age",
+          "note_zh": "仅用于提示原研究为 71 岁及以上社区老人，不调整评分。"
+        }
+      ],
+      "outputs": [
+        {
+          "key": "balance_score",
+          "label_zh": "平衡得分",
+          "unit": "score"
+        },
+        {
+          "key": "walk_score",
+          "label_zh": "8英尺步行得分",
+          "unit": "score"
+        },
+        {
+          "key": "chair_score",
+          "label_zh": "五次起立得分",
+          "unit": "score"
+        },
+        {
+          "key": "sppb_score",
+          "label_zh": "原版 SPPB 总分",
+          "unit": "score"
+        }
+      ],
+      "paper": {
+        "doi": "10.1093/geronj/49.2.m85",
+        "title": "A short physical performance battery assessing lower extremity function: association with self-reported disability and prediction of mortality and nursing home admission.",
+        "title_zh": "评估下肢功能的简易体能测试组合：与自报失能的关联及对死亡和入住养老机构的预测",
+        "journal": "Journal of Gerontology",
+        "year": 1994
       }
     },
     {
