@@ -2,9 +2,9 @@
   "schema": "longevity-catalog/1",
   "version": "2026.48.0",
   "counts": {
-    "skills": 186,
+    "skills": 187,
     "tiers": {
-      "A": 22,
+      "A": 23,
       "B": 83,
       "C": 73,
       "tool": 8
@@ -9688,6 +9688,151 @@
         "title_zh": "感染与晚年癫痫",
         "journal": "Nature Aging",
         "year": 2025
+      }
+    },
+    {
+      "name": "hotspot-somatic-sweep",
+      "kind": "paper",
+      "tier": "A",
+      "species": [
+        "human"
+      ],
+      "evidence": "case_control",
+      "domains": [
+        "克隆性造血",
+        "血液测序"
+      ],
+      "blurb_zh": "用一条血液变异的读段计数计算 VAF，核对是否满足论文热点名单、支持读段和克隆扫荡阈值；不估算个人白血病概率。",
+      "description": "Tier A personal readout: computes one person's value with the paper's printed method and reproduces a printed example. Calculates the variant allele fraction of one quality-controlled blood SNV from total and alternate read counts, then checks the published clonal-haematopoiesis hotspot somatic-sweep screen. Use for a blood sequencing report with a gene, protein substitution and read counts, or questions about a hotspot VAF above 30%. Reports a record-level research classification, not an AML diagnosis or personal cancer probability.",
+      "intents": [
+        "gene_variant"
+      ],
+      "has_script": true,
+      "validation_status": "reproduced",
+      "validation_label_zh": "已复现论文",
+      "entry": {
+        "script": "scripts/personal_report.py",
+        "measurements_flag": "--measurements",
+        "measurements_header": [
+          "item",
+          "value",
+          "unit"
+        ],
+        "age_flag": "--age",
+        "sex_flag": "--sex",
+        "out_flag": "--out",
+        "result_json": true
+      },
+      "population": {
+        "age_years": [
+          40,
+          70
+        ],
+        "note_zh": "图 5f 的 UK Biobank 人群年龄约 40–70 岁；UKCTOCS 的纵向发现来自入组时 50–74 岁绝经后女性。这里仅核对单条变异，不作年龄或性别风险校准。"
+      },
+      "inputs_status": "verified",
+      "inputs": [
+        {
+          "key": "total_reads_count",
+          "label_zh": "同一位点总读段数",
+          "aliases": [
+            "Total depth",
+            "DP",
+            "总读段数",
+            "总测序深度",
+            "Total read depth"
+          ],
+          "unit": "1",
+          "accept": {},
+          "range": [
+            1,
+            1000000000
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "经实验室质控后、与替换支持计数使用同一过滤口径的整数。不能用平均面板深度替代。范围上限是输入保护，不是论文临床切点。"
+        },
+        {
+          "key": "variant_reads_count",
+          "label_zh": "该替换支持读段数",
+          "aliases": [
+            "Variant depth",
+            "ALT read count",
+            "突变支持读段数",
+            "变异支持读数",
+            "突变读段数"
+          ],
+          "unit": "1",
+          "accept": {},
+          "range": [
+            0,
+            1000000000
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "只计这一个 ALT 的支持读段；不得超过总读段数。若读数来自 VCF，需核对 AD/DP 的过滤口径，不自动拆分多等位记录。"
+        },
+        {
+          "key": "variant",
+          "label_zh": "基因与蛋白改变",
+          "aliases": [
+            "Gene and amino acid change",
+            "基因及蛋白变异"
+          ],
+          "required": true,
+          "from": "argument",
+          "flag": "--variant",
+          "note_zh": "如 SF3B1 p.K700E；单字母蛋白替换，* 与末位 X 均表示终止。需事先确认与论文蛋白注释一致；不从 rs 编号或未注释坐标猜测。"
+        },
+        {
+          "key": "age",
+          "label_zh": "实足年龄",
+          "unit": "a",
+          "range": [
+            0,
+            120
+          ],
+          "required": false,
+          "from": "profile",
+          "flag": "--age",
+          "note_zh": "仅作适用人群提示，不参与分类。"
+        },
+        {
+          "key": "sex",
+          "label_zh": "性别",
+          "required": false,
+          "from": "profile",
+          "flag": "--sex",
+          "note_zh": "女/female 或男/male；仅作背景，不参与分类。"
+        }
+      ],
+      "outputs": [
+        {
+          "key": "variant",
+          "label_zh": "标准化的基因与蛋白改变"
+        },
+        {
+          "key": "vaf_fraction",
+          "label_zh": "该变异等位基因频率（比例）",
+          "unit": "1"
+        },
+        {
+          "key": "vaf_pct",
+          "label_zh": "该变异等位基因频率（百分比）",
+          "unit": "%"
+        },
+        {
+          "key": "screen_status",
+          "label_zh": "单条变异的论文筛查条件状态",
+          "note_zh": "meets_screen、below_or_equal_cutoff、insufficient_support 或 outside_panel；都不是个人诊断。"
+        }
+      ],
+      "paper": {
+        "doi": "10.1038/s41586-026-11269-x",
+        "title": "Evolutionary dynamics in the years preceding acute myeloid leukaemia.",
+        "title_zh": "急性髓系白血病发生前数年的克隆演化动力学",
+        "journal": "Nature",
+        "year": 2026
       }
     },
     {

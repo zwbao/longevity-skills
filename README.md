@@ -256,6 +256,10 @@ python3 -m tools.lsk test --changed origin/main   # 只测相对 main 改动过�
 
 - `skills/navy-circumference-body-fat/` — 用身高、颈围、腰围（女性加臀围）按美国海军围度方程估算体脂率，再算腰围身高比、腰臀比，并按国家标准看是否中心型肥胖。
 
+## 克隆性造血
+
+- `skills/hotspot-somatic-sweep/` — 用一条血液变异的读段计数计算 VAF，核对是否满足论文热点名单、支持读段和克隆扫荡阈值；不估算个人白血病概率。
+
 ## 功能与衰弱
 
 - `skills/emfra-factor-scores/` — 用已评定的 EMFRA 九项分数分别计算老年自主性和心理困扰分数。
@@ -279,6 +283,10 @@ python3 -m tools.lsk test --changed origin/main   # 只测相对 main 改动过�
 ## 肾脏
 
 - `skills/ckd-epi-2021-egfr/` — 血肌酐、年龄和性别算肾小球滤过率估计值（eGFR），有胱抑素 C 时用肌酐加胱抑素 C 方程，按 KDIGO 分 G1–G5；有尿白蛋白/肌酐比时再分 A1–A3。
+
+## 血液测序
+
+- `skills/hotspot-somatic-sweep/` — 见「克隆性造血」。
 
 ## 认知与神经
 
