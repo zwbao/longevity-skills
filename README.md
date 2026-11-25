@@ -102,6 +102,7 @@ python3 -m tools.lsk test --changed origin/main   # 只测相对 main 改动过�
 - `skills/blood-protein-assessment/` — 研究用：把已在一批样本内秩逆正态变换、缩放好的血液蛋白量乘论文系数加总；单个人的化验值没法直接套，糖化血红蛋白只作对照。（名单类）
 - `skills/face-aging-rate-cancer/` — 你交来的两次面容年龄之差除以相隔年数；不从照片算面容年龄。（名单类）
 - `skills/fasting-mimicking-diet/` — 两次已经算好的生物年龄相减（不从化验重算生物年龄）。（名单类）
+- `skills/framingham-general-cvd-risk/` — 用年龄、血压、血脂或体质指数估算十年总体心血管风险和等价心脏年龄。
 - `skills/life-cycle-biological-clock/` — 常规化验对照论文点名的时钟指标（不算生物年龄）。（名单类）
 - `skills/principal-component-clinical-aging/` — 用常规化验、血压和健康问卷算 LinAge 临床衰老年龄。
 - `skills/share-intrinsic-capacity-domains/` — 见「认知与神经」。
@@ -271,6 +272,18 @@ python3 -m tools.lsk test --changed origin/main   # 只测相对 main 改动过�
 ## 心血管
 
 - `skills/china-par-ascvd-risk/` — 收缩压、血脂、腰围、年龄和几个是否项到齐时，按 China-PAR 算中国成人的 10 年心血管病风险，男女都算。
+
+## 心血管与代谢风险
+
+- `skills/score2-cvd-risk/` — 用血压、血脂和吸烟状态估计欧洲成人十年心血管风险。
+
+## 心血管与运动
+
+- `skills/one-minute-heart-rate-recovery/` — 用运动试验的峰值和主动恢复1分钟心率，计算心率下降量并按原文切点分档。
+
+## 心血管健康
+
+- `skills/lifes-essential-8/` — 用饮食、运动、吸烟、睡眠和体检数据计算成人心血管健康八项评分。
 
 ## 用药与基因
 
