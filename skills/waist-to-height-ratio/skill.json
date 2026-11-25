@@ -1,0 +1,156 @@
+{
+  "schema": "longevity-skill/1",
+  "name": "waist-to-height-ratio",
+  "kind": "paper",
+  "tier": "A",
+  "species": [
+    "human"
+  ],
+  "evidence": "review",
+  "domains": [
+    "体脂与腰围",
+    "心代谢风险"
+  ],
+  "blurb_zh": "用成人腰围和身高计算腰高比，对照论文讨论的筛查界值，并查看自定腰围目标下的变化。",
+  "intents": [
+    "body_fat_waist"
+  ],
+  "triage": {
+    "reason_zh": "人群系统综述明确腰围除以身高及筛查界值，可用个人家用测量计算；未印出配套个人计算示例，按草案交付。",
+    "reviewed": false
+  },
+  "paper": {
+    "doi": "10.1111/j.1467-789x.2011.00952.x",
+    "title": "Waist-to-height ratio is a better screening tool than waist circumference and BMI for adult cardiometabolic risk factors: systematic review and meta-analysis.",
+    "title_zh": "腰围身高比筛查成人心代谢风险：系统综述与荟萃分析",
+    "journal": "Obesity reviews : an official journal of the International Association for the Study of Obesity",
+    "year": 2012,
+    "authors": "Ashwell 等",
+    "article_url": "https://onlinelibrary.wiley.com/doi/10.1111/j.1467-789X.2011.00952.x",
+    "supplements": [],
+    "summary_zh": "这项研究汇总多族群成人研究，发现腰围身高比识别心代谢风险因素的能力总体优于腰围和体质指数。个人报告只计算腰围身高比、筛查分档及自定腰围目标下的算术变化，不计算疾病概率或寿命。",
+    "summary_status": "draft",
+    "card_notes": [
+      "公式与界值见正文第 284 页；0.5 是文中讨论的初筛界值，本次荟萃分析没有重新估计通用最佳切点。",
+      "已读取作者网站的正式发表版全文；正文及可见出版社页面未列补充文件或公开代码。个人计算示例缺失，技能仍在验证。"
+    ]
+  },
+  "entry": {
+    "script": "scripts/personal_report.py",
+    "measurements_flag": "--measurements",
+    "measurements_header": [
+      "item",
+      "value",
+      "unit"
+    ],
+    "age_flag": "--age",
+    "sex_flag": "--sex",
+    "out_flag": "--out",
+    "result_json": true,
+    "targets_flag": "--targets",
+    "levers_json": true
+  },
+  "population": {
+    "age_years": [
+      18,
+      100
+    ],
+    "note_zh": "成人多族群研究；18–100 岁取自正文总体概述，并非严格推导范围。Table 1 个别研究含较年轻者，本技能只解释成人。超过上限提示外推。"
+  },
+  "inputs_status": "draft",
+  "inputs": [
+    {
+      "key": "waist_cm",
+      "label_zh": "腰围",
+      "aliases": [
+        "腰围(cm)",
+        "腰围（厘米）",
+        "腰周长",
+        "waist",
+        "waist circumference",
+        "WC"
+      ],
+      "unit": "cm",
+      "accept": {
+        "m": 100,
+        "mm": 0.1,
+        "in": 2.54
+      },
+      "range": [
+        30,
+        300
+      ],
+      "unit_required": true,
+      "required": true,
+      "from": "measurements",
+      "note_zh": "腰围测量部位应记录并在重复测量时保持一致；原文未指定唯一部位。范围是输入防错，不是正常值。"
+    },
+    {
+      "key": "height_cm",
+      "label_zh": "身高",
+      "aliases": [
+        "身高(cm)",
+        "身高（厘米）",
+        "height",
+        "body height",
+        "stature"
+      ],
+      "unit": "cm",
+      "accept": {
+        "m": 100,
+        "mm": 0.1,
+        "in": 2.54
+      },
+      "range": [
+        80,
+        260
+      ],
+      "unit_required": true,
+      "required": true,
+      "from": "measurements",
+      "note_zh": "与腰围统一为厘米后相除；范围是输入防错，不是论文纳入标准。"
+    },
+    {
+      "key": "age",
+      "label_zh": "实足年龄",
+      "aliases": [
+        "年龄",
+        "age",
+        "年龄（岁）"
+      ],
+      "unit": "a",
+      "range": [
+        18,
+        120
+      ],
+      "required": true,
+      "from": "profile",
+      "flag": "--age",
+      "note_zh": "仅用于成人适用性检查，不进入比值或改变界值。"
+    },
+    {
+      "key": "sex",
+      "label_zh": "性别",
+      "required": false,
+      "from": "profile",
+      "flag": "--sex",
+      "note_zh": "可省略，不进入比值或改变界值。"
+    }
+  ],
+  "outputs": [
+    {
+      "key": "waist_height_ratio",
+      "label_zh": "腰围身高比",
+      "unit": "1"
+    },
+    {
+      "key": "screening_category",
+      "label_zh": "腰围身高比筛查分档",
+      "note_zh": "below_boundary 为低于 0.5；at_or_above_boundary 为达到或超过 0.5；不等于诊断。"
+    }
+  ],
+  "validation": {
+    "status": "draft",
+    "gap_zh": "已阅读作者提供的正式版全文（275–286 页）、Tables 1–3、Figures 1–3 的可读内容及出版社页面；第 284 页印有腰围除以身高和 0.5 界值，但未找到个人腰围、身高与计算输出配套的示例。表和图报告人群 AUC，不是个人比值。未发现补充文件或发布代码链接；PDF 图形截图未能取得。输入和边界工程测试不作为论文示例复现。"
+  }
+}
