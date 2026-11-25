@@ -1,0 +1,229 @@
+{
+  "schema": "longevity-skill/1",
+  "name": "friend-treadmill-crf-percentiles",
+  "kind": "paper",
+  "tier": "A",
+  "species": [
+    "human"
+  ],
+  "evidence": "cross_sectional",
+  "domains": [
+    "运动与心肺适能"
+  ],
+  "blurb_zh": "用最大跑台心肺运动试验实测摄氧量，查同年龄段、同性别的心肺适能参考百分位。",
+  "intents": [
+    "lab_meaning"
+  ],
+  "triage": {
+    "reason_zh": "正文表 3 提供完整年龄及性别分层阈值，可将个人最大跑台 CPX 实测摄氧量定位到参考百分位区间。",
+    "reviewed": false
+  },
+  "paper": {
+    "doi": "10.1016/j.mayocp.2015.07.026",
+    "title": "Reference Standards for Cardiorespiratory Fitness Measured With Cardiopulmonary Exercise Testing: Data From the Fitness Registry and the Importance of Exercise National Database.",
+    "title_zh": "心肺运动试验实测心肺适能的 FRIEND 参考标准",
+    "journal": "Mayo Clinic Proceedings",
+    "year": 2015,
+    "authors": "Kaminsky 等",
+    "article_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4919021/",
+    "supplements": [],
+    "card_notes": [
+      "使用正文表 3 的 FRIEND 实测列；不使用 Cooper Clinic 负荷预测列，也不混入后续版本。",
+      "全文及表格通过 PMC 作者稿核对；未发现补充材料或论文代码链接。出版社页面访问受限。"
+    ],
+    "summary_zh": "这项研究比较美国成年人的跑台心肺运动试验实测摄氧量，建立了随年龄和性别分层的心肺适能参考值。个人报告只给出实测摄氧量在对应参照组中的百分位区间和中位数，不计算疾病风险、寿命或生物年龄。",
+    "summary_status": "draft"
+  },
+  "population": {
+    "age_years": [
+      20,
+      79
+    ],
+    "note_zh": "美国最大跑台 CPX，峰值 RER≥1.00，无已知心血管病或 COPD，且未在自愿最大努力前因异常临床发现终止。"
+  },
+  "entry": {
+    "script": "scripts/personal_report.py",
+    "measurements_flag": "--measurements",
+    "measurements_header": [
+      "marker",
+      "value",
+      "unit"
+    ],
+    "age_flag": "--age",
+    "sex_flag": "--sex",
+    "out_flag": "--out",
+    "result_json": true
+  },
+  "inputs_status": "verified",
+  "inputs": [
+    {
+      "key": "vo2max_ml_kg_min",
+      "label_zh": "最大摄氧量",
+      "aliases": [
+        "VO2max",
+        "VO2 max",
+        "VO₂max",
+        "VO2peak",
+        "peak VO2",
+        "最大耗氧量",
+        "峰值摄氧量",
+        "相对最大摄氧量"
+      ],
+      "unit": "mL/kg/min",
+      "accept": {
+        "L/kg/min": 1000
+      },
+      "range": [
+        5,
+        120
+      ],
+      "unit_required": true,
+      "required": true,
+      "from": "measurements",
+      "note_zh": "须为最大跑台 CPX 呼吸气体实测、按体重归一化的值；不接受手表估值、METs 或绝对 L/min。"
+    },
+    {
+      "key": "peak_rer",
+      "label_zh": "峰值呼吸交换率",
+      "aliases": [
+        "RER",
+        "peak RER",
+        "RERmax",
+        "呼吸交换率",
+        "峰值RER"
+      ],
+      "unit": "1",
+      "accept": {
+        "%": 0.01
+      },
+      "range": [
+        1,
+        2
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "同次试验峰值 RER，论文纳入要求≥1.00；上限2是录入核查范围。"
+    },
+    {
+      "key": "age",
+      "label_zh": "测试时实足年龄",
+      "aliases": [
+        "年龄",
+        "age"
+      ],
+      "unit": "a",
+      "range": [
+        20,
+        79
+      ],
+      "required": true,
+      "from": "profile",
+      "flag": "--age",
+      "note_zh": "填写整周岁；年龄范围外不外推。"
+    },
+    {
+      "key": "sex",
+      "label_zh": "论文性别分层",
+      "aliases": [
+        "性别",
+        "sex"
+      ],
+      "required": true,
+      "from": "profile",
+      "flag": "--sex",
+      "note_zh": "male/m/男 或 female/f/女；无其他分层参考。"
+    },
+    {
+      "key": "test_type",
+      "label_zh": "最大跑台 CPX 实测确认",
+      "required": true,
+      "from": "argument",
+      "flag": "--test-type",
+      "note_zh": "仅接受 maximal_treadmill_cpx，确认测试模式、最大努力和气体实测。"
+    },
+    {
+      "key": "cvd",
+      "label_zh": "已知心血管病",
+      "required": true,
+      "from": "argument",
+      "flag": "--cvd",
+      "note_zh": "仅接受 no，明确无冠心病、外周动脉病、心力衰竭等已知心血管病。"
+    },
+    {
+      "key": "copd",
+      "label_zh": "已知 COPD",
+      "required": true,
+      "from": "argument",
+      "flag": "--copd",
+      "note_zh": "仅接受 no；有病史或未知时不套用此参考。"
+    },
+    {
+      "key": "early_stop",
+      "label_zh": "因异常提前终止",
+      "required": true,
+      "from": "argument",
+      "flag": "--early-stop",
+      "note_zh": "仅接受 no，未在自愿最大努力前因异常临床发现终止。"
+    }
+  ],
+  "outputs": [
+    {
+      "key": "age_group",
+      "label_zh": "参照年龄段"
+    },
+    {
+      "key": "measured_vo2max_ml_kg_min",
+      "label_zh": "标准单位实测最大摄氧量",
+      "unit": "mL/kg/min"
+    },
+    {
+      "key": "percentile_band",
+      "label_zh": "参考百分位位置",
+      "note_zh": "匹配阈值时为P值，之间为区间，两端为<P5或>P95；不插值。"
+    },
+    {
+      "key": "percentile_lower",
+      "label_zh": "下方参考百分位",
+      "unit": "%",
+      "note_zh": "低于P5时为null；不是置信区间。"
+    },
+    {
+      "key": "percentile_upper",
+      "label_zh": "上方参考百分位",
+      "unit": "%",
+      "note_zh": "高于P95时为null；不是置信区间。"
+    },
+    {
+      "key": "reference_median_ml_kg_min",
+      "label_zh": "本组参考中位数",
+      "unit": "mL/kg/min"
+    }
+  ],
+  "validation": {
+    "status": "reproduced",
+    "examples": [
+      {
+        "locator": "Table 3, Men from FRIEND, 20–29; percentile headers and row",
+        "quote": "5th 10th 25th 50th 75th 90th 95th\nMen from FRIEND\n20–29 29.0 32.1 40.1 48.0 55.2 61.8 66.3",
+        "values": [
+          5,
+          10,
+          25,
+          50,
+          75,
+          90,
+          95,
+          29.0,
+          32.1,
+          40.1,
+          48.0,
+          55.2,
+          61.8,
+          66.3
+        ],
+        "tolerance": "直接查表，按印出的一位小数逐值完全相等；测试还遍历全部12行84个阈值。相等只表示匹配舍入后的参考阈值。",
+        "test": "tests/test_manifest.py::test_table3_printed_reference_points"
+      }
+    ]
+  }
+}
