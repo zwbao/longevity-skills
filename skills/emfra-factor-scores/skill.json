@@ -307,7 +307,7 @@
   ],
   "validation": {
     "status": "draft",
-    "gap_zh": "预印本，未经同行评审；已用全文第3.6–3.7节及补充R脚本第5.3–6节核对全部权重，并复现表65定义的理论最小值和最大值。已检查全文、R Quarto Script全部章节及Database - Age Eliminated数据表；未找到同一受试者九项输入及其印出的因子得分成对示例，未重跑整个人群分析或进行外部验证。",
+    "gap_zh": "预印本，未经同行评审；已用全文第3.6–3.7节及补充R脚本第5.3–6节核对全部权重，并复现表65定义的理论最小值和最大值。已检查全文、R Quarto Script全部章节及Database - Age Eliminated数据表；未找到同一受试者九项输入及其印出的因子得分成对示例，未重跑整个人群分析或进行外部验证。评审时另用公开数据表中 Complete_evaluation=Yes 的 201 人按本公式重算，补充表66（正文第3.7节）两因子均值±SD、最小值、四分位数与最大值全部一致（1.75±0.62，0.36/1.2/1.86/2.33/2.69；0.97±0.57，0.09/0.52/0.93/1.32/2.69）；受试者记录未入库，故不作为测试。",
     "examples": [
       {
         "locator": "Supplementary R Quarto Script, section 6, Table 65 (factor-specific recoded endpoint inputs)",
