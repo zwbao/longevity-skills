@@ -1,0 +1,132 @@
+{
+  "schema": "longevity-skill/1",
+  "name": "vegetable-tmrel-gap",
+  "kind": "paper",
+  "tier": "A",
+  "species": [
+    "human"
+  ],
+  "evidence": "cohort",
+  "domains": [
+    "饮食与营养"
+  ],
+  "blurb_zh": "用饮食记录中的蔬菜日均克数，计算与论文蔬菜摄入参考范围的差距。",
+  "intents": [
+    "intervention_evidence",
+    "before_after"
+  ],
+  "triage": {
+    "reason_zh": "人群研究正文印出蔬菜摄入参考范围306–372克/日，可用个人饮食日均克数计算相对两端点的差距；没有独立个人算例，保留draft。",
+    "reviewed": false
+  },
+  "paper": {
+    "doi": "10.1038/s41591-022-01970-5",
+    "title": "Health effects associated with vegetable consumption: a Burden of Proof study",
+    "title_zh": "蔬菜摄入与健康：证据负担研究",
+    "journal": "Nature Medicine",
+    "year": 2022,
+    "authors": "Stanaway 等",
+    "article_url": "https://www.nature.com/articles/s41591-022-01970-5",
+    "supplements": [
+      {
+        "label": "Supplementary Information（表1–7、图1–6）",
+        "url": "https://static-content.springer.com/esm/art%3A10.1038%2Fs41591-022-01970-5/MediaObjects/41591_2022_1970_MOESM1_ESM.pdf"
+      },
+      {
+        "label": "Reporting Summary",
+        "url": "https://static-content.springer.com/esm/art%3A10.1038%2Fs41591-022-01970-5/MediaObjects/41591_2022_1970_MOESM2_ESM.pdf"
+      }
+    ],
+    "code_url": "https://github.com/ihmeuw-msca/burden-of-proof",
+    "card_notes": [
+      "参考端点采用正文 Results 的 Minimum risk level of vegetable intake 及 Table 1；补充材料用于核对研究与食物口径。",
+      "没有独立的个人摄入差距算例；端点抄录和算术检查不等于复现论文的模型。"
+    ],
+    "summary_zh": "这项研究汇总人群观察研究，发现较高蔬菜摄入与部分心脑血管疾病及食管癌风险较低相关，而糖尿病关联的证据较弱。个人报告只比较你的日均蔬菜摄入量与论文参考范围，计算克数差距，不预测个人疾病风险。",
+    "summary_status": "draft"
+  },
+  "entry": {
+    "script": "scripts/personal_report.py",
+    "measurements_flag": "--intake",
+    "measurements_header": [
+      "marker",
+      "value",
+      "unit"
+    ],
+    "age_flag": "--age",
+    "sex_flag": "--sex",
+    "out_flag": "--out",
+    "result_json": true,
+    "targets_flag": "--targets",
+    "levers_json": true
+  },
+  "inputs_status": "draft",
+  "inputs": [
+    {
+      "key": "vegetables_g_d",
+      "label_zh": "蔬菜日均摄入量",
+      "aliases": [
+        "蔬菜摄入量",
+        "日均蔬菜摄入量",
+        "蔬菜",
+        "vegetable consumption",
+        "vegetable intake",
+        "vegetables",
+        "average daily vegetable consumption"
+      ],
+      "unit": "g/d",
+      "accept": {
+        "g/d": 1
+      },
+      "range": [
+        0,
+        3000
+      ],
+      "unit_required": true,
+      "required": true,
+      "from": "measurements",
+      "note_zh": "完整饮食记录的日均克数；排除豆类、腌菜、汁、坚果种子及土豆玉米等淀粉类蔬菜。仅接受g/d，份、杯及生熟重量不自动换算；0–3000是输入防错范围，不是论文阈值。"
+    }
+  ],
+  "outputs": [
+    {
+      "key": "vegetables_g_d",
+      "label_zh": "记录的蔬菜日均摄入量",
+      "unit": "g/d"
+    },
+    {
+      "key": "tmrel_lower_g_d",
+      "label_zh": "论文参考范围下端点",
+      "unit": "g/d"
+    },
+    {
+      "key": "tmrel_upper_g_d",
+      "label_zh": "论文参考范围上端点",
+      "unit": "g/d"
+    },
+    {
+      "key": "lower_difference_g_d",
+      "label_zh": "下端点减摄入量",
+      "unit": "g/d"
+    },
+    {
+      "key": "upper_difference_g_d",
+      "label_zh": "上端点减摄入量",
+      "unit": "g/d"
+    },
+    {
+      "key": "shortfall_g_d",
+      "label_zh": "低于下端点的距离",
+      "unit": "g/d"
+    },
+    {
+      "key": "position",
+      "label_zh": "相对参考范围的位置",
+      "note_zh": "below/within/above；两端点计入范围，不是风险分级或营养诊断。"
+    }
+  ],
+  "validation": {
+    "status": "draft",
+    "gap_zh": "已核查期刊全文（Table 1、Results、Methods）、Supplementary Information表1–7和图1–6、Reporting Summary、作者burden-of-proof代码中的veg_TMREL.R及VizHub五结局的研究数据、风险曲线和引文。306–372克/日端点已印出，但没有独立的个人摄入量到差距算例。零摄入与端点测试仅核对抄录和算术，不声称复现；原始分位数估计及风险模型未重跑。"
+  }
+}

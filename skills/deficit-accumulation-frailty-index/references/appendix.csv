@@ -1,0 +1,93 @@
+number,code,description,original_twenty
+1,CLOUDING,clouding/delirium,false
+2,SLEEPCH,sleep changes,true
+3,MOBILITY,mobility impairment,true
+4,MEMORY,difficulty with memory,true
+5,MOOD,difficulty with mood,false
+6,GOUOUT,difficulty with going out,true
+7,COOKING,difficulty with cooking,true
+8,GETDRES,difficulty with getting dressed,true
+9,GROOM,difficulty with grooming,true
+10,BATH,difficulty with bath,true
+11,TOILET,difficulty with toileting,true
+12,URINE,incontinence of urine,false
+13,STOOL,incontinence of stool,false
+14,ONSET,onset of symptoms (gradual or abrupt),false
+15,SAD,"feel sad, blue or depressed",false
+16,REST,resting tremor,false
+17,ACTION,action tremor,false
+18,CHOREA,dyskinesias/chorea,false
+19,AKINESIA,akinesia,false
+20,HXSTROKE,history of stroke,false
+21,HEADACHE,headaches of recent onset,false
+22,LOSSVISI,chronic visual loss,true
+23,LOSSHEAR,difficulties with hearing,true
+24,ARTERIAL,arterial hypertension,true
+25,CARDIAC,cardiac symptoms,false
+26,RESPIRAT,respiratory complaints,false
+27,MALIGNAN,history of malignancy,false
+28,GASTRO,gastro-intestinal complaints,true
+29,URINARY,urinary complaints,true
+30,HISTHYRO,history of thyroid disease,false
+31,HXDM,history of diabetes mellitus,true
+32,NECH,"physical exam: head and neck (normal, abnormal)",false
+33,THYROID,physical exam: thyroid,false
+34,BREAST,physical exam: breast,false
+35,LUNG,physical exam: lungs,false
+36,VASCULAR,physical exam: cardiovascular,true
+37,CAROTIDS,physical exam: peripheral pulses,false
+38,ABDOMEN,physical exam: abdomen,false
+39,RECTUM,physical exam: rectum,false
+40,SKINCLIN,physical exam: skin,true
+41,SUCKING,"neur exam: sucking, release sign",false
+42,SNOUT,"neur exam: snout, release sign",false
+43,PALMOMR,"neur exam: palmomentals R, release sign",false
+44,BULK,neur exam: bulk,false
+45,TONENECK,neur exam: tone/neck,false
+46,TONELIMB,neur exam: rone limb,false
+47,TREMORRE,neur exam: tremor/rest,false
+48,TREMORAC,neur exam: tremor/action,true
+49,MYOCLONM,neur exam: diskinesia,false
+50,BRAADFACE,bradykinesia/face,false
+51,BRADLIMB,bradykinesia/limb,false
+52,COLIMB,coordination/limb,false
+53,COTRUNK,coordination/trunk,false
+54,POSTURE,posture/standing,false
+55,GAIT,"gait, motor system",true
+56,VIBRAT,"vibration, sensory system",true
+57,ONSETAGE,onset between ages 40 and 90,false
+58,GLUCOSE,lab: glucose,false
+59,SODIUM,lab: sodium,false
+60,POTASSIU,lab: potassium,false
+61,BUN,lab: BUN,false
+62,CREATINI,lab: creatinine,false
+63,CALCIUM,lab: calcium,false
+64,ALKPHOSP,lab: phosp.,false
+65,TSH,lab: TSH,false
+66,B12,lab: B12,false
+67,FOLATE,lab: serum folate,false
+68,VDRL,lab: VDRL,false
+69,PROTEIN,lab: total protein,false
+70,ALBUMIN,lab: albumin,false
+71,PHOSPHOR,lab: inorganic phosphate,false
+72,RBC,lab: RBC folate,false
+73,FABSTRUC,impaired abstract thinking,false
+74,FJUDGEME,impaired judgement,false
+75,FAPHASIA,aphasia,false
+76,FAPRAXIA,apraxia,false
+77,FAGNOSIA,agnosia,false
+78,ADL,,false
+79,IADL,,false
+80,HBP,high blood pressure,false
+81,HEART,heart and circulation problems,false
+82,STROKE,stroke or effect of stroke,false
+83,EYETROUB,eye trouble,false
+84,EARTROUB,ear trouble,false
+85,CHEST,chest problems,false
+86,BLADDER,lose control of bladder,false
+87,BOWELS,lose control of bowels,false
+88,DIABETES,diabetes,false
+89,KIDNEY,kidney trouble,false
+90,PARKINSO,Parkinson’s disease,false
+91,RELEASE,release signs,false
+92,SINCE,years since onset,false
