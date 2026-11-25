@@ -1,0 +1,279 @@
+{
+  "schema": "longevity-skill/1",
+  "name": "pooled-cohort-ascvd-risk",
+  "kind": "paper",
+  "tier": "A",
+  "species": [
+    "human"
+  ],
+  "evidence": "consensus",
+  "domains": [
+    "心血管"
+  ],
+  "blurb_zh": "用年龄、血脂、血压、吸烟和糖尿病状态，按原始 PCE 方程估计十年首次心血管病风险。",
+  "intents": [
+    "frailty_mortality",
+    "lab_meaning"
+  ],
+  "triage": {
+    "reason_zh": "指南公开了人体队列推导的四组 PCE 方程全部系数、基线生存率与个人示例，可直接用个人数据计算风险。",
+    "reviewed": false
+  },
+  "paper": {
+    "doi": "10.1016/j.jacc.2013.11.005",
+    "title": "2013 ACC/AHA guideline on the assessment of cardiovascular risk: a report of the American College of Cardiology/American Heart Association Task Force on Practice Guidelines.",
+    "title_zh": "2013 ACC/AHA 心血管风险评估指南与 PCE 方程",
+    "journal": "Journal of the American College of Cardiology",
+    "year": 2014,
+    "authors": "Goff 等",
+    "article_url": "https://www.jacc.org/doi/10.1016/j.jacc.2013.11.005",
+    "supplements": [
+      {
+        "label": "JACC 官方全文副本（含附录表 A/B）",
+        "url": "https://jaccjacc.cardiosource.com/acc_documents/2013_FULL_Guideline_Assesment_Cardiac_Risk.pdf"
+      },
+      {
+        "label": "工作组完整补充报告",
+        "url": "https://jaccjacc.cardiosource.com/acc_documents/2013_FPR_S5_Risk_Assessment.pdf"
+      },
+      {
+        "label": "NHLBI 系统证据报告",
+        "url": "https://www.nhlbi.nih.gov/sites/default/files/media/docs/risk-assessment.pdf"
+      },
+      {
+        "label": "官方伴随 Excel",
+        "url": "https://static.heart.org/ahamah/risk/Omnibus_Risk_Estimator.xls"
+      }
+    ],
+    "card_notes": [
+      "实现原始 PCE，采用 JACC 表 A 的印刷常数，未改成后来的风险方程。",
+      "NHLBI 系统证据报告表 5 的示例文字与其表 4a/4b 不一致；本实现采用 JACC 表 A/B 和工作组报告表 4/5 一致的输入。",
+      "已复现表 A 的三个个人例子和工作组表 9 的一个例子。白人男性表 A 及工作组表 8/10/11 的部分数值与印刷系数不完全一致，保留原系数，差异见 references/contract.md；不声称全部示例已复现。"
+    ],
+    "summary_zh": "这项研究以人群随访数据为基础，在专家指南中建立了按性别和族群区分的方程，用常规血脂、血压及健康信息估计首次动脉粥样硬化性心血管病风险。个人报告只计算原方程的风险和目标值情景，不计算治疗获益或寿命。",
+    "summary_status": "draft"
+  },
+  "population": {
+    "age_years": [
+      40,
+      79
+    ],
+    "note_zh": "美国非西班牙裔白人及非裔美国人，且无既往心肌梗死、卒中、心衰、冠脉血运重建或房颤；其他族群未由本模型充分验证。"
+  },
+  "entry": {
+    "script": "scripts/personal_report.py",
+    "measurements_flag": "--measurements",
+    "measurements_header": [
+      "item",
+      "value",
+      "unit"
+    ],
+    "age_flag": "--age",
+    "sex_flag": "--sex",
+    "out_flag": "--out",
+    "result_json": true,
+    "targets_flag": "--targets",
+    "levers_json": true
+  },
+  "inputs_status": "verified",
+  "inputs": [
+    {
+      "key": "tc_mg_dl",
+      "label_zh": "总胆固醇",
+      "aliases": [
+        "TC",
+        "TCHO",
+        "CHOL",
+        "Total cholesterol",
+        "血清总胆固醇"
+      ],
+      "unit": "mg/dL",
+      "range": [
+        130,
+        320
+      ],
+      "required": true,
+      "unit_required": true,
+      "from": "measurements",
+      "accept": {
+        "mmol/L": 38.665,
+        "mg/L": 0.1
+      },
+      "molar_mass": 386.65,
+      "note_zh": "接受范围采用原论文随附官方 Excel 的 Omnibus 页；超出时不外推。"
+    },
+    {
+      "key": "hdl_mg_dl",
+      "label_zh": "高密度脂蛋白胆固醇",
+      "aliases": [
+        "HDL-C",
+        "HDL cholesterol",
+        "HDLC",
+        "高密度脂蛋白胆固醇测定"
+      ],
+      "unit": "mg/dL",
+      "range": [
+        20,
+        100
+      ],
+      "required": true,
+      "unit_required": true,
+      "from": "measurements",
+      "accept": {
+        "mmol/L": 38.665,
+        "mg/L": 0.1
+      },
+      "molar_mass": 386.65,
+      "note_zh": "接受范围采用原论文随附官方 Excel 的 Omnibus 页；超出时不外推。"
+    },
+    {
+      "key": "sbp_mmhg",
+      "label_zh": "收缩压",
+      "aliases": [
+        "SBP",
+        "Systolic blood pressure",
+        "高压"
+      ],
+      "unit": "mmHg",
+      "range": [
+        90,
+        200
+      ],
+      "required": true,
+      "unit_required": true,
+      "from": "measurements",
+      "accept": {
+        "kPa": 7.500617
+      },
+      "note_zh": "接受范围采用原论文随附官方 Excel 的 Omnibus 页；超出时不外推。"
+    },
+    {
+      "key": "treated",
+      "label_zh": "正在接受降压治疗",
+      "aliases": [
+        "BP treatment",
+        "Treatment for High Blood Pressure",
+        "降压治疗"
+      ],
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "仅接受 0=否、1=是；未知不能填 0。"
+    },
+    {
+      "key": "smoker",
+      "label_zh": "当前吸烟",
+      "aliases": [
+        "Current smoker",
+        "Smoker",
+        "吸烟"
+      ],
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "仅接受 0=否、1=是；未知不能填 0。"
+    },
+    {
+      "key": "diabetes",
+      "label_zh": "糖尿病",
+      "aliases": [
+        "Diabetes mellitus",
+        "DM",
+        "糖尿病史"
+      ],
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "仅接受 0=否、1=是；未知不能填 0。"
+    },
+    {
+      "key": "age",
+      "label_zh": "实足年龄",
+      "unit": "a",
+      "range": [
+        40,
+        79
+      ],
+      "required": true,
+      "from": "profile",
+      "flag": "--age"
+    },
+    {
+      "key": "sex",
+      "label_zh": "原方程性别",
+      "required": true,
+      "from": "profile",
+      "flag": "--sex",
+      "note_zh": "male/female，也接受 m/f、男/女。"
+    },
+    {
+      "key": "race",
+      "label_zh": "原方程族群",
+      "required": true,
+      "from": "argument",
+      "flag": "--race",
+      "note_zh": "仅 white 或 african_american；不可从姓名、国籍或语言推断。"
+    },
+    {
+      "key": "eligible",
+      "label_zh": "首次事件模型适用性",
+      "required": true,
+      "from": "argument",
+      "flag": "--eligible",
+      "note_zh": "yes：无心血管症状且无心梗、卒中、心衰、冠脉介入/搭桥或房颤史；no 或未知不计算。"
+    }
+  ],
+  "outputs": [
+    {
+      "key": "risk_10y_pct",
+      "label_zh": "十年首次 ASCVD 风险（原方程未截断值）",
+      "unit": "%",
+      "note_zh": "边缘范围可能不稳定；给人展示时使用 risk_display。"
+    },
+    {
+      "key": "risk_display",
+      "label_zh": "按论文边界显示的风险"
+    },
+    {
+      "key": "equation_group",
+      "label_zh": "采用的原方程组"
+    }
+  ],
+  "validation": {
+    "status": "reproduced",
+    "examples": [
+      {
+        "locator": "JACC Appendix 4, Table A; Full Work Group Report Table 4, pp.32–34; White women, African American women, African American men",
+        "quote": "55 years of age\n213 mg/dL\n50 mg/dL\nuntreated systolic BP 120 mm Hg, nonsmoker, and without diabetes\n2.1%\n3.0%\n6.1%",
+        "values": [
+          2.1,
+          3.0,
+          6.1
+        ],
+        "tolerance": "绝对误差不超过 0.05 个百分点：原文风险仅印到百分数小数点后一位，使用原表三位小数系数及印刷均值/生存率，不反推常数。",
+        "test": "tests/test_manifest.py::test_paper_table_a"
+      },
+      {
+        "locator": "Full Work Group Report Table 9, first row: age 40, total cholesterol 160, HDL 65, Diabetes (Yes), Current Smoking (Yes), Treated Systolic 160",
+        "quote": "40 160 65\nDiabetes (Yes)\nCurrent Smoking (Yes)\nTreated Systolic\n160\n0.044",
+        "values": [
+          0.044
+        ],
+        "tolerance": "概率绝对误差不超过 0.0005，原表印到三位小数；白人女性独立例子覆盖降压治疗、吸烟和糖尿病项。",
+        "test": "tests/test_manifest.py::test_supplement_table_9"
+      }
+    ]
+  }
+}

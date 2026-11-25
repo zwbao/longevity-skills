@@ -56,14 +56,25 @@ jobs:
       - name: Checks
         id: checks
         continue-on-error: true
+        # Checked together with the current main: that is the tree that would land, and a
+        # branch cut from an older main must not be judged by an older checker.
         run: |
+          git config user.name "longevity-skills-bot"
+          git config user.email "longevity-skills-bot@users.noreply.github.com"
+          git config merge.registry.driver "python3 tools/merge_registry.py %O %A %B"
+          git fetch origin main
+          git merge --no-edit origin/main
+          python -m tools.lsk registry --sync
           python -m tools.lsk build
           python -m tools.lsk check
           python -m pytest -q tools/tests
           python -m tools.lsk test --jobs 4
 
-      - name: Drop generated files
-        run: git checkout -- . && git clean -fdq
+      - name: Drop the trial merge and generated files
+        run: |
+          git merge --abort 2>/dev/null || true
+          git reset -q --hard "$GITHUB_SHA"
+          git clean -fdq
 
       - name: Open the pull request
         id: pr
