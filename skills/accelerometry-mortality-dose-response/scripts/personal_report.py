@@ -61,7 +61,7 @@ def collect(path, manifest):
     issues = list(result.problems)
     if result.unmatched:
         issues.append(problem("measurements", "未识别项目：" + "、".join(result.unmatched) + "。请使用支持的活动名称。"))
-    if len(result.values) != 1:
+    if len(result.values) > 1 or (not result.values and not issues):
         issues.append(problem("measurements", "每次需要且只接受一种活动或久坐测量；多种指标须分别运行，不能合并风险。", "missing" if not result.values else "input"))
     return result.values, issues
 
@@ -170,7 +170,7 @@ def main(argv=None):
              f"本列的印出参照为 {current['reference_dose']:g} {spec['display_unit']}，参照 HR 为 1。",
              *lookup_lines(current), "",
              "HR 是研究人群相对参照的全因死亡瞬时危险比，置信区间反映关联估计的不确定性；这不是个人死亡概率的区间。",
-             "研究来自美国和西欧的中老年人；对其他人群的适用性未验证。年龄只用于检查适用范围，性别不参与重新校准。"]
+             "研究来自美国、英国、瑞典和挪威八个队列的 40 岁及以上中老年人（平均 62.6 岁，约 73% 为女性）；对其他人群的适用性未验证。年龄只用于检查适用范围，性别不参与重新校准。"]
     if key == "mvpa_min_day":
         lines.append("使用补表 5 印出的 0 分钟参照；补表 3 的最低四分位中位数为 1.5 分钟，两者不混用。")
     if key == "sedentary_h_day":
