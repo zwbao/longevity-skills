@@ -289,6 +289,10 @@ python3 -m tools.lsk test --changed origin/main   # 只测相对 main 改动过�
 
 - `skills/navy-circumference-body-fat/` — 用身高、颈围、腰围（女性加臀围）按美国海军围度方程估算体脂率，再算腰围身高比、腰臀比，并按国家标准看是否中心型肥胖。
 
+## 体重
+
+- `skills/bmi-mortality-category/` — 用身高体重计算 BMI，查询从不吸烟且无相关既往慢病人群的分档死亡危险比。
+
 ## 克隆性造血
 
 - `skills/hotspot-somatic-sweep/` — 用一条血液变异的读段计数计算 VAF，核对是否满足论文热点名单、支持读段和克隆扫荡阈值；不估算个人白血病概率。
@@ -327,6 +331,7 @@ python3 -m tools.lsk test --changed origin/main   # 只测相对 main 改动过�
 ## 死亡风险
 
 - `skills/accelerometry-mortality-dose-response/` — 见「身体活动」。
+- `skills/bmi-mortality-category/` — 见「体重」。
 - `skills/sleep-duration-risk-lookup/` — 见「睡眠」。
 
 ## 生活方式与健康风险
