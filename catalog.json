@@ -2,15 +2,15 @@
   "schema": "longevity-catalog/1",
   "version": "2026.48.0",
   "counts": {
-    "skills": 183,
+    "skills": 185,
     "tiers": {
-      "A": 19,
+      "A": 21,
       "B": 83,
       "C": 73,
       "tool": 8
     },
-    "claims": 8927,
-    "claim_entities": 7482
+    "claims": 12543,
+    "claim_entities": 9844
   },
   "intents": [
     {
@@ -5341,6 +5341,432 @@
         "title_zh": "弹性蛋白片段",
         "journal": "Nature Aging",
         "year": 2025
+      }
+    },
+    {
+      "name": "elsa-hba1c-model-a",
+      "kind": "paper",
+      "tier": "A",
+      "species": [
+        "human"
+      ],
+      "evidence": "cohort",
+      "domains": [
+        "糖代谢"
+      ],
+      "blurb_zh": "用糖化血红蛋白、年龄、性别和随访间隔计算 ELSA Model A 的糖尿病检出概率（预印本研究模型）。",
+      "description": "Tier A draft: the paper's printed example is not reproduced yet, so treat the readout as provisional. Computes the printed final ELSA HbA1c Model A probability of diabetes detected by the next health visit from HbA1c, age, sex and a specified visit interval. Use for research interpretation of a diabetes-free older adult's HbA1c or a user-specified HbA1c scenario. Preserves preprint and validation limitations.",
+      "intents": [
+        "lab_meaning"
+      ],
+      "has_script": true,
+      "validation_status": "draft",
+      "validation_label_zh": "仍在验证",
+      "entry": {
+        "script": "scripts/personal_report.py",
+        "measurements_flag": "--measurements",
+        "measurements_header": [
+          "marker",
+          "value",
+          "unit"
+        ],
+        "age_flag": "--age",
+        "sex_flag": "--sex",
+        "out_flag": "--out",
+        "result_json": true,
+        "targets_flag": "--targets",
+        "levers_json": true
+      },
+      "inputs_status": "draft",
+      "inputs": [
+        {
+          "key": "hba1c_pct",
+          "label_zh": "糖化血红蛋白",
+          "aliases": [
+            "HbA1c",
+            "HbA1c (%)",
+            "糖化血红蛋白A1c",
+            "糖化血红蛋白百分比",
+            "glycated haemoglobin",
+            "hemoglobin A1c",
+            "A1C"
+          ],
+          "unit": "%",
+          "range": [
+            3,
+            25
+          ],
+          "required": true,
+          "from": "measurements",
+          "unit_required": true,
+          "note_zh": "仅接受 DCCT/NGSP 百分数；mmol/mol 与百分数之间有截距，不能用单一倍数换算，本接口拒绝 mmol/mol。内部按正文 2.1 换算为 IFCC。达到研究排除阈值时不计算。"
+        },
+        {
+          "key": "age",
+          "label_zh": "基线实足年龄",
+          "aliases": [
+            "年龄",
+            "age"
+          ],
+          "unit": "a",
+          "range": [
+            50,
+            110
+          ],
+          "required": true,
+          "from": "profile",
+          "flag": "--age",
+          "note_zh": "50–110 是接口适用性保护范围，不是论文报告的样本最小值和最大值。"
+        },
+        {
+          "key": "sex",
+          "label_zh": "模型性别编码",
+          "unit": "1",
+          "range": [
+            0,
+            1
+          ],
+          "required": true,
+          "from": "profile",
+          "flag": "--sex",
+          "note_zh": "female/女/1 对应女性=1；male/男/0 对应男性=0，必须明确提供。"
+        },
+        {
+          "key": "years_next",
+          "label_zh": "到下一次健康访视的间隔",
+          "aliases": [
+            "随访间隔",
+            "years to next visit"
+          ],
+          "unit": "a",
+          "range": [
+            0.25,
+            20
+          ],
+          "required": true,
+          "from": "argument",
+          "flag": "--years-next",
+          "note_zh": "必须指定年数；论文通常约四年或七年，区间外会提示外推。范围仅为输入保护。"
+        },
+        {
+          "key": "eligible_baseline",
+          "label_zh": "已确认符合基线条件",
+          "unit": "1",
+          "range": [
+            0,
+            1
+          ],
+          "required": true,
+          "from": "argument",
+          "flag": "--eligible-baseline",
+          "note_zh": "仅接受 1：此前及当前无论文定义的糖尿病，并有至少三个月前的无糖尿病 HbA1c 测量；0 或未知不计算。此项不进入方程。"
+        }
+      ],
+      "outputs": [
+        {
+          "key": "diabetes_probability_pct",
+          "label_zh": "下一健康访视前糖尿病检出概率（Model A 研究估计）",
+          "unit": "%"
+        },
+        {
+          "key": "linear_predictor",
+          "label_zh": "Model A 线性预测值",
+          "unit": "1"
+        }
+      ],
+      "paper": {
+        "doi": "10.64898/2026.11.20.26368578",
+        "title": "Personal HbA1c trajectories and incident diabetes: association, prediction and observability in the English Longitudinal Study of Ageing",
+        "title_zh": "个人糖化血红蛋白轨迹与新发糖尿病：关联、预测和可观测性",
+        "journal": "medRxiv",
+        "year": 2026
+      }
+    },
+    {
+      "name": "emfra-factor-scores",
+      "kind": "paper",
+      "tier": "A",
+      "species": [
+        "human"
+      ],
+      "evidence": "cross_sectional",
+      "domains": [
+        "功能与衰弱",
+        "心理与认知"
+      ],
+      "blurb_zh": "用已评定的 EMFRA 九项分数分别计算老年自主性和心理困扰分数。",
+      "description": "Tier A draft: the paper's printed example is not reproduced yet, so treat the readout as provisional. Computes separate EMFRA Autonomy and Psychological Distress scores from nine previously administered original EMFRA item scores. Use when an older adult provides EMFRA item ratings or asks to calculate the two EMFRA factors. Requires the original 0–2 item coding and applies factor-specific reversal. Reports in Chinese without a total score or clinical classification.",
+      "intents": [
+        "frailty_mortality"
+      ],
+      "has_script": true,
+      "validation_status": "draft",
+      "validation_label_zh": "仍在验证",
+      "entry": {
+        "script": "scripts/personal_report.py",
+        "measurements_flag": "--measurements",
+        "measurements_header": [
+          "marker",
+          "value",
+          "unit"
+        ],
+        "age_flag": "--age",
+        "sex_flag": "--sex",
+        "out_flag": "--out",
+        "result_json": true
+      },
+      "population": {
+        "age_years": [
+          65,
+          99
+        ],
+        "note_zh": "西班牙马德里社区、日间照护中心及养老机构；纳入年龄至少65岁、无医生确诊痴呆者，实际样本65–99岁；无外部验证。"
+      },
+      "inputs_status": "verified",
+      "inputs": [
+        {
+          "key": "emfra_item1_score",
+          "label_zh": "EMFRA 第1项：握力评分",
+          "aliases": [
+            "EMFRA_item1_trait",
+            "EMFRA 握力评分",
+            "Item 1. Hand-grip strength",
+            "EMFRA Grip strength",
+            "HGS"
+          ],
+          "unit": "score",
+          "accept": {},
+          "range": [
+            0,
+            2
+          ],
+          "unit_required": true,
+          "required": true,
+          "from": "measurements",
+          "note_zh": "只接受原版 EMFRA 已评定、尚未反向计分的整数条目分数 0、1、2；不把原始测量值或自由描述换成分数。"
+        },
+        {
+          "key": "emfra_item2_score",
+          "label_zh": "EMFRA 第2项：步速评分",
+          "aliases": [
+            "EMFRA_item2_trait",
+            "EMFRA 步速评分",
+            "Item 2. Gait speed",
+            "EMFRA Gait speed",
+            "GS"
+          ],
+          "unit": "score",
+          "accept": {},
+          "range": [
+            0,
+            2
+          ],
+          "unit_required": true,
+          "required": true,
+          "from": "measurements",
+          "note_zh": "只接受原版 EMFRA 已评定、尚未反向计分的整数条目分数 0、1、2；不把原始测量值或自由描述换成分数。"
+        },
+        {
+          "key": "emfra_item5_score",
+          "label_zh": "EMFRA 第5项：疲劳评分",
+          "aliases": [
+            "EMFRA_item5_trait",
+            "EMFRA 疲劳评分",
+            "Item 5. Fatigue",
+            "EMFRA Fatigue",
+            "FAT"
+          ],
+          "unit": "score",
+          "accept": {},
+          "range": [
+            0,
+            2
+          ],
+          "unit_required": true,
+          "required": true,
+          "from": "measurements",
+          "note_zh": "只接受原版 EMFRA 已评定、尚未反向计分的整数条目分数 0、1、2；不把原始测量值或自由描述换成分数。"
+        },
+        {
+          "key": "emfra_item6_score",
+          "label_zh": "EMFRA 第6项：钱币算术评分",
+          "aliases": [
+            "EMFRA_item6_trait",
+            "EMFRA 钱币算术评分",
+            "Item 6. Arithmetics for money",
+            "EMFRA Arithmetic money",
+            "AM"
+          ],
+          "unit": "score",
+          "accept": {},
+          "range": [
+            0,
+            2
+          ],
+          "unit_required": true,
+          "required": true,
+          "from": "measurements",
+          "note_zh": "只接受原版 EMFRA 已评定、尚未反向计分的整数条目分数 0、1、2；不把原始测量值或自由描述换成分数。"
+        },
+        {
+          "key": "emfra_item7_score",
+          "label_zh": "EMFRA 第7项：注意与抑制评分",
+          "aliases": [
+            "EMFRA_item7_trait",
+            "EMFRA 注意与抑制评分",
+            "Item 7. Attention-inhibition",
+            "EMFRA Atten-Inhib",
+            "AttIn"
+          ],
+          "unit": "score",
+          "accept": {},
+          "range": [
+            0,
+            2
+          ],
+          "unit_required": true,
+          "required": true,
+          "from": "measurements",
+          "note_zh": "只接受原版 EMFRA 已评定、尚未反向计分的整数条目分数 0、1、2；不把原始测量值或自由描述换成分数。"
+        },
+        {
+          "key": "emfra_item11_score",
+          "label_zh": "EMFRA 第11项：孤独感评分",
+          "aliases": [
+            "EMFRA_item11_trait",
+            "EMFRA 孤独感评分",
+            "Item 11. Loneliness",
+            "EMFRA Loneliness",
+            "LON"
+          ],
+          "unit": "score",
+          "accept": {},
+          "range": [
+            0,
+            2
+          ],
+          "unit_required": true,
+          "required": true,
+          "from": "measurements",
+          "note_zh": "只接受原版 EMFRA 已评定、尚未反向计分的整数条目分数 0、1、2；不把原始测量值或自由描述换成分数。"
+        },
+        {
+          "key": "emfra_item12_score",
+          "label_zh": "EMFRA 第12项：悲伤评分",
+          "aliases": [
+            "EMFRA_item12_trait",
+            "EMFRA 悲伤评分",
+            "Item 12. Sadness",
+            "EMFRA Sadness",
+            "SAD"
+          ],
+          "unit": "score",
+          "accept": {},
+          "range": [
+            0,
+            2
+          ],
+          "unit_required": true,
+          "required": true,
+          "from": "measurements",
+          "note_zh": "只接受原版 EMFRA 已评定、尚未反向计分的整数条目分数 0、1、2；不把原始测量值或自由描述换成分数。"
+        },
+        {
+          "key": "emfra_item15_score",
+          "label_zh": "EMFRA 第15项：生活满意度评分",
+          "aliases": [
+            "EMFRA_item15_trait",
+            "EMFRA 生活满意度评分",
+            "Item 15. Life satisfaction",
+            "EMFRA Life satisf.",
+            "LS"
+          ],
+          "unit": "score",
+          "accept": {},
+          "range": [
+            0,
+            2
+          ],
+          "unit_required": true,
+          "required": true,
+          "from": "measurements",
+          "note_zh": "只接受原版 EMFRA 已评定、尚未反向计分的整数条目分数 0、1、2；不把原始测量值或自由描述换成分数。"
+        },
+        {
+          "key": "emfra_item19_score",
+          "label_zh": "EMFRA 第19项：社交娱乐活动评分",
+          "aliases": [
+            "EMFRA_item19_trait",
+            "EMFRA 社交娱乐活动评分",
+            "Item 19. Social-ludic activities",
+            "EMFRA Socio-Ludic act.",
+            "SLA"
+          ],
+          "unit": "score",
+          "accept": {},
+          "range": [
+            0,
+            2
+          ],
+          "unit_required": true,
+          "required": true,
+          "from": "measurements",
+          "note_zh": "只接受原版 EMFRA 已评定、尚未反向计分的整数条目分数 0、1、2；不把原始测量值或自由描述换成分数。"
+        },
+        {
+          "key": "age",
+          "label_zh": "实足年龄",
+          "aliases": [
+            "年龄",
+            "Age"
+          ],
+          "unit": "a",
+          "range": [
+            65,
+            120
+          ],
+          "required": true,
+          "from": "profile",
+          "flag": "--age",
+          "note_zh": "仅核对人群，不进入公式；研究实际年龄为65–99岁，120岁是录入合理性上限。"
+        },
+        {
+          "key": "sex",
+          "label_zh": "性别",
+          "required": false,
+          "from": "profile",
+          "flag": "--sex",
+          "note_zh": "可选背景，不进入因子公式。"
+        },
+        {
+          "key": "dementia_diagnosis",
+          "label_zh": "医生确诊痴呆情况",
+          "required": true,
+          "from": "argument",
+          "flag": "--dementia-diagnosis",
+          "note_zh": "no=没有医生确诊痴呆；yes=已有诊断；未知不能当作no。yes时不计算，不通过本技能诊断痴呆。"
+        }
+      ],
+      "outputs": [
+        {
+          "key": "autonomy_score",
+          "label_zh": "EMFRA 自主性分数",
+          "unit": "score",
+          "note_zh": "独立因子，越高表示该因子所描述的自主性越强；保留两位小数，不设分档。"
+        },
+        {
+          "key": "psychological_distress_score",
+          "label_zh": "EMFRA 心理困扰分数",
+          "unit": "score",
+          "note_zh": "独立因子，越高表示该因子所描述的困扰越多；保留两位小数，不设分档。"
+        }
+      ],
+      "paper": {
+        "doi": "10.64898/2026.11.11.26367642",
+        "title": "Psychometric analysis of the Evaluation of Multidimensional Functioning and Risks in Aging (EMFRA) scale: reliability, structural validity, and concurrent validity.",
+        "title_zh": "EMFRA 老年多维功能与风险量表的信度和效度分析",
+        "journal": "medRxiv",
+        "year": 2026
       }
     },
     {

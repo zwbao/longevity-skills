@@ -255,6 +255,14 @@ python3 -m tools.lsk test --changed origin/main   # 只测相对 main 改动过�
 
 - `skills/navy-circumference-body-fat/` — 用身高、颈围、腰围（女性加臀围）按美国海军围度方程估算体脂率，再算腰围身高比、腰臀比，并按国家标准看是否中心型肥胖。
 
+## 功能与衰弱
+
+- `skills/emfra-factor-scores/` — 用已评定的 EMFRA 九项分数分别计算老年自主性和心理困扰分数。
+
+## 心理与认知
+
+- `skills/emfra-factor-scores/` — 见「功能与衰弱」。
+
 ## 心血管
 
 - `skills/china-par-ascvd-risk/` — 收缩压、血脂、腰围、年龄和几个是否项到齐时，按 China-PAR 算中国成人的 10 年心血管病风险，男女都算。
@@ -262,6 +270,10 @@ python3 -m tools.lsk test --changed origin/main   # 只测相对 main 改动过�
 ## 用药与基因
 
 - `skills/cpic-pharmacogenomics/` — 基因检测原始数据里的药物代谢基因，对照 CPIC 用药指南看哪些药要先问医生。（名单类）
+
+## 糖代谢
+
+- `skills/elsa-hba1c-model-a/` — 用糖化血红蛋白、年龄、性别和随访间隔计算 ELSA Model A 的糖尿病检出概率（预印本研究模型）。
 
 ## 肾脏
 
