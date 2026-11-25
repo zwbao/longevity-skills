@@ -258,6 +258,10 @@ python3 -m tools.lsk test --changed origin/main   # 只测相对 main 改动过�
 
 - `skills/accelerometry-mortality-dose-response/` — 见「身体活动」。
 
+## 代谢与心血管
+
+- `skills/finnish-diabetes-risk-score/` — 用年龄、腰围、BMI和四项问卷计算原版七项糖尿病风险筛查分数。
+
 ## 体脂与腰围
 
 - `skills/navy-circumference-body-fat/` — 用身高、颈围、腰围（女性加臀围）按美国海军围度方程估算体脂率，再算腰围身高比、腰臀比，并按国家标准看是否中心型肥胖。
