@@ -277,6 +277,10 @@ python3 -m tools.lsk test --changed origin/main   # 只测相对 main 改动过�
 
 - `skills/score2-cvd-risk/` — 用血压、血脂和吸烟状态估计欧洲成人十年心血管风险。
 
+## 心血管与运动
+
+- `skills/one-minute-heart-rate-recovery/` — 用运动试验的峰值和主动恢复1分钟心率，计算心率下降量并按原文切点分档。
+
 ## 用药与基因
 
 - `skills/cpic-pharmacogenomics/` — 基因检测原始数据里的药物代谢基因，对照 CPIC 用药指南看哪些药要先问医生。（名单类）
