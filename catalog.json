@@ -2,9 +2,9 @@
   "schema": "longevity-catalog/1",
   "version": "2026.48.0",
   "counts": {
-    "skills": 209,
+    "skills": 210,
     "tiers": {
-      "A": 45,
+      "A": 46,
       "B": 83,
       "C": 73,
       "tool": 8
@@ -9592,6 +9592,215 @@
         "title_zh": "Framingham 十年总体心血管风险",
         "journal": "Circulation",
         "year": 2008
+      }
+    },
+    {
+      "name": "gbd-alcohol-tmrel-nde",
+      "kind": "paper",
+      "tier": "A",
+      "species": [
+        "human"
+      ],
+      "evidence": "method",
+      "domains": [
+        "生活方式与健康风险"
+      ],
+      "blurb_zh": "把自己的平均每日纯酒精摄入量与按年龄、性别、地区和历史年份分层的 GBD 人群阈值比较，显示差值及所在侧，不给安全饮酒量。",
+      "description": "Tier A personal readout: computes one person's value with the paper's printed method and reproduces a printed example. Compares a person's mean daily pure ethanol intake with the GBD alcohol theoretical minimum risk exposure level (TMREL) and non-drinker equivalence (NDE) printed for their age group, sex, region and reference year. Use for drinking-amount comparisons against this published population model. Reports historical thresholds, uncertainty intervals and signed differences in Chinese; does not estimate individual disease risk or recommend drinking targets.",
+      "intents": [
+        "intervention_evidence"
+      ],
+      "has_script": true,
+      "validation_status": "reproduced",
+      "validation_label_zh": "已复现论文",
+      "entry": {
+        "script": "scripts/personal_report.py",
+        "measurements_flag": "--measurements",
+        "measurements_header": [
+          "item",
+          "value",
+          "unit"
+        ],
+        "age_flag": "--age",
+        "sex_flag": "--sex",
+        "out_flag": "--out",
+        "result_json": true,
+        "targets_flag": "--targets",
+        "levers_json": true
+      },
+      "inputs_status": "verified",
+      "inputs": [
+        {
+          "key": "ethanol_g_day",
+          "label_zh": "平均每日纯酒精摄入量",
+          "aliases": [
+            "平均每日纯酒精摄入量",
+            "每日纯酒精摄入量",
+            "日均纯乙醇摄入量",
+            "alcohol consumption",
+            "ethanol intake",
+            "pure alcohol intake",
+            "mean daily alcohol consumption"
+          ],
+          "unit": "g/d",
+          "accept": {
+            "g/d": 1
+          },
+          "range": [
+            0,
+            100
+          ],
+          "unit_required": true,
+          "required": true,
+          "from": "measurements",
+          "note_zh": "按全部日历日计算的平均量，不是仅饮酒日的量；范围对应正文曲线 0–100 g/d。只接受纯乙醇 g/d，不接受含义不明的杯、mL 或各国标准杯。"
+        },
+        {
+          "key": "age",
+          "label_zh": "年龄",
+          "aliases": [
+            "年龄",
+            "age"
+          ],
+          "unit": "a",
+          "range": [
+            15,
+            120
+          ],
+          "required": true,
+          "from": "argument",
+          "flag": "--age",
+          "note_zh": "80 岁及以上使用原表 80 plus 合并档；120 是输入合理性上限，不是研究样本最大年龄。"
+        },
+        {
+          "key": "sex",
+          "label_zh": "论文分层性别",
+          "aliases": [
+            "性别",
+            "sex"
+          ],
+          "required": true,
+          "from": "argument",
+          "flag": "--sex",
+          "note_zh": "male/男/m 或 female/女/f，不推断。"
+        },
+        {
+          "key": "region",
+          "label_zh": "GBD 地区",
+          "aliases": [
+            "地区",
+            "region"
+          ],
+          "required": true,
+          "from": "argument",
+          "flag": "--region",
+          "note_zh": "21 个 GBD 地区的英文名或中文名，见 references/regions.md；不接受全球均值代替。"
+        },
+        {
+          "key": "year",
+          "label_zh": "参照年份",
+          "aliases": [
+            "年份",
+            "year"
+          ],
+          "range": [
+            1990,
+            2020
+          ],
+          "required": false,
+          "from": "argument",
+          "flag": "--year",
+          "note_zh": "只支持 1990、2000、2010、2020，默认 2020；不插值，不外推。"
+        }
+      ],
+      "outputs": [
+        {
+          "key": "ethanol_g_day",
+          "label_zh": "平均每日纯酒精摄入量",
+          "unit": "g/d"
+        },
+        {
+          "key": "standard_drinks_day",
+          "label_zh": "本论文标准杯数",
+          "unit": "standard drinks/day"
+        },
+        {
+          "key": "tmrel_standard_drinks_day",
+          "label_zh": "TMREL 人群阈值均值",
+          "unit": "standard drinks/day"
+        },
+        {
+          "key": "tmrel_ui_low",
+          "label_zh": "TMREL 95% 不确定区间下限",
+          "unit": "standard drinks/day"
+        },
+        {
+          "key": "tmrel_ui_high",
+          "label_zh": "TMREL 95% 不确定区间上限",
+          "unit": "standard drinks/day"
+        },
+        {
+          "key": "nde_standard_drinks_day",
+          "label_zh": "NDE 人群阈值均值",
+          "unit": "standard drinks/day"
+        },
+        {
+          "key": "nde_ui_low",
+          "label_zh": "NDE 95% 不确定区间下限",
+          "unit": "standard drinks/day"
+        },
+        {
+          "key": "nde_ui_high",
+          "label_zh": "NDE 95% 不确定区间上限",
+          "unit": "standard drinks/day"
+        },
+        {
+          "key": "tmrel_gap_g_day",
+          "label_zh": "摄入量减 TMREL",
+          "unit": "g/d"
+        },
+        {
+          "key": "nde_gap_g_day",
+          "label_zh": "摄入量减 NDE",
+          "unit": "g/d"
+        },
+        {
+          "key": "tmrel_side",
+          "label_zh": "相对 TMREL 均值的位置",
+          "unit": ""
+        },
+        {
+          "key": "nde_side",
+          "label_zh": "相对 NDE 均值的位置",
+          "unit": ""
+        },
+        {
+          "key": "reference_region",
+          "label_zh": "参照 GBD 地区",
+          "unit": ""
+        },
+        {
+          "key": "reference_year",
+          "label_zh": "参照年份",
+          "unit": ""
+        },
+        {
+          "key": "reference_age_group",
+          "label_zh": "参照年龄档",
+          "unit": ""
+        },
+        {
+          "key": "reference_sex",
+          "label_zh": "参照性别",
+          "unit": ""
+        }
+      ],
+      "paper": {
+        "doi": "10.1016/s0140-6736(22)00847-9",
+        "title": "Population-level risks of alcohol consumption by amount, geography, age, sex, and year: a systematic analysis for the Global Burden of Disease Study 2020.",
+        "title_zh": "按饮酒量、地区、年龄、性别及年份分析人群饮酒风险：全球疾病负担研究",
+        "journal": "Lancet (London, England)",
+        "year": 2022
       }
     },
     {

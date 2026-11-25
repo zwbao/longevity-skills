@@ -327,6 +327,10 @@ python3 -m tools.lsk test --changed origin/main   # 只测相对 main 改动过�
 
 - `skills/accelerometry-mortality-dose-response/` — 见「身体活动」。
 
+## 生活方式与健康风险
+
+- `skills/gbd-alcohol-tmrel-nde/` — 把自己的平均每日纯酒精摄入量与按年龄、性别、地区和历史年份分层的 GBD 人群阈值比较，显示差值及所在侧，不给安全饮酒量。
+
 ## 用药与基因
 
 - `skills/cpic-pharmacogenomics/` — 基因检测原始数据里的药物代谢基因，对照 CPIC 用药指南看哪些药要先问医生。（名单类）
