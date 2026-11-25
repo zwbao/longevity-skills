@@ -254,6 +254,14 @@ python3 -m tools.lsk test --changed origin/main   # 只测相对 main 改动过�
 - `skills/digital-telomere-measurement-sequencing/` — 一批端粒长度的通用分布统计（不套论文的分类模型）。（名单类）
 - `skills/leukocyte-telomere-length/` — 你交来的英国生物银行式 z 标准化端粒放进四分位档；自己测的 T/S 比值不能分档。（名单类）
 
+## 久坐
+
+- `skills/accelerometry-mortality-dose-response/` — 见「身体活动」。
+
+## 代谢与心血管
+
+- `skills/finnish-diabetes-risk-score/` — 用年龄、腰围、BMI和四项问卷计算原版七项糖尿病风险筛查分数。
+
 ## 体脂与腰围
 
 - `skills/navy-circumference-body-fat/` — 用身高、颈围、腰围（女性加臀围）按美国海军围度方程估算体脂率，再算腰围身高比、腰臀比，并按国家标准看是否中心型肥胖。
@@ -291,6 +299,10 @@ python3 -m tools.lsk test --changed origin/main   # 只测相对 main 改动过�
 
 - `skills/lifes-essential-8/` — 用饮食、运动、吸烟、睡眠和体检数据计算成人心血管健康八项评分。
 
+## 死亡风险
+
+- `skills/accelerometry-mortality-dose-response/` — 见「身体活动」。
+
 ## 用药与基因
 
 - `skills/cpic-pharmacogenomics/` — 基因检测原始数据里的药物代谢基因，对照 CPIC 用药指南看哪些药要先问医生。（名单类）
@@ -316,6 +328,10 @@ python3 -m tools.lsk test --changed origin/main   # 只测相对 main 改动过�
 - `skills/calf-circumference-decline-falls/` — 用前后两次自己量的小腿围算绝对和相对减少量，按论文切点分档，给出中国老人队列里该档与小腿围没减少者相比的跌倒比值比。
 - `skills/reactive-agility-fall-history/` — 用 SKILLCOURT 反应敏捷测试（随机星形跑完成时间、站立踏步简单和选择反应时）的成绩，对照论文印出的探索性切点，看落在有跌倒史一侧还是没有跌倒史一侧。
 - `skills/share-intrinsic-capacity-domains/` — 见「认知与神经」。
+
+## 身体活动
+
+- `skills/accelerometry-mortality-dose-response/` — 按符合原文处理定义的加速度计活动或久坐日均值，查全因死亡相对危险比。
 
 ## 饮食与基因
 
