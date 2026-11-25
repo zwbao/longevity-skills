@@ -331,6 +331,10 @@ python3 -m tools.lsk test --changed origin/main   # 只测相对 main 改动过�
 
 - `skills/gbd-alcohol-tmrel-nde/` — 把自己的平均每日纯酒精摄入量与按年龄、性别、地区和历史年份分层的 GBD 人群阈值比较，显示差值及所在侧，不给安全饮酒量。
 
+## 生活方式与寿命
+
+- `skills/alcohol-consumption-thresholds/` — 用每周纯酒精总量匹配论文分档，查看对应研究人群的寿命差。
+
 ## 用药与基因
 
 - `skills/cpic-pharmacogenomics/` — 基因检测原始数据里的药物代谢基因，对照 CPIC 用药指南看哪些药要先问医生。（名单类）

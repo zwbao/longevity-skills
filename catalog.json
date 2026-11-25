@@ -2,9 +2,9 @@
   "schema": "longevity-catalog/1",
   "version": "2026.48.0",
   "counts": {
-    "skills": 210,
+    "skills": 211,
     "tiers": {
-      "A": 46,
+      "A": 47,
       "B": 83,
       "C": 73,
       "tool": 8
@@ -2797,6 +2797,130 @@
         "title_zh": "酒精摄入相关健康效应：证据负担研究",
         "journal": "Nature Health",
         "year": 2026
+      }
+    },
+    {
+      "name": "alcohol-consumption-thresholds",
+      "kind": "paper",
+      "tier": "A",
+      "species": [
+        "human"
+      ],
+      "evidence": "cohort",
+      "domains": [
+        "生活方式与寿命"
+      ],
+      "blurb_zh": "用每周纯酒精总量匹配论文分档，查看对应研究人群的寿命差。",
+      "description": "Tier A personal readout: computes one person's value with the paper's printed method and reproduces a printed example. Maps a person's reported weekly ethanol mass to the published alcohol-consumption categories in Wood et al. (Lancet 2018), converts grams to UK alcohol units, and describes the corresponding population life-expectancy differences at age 40. Use when a current drinker asks how their weekly alcohol amount compares with this study. Does not estimate personal survival or a safe drinking allowance.",
+      "intents": [
+        "frailty_mortality"
+      ],
+      "has_script": true,
+      "validation_status": "reproduced",
+      "validation_label_zh": "已复现论文",
+      "entry": {
+        "script": "scripts/personal_report.py",
+        "measurements_flag": "--measurements",
+        "measurements_header": [
+          "marker",
+          "value",
+          "unit"
+        ],
+        "out_flag": "--out",
+        "result_json": true,
+        "targets_flag": "--targets",
+        "levers_json": true
+      },
+      "inputs_status": "verified",
+      "inputs": [
+        {
+          "key": "alcohol_g_week",
+          "label_zh": "每周纯酒精总量",
+          "aliases": [
+            "每周酒精摄入量",
+            "每周乙醇总量",
+            "weekly alcohol intake",
+            "weekly ethanol mass",
+            "alcohol grams per week"
+          ],
+          "unit": "g",
+          "accept": {
+            "kg": 1000
+          },
+          "range": [
+            0,
+            3500
+          ],
+          "unit_required": true,
+          "required": true,
+          "from": "measurements",
+          "note_zh": "填写代表平时饮酒习惯的一周纯乙醇总质量，单位列g或kg；不是饮料质量、毫升、每日克数或杯数。时间窗固定为一周，故单位为质量。3500克是输入防错上限，不是论文风险切点。"
+        },
+        {
+          "key": "current_drinker",
+          "label_zh": "当前是否饮酒",
+          "aliases": [
+            "current drinker",
+            "当前饮酒"
+          ],
+          "unit": "1",
+          "range": [
+            0,
+            1
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "1=是，0=否；既往饮酒但已不饮酒填0。"
+        },
+        {
+          "key": "cvd_history",
+          "label_zh": "是否有既往心血管病",
+          "aliases": [
+            "history of cardiovascular disease",
+            "心血管病史"
+          ],
+          "unit": "1",
+          "range": [
+            0,
+            1
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "1=是，0=否；包括冠心病、其他心脏病、卒中、短暂性脑缺血发作、外周动脉病或心血管手术。未知则先补充病史，不能默认为0。"
+        }
+      ],
+      "outputs": [
+        {
+          "key": "reported_alcohol_g_week",
+          "label_zh": "自报一周纯酒精总质量",
+          "unit": "g"
+        },
+        {
+          "key": "uk_units_per_week",
+          "label_zh": "每周英国酒精单位数",
+          "unit": "1",
+          "note_zh": "1英国单位=8克纯乙醇。"
+        },
+        {
+          "key": "scope_status",
+          "label_zh": "与主要研究人群的适用性"
+        },
+        {
+          "key": "consumption_band",
+          "label_zh": "论文自报周饮酒量分档"
+        },
+        {
+          "key": "study_loss_at_40",
+          "label_zh": "该档研究人群40岁起算的近似寿命差",
+          "note_zh": "与>0–≤100克/周档相比的群体预期寿命缩短，不是个人寿命；参照档不代表零风险。"
+        }
+      ],
+      "paper": {
+        "doi": "10.1016/s0140-6736(18)30134-x",
+        "title": "Risk thresholds for alcohol consumption: combined analysis of individual-participant data for 599 912 current drinkers in 83 prospective studies.",
+        "title_zh": "每周饮酒量分档与研究人群寿命差",
+        "journal": "Lancet (London, England)",
+        "year": 2018
       }
     },
     {
