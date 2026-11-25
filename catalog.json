@@ -2,9 +2,9 @@
   "schema": "longevity-catalog/1",
   "version": "2026.48.0",
   "counts": {
-    "skills": 188,
+    "skills": 189,
     "tiers": {
-      "A": 24,
+      "A": 25,
       "B": 83,
       "C": 73,
       "tool": 8
@@ -28511,6 +28511,205 @@
         "title_zh": "单细胞甲基化周龄",
         "journal": "Nature Communications",
         "year": 2024
+      }
+    },
+    {
+      "name": "score2-cvd-risk",
+      "kind": "paper",
+      "tier": "A",
+      "species": [
+        "human"
+      ],
+      "evidence": "cohort",
+      "domains": [
+        "心血管与代谢风险"
+      ],
+      "blurb_zh": "用血压、血脂和吸烟状态估计欧洲成人十年心血管风险。",
+      "description": "Tier A personal readout: computes one person's value with the paper's printed method and reproduces a printed example. Estimates SCORE2 ten-year first-onset fatal and non-fatal cardiovascular risk from age, sex, smoking, blood pressure and cholesterol in adults aged 40–69 without prior CVD or diabetes in the paper's European risk regions. Use for SCORE2、欧洲心血管风险、血压血脂风险 and user-specified target scenarios.",
+      "intents": [
+        "lab_meaning"
+      ],
+      "has_script": true,
+      "validation_status": "reproduced",
+      "validation_label_zh": "已复现论文",
+      "entry": {
+        "script": "scripts/personal_report.py",
+        "measurements_flag": "--measurements",
+        "measurements_header": [
+          "marker",
+          "value",
+          "unit"
+        ],
+        "age_flag": "--age",
+        "sex_flag": "--sex",
+        "out_flag": "--out",
+        "result_json": true,
+        "targets_flag": "--targets",
+        "levers_json": true
+      },
+      "population": {
+        "age_years": [
+          40,
+          79
+        ],
+        "note_zh": "模型推导年龄 40–79 岁；个人用途仅 40–69 岁，无既往心血管病且无糖尿病，按欧洲风险地区校准。"
+      },
+      "inputs_status": "verified",
+      "inputs": [
+        {
+          "key": "sbp_mmhg",
+          "label_zh": "收缩压",
+          "aliases": [
+            "SBP",
+            "systolic blood pressure",
+            "收缩期血压",
+            "高压"
+          ],
+          "unit": "mmHg",
+          "range": [
+            70,
+            250
+          ],
+          "required": true,
+          "from": "measurements",
+          "accept": {
+            "kPa": 7.500617
+          },
+          "unit_required": true
+        },
+        {
+          "key": "tc_mmol_l",
+          "label_zh": "总胆固醇",
+          "aliases": [
+            "TC",
+            "TCHO",
+            "total cholesterol",
+            "总胆固醇(TC)"
+          ],
+          "unit": "mmol/L",
+          "range": [
+            1,
+            15
+          ],
+          "required": true,
+          "from": "measurements",
+          "accept": {
+            "mg/dL": 0.025863183757920603,
+            "mg/L": 0.00258631837579206
+          },
+          "molar_mass": 386.65,
+          "unit_required": true
+        },
+        {
+          "key": "hdl_mmol_l",
+          "label_zh": "高密度脂蛋白胆固醇",
+          "aliases": [
+            "HDL-C",
+            "HDL cholesterol",
+            "HDL",
+            "高密度脂蛋白胆固醇(HDL-C)"
+          ],
+          "unit": "mmol/L",
+          "range": [
+            0.2,
+            5
+          ],
+          "required": true,
+          "from": "measurements",
+          "accept": {
+            "mg/dL": 0.025863183757920603,
+            "mg/L": 0.00258631837579206
+          },
+          "molar_mass": 386.65,
+          "unit_required": true
+        },
+        {
+          "key": "smoker",
+          "label_zh": "当前吸烟",
+          "aliases": [
+            "smoking",
+            "current smoking",
+            "吸烟状态"
+          ],
+          "unit": "1",
+          "range": [
+            0,
+            1
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "只能为 1（当前吸烟）或 0（其他），不是吸烟比例。"
+        },
+        {
+          "key": "age",
+          "label_zh": "实足年龄",
+          "aliases": [
+            "年龄",
+            "age"
+          ],
+          "unit": "a",
+          "range": [
+            40,
+            69
+          ],
+          "required": true,
+          "from": "profile",
+          "flag": "--age"
+        },
+        {
+          "key": "sex",
+          "label_zh": "模型性别",
+          "required": true,
+          "from": "profile",
+          "flag": "--sex",
+          "note_zh": "male 或 female，选择论文相应的性别模型。"
+        },
+        {
+          "key": "region",
+          "label_zh": "SCORE2 风险地区",
+          "required": true,
+          "from": "argument",
+          "flag": "--region",
+          "note_zh": "low、moderate、high、very_high；按论文 Table S6，不按个人风险高低选择。"
+        },
+        {
+          "key": "europe",
+          "label_zh": "属于论文欧洲风险地区",
+          "required": true,
+          "from": "argument",
+          "flag": "--europe",
+          "note_zh": "yes 或 no；这里的欧洲风险地区指 Table S6 列出的校准国家，含部分邻近国家。"
+        },
+        {
+          "key": "prior_cvd",
+          "label_zh": "既往心血管病",
+          "required": true,
+          "from": "argument",
+          "flag": "--prior-cvd",
+          "note_zh": "yes 或 no；yes 时不计算。"
+        },
+        {
+          "key": "diabetes",
+          "label_zh": "糖尿病",
+          "required": true,
+          "from": "argument",
+          "flag": "--diabetes",
+          "note_zh": "yes 或 no；yes 时不计算。"
+        }
+      ],
+      "outputs": [
+        {
+          "key": "risk_10y_pct",
+          "label_zh": "十年首次心血管事件风险（模型估计）",
+          "unit": "%"
+        }
+      ],
+      "paper": {
+        "doi": "10.1093/eurheartj/ehab309",
+        "title": "SCORE2 risk prediction algorithms: new models to estimate 10-year risk of cardiovascular disease in Europe.",
+        "title_zh": "SCORE2：欧洲成人十年心血管风险",
+        "journal": "European Heart Journal",
+        "year": 2021
       }
     },
     {

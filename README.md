@@ -273,6 +273,10 @@ python3 -m tools.lsk test --changed origin/main   # 只测相对 main 改动过�
 
 - `skills/china-par-ascvd-risk/` — 收缩压、血脂、腰围、年龄和几个是否项到齐时，按 China-PAR 算中国成人的 10 年心血管病风险，男女都算。
 
+## 心血管与代谢风险
+
+- `skills/score2-cvd-risk/` — 用血压、血脂和吸烟状态估计欧洲成人十年心血管风险。
+
 ## 用药与基因
 
 - `skills/cpic-pharmacogenomics/` — 基因检测原始数据里的药物代谢基因，对照 CPIC 用药指南看哪些药要先问医生。（名单类）
