@@ -1,0 +1,172 @@
+{
+  "schema": "longevity-skill/1",
+  "name": "elsa-hba1c-model-a",
+  "kind": "paper",
+  "tier": "A",
+  "species": [
+    "human"
+  ],
+  "evidence": "cohort",
+  "domains": [
+    "糖代谢"
+  ],
+  "blurb_zh": "用糖化血红蛋白、年龄、性别和随访间隔计算 ELSA Model A 的糖尿病检出概率（预印本研究模型）。",
+  "intents": [
+    "lab_meaning"
+  ],
+  "triage": {
+    "reason_zh": "人体队列原创 Model A 的截距、全部系数及标准化参数见补充表 S4，可由个人常规信息计算；预印本且尚无个人概率示例复现。",
+    "reviewed": false
+  },
+  "paper": {
+    "doi": "10.64898/2026.11.20.26368578",
+    "title": "Personal HbA1c trajectories and incident diabetes: association, prediction and observability in the English Longitudinal Study of Ageing",
+    "title_zh": "个人糖化血红蛋白轨迹与新发糖尿病：关联、预测和可观测性",
+    "journal": "medRxiv",
+    "year": 2026,
+    "authors": "Tapias 等",
+    "article_url": "https://www.medrxiv.org/content/10.64898/2026.11.20.26368578v1",
+    "supplements": [
+      {
+        "label": "补充 S1–S5（同一 PDF，S4 表在第 32 页）",
+        "url": "https://www.medrxiv.org/content/10.64898/2026.11.20.26368578v1.full.pdf#page=29"
+      }
+    ],
+    "code_url": "https://github.com/dapias/elsa-hba1c-trajectories/tree/v1.0.0",
+    "card_notes": [
+      "预印本，未经同行评审；发表于 2026-11-23。",
+      "只实现补充表 S4 的最终 Model A，使用印出的舍入参数；它与交叉验证时的各折模型不同，最终模型本身未被单独评估。",
+      "已核对全文和补充材料、作者 v1.0.0 代码及数据目录；许可 ELSA 个体数据未下载。Model B 的一项缺失指示参数被隐去，本技能不实现它。"
+    ],
+    "summary_zh": "这项研究在英格兰中老年人队列中发现，个人糖化血红蛋白变化速度与后续糖尿病有关，但纳入纵向历史没有明确提升预测表现。个人报告只计算给定体检信息和随访间隔下的研究模型概率及假设变化，不估计个人轨迹或干预疗效。",
+    "summary_status": "draft"
+  },
+  "entry": {
+    "script": "scripts/personal_report.py",
+    "measurements_flag": "--measurements",
+    "measurements_header": [
+      "marker",
+      "value",
+      "unit"
+    ],
+    "age_flag": "--age",
+    "sex_flag": "--sex",
+    "out_flag": "--out",
+    "result_json": true,
+    "targets_flag": "--targets",
+    "levers_json": true
+  },
+  "inputs_status": "draft",
+  "inputs": [
+    {
+      "key": "hba1c_pct",
+      "label_zh": "糖化血红蛋白",
+      "aliases": [
+        "HbA1c",
+        "HbA1c (%)",
+        "糖化血红蛋白A1c",
+        "糖化血红蛋白百分比",
+        "glycated haemoglobin",
+        "hemoglobin A1c",
+        "A1C"
+      ],
+      "unit": "%",
+      "range": [
+        3,
+        25
+      ],
+      "required": true,
+      "from": "measurements",
+      "unit_required": true,
+      "note_zh": "仅接受 DCCT/NGSP 百分数；mmol/mol 与百分数之间有截距，不能用单一倍数换算，本接口拒绝 mmol/mol。内部按正文 2.1 换算为 IFCC。达到研究排除阈值时不计算。"
+    },
+    {
+      "key": "age",
+      "label_zh": "基线实足年龄",
+      "aliases": [
+        "年龄",
+        "age"
+      ],
+      "unit": "a",
+      "range": [
+        50,
+        110
+      ],
+      "required": true,
+      "from": "profile",
+      "flag": "--age",
+      "note_zh": "50–110 是接口适用性保护范围，不是论文报告的样本最小值和最大值。"
+    },
+    {
+      "key": "sex",
+      "label_zh": "模型性别编码",
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "profile",
+      "flag": "--sex",
+      "note_zh": "female/女/1 对应女性=1；male/男/0 对应男性=0，必须明确提供。"
+    },
+    {
+      "key": "years_next",
+      "label_zh": "到下一次健康访视的间隔",
+      "aliases": [
+        "随访间隔",
+        "years to next visit"
+      ],
+      "unit": "a",
+      "range": [
+        0.25,
+        20
+      ],
+      "required": true,
+      "from": "argument",
+      "flag": "--years-next",
+      "note_zh": "必须指定年数；论文通常约四年或七年，区间外会提示外推。范围仅为输入保护。"
+    },
+    {
+      "key": "eligible_baseline",
+      "label_zh": "已确认符合基线条件",
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "argument",
+      "flag": "--eligible-baseline",
+      "note_zh": "仅接受 1：此前及当前无论文定义的糖尿病，并有至少三个月前的无糖尿病 HbA1c 测量；0 或未知不计算。此项不进入方程。"
+    }
+  ],
+  "outputs": [
+    {
+      "key": "diabetes_probability_pct",
+      "label_zh": "下一健康访视前糖尿病检出概率（Model A 研究估计）",
+      "unit": "%"
+    },
+    {
+      "key": "linear_predictor",
+      "label_zh": "Model A 线性预测值",
+      "unit": "1"
+    }
+  ],
+  "validation": {
+    "status": "draft",
+    "gap_zh": "预印本，未经同行评审。已查正文、同一 PDF 内补充 S1–S5（表 S1–S14、图 S1–S4）、作者代码 v1.0.0 和 UK Data Service SN 5050 数据目录；未找到完整个人输入对应的 Model A 预测概率或逐项得分。examples 仅复现 S1 群体均值的 HbA1c 单位换算，不代表预测模型已复现。未获取许可队列数据，未重跑训练或验证；S4 仅有舍入参数。",
+    "examples": [
+      {
+        "locator": "Supplementary Table S1, p.29; preprocessing only, not a Model A risk prediction",
+        "quote": "HbA1c, mmol/mol, mean (SD) 37.5 (2.7) 43.5 (1.5)\nHbA1c, %, mean (SD) 5.58 (0.25) 6.13 (0.14)",
+        "values": [
+          37.5,
+          43.5
+        ],
+        "tolerance": "绝对误差不超过 0.105 mmol/mol：百分数均值保留两位小数产生至多 0.005×10.929 的误差，IFCC 均值保留一位产生至多 0.05 的误差。",
+        "test": "tests/test_manifest.py::test_printed_hba1c_mean_conversion"
+      }
+    ]
+  }
+}
