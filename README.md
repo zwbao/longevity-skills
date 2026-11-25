@@ -337,6 +337,10 @@ python3 -m tools.lsk test --changed origin/main   # 只测相对 main 改动过�
 
 - `skills/alcohol-consumption-thresholds/` — 用每周纯酒精总量匹配论文分档，查看对应研究人群的寿命差。
 
+## 生活方式与死亡风险
+
+- `skills/sedentary-dose-response/` — 用每天久坐及看电视时长查人群相对风险和研究分段阈值。
+
 ## 用药与基因
 
 - `skills/cpic-pharmacogenomics/` — 基因检测原始数据里的药物代谢基因，对照 CPIC 用药指南看哪些药要先问医生。（名单类）
