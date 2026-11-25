@@ -194,6 +194,7 @@ python3 -m tools.lsk test --changed origin/main   # 只测相对 main 改动过�
 - `skills/modifiable-risk-factor-score/` — 数一数 11 项可改变的危险因素（教育、抑郁、吸烟、饮酒、运动、饮食、睡眠、体重、血糖、血压、血脂）有几项，并给出你所在年龄段每多一项对应的全因死亡风险比。
 - `skills/one-year-mortality-aging-marker/` — 年龄和性别。一年死亡概率的回归系数没有印出。（名单类）
 - `skills/plasma-protein-risk-score/` — 按论文系数把你交来的标准化蛋白值加权求和，可算足跟超声骨密度；不是你的骨折风险。（名单类）
+- `skills/schonberg-mortality-index/` — 用年龄、体重指数及自报健康情况计算Schonberg五年死亡风险积分。
 - `skills/sleep-study-life-expectancy/` — 你已有的睡眠年龄估计减去实足年龄，只做相减，不跑论文的深度网络。（名单类）
 
 ## 线粒体

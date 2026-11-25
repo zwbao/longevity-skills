@@ -2,9 +2,9 @@
   "schema": "longevity-catalog/1",
   "version": "2026.48.0",
   "counts": {
-    "skills": 203,
+    "skills": 204,
     "tiers": {
-      "A": 39,
+      "A": 40,
       "B": 83,
       "C": 73,
       "tool": 8
@@ -31389,6 +31389,321 @@
         "title_zh": "单细胞甲基化周龄",
         "journal": "Nature Communications",
         "year": 2024
+      }
+    },
+    {
+      "name": "schonberg-mortality-index",
+      "kind": "paper",
+      "tier": "A",
+      "species": [
+        "human"
+      ],
+      "evidence": "cohort",
+      "domains": [
+        "衰弱与死亡风险"
+      ],
+      "blurb_zh": "用年龄、体重指数及自报健康情况计算Schonberg五年死亡风险积分。",
+      "description": "Tier A personal readout: computes one person's value with the paper's printed method and reproduces a printed example. Computes the original Schonberg mortality index from eleven self-reported factors and looks up five-year mortality in the published validation cohort. Use when a community-dwelling adult aged 65 or older asks about the Schonberg score or questionnaire-based mortality risk. Reports Chinese explanations, per-factor points, grouped risk and confidence limits, and optional user-specified scenarios.",
+      "intents": [
+        "frailty_mortality"
+      ],
+      "has_script": true,
+      "validation_status": "reproduced",
+      "validation_label_zh": "已复现论文",
+      "entry": {
+        "script": "scripts/personal_report.py",
+        "measurements_flag": "--measurements",
+        "measurements_header": [
+          "marker",
+          "value",
+          "unit"
+        ],
+        "age_flag": "--age",
+        "sex_flag": "--sex",
+        "out_flag": "--out",
+        "result_json": true,
+        "targets_flag": "--targets",
+        "levers_json": true
+      },
+      "inputs_status": "verified",
+      "inputs": [
+        {
+          "key": "bmi_kg_m2",
+          "label_zh": "体质指数",
+          "aliases": [
+            "BMI",
+            "Body mass index",
+            "体重指数"
+          ],
+          "unit": "kg/m^2",
+          "range": [
+            10,
+            80
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "提供已计算的 BMI；小于25计分，等于25不计分。",
+          "accept": {
+            "kg/m2": 1
+          }
+        },
+        {
+          "key": "health_code",
+          "label_zh": "自评健康",
+          "aliases": [
+            "Perceived health",
+            "self rated health",
+            "总体健康状况"
+          ],
+          "unit": "1",
+          "range": [
+            0,
+            2
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "整数编码：0=excellent/very good（极好/很好），1=good（好），2=fair/poor（一般/差）。"
+        },
+        {
+          "key": "copd_history",
+          "label_zh": "肺气肿或慢性支气管炎史",
+          "aliases": [
+            "COPD",
+            "emphysema",
+            "chronic bronchitis",
+            "肺气肿",
+            "慢性支气管炎"
+          ],
+          "unit": "1",
+          "range": [
+            0,
+            1
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "0=否，1=曾由医生或其他卫生专业人员告知患肺气肿或慢性支气管炎；不将其他肺病自动合并。"
+        },
+        {
+          "key": "cancer_history",
+          "label_zh": "癌症史",
+          "aliases": [
+            "cancer",
+            "cancer history",
+            "肿瘤病史"
+          ],
+          "unit": "1",
+          "range": [
+            0,
+            1
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "0=否，1=曾被告知患癌；非黑色素瘤皮肤癌不算，黑色素瘤算。"
+        },
+        {
+          "key": "diabetes_history",
+          "label_zh": "糖尿病史",
+          "aliases": [
+            "diabetes",
+            "diabetes mellitus",
+            "borderline diabetes",
+            "临界糖尿病"
+          ],
+          "unit": "1",
+          "range": [
+            0,
+            1
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "0=否，1=曾被告知患糖尿病，包括原问卷的 borderline diabetes；不根据单次血糖自行诊断。"
+        },
+        {
+          "key": "iadl_help",
+          "label_zh": "日常事务需他人帮助",
+          "aliases": [
+            "IADL dependency",
+            "dependent in at least one IADL",
+            "工具性日常生活活动依赖"
+          ],
+          "unit": "1",
+          "range": [
+            0,
+            1
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "因身体、精神或情绪问题，家务、办事、购物或外出等至少一项需要他人帮助：1=是，0=否；不是IADL量表总分。"
+        },
+        {
+          "key": "walking_difficulty",
+          "label_zh": "步行四分之一英里困难",
+          "aliases": [
+            "difficulty walking",
+            "difficulty walking a quarter mile",
+            "步行约三个街区困难"
+          ],
+          "unit": "1",
+          "range": [
+            0,
+            1
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "独自且不使用辅助设备走四分之一英里（约三个街区）：0=完全不困难，1=有任何困难、不能走或不走。"
+        },
+        {
+          "key": "smoking_code",
+          "label_zh": "吸烟状态",
+          "aliases": [
+            "smoking status",
+            "cigarette use",
+            "吸烟史"
+          ],
+          "unit": "1",
+          "range": [
+            0,
+            2
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "0=从未吸烟（终生少于100支），1=既往吸烟，2=目前每天或部分日子吸烟。编码2不是积分2。"
+        },
+        {
+          "key": "hospitalizations_count",
+          "label_zh": "过去一年过夜住院次数",
+          "aliases": [
+            "overnight hospitalizations in past year",
+            "hospitalizations",
+            "过去12个月住院次数"
+          ],
+          "unit": "1",
+          "range": [
+            0,
+            365
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "过去12个月过夜住院的整数次数；0次、1次、至少2次分别分组，不能填住院天数。365为输入合理性上限，不是研究上限。"
+        },
+        {
+          "key": "age_years",
+          "label_zh": "实足年龄",
+          "aliases": [
+            "age",
+            "年龄",
+            "周岁"
+          ],
+          "unit": "a",
+          "range": [
+            65,
+            120
+          ],
+          "required": true,
+          "from": "argument",
+          "flag": "--age",
+          "note_zh": "已满周岁整数；原研究65岁及以上，85岁及以上合并；120只是输入检查上限，并非已知研究最高年龄。"
+        },
+        {
+          "key": "sex",
+          "label_zh": "研究使用的性别分类",
+          "aliases": [
+            "sex",
+            "性别"
+          ],
+          "required": true,
+          "from": "profile",
+          "flag": "--sex",
+          "note_zh": "female/女或male/男；按论文二分类计分，其他值不猜测。"
+        }
+      ],
+      "outputs": [
+        {
+          "key": "total_score",
+          "label_zh": "总积分",
+          "unit": "score"
+        },
+        {
+          "key": "risk_band",
+          "label_zh": "表3积分档位"
+        },
+        {
+          "key": "mortality_5y_pct",
+          "label_zh": "五年死亡风险（验证队列同分档估计）",
+          "unit": "%"
+        },
+        {
+          "key": "mortality_5y_ci_low_pct",
+          "label_zh": "同分档风险95%置信区间下限",
+          "unit": "%"
+        },
+        {
+          "key": "mortality_5y_ci_high_pct",
+          "label_zh": "同分档风险95%置信区间上限",
+          "unit": "%"
+        },
+        {
+          "key": "age_years_points",
+          "label_zh": "年龄积分",
+          "unit": "score"
+        },
+        {
+          "key": "male_points",
+          "label_zh": "性别积分",
+          "unit": "score"
+        },
+        {
+          "key": "bmi_kg_m2_points",
+          "label_zh": "体质指数积分",
+          "unit": "score"
+        },
+        {
+          "key": "health_code_points",
+          "label_zh": "自评健康积分",
+          "unit": "score"
+        },
+        {
+          "key": "copd_history_points",
+          "label_zh": "肺气肿或慢性支气管炎史积分",
+          "unit": "score"
+        },
+        {
+          "key": "cancer_history_points",
+          "label_zh": "癌症史积分",
+          "unit": "score"
+        },
+        {
+          "key": "diabetes_history_points",
+          "label_zh": "糖尿病史积分",
+          "unit": "score"
+        },
+        {
+          "key": "iadl_help_points",
+          "label_zh": "日常事务需他人帮助积分",
+          "unit": "score"
+        },
+        {
+          "key": "walking_difficulty_points",
+          "label_zh": "步行四分之一英里困难积分",
+          "unit": "score"
+        },
+        {
+          "key": "smoking_code_points",
+          "label_zh": "吸烟状态积分",
+          "unit": "score"
+        },
+        {
+          "key": "hospitalizations_count_points",
+          "label_zh": "过去一年过夜住院次数积分",
+          "unit": "score"
+        }
+      ],
+      "paper": {
+        "doi": "10.1007/s11606-009-1073-y",
+        "title": "Index to Predict 5-Year Mortality of Community-Dwelling Adults Aged 65 and Older Using Data from the National Health Interview Survey",
+        "title_zh": "社区老年人的Schonberg五年死亡风险指数",
+        "journal": "Journal of General Internal Medicine",
+        "year": 2009
       }
     },
     {
