@@ -1,0 +1,201 @@
+{
+  "schema": "longevity-skill/1",
+  "name": "hotspot-somatic-sweep",
+  "kind": "paper",
+  "tier": "A",
+  "species": [
+    "human"
+  ],
+  "evidence": "case_control",
+  "domains": [
+    "克隆性造血",
+    "血液测序"
+  ],
+  "blurb_zh": "用一条血液变异的读段计数计算 VAF，核对是否满足论文热点名单、支持读段和克隆扫荡阈值；不估算个人白血病概率。",
+  "intents": [
+    "gene_variant"
+  ],
+  "triage": {
+    "reason_zh": "人体研究印出热点替换名单、至少三条支持读段及 VAF 大于 30% 的筛查条件，可对个人已质控的血液测序记录计算并分档。",
+    "reviewed": false
+  },
+  "paper": {
+    "doi": "10.1038/s41586-026-11269-x",
+    "title": "Evolutionary dynamics in the years preceding acute myeloid leukaemia.",
+    "title_zh": "急性髓系白血病发生前数年的克隆演化动力学",
+    "journal": "Nature",
+    "year": 2026,
+    "authors": "Watson 等",
+    "article_url": "https://www.nature.com/articles/s41586-026-11269-x",
+    "supplements": [
+      {
+        "label": "Supplementary Information（Notes、Figures、内嵌表）",
+        "url": "https://static-content.springer.com/esm/art%3A10.1038%2Fs41586-026-11269-x/MediaObjects/41586_2026_11269_MOESM1_ESM.pdf"
+      },
+      {
+        "label": "Reporting Summary",
+        "url": "https://static-content.springer.com/esm/art%3A10.1038%2Fs41586-026-11269-x/MediaObjects/41586_2026_11269_MOESM2_ESM.pdf"
+      },
+      {
+        "label": "Supplementary Tables 1–11（表 6 数值核对）",
+        "url": "https://static-content.springer.com/esm/art%3A10.1038%2Fs41586-026-11269-x/MediaObjects/41586_2026_11269_MOESM3_ESM.xlsx"
+      },
+      {
+        "label": "Peer Review File",
+        "url": "https://static-content.springer.com/esm/art%3A10.1038%2Fs41586-026-11269-x/MediaObjects/41586_2026_11269_MOESM4_ESM.pdf"
+      }
+    ],
+    "code_url": "https://github.com/the-blundell-lab/preAML_evolutionary_dynamics",
+    "summary_zh": "这项人体纵向病例对照研究发现，白血病发生前血液中的多个驱动突变可共同促进克隆扩张，并在人群中观察到热点高频变异与未来髓系白血病有关。个人报告只计算一条已质控血液变异的等位基因频率并核对论文筛查条件，不计算个人患病概率或诊断白血病。",
+    "summary_status": "draft",
+    "card_notes": [
+      "研究对象：UKCTOCS 最终纳入 47 名未来 AML 病例及 46 名女性对照；UK Biobank 最终分析 420,054 人，结局为 ICD-10 C92 髓系白血病，不能完全等同于 AML。",
+      "读出采用最终 Methods 的热点替换名单和筛查条件；不运行纵向克隆结构、适应度或突变发生年龄模型。数值复现范围是补充表 6 的读段计数到 VAF，不是 UK Biobank 风险关联的独立复现。",
+      "高 VAF 不是体细胞来源的证明；论文提出需结合第二组织等信息排除胚系来源。名单外替换不套用本规则。"
+    ]
+  },
+  "entry": {
+    "script": "scripts/personal_report.py",
+    "measurements_flag": "--measurements",
+    "measurements_header": [
+      "item",
+      "value",
+      "unit"
+    ],
+    "age_flag": "--age",
+    "sex_flag": "--sex",
+    "out_flag": "--out",
+    "result_json": true
+  },
+  "population": {
+    "age_years": [
+      40,
+      70
+    ],
+    "note_zh": "图 5f 的 UK Biobank 人群年龄约 40–70 岁；UKCTOCS 的纵向发现来自入组时 50–74 岁绝经后女性。这里仅核对单条变异，不作年龄或性别风险校准。"
+  },
+  "inputs_status": "verified",
+  "inputs": [
+    {
+      "key": "total_reads_count",
+      "label_zh": "同一位点总读段数",
+      "aliases": [
+        "Total depth",
+        "DP",
+        "总读段数",
+        "总测序深度",
+        "Total read depth"
+      ],
+      "unit": "1",
+      "accept": {},
+      "range": [
+        1,
+        1000000000
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "经实验室质控后、与替换支持计数使用同一过滤口径的整数。不能用平均面板深度替代。范围上限是输入保护，不是论文临床切点。"
+    },
+    {
+      "key": "variant_reads_count",
+      "label_zh": "该替换支持读段数",
+      "aliases": [
+        "Variant depth",
+        "ALT read count",
+        "突变支持读段数",
+        "变异支持读数",
+        "突变读段数"
+      ],
+      "unit": "1",
+      "accept": {},
+      "range": [
+        0,
+        1000000000
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "只计这一个 ALT 的支持读段；不得超过总读段数。若读数来自 VCF，需核对 AD/DP 的过滤口径，不自动拆分多等位记录。"
+    },
+    {
+      "key": "variant",
+      "label_zh": "基因与蛋白改变",
+      "aliases": [
+        "Gene and amino acid change",
+        "基因及蛋白变异"
+      ],
+      "required": true,
+      "from": "argument",
+      "flag": "--variant",
+      "note_zh": "如 SF3B1 p.K700E；单字母蛋白替换，* 与末位 X 均表示终止。需事先确认与论文蛋白注释一致；不从 rs 编号或未注释坐标猜测。"
+    },
+    {
+      "key": "age",
+      "label_zh": "实足年龄",
+      "unit": "a",
+      "range": [
+        0,
+        120
+      ],
+      "required": false,
+      "from": "profile",
+      "flag": "--age",
+      "note_zh": "仅作适用人群提示，不参与分类。"
+    },
+    {
+      "key": "sex",
+      "label_zh": "性别",
+      "required": false,
+      "from": "profile",
+      "flag": "--sex",
+      "note_zh": "女/female 或男/male；仅作背景，不参与分类。"
+    }
+  ],
+  "outputs": [
+    {
+      "key": "variant",
+      "label_zh": "标准化的基因与蛋白改变"
+    },
+    {
+      "key": "vaf_fraction",
+      "label_zh": "该变异等位基因频率（比例）",
+      "unit": "1"
+    },
+    {
+      "key": "vaf_pct",
+      "label_zh": "该变异等位基因频率（百分比）",
+      "unit": "%"
+    },
+    {
+      "key": "screen_status",
+      "label_zh": "单条变异的论文筛查条件状态",
+      "note_zh": "meets_screen、below_or_equal_cutoff、insufficient_support 或 outside_panel；都不是个人诊断。"
+    }
+  ],
+  "validation": {
+    "status": "reproduced",
+    "examples": [
+      {
+        "locator": "Supplementary Table 6, C92_002_s1 / SF3B1 p.K700E, K2:M2; same released table in Data_files/Somatic_SNV_indel_FLT3_calls.csv",
+        "quote": "Total depth,Variant depth,VAF\n1671.0,134.0,0.0801915020945541",
+        "values": [
+          1671,
+          134,
+          0.0801915020945541
+        ],
+        "tolerance": "VAF 绝对误差不超过 1e-15，容纳公开表格的十进制尾数舍入；复现仅指 VAF 数值，不声称复现人群风险。",
+        "test": "tests/test_manifest.py::test_paper_table6_vaf"
+      },
+      {
+        "locator": "Supplementary Table 6, C92_012_s5 / SRSF2 p.P95H; same released table in Data_files/Somatic_SNV_indel_FLT3_calls.csv",
+        "quote": "Total depth,Variant depth,VAF\n1822.0,644.0,0.3534577387486279",
+        "values": [
+          1822,
+          644,
+          0.3534577387486279
+        ],
+        "tolerance": "VAF 绝对误差不超过 1e-15；筛查标签的边界测试另列，不把推导标签当作论文印出的个人结局。",
+        "test": "tests/test_manifest.py::test_paper_table6_high_vaf"
+      }
+    ]
+  }
+}
