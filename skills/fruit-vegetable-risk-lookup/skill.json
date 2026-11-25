@@ -1,0 +1,270 @@
+{
+  "schema": "longevity-skill/1",
+  "name": "fruit-vegetable-risk-lookup",
+  "kind": "paper",
+  "tier": "A",
+  "species": [
+    "human"
+  ],
+  "evidence": "review",
+  "domains": [
+    "营养与代谢"
+  ],
+  "blurb_zh": "用日均果蔬摄入量查出论文中的人群相对风险及相邻表格行。",
+  "intents": [
+    "frailty_mortality",
+    "intervention_evidence"
+  ],
+  "triage": {
+    "reason_zh": "人体前瞻性研究的荟萃分析在补充表8至18印出摄入克数与风险比，可用个人摄入量直接查表，已复现印出行。",
+    "reviewed": false
+  },
+  "paper": {
+    "doi": "10.1093/ije/dyw319",
+    "title": "Fruit and vegetable intake and the risk of cardiovascular disease, total cancer and all-cause mortality-a systematic review and dose-response meta-analysis of prospective studies.",
+    "title_zh": "果蔬摄入量与心血管疾病、总癌症及全因死亡风险",
+    "journal": "International Journal of Epidemiology",
+    "year": 2017,
+    "authors": "Aune 等",
+    "article_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC5837313/",
+    "supplements": [
+      {
+        "label": "补充表8–18（PDF）",
+        "url": "https://pmc.ncbi.nlm.nih.gov/articles/instance/5837313/bin/supplementary_materials_dyw319.pdf"
+      },
+      {
+        "label": "Webappendix（MOOSE清单）",
+        "url": "https://pmc.ncbi.nlm.nih.gov/articles/instance/5837313/bin/supplementary_webappendix_dyw319.docx"
+      }
+    ],
+    "summary_zh": "这项研究汇总人群前瞻性研究，发现较高的水果和蔬菜摄入量与较低的心血管疾病、总癌症及全因死亡风险相关。个人报告只按日均摄入量查出论文印出的相对风险和相邻表格行，不计算个人患病概率或预期寿命。",
+    "summary_status": "draft",
+    "card_notes": [
+      "采用补充表8–18的限制性立方样条结果数值；保留每列不同的参照摄入量与发病、死亡或合并结局。",
+      "未印出的摄入点只显示相邻行；空白保留缺失，超出各列表格范围不外推。",
+      "原文与补充材料未链接作者代码仓库；不重拟合样条。"
+    ]
+  },
+  "entry": {
+    "script": "scripts/personal_report.py",
+    "measurements_flag": "--measurements",
+    "measurements_header": [
+      "marker",
+      "value",
+      "unit"
+    ],
+    "out_flag": "--out",
+    "result_json": true,
+    "targets_flag": "--targets",
+    "levers_json": true
+  },
+  "inputs_status": "verified",
+  "inputs": [
+    {
+      "key": "intake_g_d",
+      "label_zh": "日均摄入量",
+      "aliases": [
+        "摄入量",
+        "平均每日摄入量",
+        "daily intake",
+        "intake",
+        "g/d intake"
+      ],
+      "unit": "g/d",
+      "accept": {
+        "g/d": 1
+      },
+      "range": [
+        0,
+        3000
+      ],
+      "unit_required": true,
+      "required": true,
+      "from": "measurements",
+      "note_zh": "所选食物组的长期日均克数，不是营养素浓度。仅接受 g/d；份、杯和盘的大小不统一。0–3000是录入检查范围，各表可查范围另行判断。"
+    },
+    {
+      "key": "food_group",
+      "label_zh": "食物组",
+      "required": false,
+      "from": "argument",
+      "flag": "--food-group",
+      "note_zh": "combined（默认，水果与蔬菜合计）、fruit 或 vegetables。测量和目标必须对应同一组。"
+    },
+    {
+      "key": "outcome",
+      "label_zh": "结局",
+      "required": false,
+      "from": "argument",
+      "flag": "--outcome",
+      "note_zh": "默认 all_cause_mortality；另支持 coronary_heart_disease、stroke、ischemic_stroke、hemorrhagic_stroke、cardiovascular_disease、total_cancer。"
+    },
+    {
+      "key": "endpoint",
+      "label_zh": "分析类型",
+      "required": false,
+      "from": "argument",
+      "flag": "--endpoint",
+      "note_zh": "mixed、incidence、mortality；未指定时全因死亡用mortality，其余用mixed。卒中亚型仅支持mixed。"
+    }
+  ],
+  "outputs": [
+    {
+      "key": "food_group",
+      "label_zh": "食物组"
+    },
+    {
+      "key": "outcome",
+      "label_zh": "结局"
+    },
+    {
+      "key": "endpoint",
+      "label_zh": "分析类型"
+    },
+    {
+      "key": "intake_g_d",
+      "label_zh": "输入日均摄入量",
+      "unit": "g/d"
+    },
+    {
+      "key": "status",
+      "label_zh": "查表状态",
+      "note_zh": "exact=命中印出行；bracket=仅列相邻两行；outside_table=超出该列范围；not_published=该列无数值。"
+    },
+    {
+      "key": "reference_g_d",
+      "label_zh": "该列参照摄入量",
+      "unit": "g/d"
+    },
+    {
+      "key": "rr",
+      "label_zh": "印出行相对风险",
+      "unit": "1"
+    },
+    {
+      "key": "ci_low",
+      "label_zh": "印出行95%置信区间下限",
+      "unit": "1"
+    },
+    {
+      "key": "ci_high",
+      "label_zh": "印出行95%置信区间上限",
+      "unit": "1"
+    },
+    {
+      "key": "table",
+      "label_zh": "补充表编号",
+      "unit": "1"
+    },
+    {
+      "key": "pdf_page",
+      "label_zh": "补充PDF页码",
+      "unit": "1"
+    },
+    {
+      "key": "lower_intake_g_d",
+      "label_zh": "较低摄入量的相邻行摄入量",
+      "unit": "g/d"
+    },
+    {
+      "key": "lower_rr",
+      "label_zh": "较低摄入量的相邻行RR",
+      "unit": "1"
+    },
+    {
+      "key": "lower_ci_low",
+      "label_zh": "较低摄入量的相邻行95%CI下限",
+      "unit": "1"
+    },
+    {
+      "key": "lower_ci_high",
+      "label_zh": "较低摄入量的相邻行95%CI上限",
+      "unit": "1"
+    },
+    {
+      "key": "upper_intake_g_d",
+      "label_zh": "较高摄入量的相邻行摄入量",
+      "unit": "g/d"
+    },
+    {
+      "key": "upper_rr",
+      "label_zh": "较高摄入量的相邻行RR",
+      "unit": "1"
+    },
+    {
+      "key": "upper_ci_low",
+      "label_zh": "较高摄入量的相邻行95%CI下限",
+      "unit": "1"
+    },
+    {
+      "key": "upper_ci_high",
+      "label_zh": "较高摄入量的相邻行95%CI上限",
+      "unit": "1"
+    },
+    {
+      "key": "table_min_g_d",
+      "label_zh": "越界时该列最小摄入量",
+      "unit": "g/d"
+    },
+    {
+      "key": "table_max_g_d",
+      "label_zh": "越界时该列最大摄入量",
+      "unit": "g/d"
+    }
+  ],
+  "validation": {
+    "status": "reproduced",
+    "examples": [
+      {
+        "locator": "Supplementary Table 18, PDF p.168, Fruit and vegetables column",
+        "quote": "g/d RR (95% CI)\n0 1.00\n500 0.73 (0.70-0.77)\n800 0.69 (0.66-0.73)",
+        "values": [
+          0,
+          1.0,
+          500,
+          0.73,
+          0.7,
+          0.77,
+          800,
+          0.69,
+          0.66
+        ],
+        "tolerance": "逐字抄录表格单元格；仅规范空白。直接查表，所有值精确匹配已四舍五入到两位小数的印出数值。",
+        "test": "tests/test_manifest.py::test_printed_table18"
+      },
+      {
+        "locator": "Supplementary Table 8, PDF p.158, incidence/mortality, incidence, mortality columns",
+        "quote": "35.6 1.00\n500 0.84 (0.81-0.86)\n500 0.84 (0.81-0.87)\n500 0.80 (0.75-0.85)",
+        "values": [
+          35.6,
+          500,
+          0.84,
+          0.81,
+          0.86,
+          0.87,
+          0.8,
+          0.75,
+          0.85
+        ],
+        "tolerance": "直接查表，三种结局的印出数值分别精确匹配；只规范单元格间空白。",
+        "test": "tests/test_manifest.py::test_printed_table8_endpoints"
+      }
+    ]
+  },
+  "data_files": [
+    {
+      "path": "data/lookup.csv",
+      "source_url": "https://pmc.ncbi.nlm.nih.gov/articles/instance/5837313/bin/supplementary_materials_dyw319.pdf",
+      "license": "CC-BY-NC-4.0 (source article; preserve attribution and non-commercial restriction)",
+      "sha256": "48ce74f6ab141ed8e946181e77a2ed770b95e0dee5400acae5543d483dd61245",
+      "redistributable": "yes"
+    },
+    {
+      "path": "data/curves.json",
+      "source_url": "https://pmc.ncbi.nlm.nih.gov/articles/instance/5837313/bin/supplementary_materials_dyw319.pdf",
+      "license": "CC-BY-NC-4.0 (source article; preserve attribution and non-commercial restriction)",
+      "sha256": "9e7350cb831683587ed0b384ea229c9b690d7a431df189410bc18c89a642fca0",
+      "redistributable": "yes"
+    }
+  ]
+}

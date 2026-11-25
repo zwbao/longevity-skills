@@ -1,0 +1,326 @@
+{
+  "schema": "longevity-skill/1",
+  "name": "burden-of-proof-dietary-risk",
+  "kind": "paper",
+  "tier": "A",
+  "species": [
+    "human"
+  ],
+  "evidence": "cohort",
+  "domains": [
+    "饮食与代谢"
+  ],
+  "blurb_zh": "用加工肉、含糖饮料或反式脂肪的日常摄入量，读取已发表摄入量点对应的慢病相对风险及不确定区间。",
+  "intents": [
+    "intervention_evidence",
+    "before_after"
+  ],
+  "triage": {
+    "reason_zh": "人体观察性研究的荟萃回归在附表13–16印出39个摄入量—风险读数，可按个人摄入量精确查表；只支持已发表点，不插值。",
+    "reviewed": false
+  },
+  "paper": {
+    "doi": "10.1038/s41591-025-03775-8",
+    "title": "Health effects associated with consumption of processed meat, sugar-sweetened beverages and trans fatty acids: a Burden of Proof study",
+    "title_zh": "加工肉、含糖饮料和反式脂肪摄入的健康关联",
+    "journal": "Nature Medicine",
+    "year": 2025,
+    "authors": "Haile 等",
+    "article_url": "https://www.nature.com/articles/s41591-025-03775-8",
+    "supplements": [
+      {
+        "label": "Supplementary Information（附表 1–17）",
+        "url": "https://static-content.springer.com/esm/art%3A10.1038%2Fs41591-025-03775-8/MediaObjects/41591_2025_3775_MOESM1_ESM.pdf"
+      },
+      {
+        "label": "Reporting Summary",
+        "url": "https://static-content.springer.com/esm/art%3A10.1038%2Fs41591-025-03775-8/MediaObjects/41591_2025_3775_MOESM2_ESM.pdf"
+      },
+      {
+        "label": "作者接受稿（含全文和附录）",
+        "url": "https://zenodo.org/records/16955948"
+      }
+    ],
+    "code_url": "https://github.com/ihmeuw-msca/burden-of-proof/tree/main/risks/processed_foods",
+    "card_notes": [
+      "本报告只读取附表 13–16 中包含研究间异质性的相对风险列；不是原始样条模型的重新拟合。",
+      "仅支持已发表的离散摄入量点，零摄入按参照定义处理；没有表格点的结局保持空值，不插值或外推。"
+    ],
+    "summary_zh": "这项研究汇总成年人的观察性研究，发现加工肉、含糖饮料和反式脂肪摄入与部分慢性疾病风险升高有关，但证据较弱或研究间不一致。个人报告只读取与你摄入量相对应的已发表相对风险及不确定区间，不计算个人绝对发病概率或饮食改变的因果效果。",
+    "summary_status": "draft"
+  },
+  "entry": {
+    "script": "scripts/personal_report.py",
+    "measurements_flag": "--measurements",
+    "measurements_header": [
+      "marker",
+      "value",
+      "unit"
+    ],
+    "age_flag": "--age",
+    "sex_flag": "--sex",
+    "out_flag": "--out",
+    "result_json": true,
+    "targets_flag": "--targets",
+    "levers_json": true
+  },
+  "inputs_status": "verified",
+  "inputs": [
+    {
+      "key": "processed_meat_g_d",
+      "label_zh": "加工肉",
+      "aliases": [
+        "加工肉摄入量",
+        "加工肉类",
+        "processed meat",
+        "Processed meat consumption"
+      ],
+      "unit": "g/d",
+      "range": [
+        0,
+        400
+      ],
+      "note_zh": "日常平均摄入的食物质量，不是蛋白质或钠的质量。只接受已发表点：0、25、50、75、100、150、200、250、300、350、400；其中 25、75 只有缺血性心脏病读数，150 没有该结局读数。",
+      "required": false,
+      "unit_required": true,
+      "from": "measurements"
+    },
+    {
+      "key": "ssb_g_d",
+      "label_zh": "含糖饮料",
+      "aliases": [
+        "含糖饮料摄入量",
+        "SSB",
+        "SSBs",
+        "sugar-sweetened beverages",
+        "SSB consumption"
+      ],
+      "unit": "g/d",
+      "range": [
+        0,
+        1000
+      ],
+      "note_zh": "饮料总质量，不是其中糖的质量；不能把 mL 或瓶数直接当作克。只接受已发表点：0、250、500、750、1000。",
+      "required": false,
+      "unit_required": true,
+      "from": "measurements"
+    },
+    {
+      "key": "tfa_energy_pct",
+      "label_zh": "反式脂肪供能占比",
+      "aliases": [
+        "反式脂肪酸供能百分比",
+        "TFA energy percentage",
+        "trans fat percent energy",
+        "Trans fat consumption"
+      ],
+      "unit": "%",
+      "accept": {
+        "1": 100
+      },
+      "range": [
+        0,
+        6
+      ],
+      "note_zh": "反式脂肪提供的能量占每日总能量的百分比，不是食物重量百分比或每日克数。1% 输入 1；若用能量比例 0.01，单位填 1。只接受 0、1、2、3、4、5、6；零为参照定义。",
+      "required": false,
+      "unit_required": true,
+      "from": "measurements"
+    },
+    {
+      "key": "age",
+      "label_zh": "实足年龄",
+      "unit": "a",
+      "range": [
+        18,
+        120
+      ],
+      "required": true,
+      "from": "profile",
+      "flag": "--age",
+      "note_zh": "只核对成年人适用范围；18–120 是输入检查范围，不是模型训练年龄上下界。年龄不改变表格读数。"
+    },
+    {
+      "key": "sex",
+      "label_zh": "性别",
+      "required": false,
+      "from": "profile",
+      "flag": "--sex",
+      "note_zh": "可选上下文，不改变读数。"
+    }
+  ],
+  "outputs": [
+    {
+      "key": "meat_t2d_rr",
+      "label_zh": "加工肉—2 型糖尿病 相对风险",
+      "unit": "1",
+      "note_zh": "相对于零摄入的群体关联。未提供摄入量或该结局没有该摄入量的已发表表格点时为 null；零参照的区间也为 null。"
+    },
+    {
+      "key": "meat_t2d_ui_lower",
+      "label_zh": "加工肉—2 型糖尿病 95% 不确定区间下限（含异质性）",
+      "unit": "1",
+      "note_zh": "相对于零摄入的群体关联。未提供摄入量或该结局没有该摄入量的已发表表格点时为 null；零参照的区间也为 null。"
+    },
+    {
+      "key": "meat_t2d_ui_upper",
+      "label_zh": "加工肉—2 型糖尿病 95% 不确定区间上限（含异质性）",
+      "unit": "1",
+      "note_zh": "相对于零摄入的群体关联。未提供摄入量或该结局没有该摄入量的已发表表格点时为 null；零参照的区间也为 null。"
+    },
+    {
+      "key": "meat_crc_rr",
+      "label_zh": "加工肉—结直肠癌 相对风险",
+      "unit": "1",
+      "note_zh": "相对于零摄入的群体关联。未提供摄入量或该结局没有该摄入量的已发表表格点时为 null；零参照的区间也为 null。"
+    },
+    {
+      "key": "meat_crc_ui_lower",
+      "label_zh": "加工肉—结直肠癌 95% 不确定区间下限（含异质性）",
+      "unit": "1",
+      "note_zh": "相对于零摄入的群体关联。未提供摄入量或该结局没有该摄入量的已发表表格点时为 null；零参照的区间也为 null。"
+    },
+    {
+      "key": "meat_crc_ui_upper",
+      "label_zh": "加工肉—结直肠癌 95% 不确定区间上限（含异质性）",
+      "unit": "1",
+      "note_zh": "相对于零摄入的群体关联。未提供摄入量或该结局没有该摄入量的已发表表格点时为 null；零参照的区间也为 null。"
+    },
+    {
+      "key": "meat_ihd_rr",
+      "label_zh": "加工肉—缺血性心脏病 相对风险",
+      "unit": "1",
+      "note_zh": "相对于零摄入的群体关联。未提供摄入量或该结局没有该摄入量的已发表表格点时为 null；零参照的区间也为 null。"
+    },
+    {
+      "key": "meat_ihd_ui_lower",
+      "label_zh": "加工肉—缺血性心脏病 95% 不确定区间下限（含异质性）",
+      "unit": "1",
+      "note_zh": "相对于零摄入的群体关联。未提供摄入量或该结局没有该摄入量的已发表表格点时为 null；零参照的区间也为 null。"
+    },
+    {
+      "key": "meat_ihd_ui_upper",
+      "label_zh": "加工肉—缺血性心脏病 95% 不确定区间上限（含异质性）",
+      "unit": "1",
+      "note_zh": "相对于零摄入的群体关联。未提供摄入量或该结局没有该摄入量的已发表表格点时为 null；零参照的区间也为 null。"
+    },
+    {
+      "key": "ssb_t2d_rr",
+      "label_zh": "含糖饮料—2 型糖尿病 相对风险",
+      "unit": "1",
+      "note_zh": "相对于零摄入的群体关联。未提供摄入量或该结局没有该摄入量的已发表表格点时为 null；零参照的区间也为 null。"
+    },
+    {
+      "key": "ssb_t2d_ui_lower",
+      "label_zh": "含糖饮料—2 型糖尿病 95% 不确定区间下限（含异质性）",
+      "unit": "1",
+      "note_zh": "相对于零摄入的群体关联。未提供摄入量或该结局没有该摄入量的已发表表格点时为 null；零参照的区间也为 null。"
+    },
+    {
+      "key": "ssb_t2d_ui_upper",
+      "label_zh": "含糖饮料—2 型糖尿病 95% 不确定区间上限（含异质性）",
+      "unit": "1",
+      "note_zh": "相对于零摄入的群体关联。未提供摄入量或该结局没有该摄入量的已发表表格点时为 null；零参照的区间也为 null。"
+    },
+    {
+      "key": "ssb_ihd_rr",
+      "label_zh": "含糖饮料—缺血性心脏病 相对风险",
+      "unit": "1",
+      "note_zh": "相对于零摄入的群体关联。未提供摄入量或该结局没有该摄入量的已发表表格点时为 null；零参照的区间也为 null。"
+    },
+    {
+      "key": "ssb_ihd_ui_lower",
+      "label_zh": "含糖饮料—缺血性心脏病 95% 不确定区间下限（含异质性）",
+      "unit": "1",
+      "note_zh": "相对于零摄入的群体关联。未提供摄入量或该结局没有该摄入量的已发表表格点时为 null；零参照的区间也为 null。"
+    },
+    {
+      "key": "ssb_ihd_ui_upper",
+      "label_zh": "含糖饮料—缺血性心脏病 95% 不确定区间上限（含异质性）",
+      "unit": "1",
+      "note_zh": "相对于零摄入的群体关联。未提供摄入量或该结局没有该摄入量的已发表表格点时为 null；零参照的区间也为 null。"
+    },
+    {
+      "key": "tfa_ihd_rr",
+      "label_zh": "反式脂肪—缺血性心脏病 相对风险",
+      "unit": "1",
+      "note_zh": "相对于零摄入的群体关联。未提供摄入量或该结局没有该摄入量的已发表表格点时为 null；零参照的区间也为 null。"
+    },
+    {
+      "key": "tfa_ihd_ui_lower",
+      "label_zh": "反式脂肪—缺血性心脏病 95% 不确定区间下限（含异质性）",
+      "unit": "1",
+      "note_zh": "相对于零摄入的群体关联。未提供摄入量或该结局没有该摄入量的已发表表格点时为 null；零参照的区间也为 null。"
+    },
+    {
+      "key": "tfa_ihd_ui_upper",
+      "label_zh": "反式脂肪—缺血性心脏病 95% 不确定区间上限（含异质性）",
+      "unit": "1",
+      "note_zh": "相对于零摄入的群体关联。未提供摄入量或该结局没有该摄入量的已发表表格点时为 null；零参照的区间也为 null。"
+    }
+  ],
+  "validation": {
+    "status": "reproduced",
+    "examples": [
+      {
+        "locator": "Supplementary Tables 13 and 14, PDF page 44, with-between-study-heterogeneity column",
+        "quote": "Type 2 diabetes\n50 1.3 (1.12, 1.52)\nColorectal cancer\n50 1.26 (1.08, 1.47)\nIschemic heart disease\n50 1.15 (0.97, 1.36)",
+        "values": [
+          50,
+          1.3,
+          1.12,
+          1.52,
+          1.26,
+          1.08,
+          1.47,
+          1.15,
+          0.97,
+          1.36
+        ],
+        "test": "tests/test_manifest.py::test_printed_processed_meat",
+        "tolerance": "精确匹配论文已四舍五入的表格数字；测试的是表格读出，不声称重建原始连续样条。表格单元格换行仅作排版。"
+      },
+      {
+        "locator": "Supplementary Table 15, PDF page 44, with-between-study-heterogeneity column",
+        "quote": "Type 2 diabetes\n250 1.2 (1.07, 1.34)\nIschemic heart disease\n250 1.07 (1.03, 1.12)\n750 1.29 (1.1, 1.50)",
+        "values": [
+          250,
+          1.2,
+          1.07,
+          1.34,
+          1.03,
+          1.12,
+          750,
+          1.29,
+          1.1,
+          1.5
+        ],
+        "test": "tests/test_manifest.py::test_printed_ssb",
+        "tolerance": "精确匹配论文已四舍五入的表格数字；测试的是表格读出，不声称重建原始连续样条。表格单元格换行仅作排版。"
+      },
+      {
+        "locator": "Supplementary Table 16, PDF page 45, with-between-study-heterogeneity column",
+        "quote": "Ischemic heart disease\n1 1.11 (1, 1.24)\n4 1.3 (1, 1.68)",
+        "values": [
+          1,
+          1.11,
+          1.24,
+          4,
+          1.3,
+          1.68
+        ],
+        "test": "tests/test_manifest.py::test_printed_tfa",
+        "tolerance": "精确匹配论文已四舍五入的表格数字；测试的是表格读出，不声称重建原始连续样条。表格单元格换行仅作排版。"
+      }
+    ]
+  },
+  "data_files": [
+    {
+      "path": "data/risk_table.csv",
+      "source_url": "https://static-content.springer.com/esm/art%3A10.1038%2Fs41591-025-03775-8/MediaObjects/41591_2025_3775_MOESM1_ESM.pdf",
+      "license": "Numerical facts transcribed from published tables; no source PDF redistributed",
+      "redistributable": "yes",
+      "sha256": "ea7329f9692bd52454ceffae171e9e3a82724ec2d5454ba61bfbf1981085c7ed"
+    }
+  ]
+}
