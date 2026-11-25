@@ -1,0 +1,302 @@
+{
+  "schema": "longevity-skill/1",
+  "name": "edisea-dietary-index",
+  "kind": "paper",
+  "tier": "A",
+  "species": [
+    "human"
+  ],
+  "evidence": "cohort",
+  "domains": [
+    "甲基化",
+    "衰弱与死亡风险"
+  ],
+  "blurb_zh": "用茶、全谷物、水果、薯条、酒、加工肉、甜饮料等十类食物每天的份数，算与表观衰老较慢相关的饮食指数 EDISEA。",
+  "intents": [
+    "intervention_evidence",
+    "epigenetic_age"
+  ],
+  "triage": {
+    "reason_zh": "源数据图2b印出十项食物全精度权重，作者代码证实为每2000千卡每份的权重，可按个人饮食份数算出 EDISEA。",
+    "reviewed": false
+  },
+  "paper": {
+    "doi": "10.1038/s41467-026-77790-9",
+    "title": "An epigenetic aging-informed dietary pattern is associated with a spectrum of aging-related health outcomes",
+    "title_zh": "表观衰老饮食指数 EDISEA",
+    "journal": "Nature Communications",
+    "year": 2026,
+    "authors": "Lai 等",
+    "article_url": "https://www.nature.com/articles/s41467-026-77790-9",
+    "supplements": [
+      {
+        "label": "Source Data（Figure 2b 权重）",
+        "url": "https://static-content.springer.com/esm/art%3A10.1038%2Fs41467-026-77790-9/MediaObjects/41467_2026_77790_MOESM13_ESM.xlsx"
+      },
+      {
+        "label": "Supplementary Data 2（弹性网络选中的食物组）",
+        "url": "https://static-content.springer.com/esm/art%3A10.1038%2Fs41467-026-77790-9/MediaObjects/41467_2026_77790_MOESM4_ESM.xlsx"
+      },
+      {
+        "label": "Supplementary Data 7（38 个食物组的定义）",
+        "url": "https://static-content.springer.com/esm/art%3A10.1038%2Fs41467-026-77790-9/MediaObjects/41467_2026_77790_MOESM9_ESM.xlsx"
+      },
+      {
+        "label": "Supplementary Information",
+        "url": "https://static-content.springer.com/esm/art%3A10.1038%2Fs41467-026-77790-9/MediaObjects/41467_2026_77790_MOESM1_ESM.pdf"
+      }
+    ],
+    "code_url": "https://github.com/WilliamLai3/Diet_EpigeneticAging",
+    "card_notes": [
+      "权重取自 Source Data 的 Figure 2b（全精度），即作者代码 construct/hrs-ediea.R 写出的每 2000 千卡每份的权重（Estimate = −β_z / SD），正文印到三位小数。",
+      "论文用残差法做能量校正，残差法所需的推导队列回归系数没有公布；本技能用“份数 × 2000 / 总能量”换算，没给总能量时按每天份数直接算。",
+      "推导队列各食物组均值没有公布，所以不给人群百分位；论文没有印出个人示例分数，个人读出尚未与论文示例核对。"
+    ],
+    "summary_zh": "这项研究在美国老年人中用饮食问卷和血液甲基化时钟 GrimAge2 推导出一个十类食物的饮食指数，并在美国和英国四个人群队列中发现，指数较高的人表观衰老较慢、全因死亡和多种衰老相关疾病风险较低。个人报告只用你十类食物每天的份数（可加每日总能量）按论文权重算出你的指数和每项贡献，不换算成表观年龄、不给人群百分位，也不预测死亡或疾病风险。",
+    "summary_status": "draft"
+  },
+  "entry": {
+    "script": "scripts/personal_report.py",
+    "measurements_flag": "--intake",
+    "measurements_header": [
+      "item",
+      "value",
+      "unit"
+    ],
+    "sex_flag": "--sex",
+    "out_flag": "--out",
+    "result_json": true,
+    "targets_flag": "--targets",
+    "levers_json": true
+  },
+  "inputs_status": "verified",
+  "inputs": [
+    {
+      "key": "tea_serv_d",
+      "label_zh": "茶",
+      "aliases": [
+        "tea",
+        "喝茶",
+        "茶水",
+        "绿茶",
+        "红茶",
+        "Tea servings"
+      ],
+      "unit": "1",
+      "range": [
+        0,
+        30
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "每天几份，按平时一年的习惯摄入估计；不吃填 0。论文 HRS 问卷里的 Tea；不含加糖的甜冰茶（归入含糖饮料）。论文没有印每份的克数，按你所用问卷或记录的常用份量理解。"
+    },
+    {
+      "key": "whole_grains_serv_d",
+      "label_zh": "全谷物",
+      "aliases": [
+        "whole grains",
+        "whole grain",
+        "全谷",
+        "粗粮",
+        "全麦"
+      ],
+      "unit": "1",
+      "range": [
+        0,
+        30
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "每天几份，按平时一年的习惯摄入估计；不吃填 0。全麦面包、谷物早餐、糙米、燕麦等全谷物食物。论文没有印每份的克数，按你所用问卷或记录的常用份量理解。"
+    },
+    {
+      "key": "fruits_serv_d",
+      "label_zh": "水果（不含果汁）",
+      "aliases": [
+        "fruits",
+        "fruit",
+        "水果",
+        "新鲜水果"
+      ],
+      "unit": "1",
+      "range": [
+        0,
+        30
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "每天几份，按平时一年的习惯摄入估计；不吃填 0。整个水果，不含果汁（Supplementary Data 7）。论文没有印每份的克数，按你所用问卷或记录的常用份量理解。"
+    },
+    {
+      "key": "fries_serv_d",
+      "label_zh": "炸薯条和炸土豆",
+      "aliases": [
+        "fries",
+        "french fries",
+        "薯条",
+        "炸薯条",
+        "炸土豆"
+      ],
+      "unit": "1",
+      "range": [
+        0,
+        30
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "每天几份，按平时一年的习惯摄入估计；不吃填 0。French fries and fried potatoes。论文没有印每份的克数，按你所用问卷或记录的常用份量理解。"
+    },
+    {
+      "key": "liquor_serv_d",
+      "label_zh": "烈酒",
+      "aliases": [
+        "liquor",
+        "spirits",
+        "烈性酒",
+        "白酒",
+        "洋酒"
+      ],
+      "unit": "1",
+      "range": [
+        0,
+        30
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "每天几份，按平时一年的习惯摄入估计；不吃填 0。烈酒和蒸馏酒（Liquor and spirits）。论文没有印每份的克数，按你所用问卷或记录的常用份量理解。"
+    },
+    {
+      "key": "beer_serv_d",
+      "label_zh": "啤酒",
+      "aliases": [
+        "beer",
+        "啤酒摄入"
+      ],
+      "unit": "1",
+      "range": [
+        0,
+        30
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "每天几份，按平时一年的习惯摄入估计；不吃填 0。啤酒（Beer）。论文没有印每份的克数，按你所用问卷或记录的常用份量理解。"
+    },
+    {
+      "key": "processed_meat_serv_d",
+      "label_zh": "加工肉",
+      "aliases": [
+        "processed meat",
+        "加工肉类",
+        "加工肉制品",
+        "香肠培根火腿"
+      ],
+      "unit": "1",
+      "range": [
+        0,
+        30
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "每天几份，按平时一年的习惯摄入估计；不吃填 0。培根、香肠、热狗、午餐肉等加工肉。论文没有印每份的克数，按你所用问卷或记录的常用份量理解。"
+    },
+    {
+      "key": "ssb_serv_d",
+      "label_zh": "含糖饮料",
+      "aliases": [
+        "sugar-sweetened beverages",
+        "SSB",
+        "甜饮料",
+        "含糖汽水"
+      ],
+      "unit": "1",
+      "range": [
+        0,
+        30
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "每天几份，按平时一年的习惯摄入估计；不吃填 0。普通汽水、果味饮料等加糖饮料。论文没有印每份的克数，按你所用问卷或记录的常用份量理解。"
+    },
+    {
+      "key": "asb_serv_d",
+      "label_zh": "人工甜味剂饮料",
+      "aliases": [
+        "artificially sweetened beverages",
+        "artificial sweetened beverages",
+        "ASB",
+        "diet soda",
+        "代糖饮料",
+        "零度饮料"
+      ],
+      "unit": "1",
+      "range": [
+        0,
+        30
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "每天几份，按平时一年的习惯摄入估计；不吃填 0。无糖可乐等用代糖的饮料；不含白开水和不加糖的茶、咖啡。论文没有印每份的克数，按你所用问卷或记录的常用份量理解。"
+    },
+    {
+      "key": "margarine_serv_d",
+      "label_zh": "人造黄油",
+      "aliases": [
+        "margarine",
+        "植物黄油",
+        "人造奶油"
+      ],
+      "unit": "1",
+      "range": [
+        0,
+        30
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "每天几份，按平时一年的习惯摄入估计；不吃填 0。Margarine。论文没有印每份的克数，按你所用问卷或记录的常用份量理解。"
+    },
+    {
+      "key": "energy_kcal_d",
+      "label_zh": "每日总能量（千卡）",
+      "aliases": [
+        "energy",
+        "total energy",
+        "energy intake",
+        "kcal",
+        "总能量",
+        "总热量",
+        "每日总热量",
+        "能量摄入",
+        "每日能量"
+      ],
+      "unit": "1",
+      "range": [
+        500,
+        6000
+      ],
+      "required": false,
+      "from": "measurements",
+      "note_zh": "每天吃进的总千卡数（不是千焦；千焦除以 4.184 才是千卡）。给了就把份数换算成每 2000 千卡的份数；没给就按每天份数直接算。"
+    },
+    {
+      "key": "sex",
+      "label_zh": "性别",
+      "required": false,
+      "from": "profile",
+      "flag": "--sex",
+      "note_zh": "不进 EDISEA，只用于对照论文的能量可信范围。"
+    }
+  ],
+  "outputs": [
+    {
+      "key": "edisea",
+      "label_zh": "EDISEA 饮食指数（每 2000 千卡份数加权和）",
+      "unit": "score",
+      "note_zh": "越高越接近论文中与表观衰老较慢相关的饮食模式；没有单位，也没有公布的人群百分位。"
+    }
+  ],
+  "validation": {
+    "status": "draft",
+    "gap_zh": "论文没有印出任何个人饮食输入对应的 EDISEA 分数（正文、Supplementary Information 的补充图表 1–10 与补充表、Supplementary Data 1–8、Source Data 全部工作表、作者 GitHub 仓库 WilliamLai3/Diet_EpigeneticAging 的 construct、outcomes、multiomics 脚本都查过）；Source Data 的 Supplementary Figure 3b 有每个人的 EDISEA，但那是按推导训练集均值中心化后的分数，没有对应的食物摄入，均值也没公布，无法核对。测试只核对 Source Data 全精度权重与正文三位小数权重一致、以及加权和的算法与作者代码一致，不算复现论文示例。另：论文用残差法做能量校正，本技能用每 2000 千卡的比例换算，两者对同一个人的分数会有差别。"
+  }
+}

@@ -1,0 +1,554 @@
+{
+  "schema": "longevity-skill/1",
+  "name": "modifiable-risk-factor-score",
+  "kind": "paper",
+  "tier": "A",
+  "species": [
+    "human"
+  ],
+  "evidence": "cohort",
+  "domains": [
+    "衰弱与死亡风险"
+  ],
+  "blurb_zh": "数一数 11 项可改变的危险因素（教育、抑郁、吸烟、饮酒、运动、饮食、睡眠、体重、血糖、血压、血脂）有几项，并给出你所在年龄段每多一项对应的全因死亡风险比。",
+  "intents": [
+    "frailty_mortality",
+    "lab_meaning"
+  ],
+  "triage": {
+    "reason_zh": "按补充方法 S1 的 11 项二分类切点数出个人的可改变危险因素得分（0–11）和三个分组得分，并按补充表 S11 给出所在年龄段每分全因死亡风险比。",
+    "reviewed": false
+  },
+  "paper": {
+    "doi": "10.1093/gerona/glag196",
+    "title": "Modifiable risk factors for mortality across life course: a pooled population-based cohort study",
+    "title_zh": "全生命周期可改变的死亡危险因素：三个中国人群队列的汇总研究",
+    "journal": "The Journals of Gerontology, Series A: Biological Sciences and Medical Sciences",
+    "year": 2026,
+    "authors": "Chen 等",
+    "article_url": "https://academic.oup.com/biomedgerontology/article/81/10/glag196/8762634",
+    "supplements": [
+      {
+        "label": "Supplementary data（glag196_supplementary_data.docx：方法 S1 切点、补充表 S11 每分风险比）",
+        "url": "https://academic.oup.com/biomedgerontology/article/81/10/glag196/8762634#supplementary-data"
+      }
+    ],
+    "card_notes": [
+      "11 项的切点来自补充方法 S1 最后一列（各队列统一后的二分类定义）；每分风险比来自补充附录里标题为 Table S11 的表（汇总三个队列，目录里编号为 S12；正文引作 Table S11）。",
+      "论文没有印出任何个人的得分算例，也没有印出“几项对零项”的风险比；报告里的“与零项相比”是按每分风险比连乘推算的模型数，不是论文印出的数。",
+      "数据只有作者按需提供，没有公开代码。"
+    ],
+    "summary_zh": "这项研究汇总了海南和广州三个中国人群队列共六万多名 30 岁到百岁以上的成人，发现 11 项可改变危险因素的个数越多，各年龄段的全因死亡风险都越高，而且代谢类因素（糖尿病、高血压）的关联随年龄变弱，受教育程度低和缺乏运动的关联在高龄老人里更明显。个人报告只按论文的切点数出你有几项危险因素、分在哪一组，并查出你所在年龄段每多一项对应的风险比，不算个人的死亡概率或预期寿命。",
+    "summary_status": "draft"
+  },
+  "entry": {
+    "script": "scripts/personal_report.py",
+    "measurements_flag": "--measurements",
+    "measurements_header": [
+      "item",
+      "value",
+      "unit"
+    ],
+    "age_flag": "--age",
+    "sex_flag": "--sex",
+    "medications_flag": "--medications",
+    "labs_flag": "--labs",
+    "out_flag": "--out",
+    "result_json": true,
+    "targets_flag": "--targets",
+    "levers_json": true
+  },
+  "population": {
+    "age_years": [
+      30,
+      116
+    ],
+    "note_zh": "三个队列合计 30–116 岁，均在中国南方（海南、广州）；百岁组只来自海南百岁老人队列。"
+  },
+  "inputs_status": "verified",
+  "inputs": [
+    {
+      "key": "gds15_score",
+      "label_zh": "老年抑郁量表 GDS-15 得分",
+      "aliases": [
+        "GDS-15",
+        "GDS15",
+        "GDS",
+        "老年抑郁量表",
+        "老年抑郁量表得分",
+        "geriatric depression scale"
+      ],
+      "unit": "score",
+      "range": [
+        0,
+        15
+      ],
+      "required": false,
+      "from": "measurements",
+      "note_zh": "15 道是/否题，≥6 分算抑郁。也可以改用 --depressive-symptoms（CIDI-SF 问题）。"
+    },
+    {
+      "key": "pa_met_h_week",
+      "label_zh": "每周体力活动量（MET-小时/周）",
+      "aliases": [
+        "体力活动",
+        "身体活动",
+        "运动量",
+        "MET-h/week",
+        "MET小时每周",
+        "physical activity",
+        "PA score",
+        "体力活动量",
+        "每周体力活动"
+      ],
+      "unit": "score",
+      "range": [
+        0,
+        300
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "每种活动的 MET 值×每周小时数之和（快走或太极约 3.5，中等强度 5.5，剧烈 7.5）；每周 150 分钟快走约等于 10。单位列写 MET-h/week 或留空。"
+    },
+    {
+      "key": "diet_score",
+      "label_zh": "健康饮食得分（10 项）",
+      "aliases": [
+        "健康饮食得分",
+        "饮食得分",
+        "健康饮食评分",
+        "diet score",
+        "healthy diet score"
+      ],
+      "unit": "score",
+      "range": [
+        0,
+        10
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "补充方法 S1 的 10 条健康饮食行为，每满足一条 1 分；≤6 分算饮食不健康。"
+    },
+    {
+      "key": "sleep_hours",
+      "label_zh": "每晚平均睡眠时长",
+      "aliases": [
+        "睡眠时长",
+        "睡眠时间",
+        "平均睡眠",
+        "sleep duration",
+        "sleep",
+        "每晚睡眠时长"
+      ],
+      "unit": "h",
+      "accept": {
+        "min": 0.016667
+      },
+      "range": [
+        1,
+        20
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "最近一个月平均每晚（每天）睡几个小时。"
+    },
+    {
+      "key": "bmi_kg_m2",
+      "label_zh": "体质指数",
+      "aliases": [
+        "BMI",
+        "体重指数",
+        "body mass index"
+      ],
+      "unit": "kg/m^2",
+      "range": [
+        10,
+        70
+      ],
+      "required": false,
+      "from": "measurements",
+      "group": "bmi",
+      "note_zh": "没有 BMI 时可给体重和身高。"
+    },
+    {
+      "key": "weight_kg",
+      "label_zh": "体重",
+      "aliases": [
+        "weight",
+        "body weight",
+        "体重(kg)"
+      ],
+      "unit": "kg",
+      "accept": {
+        "lb": 0.45359237
+      },
+      "range": [
+        20,
+        300
+      ],
+      "required": false,
+      "from": "measurements",
+      "group": "bmi"
+    },
+    {
+      "key": "height_cm",
+      "label_zh": "身高",
+      "aliases": [
+        "height",
+        "身高(cm)"
+      ],
+      "unit": "cm",
+      "accept": {
+        "m": 100
+      },
+      "range": [
+        100,
+        230
+      ],
+      "required": false,
+      "from": "measurements",
+      "group": "bmi"
+    },
+    {
+      "key": "sbp_mmhg",
+      "label_zh": "收缩压",
+      "aliases": [
+        "sbp",
+        "systolic",
+        "高压",
+        "收缩压(高压)",
+        "SBP"
+      ],
+      "loinc": [
+        "8480-6"
+      ],
+      "unit": "mmHg",
+      "accept": {
+        "kPa": 7.500617
+      },
+      "range": [
+        60,
+        260
+      ],
+      "required": false,
+      "from": "measurements",
+      "note_zh": "论文用坐位静息 5 分钟后测三次的平均值。"
+    },
+    {
+      "key": "dbp_mmhg",
+      "label_zh": "舒张压",
+      "aliases": [
+        "dbp",
+        "diastolic",
+        "低压",
+        "舒张压(低压)",
+        "DBP"
+      ],
+      "loinc": [
+        "8462-4"
+      ],
+      "unit": "mmHg",
+      "accept": {
+        "kPa": 7.500617
+      },
+      "range": [
+        30,
+        160
+      ],
+      "required": false,
+      "from": "measurements"
+    },
+    {
+      "key": "fasting_glucose_mmol_l",
+      "label_zh": "空腹血糖",
+      "aliases": [
+        "FPG",
+        "FBG",
+        "GLU",
+        "空腹葡萄糖",
+        "空腹血葡萄糖",
+        "fasting glucose",
+        "葡萄糖"
+      ],
+      "loinc": [
+        "1558-6"
+      ],
+      "unit": "mmol/L",
+      "accept": {
+        "mg/dL": 0.0555
+      },
+      "molar_mass": 180.16,
+      "range": [
+        1.5,
+        40
+      ],
+      "required": false,
+      "from": "measurements",
+      "group": "glucose"
+    },
+    {
+      "key": "random_glucose_mmol_l",
+      "label_zh": "随机血糖",
+      "aliases": [
+        "random glucose",
+        "随机葡萄糖",
+        "餐后任意时间血糖"
+      ],
+      "unit": "mmol/L",
+      "accept": {
+        "mg/dL": 0.0555
+      },
+      "molar_mass": 180.16,
+      "range": [
+        1.5,
+        40
+      ],
+      "required": false,
+      "from": "measurements",
+      "group": "glucose",
+      "note_zh": "中国嘉道理队列用随机血糖 ≥11.1 mmol/L；有空腹血糖时两个都会看。"
+    },
+    {
+      "key": "tc_mmol_l",
+      "label_zh": "总胆固醇",
+      "aliases": [
+        "TC",
+        "CHOL",
+        "total cholesterol",
+        "总胆固醇(TC)",
+        "血清总胆固醇"
+      ],
+      "loinc": [
+        "2093-3",
+        "14647-2"
+      ],
+      "unit": "mmol/L",
+      "accept": {
+        "mg/dL": 0.02586
+      },
+      "molar_mass": 386.65,
+      "range": [
+        1,
+        20
+      ],
+      "required": false,
+      "from": "measurements",
+      "group": "lipids"
+    },
+    {
+      "key": "ldl_c_mmol_l",
+      "label_zh": "低密度脂蛋白胆固醇",
+      "aliases": [
+        "LDL",
+        "LDL-C",
+        "低密度脂蛋白",
+        "低密度脂蛋白胆固醇(LDL-C)"
+      ],
+      "loinc": [
+        "13457-7",
+        "18262-6",
+        "2089-1",
+        "22748-8"
+      ],
+      "unit": "mmol/L",
+      "accept": {
+        "mg/dL": 0.02586
+      },
+      "molar_mass": 386.65,
+      "range": [
+        0.2,
+        15
+      ],
+      "required": false,
+      "from": "measurements",
+      "group": "lipids"
+    },
+    {
+      "key": "hdl_c_mmol_l",
+      "label_zh": "高密度脂蛋白胆固醇",
+      "aliases": [
+        "HDL",
+        "HDL-C",
+        "高密度脂蛋白",
+        "高密度脂蛋白胆固醇(HDL-C)"
+      ],
+      "loinc": [
+        "2085-9",
+        "14646-4"
+      ],
+      "unit": "mmol/L",
+      "accept": {
+        "mg/dL": 0.02586
+      },
+      "molar_mass": 386.65,
+      "range": [
+        0.1,
+        5
+      ],
+      "required": false,
+      "from": "measurements",
+      "group": "lipids"
+    },
+    {
+      "key": "tg_mmol_l",
+      "label_zh": "甘油三酯",
+      "aliases": [
+        "TG",
+        "triglycerides",
+        "三酰甘油",
+        "甘油三酯(TG)"
+      ],
+      "loinc": [
+        "2571-8",
+        "14927-8"
+      ],
+      "unit": "mmol/L",
+      "accept": {
+        "mg/dL": 0.01129
+      },
+      "molar_mass": 885.7,
+      "range": [
+        0.1,
+        50
+      ],
+      "required": false,
+      "from": "measurements",
+      "group": "lipids"
+    },
+    {
+      "key": "age",
+      "label_zh": "实足年龄",
+      "unit": "a",
+      "range": [
+        30,
+        120
+      ],
+      "required": true,
+      "from": "profile",
+      "flag": "--age",
+      "note_zh": "论文按 30–49、50–59、60–79、80–99、≥100 岁分组，30 岁以下没有数据。"
+    },
+    {
+      "key": "sex",
+      "label_zh": "性别",
+      "required": false,
+      "from": "profile",
+      "flag": "--sex",
+      "note_zh": "不进得分；模型已按性别调整。"
+    },
+    {
+      "key": "education_junior_middle",
+      "label_zh": "是否读完初中（含旧式私塾）或以上",
+      "required": true,
+      "from": "argument",
+      "flag": "--education-junior-middle"
+    },
+    {
+      "key": "depressive_symptoms",
+      "label_zh": "过去一年是否有持续两周以上的抑郁症状（CIDI-SF 任一题为是）",
+      "required": false,
+      "from": "argument",
+      "flag": "--depressive-symptoms",
+      "note_zh": "四个问题：比平时悲伤或情绪低落、对大多数事情失去兴趣、绝望到没有胃口、觉得自己没有价值。任一为是即算抑郁。没有 GDS-15 得分时必填。"
+    },
+    {
+      "key": "ever_smoked",
+      "label_zh": "是否曾经吸烟（包括偶尔吸、已戒、现在吸）",
+      "required": true,
+      "from": "argument",
+      "flag": "--ever-smoked"
+    },
+    {
+      "key": "ever_drank",
+      "label_zh": "是否饮酒（包括现在偶尔或季节性饮酒、已戒酒）",
+      "required": true,
+      "from": "argument",
+      "flag": "--ever-drank",
+      "note_zh": "从不饮酒或从未规律饮酒填 no。"
+    },
+    {
+      "key": "diabetes_diagnosed",
+      "label_zh": "是否被医生诊断过糖尿病",
+      "required": true,
+      "from": "argument",
+      "flag": "--diabetes-diagnosed"
+    },
+    {
+      "key": "glucose_lowering_medication",
+      "label_zh": "是否在用降糖药",
+      "required": true,
+      "from": "argument",
+      "flag": "--glucose-lowering-medication"
+    },
+    {
+      "key": "hypertension_diagnosed",
+      "label_zh": "是否被医生诊断过高血压",
+      "required": true,
+      "from": "argument",
+      "flag": "--hypertension-diagnosed"
+    },
+    {
+      "key": "antihypertensive_medication",
+      "label_zh": "是否在用降压药",
+      "required": true,
+      "from": "argument",
+      "flag": "--antihypertensive-medication"
+    },
+    {
+      "key": "hyperlipidemia_diagnosed",
+      "label_zh": "是否被医生诊断过高血脂",
+      "required": true,
+      "from": "argument",
+      "flag": "--hyperlipidemia-diagnosed"
+    },
+    {
+      "key": "lipid_lowering_medication",
+      "label_zh": "是否在用降脂药",
+      "required": true,
+      "from": "argument",
+      "flag": "--lipid-lowering-medication"
+    }
+  ],
+  "outputs": [
+    {
+      "key": "modifiable_risk_score",
+      "label_zh": "可改变危险因素得分（0–11 项）",
+      "unit": "score"
+    },
+    {
+      "key": "sep_risk_score",
+      "label_zh": "社会经济与心理因素得分（0–2）",
+      "unit": "score"
+    },
+    {
+      "key": "behavior_risk_score",
+      "label_zh": "行为因素得分（0–5）",
+      "unit": "score"
+    },
+    {
+      "key": "metabolic_risk_score",
+      "label_zh": "代谢因素得分（0–4）",
+      "unit": "score"
+    },
+    {
+      "key": "age_group",
+      "label_zh": "论文年龄分组",
+      "unit": ""
+    },
+    {
+      "key": "hr_per_point",
+      "label_zh": "所在年龄段每多一项的全因死亡风险比（补充表 S11）",
+      "unit": "1"
+    },
+    {
+      "key": "relative_hazard_vs_zero",
+      "label_zh": "与零项相比的相对风险（按每分风险比连乘的模型推算）",
+      "unit": "1",
+      "note_zh": "论文没有印出这个数；是每分风险比的得分次方。"
+    }
+  ],
+  "validation": {
+    "status": "draft",
+    "gap_zh": "论文正文、图 1–3 和补充附录（方法 S1、S2，补充表 S1–S11，图 S1–S7）都查过：没有印出任何个人输入对应的得分或风险比算例，也没有印出“几项对零项”的风险比；图 3 的按队列分年龄风险比只在图片里，正文只给范围。测试只核对 11 项切点按方法 S1 判定，以及年龄分组查出的每分风险比与补充表 S11 印出的数一致，不算复现论文的例子。数据按需向作者索取，没有公开代码。"
+  }
+}
