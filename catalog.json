@@ -2,9 +2,9 @@
   "schema": "longevity-catalog/1",
   "version": "2026.48.0",
   "counts": {
-    "skills": 219,
+    "skills": 220,
     "tiers": {
-      "A": 55,
+      "A": 56,
       "B": 83,
       "C": 73,
       "tool": 8
@@ -33273,6 +33273,451 @@
           "pyaging"
         ],
         "doi": "10.1093/bioinformatics/btae200"
+      }
+    },
+    {
+      "name": "qrisk3-cvd-risk",
+      "kind": "paper",
+      "tier": "A",
+      "species": [
+        "human"
+      ],
+      "evidence": "cohort",
+      "domains": [
+        "心血管"
+      ],
+      "blurb_zh": "用血压及重复记录标准差、体质指数、血脂比值和病史估计十年心血管病风险；需英国Townsend评分，仍在验证。",
+      "description": "Tier A draft: the paper's printed example is not reproduced yet, so treat the readout as provisional. 按 QRISK3-2017 男女模型 C，使用年龄、血压及重复记录标准差、体质指数、总胆固醇/HDL 比值、Townsend 评分及病史估计十年心血管病风险。用户问 QRISK3、英国心血管风险或目标测量值下的模型变化时使用。",
+      "intents": [
+        "frailty_mortality",
+        "lab_meaning"
+      ],
+      "has_script": true,
+      "validation_status": "draft",
+      "validation_label_zh": "仍在验证",
+      "entry": {
+        "script": "scripts/personal_report.py",
+        "measurements_flag": "--measurements",
+        "measurements_header": [
+          "marker",
+          "value",
+          "unit"
+        ],
+        "age_flag": "--age",
+        "sex_flag": "--sex",
+        "out_flag": "--out",
+        "result_json": true,
+        "targets_flag": "--targets",
+        "levers_json": true
+      },
+      "population": {
+        "age_years": [
+          25,
+          84
+        ],
+        "note_zh": "英格兰基层医疗人群，基线无心血管病且未用他汀；不能把英国华人亚组验证当作中国居民校准。"
+      },
+      "inputs_status": "draft",
+      "inputs": [
+        {
+          "key": "sbp_mmhg",
+          "label_zh": "收缩压",
+          "unit": "mmHg",
+          "range": [
+            60,
+            260
+          ],
+          "aliases": [
+            "SBP",
+            "systolic blood pressure",
+            "高压"
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "使用评估前最近一次记录，不用五年均值替代。",
+          "accept": {
+            "kPa": 7.500617
+          },
+          "loinc": [
+            "8480-6"
+          ]
+        },
+        {
+          "key": "sbp_sd_mmhg",
+          "label_zh": "收缩压标准差",
+          "unit": "mmHg",
+          "range": [
+            0,
+            100
+          ],
+          "aliases": [
+            "SBP SD",
+            "sbps5",
+            "standard deviation of systolic blood pressure"
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "评估前五年内所有可用重复记录的样本标准差；至少两次。未知不能填零。",
+          "accept": {
+            "kPa": 7.500617
+          }
+        },
+        {
+          "key": "sbp_readings_n",
+          "label_zh": "用于标准差的收缩压记录数",
+          "unit": "1",
+          "range": [
+            2,
+            100000
+          ],
+          "aliases": [
+            "SBP count"
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "整数，五年窗口内的记录数量；不是模型项。"
+        },
+        {
+          "key": "bmi_kg_m2",
+          "label_zh": "体质指数",
+          "unit": "kg/m^2",
+          "range": [
+            10,
+            80
+          ],
+          "aliases": [
+            "BMI",
+            "body mass index"
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "评估前最近一次测量。"
+        },
+        {
+          "key": "tc_hdl_ratio",
+          "label_zh": "总胆固醇与高密度脂蛋白胆固醇比值",
+          "unit": "1",
+          "range": [
+            1,
+            20
+          ],
+          "aliases": [
+            "TC/HDL",
+            "cholesterol/HDL ratio",
+            "rati"
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "先将 TC 和 HDL-C 化为相同单位再相除；不能填 LDL-C 或单独的总胆固醇。"
+        },
+        {
+          "key": "townsend_score",
+          "label_zh": "Townsend贫困评分",
+          "unit": "score",
+          "range": [
+            -15,
+            20
+          ],
+          "aliases": [
+            "Townsend score",
+            "town"
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "英国地区贫困评分；需已有可信评分，不能把中国地址换成英国邮编，也不能缺省填零。"
+        },
+        {
+          "key": "ethnicity",
+          "label_zh": "族裔编码",
+          "unit": "1",
+          "range": [
+            1,
+            9
+          ],
+          "aliases": [
+            "ethrisk",
+            "ethnic origin"
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "整数：1白人或明确记录为未记录，2印度，3巴基斯坦，4孟加拉，5其他亚洲，6加勒比黑人，7非洲黑人，8华人，9其他。不得因缺项擅自填1。"
+        },
+        {
+          "key": "smoking",
+          "label_zh": "吸烟状态编码",
+          "unit": "1",
+          "range": [
+            0,
+            4
+          ],
+          "aliases": [
+            "smoke_cat",
+            "smoking status"
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "整数：0不吸烟，1既往吸烟，2每日1–9支，3每日10–19支，4每日至少20支。"
+        },
+        {
+          "key": "b_AF",
+          "label_zh": "房颤",
+          "unit": "1",
+          "range": [
+            0,
+            1
+          ],
+          "aliases": [
+            "atrial fibrillation"
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "0=已确认无，1=已确认有；未知不可填0。"
+        },
+        {
+          "key": "b_atypicalantipsy",
+          "label_zh": "非典型抗精神病药使用",
+          "unit": "1",
+          "range": [
+            0,
+            1
+          ],
+          "aliases": [
+            "atypical antipsychotic use"
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "0=已确认无，1=已确认有；未知不可填0。论文基线药物定义：至少两张处方，最近一张距评估日不超过28天；高血压还需诊断。"
+        },
+        {
+          "key": "b_corticosteroids",
+          "label_zh": "全身性糖皮质激素使用",
+          "unit": "1",
+          "range": [
+            0,
+            1
+          ],
+          "aliases": [
+            "corticosteroid use"
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "0=已确认无，1=已确认有；未知不可填0。论文基线药物定义：至少两张处方，最近一张距评估日不超过28天；高血压还需诊断。"
+        },
+        {
+          "key": "b_impotence2",
+          "label_zh": "勃起功能障碍诊断或治疗",
+          "unit": "1",
+          "range": [
+            0,
+            1
+          ],
+          "aliases": [
+            "erectile dysfunction"
+          ],
+          "required": false,
+          "from": "measurements",
+          "note_zh": "0=已确认无，1=已确认有；未知不可填0。仅男性模型必填；女性不使用。"
+        },
+        {
+          "key": "b_migraine",
+          "label_zh": "偏头痛",
+          "unit": "1",
+          "range": [
+            0,
+            1
+          ],
+          "aliases": [
+            "migraine"
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "0=已确认无，1=已确认有；未知不可填0。"
+        },
+        {
+          "key": "b_ra",
+          "label_zh": "类风湿关节炎",
+          "unit": "1",
+          "range": [
+            0,
+            1
+          ],
+          "aliases": [
+            "rheumatoid arthritis"
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "0=已确认无，1=已确认有；未知不可填0。"
+        },
+        {
+          "key": "b_renal",
+          "label_zh": "慢性肾病3至5期或重大慢性肾病",
+          "unit": "1",
+          "range": [
+            0,
+            1
+          ],
+          "aliases": [
+            "chronic kidney disease"
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "0=已确认无，1=已确认有；未知不可填0。"
+        },
+        {
+          "key": "b_semi",
+          "label_zh": "严重精神疾病",
+          "unit": "1",
+          "range": [
+            0,
+            1
+          ],
+          "aliases": [
+            "severe mental illness"
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "0=已确认无，1=已确认有；未知不可填0。按论文所用临床记录定义；不根据日常情绪自行判断。"
+        },
+        {
+          "key": "b_sle",
+          "label_zh": "系统性红斑狼疮",
+          "unit": "1",
+          "range": [
+            0,
+            1
+          ],
+          "aliases": [
+            "systemic lupus erythematosus"
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "0=已确认无，1=已确认有；未知不可填0。"
+        },
+        {
+          "key": "b_treatedhyp",
+          "label_zh": "已治疗的高血压",
+          "unit": "1",
+          "range": [
+            0,
+            1
+          ],
+          "aliases": [
+            "treated hypertension"
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "0=已确认无，1=已确认有；未知不可填0。论文基线药物定义：至少两张处方，最近一张距评估日不超过28天；高血压还需诊断。"
+        },
+        {
+          "key": "b_type1",
+          "label_zh": "1型糖尿病",
+          "unit": "1",
+          "range": [
+            0,
+            1
+          ],
+          "aliases": [
+            "type 1 diabetes"
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "0=已确认无，1=已确认有；未知不可填0。"
+        },
+        {
+          "key": "b_type2",
+          "label_zh": "2型糖尿病",
+          "unit": "1",
+          "range": [
+            0,
+            1
+          ],
+          "aliases": [
+            "type 2 diabetes"
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "0=已确认无，1=已确认有；未知不可填0。"
+        },
+        {
+          "key": "fh_cvd",
+          "label_zh": "一级亲属60岁前冠心病家族史",
+          "unit": "1",
+          "range": [
+            0,
+            1
+          ],
+          "aliases": [
+            "family history of coronary heart disease"
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "0=已确认无，1=已确认有；未知不可填0。"
+        },
+        {
+          "key": "prior_cvd",
+          "label_zh": "既往心血管病",
+          "unit": "1",
+          "range": [
+            0,
+            1
+          ],
+          "aliases": [
+            "pre-existing cardiovascular disease"
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "0=已确认没有冠心病、缺血性卒中或TIA；1=有，本工具不计算。"
+        },
+        {
+          "key": "statin_use",
+          "label_zh": "当前他汀使用",
+          "unit": "1",
+          "range": [
+            0,
+            1
+          ],
+          "aliases": [
+            "statin use"
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "0=已确认未用；1=正在使用，本工具不计算；不能据此停药。"
+        },
+        {
+          "key": "age",
+          "label_zh": "实足年龄",
+          "unit": "a",
+          "range": [
+            25,
+            84
+          ],
+          "required": true,
+          "from": "profile",
+          "flag": "--age",
+          "note_zh": "周岁整数，与原始C函数的int age一致。"
+        },
+        {
+          "key": "sex",
+          "label_zh": "模型性别",
+          "required": true,
+          "from": "profile",
+          "flag": "--sex",
+          "note_zh": "female 或 male；论文只提供这两个模型。"
+        }
+      ],
+      "outputs": [
+        {
+          "key": "risk_10y_pct",
+          "label_zh": "十年心血管病风险（QRISK3模型C估计）",
+          "unit": "%"
+        }
+      ],
+      "paper": {
+        "doi": "10.1136/bmj.j2099",
+        "title": "Development and validation of QRISK3 risk prediction algorithms to estimate future risk of cardiovascular disease: prospective cohort study.",
+        "title_zh": "QRISK3：未来心血管病风险预测算法的开发与验证",
+        "journal": "BMJ (Clinical research ed.)",
+        "year": 2017
       }
     },
     {
