@@ -1,0 +1,181 @@
+{
+  "schema": "longevity-skill/1",
+  "name": "reactive-agility-fall-history",
+  "kind": "paper",
+  "tier": "A",
+  "species": [
+    "human"
+  ],
+  "evidence": "cross_sectional",
+  "domains": [
+    "跌倒与肌肉"
+  ],
+  "blurb_zh": "用 SKILLCOURT 反应敏捷测试（随机星形跑完成时间、站立踏步简单和选择反应时）的成绩，对照论文印出的探索性切点，看落在有跌倒史一侧还是没有跌倒史一侧。",
+  "intents": [
+    "frailty_mortality"
+  ],
+  "triage": {
+    "reason_zh": "正文印出随机星形跑 28.6 秒、简单踏步反应 0.62 秒、选择踏步反应 0.88 秒三个探索性切点，个人成绩可直接对照；论文没印个人算例，表 1–7 正文页只给到登录跳转，验证保持草稿。",
+    "reviewed": false
+  },
+  "paper": {
+    "doi": "10.1007/s11357-026-02477-4",
+    "title": "Reactive agility and motor-cognitive assessments for distinguishing community-dwelling older adults with and without a history of falls: a dual-centre cross-sectional study",
+    "title_zh": "反应敏捷与运动-认知测评区分有无跌倒史的社区老人：双中心横断面研究",
+    "journal": "GeroScience",
+    "year": 2026,
+    "authors": "Giesche 等",
+    "article_url": "https://link.springer.com/article/10.1007/s11357-026-02477-4",
+    "supplements": [
+      {
+        "label": "ESM 1（补充表 S1–S5，DOCX）",
+        "url": "https://static-content.springer.com/esm/art%3A10.1007%2Fs11357-026-02477-4/MediaObjects/11357_2026_2477_MOESM1_ESM.docx"
+      }
+    ],
+    "card_notes": [
+      "德国法兰克福（Goethe 大学）和卢森堡（LUNEX）两个中心，231 名 60 岁及以上能独立生活的社区老人（103 人过去 12 个月有跌倒史、128 人没有），平均 71.9 岁；随机星形跑分析样本 172 人（80 人有、92 人无跌倒史）。跌倒史是回顾性自报，不是随访到的新发跌倒。",
+      "随机星形跑：从中心格出发，按随机顺序跑到 8 个外侧目标格、每次回中心；做 3 次、间隔 60 秒，取最快一次的总完成时间（秒）。简单/选择踏步反应：站立，看到屏幕刺激后侧向迈步到目标格，30 次（两腿各 15 次）的平均反应时间（秒）。两个中心的 SKILLCOURT 场地设置略有不同。",
+      "切点 28.6 秒（随机星形跑）、0.62 秒（简单反应）、0.88 秒（选择反应）都来自不含协变量的 ROC 分析，论文称为探索性切点；28.6 秒对应 AUC 0.66、灵敏度 55%、特异度 76%。调整年龄和中心后的模型 AUC 0.73（随机星形跑）和 0.72（简单反应）用的是预测概率；表 5–7 的回归系数单元格本次只拿到登录跳转、没有读到，技能不算个人概率。",
+      "利益冲突：作者 TH 为 SKILLCOURT GmbH 提供科学咨询，论文声明公司未参与设计、分析和投稿决定。"
+    ],
+    "summary_zh": "这项德国和卢森堡社区老人的横断面研究发现，在 SKILLCOURT 上做反应式变向跑（随机星形跑）和站立踏步反应更慢的人，更常有过去一年跌倒史，而起立行走、坐站和步速等常规测试区分不出两组。个人报告只把你在 SKILLCOURT 上测得的完成时间或反应时间和论文印出的探索性切点对照，说明落在哪一侧，不估算你的跌倒概率，也不预测将来会不会跌倒。",
+    "summary_status": "draft"
+  },
+  "entry": {
+    "script": "scripts/personal_report.py",
+    "measurements_flag": "--measurements",
+    "measurements_header": [
+      "item",
+      "value",
+      "unit"
+    ],
+    "age_flag": "--age",
+    "out_flag": "--out",
+    "result_json": true
+  },
+  "population": {
+    "age_years": [
+      60,
+      120
+    ],
+    "note_zh": "论文人群是德国和卢森堡 60 岁及以上、能独立行走、无严重神经和认知疾病的社区老人，平均 71.9 岁。切点要求用 SKILLCOURT 设备按论文流程测；其他敏捷或反应测试的秒数不能套用。"
+  },
+  "inputs_status": "verified",
+  "inputs": [
+    {
+      "key": "random_star_run_s",
+      "label_zh": "随机星形跑完成时间（SKILLCOURT）",
+      "aliases": [
+        "Random Star Run",
+        "RSR",
+        "SKILLCOURT RSR",
+        "SC RSR",
+        "random star run time",
+        "随机星形跑",
+        "随机星跑",
+        "星形跑",
+        "反应敏捷跑"
+      ],
+      "unit": "s",
+      "accept": {
+        "ms": 0.001
+      },
+      "range": [
+        10,
+        150
+      ],
+      "required": false,
+      "from": "measurements",
+      "note_zh": "8 个外侧目标随机出现、每次回中心；3 次取最快一次的总时间（秒）。"
+    },
+    {
+      "key": "skillcourt_simple_reaction_s",
+      "label_zh": "SKILLCOURT 简单踏步反应时间",
+      "aliases": [
+        "SKILLCOURT simple reaction",
+        "SKILLCOURT SRT",
+        "SC SRT",
+        "simple stepping reaction time",
+        "simple reaction stepping",
+        "简单踏步反应时",
+        "简单踏步反应时间",
+        "简单反应踏步"
+      ],
+      "unit": "s",
+      "accept": {
+        "ms": 0.001
+      },
+      "range": [
+        0.2,
+        3
+      ],
+      "required": false,
+      "from": "measurements",
+      "note_zh": "站立，看到中央橙色方块后侧向迈步到目标格，30 次（两腿各 15 次）的平均时间。坐着按键的电脑反应时不是这一项。"
+    },
+    {
+      "key": "skillcourt_choice_reaction_s",
+      "label_zh": "SKILLCOURT 选择踏步反应时间",
+      "aliases": [
+        "SKILLCOURT choice reaction",
+        "SKILLCOURT CRT",
+        "SC CRT",
+        "choice stepping reaction time",
+        "choice reaction stepping",
+        "选择踏步反应时",
+        "选择踏步反应时间",
+        "选择反应踏步"
+      ],
+      "unit": "s",
+      "accept": {
+        "ms": 0.001
+      },
+      "range": [
+        0.2,
+        3
+      ],
+      "required": false,
+      "from": "measurements",
+      "note_zh": "站立，按颜色（橙/蓝）向左或向右迈步，30 次的平均时间。"
+    },
+    {
+      "key": "age",
+      "label_zh": "实足年龄",
+      "unit": "a",
+      "range": [
+        18,
+        120
+      ],
+      "required": false,
+      "from": "profile",
+      "flag": "--age",
+      "note_zh": "只用来提示是否在论文人群（60 岁及以上）内；切点本身不随年龄变化。"
+    }
+  ],
+  "outputs": [
+    {
+      "key": "random_star_run_side",
+      "label_zh": "随机星形跑相对 28.6 秒切点的位置",
+      "unit": ""
+    },
+    {
+      "key": "simple_reaction_side",
+      "label_zh": "简单踏步反应相对 0.62 秒切点的位置",
+      "unit": ""
+    },
+    {
+      "key": "choice_reaction_side",
+      "label_zh": "选择踏步反应相对 0.88 秒切点的位置",
+      "unit": ""
+    },
+    {
+      "key": "tests_at_or_above_cutoff",
+      "label_zh": "达到或超过切点的测试个数",
+      "unit": "1"
+    }
+  ],
+  "validation": {
+    "status": "draft",
+    "gap_zh": "正文印出三个探索性切点（28.6、0.62、0.88 秒）和 28.6 秒的 AUC、灵敏度、特异度，测试只核对切点常数和分侧逻辑；论文没有印出任何个人成绩对应结果的算例。表 1–7 的正文页（link.springer.com/…/tables/N）和 PDF 只返回登录跳转，没读到表内单元格；ESM 1（补充表 S1–S5）已打开，只有分中心描述统计和组效应。"
+  }
+}
