@@ -263,6 +263,10 @@ python3 -m tools.lsk test --changed origin/main   # 只测相对 main 改动过�
 
 - `skills/cpic-pharmacogenomics/` — 基因检测原始数据里的药物代谢基因，对照 CPIC 用药指南看哪些药要先问医生。（名单类）
 
+## 糖代谢
+
+- `skills/elsa-hba1c-model-a/` — 用糖化血红蛋白、年龄、性别和随访间隔计算 ELSA Model A 的糖尿病检出概率（预印本研究模型）。
+
 ## 肾脏
 
 - `skills/ckd-epi-2021-egfr/` — 血肌酐、年龄和性别算肾小球滤过率估计值（eGFR），有胱抑素 C 时用肌酐加胱抑素 C 方程，按 KDIGO 分 G1–G5；有尿白蛋白/肌酐比时再分 A1–A3。

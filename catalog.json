@@ -2,15 +2,15 @@
   "schema": "longevity-catalog/1",
   "version": "2026.48.0",
   "counts": {
-    "skills": 183,
+    "skills": 184,
     "tiers": {
-      "A": 19,
+      "A": 20,
       "B": 83,
       "C": 73,
       "tool": 8
     },
-    "claims": 8927,
-    "claim_entities": 7482
+    "claims": 12543,
+    "claim_entities": 9844
   },
   "intents": [
     {
@@ -5341,6 +5341,145 @@
         "title_zh": "弹性蛋白片段",
         "journal": "Nature Aging",
         "year": 2025
+      }
+    },
+    {
+      "name": "elsa-hba1c-model-a",
+      "kind": "paper",
+      "tier": "A",
+      "species": [
+        "human"
+      ],
+      "evidence": "cohort",
+      "domains": [
+        "糖代谢"
+      ],
+      "blurb_zh": "用糖化血红蛋白、年龄、性别和随访间隔计算 ELSA Model A 的糖尿病检出概率（预印本研究模型）。",
+      "description": "Tier A draft: the paper's printed example is not reproduced yet, so treat the readout as provisional. Computes the printed final ELSA HbA1c Model A probability of diabetes detected by the next health visit from HbA1c, age, sex and a specified visit interval. Use for research interpretation of a diabetes-free older adult's HbA1c or a user-specified HbA1c scenario. Preserves preprint and validation limitations.",
+      "intents": [
+        "lab_meaning"
+      ],
+      "has_script": true,
+      "validation_status": "draft",
+      "validation_label_zh": "仍在验证",
+      "entry": {
+        "script": "scripts/personal_report.py",
+        "measurements_flag": "--measurements",
+        "measurements_header": [
+          "marker",
+          "value",
+          "unit"
+        ],
+        "age_flag": "--age",
+        "sex_flag": "--sex",
+        "out_flag": "--out",
+        "result_json": true,
+        "targets_flag": "--targets",
+        "levers_json": true
+      },
+      "inputs_status": "draft",
+      "inputs": [
+        {
+          "key": "hba1c_pct",
+          "label_zh": "糖化血红蛋白",
+          "aliases": [
+            "HbA1c",
+            "HbA1c (%)",
+            "糖化血红蛋白A1c",
+            "糖化血红蛋白百分比",
+            "glycated haemoglobin",
+            "hemoglobin A1c",
+            "A1C"
+          ],
+          "unit": "%",
+          "range": [
+            3,
+            25
+          ],
+          "required": true,
+          "from": "measurements",
+          "unit_required": true,
+          "note_zh": "仅接受 DCCT/NGSP 百分数；mmol/mol 与百分数之间有截距，不能用单一倍数换算，本接口拒绝 mmol/mol。内部按正文 2.1 换算为 IFCC。达到研究排除阈值时不计算。"
+        },
+        {
+          "key": "age",
+          "label_zh": "基线实足年龄",
+          "aliases": [
+            "年龄",
+            "age"
+          ],
+          "unit": "a",
+          "range": [
+            50,
+            110
+          ],
+          "required": true,
+          "from": "profile",
+          "flag": "--age",
+          "note_zh": "50–110 是接口适用性保护范围，不是论文报告的样本最小值和最大值。"
+        },
+        {
+          "key": "sex",
+          "label_zh": "模型性别编码",
+          "unit": "1",
+          "range": [
+            0,
+            1
+          ],
+          "required": true,
+          "from": "profile",
+          "flag": "--sex",
+          "note_zh": "female/女/1 对应女性=1；male/男/0 对应男性=0，必须明确提供。"
+        },
+        {
+          "key": "years_next",
+          "label_zh": "到下一次健康访视的间隔",
+          "aliases": [
+            "随访间隔",
+            "years to next visit"
+          ],
+          "unit": "a",
+          "range": [
+            0.25,
+            20
+          ],
+          "required": true,
+          "from": "argument",
+          "flag": "--years-next",
+          "note_zh": "必须指定年数；论文通常约四年或七年，区间外会提示外推。范围仅为输入保护。"
+        },
+        {
+          "key": "eligible_baseline",
+          "label_zh": "已确认符合基线条件",
+          "unit": "1",
+          "range": [
+            0,
+            1
+          ],
+          "required": true,
+          "from": "argument",
+          "flag": "--eligible-baseline",
+          "note_zh": "仅接受 1：此前及当前无论文定义的糖尿病，并有至少三个月前的无糖尿病 HbA1c 测量；0 或未知不计算。此项不进入方程。"
+        }
+      ],
+      "outputs": [
+        {
+          "key": "diabetes_probability_pct",
+          "label_zh": "下一健康访视前糖尿病检出概率（Model A 研究估计）",
+          "unit": "%"
+        },
+        {
+          "key": "linear_predictor",
+          "label_zh": "Model A 线性预测值",
+          "unit": "1"
+        }
+      ],
+      "paper": {
+        "doi": "10.64898/2026.11.20.26368578",
+        "title": "Personal HbA1c trajectories and incident diabetes: association, prediction and observability in the English Longitudinal Study of Ageing",
+        "title_zh": "个人糖化血红蛋白轨迹与新发糖尿病：关联、预测和可观测性",
+        "journal": "medRxiv",
+        "year": 2026
       }
     },
     {
