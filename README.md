@@ -104,6 +104,7 @@ python3 -m tools.lsk test --changed origin/main   # 只测相对 main 改动过�
 - `skills/fasting-mimicking-diet/` — 两次已经算好的生物年龄相减（不从化验重算生物年龄）。（名单类）
 - `skills/life-cycle-biological-clock/` — 常规化验对照论文点名的时钟指标（不算生物年龄）。（名单类）
 - `skills/principal-component-clinical-aging/` — 用常规化验、血压和健康问卷算 LinAge 临床衰老年龄。
+- `skills/share-intrinsic-capacity-domains/` — 见「认知与神经」。
 - `skills/sleep-chart-biological-ageing/` — 睡眠小时数落在论文的短、正常还是长睡眠组（不算生物年龄差）。（名单类）
 - `skills/wearable-aging-clock/` — 把你已拿到的腕部脉搏波年龄减去实足年龄；不从脉搏波算年龄。（名单类）
 
@@ -255,6 +256,14 @@ python3 -m tools.lsk test --changed origin/main   # 只测相对 main 改动过�
 
 - `skills/navy-circumference-body-fat/` — 用身高、颈围、腰围（女性加臀围）按美国海军围度方程估算体脂率，再算腰围身高比、腰臀比，并按国家标准看是否中心型肥胖。
 
+## 功能与衰弱
+
+- `skills/emfra-factor-scores/` — 用已评定的 EMFRA 九项分数分别计算老年自主性和心理困扰分数。
+
+## 心理与认知
+
+- `skills/emfra-factor-scores/` — 见「功能与衰弱」。
+
 ## 心血管
 
 - `skills/china-par-ascvd-risk/` — 收缩压、血脂、腰围、年龄和几个是否项到齐时，按 China-PAR 算中国成人的 10 年心血管病风险，男女都算。
@@ -271,10 +280,15 @@ python3 -m tools.lsk test --changed origin/main   # 只测相对 main 改动过�
 
 - `skills/ckd-epi-2021-egfr/` — 血肌酐、年龄和性别算肾小球滤过率估计值（eGFR），有胱抑素 C 时用肌酐加胱抑素 C 方程，按 KDIGO 分 G1–G5；有尿白蛋白/肌酐比时再分 A1–A3。
 
+## 认知与神经
+
+- `skills/share-intrinsic-capacity-domains/` — 用认知测验、行走困难和视听自评，计算 SHARE 内在能力的三个分域分数，并可比较两次变化；不算完整总分。
+
 ## 跌倒与肌肉
 
 - `skills/calf-circumference-decline-falls/` — 用前后两次自己量的小腿围算绝对和相对减少量，按论文切点分档，给出中国老人队列里该档与小腿围没减少者相比的跌倒比值比。
 - `skills/reactive-agility-fall-history/` — 用 SKILLCOURT 反应敏捷测试（随机星形跑完成时间、站立踏步简单和选择反应时）的成绩，对照论文印出的探索性切点，看落在有跌倒史一侧还是没有跌倒史一侧。
+- `skills/share-intrinsic-capacity-domains/` — 见「认知与神经」。
 
 ## 饮食与基因
 
