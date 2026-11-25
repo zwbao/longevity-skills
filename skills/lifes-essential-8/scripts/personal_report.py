@@ -33,7 +33,7 @@ def calculate(v):
         lookup(v['moderate_min_week']+p.VIGOROUS_WEIGHT*v['vigorous_min_week'],p.ACTIVITY),
         max(0,nicotine-p.PENALTY*v['indoor_smoke']),
         max(0,lookup(v['sleep_h'],p.SLEEP)-p.PENALTY*v.get('sleep_apnea_penalty',0)),
-        lookup(v['bmi_kg_m2'],p.BMI_ASIAN if v['bmi_asian_scale'] else p.BMI),
+        lookup(v['bmi_kg_m2'],p.BMI),
         max(0,lookup(v['non_hdl_mg_dl'],p.LIPIDS)-p.PENALTY*v['lipid_treated']),
         max(0,glucose(v)-p.PENALTY*v.get('prediabetes_penalty',0)),
         max(0,min(lookup(v['sbp_mmhg'],p.SBP),lookup(v['dbp_mmhg'],p.DBP))-p.PENALTY*v['bp_treated']),
@@ -53,6 +53,8 @@ def validate(v):
     for k in (*p.FLAGS,'smoking_status','mepa_score','moderate_min_week','vigorous_min_week'):
         if k in v and v[k]!=int(v[k]):
             problems.append(problem(k,f'{k} 必须为整数，状态项请按说明编码。','range'))
+    if v.get('bmi_asian_scale')==1:
+        problems.append(problem('bmi_asian_scale','原文只说亚洲/太平洋祖源者的 BMI 分数应“酌情对齐”，未印出该人群的分档与分值；本技能不能自动赋分，请由医生判断。'))
     if v.get('bmi_kg_m2',20)<18.5:
         problems.append(problem('bmi_kg_m2','BMI 低于 18.5 时原文要求医生判断，本技能不能自动赋分。'))
     if v.get('sbp_mmhg',200)<=v.get('dbp_mmhg',0):
@@ -152,7 +154,7 @@ def main(argv=None):
        '| 项目 | 得分 |','|---|---:|']
     lines += [f'| {label} | {outputs[k+"_score"]:g} |' for k,label in zip(p.METRICS,p.LABELS)]
     lines += ['',f"八项合计 {outputs['score_sum']:g} 分，除以 {p.N_METRICS}；保留未四舍五入的均值用于分档。",
-       'BMI 尺度：'+('原文亚洲/太平洋祖源调整尺度。' if v['bmi_asian_scale'] else '原文通用成人尺度。'),
+       'BMI 尺度：原文通用成人尺度（Table 1）。',
        '年龄范围为成人；饮食输入为已完成的成人 16 项 MEPA 总分。用药扣分反映评分构造，并不意味着药物有害。',
        '睡眠呼吸暂停及糖尿病前期治疗的酌情扣分仅按提供的医生决定应用；未提供时不应用。']
     if targets:

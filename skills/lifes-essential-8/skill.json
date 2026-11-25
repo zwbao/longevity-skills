@@ -31,12 +31,12 @@
     "article_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10503546/",
     "supplements": [
       {
-        "label": "Supplemental Material：Appendix 1–3（LWW出版商托管的原始附件镜像）",
-        "url": "https://cdn-links.lww.com/permalink/jcn/a/jcn_00_00_2022_08_26_hayman_jcn-d-22-00197_sdc1.pdf"
+        "label": "Supplemental Material（PMC作者稿附件，含Appendix 1–3）",
+        "url": "https://pmc.ncbi.nlm.nih.gov/articles/instance/10503546/bin/NIHMS1913084-supplement-Supplemental_File.pdf"
       }
     ],
     "card_notes": [
-      "专家咨询文件，非新的人群预测模型；本实现限成人，饮食采用已完成的16项MEPA总分。",
+      "专家咨询文件，非新的人群预测模型；切点由AHA专家组主要依据美国临床指南制定（人群饮食分位数参照美国NHANES），本文未在独立队列中验证，用于中国等其他人群未经本文校准。本实现限≥20岁成人，饮食采用已完成的16项MEPA总分。",
       "Table 1及其实施注释提供评分规则，Supplemental Appendix 3提供验证案例；未发布专用计算代码。"
     ],
     "summary_zh": "这项研究由美国心脏协会专家组整合人体心血管健康证据，更新饮食、活动、尼古丁暴露、睡眠和常规体检指标的评价方法，以支持个人健康状态的持续监测。个人报告只计算成人心血管健康各项得分、综合分及输入目标后的分数差，不计算患病概率或寿命。",
@@ -193,7 +193,7 @@
     },
     {
       "key": "bmi_asian_scale",
-      "label_zh": "采用亚洲太平洋祖源BMI尺度",
+      "label_zh": "是否需要亚洲太平洋祖源BMI调整",
       "unit": "1",
       "range": [
         0,
@@ -204,7 +204,7 @@
       ],
       "required": true,
       "from": "measurements",
-      "note_zh": "0=否，1=是；不能把未知填成0。"
+      "note_zh": "0=否，按Table 1通用成人尺度；1=是，原文未印出该人群分档，本技能停算并请医生判断；不能把未知填成0。"
     },
     {
       "key": "non_hdl_mg_dl",

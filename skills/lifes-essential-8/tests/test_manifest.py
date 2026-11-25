@@ -130,6 +130,13 @@ def test_targets_and_stale_results(tmp_path):
     assert run(tmp_path,targets={'bp_treated':0}).returncode==3
 
 
+def test_asian_bmi_scale_not_printed(tmp_path):
+    # Table 1 notes say scores 'should be aligned as appropriate' for Asian or
+    # Pacific ancestry but print no cutoffs, so the skill must stop, not guess.
+    assert run(tmp_path,{**D,'bmi_asian_scale':1}).returncode==3
+    assert not hasattr(presets,'BMI_ASIAN')
+
+
 def test_adult_scope(tmp_path):
     assert run(tmp_path,age='19').returncode==3
 
@@ -144,8 +151,6 @@ def test_adult_scope(tmp_path):
     ({'smoking_status':1},'nicotine',75),
     ({'sleep_h':9},'sleep',90),
     ({'sleep_h':10},'sleep',40),
-    ({'bmi_asian_scale':1,'bmi_kg_m2':23},'bmi',75),
-    ({'bmi_asian_scale':1,'bmi_kg_m2':35},'bmi',0),
     ({'moderate_min_week':0,'vigorous_min_week':75},'activity',100),
     ({'diabetes':1,'hba1c_pct':6.9},'glucose',40),
     ({'diabetes':1,'hba1c_pct':7},'glucose',30),

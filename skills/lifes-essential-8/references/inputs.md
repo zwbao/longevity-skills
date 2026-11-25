@@ -11,7 +11,7 @@ CSV 表头 `marker,value,unit`。每行一个指标，单位与别名以 skill.j
 | indoor_smoke | 家中有主动在室内吸烟者：0否/1是 |
 | sleep_h | 平均每晚睡眠小时 |
 | bmi_kg_m2 | BMI，kg/m² |
-| bmi_asian_scale | 0使用通用成人尺度；1使用论文亚洲/太平洋祖源尺度；明确选择，不根据语言推断 |
+| bmi_asian_scale | 0使用Table 1通用成人尺度；1表示应按亚洲/太平洋祖源调整，原文未印出该尺度分档，本技能停算并请医生判断；明确选择，不根据语言推断 |
 | non_hdl_mg_dl | 非HDL胆固醇；不是LDL或总胆固醇；可由同次总胆固醇减HDL后提供 |
 | lipid_treated | 该血脂是否为药物治疗后水平 |
 | diabetes | 医生确诊糖尿病史；不得从本次化验值推断 |
