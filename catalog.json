@@ -2,9 +2,9 @@
   "schema": "longevity-catalog/1",
   "version": "2026.48.0",
   "counts": {
-    "skills": 197,
+    "skills": 198,
     "tiers": {
-      "A": 33,
+      "A": 34,
       "B": 83,
       "C": 73,
       "tool": 8
@@ -8044,6 +8044,230 @@
         "title_zh": "用 p53 与 FOXO3 调节肥胖引起的骨关节炎",
         "journal": "Nature Communications",
         "year": 2025
+      }
+    },
+    {
+      "name": "frail-scale",
+      "kind": "paper",
+      "tier": "A",
+      "species": [
+        "human"
+      ],
+      "evidence": "cohort",
+      "domains": [
+        "衰弱与功能"
+      ],
+      "blurb_zh": "用疲劳、上楼和步行困难、疾病种数及一年体重变化计算FRAIL衰弱筛查分数。",
+      "description": "Tier A personal readout: computes one person's value with the paper's printed method and reproduces a printed example. Calculates the FRAIL questionnaire total and screening category from fatigue, stair and walking difficulty, specified illnesses, and one-year weight change. Use for FRAIL scoring, 衰弱问卷, or 衰弱筛查 when personal questionnaire answers and current and prior-year weights are available.",
+      "intents": [
+        "frailty_mortality"
+      ],
+      "has_script": true,
+      "validation_status": "reproduced",
+      "validation_label_zh": "已复现论文",
+      "entry": {
+        "script": "scripts/personal_report.py",
+        "measurements_flag": "--measurements",
+        "measurements_header": [
+          "marker",
+          "value",
+          "unit"
+        ],
+        "age_flag": "--age",
+        "sex_flag": "--sex",
+        "out_flag": "--out",
+        "result_json": true
+      },
+      "population": {
+        "age_years": [
+          49,
+          65
+        ],
+        "note_zh": "美国圣路易斯社区非裔成年人；两个按基线ADL状态排除的重叠分析样本，不能视为两个独立验证队列。"
+      },
+      "inputs_status": "verified",
+      "inputs": [
+        {
+          "key": "fatigue_response_code",
+          "label_zh": "过去四周疲劳频度编码",
+          "aliases": [
+            "疲劳频度",
+            "Fatigue response",
+            "Fatigue"
+          ],
+          "unit": "score",
+          "range": [
+            1,
+            5
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "过去4周感到疲劳的时间：1一直，2大部分，3有些时候，4少部分，5从不；填原回答编码，不能填已折算的0/1分。"
+        },
+        {
+          "key": "resistance_difficulty_binary",
+          "label_zh": "独自连续上十级台阶有困难",
+          "aliases": [
+            "上楼困难",
+            "Resistance",
+            "Difficulty walking up 10 steps"
+          ],
+          "unit": "1",
+          "range": [
+            0,
+            1
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "独自、不用辅助器具、不休息走上10级台阶是否有任何困难：1是，0否。"
+        },
+        {
+          "key": "ambulation_difficulty_binary",
+          "label_zh": "独自步行数百码有困难",
+          "aliases": [
+            "步行困难",
+            "Ambulation",
+            "Difficulty walking several hundred yards"
+          ],
+          "unit": "1",
+          "range": [
+            0,
+            1
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "独自、不用辅助器具步行数百码是否有任何困难：1是，0否；保留本研究题干，不替换成一个街区。"
+        },
+        {
+          "key": "illnesses_count",
+          "label_zh": "医生告知的指定疾病种数",
+          "aliases": [
+            "疾病种数",
+            "Illnesses",
+            "Illness count"
+          ],
+          "unit": "1",
+          "range": [
+            0,
+            11
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "只数11类：高血压、糖尿病、癌症（不含轻微皮肤癌）、慢性肺病、心肌梗死、充血性心力衰竭、心绞痛、哮喘、关节炎、卒中、肾病；每类最多一次。"
+        },
+        {
+          "key": "weight_current_kg",
+          "label_zh": "当前体重",
+          "aliases": [
+            "现在体重",
+            "Current weight"
+          ],
+          "unit": "kg",
+          "range": [
+            15,
+            500
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "穿衣、不穿鞋的当前体重。15–500 kg是输入错误防护范围，不是论文的临床切点。",
+          "accept": {
+            "lb": 0.45359237,
+            "g": 0.001
+          },
+          "unit_required": true
+        },
+        {
+          "key": "weight_year_ago_kg",
+          "label_zh": "一年前体重",
+          "aliases": [
+            "去年体重",
+            "Weight 1 year ago"
+          ],
+          "unit": "kg",
+          "range": [
+            15,
+            500
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "一年前穿衣、不穿鞋的体重，不能用半年前体重代替；不知道则保持缺失。",
+          "accept": {
+            "lb": 0.45359237,
+            "g": 0.001
+          },
+          "unit_required": true
+        },
+        {
+          "key": "age",
+          "label_zh": "实足年龄",
+          "unit": "a",
+          "range": [
+            18,
+            120
+          ],
+          "required": false,
+          "from": "profile",
+          "flag": "--age",
+          "note_zh": "仅用于提示是否超出研究49–65岁基线范围，不改变分数。"
+        },
+        {
+          "key": "sex",
+          "label_zh": "性别",
+          "required": false,
+          "from": "profile",
+          "flag": "--sex",
+          "note_zh": "可选上下文，不进入评分；男/女/其他/未知或male/female/other/unknown。"
+        }
+      ],
+      "outputs": [
+        {
+          "key": "fatigue_score",
+          "label_zh": "疲劳项得分",
+          "unit": "score"
+        },
+        {
+          "key": "resistance_score",
+          "label_zh": "上楼困难项得分",
+          "unit": "score"
+        },
+        {
+          "key": "ambulation_score",
+          "label_zh": "步行困难项得分",
+          "unit": "score"
+        },
+        {
+          "key": "illnesses_score",
+          "label_zh": "疾病项得分",
+          "unit": "score"
+        },
+        {
+          "key": "weight_loss_score",
+          "label_zh": "体重下降项得分",
+          "unit": "score"
+        },
+        {
+          "key": "frail_total_score",
+          "label_zh": "FRAIL总分",
+          "unit": "score"
+        },
+        {
+          "key": "weight_loss_pct",
+          "label_zh": "过去一年体重下降百分比",
+          "unit": "%",
+          "note_zh": "增加体重为负数。"
+        },
+        {
+          "key": "frail_category",
+          "label_zh": "FRAIL筛查分层",
+          "note_zh": "robust=健壮，prefrail=衰弱前期，frail=衰弱。"
+        }
+      ],
+      "paper": {
+        "doi": "10.1007/s12603-012-0084-2",
+        "title": "A simple frailty questionnaire (FRAIL) predicts outcomes in middle aged African Americans.",
+        "title_zh": "FRAIL简易衰弱问卷的社区人群验证",
+        "journal": "The journal of nutrition, health & aging",
+        "year": 2012
       }
     },
     {

@@ -323,6 +323,10 @@ python3 -m tools.lsk test --changed origin/main   # 只测相对 main 改动过�
 
 - `skills/hotspot-somatic-sweep/` — 见「克隆性造血」。
 
+## 衰弱与功能
+
+- `skills/frail-scale/` — 用疲劳、上楼和步行困难、疾病种数及一年体重变化计算FRAIL衰弱筛查分数。
+
 ## 认知与神经
 
 - `skills/share-intrinsic-capacity-domains/` — 用认知测验、行走困难和视听自评，计算 SHARE 内在能力的三个分域分数，并可比较两次变化；不算完整总分。
