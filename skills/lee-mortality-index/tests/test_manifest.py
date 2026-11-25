@@ -50,7 +50,21 @@ def test_table4_validation_rates():
         assert mortality_for_score(score) == percent
 
 
-@pytest.mark.xfail(strict=True, reason='Published 78-year example says age=3 and total=6; Table 3 gives age=4. Validation remains draft.')
+def test_printed_comment_16_point_example():
+    # Comment: "For example, a 75-year-old male smoker with heart failure,
+    # difficulty bathing, walking, and managing finances ... his probability
+    # of 4-year mortality is greater than 64% (16 points)".
+    # BMI is not stated; a printed total of 16 implies the BMI<25 item is
+    # absent (BMI 28 used here). Unlisted items absent for this illustration.
+    person = dict(baseline(), age=75, sex=1, bmi_kg_m2=28, current_smoker=1,
+                  heart_failure=1, bathing_difficulty=1, walking_difficulty=1,
+                  finances_difficulty=1)
+    result = calculate(person)
+    assert result['lee_score'] == 16
+    assert result['mortality_4y_pct'] == 64
+
+
+@pytest.mark.xfail(strict=True, reason='Published 78-year example says age=3 and total=6; Table 3 gives age=4. Table 3 governs.')
 def test_printed_78_year_example_unresolved():
     # Results / Risk Stratification by Points: printed inputs 78-year-old,
     # nonsmoking woman, BMI 28, diabetes and difficulty managing finances;
@@ -100,7 +114,7 @@ def test_report_and_result(tmp_path):
     assert outputs['mortality_4y_pct']['value'] == 2
     report = (out / 'report.md').read_text()
     assert report.index('论文卡片') < report.index('你的结果')
-    assert '边界:' in report and '暂定' in report
+    assert '边界:' in report and '验证' in report
     assert len(json.loads((out / 'levers.json').read_text())['sensitivity']) == 12
 
 

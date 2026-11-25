@@ -15,7 +15,7 @@
     "frailty_mortality"
   ],
   "triage": {
-    "reason_zh": "人体社区队列公开逐项计分与逐分死亡率，可计算个人分层；正文示例矛盾使验证暂定。",
+    "reason_zh": "人体社区队列公开逐项计分与逐分死亡率，可计算个人分层；正文Comment的16分示例已复现。",
     "reviewed": false
   },
   "paper": {
@@ -30,7 +30,7 @@
     "card_notes": [
       "采用正文表3计分和表4验证队列逐分死亡率；期刊全文页未列单独补充表或发布代码。",
       "勘误明确糖尿病为1分：https://jamanetwork.com/journals/jama/fullarticle/202729 。",
-      "正文78岁示例与表3年龄分值不一致，尚未完整复现，验证暂定。"
+      "正文Comment的75岁男性16分示例已复现；Results中78岁示例的年龄分值与表3不一致，以表3为准。"
     ],
     "summary_zh": "这项研究发现，美国社区居住中老年人的年龄、性别、自报病史和日常功能可共同用于死亡风险分层。个人报告只计算问卷总分并查出相应的历史队列死亡率，不推算个人能活多久或治疗收益。",
     "summary_status": "draft"
@@ -303,7 +303,19 @@
     }
   ],
   "validation": {
-    "status": "draft",
-    "gap_zh": "已读取JAMA全文表1至表4、Box原图公开副本及2006年勘误，逐项分数和表4查表测试通过。但正文Risk Stratification by Points的78岁女性示例印年龄3分、总分6分，表3的75–79岁为4分，按表合计为7分；勘误仅改Box糖尿病为1分，未解决该矛盾。保留严格预期失败测试，不反推或篡改权重，按流水线规则暂定。"
+    "status": "reproduced",
+    "examples": [
+      {
+        "locator": "JAMA 2006;295(7):801, Comment, colorectal cancer screening example; Table 3 points and Table 4 validation row ≥14",
+        "quote": "For example, a 75-year-old male smoker with heart failure, difficulty bathing, walking, and managing finances ... his probability of 4-year mortality is greater than 64% (16 points)",
+        "values": [
+          75,
+          64,
+          16
+        ],
+        "tolerance": "整数分精确相等；BMI未印出，印出总分16意味着BMI<25项不计分，测试用BMI 28；未列项目按示例视为无。",
+        "test": "tests/test_manifest.py::test_printed_comment_16_point_example"
+      }
+    ]
   }
 }

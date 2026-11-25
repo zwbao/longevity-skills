@@ -1,9 +1,9 @@
 ---
 name: lee-mortality-index
 description: >-
-  Tier A draft: the paper's printed example is not reproduced yet, so treat the readout as
-  provisional. Calculates the Lee four-year mortality point index from age, sex, BMI, self-reported
-  diagnoses, smoking, and functional difficulties, and maps the score to the published
+  Tier A personal readout: computes one person's value with the paper's printed method and reproduces
+  a printed example. Calculates the Lee four-year mortality point index from age, sex, BMI,
+  self-reported diagnoses, smoking, and functional difficulties, and maps the score to the published
   validation-cohort mortality percentage. Use for community-dwelling adults aged 50 or older asking
   about the Lee index or questionnaire-based mortality risk. Reports in Chinese and supports explicit
   target scenarios without interpreting them as treatment effects.
@@ -41,7 +41,7 @@ python3 scripts/personal_report.py --measurements measurements.csv --age 70 --se
 
 `levers.json` 的敏感度是离散比较：二元项翻转，年龄比较下个计分档，BMI比较25或24.9；它不是连续导数。非可改变项也显示其评分影响，但标记不可设目标。最高年龄档无下一个年龄切点。表4在11分至12分不单调，原样保留。
 
-验证暂定：表3逐项和表4各行测试通过；正文78岁女性示例却使用3分年龄权重，与表3的75–79岁4分不符。严格预期失败测试保存论文印出的总分6，不修改年龄权重来迎合示例。JAMA勘误只纠正Box中糖尿病为1分。详见 [合同](references/contract.md) 和 [证据核对](references/claims.md)。
+验证：表3逐项、表4各行及正文Comment的75岁男性吸烟、心衰、洗澡/步行/财务困难16分（>64%）示例测试通过；正文78岁女性示例却使用3分年龄权重，与表3的75–79岁4分不符。严格预期失败测试保存论文印出的总分6，不修改年龄权重来迎合示例。JAMA勘误只纠正Box中糖尿病为1分。详见 [合同](references/contract.md) 和 [证据核对](references/claims.md)。
 
 每份报告（含输入失败）必须保留：
 
