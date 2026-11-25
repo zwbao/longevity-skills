@@ -2,9 +2,9 @@
   "schema": "longevity-catalog/1",
   "version": "2026.48.0",
   "counts": {
-    "skills": 191,
+    "skills": 192,
     "tiers": {
-      "A": 27,
+      "A": 28,
       "B": 83,
       "C": 73,
       "tool": 8
@@ -25802,6 +25802,232 @@
         "title_zh": "多基因与肠道菌群",
         "journal": "Nature Aging",
         "year": 2024
+      }
+    },
+    {
+      "name": "pooled-cohort-ascvd-risk",
+      "kind": "paper",
+      "tier": "A",
+      "species": [
+        "human"
+      ],
+      "evidence": "consensus",
+      "domains": [
+        "心血管"
+      ],
+      "blurb_zh": "用年龄、血脂、血压、吸烟和糖尿病状态，按原始 PCE 方程估计十年首次心血管病风险。",
+      "description": "Tier A personal readout: computes one person's value with the paper's printed method and reproduces a printed example. Computes the original Pooled Cohort Equations ten-year risk of a first hard ASCVD event from age, sex, explicitly selected population equation, cholesterol, blood pressure, treatment, smoking and diabetes. Use for requests about PCE or the 2013 ACC/AHA risk equation and user-specified target scenarios. Produces a Chinese report with applicability limits and structured input problems.",
+      "intents": [
+        "frailty_mortality",
+        "lab_meaning"
+      ],
+      "has_script": true,
+      "validation_status": "reproduced",
+      "validation_label_zh": "已复现论文",
+      "entry": {
+        "script": "scripts/personal_report.py",
+        "measurements_flag": "--measurements",
+        "measurements_header": [
+          "item",
+          "value",
+          "unit"
+        ],
+        "age_flag": "--age",
+        "sex_flag": "--sex",
+        "out_flag": "--out",
+        "result_json": true,
+        "targets_flag": "--targets",
+        "levers_json": true
+      },
+      "population": {
+        "age_years": [
+          40,
+          79
+        ],
+        "note_zh": "美国非西班牙裔白人及非裔美国人，且无既往心肌梗死、卒中、心衰、冠脉血运重建或房颤；其他族群未由本模型充分验证。"
+      },
+      "inputs_status": "verified",
+      "inputs": [
+        {
+          "key": "tc_mg_dl",
+          "label_zh": "总胆固醇",
+          "aliases": [
+            "TC",
+            "TCHO",
+            "CHOL",
+            "Total cholesterol",
+            "血清总胆固醇"
+          ],
+          "unit": "mg/dL",
+          "range": [
+            130,
+            320
+          ],
+          "required": true,
+          "unit_required": true,
+          "from": "measurements",
+          "accept": {
+            "mmol/L": 38.665,
+            "mg/L": 0.1
+          },
+          "molar_mass": 386.65,
+          "note_zh": "接受范围采用原论文随附官方 Excel 的 Omnibus 页；超出时不外推。"
+        },
+        {
+          "key": "hdl_mg_dl",
+          "label_zh": "高密度脂蛋白胆固醇",
+          "aliases": [
+            "HDL-C",
+            "HDL cholesterol",
+            "HDLC",
+            "高密度脂蛋白胆固醇测定"
+          ],
+          "unit": "mg/dL",
+          "range": [
+            20,
+            100
+          ],
+          "required": true,
+          "unit_required": true,
+          "from": "measurements",
+          "accept": {
+            "mmol/L": 38.665,
+            "mg/L": 0.1
+          },
+          "molar_mass": 386.65,
+          "note_zh": "接受范围采用原论文随附官方 Excel 的 Omnibus 页；超出时不外推。"
+        },
+        {
+          "key": "sbp_mmhg",
+          "label_zh": "收缩压",
+          "aliases": [
+            "SBP",
+            "Systolic blood pressure",
+            "高压"
+          ],
+          "unit": "mmHg",
+          "range": [
+            90,
+            200
+          ],
+          "required": true,
+          "unit_required": true,
+          "from": "measurements",
+          "accept": {
+            "kPa": 7.500617
+          },
+          "note_zh": "接受范围采用原论文随附官方 Excel 的 Omnibus 页；超出时不外推。"
+        },
+        {
+          "key": "treated",
+          "label_zh": "正在接受降压治疗",
+          "aliases": [
+            "BP treatment",
+            "Treatment for High Blood Pressure",
+            "降压治疗"
+          ],
+          "unit": "1",
+          "range": [
+            0,
+            1
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "仅接受 0=否、1=是；未知不能填 0。"
+        },
+        {
+          "key": "smoker",
+          "label_zh": "当前吸烟",
+          "aliases": [
+            "Current smoker",
+            "Smoker",
+            "吸烟"
+          ],
+          "unit": "1",
+          "range": [
+            0,
+            1
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "仅接受 0=否、1=是；未知不能填 0。"
+        },
+        {
+          "key": "diabetes",
+          "label_zh": "糖尿病",
+          "aliases": [
+            "Diabetes mellitus",
+            "DM",
+            "糖尿病史"
+          ],
+          "unit": "1",
+          "range": [
+            0,
+            1
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "仅接受 0=否、1=是；未知不能填 0。"
+        },
+        {
+          "key": "age",
+          "label_zh": "实足年龄",
+          "unit": "a",
+          "range": [
+            40,
+            79
+          ],
+          "required": true,
+          "from": "profile",
+          "flag": "--age"
+        },
+        {
+          "key": "sex",
+          "label_zh": "原方程性别",
+          "required": true,
+          "from": "profile",
+          "flag": "--sex",
+          "note_zh": "male/female，也接受 m/f、男/女。"
+        },
+        {
+          "key": "race",
+          "label_zh": "原方程族群",
+          "required": true,
+          "from": "argument",
+          "flag": "--race",
+          "note_zh": "仅 white 或 african_american；不可从姓名、国籍或语言推断。"
+        },
+        {
+          "key": "eligible",
+          "label_zh": "首次事件模型适用性",
+          "required": true,
+          "from": "argument",
+          "flag": "--eligible",
+          "note_zh": "yes：无心血管症状且无心梗、卒中、心衰、冠脉介入/搭桥或房颤史；no 或未知不计算。"
+        }
+      ],
+      "outputs": [
+        {
+          "key": "risk_10y_pct",
+          "label_zh": "十年首次 ASCVD 风险（原方程未截断值）",
+          "unit": "%",
+          "note_zh": "边缘范围可能不稳定；给人展示时使用 risk_display。"
+        },
+        {
+          "key": "risk_display",
+          "label_zh": "按论文边界显示的风险"
+        },
+        {
+          "key": "equation_group",
+          "label_zh": "采用的原方程组"
+        }
+      ],
+      "paper": {
+        "doi": "10.1016/j.jacc.2013.11.005",
+        "title": "2013 ACC/AHA guideline on the assessment of cardiovascular risk: a report of the American College of Cardiology/American Heart Association Task Force on Practice Guidelines.",
+        "title_zh": "2013 ACC/AHA 心血管风险评估指南与 PCE 方程",
+        "journal": "Journal of the American College of Cardiology",
+        "year": 2014
       }
     },
     {

@@ -272,6 +272,7 @@ python3 -m tools.lsk test --changed origin/main   # 只测相对 main 改动过�
 ## 心血管
 
 - `skills/china-par-ascvd-risk/` — 收缩压、血脂、腰围、年龄和几个是否项到齐时，按 China-PAR 算中国成人的 10 年心血管病风险，男女都算。
+- `skills/pooled-cohort-ascvd-risk/` — 用年龄、血脂、血压、吸烟和糖尿病状态，按原始 PCE 方程估计十年首次心血管病风险。
 
 ## 心血管与代谢风险
 
