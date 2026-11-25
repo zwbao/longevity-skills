@@ -1,0 +1,179 @@
+{
+  "schema": "longevity-skill/1",
+  "name": "deficit-accumulation-frailty-index",
+  "kind": "paper",
+  "tier": "A",
+  "species": [
+    "human"
+  ],
+  "evidence": "method",
+  "domains": [
+    "临床年龄与可穿戴"
+  ],
+  "blurb_zh": "用已评估的健康缺陷计数算虚弱指数，附原论文的探索性生存模型。",
+  "intents": [
+    "biological_age"
+  ],
+  "triage": {
+    "reason_zh": "人体研究明确印出缺陷比例定义、二元计数示例及生存模型参数，可从个人已评估计数重算。",
+    "reviewed": false
+  },
+  "paper": {
+    "doi": "10.1100/tsw.2001.58",
+    "title": "Accumulation of deficits as a proxy measure of aging.",
+    "title_zh": "以缺陷累积衡量衰老",
+    "journal": "TheScientificWorldJournal",
+    "year": 2001,
+    "authors": "Mitnitski 等",
+    "article_url": "https://doi.org/10.1100/tsw.2001.58",
+    "supplements": [],
+    "card_notes": [
+      "92 项变量附录在全文第 335–336 页，不是单独补充文件。",
+      "输入限于已有二元评估的计数；原文未列出完整的化验阈值和变量编码规则，不能从原始化验单自动生成计数。",
+      "生存模型来自记录了死亡时间的子样本，缺少明确的删失处理说明；数值复现不等于临床预测有效性。"
+    ],
+    "summary_zh": "这项研究利用加拿大老年人的评估资料提出以健康缺陷比例衡量衰老，并考察其与年龄、认知状态和生存的关系。个人报告只计算已评估缺陷的比例及原论文的探索性生存模型数值，不计算实际寿命或诊断分档。",
+    "summary_status": "draft"
+  },
+  "entry": {
+    "script": "scripts/personal_report.py",
+    "measurements_flag": "--measurements",
+    "measurements_header": [
+      "marker",
+      "value",
+      "unit"
+    ],
+    "age_flag": "--age",
+    "sex_flag": "--sex",
+    "out_flag": "--out",
+    "result_json": true,
+    "targets_flag": "--targets",
+    "levers_json": true
+  },
+  "population": {
+    "age_years": [
+      65,
+      106
+    ],
+    "note_zh": "加拿大健康与衰老研究临床样本；认知筛查异常者及筛查正常者的随机子样本。没有外部验证队列。"
+  },
+  "inputs_status": "verified",
+  "inputs": [
+    {
+      "key": "deficits_count",
+      "label_zh": "缺陷数",
+      "aliases": [
+        "存在缺陷项数",
+        "健康缺陷数",
+        "number of deficits",
+        "deficits present"
+      ],
+      "unit": "1",
+      "accept": {},
+      "range": [
+        0,
+        92
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "整数计数，仅统计已经判定存在的二元缺陷；不是百分比或加权评分。分子与分母必须来自同一次附录项目评估。"
+    },
+    {
+      "key": "assessed_count",
+      "label_zh": "已评估项数",
+      "aliases": [
+        "已检查项数",
+        "评估项目数",
+        "number of deficits assessed",
+        "tests performed"
+      ],
+      "unit": "1",
+      "accept": {},
+      "range": [
+        1,
+        92
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "整数，包含存在和不存在的已评估项目；缺失或未评估项目不计入分母。仅接受原文92项集合中的计数。"
+    },
+    {
+      "key": "age",
+      "label_zh": "实足年龄",
+      "aliases": [
+        "年龄",
+        "age",
+        "chronological age"
+      ],
+      "unit": "a",
+      "range": [
+        65,
+        106
+      ],
+      "required": true,
+      "from": "profile",
+      "flag": "--age",
+      "note_zh": "用于研究年龄范围检查，不进入虚弱指数或生存公式。"
+    },
+    {
+      "key": "sex",
+      "label_zh": "性别",
+      "required": false,
+      "from": "profile",
+      "flag": "--sex",
+      "note_zh": "可选背景信息，不进入公式或改变结果。"
+    }
+  ],
+  "outputs": [
+    {
+      "key": "frailty_index",
+      "label_zh": "缺陷累积虚弱指数",
+      "unit": "1"
+    },
+    {
+      "key": "historical_survival_24mo_pct",
+      "label_zh": "原论文24个月探索性模型生存概率",
+      "unit": "%",
+      "note_zh": "非个人临床预测；q=0时不报告。"
+    },
+    {
+      "key": "historical_survival_60mo_pct",
+      "label_zh": "原论文60个月探索性模型生存概率",
+      "unit": "%",
+      "note_zh": "非个人临床预测；q=0时不报告。"
+    }
+  ],
+  "validation": {
+    "status": "reproduced",
+    "examples": [
+      {
+        "locator": "Methods, pp. 324–325",
+        "quote": "if an individual was given 80 tests from the 92 (12 were not performed and thus considered as missing) and 16 from 80 variables were present, the frailty index is 16/80 = 0.2.",
+        "values": [
+          0.2
+        ],
+        "tolerance": "绝对误差不超过1e-12；计数比值，无拟合或系数舍入。",
+        "test": "tests/test_manifest.py::test_printed_frailty_example"
+      },
+      {
+        "locator": "Frailty Index and Survival Probability, p. 329, paragraph below Figure 4",
+        "quote": "For example, for an individual with q = 0.20, the chance of surviving at least 2 years (24 months, thus V = 0.2⋅24 = 4.8) equals 0.55 (55%), and for 5 years (V = 0.2⋅60 = 12) is 0.16 (16%).",
+        "values": [
+          0.55,
+          0.16
+        ],
+        "tolerance": "概率绝对误差不超过0.005，原文概率印至小数点后两位；使用原文k=1.456和lambda=0.209，不反推常数。",
+        "test": "tests/test_manifest.py::test_printed_survival_examples"
+      }
+    ]
+  },
+  "data_files": [
+    {
+      "path": "references/appendix.csv",
+      "source_url": "https://downloads.hindawi.com/journals/tswj/2001/321027.pdf",
+      "license": "Creative Commons Attribution (license statement at PMC6084020)",
+      "sha256": "5ee05df08afdc12a6bbfc7367c3dbb112f52138eacac82e010d0264d51bbf1fb",
+      "redistributable": "yes"
+    }
+  ]
+}
