@@ -96,6 +96,7 @@ python3 -m tools.lsk test --changed origin/main   # 只测相对 main 改动过�
 ## 临床年龄与可穿戴
 
 - `skills/accelerated-biological-aging-risk/` — 九项血液指标和实足年龄的表型年龄。
+- `skills/age-stratified-step-range/` — 用年龄和设备记录的日均步数，比较所在年龄组的研究平台范围。
 - `skills/ageing-clocks-digital-twins/` — 同一时钟多次生物年龄的波动（只算差值，不算新的生物年龄）。（名单类）
 - `skills/aging-biomarker-framework/` — 把你已经算好的时钟预测年龄减去实足年龄（简单相减），再标出这个时钟在论文评测里的队列结果。（名单类）
 - `skills/biological-aging-generational-shifts/` — 你交来的 PhenoAge 减去年龄的未标准化差和出生年；不是论文的标准化年龄差。（名单类）
