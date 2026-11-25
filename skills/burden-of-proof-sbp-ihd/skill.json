@@ -1,0 +1,168 @@
+{
+  "schema": "longevity-skill/1",
+  "name": "burden-of-proof-sbp-ihd",
+  "kind": "paper",
+  "tier": "A",
+  "species": [
+    "human"
+  ],
+  "evidence": "method",
+  "domains": [
+    "心血管与代谢"
+  ],
+  "blurb_zh": "用收缩压查算缺血性心脏病的人群相对风险，支持目标血压的模型对比。",
+  "intents": [
+    "lab_meaning",
+    "before_after"
+  ],
+  "triage": {
+    "reason_zh": "人体研究荟萃分析公开收缩压与缺血性心脏病相对风险及区间对照表，可由个人收缩压直接查算并复现印出数值。",
+    "reviewed": false
+  },
+  "paper": {
+    "doi": "10.1038/s41591-022-01974-1",
+    "title": "Effects of elevated systolic blood pressure on ischemic heart disease: a Burden of Proof study",
+    "title_zh": "收缩压与缺血性心脏病的相对风险",
+    "journal": "Nature Medicine",
+    "year": 2022,
+    "authors": "Razo 等",
+    "article_url": "https://www.nature.com/articles/s41591-022-01974-1",
+    "supplements": [
+      {
+        "label": "Supplementary Information（表 4，页 8–9）",
+        "url": "https://static-content.springer.com/esm/art%3A10.1038%2Fs41591-022-01974-1/MediaObjects/41591_2022_1974_MOESM1_ESM.pdf"
+      },
+      {
+        "label": "Reporting Summary",
+        "url": "https://static-content.springer.com/esm/art%3A10.1038%2Fs41591-022-01974-1/MediaObjects/41591_2022_1974_MOESM2_ESM.pdf"
+      }
+    ],
+    "code_url": "https://github.com/ihmeuw-msca/burden-of-proof",
+    "card_notes": [
+      "本技能固定使用 2022 年补充表 4；表格节点直接读取，中间值为明确标注的对数线性插值近似，不重建原论文的样条模型。"
+    ],
+    "summary_zh": "这项研究综合人体观察研究与随机试验，重新估计收缩压与缺血性心脏病的关系，发现较高收缩压对应更高的人群相对风险。个人报告只将收缩压对应到发表的相对风险表，显示不确定区间及用户所给目标值的模型对比，不计算个人发病概率或治疗获益。",
+    "summary_status": "draft"
+  },
+  "entry": {
+    "script": "scripts/personal_report.py",
+    "measurements_flag": "--measurements",
+    "measurements_header": [
+      "marker",
+      "value",
+      "unit"
+    ],
+    "out_flag": "--out",
+    "result_json": true,
+    "targets_flag": "--targets",
+    "levers_json": true
+  },
+  "inputs_status": "verified",
+  "inputs": [
+    {
+      "key": "sbp_mmhg",
+      "label_zh": "收缩压",
+      "aliases": [
+        "SBP",
+        "Systolic blood pressure",
+        "Systolic BP",
+        "收缩期血压",
+        "高压"
+      ],
+      "unit": "mmHg",
+      "accept": {
+        "kPa": 7.500617
+      },
+      "range": [
+        50,
+        300
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "提供一个已汇总的收缩压数值，不能填 130/80；合理性检查后仅在论文表格范围 100–200 mmHg 内计算，范围外不外推。"
+    }
+  ],
+  "outputs": [
+    {
+      "key": "sbp_mmhg",
+      "label_zh": "输入收缩压",
+      "unit": "mmHg"
+    },
+    {
+      "key": "reference_sbp_mmhg",
+      "label_zh": "论文参照收缩压",
+      "unit": "mmHg"
+    },
+    {
+      "key": "ihd_rr",
+      "label_zh": "人群平均相对风险",
+      "unit": "1"
+    },
+    {
+      "key": "ihd_rr_ui_lower",
+      "label_zh": "95% 不确定区间下界（含研究间异质性）",
+      "unit": "1"
+    },
+    {
+      "key": "ihd_rr_ui_upper",
+      "label_zh": "95% 不确定区间上界（含研究间异质性）",
+      "unit": "1"
+    },
+    {
+      "key": "bracket_lower_sbp_mmhg",
+      "label_zh": "查表或插值的下方血压节点",
+      "unit": "mmHg"
+    },
+    {
+      "key": "bracket_upper_sbp_mmhg",
+      "label_zh": "查表或插值的上方血压节点",
+      "unit": "mmHg"
+    },
+    {
+      "key": "readout_method",
+      "label_zh": "读取方式"
+    },
+    {
+      "key": "evidence_region",
+      "label_zh": "证据密集或稀疏区段"
+    }
+  ],
+  "data_files": [
+    {
+      "path": "data/supplementary_table_4.csv",
+      "source_url": "https://static-content.springer.com/esm/art%3A10.1038%2Fs41591-022-01974-1/MediaObjects/41591_2022_1974_MOESM1_ESM.pdf",
+      "license": "CC-BY-4.0",
+      "sha256": "1744bb4c861e2ffc10c017aff7b3880bd8b49a164e8e3cb785467015e8a7ae3a",
+      "redistributable": "yes"
+    }
+  ],
+  "validation": {
+    "status": "reproduced",
+    "examples": [
+      {
+        "locator": "Supplementary Table 4, Supplementary Information pp. 8–9; SBP level (mmHg), RR (95% UI)",
+        "quote": "120 1.39 (1.34 to 1.44)\n130 1.81 (1.70 to 1.93)\n165* 4.48 (3.81 to 5.26)\n200 6.64 (5.41 to 8.15)",
+        "values": [
+          120,
+          1.39,
+          1.34,
+          1.44,
+          130,
+          1.81,
+          1.7,
+          1.93,
+          165,
+          4.48,
+          3.81,
+          5.26,
+          200,
+          6.64,
+          5.41,
+          8.15
+        ],
+        "tolerance": "表格直接查值，按印出的精度逐项相等；验证的是发表的查表读出，不代表复现原始模型拟合。",
+        "test": "tests/test_manifest.py::test_supplementary_table_4"
+      }
+    ]
+  }
+}
