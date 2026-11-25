@@ -2,9 +2,9 @@
   "schema": "longevity-catalog/1",
   "version": "2026.48.0",
   "counts": {
-    "skills": 216,
+    "skills": 217,
     "tiers": {
-      "A": 52,
+      "A": 53,
       "B": 83,
       "C": 73,
       "tool": 8
@@ -9898,6 +9898,201 @@
         "title_zh": "Framingham 十年总体心血管风险",
         "journal": "Circulation",
         "year": 2008
+      }
+    },
+    {
+      "name": "fruit-vegetable-risk-lookup",
+      "kind": "paper",
+      "tier": "A",
+      "species": [
+        "human"
+      ],
+      "evidence": "review",
+      "domains": [
+        "营养与代谢"
+      ],
+      "blurb_zh": "用日均果蔬摄入量查出论文中的人群相对风险及相邻表格行。",
+      "description": "Tier A personal readout: computes one person's value with the paper's printed method and reproduces a printed example. 按日均果蔬摄入克数查询 Aune 等的非线性剂量反应表，分别返回水果与蔬菜合计、水果或蔬菜对应的心血管疾病、总癌症及全因死亡人群相对风险。用户询问自己的果蔬摄入量与这些结局的研究关联，或比较自设摄入目标时使用。",
+      "intents": [
+        "frailty_mortality",
+        "intervention_evidence"
+      ],
+      "has_script": true,
+      "validation_status": "reproduced",
+      "validation_label_zh": "已复现论文",
+      "entry": {
+        "script": "scripts/personal_report.py",
+        "measurements_flag": "--measurements",
+        "measurements_header": [
+          "marker",
+          "value",
+          "unit"
+        ],
+        "out_flag": "--out",
+        "result_json": true,
+        "targets_flag": "--targets",
+        "levers_json": true
+      },
+      "inputs_status": "verified",
+      "inputs": [
+        {
+          "key": "intake_g_d",
+          "label_zh": "日均摄入量",
+          "aliases": [
+            "摄入量",
+            "平均每日摄入量",
+            "daily intake",
+            "intake",
+            "g/d intake"
+          ],
+          "unit": "g/d",
+          "accept": {
+            "g/d": 1
+          },
+          "range": [
+            0,
+            3000
+          ],
+          "unit_required": true,
+          "required": true,
+          "from": "measurements",
+          "note_zh": "所选食物组的长期日均克数，不是营养素浓度。仅接受 g/d；份、杯和盘的大小不统一。0–3000是录入检查范围，各表可查范围另行判断。"
+        },
+        {
+          "key": "food_group",
+          "label_zh": "食物组",
+          "required": false,
+          "from": "argument",
+          "flag": "--food-group",
+          "note_zh": "combined（默认，水果与蔬菜合计）、fruit 或 vegetables。测量和目标必须对应同一组。"
+        },
+        {
+          "key": "outcome",
+          "label_zh": "结局",
+          "required": false,
+          "from": "argument",
+          "flag": "--outcome",
+          "note_zh": "默认 all_cause_mortality；另支持 coronary_heart_disease、stroke、ischemic_stroke、hemorrhagic_stroke、cardiovascular_disease、total_cancer。"
+        },
+        {
+          "key": "endpoint",
+          "label_zh": "分析类型",
+          "required": false,
+          "from": "argument",
+          "flag": "--endpoint",
+          "note_zh": "mixed、incidence、mortality；未指定时全因死亡用mortality，其余用mixed。卒中亚型仅支持mixed。"
+        }
+      ],
+      "outputs": [
+        {
+          "key": "food_group",
+          "label_zh": "食物组"
+        },
+        {
+          "key": "outcome",
+          "label_zh": "结局"
+        },
+        {
+          "key": "endpoint",
+          "label_zh": "分析类型"
+        },
+        {
+          "key": "intake_g_d",
+          "label_zh": "输入日均摄入量",
+          "unit": "g/d"
+        },
+        {
+          "key": "status",
+          "label_zh": "查表状态",
+          "note_zh": "exact=命中印出行；bracket=仅列相邻两行；outside_table=超出该列范围；not_published=该列无数值。"
+        },
+        {
+          "key": "reference_g_d",
+          "label_zh": "该列参照摄入量",
+          "unit": "g/d"
+        },
+        {
+          "key": "rr",
+          "label_zh": "印出行相对风险",
+          "unit": "1"
+        },
+        {
+          "key": "ci_low",
+          "label_zh": "印出行95%置信区间下限",
+          "unit": "1"
+        },
+        {
+          "key": "ci_high",
+          "label_zh": "印出行95%置信区间上限",
+          "unit": "1"
+        },
+        {
+          "key": "table",
+          "label_zh": "补充表编号",
+          "unit": "1"
+        },
+        {
+          "key": "pdf_page",
+          "label_zh": "补充PDF页码",
+          "unit": "1"
+        },
+        {
+          "key": "lower_intake_g_d",
+          "label_zh": "较低摄入量的相邻行摄入量",
+          "unit": "g/d"
+        },
+        {
+          "key": "lower_rr",
+          "label_zh": "较低摄入量的相邻行RR",
+          "unit": "1"
+        },
+        {
+          "key": "lower_ci_low",
+          "label_zh": "较低摄入量的相邻行95%CI下限",
+          "unit": "1"
+        },
+        {
+          "key": "lower_ci_high",
+          "label_zh": "较低摄入量的相邻行95%CI上限",
+          "unit": "1"
+        },
+        {
+          "key": "upper_intake_g_d",
+          "label_zh": "较高摄入量的相邻行摄入量",
+          "unit": "g/d"
+        },
+        {
+          "key": "upper_rr",
+          "label_zh": "较高摄入量的相邻行RR",
+          "unit": "1"
+        },
+        {
+          "key": "upper_ci_low",
+          "label_zh": "较高摄入量的相邻行95%CI下限",
+          "unit": "1"
+        },
+        {
+          "key": "upper_ci_high",
+          "label_zh": "较高摄入量的相邻行95%CI上限",
+          "unit": "1"
+        },
+        {
+          "key": "table_min_g_d",
+          "label_zh": "越界时该列最小摄入量",
+          "unit": "g/d"
+        },
+        {
+          "key": "table_max_g_d",
+          "label_zh": "越界时该列最大摄入量",
+          "unit": "g/d"
+        }
+      ],
+      "paper": {
+        "doi": "10.1093/ije/dyw319",
+        "title": "Fruit and vegetable intake and the risk of cardiovascular disease, total cancer and all-cause mortality-a systematic review and dose-response meta-analysis of prospective studies.",
+        "title_zh": "果蔬摄入量与心血管疾病、总癌症及全因死亡风险",
+        "journal": "International Journal of Epidemiology",
+        "year": 2017
       }
     },
     {

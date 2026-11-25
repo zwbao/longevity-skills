@@ -374,6 +374,10 @@ python3 -m tools.lsk test --changed origin/main   # 只测相对 main 改动过�
 
 - `skills/gbd-dietary-intake-gap/` — 把每日食物、营养素和24小时尿钠记录换算为相对GBD饮食参考值的差值与比例。
 
+## 营养与代谢
+
+- `skills/fruit-vegetable-risk-lookup/` — 用日均果蔬摄入量查出论文中的人群相对风险及相邻表格行。
+
 ## 血液测序
 
 - `skills/hotspot-somatic-sweep/` — 见「克隆性造血」。
