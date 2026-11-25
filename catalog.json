@@ -2,9 +2,9 @@
   "schema": "longevity-catalog/1",
   "version": "2026.48.0",
   "counts": {
-    "skills": 205,
+    "skills": 206,
     "tiers": {
-      "A": 41,
+      "A": 42,
       "B": 83,
       "C": 73,
       "tool": 8
@@ -34309,6 +34309,114 @@
         "title_zh": "尿液衰老探针",
         "journal": "Nature Aging",
         "year": 2026
+      }
+    },
+    {
+      "name": "vegetable-tmrel-gap",
+      "kind": "paper",
+      "tier": "A",
+      "species": [
+        "human"
+      ],
+      "evidence": "cohort",
+      "domains": [
+        "饮食与营养"
+      ],
+      "blurb_zh": "用饮食记录中的蔬菜日均克数，计算与论文蔬菜摄入参考范围的差距。",
+      "description": "Tier A draft: the paper's printed example is not reproduced yet, so treat the readout as provisional. Compares a person's recorded average daily vegetable intake with the published Burden of Proof theoretical minimum risk exposure range, reporting signed differences in grams per day and optional user-supplied intake scenarios. Use when a person asks how their vegetable intake compares with this study or wants to compare dietary records. Applies the paper's vegetable definition.",
+      "intents": [
+        "intervention_evidence",
+        "before_after"
+      ],
+      "has_script": true,
+      "validation_status": "draft",
+      "validation_label_zh": "仍在验证",
+      "entry": {
+        "script": "scripts/personal_report.py",
+        "measurements_flag": "--intake",
+        "measurements_header": [
+          "marker",
+          "value",
+          "unit"
+        ],
+        "age_flag": "--age",
+        "sex_flag": "--sex",
+        "out_flag": "--out",
+        "result_json": true,
+        "targets_flag": "--targets",
+        "levers_json": true
+      },
+      "inputs_status": "draft",
+      "inputs": [
+        {
+          "key": "vegetables_g_d",
+          "label_zh": "蔬菜日均摄入量",
+          "aliases": [
+            "蔬菜摄入量",
+            "日均蔬菜摄入量",
+            "蔬菜",
+            "vegetable consumption",
+            "vegetable intake",
+            "vegetables",
+            "average daily vegetable consumption"
+          ],
+          "unit": "g/d",
+          "accept": {
+            "g/d": 1
+          },
+          "range": [
+            0,
+            3000
+          ],
+          "unit_required": true,
+          "required": true,
+          "from": "measurements",
+          "note_zh": "完整饮食记录的日均克数；排除豆类、腌菜、汁、坚果种子及土豆玉米等淀粉类蔬菜。仅接受g/d，份、杯及生熟重量不自动换算；0–3000是输入防错范围，不是论文阈值。"
+        }
+      ],
+      "outputs": [
+        {
+          "key": "vegetables_g_d",
+          "label_zh": "记录的蔬菜日均摄入量",
+          "unit": "g/d"
+        },
+        {
+          "key": "tmrel_lower_g_d",
+          "label_zh": "论文参考范围下端点",
+          "unit": "g/d"
+        },
+        {
+          "key": "tmrel_upper_g_d",
+          "label_zh": "论文参考范围上端点",
+          "unit": "g/d"
+        },
+        {
+          "key": "lower_difference_g_d",
+          "label_zh": "下端点减摄入量",
+          "unit": "g/d"
+        },
+        {
+          "key": "upper_difference_g_d",
+          "label_zh": "上端点减摄入量",
+          "unit": "g/d"
+        },
+        {
+          "key": "shortfall_g_d",
+          "label_zh": "低于下端点的距离",
+          "unit": "g/d"
+        },
+        {
+          "key": "position",
+          "label_zh": "相对参考范围的位置",
+          "note_zh": "below/within/above；两端点计入范围，不是风险分级或营养诊断。"
+        }
+      ],
+      "paper": {
+        "doi": "10.1038/s41591-022-01970-5",
+        "title": "Health effects associated with vegetable consumption: a Burden of Proof study",
+        "title_zh": "蔬菜摄入与健康：证据负担研究",
+        "journal": "Nature Medicine",
+        "year": 2022
       }
     },
     {

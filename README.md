@@ -368,6 +368,10 @@ python3 -m tools.lsk test --changed origin/main   # 只测相对 main 改动过�
 
 - `skills/nutrigenetic-variant-panel/` — 基因检测原始数据里和喝酒、叶酸、喝奶有关的三个位点，按要求再看 APOE 与血脂。（名单类）
 
+## 饮食与营养
+
+- `skills/vegetable-tmrel-gap/` — 用饮食记录中的蔬菜日均克数，计算与论文蔬菜摄入参考范围的差距。
+
 ## 只收录，不参与个人调度
 
 下面这些是动物、细胞实验，或者输入只能是队列统计量的方法。它们留在仓库里供检索和科普，个人问题不会调度到它们，除非问题点名了对应的模式生物。
