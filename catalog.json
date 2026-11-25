@@ -2,9 +2,9 @@
   "schema": "longevity-catalog/1",
   "version": "2026.48.0",
   "counts": {
-    "skills": 212,
+    "skills": 213,
     "tiers": {
-      "A": 48,
+      "A": 49,
       "B": 83,
       "C": 73,
       "tool": 8
@@ -35807,6 +35807,185 @@
         "title_zh": "睡眠时长分组",
         "journal": "Nature",
         "year": 2026
+      }
+    },
+    {
+      "name": "sleep-duration-risk-lookup",
+      "kind": "paper",
+      "tier": "A",
+      "species": [
+        "human"
+      ],
+      "evidence": "review",
+      "domains": [
+        "睡眠",
+        "心血管",
+        "死亡风险"
+      ],
+      "blurb_zh": "用通常睡眠时长匹配论文整数小时查表值，查看全因死亡、心血管疾病、冠心病和卒中的人群相对风险。",
+      "description": "Tier A personal readout: computes one person's value with the paper's printed method and reproduces a printed example. 按通常睡眠时长匹配前瞻性队列荟萃分析正文表2中已印出的非线性相对风险，展示全因死亡、总心血管疾病、冠心病和卒中的人群关联与置信区间。适用于询问每天睡几个小时与死亡或心血管风险的关系；仅接受已印出的整数小时点，可比较用户指定的目标情景，不预测个人概率或干预获益。",
+      "intents": [
+        "wearable_sleep",
+        "frailty_mortality"
+      ],
+      "has_script": true,
+      "validation_status": "reproduced",
+      "validation_label_zh": "已复现论文",
+      "entry": {
+        "script": "scripts/personal_report.py",
+        "measurements_flag": "--measurements",
+        "measurements_header": [
+          "item",
+          "value",
+          "unit"
+        ],
+        "age_flag": "--age",
+        "sex_flag": "--sex",
+        "out_flag": "--out",
+        "result_json": true,
+        "targets_flag": "--targets",
+        "levers_json": true
+      },
+      "inputs_status": "verified",
+      "inputs": [
+        {
+          "key": "sleep_duration_h",
+          "label_zh": "通常的睡眠时长",
+          "aliases": [
+            "睡眠时长",
+            "每日睡眠时长",
+            "平均睡眠时长",
+            "睡眠时间",
+            "sleep duration",
+            "habitual sleep duration",
+            "average sleep duration",
+            "sleep length"
+          ],
+          "unit": "h",
+          "accept": {
+            "min": 0.016666666666666666
+          },
+          "range": [
+            0,
+            24
+          ],
+          "unit_required": true,
+          "required": true,
+          "from": "measurements",
+          "note_zh": "每天通常的睡眠小时数，不是卧床时间或单晚记录。0–24 是生理输入检查；方法只接受表2已印出的3至11整数小时点，不对非整数取整。研究混合夜间与全天睡眠，不能进行口径专属校准。"
+        },
+        {
+          "key": "age",
+          "label_zh": "年龄",
+          "unit": "a",
+          "range": [
+            18,
+            120
+          ],
+          "required": false,
+          "from": "profile",
+          "flag": "--age",
+          "note_zh": "可选背景；18–120是本工具成人使用范围而非论文拟合切点，不参与表2查表。"
+        },
+        {
+          "key": "sex",
+          "label_zh": "性别",
+          "required": false,
+          "from": "profile",
+          "flag": "--sex",
+          "note_zh": "可选 male/female，仅作接口兼容；不对总体查表结果作性别调整。"
+        }
+      ],
+      "outputs": [
+        {
+          "key": "sleep_duration_h",
+          "label_zh": "已匹配的通常睡眠时长",
+          "unit": "h"
+        },
+        {
+          "key": "reference_sleep_h",
+          "label_zh": "参照睡眠时长",
+          "unit": "h"
+        },
+        {
+          "key": "all_cause_mortality_rr",
+          "label_zh": "全因死亡人群相对风险",
+          "unit": "1",
+          "note_zh": "正文表2，相对每日7小时；未印出的单元格为null。心血管疾病结局混合发病与死亡；不是个人概率。"
+        },
+        {
+          "key": "all_cause_mortality_ci_lower",
+          "label_zh": "全因死亡人群95%置信区间下限",
+          "unit": "1",
+          "note_zh": "正文表2，相对每日7小时；未印出的单元格为null。心血管疾病结局混合发病与死亡；不是个人概率。"
+        },
+        {
+          "key": "all_cause_mortality_ci_upper",
+          "label_zh": "全因死亡人群95%置信区间上限",
+          "unit": "1",
+          "note_zh": "正文表2，相对每日7小时；未印出的单元格为null。心血管疾病结局混合发病与死亡；不是个人概率。"
+        },
+        {
+          "key": "total_cvd_rr",
+          "label_zh": "总心血管疾病人群相对风险",
+          "unit": "1",
+          "note_zh": "正文表2，相对每日7小时；未印出的单元格为null。心血管疾病结局混合发病与死亡；不是个人概率。"
+        },
+        {
+          "key": "total_cvd_ci_lower",
+          "label_zh": "总心血管疾病人群95%置信区间下限",
+          "unit": "1",
+          "note_zh": "正文表2，相对每日7小时；未印出的单元格为null。心血管疾病结局混合发病与死亡；不是个人概率。"
+        },
+        {
+          "key": "total_cvd_ci_upper",
+          "label_zh": "总心血管疾病人群95%置信区间上限",
+          "unit": "1",
+          "note_zh": "正文表2，相对每日7小时；未印出的单元格为null。心血管疾病结局混合发病与死亡；不是个人概率。"
+        },
+        {
+          "key": "chd_rr",
+          "label_zh": "冠心病人群相对风险",
+          "unit": "1",
+          "note_zh": "正文表2，相对每日7小时；未印出的单元格为null。心血管疾病结局混合发病与死亡；不是个人概率。"
+        },
+        {
+          "key": "chd_ci_lower",
+          "label_zh": "冠心病人群95%置信区间下限",
+          "unit": "1",
+          "note_zh": "正文表2，相对每日7小时；未印出的单元格为null。心血管疾病结局混合发病与死亡；不是个人概率。"
+        },
+        {
+          "key": "chd_ci_upper",
+          "label_zh": "冠心病人群95%置信区间上限",
+          "unit": "1",
+          "note_zh": "正文表2，相对每日7小时；未印出的单元格为null。心血管疾病结局混合发病与死亡；不是个人概率。"
+        },
+        {
+          "key": "stroke_rr",
+          "label_zh": "卒中人群相对风险",
+          "unit": "1",
+          "note_zh": "正文表2，相对每日7小时；未印出的单元格为null。心血管疾病结局混合发病与死亡；不是个人概率。"
+        },
+        {
+          "key": "stroke_ci_lower",
+          "label_zh": "卒中人群95%置信区间下限",
+          "unit": "1",
+          "note_zh": "正文表2，相对每日7小时；未印出的单元格为null。心血管疾病结局混合发病与死亡；不是个人概率。"
+        },
+        {
+          "key": "stroke_ci_upper",
+          "label_zh": "卒中人群95%置信区间上限",
+          "unit": "1",
+          "note_zh": "正文表2，相对每日7小时；未印出的单元格为null。心血管疾病结局混合发病与死亡；不是个人概率。"
+        }
+      ],
+      "paper": {
+        "doi": "10.1161/jaha.117.005947",
+        "title": "Relationship of Sleep Duration With All-Cause Mortality and Cardiovascular Events: A Systematic Review and Dose-Response Meta-Analysis of Prospective Cohort Studies.",
+        "title_zh": "睡眠时长与全因死亡及心血管事件：前瞻性队列的剂量反应荟萃分析",
+        "journal": "Journal of the American Heart Association",
+        "year": 2017
       }
     },
     {
