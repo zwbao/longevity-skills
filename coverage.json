@@ -1,0 +1,764 @@
+{
+  "schema": "longevity-coverage/1",
+  "reference_items": 0,
+  "reference_covered": 0,
+  "unlabelled": {
+    "claims": 15332,
+    "effects": 293,
+    "skills": 67
+  },
+  "topics": [
+    {
+      "topic": "physical_activity",
+      "label_zh": "运动与体力活动",
+      "background_rows": 0,
+      "cells": {
+        "method": {
+          "rows": 0,
+          "effects": 0,
+          "papers": 0,
+          "skills": [],
+          "latest": null,
+          "reference": 0,
+          "covered": 0,
+          "missing": []
+        },
+        "population": {
+          "rows": 0,
+          "effects": 0,
+          "papers": 0,
+          "skills": [],
+          "latest": null,
+          "reference": 0,
+          "covered": 0,
+          "missing": []
+        },
+        "reference_data": {
+          "rows": 0,
+          "effects": 0,
+          "papers": 0,
+          "skills": [],
+          "latest": null,
+          "reference": 0,
+          "covered": 0,
+          "missing": []
+        },
+        "mechanism": {
+          "rows": 0,
+          "effects": 0,
+          "papers": 0,
+          "skills": [],
+          "latest": null,
+          "reference": 0,
+          "covered": 0,
+          "missing": []
+        }
+      }
+    },
+    {
+      "topic": "diet_nutrition",
+      "label_zh": "饮食与营养",
+      "background_rows": 0,
+      "cells": {
+        "method": {
+          "rows": 0,
+          "effects": 0,
+          "papers": 0,
+          "skills": [],
+          "latest": null,
+          "reference": 0,
+          "covered": 0,
+          "missing": []
+        },
+        "population": {
+          "rows": 0,
+          "effects": 0,
+          "papers": 0,
+          "skills": [],
+          "latest": null,
+          "reference": 0,
+          "covered": 0,
+          "missing": []
+        },
+        "reference_data": {
+          "rows": 0,
+          "effects": 0,
+          "papers": 0,
+          "skills": [],
+          "latest": null,
+          "reference": 0,
+          "covered": 0,
+          "missing": []
+        },
+        "mechanism": {
+          "rows": 0,
+          "effects": 0,
+          "papers": 0,
+          "skills": [],
+          "latest": null,
+          "reference": 0,
+          "covered": 0,
+          "missing": []
+        }
+      }
+    },
+    {
+      "topic": "sleep_circadian",
+      "label_zh": "睡眠与昼夜节律",
+      "background_rows": 0,
+      "cells": {
+        "method": {
+          "rows": 0,
+          "effects": 0,
+          "papers": 0,
+          "skills": [],
+          "latest": null,
+          "reference": 0,
+          "covered": 0,
+          "missing": []
+        },
+        "population": {
+          "rows": 0,
+          "effects": 0,
+          "papers": 0,
+          "skills": [],
+          "latest": null,
+          "reference": 0,
+          "covered": 0,
+          "missing": []
+        },
+        "reference_data": {
+          "rows": 0,
+          "effects": 0,
+          "papers": 0,
+          "skills": [],
+          "latest": null,
+          "reference": 0,
+          "covered": 0,
+          "missing": []
+        },
+        "mechanism": {
+          "rows": 0,
+          "effects": 0,
+          "papers": 0,
+          "skills": [],
+          "latest": null,
+          "reference": 0,
+          "covered": 0,
+          "missing": []
+        }
+      }
+    },
+    {
+      "topic": "tobacco_alcohol",
+      "label_zh": "吸烟与饮酒",
+      "background_rows": 0,
+      "cells": {
+        "method": {
+          "rows": 0,
+          "effects": 0,
+          "papers": 0,
+          "skills": [],
+          "latest": null,
+          "reference": 0,
+          "covered": 0,
+          "missing": []
+        },
+        "population": {
+          "rows": 0,
+          "effects": 0,
+          "papers": 0,
+          "skills": [],
+          "latest": null,
+          "reference": 0,
+          "covered": 0,
+          "missing": []
+        },
+        "reference_data": {
+          "rows": 0,
+          "effects": 0,
+          "papers": 0,
+          "skills": [],
+          "latest": null,
+          "reference": 0,
+          "covered": 0,
+          "missing": []
+        },
+        "mechanism": {
+          "rows": 0,
+          "effects": 0,
+          "papers": 0,
+          "skills": [],
+          "latest": null,
+          "reference": 0,
+          "covered": 0,
+          "missing": []
+        }
+      }
+    },
+    {
+      "topic": "body_weight_metabolism",
+      "label_zh": "体重与代谢",
+      "background_rows": 0,
+      "cells": {
+        "method": {
+          "rows": 0,
+          "effects": 0,
+          "papers": 0,
+          "skills": [],
+          "latest": null,
+          "reference": 0,
+          "covered": 0,
+          "missing": []
+        },
+        "population": {
+          "rows": 0,
+          "effects": 0,
+          "papers": 0,
+          "skills": [],
+          "latest": null,
+          "reference": 0,
+          "covered": 0,
+          "missing": []
+        },
+        "reference_data": {
+          "rows": 0,
+          "effects": 0,
+          "papers": 0,
+          "skills": [],
+          "latest": null,
+          "reference": 0,
+          "covered": 0,
+          "missing": []
+        },
+        "mechanism": {
+          "rows": 0,
+          "effects": 0,
+          "papers": 0,
+          "skills": [],
+          "latest": null,
+          "reference": 0,
+          "covered": 0,
+          "missing": []
+        }
+      }
+    },
+    {
+      "topic": "cardiovascular",
+      "label_zh": "心血管",
+      "background_rows": 0,
+      "cells": {
+        "method": {
+          "rows": 0,
+          "effects": 0,
+          "papers": 0,
+          "skills": [],
+          "latest": null,
+          "reference": 0,
+          "covered": 0,
+          "missing": []
+        },
+        "population": {
+          "rows": 0,
+          "effects": 0,
+          "papers": 0,
+          "skills": [],
+          "latest": null,
+          "reference": 0,
+          "covered": 0,
+          "missing": []
+        },
+        "reference_data": {
+          "rows": 0,
+          "effects": 0,
+          "papers": 0,
+          "skills": [],
+          "latest": null,
+          "reference": 0,
+          "covered": 0,
+          "missing": []
+        },
+        "mechanism": {
+          "rows": 0,
+          "effects": 0,
+          "papers": 0,
+          "skills": [],
+          "latest": null,
+          "reference": 0,
+          "covered": 0,
+          "missing": []
+        }
+      }
+    },
+    {
+      "topic": "brain_cognition",
+      "label_zh": "认知与脑",
+      "background_rows": 0,
+      "cells": {
+        "method": {
+          "rows": 0,
+          "effects": 0,
+          "papers": 0,
+          "skills": [],
+          "latest": null,
+          "reference": 0,
+          "covered": 0,
+          "missing": []
+        },
+        "population": {
+          "rows": 0,
+          "effects": 0,
+          "papers": 0,
+          "skills": [],
+          "latest": null,
+          "reference": 0,
+          "covered": 0,
+          "missing": []
+        },
+        "reference_data": {
+          "rows": 0,
+          "effects": 0,
+          "papers": 0,
+          "skills": [],
+          "latest": null,
+          "reference": 0,
+          "covered": 0,
+          "missing": []
+        },
+        "mechanism": {
+          "rows": 0,
+          "effects": 0,
+          "papers": 0,
+          "skills": [],
+          "latest": null,
+          "reference": 0,
+          "covered": 0,
+          "missing": []
+        }
+      }
+    },
+    {
+      "topic": "musculoskeletal_frailty",
+      "label_zh": "肌骨与衰弱",
+      "background_rows": 0,
+      "cells": {
+        "method": {
+          "rows": 0,
+          "effects": 0,
+          "papers": 0,
+          "skills": [],
+          "latest": null,
+          "reference": 0,
+          "covered": 0,
+          "missing": []
+        },
+        "population": {
+          "rows": 0,
+          "effects": 0,
+          "papers": 0,
+          "skills": [],
+          "latest": null,
+          "reference": 0,
+          "covered": 0,
+          "missing": []
+        },
+        "reference_data": {
+          "rows": 0,
+          "effects": 0,
+          "papers": 0,
+          "skills": [],
+          "latest": null,
+          "reference": 0,
+          "covered": 0,
+          "missing": []
+        },
+        "mechanism": {
+          "rows": 0,
+          "effects": 0,
+          "papers": 0,
+          "skills": [],
+          "latest": null,
+          "reference": 0,
+          "covered": 0,
+          "missing": []
+        }
+      }
+    },
+    {
+      "topic": "mental_social",
+      "label_zh": "心理与社交",
+      "background_rows": 0,
+      "cells": {
+        "method": {
+          "rows": 0,
+          "effects": 0,
+          "papers": 0,
+          "skills": [],
+          "latest": null,
+          "reference": 0,
+          "covered": 0,
+          "missing": []
+        },
+        "population": {
+          "rows": 0,
+          "effects": 0,
+          "papers": 0,
+          "skills": [],
+          "latest": null,
+          "reference": 0,
+          "covered": 0,
+          "missing": []
+        },
+        "reference_data": {
+          "rows": 0,
+          "effects": 0,
+          "papers": 0,
+          "skills": [],
+          "latest": null,
+          "reference": 0,
+          "covered": 0,
+          "missing": []
+        },
+        "mechanism": {
+          "rows": 0,
+          "effects": 0,
+          "papers": 0,
+          "skills": [],
+          "latest": null,
+          "reference": 0,
+          "covered": 0,
+          "missing": []
+        }
+      }
+    },
+    {
+      "topic": "screening_prevention",
+      "label_zh": "筛查与疫苗",
+      "background_rows": 0,
+      "cells": {
+        "method": {
+          "rows": 0,
+          "effects": 0,
+          "papers": 0,
+          "skills": [],
+          "latest": null,
+          "reference": 0,
+          "covered": 0,
+          "missing": []
+        },
+        "population": {
+          "rows": 0,
+          "effects": 0,
+          "papers": 0,
+          "skills": [],
+          "latest": null,
+          "reference": 0,
+          "covered": 0,
+          "missing": []
+        },
+        "reference_data": {
+          "rows": 0,
+          "effects": 0,
+          "papers": 0,
+          "skills": [],
+          "latest": null,
+          "reference": 0,
+          "covered": 0,
+          "missing": []
+        },
+        "mechanism": {
+          "rows": 0,
+          "effects": 0,
+          "papers": 0,
+          "skills": [],
+          "latest": null,
+          "reference": 0,
+          "covered": 0,
+          "missing": []
+        }
+      }
+    },
+    {
+      "topic": "drugs_supplements",
+      "label_zh": "药物与补充剂",
+      "background_rows": 0,
+      "cells": {
+        "method": {
+          "rows": 0,
+          "effects": 0,
+          "papers": 0,
+          "skills": [],
+          "latest": null,
+          "reference": 0,
+          "covered": 0,
+          "missing": []
+        },
+        "population": {
+          "rows": 0,
+          "effects": 0,
+          "papers": 0,
+          "skills": [],
+          "latest": null,
+          "reference": 0,
+          "covered": 0,
+          "missing": []
+        },
+        "reference_data": {
+          "rows": 0,
+          "effects": 0,
+          "papers": 0,
+          "skills": [],
+          "latest": null,
+          "reference": 0,
+          "covered": 0,
+          "missing": []
+        },
+        "mechanism": {
+          "rows": 0,
+          "effects": 0,
+          "papers": 0,
+          "skills": [],
+          "latest": null,
+          "reference": 0,
+          "covered": 0,
+          "missing": []
+        }
+      }
+    },
+    {
+      "topic": "environment",
+      "label_zh": "环境暴露",
+      "background_rows": 0,
+      "cells": {
+        "method": {
+          "rows": 0,
+          "effects": 0,
+          "papers": 0,
+          "skills": [],
+          "latest": null,
+          "reference": 0,
+          "covered": 0,
+          "missing": []
+        },
+        "population": {
+          "rows": 0,
+          "effects": 0,
+          "papers": 0,
+          "skills": [],
+          "latest": null,
+          "reference": 0,
+          "covered": 0,
+          "missing": []
+        },
+        "reference_data": {
+          "rows": 0,
+          "effects": 0,
+          "papers": 0,
+          "skills": [],
+          "latest": null,
+          "reference": 0,
+          "covered": 0,
+          "missing": []
+        },
+        "mechanism": {
+          "rows": 0,
+          "effects": 0,
+          "papers": 0,
+          "skills": [],
+          "latest": null,
+          "reference": 0,
+          "covered": 0,
+          "missing": []
+        }
+      }
+    },
+    {
+      "topic": "biological_age",
+      "label_zh": "生物年龄与时钟",
+      "background_rows": 0,
+      "cells": {
+        "method": {
+          "rows": 0,
+          "effects": 0,
+          "papers": 0,
+          "skills": [],
+          "latest": null,
+          "reference": 0,
+          "covered": 0,
+          "missing": []
+        },
+        "population": {
+          "rows": 0,
+          "effects": 0,
+          "papers": 0,
+          "skills": [],
+          "latest": null,
+          "reference": 0,
+          "covered": 0,
+          "missing": []
+        },
+        "reference_data": {
+          "rows": 0,
+          "effects": 0,
+          "papers": 0,
+          "skills": [],
+          "latest": null,
+          "reference": 0,
+          "covered": 0,
+          "missing": []
+        },
+        "mechanism": {
+          "rows": 0,
+          "effects": 0,
+          "papers": 0,
+          "skills": [],
+          "latest": null,
+          "reference": 0,
+          "covered": 0,
+          "missing": []
+        }
+      }
+    },
+    {
+      "topic": "genetics",
+      "label_zh": "遗传",
+      "background_rows": 0,
+      "cells": {
+        "method": {
+          "rows": 0,
+          "effects": 0,
+          "papers": 0,
+          "skills": [],
+          "latest": null,
+          "reference": 0,
+          "covered": 0,
+          "missing": []
+        },
+        "population": {
+          "rows": 0,
+          "effects": 0,
+          "papers": 0,
+          "skills": [],
+          "latest": null,
+          "reference": 0,
+          "covered": 0,
+          "missing": []
+        },
+        "reference_data": {
+          "rows": 0,
+          "effects": 0,
+          "papers": 0,
+          "skills": [],
+          "latest": null,
+          "reference": 0,
+          "covered": 0,
+          "missing": []
+        },
+        "mechanism": {
+          "rows": 0,
+          "effects": 0,
+          "papers": 0,
+          "skills": [],
+          "latest": null,
+          "reference": 0,
+          "covered": 0,
+          "missing": []
+        }
+      }
+    },
+    {
+      "topic": "aging_biology",
+      "label_zh": "衰老机制",
+      "background_rows": 0,
+      "cells": {
+        "method": {
+          "rows": 0,
+          "effects": 0,
+          "papers": 0,
+          "skills": [],
+          "latest": null,
+          "reference": 0,
+          "covered": 0,
+          "missing": []
+        },
+        "population": {
+          "rows": 0,
+          "effects": 0,
+          "papers": 0,
+          "skills": [],
+          "latest": null,
+          "reference": 0,
+          "covered": 0,
+          "missing": []
+        },
+        "reference_data": {
+          "rows": 0,
+          "effects": 0,
+          "papers": 0,
+          "skills": [],
+          "latest": null,
+          "reference": 0,
+          "covered": 0,
+          "missing": []
+        },
+        "mechanism": {
+          "rows": 0,
+          "effects": 0,
+          "papers": 0,
+          "skills": [],
+          "latest": null,
+          "reference": 0,
+          "covered": 0,
+          "missing": []
+        }
+      }
+    },
+    {
+      "topic": "organ_aging",
+      "label_zh": "器官与系统老化",
+      "background_rows": 0,
+      "cells": {
+        "method": {
+          "rows": 0,
+          "effects": 0,
+          "papers": 0,
+          "skills": [],
+          "latest": null,
+          "reference": 0,
+          "covered": 0,
+          "missing": []
+        },
+        "population": {
+          "rows": 0,
+          "effects": 0,
+          "papers": 0,
+          "skills": [],
+          "latest": null,
+          "reference": 0,
+          "covered": 0,
+          "missing": []
+        },
+        "reference_data": {
+          "rows": 0,
+          "effects": 0,
+          "papers": 0,
+          "skills": [],
+          "latest": null,
+          "reference": 0,
+          "covered": 0,
+          "missing": []
+        },
+        "mechanism": {
+          "rows": 0,
+          "effects": 0,
+          "papers": 0,
+          "skills": [],
+          "latest": null,
+          "reference": 0,
+          "covered": 0,
+          "missing": []
+        }
+      }
+    }
+  ]
+}
