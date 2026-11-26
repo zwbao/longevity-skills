@@ -1,7 +1,7 @@
 {
   "schema": "longevity-coverage/1",
   "reference_items": 583,
-  "reference_covered": 32,
+  "reference_covered": 40,
   "unlabelled": {
     "claims": 11902,
     "effects": 293,
@@ -5327,7 +5327,7 @@
           "skills": [],
           "latest": null,
           "reference": 22,
-          "covered": 2,
+          "covered": 10,
           "missing": [
             {
               "id": "biological-age-method-bioage-toolkit",
@@ -5367,91 +5367,6 @@
               ]
             },
             {
-              "id": "biological-age-method-dunedinpace",
-              "item": "DunedinPACE pace-of-aging methylation clock",
-              "item_zh": "DunedinPACE 衰老速度甲基化时钟",
-              "priority": "P0",
-              "status": "reviewed",
-              "covered": false,
-              "by": [],
-              "doi": [
-                "10.7554/elife.73420"
-              ]
-            },
-            {
-              "id": "biological-age-method-grimage",
-              "item": "GrimAge epigenetic clock",
-              "item_zh": "GrimAge 表观遗传时钟",
-              "priority": "P0",
-              "status": "reviewed",
-              "covered": false,
-              "by": [],
-              "doi": [
-                "10.18632/aging.101684"
-              ]
-            },
-            {
-              "id": "biological-age-method-grimage2",
-              "item": "GrimAge2 epigenetic clock",
-              "item_zh": "GrimAge2 表观遗传时钟",
-              "priority": "P1",
-              "status": "reviewed",
-              "covered": false,
-              "by": [],
-              "doi": [
-                "10.18632/aging.204434"
-              ]
-            },
-            {
-              "id": "biological-age-method-hannum-clock",
-              "item": "Hannum blood DNA methylation age clock (71 CpGs)",
-              "item_zh": "Hannum 血液 DNA 甲基化年龄时钟（71 个 CpG）",
-              "priority": "P1",
-              "status": "reviewed",
-              "covered": false,
-              "by": [],
-              "doi": [
-                "10.1016/j.molcel.2012.10.016"
-              ]
-            },
-            {
-              "id": "biological-age-method-homeostatic-dysregulation",
-              "item": "Homeostatic dysregulation (Mahalanobis distance) index",
-              "item_zh": "稳态失调指数（马氏距离法）",
-              "priority": "P1",
-              "status": "reviewed",
-              "covered": false,
-              "by": [],
-              "doi": [
-                "10.1016/j.mad.2013.01.004"
-              ]
-            },
-            {
-              "id": "biological-age-method-horvath-multitissue",
-              "item": "Horvath multi-tissue DNA methylation age clock (353 CpGs)",
-              "item_zh": "Horvath 多组织 DNA 甲基化年龄时钟（353 个 CpG）",
-              "priority": "P0",
-              "status": "reviewed",
-              "covered": false,
-              "by": [],
-              "doi": [
-                "10.1186/gb-2013-14-10-r115"
-              ]
-            },
-            {
-              "id": "biological-age-method-klemera-doubal",
-              "item": "Klemera–Doubal method (KDM) biological age",
-              "item_zh": "Klemera–Doubal 生物年龄算法（KDM）",
-              "priority": "P0",
-              "status": "reviewed",
-              "covered": false,
-              "by": [],
-              "doi": [
-                "10.1016/j.mad.2005.10.004",
-                "10.1093/gerona/gls233"
-              ]
-            },
-            {
               "id": "biological-age-method-metabolomic-metabohealth",
               "item": "MetaboHealth metabolomic mortality score",
               "item_zh": "MetaboHealth 代谢组死亡风险评分",
@@ -5473,18 +5388,6 @@
               "by": [],
               "doi": [
                 "10.1073/pnas.1506264112"
-              ]
-            },
-            {
-              "id": "biological-age-method-pc-clocks",
-              "item": "Principal-component (PC) epigenetic clocks for reliability",
-              "item_zh": "主成分版表观遗传时钟（PC 时钟）",
-              "priority": "P1",
-              "status": "reviewed",
-              "covered": false,
-              "by": [],
-              "doi": [
-                "10.1038/s43587-022-00248-2"
               ]
             },
             {
