@@ -1,0 +1,267 @@
+{
+  "schema": "longevity-skill/1",
+  "name": "apoe-genotype-ad-association",
+  "kind": "paper",
+  "tier": "A",
+  "species": [
+    "human"
+  ],
+  "evidence": "case_control",
+  "domains": [
+    "阿尔茨海默病",
+    "APOE基因型"
+  ],
+  "topic": [
+    "brain_cognition",
+    "genetics"
+  ],
+  "blurb_zh": "用已确认的 APOE 基因型查询论文印出的族裔、性别或全基因组祖源分层 OR/HR；年龄仅检查适用范围。",
+  "intents": [
+    "cognition_dementia"
+  ],
+  "triage": {
+    "reason_zh": "正文表和补充表完整印出可按个人基因型选择的分层 OR、HR 及置信区间，可离线精确查表；不复原年龄曲线。",
+    "reviewed": false
+  },
+  "paper": {
+    "doi": "10.1001/jamaneurol.2023.3599",
+    "title": "APOE Genotype and Alzheimer Disease Risk Across Age, Sex, and Population Ancestry.",
+    "title_zh": "APOE 基因型与不同年龄、性别及人群祖源中的阿尔茨海默病风险",
+    "journal": "JAMA Neurology",
+    "year": 2023,
+    "authors": "Belloy 等",
+    "article_url": "https://jamanetwork.com/journals/jamaneurology/fullarticle/2811630",
+    "supplements": [
+      {
+        "label": "Supplement 1：eMethods、eAppendix、eFigures 1–6、eTables 1–16（使用正文表、eTables 6、13、16）",
+        "url": "https://pmc.ncbi.nlm.nih.gov/articles/instance/10628838/bin/jamaneurol-e233599-s001.pdf"
+      },
+      {
+        "label": "Supplement 2：Data Sharing Statement",
+        "url": "https://pmc.ncbi.nlm.nih.gov/articles/instance/10628838/bin/jamaneurol-e233599-s002.pdf"
+      }
+    ],
+    "card_notes": [
+      "公开全文：https://pmc.ncbi.nlm.nih.gov/articles/PMC10628838/；期刊卷期年为 2023。",
+      "已核查两份补充文件；未发现本研究发布的分析代码仓库。原始个体数据须向原仓库申请，本查表不需要下载。",
+      "年龄窗口曲线缺少完整数字表，本工具只查年龄未分层的印出数值。东亚数据仅来自日本、韩国，只有男女合并 OR。",
+      "正文生存段落的 ε4/ε4 数字与补表行名不一致；HR 严格按 eTable 13 基因型行。详见 references/claims.md。"
+    ],
+    "summary_zh": "这项研究通过人群遗传病例对照及生存分析，发现 APOE 基因型与阿尔茨海默病的关联随人群、性别及祖源不同。个人报告只查询所选研究分层的相对关联与置信区间，不计算个人患病概率或精确年龄风险。",
+    "summary_status": "draft"
+  },
+  "entry": {
+    "script": "scripts/personal_report.py",
+    "measurements_flag": "--measurements",
+    "measurements_header": [
+      "marker",
+      "value",
+      "unit"
+    ],
+    "age_flag": "--age",
+    "sex_flag": "--sex",
+    "out_flag": "--out",
+    "result_json": true
+  },
+  "inputs_status": "verified",
+  "validation": {
+    "status": "reproduced",
+    "examples": [
+      {
+        "locator": "Main Table, APOE*34 female, White individuals",
+        "quote": "APOE*34, female; 6359; 3.54 (3.29-3.80)",
+        "values": [
+          3.54,
+          3.29,
+          3.8
+        ],
+        "tolerance": "Exact equality to printed lookup cells; no interpolation, reconstruction or refitting.",
+        "test": "tests/test_manifest.py::test_main_table_printed_sex_strata"
+      },
+      {
+        "locator": "Supplement 1, eTable 6, PDF p.36, East-Asian APOE*34",
+        "quote": "APOE *34 4,164 4.54 [3.99, 5.17]",
+        "values": [
+          4.54,
+          3.99,
+          5.17
+        ],
+        "tolerance": "Exact equality to printed lookup cells; no interpolation, reconstruction or refitting.",
+        "test": "tests/test_manifest.py::test_etable6_printed_east_asian"
+      },
+      {
+        "locator": "Supplement 1, eTable 13, PDF p.43, NHW APOE*44 females",
+        "quote": "APOE *44, females 1,245 5.53 [5.13, 5.96]",
+        "values": [
+          5.53,
+          5.13,
+          5.96
+        ],
+        "tolerance": "Exact equality to printed lookup cells; no interpolation, reconstruction or refitting.",
+        "test": "tests/test_manifest.py::test_etable13_printed_survival"
+      },
+      {
+        "locator": "Supplement 1, eTable 16, PDF p.46, European >75%, APOE*34",
+        "quote": "APOE *34 10,867 3.43 [3.25, 3.63]",
+        "values": [
+          3.43,
+          3.25,
+          3.63
+        ],
+        "tolerance": "Exact equality to printed lookup cells; no interpolation, reconstruction or refitting.",
+        "test": "tests/test_manifest.py::test_etable16_printed_ancestry"
+      }
+    ]
+  },
+  "inputs": [
+    {
+      "key": "genotype",
+      "label_zh": "APOE 基因型",
+      "aliases": [
+        "载脂蛋白E基因型",
+        "APOE genotype",
+        "APOE ε genotype"
+      ],
+      "required": true,
+      "from": "argument",
+      "flag": "--genotype",
+      "note_zh": "分类输入无单位或连续范围：22/23/24/33/34/44，也接受 ε3/ε4、E3/E4、APOE*34 及反向排列。需报告已确认的双等位基因型，不从原始 SNP 推断。"
+    },
+    {
+      "key": "age",
+      "label_zh": "当前年龄",
+      "aliases": [
+        "年龄",
+        "Age"
+      ],
+      "required": true,
+      "unit": "a",
+      "range": [
+        55,
+        120
+      ],
+      "from": "argument",
+      "flag": "--age",
+      "note_zh": "岁；实际严格大于55。120是输入质量上限而非论文最大年龄；HR模式保守限制为未满90岁。只核查范围，不按当前年龄校准。"
+    },
+    {
+      "key": "sex",
+      "label_zh": "研究性别分层",
+      "aliases": [
+        "Sex",
+        "性别"
+      ],
+      "required": true,
+      "from": "argument",
+      "flag": "--sex",
+      "note_zh": "分类输入：male/female/pooled。pooled明确请求男女合并，不能把缺失性别默认为女性或男性。祖源与东亚模式仅pooled。"
+    },
+    {
+      "key": "analysis",
+      "label_zh": "分析类型",
+      "aliases": [
+        "Analysis"
+      ],
+      "required": false,
+      "from": "argument",
+      "flag": "--analysis",
+      "note_zh": "case-control（默认）查询OR；survival查询HR；ancestry查询祖源超过75%分组OR。"
+    },
+    {
+      "key": "group",
+      "label_zh": "研究种族／族裔分组",
+      "aliases": [
+        "Race and ethnicity",
+        "人群分组"
+      ],
+      "required": false,
+      "from": "argument",
+      "flag": "--group",
+      "note_zh": "case-control/survival模式条件必填：nhw/nhb/hispanic/east_asian。east_asian仅日、韩汇总OR。不能从姓名、语言、国籍或祖源比例自动推断。"
+    },
+    {
+      "key": "ancestry",
+      "label_zh": "全基因组祖源类型",
+      "aliases": [
+        "Global population ancestry",
+        "遗传祖源"
+      ],
+      "required": false,
+      "from": "argument",
+      "flag": "--ancestry",
+      "note_zh": "ancestry模式条件必填：european/african/amerindian，必须有全基因组祖源估计；不是APOE局部祖源。"
+    },
+    {
+      "key": "ancestry_percent",
+      "label_zh": "全基因组祖源比例",
+      "aliases": [
+        "Global ancestry proportion",
+        "Ancestry percentage",
+        "全基因组祖源百分比"
+      ],
+      "required": false,
+      "unit": "%",
+      "range": [
+        0,
+        100
+      ],
+      "unit_required": true,
+      "from": "measurements",
+      "note_zh": "ancestry模式条件必填：所选祖源的百分比，必须严格超过75%；不支持以种族代替报告。只接受百分数，不猜测0到1比例。"
+    }
+  ],
+  "outputs": [
+    {
+      "key": "effect",
+      "label_zh": "该研究分层的相对关联值",
+      "unit": "1"
+    },
+    {
+      "key": "ci_low",
+      "label_zh": "95%置信区间下限",
+      "unit": "1"
+    },
+    {
+      "key": "ci_high",
+      "label_zh": "95%置信区间上限",
+      "unit": "1"
+    },
+    {
+      "key": "effect_type",
+      "label_zh": "关联尺度：OR或HR"
+    },
+    {
+      "key": "genotype_stratum",
+      "label_zh": "实际使用的基因型分组"
+    },
+    {
+      "key": "reference_genotype",
+      "label_zh": "参照基因型"
+    },
+    {
+      "key": "source",
+      "label_zh": "数值来源表"
+    },
+    {
+      "key": "population_stratum",
+      "label_zh": "使用的研究人群或祖源分组"
+    },
+    {
+      "key": "sex_stratum",
+      "label_zh": "使用的性别分层"
+    },
+    {
+      "key": "age_stratum",
+      "label_zh": "年龄未分层标记"
+    }
+  ],
+  "data_files": [
+    {
+      "path": "data/associations.json",
+      "source_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10628838/",
+      "license": "CC-BY; numerical table extraction, Belloy et al. 2023",
+      "sha256": "359069eb83a604b67fdc468142d1970fb53714e277ab6d159a71f1cf2cf08380",
+      "redistributable": "yes"
+    }
+  ]
+}
