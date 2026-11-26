@@ -380,6 +380,10 @@ python3 -m tools.lsk test --changed origin/main   # 只测相对 main 改动过�
 
 - `skills/stop-bang/` — 用打鼾、白天疲倦、目击呼吸暂停、高血压及体型年龄信息计算原版STOP和STOP-Bang筛查分档。
 
+## 睡眠与昼夜节律
+
+- `skills/epworth-sleepiness-scale/` — 把已完成ESS问卷的八项分数相加，读出日间容易打瞌睡的程度。
+
 ## 糖代谢
 
 - `skills/elsa-hba1c-model-a/` — 用糖化血红蛋白、年龄、性别和随访间隔计算 ELSA Model A 的糖尿病检出概率（预印本研究模型）。
