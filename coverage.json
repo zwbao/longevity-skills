@@ -1,24 +1,32 @@
 {
   "schema": "longevity-coverage/1",
   "reference_items": 583,
-  "reference_covered": 40,
+  "reference_covered": 70,
   "unlabelled": {
-    "claims": 11902,
-    "effects": 293,
-    "skills": 67
+    "claims": 0,
+    "effects": 0,
+    "skills": 0
   },
   "topics": [
     {
       "topic": "physical_activity",
       "label_zh": "运动与体力活动",
-      "background_rows": 0,
+      "background_rows": 108,
       "cells": {
         "method": {
           "rows": 0,
           "effects": 0,
-          "papers": 0,
-          "skills": [],
-          "latest": null,
+          "papers": 7,
+          "skills": [
+            "accelerometry-mortality-dose-response",
+            "age-stratified-step-range",
+            "modifiable-risk-factor-score",
+            "nonoccupational-activity-risk",
+            "one-minute-heart-rate-recovery",
+            "sedentary-dose-response",
+            "senior-fitness-independence"
+          ],
+          "latest": "2026-11-25",
           "reference": 7,
           "covered": 0,
           "missing": [
@@ -109,13 +117,13 @@
           ]
         },
         "population": {
-          "rows": 1,
-          "effects": 0,
-          "papers": 1,
+          "rows": 436,
+          "effects": 97,
+          "papers": 84,
           "skills": [],
-          "latest": "2026-09-23",
+          "latest": "2026-11-25",
           "reference": 16,
-          "covered": 0,
+          "covered": 3,
           "missing": [
             {
               "id": "physical-activity-population-acsm-2011-position-stand",
@@ -139,19 +147,6 @@
               "by": [],
               "doi": [
                 "10.1161/cir.0000000000000461"
-              ]
-            },
-            {
-              "id": "physical-activity-population-china-pa-guidelines-2021",
-              "item": "Physical Activity Guidelines for Chinese (2021)",
-              "item_zh": "中国人群身体活动指南（2021）",
-              "priority": "P0",
-              "status": "reviewed",
-              "covered": false,
-              "by": [],
-              "doi": [
-                "10.3760/cma.j.cn112150-20211119-01070",
-                "10.3760/cma.j.cn112338-20211119-00903"
               ]
             },
             {
@@ -227,18 +222,6 @@
               ]
             },
             {
-              "id": "physical-activity-population-lang-2024-crf-umbrella",
-              "item": "Cardiorespiratory fitness and morbidity and mortality: overview of meta-analyses (20.9 million observations)",
-              "item_zh": "心肺耐力与发病和死亡风险：荟萃分析综述（2090万观察）",
-              "priority": "P0",
-              "status": "reviewed",
-              "covered": false,
-              "by": [],
-              "doi": [
-                "10.1136/bjsports-2023-107849"
-              ]
-            },
-            {
               "id": "physical-activity-population-lee-2012-inactivity-burden",
               "item": "Effect of physical inactivity on major non-communicable diseases worldwide",
               "item_zh": "身体活动不足对全球主要慢性病负担和期望寿命的影响",
@@ -296,18 +279,6 @@
               "by": [],
               "doi": [
                 "10.1038/s41591-022-02100-x"
-              ]
-            },
-            {
-              "id": "physical-activity-population-who-2020-guidelines",
-              "item": "WHO 2020 guidelines on physical activity and sedentary behaviour",
-              "item_zh": "世界卫生组织2020年身体活动和久坐行为指南",
-              "priority": "P0",
-              "status": "reviewed",
-              "covered": false,
-              "by": [],
-              "doi": [
-                "10.1136/bjsports-2020-102955"
               ]
             }
           ]
@@ -370,11 +341,11 @@
           ]
         },
         "mechanism": {
-          "rows": 1,
+          "rows": 15,
           "effects": 0,
-          "papers": 1,
+          "papers": 3,
           "skills": [],
-          "latest": "2026-09-23",
+          "latest": "2026-11-09",
           "reference": 2,
           "covered": 0,
           "missing": [
@@ -409,16 +380,26 @@
     {
       "topic": "diet_nutrition",
       "label_zh": "饮食与营养",
-      "background_rows": 0,
+      "background_rows": 124,
       "cells": {
         "method": {
           "rows": 0,
           "effects": 0,
-          "papers": 0,
-          "skills": [],
-          "latest": null,
+          "papers": 9,
+          "skills": [
+            "burden-of-proof-dietary-risk",
+            "chinese-healthy-eating-index",
+            "edisea-dietary-index",
+            "fruit-vegetable-risk-lookup",
+            "gbd-dietary-intake-gap",
+            "medas-mediterranean-diet-adherence",
+            "red-meat-burden-of-proof",
+            "vegetable-tmrel-gap",
+            "whole-grain-dose-response"
+          ],
+          "latest": "2026-11-26",
           "reference": 8,
-          "covered": 1,
+          "covered": 2,
           "missing": [
             {
               "id": "diet-nutrition-method-ahei-2010",
@@ -430,18 +411,6 @@
               "by": [],
               "doi": [
                 "10.3945/jn.111.157222"
-              ]
-            },
-            {
-              "id": "diet-nutrition-method-chei",
-              "item": "Chinese Healthy Eating Index (CHEI)",
-              "item_zh": "中国健康膳食指数（CHEI）",
-              "priority": "P0",
-              "status": "reviewed",
-              "covered": false,
-              "by": [],
-              "doi": [
-                "10.3390/nu9090977"
               ]
             },
             {
@@ -508,26 +477,14 @@
           ]
         },
         "population": {
-          "rows": 4,
-          "effects": 0,
-          "papers": 1,
+          "rows": 468,
+          "effects": 132,
+          "papers": 79,
           "skills": [],
-          "latest": "2026-09-23",
+          "latest": "2026-11-25",
           "reference": 23,
-          "covered": 4,
+          "covered": 8,
           "missing": [
-            {
-              "id": "diet-nutrition-population-aha-2021-dietary-guidance",
-              "item": "AHA 2021 Dietary Guidance to Improve Cardiovascular Health",
-              "item_zh": "美国心脏协会2021年改善心血管健康膳食指导",
-              "priority": "P1",
-              "status": "reviewed",
-              "covered": false,
-              "by": [],
-              "doi": [
-                "10.1161/cir.0000000000001031"
-              ]
-            },
             {
               "id": "diet-nutrition-population-bop-red-meat",
               "item": "Health effects of unprocessed red meat consumption: a Burden of Proof study",
@@ -538,18 +495,6 @@
               "by": [],
               "doi": [
                 "10.1038/s41591-022-01968-z"
-              ]
-            },
-            {
-              "id": "diet-nutrition-population-calerie-2",
-              "item": "CALERIE phase 2: two years of calorie restriction and cardiometabolic risk in non-obese adults",
-              "item_zh": "CALERIE二期试验：非肥胖成人两年热量限制与心血管代谢风险",
-              "priority": "P0",
-              "status": "reviewed",
-              "covered": false,
-              "by": [],
-              "doi": [
-                "10.1016/s2213-8587(19)30151-2"
               ]
             },
             {
@@ -640,30 +585,6 @@
               "by": [],
               "doi": [
                 "10.1001/jamanetworkopen.2021.39558"
-              ]
-            },
-            {
-              "id": "diet-nutrition-population-predimed-2018",
-              "item": "PREDIMED trial: Mediterranean diet supplemented with olive oil or nuts for primary prevention of CVD (2018 reanalysis)",
-              "item_zh": "PREDIMED试验：补充橄榄油或坚果的地中海饮食用于心血管病一级预防（2018年重新分析版）",
-              "priority": "P0",
-              "status": "reviewed",
-              "covered": false,
-              "by": [],
-              "doi": [
-                "10.1056/nejmoa1800389"
-              ]
-            },
-            {
-              "id": "diet-nutrition-population-prot-age-2013",
-              "item": "PROT-AGE recommendations for optimal dietary protein intake in older people",
-              "item_zh": "PROT-AGE研究组老年人适宜蛋白质摄入推荐",
-              "priority": "P0",
-              "status": "reviewed",
-              "covered": false,
-              "by": [],
-              "doi": [
-                "10.1016/j.jamda.2013.05.021"
               ]
             },
             {
@@ -796,11 +717,11 @@
           ]
         },
         "mechanism": {
-          "rows": 12,
+          "rows": 85,
           "effects": 0,
-          "papers": 5,
+          "papers": 10,
           "skills": [],
-          "latest": "2026-09-23",
+          "latest": "2026-11-25",
           "reference": 3,
           "covered": 0,
           "missing": [
@@ -847,16 +768,21 @@
     {
       "topic": "sleep_circadian",
       "label_zh": "睡眠与昼夜节律",
-      "background_rows": 0,
+      "background_rows": 76,
       "cells": {
         "method": {
           "rows": 0,
           "effects": 0,
-          "papers": 0,
-          "skills": [],
-          "latest": null,
+          "papers": 4,
+          "skills": [
+            "insomnia-severity-index",
+            "sleep-duration-risk-lookup",
+            "stop-bang",
+            "wearable-circadian-aging-biomarker"
+          ],
+          "latest": "2026-11-26",
           "reference": 9,
-          "covered": 0,
+          "covered": 2,
           "missing": [
             {
               "id": "sleep-circadian-method-consensus-sleep-diary",
@@ -892,18 +818,6 @@
               "by": [],
               "doi": [
                 "10.1093/sleep/14.6.540"
-              ]
-            },
-            {
-              "id": "sleep-circadian-method-isi",
-              "item": "Insomnia Severity Index (ISI)",
-              "item_zh": "失眠严重程度指数（ISI）",
-              "priority": "P0",
-              "status": "reviewed",
-              "covered": false,
-              "by": [],
-              "doi": [
-                "10.1016/s1389-9457(00)00065-4"
               ]
             },
             {
@@ -953,29 +867,17 @@
               "doi": [
                 "10.1038/s41598-017-03171-4"
               ]
-            },
-            {
-              "id": "sleep-circadian-method-stop-bang",
-              "item": "STOP and STOP-Bang questionnaires for obstructive sleep apnea (development paper)",
-              "item_zh": "STOP-Bang阻塞性睡眠呼吸暂停筛查问卷",
-              "priority": "P0",
-              "status": "reviewed",
-              "covered": false,
-              "by": [],
-              "doi": [
-                "10.1097/aln.0b013e31816d83e4"
-              ]
             }
           ]
         },
         "population": {
-          "rows": 0,
-          "effects": 0,
-          "papers": 0,
+          "rows": 99,
+          "effects": 18,
+          "papers": 32,
           "skills": [],
-          "latest": null,
+          "latest": "2026-11-25",
           "reference": 17,
-          "covered": 0,
+          "covered": 2,
           "missing": [
             {
               "id": "sleep-circadian-population-aasm-2017-pharmacologic-insomnia",
@@ -1011,19 +913,6 @@
               "by": [],
               "doi": [
                 "10.5664/jcsm.8986"
-              ]
-            },
-            {
-              "id": "sleep-circadian-population-aasm-srs-2015-sleep-duration",
-              "item": "AASM/SRS consensus statement: recommended amount of sleep for a healthy adult",
-              "item_zh": "美国睡眠医学会与睡眠研究学会共识：健康成人推荐睡眠时长",
-              "priority": "P0",
-              "status": "reviewed",
-              "covered": false,
-              "by": [],
-              "doi": [
-                "10.5664/jcsm.4758",
-                "10.5665/sleep.4716"
               ]
             },
             {
@@ -1167,18 +1056,6 @@
               "doi": [
                 "10.1001/jama.2022.20304"
               ]
-            },
-            {
-              "id": "sleep-circadian-population-windred-2024-regularity-mortality",
-              "item": "Sleep regularity is a stronger predictor of mortality than sleep duration (UK Biobank)",
-              "item_zh": "睡眠规律性比睡眠时长更能预测死亡风险（英国生物银行）",
-              "priority": "P1",
-              "status": "reviewed",
-              "covered": false,
-              "by": [],
-              "doi": [
-                "10.1093/sleep/zsad253"
-              ]
             }
           ]
         },
@@ -1269,14 +1146,20 @@
     {
       "topic": "tobacco_alcohol",
       "label_zh": "吸烟与饮酒",
-      "background_rows": 0,
+      "background_rows": 20,
       "cells": {
         "method": {
           "rows": 0,
           "effects": 0,
-          "papers": 0,
-          "skills": [],
-          "latest": null,
+          "papers": 5,
+          "skills": [
+            "alcohol-burden-of-proof",
+            "alcohol-consumption-thresholds",
+            "gbd-alcohol-tmrel-nde",
+            "modifiable-risk-factor-score",
+            "smoking-burden-of-proof"
+          ],
+          "latest": "2026-11-26",
           "reference": 6,
           "covered": 0,
           "missing": [
@@ -1355,13 +1238,13 @@
           ]
         },
         "population": {
-          "rows": 5,
-          "effects": 0,
-          "papers": 2,
+          "rows": 109,
+          "effects": 3,
+          "papers": 45,
           "skills": [],
-          "latest": "2026-10-04",
+          "latest": "2026-11-25",
           "reference": 21,
-          "covered": 0,
+          "covered": 1,
           "missing": [
             {
               "id": "tobacco-alcohol-population-bagnardi-2015-alcohol-cancer",
@@ -1562,18 +1445,6 @@
               "doi": []
             },
             {
-              "id": "tobacco-alcohol-population-uspstf-2018-alcohol-screening",
-              "item": "USPSTF 2018: screening and behavioral counseling to reduce unhealthy alcohol use",
-              "item_zh": "美国预防服务工作组2018：不健康饮酒的筛查与行为咨询",
-              "priority": "P0",
-              "status": "reviewed",
-              "covered": false,
-              "by": [],
-              "doi": [
-                "10.1001/jama.2018.16789"
-              ]
-            },
-            {
               "id": "tobacco-alcohol-population-uspstf-2021-tobacco-cessation",
               "item": "USPSTF 2021: interventions for tobacco smoking cessation in adults",
               "item_zh": "美国预防服务工作组2021：成人戒烟干预",
@@ -1647,11 +1518,11 @@
           ]
         },
         "mechanism": {
-          "rows": 1,
+          "rows": 16,
           "effects": 0,
-          "papers": 1,
+          "papers": 4,
           "skills": [],
-          "latest": "2026-09-23",
+          "latest": "2026-11-25",
           "reference": 2,
           "covered": 1,
           "missing": [
@@ -1674,16 +1545,27 @@
     {
       "topic": "body_weight_metabolism",
       "label_zh": "体重与代谢",
-      "background_rows": 0,
+      "background_rows": 180,
       "cells": {
         "method": {
           "rows": 0,
           "effects": 0,
-          "papers": 0,
-          "skills": [],
-          "latest": null,
+          "papers": 9,
+          "skills": [
+            "bmi-mortality-category",
+            "burden-of-proof-dietary-risk",
+            "ctt-ldl-relative-risk",
+            "elsa-hba1c-model-a",
+            "fib4-index",
+            "finnish-diabetes-risk-score",
+            "modifiable-risk-factor-score",
+            "navy-circumference-body-fat",
+            "new-chinese-diabetes-risk-score",
+            "relative-fat-mass"
+          ],
+          "latest": "2026-11-26",
           "reference": 11,
-          "covered": 2,
+          "covered": 3,
           "missing": [
             {
               "id": "body-weight-metabolism-method-adag-estimated-average-glucose",
@@ -1707,19 +1589,6 @@
               "by": [],
               "doi": [
                 "10.1186/1471-230x-6-33"
-              ]
-            },
-            {
-              "id": "body-weight-metabolism-method-fib-4",
-              "item": "Fibrosis-4 index (FIB-4)",
-              "item_zh": "肝纤维化 4 因子指数（FIB-4）",
-              "priority": "P0",
-              "status": "reviewed",
-              "covered": false,
-              "by": [],
-              "doi": [
-                "10.1002/hep.21178",
-                "10.1016/j.cgh.2009.05.033"
               ]
             },
             {
@@ -1797,13 +1666,13 @@
           ]
         },
         "population": {
-          "rows": 10,
-          "effects": 0,
-          "papers": 3,
+          "rows": 867,
+          "effects": 147,
+          "papers": 142,
           "skills": [],
-          "latest": "2026-09-23",
+          "latest": "2026-11-26",
           "reference": 22,
-          "covered": 1,
+          "covered": 5,
           "missing": [
             {
               "id": "body-weight-metabolism-population-acc-aha-dyslipidemia-2026",
@@ -1855,19 +1724,6 @@
               ]
             },
             {
-              "id": "body-weight-metabolism-population-chinese-lipid-guideline-2023",
-              "item": "Chinese guidelines for lipid management (2023)",
-              "item_zh": "《中国血脂管理指南（2023 年）》",
-              "priority": "P0",
-              "status": "reviewed",
-              "covered": false,
-              "by": [],
-              "doi": [
-                "10.3389/fphar.2023.1190934",
-                "10.3760/cma.j.cn112148-20230119-00038"
-              ]
-            },
-            {
               "id": "body-weight-metabolism-population-chinese-mafld-guideline-2024",
               "item": "Chinese guidelines for the prevention and treatment of metabolic dysfunction-associated (non-alcoholic) fatty liver disease (2024 version)",
               "item_zh": "《代谢相关（非酒精性）脂肪性肝病防治指南（2024 年版）》",
@@ -1880,19 +1736,6 @@
               ]
             },
             {
-              "id": "body-weight-metabolism-population-da-qing-dps",
-              "item": "Da Qing Diabetes Prevention Study and its 30-year follow-up",
-              "item_zh": "大庆糖尿病预防研究及其 30 年随访",
-              "priority": "P0",
-              "status": "reviewed",
-              "covered": false,
-              "by": [],
-              "doi": [
-                "10.1016/s2213-8587(19)30093-2",
-                "10.2337/diacare.20.4.537"
-              ]
-            },
-            {
               "id": "body-weight-metabolism-population-direct-trial",
               "item": "DiRECT trial (diabetes remission through weight management)",
               "item_zh": "DiRECT 试验（通过体重管理实现糖尿病缓解）",
@@ -1902,18 +1745,6 @@
               "by": [],
               "doi": [
                 "10.1016/s0140-6736(17)33102-1"
-              ]
-            },
-            {
-              "id": "body-weight-metabolism-population-dpp-trial",
-              "item": "Diabetes Prevention Program (DPP) trial",
-              "item_zh": "美国糖尿病预防计划（DPP）试验",
-              "priority": "P0",
-              "status": "reviewed",
-              "covered": false,
-              "by": [],
-              "doi": [
-                "10.1056/nejmoa012512"
               ]
             },
             {
@@ -1963,18 +1794,6 @@
               "by": [],
               "doi": [
                 "10.1016/s0140-6736(16)30175-1"
-              ]
-            },
-            {
-              "id": "body-weight-metabolism-population-lancet-commission-clinical-obesity",
-              "item": "Lancet Diabetes & Endocrinology Commission: definition and diagnostic criteria of clinical obesity (2025)",
-              "item_zh": "《柳叶刀·糖尿病与内分泌》委员会：临床肥胖的定义与诊断标准（2025）",
-              "priority": "P0",
-              "status": "reviewed",
-              "covered": false,
-              "by": [],
-              "doi": [
-                "10.1016/s2213-8587(24)00316-4"
               ]
             },
             {
@@ -2120,11 +1939,11 @@
           ]
         },
         "mechanism": {
-          "rows": 13,
+          "rows": 67,
           "effects": 0,
-          "papers": 4,
+          "papers": 12,
           "skills": [],
-          "latest": "2026-09-23",
+          "latest": "2026-11-25",
           "reference": 2,
           "covered": 0,
           "missing": [
@@ -2159,14 +1978,28 @@
     {
       "topic": "cardiovascular",
       "label_zh": "心血管",
-      "background_rows": 0,
+      "background_rows": 82,
       "cells": {
         "method": {
           "rows": 0,
           "effects": 0,
-          "papers": 0,
-          "skills": [],
-          "latest": null,
+          "papers": 13,
+          "skills": [
+            "alcohol-burden-of-proof",
+            "burden-of-proof-sbp-ihd",
+            "china-par-ascvd-risk",
+            "ctt-ldl-relative-risk",
+            "framingham-general-cvd-risk",
+            "fruit-vegetable-risk-lookup",
+            "lifes-essential-8",
+            "nonoccupational-activity-risk",
+            "one-minute-heart-rate-recovery",
+            "pooled-cohort-ascvd-risk",
+            "qrisk3-cvd-risk",
+            "score2-cvd-risk",
+            "sleep-duration-risk-lookup"
+          ],
+          "latest": "2026-11-26",
           "reference": 13,
           "covered": 6,
           "missing": [
@@ -2257,26 +2090,14 @@
           ]
         },
         "population": {
-          "rows": 26,
-          "effects": 0,
-          "papers": 5,
+          "rows": 565,
+          "effects": 49,
+          "papers": 120,
           "skills": [],
-          "latest": "2026-10-04",
+          "latest": "2026-11-25",
           "reference": 24,
-          "covered": 0,
+          "covered": 3,
           "missing": [
-            {
-              "id": "cardiovascular-population-acc-aha-primary-prevention-2019",
-              "item": "2019 ACC/AHA Guideline on the primary prevention of cardiovascular disease",
-              "item_zh": "2019 年 ACC/AHA 心血管病一级预防指南",
-              "priority": "P0",
-              "status": "reviewed",
-              "covered": false,
-              "by": [],
-              "doi": [
-                "10.1161/cir.0000000000000678"
-              ]
-            },
             {
               "id": "cardiovascular-population-aha-acc-hypertension-2025",
               "item": "2025 AHA/ACC multisociety guideline for the prevention, detection, evaluation and management of high blood pressure in adults",
@@ -2506,18 +2327,6 @@
               ]
             },
             {
-              "id": "cardiovascular-population-sprint-trial",
-              "item": "SPRINT trial (intensive versus standard blood-pressure control)",
-              "item_zh": "SPRINT 试验（强化与标准降压对比）",
-              "priority": "P0",
-              "status": "reviewed",
-              "covered": false,
-              "by": [],
-              "doi": [
-                "10.1056/nejmoa1511939"
-              ]
-            },
-            {
               "id": "cardiovascular-population-step-trial-china",
               "item": "STEP trial (intensive blood-pressure control in older Chinese patients with hypertension)",
               "item_zh": "STEP 试验（中国老年高血压患者强化降压）",
@@ -2539,18 +2348,6 @@
               "by": [],
               "doi": [
                 "10.1001/jama.2021.4987"
-              ]
-            },
-            {
-              "id": "cardiovascular-population-uspstf-statin-2022",
-              "item": "USPSTF recommendation: statin use for the primary prevention of cardiovascular disease in adults (2022)",
-              "item_zh": "美国预防服务工作组：成人他汀一级预防建议（2022）",
-              "priority": "P1",
-              "status": "reviewed",
-              "covered": false,
-              "by": [],
-              "doi": [
-                "10.1001/jama.2022.13044"
               ]
             }
           ]
@@ -2579,11 +2376,11 @@
           ]
         },
         "mechanism": {
-          "rows": 12,
+          "rows": 43,
           "effects": 0,
-          "papers": 3,
+          "papers": 6,
           "skills": [],
-          "latest": "2026-09-23",
+          "latest": "2026-11-09",
           "reference": 1,
           "covered": 0,
           "missing": [
@@ -2606,14 +2403,18 @@
     {
       "topic": "brain_cognition",
       "label_zh": "认知与脑",
-      "background_rows": 0,
+      "background_rows": 533,
       "cells": {
         "method": {
           "rows": 0,
           "effects": 0,
-          "papers": 0,
-          "skills": [],
-          "latest": null,
+          "papers": 3,
+          "skills": [
+            "itfnat-face-name-mci-cutoff",
+            "reactive-agility-fall-history",
+            "share-intrinsic-capacity-domains"
+          ],
+          "latest": "2026-11-25",
           "reference": 9,
           "covered": 0,
           "missing": [
@@ -2729,13 +2530,13 @@
           ]
         },
         "population": {
-          "rows": 647,
-          "effects": 0,
-          "papers": 11,
+          "rows": 1982,
+          "effects": 41,
+          "papers": 138,
           "skills": [],
-          "latest": "2026-10-04",
+          "latest": "2026-11-25",
           "reference": 18,
-          "covered": 2,
+          "covered": 4,
           "missing": [
             {
               "id": "brain-cognition-population-aa-blood-biomarker-guideline-2025",
@@ -2834,18 +2635,6 @@
               ]
             },
             {
-              "id": "brain-cognition-population-lancet-commission-2024",
-              "item": "Lancet Commission on dementia prevention, intervention and care (2024 update)",
-              "item_zh": "《柳叶刀》痴呆预防、干预与照护委员会报告（2024 年更新）",
-              "priority": "P0",
-              "status": "reviewed",
-              "covered": false,
-              "by": [],
-              "doi": [
-                "10.1016/s0140-6736(24)01296-0"
-              ]
-            },
-            {
               "id": "brain-cognition-population-mind-diet-rct-2023",
               "item": "Trial of the MIND diet for prevention of cognitive decline in older persons",
               "item_zh": "MIND 饮食预防老年人认知衰退的随机试验",
@@ -2914,18 +2703,6 @@
               "doi": [
                 "10.1136/jnnp-2019-321913"
               ]
-            },
-            {
-              "id": "brain-cognition-population-zoster-vaccine-dementia-2025",
-              "item": "Natural experiment on the effect of herpes zoster vaccination on dementia (Wales)",
-              "item_zh": "带状疱疹疫苗接种对痴呆影响的自然实验（威尔士）",
-              "priority": "P2",
-              "status": "reviewed",
-              "covered": false,
-              "by": [],
-              "doi": [
-                "10.1038/s41586-025-08800-x"
-              ]
             }
           ]
         },
@@ -2977,11 +2754,11 @@
           ]
         },
         "mechanism": {
-          "rows": 116,
+          "rows": 197,
           "effects": 0,
-          "papers": 10,
+          "papers": 25,
           "skills": [],
-          "latest": "2026-10-04",
+          "latest": "2026-11-24",
           "reference": 3,
           "covered": 0,
           "missing": [
@@ -3028,14 +2805,29 @@
     {
       "topic": "musculoskeletal_frailty",
       "label_zh": "肌骨与衰弱",
-      "background_rows": 0,
+      "background_rows": 177,
       "cells": {
         "method": {
           "rows": 0,
           "effects": 0,
-          "papers": 0,
-          "skills": [],
-          "latest": null,
+          "papers": 14,
+          "skills": [
+            "calf-circumference-decline-falls",
+            "clinical-frailty-scale-7",
+            "deficit-accumulation-frailty-index",
+            "emfra-factor-scores",
+            "epigenetic-frailty-risk-score",
+            "fnih-sarcopenia-cutpoints",
+            "frail-scale",
+            "genome-wide-proteomics-frailty",
+            "lee-mortality-index",
+            "reactive-agility-fall-history",
+            "schonberg-mortality-index",
+            "senior-fitness-independence",
+            "share-intrinsic-capacity-domains",
+            "short-physical-performance-battery"
+          ],
+          "latest": "2026-11-26",
           "reference": 16,
           "covered": 4,
           "missing": [
@@ -3188,26 +2980,14 @@
           ]
         },
         "population": {
-          "rows": 24,
-          "effects": 0,
-          "papers": 4,
+          "rows": 1017,
+          "effects": 22,
+          "papers": 115,
           "skills": [],
-          "latest": "2026-10-04",
+          "latest": "2026-11-25",
           "reference": 18,
-          "covered": 0,
+          "covered": 5,
           "missing": [
-            {
-              "id": "musculoskeletal-frailty-population-bhof-clinicians-guide-2022",
-              "item": "Bone Health and Osteoporosis Foundation clinician's guide to prevention and treatment of osteoporosis (2022)",
-              "item_zh": "美国骨健康与骨质疏松基金会《骨质疏松防治临床指南》（2022）",
-              "priority": "P0",
-              "status": "reviewed",
-              "covered": false,
-              "by": [],
-              "doi": [
-                "10.1007/s00198-021-05900-y"
-              ]
-            },
             {
               "id": "musculoskeletal-frailty-population-china-osteoporosis-prevalence",
               "item": "China Osteoporosis Prevalence Study: prevalence of osteoporosis and fracture in China",
@@ -3240,18 +3020,6 @@
               "by": [],
               "doi": [
                 "10.1002/agm2.12245"
-              ]
-            },
-            {
-              "id": "musculoskeletal-frailty-population-cochrane-exercise-falls-2019",
-              "item": "Cochrane review: exercise for preventing falls in older people living in the community (2019)",
-              "item_zh": "Cochrane 系统综述：运动预防社区老年人跌倒（2019）",
-              "priority": "P1",
-              "status": "reviewed",
-              "covered": false,
-              "by": [],
-              "doi": [
-                "10.1002/14651858.cd012424.pub2"
               ]
             },
             {
@@ -3339,30 +3107,6 @@
               ]
             },
             {
-              "id": "musculoskeletal-frailty-population-uspstf-falls-2024",
-              "item": "USPSTF recommendation: interventions to prevent falls in community-dwelling older adults (2024)",
-              "item_zh": "美国预防服务工作组：社区老年人跌倒预防干预建议（2024）",
-              "priority": "P1",
-              "status": "reviewed",
-              "covered": false,
-              "by": [],
-              "doi": [
-                "10.1001/jama.2024.8481"
-              ]
-            },
-            {
-              "id": "musculoskeletal-frailty-population-uspstf-osteoporosis-2025",
-              "item": "USPSTF recommendation: screening for osteoporosis to prevent fractures (2025)",
-              "item_zh": "美国预防服务工作组：骨质疏松筛查预防骨折建议（2025）",
-              "priority": "P0",
-              "status": "reviewed",
-              "covered": false,
-              "by": [],
-              "doi": [
-                "10.1001/jama.2024.27154"
-              ]
-            },
-            {
               "id": "musculoskeletal-frailty-population-uspstf-vitd-calcium-fractures-2018",
               "item": "USPSTF 2018: Vitamin D, Calcium, or Combined Supplementation for the Primary Prevention of Fractures",
               "item_zh": "美国预防服务工作组 2018 年维生素 D 与钙补充预防骨折推荐",
@@ -3395,18 +3139,6 @@
               "covered": false,
               "by": [],
               "doi": []
-            },
-            {
-              "id": "musculoskeletal-frailty-population-world-falls-guidelines-2022",
-              "item": "World guidelines for falls prevention and management for older adults (2022)",
-              "item_zh": "《老年人跌倒预防与管理世界指南》（2022）",
-              "priority": "P0",
-              "status": "reviewed",
-              "covered": false,
-              "by": [],
-              "doi": [
-                "10.1093/ageing/afac205"
-              ]
             }
           ]
         },
@@ -3470,11 +3202,11 @@
           ]
         },
         "mechanism": {
-          "rows": 30,
+          "rows": 263,
           "effects": 0,
-          "papers": 7,
+          "papers": 20,
           "skills": [],
-          "latest": "2026-09-23",
+          "latest": "2026-11-25",
           "reference": 2,
           "covered": 0,
           "missing": [
@@ -3509,14 +3241,16 @@
     {
       "topic": "mental_social",
       "label_zh": "心理与社交",
-      "background_rows": 0,
+      "background_rows": 40,
       "cells": {
         "method": {
           "rows": 0,
           "effects": 0,
-          "papers": 0,
-          "skills": [],
-          "latest": null,
+          "papers": 1,
+          "skills": [
+            "emfra-factor-scores"
+          ],
+          "latest": "2026-11-25",
           "reference": 14,
           "covered": 0,
           "missing": [
@@ -3691,11 +3425,11 @@
           ]
         },
         "population": {
-          "rows": 4,
-          "effects": 0,
-          "papers": 1,
+          "rows": 219,
+          "effects": 11,
+          "papers": 62,
           "skills": [],
-          "latest": "2026-09-23",
+          "latest": "2026-11-25",
           "reference": 13,
           "covered": 0,
           "missing": [
@@ -3942,14 +3676,19 @@
     {
       "topic": "screening_prevention",
       "label_zh": "筛查与疫苗",
-      "background_rows": 0,
+      "background_rows": 16,
       "cells": {
         "method": {
           "rows": 0,
           "effects": 0,
-          "papers": 0,
-          "skills": [],
-          "latest": null,
+          "papers": 4,
+          "skills": [
+            "fib4-index",
+            "finnish-diabetes-risk-score",
+            "new-chinese-diabetes-risk-score",
+            "stop-bang"
+          ],
+          "latest": "2026-11-26",
           "reference": 7,
           "covered": 0,
           "missing": [
@@ -4040,13 +3779,13 @@
           ]
         },
         "population": {
-          "rows": 0,
+          "rows": 89,
           "effects": 0,
-          "papers": 0,
+          "papers": 22,
           "skills": [],
-          "latest": null,
+          "latest": "2026-11-25",
           "reference": 27,
-          "covered": 0,
+          "covered": 1,
           "missing": [
             {
               "id": "screening-prevention-population-china-breast-screening-2021",
@@ -4242,18 +3981,6 @@
               ]
             },
             {
-              "id": "screening-prevention-population-uspstf-breast-2024",
-              "item": "USPSTF 2024: Screening for Breast Cancer",
-              "item_zh": "美国预防服务工作组2024年乳腺癌筛查推荐",
-              "priority": "P0",
-              "status": "reviewed",
-              "covered": false,
-              "by": [],
-              "doi": [
-                "10.1001/jama.2024.5534"
-              ]
-            },
-            {
               "id": "screening-prevention-population-uspstf-cervical-2018",
               "item": "USPSTF 2018: Screening for Cervical Cancer",
               "item_zh": "美国预防服务工作组2018年宫颈癌筛查推荐",
@@ -4442,14 +4169,21 @@
     {
       "topic": "drugs_supplements",
       "label_zh": "药物与补充剂",
-      "background_rows": 0,
+      "background_rows": 399,
       "cells": {
         "method": {
           "rows": 0,
           "effects": 0,
-          "papers": 0,
-          "skills": [],
-          "latest": null,
+          "papers": 1,
+          "skills": [
+            "ai4l",
+            "biomcp",
+            "evipedia",
+            "longevity-evidence",
+            "opengenes",
+            "steeramed-core"
+          ],
+          "latest": "2026-10-23",
           "reference": 5,
           "covered": 0,
           "missing": [
@@ -4516,13 +4250,13 @@
           ]
         },
         "population": {
-          "rows": 4,
-          "effects": 0,
-          "papers": 3,
+          "rows": 800,
+          "effects": 64,
+          "papers": 82,
           "skills": [],
-          "latest": "2026-09-23",
+          "latest": "2026-11-26",
           "reference": 18,
-          "covered": 1,
+          "covered": 2,
           "missing": [
             {
               "id": "drugs-supplements-population-ags-beers-2023",
@@ -4717,19 +4451,6 @@
               "doi": [
                 "10.1001/jama.2022.8970"
               ]
-            },
-            {
-              "id": "drugs-supplements-population-vital-trial",
-              "item": "VITAL trial: vitamin D and marine omega-3 fatty acids for prevention of cancer and cardiovascular disease",
-              "item_zh": "VITAL 试验（维生素 D 与ω-3脂肪酸预防癌症和心血管病）",
-              "priority": "P0",
-              "status": "reviewed",
-              "covered": false,
-              "by": [],
-              "doi": [
-                "10.1056/nejmoa1809944",
-                "10.1056/nejmoa1811403"
-              ]
             }
           ]
         },
@@ -4789,11 +4510,11 @@
           ]
         },
         "mechanism": {
-          "rows": 595,
+          "rows": 978,
           "effects": 0,
-          "papers": 12,
+          "papers": 35,
           "skills": [],
-          "latest": "2026-10-04",
+          "latest": "2026-11-25",
           "reference": 8,
           "covered": 0,
           "missing": [
@@ -4900,7 +4621,7 @@
     {
       "topic": "environment",
       "label_zh": "环境暴露",
-      "background_rows": 0,
+      "background_rows": 11,
       "cells": {
         "method": {
           "rows": 0,
@@ -4950,11 +4671,11 @@
           ]
         },
         "population": {
-          "rows": 0,
+          "rows": 43,
           "effects": 0,
-          "papers": 0,
+          "papers": 10,
           "skills": [],
-          "latest": null,
+          "latest": "2026-11-25",
           "reference": 23,
           "covered": 1,
           "missing": [
@@ -5318,14 +5039,29 @@
     {
       "topic": "biological_age",
       "label_zh": "生物年龄与时钟",
-      "background_rows": 0,
+      "background_rows": 70,
       "cells": {
         "method": {
           "rows": 0,
           "effects": 0,
-          "papers": 0,
-          "skills": [],
-          "latest": null,
+          "papers": 13,
+          "skills": [
+            "accelerated-biological-aging-risk",
+            "blood-epigenetic-intrinsic-capacity",
+            "deficit-accumulation-frailty-index",
+            "edisea-dietary-index",
+            "epiage",
+            "epigenetic-frailty-risk-score",
+            "methylation-variability-aging-score",
+            "omniage-mitotic-clonal-hematopoiesis",
+            "principal-component-clinical-aging",
+            "pyaging",
+            "sasp-senescence-score",
+            "steeramed-core",
+            "time-seq-dna-methylation",
+            "wearable-circadian-aging-biomarker"
+          ],
+          "latest": "2026-11-25",
           "reference": 22,
           "covered": 10,
           "missing": [
@@ -5477,11 +5213,11 @@
           ]
         },
         "population": {
-          "rows": 42,
-          "effects": 0,
-          "papers": 7,
+          "rows": 1179,
+          "effects": 11,
+          "papers": 83,
           "skills": [],
-          "latest": "2026-10-04",
+          "latest": "2026-11-25",
           "reference": 12,
           "covered": 2,
           "missing": [
@@ -5664,11 +5400,11 @@
           ]
         },
         "mechanism": {
-          "rows": 108,
+          "rows": 156,
           "effects": 0,
-          "papers": 7,
+          "papers": 17,
           "skills": [],
-          "latest": "2026-10-04",
+          "latest": "2026-11-24",
           "reference": 4,
           "covered": 0,
           "missing": [
@@ -5727,13 +5463,18 @@
     {
       "topic": "genetics",
       "label_zh": "遗传",
-      "background_rows": 0,
+      "background_rows": 97,
       "cells": {
         "method": {
           "rows": 0,
           "effects": 0,
           "papers": 0,
-          "skills": [],
+          "skills": [
+            "biomcp",
+            "longevity-evidence",
+            "opengenes",
+            "synergy-age"
+          ],
           "latest": null,
           "reference": 7,
           "covered": 0,
@@ -5825,11 +5566,11 @@
           ]
         },
         "population": {
-          "rows": 601,
+          "rows": 1073,
           "effects": 0,
-          "papers": 14,
+          "papers": 64,
           "skills": [],
-          "latest": "2026-10-04",
+          "latest": "2026-11-25",
           "reference": 21,
           "covered": 0,
           "missing": [
@@ -6184,11 +5925,11 @@
           ]
         },
         "mechanism": {
-          "rows": 222,
+          "rows": 227,
           "effects": 0,
-          "papers": 3,
+          "papers": 5,
           "skills": [],
-          "latest": "2026-09-23",
+          "latest": "2026-11-09",
           "reference": 8,
           "covered": 2,
           "missing": [
@@ -6272,24 +6013,31 @@
     {
       "topic": "aging_biology",
       "label_zh": "衰老机制",
-      "background_rows": 1,
+      "background_rows": 685,
       "cells": {
         "method": {
           "rows": 0,
           "effects": 0,
-          "papers": 0,
-          "skills": [],
-          "latest": null,
+          "papers": 3,
+          "skills": [
+            "hotspot-somatic-sweep",
+            "longevity-evidence",
+            "omniage-mitotic-clonal-hematopoiesis",
+            "opengenes",
+            "sasp-senescence-score",
+            "synergy-age"
+          ],
+          "latest": "2026-11-25",
           "reference": 0,
           "covered": 0,
           "missing": []
         },
         "population": {
-          "rows": 260,
-          "effects": 0,
-          "papers": 9,
+          "rows": 1101,
+          "effects": 2,
+          "papers": 64,
           "skills": [],
-          "latest": "2026-10-04",
+          "latest": "2026-11-25",
           "reference": 4,
           "covered": 0,
           "missing": [
@@ -6379,11 +6127,11 @@
           ]
         },
         "mechanism": {
-          "rows": 1098,
+          "rows": 2452,
           "effects": 0,
-          "papers": 42,
+          "papers": 85,
           "skills": [],
-          "latest": "2026-10-04",
+          "latest": "2026-11-25",
           "reference": 22,
           "covered": 1,
           "missing": [
@@ -6646,14 +6394,22 @@
     {
       "topic": "organ_aging",
       "label_zh": "器官与系统老化",
-      "background_rows": 0,
+      "background_rows": 406,
       "cells": {
         "method": {
           "rows": 0,
           "effects": 0,
-          "papers": 0,
-          "skills": [],
-          "latest": null,
+          "papers": 7,
+          "skills": [
+            "alcohol-burden-of-proof",
+            "ckd-epi-2021-egfr",
+            "fruit-vegetable-risk-lookup",
+            "hotspot-somatic-sweep",
+            "nonoccupational-activity-risk",
+            "omniage-mitotic-clonal-hematopoiesis",
+            "share-intrinsic-capacity-domains"
+          ],
+          "latest": "2026-11-25",
           "reference": 7,
           "covered": 1,
           "missing": [
@@ -6732,11 +6488,11 @@
           ]
         },
         "population": {
-          "rows": 111,
-          "effects": 0,
-          "papers": 10,
+          "rows": 1518,
+          "effects": 9,
+          "papers": 129,
           "skills": [],
-          "latest": "2026-10-04",
+          "latest": "2026-11-26",
           "reference": 31,
           "covered": 0,
           "missing": [
@@ -7186,11 +6942,11 @@
           ]
         },
         "mechanism": {
-          "rows": 132,
+          "rows": 521,
           "effects": 0,
-          "papers": 7,
+          "papers": 26,
           "skills": [],
-          "latest": "2026-10-04",
+          "latest": "2026-11-25",
           "reference": 6,
           "covered": 0,
           "missing": [

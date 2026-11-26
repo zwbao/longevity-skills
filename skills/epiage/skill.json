@@ -10,6 +10,9 @@
   "domains": [
     "工具与证据库"
   ],
+  "topic": [
+    "biological_age"
+  ],
   "blurb_zh": "epiage-skill（gangchen/epiage-skill fcf4e3b）。离线读一份血液甲基化 β 值文件，算 25 个衰老时钟和 10 个暴露组与健康分值（另有 2 个上游暂停）。",
   "intents": [
     "epigenetic_age"

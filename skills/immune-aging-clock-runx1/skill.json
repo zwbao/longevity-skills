@@ -10,6 +10,10 @@
   "domains": [
     "免疫与炎症"
   ],
+  "topic": [
+    "biological_age",
+    "organ_aging"
+  ],
   "blurb_zh": "已有单细胞测序结果时，按论文 Table S3 系数把亚群比例、分亚群表达或 TCR 指标代入；这些输入只有研究级单细胞数据才有。",
   "intents": [
     "immune_inflammation"

@@ -11,6 +11,9 @@
   "domains": [
     "工具与证据库"
   ],
+  "topic": [
+    "biological_age"
+  ],
   "blurb_zh": "pyaging 0.5.2（lucascamillomd/pyaging edb1b37）。在用户提供的特征矩阵上运行衰老时钟。",
   "intents": [
     "epigenetic_age"

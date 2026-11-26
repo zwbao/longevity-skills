@@ -10,6 +10,9 @@
   "domains": [
     "饮食与营养"
   ],
+  "topic": [
+    "diet_nutrition"
+  ],
   "blurb_zh": "用饮食记录中的蔬菜日均克数，计算与论文蔬菜摄入参考范围的差距。",
   "intents": [
     "intervention_evidence",

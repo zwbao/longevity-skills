@@ -11,6 +11,9 @@
   "domains": [
     "免疫与炎症"
   ],
+  "topic": [
+    "aging_biology"
+  ],
   "blurb_zh": "补充表九里按 MarkerScore 排在炎症记忆一侧的基因。",
   "intents": [
     "immune_inflammation",

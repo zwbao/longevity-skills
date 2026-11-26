@@ -10,6 +10,9 @@
   "domains": [
     "免疫与炎症"
   ],
+  "topic": [
+    "organ_aging"
+  ],
   "blurb_zh": "初始T细胞的CD38、CXCR3、CD25门控（研究用流式数据）。",
   "intents": [
     "immune_inflammation"

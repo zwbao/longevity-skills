@@ -13,6 +13,10 @@
   "domains": [
     "长寿基因"
   ],
+  "topic": [
+    "genetics",
+    "aging_biology"
+  ],
   "blurb_zh": "OSER1，以及补充表里的位点和名义关联。",
   "intents": [
     "gene_variant"

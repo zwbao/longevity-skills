@@ -10,6 +10,9 @@
   "domains": [
     "脑、认知与痴呆"
   ],
+  "topic": [
+    "brain_cognition"
+  ],
   "blurb_zh": "每个核的短程互作计数。",
   "intents": [],
   "triage": {

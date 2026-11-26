@@ -10,6 +10,10 @@
   "domains": [
     "昼夜节律"
   ],
+  "topic": [
+    "organ_aging",
+    "sleep_circadian"
+  ],
   "blurb_zh": "NAD 浓度相对 HSD3B1 和 HSD3B2 的米氏常数。",
   "intents": [
     "model_organism"

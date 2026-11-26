@@ -10,6 +10,9 @@
   "domains": [
     "再生"
   ],
+  "topic": [
+    "organ_aging"
+  ],
   "blurb_zh": "正文点名的 T 细胞基因和亚群随年龄的方向。",
   "intents": [
     "immune_inflammation",

@@ -10,6 +10,9 @@
   "domains": [
     "蛋白、代谢与器官年龄"
   ],
+  "topic": [
+    "biological_age"
+  ],
   "blurb_zh": "SomaScan 序列号是否齐套。",
   "intents": [
     "proteomic_organ_age"

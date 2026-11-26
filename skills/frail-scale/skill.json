@@ -10,6 +10,9 @@
   "domains": [
     "衰弱与功能"
   ],
+  "topic": [
+    "musculoskeletal_frailty"
+  ],
   "blurb_zh": "用疲劳、上楼和步行困难、疾病种数及一年体重变化计算FRAIL衰弱筛查分数。",
   "intents": [
     "frailty_mortality"

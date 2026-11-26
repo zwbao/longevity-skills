@@ -10,6 +10,11 @@
   "domains": [
     "营养与代谢"
   ],
+  "topic": [
+    "diet_nutrition",
+    "cardiovascular",
+    "organ_aging"
+  ],
   "blurb_zh": "用日均果蔬摄入量查出论文中的人群相对风险及相邻表格行。",
   "intents": [
     "frailty_mortality",
