@@ -1,7 +1,7 @@
 {
   "schema": "longevity-coverage/1",
   "reference_items": 583,
-  "reference_covered": 70,
+  "reference_covered": 71,
   "unlabelled": {
     "claims": 0,
     "effects": 0,
@@ -2408,15 +2408,16 @@
         "method": {
           "rows": 0,
           "effects": 0,
-          "papers": 3,
+          "papers": 4,
           "skills": [
             "itfnat-face-name-mci-cutoff",
+            "mini-mental-state",
             "reactive-agility-fall-history",
             "share-intrinsic-capacity-domains"
           ],
-          "latest": "2026-11-25",
+          "latest": "2026-11-26",
           "reference": 9,
-          "covered": 0,
+          "covered": 1,
           "missing": [
             {
               "id": "brain-cognition-method-ad8",
@@ -2489,18 +2490,6 @@
               "by": [],
               "doi": [
                 "10.1002/1099-1166(200011)15:11<1021::aid-gps234>3.0.co;2-6"
-              ]
-            },
-            {
-              "id": "brain-cognition-method-mmse",
-              "item": "Mini-Mental State Examination (MMSE)",
-              "item_zh": "简易精神状态检查（MMSE）",
-              "priority": "P0",
-              "status": "reviewed",
-              "covered": false,
-              "by": [],
-              "doi": [
-                "10.1016/0022-3956(75)90026-6"
               ]
             },
             {

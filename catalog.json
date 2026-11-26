@@ -2,9 +2,9 @@
   "schema": "longevity-catalog/1",
   "version": "2026.48.0",
   "counts": {
-    "skills": 227,
+    "skills": 228,
     "tiers": {
-      "A": 63,
+      "A": 64,
       "B": 83,
       "C": 73,
       "tool": 8
@@ -28901,6 +28901,267 @@
         "title_zh": "DNA 甲基化变异性为衰老异质性提供互补的表观遗传特征：来自加拿大和巴尔的摩老龄化纵向研究",
         "journal": "The Journals of Gerontology, Series A: Biological Sciences and Medical Sciences",
         "year": 2026
+      }
+    },
+    {
+      "name": "mini-mental-state",
+      "kind": "paper",
+      "tier": "A",
+      "species": [
+        "human"
+      ],
+      "evidence": "method",
+      "domains": [
+        "认知与脑"
+      ],
+      "blurb_zh": "用施测者记录的 MMSE 各项得分计算两部分小计与总分，不作痴呆诊断。",
+      "description": "Tier A personal readout: computes one person's value with the paper's printed method and reproduces a printed example. 汇总施测者已记录的原版 Mini-Mental State（MMSE）各项得分，生成中文小计与总分报告。适用于用户提供完整 MMSE 分项记录并要求核算分数；不自动施测、不判读作答，也不作痴呆诊断。",
+      "intents": [
+        "cognition_dementia"
+      ],
+      "has_script": true,
+      "validation_status": "reproduced",
+      "validation_label_zh": "已复现论文",
+      "entry": {
+        "script": "scripts/personal_report.py",
+        "measurements_flag": "--measurements",
+        "measurements_header": [
+          "marker",
+          "value",
+          "unit"
+        ],
+        "out_flag": "--out",
+        "result_json": true
+      },
+      "inputs_status": "verified",
+      "inputs": [
+        {
+          "key": "time_orientation_score",
+          "label_zh": "时间定向得分",
+          "aliases": [
+            "时间定向力",
+            "orientation to time"
+          ],
+          "unit": "score",
+          "accept": {},
+          "range": [
+            0,
+            5
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "附录第 196 页时间定向小计。 仅接受整数分。"
+        },
+        {
+          "key": "place_orientation_score",
+          "label_zh": "地点定向得分",
+          "aliases": [
+            "地点定向力",
+            "orientation to place"
+          ],
+          "unit": "score",
+          "accept": {},
+          "range": [
+            0,
+            5
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "附录第 196 页地点定向小计。 仅接受整数分。"
+        },
+        {
+          "key": "registration_score",
+          "label_zh": "即刻记忆得分",
+          "aliases": [
+            "即刻回忆",
+            "registration"
+          ],
+          "unit": "score",
+          "accept": {},
+          "range": [
+            0,
+            3
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "只用首次复述得分；后续学习成功不能改写首次得分。 仅接受整数分。"
+        },
+        {
+          "key": "attention_score",
+          "label_zh": "注意与计算得分",
+          "aliases": [
+            "注意力和计算力",
+            "attention and calculation"
+          ],
+          "unit": "score",
+          "accept": {},
+          "range": [
+            0,
+            5
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "使用施测者按原文选择的一个任务得分，不能相加或取两种任务的较高分。 仅接受整数分。"
+        },
+        {
+          "key": "recall_score",
+          "label_zh": "延迟回忆得分",
+          "aliases": [
+            "回忆能力",
+            "recall"
+          ],
+          "unit": "score",
+          "accept": {},
+          "range": [
+            0,
+            3
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "只有先前已学会全部记忆材料才能有意义地测回忆。 仅接受整数分。"
+        },
+        {
+          "key": "naming_score",
+          "label_zh": "命名得分",
+          "aliases": [
+            "命名能力",
+            "naming"
+          ],
+          "unit": "score",
+          "accept": {},
+          "range": [
+            0,
+            2
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "由施测者记录命名小计。 仅接受整数分。"
+        },
+        {
+          "key": "repetition_score",
+          "label_zh": "复述得分",
+          "aliases": [
+            "语言复述",
+            "repetition"
+          ],
+          "unit": "score",
+          "accept": {},
+          "range": [
+            0,
+            1
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "由施测者按一次尝试记录。 仅接受整数分。"
+        },
+        {
+          "key": "command_score",
+          "label_zh": "三步指令得分",
+          "aliases": [
+            "三级命令",
+            "3-stage command"
+          ],
+          "unit": "score",
+          "accept": {},
+          "range": [
+            0,
+            3
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "由施测者记录正确完成部分的合计。 仅接受整数分。"
+        },
+        {
+          "key": "reading_score",
+          "label_zh": "阅读执行得分",
+          "aliases": [
+            "阅读理解",
+            "reading"
+          ],
+          "unit": "score",
+          "accept": {},
+          "range": [
+            0,
+            1
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "由施测者记录阅读并执行的得分。 仅接受整数分。"
+        },
+        {
+          "key": "writing_score",
+          "label_zh": "书写得分",
+          "aliases": [
+            "书写能力",
+            "writing"
+          ],
+          "unit": "score",
+          "accept": {},
+          "range": [
+            0,
+            1
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "由施测者判定句子是否符合原文标准。 仅接受整数分。"
+        },
+        {
+          "key": "copying_score",
+          "label_zh": "图形复制得分",
+          "aliases": [
+            "结构能力",
+            "copying"
+          ],
+          "unit": "score",
+          "accept": {},
+          "range": [
+            0,
+            1
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "由施测者判定图形是否符合原文标准。 仅接受整数分。"
+        },
+        {
+          "key": "registration_learned",
+          "label_zh": "记忆材料已全部学会",
+          "aliases": [
+            "all registration items learned"
+          ],
+          "unit": "1",
+          "accept": {},
+          "range": [
+            0,
+            1
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "施测者确认值：1=在原文允许的学习尝试内全部学会，0=未全部学会；0 或未知时停止计算。二元编码为接口约定，不计入得分。"
+        }
+      ],
+      "outputs": [
+        {
+          "key": "part_one_score",
+          "label_zh": "第一部分得分",
+          "unit": "score"
+        },
+        {
+          "key": "part_two_score",
+          "label_zh": "第二部分得分",
+          "unit": "score"
+        },
+        {
+          "key": "mmse_total_score",
+          "label_zh": "MMSE 总分",
+          "unit": "score"
+        }
+      ],
+      "paper": {
+        "doi": "10.1016/0022-3956(75)90026-6",
+        "title": "\"Mini-mental state\". A practical method for grading the cognitive state of patients for the clinician.",
+        "title_zh": "简易精神状态检查：供临床医生量化患者认知状态的实用方法",
+        "journal": "Journal of Psychiatric Research",
+        "year": 1975
       }
     },
     {
