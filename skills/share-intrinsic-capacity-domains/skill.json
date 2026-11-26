@@ -12,6 +12,11 @@
     "跌倒与肌肉",
     "临床年龄与可穿戴"
   ],
+  "topic": [
+    "brain_cognition",
+    "musculoskeletal_frailty",
+    "organ_aging"
+  ],
   "blurb_zh": "用认知测验、行走困难和视听自评，计算 SHARE 内在能力的三个分域分数，并可比较两次变化；不算完整总分。",
   "intents": [
     "cognition_dementia",

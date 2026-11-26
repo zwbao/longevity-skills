@@ -365,7 +365,12 @@ python3 -m tools.lsk test --changed origin/main   # 只测相对 main 改动过�
 
 ## 睡眠
 
+- `skills/insomnia-severity-index/` — 用过去两周七项失眠自评分计算ISI总分及严重程度筛查分档。
 - `skills/sleep-duration-risk-lookup/` — 用通常睡眠时长匹配论文整数小时查表值，查看全因死亡、心血管疾病、冠心病和卒中的人群相对风险。
+
+## 睡眠与呼吸
+
+- `skills/stop-bang/` — 用打鼾、白天疲倦、目击呼吸暂停、高血压及体型年龄信息计算原版STOP和STOP-Bang筛查分档。
 
 ## 糖代谢
 
@@ -374,6 +379,10 @@ python3 -m tools.lsk test --changed origin/main   # 只测相对 main 改动过�
 ## 糖尿病风险筛查
 
 - `skills/new-chinese-diabetes-risk-score/` — 用年龄、性别、腰围、BMI、收缩压和家族史计算糖尿病筛查分数。
+
+## 肝脏与代谢
+
+- `skills/fib4-index/` — 用年龄、肝酶和血小板计算脂肪肝成人的 FIB-4 纤维化指数。
 
 ## 肾脏
 
@@ -399,6 +408,10 @@ python3 -m tools.lsk test --changed origin/main   # 只测相对 main 改动过�
 ## 认知与神经
 
 - `skills/share-intrinsic-capacity-domains/` — 用认知测验、行走困难和视听自评，计算 SHARE 内在能力的三个分域分数，并可比较两次变化；不算完整总分。
+
+## 认知与脑
+
+- `skills/mini-mental-state/` — 用施测者记录的 MMSE 各项得分计算两部分小计与总分，不作痴呆诊断。
 
 ## 跌倒与肌肉
 
@@ -431,6 +444,7 @@ python3 -m tools.lsk test --changed origin/main   # 只测相对 main 改动过�
 ## 饮食与营养
 
 - `skills/alcohol-burden-of-proof/` — 用自己的每日平均纯酒精摄入量，查阅论文中各疾病相对于无饮酒的风险比及不确定性区间；不推算个人患病概率。
+- `skills/chinese-healthy-eating-index/` — 用每日食物标准份数、总能量、烹调油、钠、添加糖和酒精摄入计算中国健康膳食指数 CHEI。
 - `skills/vegetable-tmrel-gap/` — 用饮食记录中的蔬菜日均克数，计算与论文蔬菜摄入参考范围的差距。
 - `skills/whole-grain-dose-response/` — 按每日全谷物食品摄入量匹配论文中的群体相对风险及置信区间。
 

@@ -10,6 +10,11 @@
   "domains": [
     "甲基化"
   ],
+  "topic": [
+    "biological_age",
+    "aging_biology",
+    "organ_aging"
+  ],
   "blurb_zh": "探针甲基化对应的干细胞分裂次数。",
   "intents": [
     "epigenetic_age"

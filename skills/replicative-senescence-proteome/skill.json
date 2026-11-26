@@ -10,6 +10,9 @@
   "domains": [
     "细胞衰老"
   ],
+  "topic": [
+    "aging_biology"
+  ],
   "blurb_zh": "IMR90 复制性衰老显著蛋白的基因和 UniProt 查表。",
   "intents": [
     "model_organism"

@@ -10,6 +10,9 @@
   "domains": [
     "心血管"
   ],
+  "topic": [
+    "cardiovascular"
+  ],
   "blurb_zh": "用血压及重复记录标准差、体质指数、血脂比值和病史估计十年心血管病风险；需英国Townsend评分，仍在验证。",
   "intents": [
     "frailty_mortality",

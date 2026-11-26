@@ -10,6 +10,9 @@
   "domains": [
     "饮食与代谢"
   ],
+  "topic": [
+    "diet_nutrition"
+  ],
   "blurb_zh": "按未加工红肉日均摄入量查询慢病相对风险与不确定区间，仅支持论文列出的摄入点。",
   "intents": [
     "intervention_evidence"

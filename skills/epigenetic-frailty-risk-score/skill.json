@@ -11,6 +11,10 @@
     "甲基化",
     "衰弱与死亡风险"
   ],
+  "topic": [
+    "biological_age",
+    "musculoskeletal_frailty"
+  ],
   "blurb_zh": "甲基化数值，可带衰弱指数。",
   "intents": [
     "epigenetic_age",

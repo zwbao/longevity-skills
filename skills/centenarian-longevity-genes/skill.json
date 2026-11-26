@@ -10,6 +10,9 @@
   "domains": [
     "长寿基因"
   ],
+  "topic": [
+    "genetics"
+  ],
   "blurb_zh": "补充表里百岁组过阈值的基因，以及正文点名的基因。",
   "intents": [
     "gene_variant"

@@ -10,6 +10,10 @@
   "domains": [
     "蛋白、代谢与器官年龄"
   ],
+  "topic": [
+    "biological_age",
+    "aging_biology"
+  ],
   "blurb_zh": "已按队列标准化的 SomaScan 蛋白 z 分数套公开系数（个人单份数据做不出 z 分数）。",
   "intents": [
     "proteomic_organ_age"

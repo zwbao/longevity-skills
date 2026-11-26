@@ -10,6 +10,9 @@
   "domains": [
     "长寿基因"
   ],
+  "topic": [
+    "genetics"
+  ],
   "blurb_zh": "调控子的细胞类型特异性和遗传相关性。",
   "intents": [],
   "triage": {

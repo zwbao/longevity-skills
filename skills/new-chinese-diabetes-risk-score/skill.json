@@ -10,6 +10,10 @@
   "domains": [
     "糖尿病风险筛查"
   ],
+  "topic": [
+    "body_weight_metabolism",
+    "screening_prevention"
+  ],
   "blurb_zh": "用年龄、性别、腰围、BMI、收缩压和家族史计算糖尿病筛查分数。",
   "intents": [
     "lab_meaning",

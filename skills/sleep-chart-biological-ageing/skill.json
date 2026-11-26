@@ -10,6 +10,9 @@
   "domains": [
     "临床年龄与可穿戴"
   ],
+  "topic": [
+    "sleep_circadian"
+  ],
   "blurb_zh": "睡眠小时数落在论文的短、正常还是长睡眠组（不算生物年龄差）。",
   "intents": [
     "wearable_sleep"

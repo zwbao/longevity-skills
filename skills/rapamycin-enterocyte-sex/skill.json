@@ -11,6 +11,10 @@
   "domains": [
     "老年保护"
   ],
+  "topic": [
+    "aging_biology",
+    "drugs_supplements"
+  ],
   "blurb_zh": "处理后面积除以对照面积，并按雌雄写自噬方向。",
   "intents": [
     "model_organism"

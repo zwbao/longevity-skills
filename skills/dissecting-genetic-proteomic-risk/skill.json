@@ -10,6 +10,10 @@
   "domains": [
     "脑、认知与痴呆"
   ],
+  "topic": [
+    "brain_cognition",
+    "genetics"
+  ],
   "blurb_zh": "谵妄相关蛋白，以及两个 APOE 位点的基因型。",
   "intents": [
     "cognition_dementia",

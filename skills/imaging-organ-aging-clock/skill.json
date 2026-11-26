@@ -10,6 +10,9 @@
   "domains": [
     "影像"
   ],
+  "topic": [
+    "biological_age"
+  ],
   "blurb_zh": "你已有的影像器官预测年龄减实足年龄（不重算器官年龄）。",
   "intents": [
     "imaging",

@@ -10,6 +10,10 @@
   "domains": [
     "工具与证据库"
   ],
+  "topic": [
+    "genetics",
+    "drugs_supplements"
+  ],
   "blurb_zh": "BioMCP v0.9.0（genomoncology/biomcp a450303）。检索文献、基因、变异、试验、药物、疾病和通路。本机需要 biomcp。",
   "intents": [
     "gene_variant",

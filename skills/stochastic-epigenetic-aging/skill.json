@@ -10,6 +10,9 @@
   "domains": [
     "甲基化"
   ],
+  "topic": [
+    "biological_age"
+  ],
   "blurb_zh": "一个时钟的两个决定系数和一个效应大小。",
   "intents": [],
   "triage": {

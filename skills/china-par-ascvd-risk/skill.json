@@ -10,6 +10,9 @@
   "domains": [
     "心血管"
   ],
+  "topic": [
+    "cardiovascular"
+  ],
   "blurb_zh": "收缩压、血脂、腰围、年龄和几个是否项到齐时，按 China-PAR 算中国成人的 10 年心血管病风险，男女都算。",
   "intents": [
     "frailty_mortality",

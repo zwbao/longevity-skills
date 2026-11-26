@@ -10,6 +10,9 @@
   "domains": [
     "脑、认知与痴呆"
   ],
+  "topic": [
+    "brain_cognition"
+  ],
   "blurb_zh": "把自己做过的意大利人脸-姓名联想记忆测验（ItFNAT）延迟自由回忆校正分和 MoCA 校正分对到论文的轻度认知障碍切点，给出切点哪一侧和对应的似然比。",
   "intents": [
     "cognition_dementia"
@@ -132,7 +135,7 @@
         "quote": "Table 4: ItFNAT DFR | 0.711 [0.621, 0.801] | <.001 | ≤ 3.21 | 60.00 [47.54, 72.44] | 80.56 [69.53, 88.94]. Results: Conversely, the optimal threshold value for the DFR was identified at ≤ 3.21, balancing a lower true-positive capture rate than MoCA but with a superior protection against false positives. Additionally, its positive likelihood ratio (PLR = 3.086) indicates",
         "values": [
           3.21,
-          60.00,
+          60.0,
           80.56,
           3.086
         ],
@@ -144,7 +147,7 @@
         "quote": "Table 4: MoCA | 0.705 [0.614, 0.796] | <.001 | ≤ 23.99 | 65.00 [51.60, 77.87] | 72.22 [60.41, 82.14]. Results: The MoCA total score was established at ≤ 23.99, maximizing sensitivity at the cost of elevated false-positive classifications. The MoCA low negative likelihood ratio (NLR = 0.485)",
         "values": [
           23.99,
-          65.00,
+          65.0,
           72.22,
           0.485
         ],

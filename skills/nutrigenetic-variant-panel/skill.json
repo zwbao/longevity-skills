@@ -10,6 +10,11 @@
   "domains": [
     "饮食与基因"
   ],
+  "topic": [
+    "genetics",
+    "diet_nutrition",
+    "tobacco_alcohol"
+  ],
   "blurb_zh": "基因检测原始数据里和喝酒、叶酸、喝奶有关的三个位点，按要求再看 APOE 与血脂。",
   "intents": [
     "nutrigenetics",

@@ -10,6 +10,9 @@
   "domains": [
     "临床年龄与可穿戴"
   ],
+  "topic": [
+    "biological_age"
+  ],
   "blurb_zh": "把你已经算好的时钟预测年龄减去实足年龄（简单相减），再标出这个时钟在论文评测里的队列结果。",
   "intents": [
     "biological_age",

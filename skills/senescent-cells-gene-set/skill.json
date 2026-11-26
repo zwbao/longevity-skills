@@ -11,6 +11,9 @@
   "domains": [
     "免疫与炎症"
   ],
+  "topic": [
+    "aging_biology"
+  ],
   "blurb_zh": "一份基因表达表对照的衰老相关基因。",
   "intents": [
     "gene_variant"

@@ -10,6 +10,9 @@
   "domains": [
     "影像"
   ],
+  "topic": [
+    "biological_age"
+  ],
   "blurb_zh": "你交来的组织预测年龄减实足年龄；不从切片算年龄。",
   "intents": [
     "imaging",
