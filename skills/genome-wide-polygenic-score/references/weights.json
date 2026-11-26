@@ -1,0 +1,42 @@
+{
+  "bc": {
+    "member": "BreastCancer_PRS_PT_r2_0.2_p_0.0005_v3.txt",
+    "zip_sha256": "bb558d5c57803c4ba0a069c42befcabbd3fa7896085ec204856b3e543e4eb991",
+    "text_sha256": "0e824f26852b1f9b319abb1fd10b802c5cdd81526d0c4173848c9d6035a8f0a0",
+    "count": 5218,
+    "label_zh": "乳腺癌",
+    "url": "https://personal.broadinstitute.org/ryank/BreastCancer_PRS_PT_r2_0.2_p_0.0005_v3.zip"
+  },
+  "cad": {
+    "member": "CoronaryArteryDisease_PRS_LDpred_rho0.001_v3.txt",
+    "zip_sha256": "0c3dde42772a2ec541d0048c0a988ada7d438c54625c1a0f88bf35c92662e38a",
+    "text_sha256": "e60f32f154b0aa34ff8f33c7c49c284662d1502bd4ca07fa975ead63166a08a8",
+    "count": 6630150,
+    "label_zh": "冠状动脉疾病",
+    "url": "https://personal.broadinstitute.org/ryank/CoronaryArteryDisease_PRS_LDpred_rho0.001_v3.zip"
+  },
+  "af": {
+    "member": "AtrialFibrillation_PRS_LDpred_rho0.003_v3.txt",
+    "zip_sha256": "424fec19280f9036612b4402072c7db040d70351fa7d188cf041c3f2dd6eb600",
+    "text_sha256": "a9981e24fb1d7c9f20515f67e12630bb9352203a2655ae07896c65f5e131a060",
+    "count": 6730541,
+    "label_zh": "心房颤动",
+    "url": "https://personal.broadinstitute.org/ryank/AtrialFibrillation_PRS_LDpred_rho0.003_v3.zip"
+  },
+  "ibd": {
+    "member": "InflammatoryBowelDisease_PRS_LDpred_rho0.1_v3.txt",
+    "zip_sha256": "c18ecd43ef251c2f041f992c9ab95fa04fe9250aab207d6eef37e1259445da60",
+    "text_sha256": "0b49289f42fa160a62ecae0e4f3c7452f54299783c918e81b363f8bb04504033",
+    "count": 6907112,
+    "label_zh": "炎症性肠病",
+    "url": "https://personal.broadinstitute.org/ryank/InflammatoryBowelDisease_PRS_LDpred_rho0.1_v3.zip"
+  },
+  "t2d": {
+    "member": "Type2Diabetes_PRS_LDpred_rho0.01_v3.txt",
+    "zip_sha256": "94d0945980a3a1cdd3b35bf6ae240f80cef306cd5539d8c242174a90527a9d7a",
+    "text_sha256": "3d7e1df4352a551eac56b6a9f1f3497dc20964f9e80b66959ca74c58f7ac7d27",
+    "count": 6917436,
+    "label_zh": "2 型糖尿病",
+    "url": "https://personal.broadinstitute.org/ryank/Type2Diabetes_PRS_LDpred_rho0.01_v3.zip"
+  }
+}
