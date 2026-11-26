@@ -1,0 +1,265 @@
+{
+  "schema": "longevity-skill/1",
+  "name": "frax-uk-risk-lookup",
+  "kind": "paper",
+  "tier": "A",
+  "species": [
+    "human"
+  ],
+  "evidence": "method",
+  "domains": [
+    "骨折",
+    "骨质疏松"
+  ],
+  "topic": [
+    "musculoskeletal_frailty",
+    "tobacco_alcohol"
+  ],
+  "blurb_zh": "按年龄、性别和单一危险因素查英国模型的十年骨折概率，仅适用BMI为25的论文已印出年龄点。",
+  "intents": [
+    "frailty_mortality"
+  ],
+  "triage": {
+    "reason_zh": "表2完整印出固定BMI、年龄、性别与单一危险因素对应的骨折概率，可以严格匹配个人输入并逐格复现。",
+    "reviewed": false
+  },
+  "paper": {
+    "doi": "10.1007/s00198-007-0543-5",
+    "title": "FRAX and the assessment of fracture probability in men and women from the UK.",
+    "title_zh": "FRAX与英国男性和女性骨折概率的评估",
+    "journal": "Osteoporosis International",
+    "year": 2008,
+    "authors": "Kanis 等",
+    "article_url": "https://link.springer.com/article/10.1007/s00198-007-0543-5",
+    "supplements": [],
+    "card_notes": [
+      "使用正文表2（无骨密度）；全文、表1–3及内嵌Appendix已核查。页面未列独立补充文件或代码/数据仓库。",
+      "本技能只冻结2008年表2，不重建连续FRAX模型。旧Sheffield在线工具链接访问失败，不依赖该服务；附录未提供完整数值系数。",
+      "表格数字据Kanis等（2008）转录为代码；出版社标示CC BY-NC 2.0，https://creativecommons.org/licenses/by-nc/2.0/。"
+    ],
+    "summary_zh": "这项研究整合人群队列中的临床危险因素与骨密度信息，建立了按英国骨折和死亡情况校准的骨折概率评估方法。个人报告只匹配无骨密度、固定体质指数和单一危险因素条件下已印出的年龄及性别查表值，不计算完整连续模型或改变行为后的获益。",
+    "summary_status": "draft"
+  },
+  "entry": {
+    "script": "scripts/personal_report.py",
+    "measurements_flag": "--measurements",
+    "measurements_header": [
+      "item",
+      "value",
+      "unit"
+    ],
+    "age_flag": "--age",
+    "sex_flag": "--sex",
+    "out_flag": "--out",
+    "result_json": true,
+    "targets_flag": "--targets",
+    "levers_json": true
+  },
+  "inputs_status": "verified",
+  "inputs": [
+    {
+      "key": "bmi_kg_m2",
+      "label_zh": "体质指数",
+      "unit": "kg/m^2",
+      "range": [
+        10,
+        80
+      ],
+      "aliases": [
+        "BMI",
+        "body mass index",
+        "体重指数"
+      ],
+      "accept": {},
+      "required": true,
+      "from": "measurements",
+      "note_zh": "10–80为输入合理性检查；查表仅接受恰为25，不取整。"
+    },
+    {
+      "key": "parental_hip_fracture",
+      "label_zh": "父母髋部骨折史",
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "aliases": [
+        "parental history of hip fracture",
+        "parental hip fracture"
+      ],
+      "accept": {},
+      "required": true,
+      "from": "measurements",
+      "note_zh": "0=否，1=是；未知必须补充，不能按0处理。父亲或母亲的髋部骨折史。"
+    },
+    {
+      "key": "current_smoking",
+      "label_zh": "目前吸烟",
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "aliases": [
+        "current smoking",
+        "current cigarette smoking",
+        "当前吸烟"
+      ],
+      "accept": {},
+      "required": true,
+      "from": "measurements",
+      "note_zh": "0=否，1=是；未知必须补充，不能按0处理。当前是否吸烟。"
+    },
+    {
+      "key": "high_alcohol",
+      "label_zh": "高酒精摄入分类",
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "aliases": [
+        "high alcohol intake",
+        "alcohol intake >2 units daily",
+        "高酒精摄入"
+      ],
+      "accept": {},
+      "required": true,
+      "from": "measurements",
+      "note_zh": "0=否，1=是；未知必须补充，不能按0处理。表2行名为>2 units daily，方法段为平均每天3个及以上单位；需已按论文口径确认分类，本文未给出克数换算，不按杯数自行推断。"
+    },
+    {
+      "key": "rheumatoid_arthritis",
+      "label_zh": "类风湿关节炎",
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "aliases": [
+        "rheumatoid arthritis",
+        "RA"
+      ],
+      "accept": {},
+      "required": true,
+      "from": "measurements",
+      "note_zh": "0=否，1=是；未知必须补充，不能按0处理。已有类风湿关节炎诊断，不等同于骨关节炎。"
+    },
+    {
+      "key": "oral_glucocorticoids",
+      "label_zh": "曾长期口服糖皮质激素",
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "aliases": [
+        "oral glucocorticoids",
+        "ever long-term use of oral glucocorticoids",
+        "口服糖皮质激素史"
+      ],
+      "accept": {},
+      "required": true,
+      "from": "measurements",
+      "note_zh": "0=否，1=是；未知必须补充，不能按0处理。按病史确认曾长期口服使用；本文未将长期的时长阈值写死，不按药名猜测，不读取剂量或建议调整。"
+    },
+    {
+      "key": "previous_fragility_fracture",
+      "label_zh": "既往脆性骨折",
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "aliases": [
+        "previous fragility fracture",
+        "prior fragility fracture",
+        "脆性骨折史"
+      ],
+      "accept": {},
+      "required": true,
+      "from": "measurements",
+      "note_zh": "0=否，1=是；未知必须补充，不能按0处理。由病历确认脆性骨折史，不把任意创伤性骨折自动归入。"
+    },
+    {
+      "key": "secondary_osteoporosis",
+      "label_zh": "其他继发性骨质疏松",
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "aliases": [
+        "other secondary osteoporosis",
+        "其他原因骨质疏松"
+      ],
+      "accept": {},
+      "required": true,
+      "from": "measurements",
+      "note_zh": "0=否，1=是；未知必须补充，不能按0处理。适用性门槛：必须明确为0；表2未单列此项，不自动映射为类风湿关节炎。"
+    },
+    {
+      "key": "age",
+      "label_zh": "年龄",
+      "unit": "a",
+      "range": [
+        50,
+        80
+      ],
+      "required": true,
+      "from": "profile",
+      "flag": "--age",
+      "aliases": [
+        "age",
+        "年龄（岁）"
+      ],
+      "accept": {},
+      "note_zh": "仅50、60、70、80这四个已印出年龄点。"
+    },
+    {
+      "key": "sex",
+      "label_zh": "论文性别分组",
+      "required": true,
+      "from": "profile",
+      "flag": "--sex",
+      "aliases": [
+        "sex",
+        "性别"
+      ],
+      "note_zh": "male或female，按论文男性/女性分组。"
+    }
+  ],
+  "outputs": [
+    {
+      "key": "major_osteoporotic_10y_pct",
+      "label_zh": "主要骨质疏松性骨折十年概率",
+      "unit": "%"
+    },
+    {
+      "key": "hip_fracture_10y_pct",
+      "label_zh": "髋部骨折十年概率",
+      "unit": "%"
+    }
+  ],
+  "validation": {
+    "status": "reproduced",
+    "examples": [
+      {
+        "locator": "Table 2(b), Women, Parental history of hip fracture; columns major fracture then hip at ages 50/60/70/80; BMI 25 kg/m², without BMD",
+        "quote": "Parental history of hip fracture | 6.9 | 12 | 17 | 31 | 0.3 | 0.9 | 5.0 | 22",
+        "values": [
+          6.9,
+          12,
+          17,
+          31,
+          0.3,
+          0.9,
+          5.0,
+          22
+        ],
+        "tolerance": "精确等于原表印出小数；直接查表，无插值或系数拟合。测试另核对表2全部112个概率单元格。",
+        "test": "tests/test_manifest.py::test_table_2_printed_values"
+      }
+    ]
+  }
+}
