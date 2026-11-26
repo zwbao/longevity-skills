@@ -1,7 +1,7 @@
 {
   "schema": "longevity-coverage/1",
   "reference_items": 583,
-  "reference_covered": 66,
+  "reference_covered": 70,
   "unlabelled": {
     "claims": 0,
     "effects": 0,
@@ -385,9 +385,10 @@
         "method": {
           "rows": 0,
           "effects": 0,
-          "papers": 8,
+          "papers": 9,
           "skills": [
             "burden-of-proof-dietary-risk",
+            "chinese-healthy-eating-index",
             "edisea-dietary-index",
             "fruit-vegetable-risk-lookup",
             "gbd-dietary-intake-gap",
@@ -396,9 +397,9 @@
             "vegetable-tmrel-gap",
             "whole-grain-dose-response"
           ],
-          "latest": "2026-11-25",
+          "latest": "2026-11-26",
           "reference": 8,
-          "covered": 1,
+          "covered": 2,
           "missing": [
             {
               "id": "diet-nutrition-method-ahei-2010",
@@ -410,18 +411,6 @@
               "by": [],
               "doi": [
                 "10.3945/jn.111.157222"
-              ]
-            },
-            {
-              "id": "diet-nutrition-method-chei",
-              "item": "Chinese Healthy Eating Index (CHEI)",
-              "item_zh": "中国健康膳食指数（CHEI）",
-              "priority": "P0",
-              "status": "reviewed",
-              "covered": false,
-              "by": [],
-              "doi": [
-                "10.3390/nu9090977"
               ]
             },
             {
@@ -784,14 +773,16 @@
         "method": {
           "rows": 0,
           "effects": 0,
-          "papers": 2,
+          "papers": 4,
           "skills": [
+            "insomnia-severity-index",
             "sleep-duration-risk-lookup",
+            "stop-bang",
             "wearable-circadian-aging-biomarker"
           ],
-          "latest": "2026-11-25",
+          "latest": "2026-11-26",
           "reference": 9,
-          "covered": 0,
+          "covered": 2,
           "missing": [
             {
               "id": "sleep-circadian-method-consensus-sleep-diary",
@@ -827,18 +818,6 @@
               "by": [],
               "doi": [
                 "10.1093/sleep/14.6.540"
-              ]
-            },
-            {
-              "id": "sleep-circadian-method-isi",
-              "item": "Insomnia Severity Index (ISI)",
-              "item_zh": "失眠严重程度指数（ISI）",
-              "priority": "P0",
-              "status": "reviewed",
-              "covered": false,
-              "by": [],
-              "doi": [
-                "10.1016/s1389-9457(00)00065-4"
               ]
             },
             {
@@ -887,18 +866,6 @@
               "by": [],
               "doi": [
                 "10.1038/s41598-017-03171-4"
-              ]
-            },
-            {
-              "id": "sleep-circadian-method-stop-bang",
-              "item": "STOP and STOP-Bang questionnaires for obstructive sleep apnea (development paper)",
-              "item_zh": "STOP-Bang阻塞性睡眠呼吸暂停筛查问卷",
-              "priority": "P0",
-              "status": "reviewed",
-              "covered": false,
-              "by": [],
-              "doi": [
-                "10.1097/aln.0b013e31816d83e4"
               ]
             }
           ]
@@ -1583,21 +1550,22 @@
         "method": {
           "rows": 0,
           "effects": 0,
-          "papers": 8,
+          "papers": 9,
           "skills": [
             "bmi-mortality-category",
             "burden-of-proof-dietary-risk",
             "ctt-ldl-relative-risk",
             "elsa-hba1c-model-a",
+            "fib4-index",
             "finnish-diabetes-risk-score",
             "modifiable-risk-factor-score",
             "navy-circumference-body-fat",
             "new-chinese-diabetes-risk-score",
             "relative-fat-mass"
           ],
-          "latest": "2026-11-25",
+          "latest": "2026-11-26",
           "reference": 11,
-          "covered": 2,
+          "covered": 3,
           "missing": [
             {
               "id": "body-weight-metabolism-method-adag-estimated-average-glucose",
@@ -1621,19 +1589,6 @@
               "by": [],
               "doi": [
                 "10.1186/1471-230x-6-33"
-              ]
-            },
-            {
-              "id": "body-weight-metabolism-method-fib-4",
-              "item": "Fibrosis-4 index (FIB-4)",
-              "item_zh": "肝纤维化 4 因子指数（FIB-4）",
-              "priority": "P0",
-              "status": "reviewed",
-              "covered": false,
-              "by": [],
-              "doi": [
-                "10.1002/hep.21178",
-                "10.1016/j.cgh.2009.05.033"
               ]
             },
             {
@@ -3726,12 +3681,14 @@
         "method": {
           "rows": 0,
           "effects": 0,
-          "papers": 2,
+          "papers": 4,
           "skills": [
+            "fib4-index",
             "finnish-diabetes-risk-score",
-            "new-chinese-diabetes-risk-score"
+            "new-chinese-diabetes-risk-score",
+            "stop-bang"
           ],
-          "latest": "2026-11-25",
+          "latest": "2026-11-26",
           "reference": 7,
           "covered": 0,
           "missing": [
