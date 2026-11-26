@@ -1,0 +1,335 @@
+{
+  "schema": "longevity-skill/1",
+  "name": "caide-dementia-risk",
+  "kind": "paper",
+  "tier": "A",
+  "species": [
+    "human"
+  ],
+  "evidence": "cohort",
+  "domains": [
+    "认知与脑健康"
+  ],
+  "topic": [
+    "brain_cognition",
+    "cardiovascular",
+    "physical_activity"
+  ],
+  "blurb_zh": "用中年体检和活动问卷计算CAIDE痴呆风险积分、原队列风险参照及自定目标情景。",
+  "intents": [
+    "cognition_dementia",
+    "lab_meaning",
+    "before_after"
+  ],
+  "triage": {
+    "reason_zh": "人群纵向队列开发的CAIDE模型，正文完整印出两套积分、风险查表和连续公式，可用个人数据计算并复现表3及表4。",
+    "reviewed": false
+  },
+  "paper": {
+    "doi": "10.1016/s1474-4422(06)70537-3",
+    "title": "Risk score for the prediction of dementia risk in 20 years among middle aged people: a longitudinal, population-based study.",
+    "title_zh": "根据中年危险因素预测二十年后痴呆风险的积分：纵向人群研究",
+    "journal": "The Lancet Neurology",
+    "year": 2006,
+    "authors": "Kivipelto 等",
+    "article_url": "https://www.sciencedirect.com/science/article/pii/S1474442206705373",
+    "supplements": [],
+    "card_notes": [
+      "原版模型1不含APOE；模型2含APOE并改变部分权重。采用正文表2、表3及第736页积分回归公式，复现表4的六组示例。",
+      "经Academia公开副本读取原刊全文；出版社实时页面受限。全文未引用附件或代码，Europe PMC标记无补充材料；访问限制见来源记录。"
+    ],
+    "summary_zh": "这项研究在芬兰中年人随访队列中发现，年龄、教育与血管相关危险因素组成的积分能够区分晚年痴呆风险。个人报告只计算原版积分、队列分组参照、模型风险估计及自定目标下的变化，不判断是否患病或估计治疗收益。",
+    "summary_status": "draft"
+  },
+  "entry": {
+    "script": "scripts/personal_report.py",
+    "measurements_flag": "--measurements",
+    "measurements_header": [
+      "marker",
+      "value",
+      "unit"
+    ],
+    "age_flag": "--age",
+    "sex_flag": "--sex",
+    "out_flag": "--out",
+    "result_json": true,
+    "targets_flag": "--targets",
+    "levers_json": true
+  },
+  "inputs_status": "verified",
+  "inputs": [
+    {
+      "key": "education_years",
+      "label_zh": "教育年限",
+      "aliases": [
+        "education",
+        "education years",
+        "受教育年数",
+        "教育程度"
+      ],
+      "unit": "a",
+      "range": [
+        0,
+        30
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "已完成的整年教育年限；0–6、7–9、≥10年，不对小数取整。"
+    },
+    {
+      "key": "sbp_mmhg",
+      "label_zh": "收缩压",
+      "aliases": [
+        "SBP",
+        "systolic blood pressure",
+        "高压"
+      ],
+      "unit": "mmHg",
+      "range": [
+        60,
+        280
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "同一中年评估时点，坐位休息后测量；恰140不加分。",
+      "accept": {
+        "kPa": 7.500617
+      },
+      "unit_required": true
+    },
+    {
+      "key": "bmi_kg_m2",
+      "label_zh": "体质指数",
+      "aliases": [
+        "BMI",
+        "body mass index",
+        "体重指数"
+      ],
+      "unit": "kg/m^2",
+      "range": [
+        10,
+        80
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "体重kg除以身高m的平方；恰30不加分。"
+    },
+    {
+      "key": "total_cholesterol_mmol_l",
+      "label_zh": "总胆固醇",
+      "aliases": [
+        "TC",
+        "CHOL",
+        "total cholesterol",
+        "血清总胆固醇",
+        "总胆固醇(TC)"
+      ],
+      "unit": "mmol/L",
+      "range": [
+        1,
+        20
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "不能用LDL或HDL代替；恰6.5不加分。",
+      "accept": {
+        "mg/dL": 0.025863183757920603,
+        "umol/L": 0.001
+      },
+      "molar_mass": 386.65,
+      "unit_required": true
+    },
+    {
+      "key": "active",
+      "label_zh": "符合原文闲暇活动定义",
+      "aliases": [
+        "physically active",
+        "leisure time physical activity",
+        "physical activity",
+        "闲暇体力活动"
+      ],
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "1=每周至少两次、每次至少20–30分钟且出汗和气喘；0=不符合；未知留空。"
+    },
+    {
+      "key": "apoe_e4",
+      "label_zh": "APOE ε4携带状态",
+      "aliases": [
+        "APOE e4",
+        "APOE ε4 status",
+        "APOE epsilon4 carrier",
+        "APOE4携带者"
+      ],
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "required": false,
+      "from": "measurements",
+      "note_zh": "仅模型2必需：0=已知非携带者，1=至少一个ε4；未知不可填0。模型1不使用。"
+    },
+    {
+      "key": "age",
+      "label_zh": "评估时年龄",
+      "aliases": [
+        "年龄",
+        "age years",
+        "midlife age"
+      ],
+      "unit": "a",
+      "range": [
+        39,
+        64
+      ],
+      "required": true,
+      "from": "profile",
+      "note_zh": "同一中年测量时点的已满周岁整数，限定原研究观察年龄范围。",
+      "flag": "--age"
+    },
+    {
+      "key": "sex",
+      "label_zh": "性别",
+      "aliases": [
+        "性别",
+        "sex"
+      ],
+      "required": true,
+      "from": "profile",
+      "flag": "--sex",
+      "note_zh": "male/男或female/女；依原研究二分类积分。"
+    }
+  ],
+  "outputs": [
+    {
+      "key": "age_score",
+      "label_zh": "年龄得分",
+      "unit": "score"
+    },
+    {
+      "key": "education_score",
+      "label_zh": "教育得分",
+      "unit": "score"
+    },
+    {
+      "key": "sex_score",
+      "label_zh": "性别得分",
+      "unit": "score"
+    },
+    {
+      "key": "sbp_score",
+      "label_zh": "收缩压得分",
+      "unit": "score"
+    },
+    {
+      "key": "bmi_score",
+      "label_zh": "BMI得分",
+      "unit": "score"
+    },
+    {
+      "key": "cholesterol_score",
+      "label_zh": "总胆固醇得分",
+      "unit": "score"
+    },
+    {
+      "key": "activity_score",
+      "label_zh": "活动得分",
+      "unit": "score"
+    },
+    {
+      "key": "apoe_score",
+      "label_zh": "APOE得分（仅模型2）",
+      "unit": "score"
+    },
+    {
+      "key": "total_score",
+      "label_zh": "CAIDE总分",
+      "unit": "score"
+    },
+    {
+      "key": "group_risk_20y_pct",
+      "label_zh": "原队列同积分组的约20年痴呆发生比例",
+      "unit": "%",
+      "note_zh": "模型参照值，未经个体或当代中国人群校准；组置信区间不是个人预测区间。"
+    },
+    {
+      "key": "group_ci_low_pct",
+      "label_zh": "原队列组发生比例95%置信下限",
+      "unit": "%",
+      "note_zh": "模型参照值，未经个体或当代中国人群校准；组置信区间不是个人预测区间。"
+    },
+    {
+      "key": "group_ci_high_pct",
+      "label_zh": "原队列组发生比例95%置信上限",
+      "unit": "%",
+      "note_zh": "模型参照值，未经个体或当代中国人群校准；组置信区间不是个人预测区间。"
+    },
+    {
+      "key": "model_risk_20y_pct",
+      "label_zh": "连续公式的20年痴呆风险估计",
+      "unit": "%",
+      "note_zh": "模型参照值，未经个体或当代中国人群校准；组置信区间不是个人预测区间。"
+    },
+    {
+      "key": "model",
+      "label_zh": "采用的模型",
+      "note_zh": "1不含APOE；2含APOE并重设部分积分。"
+    },
+    {
+      "key": "score_category",
+      "label_zh": "表3积分分组"
+    },
+    {
+      "key": "cutoff_category",
+      "label_zh": "是否达到原文主要筛查阈值",
+      "note_zh": "模型1≥9、模型2≥10；不是诊断。"
+    }
+  ],
+  "validation": {
+    "status": "reproduced",
+    "examples": [
+      {
+        "locator": "Table 3, p. 737, Model 1 and Model 2 Score / Risk cells",
+        "quote": "0–5 1·0%; 6–7 1·9%; 8–9 4·2%; 10–11 7·4%; 12–15 16·4%; 0–5 0·3%; 6–8 1·7%; 9–10 4·6%; 11–12 4·4%; 13–18 16·3%",
+        "values": [
+          1.0,
+          1.9,
+          4.2,
+          7.4,
+          16.4,
+          0.3,
+          1.7,
+          4.6,
+          4.4,
+          16.3
+        ],
+        "tolerance": "逐格精确相等；对原文每个分数组的两个印出端点测试。",
+        "test": "tests/test_manifest.py::test_table3_printed_risk_lookup"
+      },
+      {
+        "locator": "Table 4, p. 738, low/intermediate/high risk profiles, Models 1 and 2",
+        "quote": "score=0 score=0 score=10 score=10 score=15 score=18; Risk of dementia 0·13% 0·09% 6·91% 4·06% 35·55% 48·93%",
+        "values": [
+          0,
+          10,
+          15,
+          18,
+          0.13,
+          0.09,
+          6.91,
+          4.06,
+          35.55,
+          48.93
+        ],
+        "tolerance": "总分精确相等；概率允许绝对误差0.005个百分点（原表保留两位小数）。输入类别依表4，类别内代表值不是原文精确测量；见contract.md。",
+        "test": "tests/test_manifest.py::test_table4_printed_profiles"
+      }
+    ]
+  }
+}
