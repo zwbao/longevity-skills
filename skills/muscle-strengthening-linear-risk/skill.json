@@ -1,0 +1,210 @@
+{
+  "schema": "longevity-skill/1",
+  "name": "muscle-strengthening-linear-risk",
+  "kind": "paper",
+  "tier": "A",
+  "species": [
+    "human"
+  ],
+  "evidence": "review",
+  "domains": [
+    "运动与体力活动",
+    "死亡风险"
+  ],
+  "topic": [
+    "physical_activity"
+  ],
+  "blurb_zh": "按每周力量训练时长换算论文线性模型的群体相对风险，保留非线性证据的限制。",
+  "intents": [
+    "frailty_mortality",
+    "intervention_evidence"
+  ],
+  "triage": {
+    "reason_zh": "人体队列荟萃分析表 1 印出四个主要结局每增加十分钟的线性相对风险，可按个人每周时长换算该线性模型的关联；不重建非线性曲线。",
+    "reviewed": false
+  },
+  "paper": {
+    "doi": "10.1136/bjsports-2021-105061",
+    "title": "Muscle-strengthening activities are associated with lower risk and mortality in major non-communicable diseases: a systematic review and meta-analysis of cohort studies.",
+    "title_zh": "力量训练与主要非传染性疾病及死亡风险：队列研究的系统综述和荟萃分析",
+    "journal": "British Journal of Sports Medicine",
+    "year": 2022,
+    "authors": "Momma 等",
+    "article_url": "https://bjsm.bmj.com/content/56/13/755",
+    "supplements": [
+      {
+        "label": "补充材料：Appendix Tables 1–6、Figures 1–7（38 页）",
+        "url": "https://pmc.ncbi.nlm.nih.gov/articles/instance/9209691/bin/bjsports-2021-105061supp001.pdf"
+      }
+    ],
+    "card_notes": [
+      "全文及唯一补充 PDF 经 Europe PMC 接口核查。使用表 1 线性列；图 3 精度较低，CVD 采用表 1 的 0.996。",
+      "复现仅指表 1 每 10 分钟增量的数值，不代表复现图 4 非线性曲线或个人风险。未发现公开分析代码或完整样条参数。"
+    ],
+    "summary_zh": "这项研究汇总成年人的前瞻性队列，发现力量训练与部分慢性病及死亡风险较低相关，但活动时长与健康结局的关系存在非线性。个人报告只按每周力量训练时长换算论文线性模型的群体相对风险及用户指定情景，不计算个人患病概率或最佳训练时长。",
+    "summary_status": "draft"
+  },
+  "entry": {
+    "script": "scripts/personal_report.py",
+    "measurements_flag": "--measurements",
+    "measurements_header": [
+      "marker",
+      "value",
+      "unit"
+    ],
+    "age_flag": "--age",
+    "sex_flag": "--sex",
+    "out_flag": "--out",
+    "result_json": true,
+    "targets_flag": "--targets",
+    "levers_json": true
+  },
+  "inputs_status": "verified",
+  "inputs": [
+    {
+      "key": "strength_minutes_per_week",
+      "label_zh": "每周力量训练总时长",
+      "aliases": [
+        "每周抗阻训练总时长",
+        "每周肌肉强化活动时长",
+        "muscle-strengthening activities",
+        "strength training minutes per week",
+        "resistance training minutes per week",
+        "weight training minutes per week"
+      ],
+      "unit": "min",
+      "accept": {
+        "h": 60
+      },
+      "range": [
+        0,
+        10080
+      ],
+      "unit_required": true,
+      "required": true,
+      "from": "measurements",
+      "note_zh": "一个七天周期内力量/抗阻/自重训练的总分钟数；单位 min 或 h（小时乘 60）。不是单次时长、次数、有氧分钟数或重体力家务。0–10080 仅为一周时间预算的排错范围，非模型有效范围；不自动换算次/周或 MET。"
+    },
+    {
+      "key": "age",
+      "label_zh": "实足年龄",
+      "unit": "a",
+      "range": [
+        18,
+        120
+      ],
+      "required": true,
+      "from": "profile",
+      "flag": "--age",
+      "note_zh": "18 岁为研究纳入下限，120 岁为软件排错上限；只检查成年人适用范围，不进入公式。"
+    },
+    {
+      "key": "sex",
+      "label_zh": "性别",
+      "required": false,
+      "from": "profile",
+      "flag": "--sex",
+      "note_zh": "可选上下文，不改变合并关联。"
+    }
+  ],
+  "outputs": [
+    {
+      "key": "strength_minutes_per_week",
+      "label_zh": "每周力量训练总时长",
+      "unit": "min"
+    },
+    {
+      "key": "all_cause_mortality_linear_rr",
+      "label_zh": "全因死亡线性模型 RR",
+      "unit": "1",
+      "note_zh": "相对每周零分钟；线性 log(RR) 模型换算，非个人概率，非非线性曲线。"
+    },
+    {
+      "key": "all_cause_mortality_linear_ci_low",
+      "label_zh": "全因死亡线性模型 95% CI 下限",
+      "unit": "1",
+      "note_zh": "相对每周零分钟；线性 log(RR) 模型换算，非个人概率，非非线性曲线。"
+    },
+    {
+      "key": "all_cause_mortality_linear_ci_high",
+      "label_zh": "全因死亡线性模型 95% CI 上限",
+      "unit": "1",
+      "note_zh": "相对每周零分钟；线性 log(RR) 模型换算，非个人概率，非非线性曲线。"
+    },
+    {
+      "key": "cvd_linear_rr",
+      "label_zh": "心血管疾病（发病或死亡）线性模型 RR",
+      "unit": "1",
+      "note_zh": "相对每周零分钟；线性 log(RR) 模型换算，非个人概率，非非线性曲线。"
+    },
+    {
+      "key": "cvd_linear_ci_low",
+      "label_zh": "心血管疾病（发病或死亡）线性模型 95% CI 下限",
+      "unit": "1",
+      "note_zh": "相对每周零分钟；线性 log(RR) 模型换算，非个人概率，非非线性曲线。"
+    },
+    {
+      "key": "cvd_linear_ci_high",
+      "label_zh": "心血管疾病（发病或死亡）线性模型 95% CI 上限",
+      "unit": "1",
+      "note_zh": "相对每周零分钟；线性 log(RR) 模型换算，非个人概率，非非线性曲线。"
+    },
+    {
+      "key": "total_cancer_linear_rr",
+      "label_zh": "总癌症（发病或死亡）线性模型 RR",
+      "unit": "1",
+      "note_zh": "相对每周零分钟；线性 log(RR) 模型换算，非个人概率，非非线性曲线。"
+    },
+    {
+      "key": "total_cancer_linear_ci_low",
+      "label_zh": "总癌症（发病或死亡）线性模型 95% CI 下限",
+      "unit": "1",
+      "note_zh": "相对每周零分钟；线性 log(RR) 模型换算，非个人概率，非非线性曲线。"
+    },
+    {
+      "key": "total_cancer_linear_ci_high",
+      "label_zh": "总癌症（发病或死亡）线性模型 95% CI 上限",
+      "unit": "1",
+      "note_zh": "相对每周零分钟；线性 log(RR) 模型换算，非个人概率，非非线性曲线。"
+    },
+    {
+      "key": "diabetes_linear_rr",
+      "label_zh": "糖尿病发病线性模型 RR",
+      "unit": "1",
+      "note_zh": "相对每周零分钟；线性 log(RR) 模型换算，非个人概率，非非线性曲线。"
+    },
+    {
+      "key": "diabetes_linear_ci_low",
+      "label_zh": "糖尿病发病线性模型 95% CI 下限",
+      "unit": "1",
+      "note_zh": "相对每周零分钟；线性 log(RR) 模型换算，非个人概率，非非线性曲线。"
+    },
+    {
+      "key": "diabetes_linear_ci_high",
+      "label_zh": "糖尿病发病线性模型 95% CI 上限",
+      "unit": "1",
+      "note_zh": "相对每周零分钟；线性 log(RR) 模型换算，非个人概率，非非线性曲线。"
+    }
+  ],
+  "validation": {
+    "status": "reproduced",
+    "examples": [
+      {
+        "locator": "Table 1, Dose–response meta-analysis (10 min/week increase), first four outcome rows",
+        "quote": "Dose–response meta-analysis (10 min/week increase)\nAll-cause mortality 0.99 (0.98 to 1.00)\nCVD 0.996 (0.99 to 1.003)\nTotal cancer 0.99 (0.98 to 1.004)\nDiabetes 0.98 (0.97 to 0.99)",
+        "values": [
+          10,
+          0.99,
+          0.98,
+          1.0,
+          0.996,
+          1.003,
+          1.004,
+          0.97
+        ],
+        "tolerance": "绝对误差 1e-12，仅允许浮点运算误差；使用表 1 原印精度。只验证十分钟线性增量，不声称复现非线性图 4。",
+        "test": "tests/test_manifest.py::test_printed_table1_ten_minutes"
+      }
+    ]
+  }
+}
