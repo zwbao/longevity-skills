@@ -1,7 +1,7 @@
 {
   "schema": "longevity-coverage/1",
   "reference_items": 583,
-  "reference_covered": 67,
+  "reference_covered": 68,
   "unlabelled": {
     "claims": 0,
     "effects": 0,
@@ -385,9 +385,10 @@
         "method": {
           "rows": 0,
           "effects": 0,
-          "papers": 8,
+          "papers": 9,
           "skills": [
             "burden-of-proof-dietary-risk",
+            "chinese-healthy-eating-index",
             "edisea-dietary-index",
             "fruit-vegetable-risk-lookup",
             "gbd-dietary-intake-gap",
@@ -396,9 +397,9 @@
             "vegetable-tmrel-gap",
             "whole-grain-dose-response"
           ],
-          "latest": "2026-11-25",
+          "latest": "2026-11-26",
           "reference": 8,
-          "covered": 1,
+          "covered": 2,
           "missing": [
             {
               "id": "diet-nutrition-method-ahei-2010",
@@ -410,18 +411,6 @@
               "by": [],
               "doi": [
                 "10.3945/jn.111.157222"
-              ]
-            },
-            {
-              "id": "diet-nutrition-method-chei",
-              "item": "Chinese Healthy Eating Index (CHEI)",
-              "item_zh": "中国健康膳食指数（CHEI）",
-              "priority": "P0",
-              "status": "reviewed",
-              "covered": false,
-              "by": [],
-              "doi": [
-                "10.3390/nu9090977"
               ]
             },
             {
