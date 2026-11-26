@@ -1,0 +1,209 @@
+{
+  "schema": "longevity-skill/1",
+  "name": "smoking-cessation-mortality-lookup",
+  "kind": "paper",
+  "tier": "A",
+  "species": [
+    "human"
+  ],
+  "evidence": "cohort",
+  "domains": [
+    "吸烟",
+    "死亡风险",
+    "戒烟"
+  ],
+  "topic": [
+    "tobacco_alcohol"
+  ],
+  "blurb_zh": "按男性当前年龄、吸烟史及戒烟年龄，查英国医生历史队列的年死亡率和戒烟组近似寿命差。",
+  "intents": [
+    "frailty_mortality"
+  ],
+  "triage": {
+    "reason_zh": "表5完整印出达到年龄与戒烟年龄分组的死亡率，图4正文印出近似寿命差，可匹配个人吸烟史；限定男性历史队列参考。",
+    "reviewed": false
+  },
+  "paper": {
+    "doi": "10.1136/bmj.38142.554479.ae",
+    "title": "Mortality in relation to smoking: 50 years' observations on male British doctors.",
+    "title_zh": "吸烟与死亡率：英国男性医生的五十年随访",
+    "journal": "BMJ (Clinical research ed.)",
+    "year": 2004,
+    "authors": "Doll 等",
+    "article_url": "https://www.bmj.com/content/328/7455/1519",
+    "supplements": [
+      {
+        "label": "作者图表展示文件（原链接404，未读取；查表不依赖此文件）",
+        "url": "https://www.ctsu.ox.ac.uk/bds50yr_bmj2004-1.pdf"
+      }
+    ],
+    "card_notes": [
+      "已阅读BMJ全文及PMC全文表1–6、图4图注和对应正文；使用表5印出值，不重建生存曲线。",
+      "作者图表PDF链接失效；期刊PowerPoint及图像下载受访问验证阻挡，未读取，详见来源审计。未发现本文另列补充表、作者代码或公开个体数据仓库。"
+    ],
+    "summary_zh": "这项英国男性医生的前瞻性队列研究发现，持续吸卷烟与较高死亡率相关，较早戒烟者的长期生存情况更接近终生不吸烟者。个人报告只按年龄和吸烟史匹配已发表的历史队列死亡率及戒烟组近似寿命差，不推算个人死亡概率或剩余寿命。",
+    "summary_status": "draft"
+  },
+  "entry": {
+    "script": "scripts/personal_report.py",
+    "measurements_flag": "--measurements",
+    "measurements_header": [
+      "item",
+      "value",
+      "unit"
+    ],
+    "age_flag": "--age",
+    "sex_flag": "--sex",
+    "out_flag": "--out",
+    "result_json": true
+  },
+  "population": {
+    "age_years": [
+      35,
+      84
+    ],
+    "note_zh": "表5的整岁年龄35–84（运行接受35≤年龄<85）；1900–1930年出生的英国男性医生，1951–2001年观察，仅匹配历史队列，不是现代人群校准。"
+  },
+  "inputs_status": "verified",
+  "inputs": [
+    {
+      "key": "smoking_history_code",
+      "label_zh": "吸烟史编码",
+      "aliases": [
+        "吸烟史",
+        "smoking history code",
+        "smoking status code"
+      ],
+      "unit": "1",
+      "range": [
+        0,
+        3
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "人工核实问卷后编码：0终生不吸烟；1持续仅吸卷烟；2曾持续仅吸卷烟现已戒烟；3其他/混合/复吸/间歇模式（不支持，会退出3）。不接受小数，不可从笼统的当前吸烟或曾吸烟推断卷烟专用模式。"
+    },
+    {
+      "key": "quit_age_years",
+      "label_zh": "戒烟年龄",
+      "aliases": [
+        "停止吸烟年龄",
+        "age stopped smoking",
+        "age at smoking cessation",
+        "quit age"
+      ],
+      "unit": "a",
+      "accept": {
+        "mo": 0.08333333333333333
+      },
+      "range": [
+        0,
+        120
+      ],
+      "required": false,
+      "from": "measurements",
+      "note_zh": "只在吸烟史编码2时必填，必须≤当前年龄。0–120是录入合理范围；实际查表仅支持25≤戒烟年龄<65。未戒烟者不填，不用0占位。"
+    },
+    {
+      "key": "age",
+      "label_zh": "当前年龄",
+      "aliases": [
+        "年龄",
+        "attained age",
+        "age"
+      ],
+      "unit": "a",
+      "range": [
+        35,
+        85
+      ],
+      "required": true,
+      "from": "profile",
+      "flag": "--age",
+      "note_zh": "岁；运行另拒绝85岁，上界为85岁生日之前，不按四舍五入分组。"
+    },
+    {
+      "key": "sex",
+      "label_zh": "性别",
+      "aliases": [
+        "sex",
+        "性别"
+      ],
+      "required": true,
+      "from": "profile",
+      "flag": "--sex",
+      "note_zh": "仅male可用；female或未知不套用男性队列。"
+    }
+  ],
+  "outputs": [
+    {
+      "key": "attained_age_band",
+      "label_zh": "达到年龄分组",
+      "note_zh": "表5年龄行；上界按下一生日之前处理。"
+    },
+    {
+      "key": "smoking_history_group",
+      "label_zh": "吸烟史分组",
+      "note_zh": "仅支持论文中的不吸烟和持续仅吸卷烟模式。"
+    },
+    {
+      "key": "quit_age_band",
+      "label_zh": "戒烟年龄分组",
+      "note_zh": "仅已戒烟者输出，其他为null。"
+    },
+    {
+      "key": "cohort_annual_deaths_per_1000",
+      "label_zh": "匹配组的队列年死亡率",
+      "note_zh": "每千名男性的年死亡率；均值来自两个五岁年龄组，不是个人概率；未印单元为null。",
+      "unit": "deaths/1000 men/year"
+    },
+    {
+      "key": "cohort_observed_deaths",
+      "label_zh": "匹配单元的队列死亡数",
+      "note_zh": "原表括号内队列死亡数；不是个人预测事件数。",
+      "unit": "1"
+    },
+    {
+      "key": "never_smoker_annual_deaths_per_1000",
+      "label_zh": "终生不吸烟参照组年死亡率",
+      "note_zh": "同一表5年龄行的历史队列参考。",
+      "unit": "deaths/1000 men/year"
+    },
+    {
+      "key": "continuing_smoker_annual_deaths_per_1000",
+      "label_zh": "持续吸卷烟参照组年死亡率",
+      "note_zh": "同一表5年龄行的历史队列参考。",
+      "unit": "deaths/1000 men/year"
+    },
+    {
+      "key": "printed_smoker_vs_never_ratio",
+      "label_zh": "原表持续吸卷烟与不吸烟的死亡率比",
+      "note_zh": "直接使用表5最右列，非戒烟者风险比；不对已四舍五入的死亡率相除。",
+      "unit": "1"
+    },
+    {
+      "key": "cohort_approx_life_years_gained",
+      "label_zh": "对应戒烟组的队列近似寿命差",
+      "note_zh": "图4正文相对持续吸烟的终生平均寿命差概括；不是从当前年龄起的寿命增加或个人获益。仅已戒烟者输出。",
+      "unit": "a"
+    }
+  ],
+  "validation": {
+    "status": "reproduced",
+    "examples": [
+      {
+        "locator": "Table 5, attained age 65-74; ex-cigarette smokers age stopped 45-54, and reference columns",
+        "quote": "Age range (years) | Lifelong non-smokers | 35-44 | 45-54 | 55-64\n65-74 | 18.6 (528) | 22.7 (262) | 31.7 (331) | 36.4 (250) | 50.7 (722) | 2.7",
+        "values": [
+          31.7,
+          331,
+          18.6,
+          50.7,
+          2.7
+        ],
+        "tolerance": "精确等于已印出的小数；查表不拟合、不重新相除。测试另核对表5所有非空单元、缺失项和图4正文的近似寿命差。",
+        "test": "tests/test_manifest.py::test_table_5_cli_example"
+      }
+    ]
+  }
+}
