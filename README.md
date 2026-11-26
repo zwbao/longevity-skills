@@ -409,6 +409,10 @@ python3 -m tools.lsk test --changed origin/main   # 只测相对 main 改动过�
 
 - `skills/share-intrinsic-capacity-domains/` — 用认知测验、行走困难和视听自评，计算 SHARE 内在能力的三个分域分数，并可比较两次变化；不算完整总分。
 
+## 认知与脑
+
+- `skills/mini-mental-state/` — 用施测者记录的 MMSE 各项得分计算两部分小计与总分，不作痴呆诊断。
+
 ## 跌倒与肌肉
 
 - `skills/calf-circumference-decline-falls/` — 用前后两次自己量的小腿围算绝对和相对减少量，按论文切点分档，给出中国老人队列里该档与小腿围没减少者相比的跌倒比值比。
