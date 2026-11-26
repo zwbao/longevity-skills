@@ -1,0 +1,23 @@
+{
+  "accessed": "2026-11-25",
+  "doi": "10.1093/eurheartj/ehab309",
+  "publisher_page": "https://academic.oup.com/eurheartj/article/42/25/2439/6297709",
+  "retrieved_page": "https://oup.silverchair-cdn.com/article-minimal/6297709",
+  "supplement_url": "https://oup.silverchair-cdn.com/oup/backfile/Content_public/Journal/eurheartj/42/25/10.1093_eurheartj_ehab309/8/ehab309_supplementary_data.zip?Expires=2147483647&Signature=Ju8-l6KsoE03sZ-ZfUnHN5TrIw3SPKhcVgCmKd27PHPnWZzwmoBlnRVpeOTa7pbrlt8klsd37G79SJAP6gjIBkQff2ZXuxhJdWb1T1Y1-0pmZ-WEC8ZuTJMXAqKwOL6Qy9YLylluQv02iw7MVcNH~pXCqOeb-n~K6Isi60uFy3xig0msshNpgSzNxvpAPFN5Pm8HqZ9zuGslfSaK1E4wcpE3xhpLlDs4Va6c1CE~68tQeQdjpQZqYjqYCZ-E3p1a-mHbklZ17ZBBchotTUxHcZ9NclcB6Cj8gb-wWabCHgSRTnaOZ9Ic06up1Qykvqi~s4iwyAXsArtgDzslPLPemg__&Key-Pair-Id=APKAIE5G5CRDK6RD3PGA",
+  "archive_sha256": "4c1e297dd2c457a22ffac877fcb68e03a5e3986c43525e10b000e9b2da8a0560",
+  "files": [
+    {
+      "name": "SCORE2 Updated Supplementary Material.docx",
+      "sha256": "152cabf2a622a96a042f74cbce47ee5dfbb981bf0ad368873ce88d7446d19753",
+      "bytes": 2590168
+    },
+    {
+      "name": "SCORE2_Appendix_1.docx",
+      "sha256": "2313b5e130fa842520e556df92ca24f5b3336844f592f85b54bdb2fea2db1f11",
+      "bytes": 153154
+    }
+  ],
+  "computational_source": "SCORE2 Updated Supplementary Material.docx, Supplementary Methods Tables 2–3",
+  "example_source": "main Results and updated Supplementary Methods Table 4",
+  "released_code": "Stata code available on request; no public repository linked"
+}
