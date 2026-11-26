@@ -12,6 +12,10 @@
     "心血管",
     "死亡风险"
   ],
+  "topic": [
+    "sleep_circadian",
+    "cardiovascular"
+  ],
   "blurb_zh": "用通常睡眠时长匹配论文整数小时查表值，查看全因死亡、心血管疾病、冠心病和卒中的人群相对风险。",
   "intents": [
     "wearable_sleep",

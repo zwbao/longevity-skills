@@ -10,6 +10,9 @@
   "domains": [
     "脑、认知与痴呆"
   ],
+  "topic": [
+    "brain_cognition"
+  ],
   "blurb_zh": "自己报告了的脆弱脑网络因素。",
   "intents": [
     "cognition_dementia"

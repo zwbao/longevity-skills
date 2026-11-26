@@ -11,6 +11,9 @@
     "甲基化",
     "比较生物学"
   ],
+  "topic": [
+    "biological_age"
+  ],
   "blurb_zh": "26 个位点到齐时的裸鼹鼠血液甲基化年龄。",
   "intents": [
     "model_organism"

@@ -11,6 +11,10 @@
     "脑、认知与痴呆",
     "比较生物学"
   ],
+  "topic": [
+    "brain_cognition",
+    "biological_age"
+  ],
   "blurb_zh": "线虫神经元名字。",
   "intents": [
     "model_organism"

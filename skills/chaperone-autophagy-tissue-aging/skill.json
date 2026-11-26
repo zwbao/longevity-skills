@@ -10,6 +10,9 @@
   "domains": [
     "自噬"
   ],
+  "topic": [
+    "aging_biology"
+  ],
   "blurb_zh": "双阳性点数和 LAMP1 点数都有时，有能力溶酶体的百分比。",
   "intents": [
     "model_organism"

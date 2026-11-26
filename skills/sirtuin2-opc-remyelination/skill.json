@@ -10,6 +10,10 @@
   "domains": [
     "营养感应"
   ],
+  "topic": [
+    "brain_cognition",
+    "aging_biology"
+  ],
   "blurb_zh": "核内量除以总量。",
   "intents": [
     "model_organism"

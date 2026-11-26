@@ -10,6 +10,9 @@
   "domains": [
     "蛋白、代谢与器官年龄"
   ],
+  "topic": [
+    "aging_biology"
+  ],
   "blurb_zh": "基因表达对照的转录组特征。",
   "intents": [
     "model_organism"

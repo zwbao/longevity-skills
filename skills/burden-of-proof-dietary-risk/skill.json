@@ -10,6 +10,10 @@
   "domains": [
     "饮食与代谢"
   ],
+  "topic": [
+    "diet_nutrition",
+    "body_weight_metabolism"
+  ],
   "blurb_zh": "用加工肉、含糖饮料或反式脂肪的日常摄入量，读取已发表摄入量点对应的慢病相对风险及不确定区间。",
   "intents": [
     "intervention_evidence",

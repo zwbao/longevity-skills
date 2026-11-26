@@ -12,6 +12,11 @@
     "基质、软骨与纤维化",
     "长寿基因"
   ],
+  "topic": [
+    "musculoskeletal_frailty",
+    "body_weight_metabolism",
+    "aging_biology"
+  ],
   "blurb_zh": "FOXO3 和正文点名的铁死亡相关基因，以及方向。",
   "intents": [
     "model_organism"

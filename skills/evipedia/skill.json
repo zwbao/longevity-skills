@@ -10,6 +10,9 @@
   "domains": [
     "工具与证据库"
   ],
+  "topic": [
+    "drugs_supplements"
+  ],
   "blurb_zh": "Evipedia 0.1.30（forever-healthy/evipedia-mcp b94febd）。已发布的干预证据综述。",
   "intents": [
     "intervention_evidence"

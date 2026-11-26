@@ -10,6 +10,10 @@
   "domains": [
     "营养感应"
   ],
+  "topic": [
+    "aging_biology",
+    "body_weight_metabolism"
+  ],
   "blurb_zh": "效应属于依赖肝细胞 SIRT1，还是不依赖。",
   "intents": [
     "model_organism"

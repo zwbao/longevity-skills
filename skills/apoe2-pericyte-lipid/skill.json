@@ -10,6 +10,10 @@
   "domains": [
     "脑、认知与痴呆"
   ],
+  "topic": [
+    "genetics",
+    "brain_cognition"
+  ],
   "blurb_zh": "iPSC 周细胞里 APOE2 对 APOE3 的显著蛋白查表。",
   "intents": [
     "model_organism"

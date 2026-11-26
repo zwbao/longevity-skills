@@ -11,6 +11,9 @@
   "domains": [
     "甲基化"
   ],
+  "topic": [
+    "biological_age"
+  ],
   "blurb_zh": "血液甲基化百分比。",
   "intents": [
     "epigenetic_age"

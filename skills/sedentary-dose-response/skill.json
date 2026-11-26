@@ -10,6 +10,9 @@
   "domains": [
     "生活方式与死亡风险"
   ],
+  "topic": [
+    "physical_activity"
+  ],
   "blurb_zh": "用每天久坐及看电视时长查人群相对风险和研究分段阈值。",
   "intents": [
     "frailty_mortality"

@@ -10,6 +10,11 @@
   "domains": [
     "蛋白、代谢与器官年龄"
   ],
+  "topic": [
+    "biological_age",
+    "body_weight_metabolism",
+    "cardiovascular"
+  ],
   "blurb_zh": "血清蛋白的记录。",
   "intents": [
     "proteomic_organ_age"

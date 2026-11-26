@@ -11,6 +11,10 @@
   "domains": [
     "免疫与炎症"
   ],
+  "topic": [
+    "aging_biology",
+    "organ_aging"
+  ],
   "blurb_zh": "--system rpe1 或 --system liver 和一个剂量箱。",
   "intents": [
     "model_organism"

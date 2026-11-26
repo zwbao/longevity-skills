@@ -11,6 +11,9 @@
     "甲基化",
     "比较生物学"
   ],
+  "topic": [
+    "biological_age"
+  ],
   "blurb_zh": "Supplementary Table 20 的甲基化年龄。位点不齐时只保留相对年龄的输入，不补 0。",
   "intents": [
     "model_organism"

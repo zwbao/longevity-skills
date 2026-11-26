@@ -10,6 +10,10 @@
   "domains": [
     "临床年龄与可穿戴"
   ],
+  "topic": [
+    "biological_age",
+    "organ_aging"
+  ],
   "blurb_zh": "你交来的两次面容年龄之差除以相隔年数；不从照片算面容年龄。",
   "intents": [
     "before_after",

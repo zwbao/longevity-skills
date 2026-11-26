@@ -10,6 +10,9 @@
   "domains": [
     "心血管与代谢风险"
   ],
+  "topic": [
+    "cardiovascular"
+  ],
   "blurb_zh": "用血压、血脂和吸烟状态估计欧洲成人十年心血管风险。",
   "intents": [
     "lab_meaning"

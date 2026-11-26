@@ -10,6 +10,9 @@
   "domains": [
     "肾脏"
   ],
+  "topic": [
+    "organ_aging"
+  ],
   "blurb_zh": "血肌酐、年龄和性别算肾小球滤过率估计值（eGFR），有胱抑素 C 时用肌酐加胱抑素 C 方程，按 KDIGO 分 G1–G5；有尿白蛋白/肌酐比时再分 A1–A3。",
   "intents": [
     "kidney_function",
