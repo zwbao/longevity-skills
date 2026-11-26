@@ -1,0 +1,283 @@
+{
+  "schema": "longevity-skill/1",
+  "name": "fagerstrom-nicotine-dependence",
+  "kind": "paper",
+  "tier": "A",
+  "species": [
+    "human"
+  ],
+  "evidence": "cross_sectional",
+  "domains": [
+    "尼古丁依赖与吸烟行为"
+  ],
+  "topic": [
+    "tobacco_alcohol"
+  ],
+  "blurb_zh": "用六个吸烟习惯问题计算FTND尼古丁依赖总分和逐题得分。",
+  "intents": [
+    "before_after"
+  ],
+  "triage": {
+    "reason_zh": "人群量表修订研究的表3完整印出六题选项及计分，个人回答可计算总分，测试复现逐项印刷分值。",
+    "reviewed": false
+  },
+  "paper": {
+    "doi": "10.1111/j.1360-0443.1991.tb01879.x",
+    "title": "The Fagerström Test for Nicotine Dependence: a revision of the Fagerström Tolerance Questionnaire.",
+    "title_zh": "Fagerström尼古丁依赖测试：对耐受问卷的修订",
+    "journal": "British journal of addiction",
+    "year": 1991,
+    "authors": "Heatherton 等",
+    "article_url": "https://onlinelibrary.wiley.com/doi/abs/10.1111/j.1360-0443.1991.tb01879.x",
+    "supplements": [],
+    "card_notes": [
+      "计算依据为正文表3（第1125页）。全文公开副本：https://cpb-us-e1.wpmucdn.com/sites.dartmouth.edu/dist/4/869/files/2010/10/91_Heatherton_etal_BJA.pdf",
+      "原文表3有非研究用途需向K. O. Fagerström取得许可的说明；本实现不声称已取得该许可。"
+    ],
+    "summary_zh": "这项研究发现，人类吸烟者问卷中删去尼古丁标示量和吸入方式问题、细化晨起吸烟时间与每日支数计分，可以改善对吸烟依赖表现的测量。个人报告只计算自报问卷的逐题分数和总分，不估计戒烟成功率、疾病风险或寿命。",
+    "summary_status": "draft"
+  },
+  "entry": {
+    "script": "scripts/personal_report.py",
+    "measurements_flag": "--measurements",
+    "measurements_header": [
+      "marker",
+      "value",
+      "unit"
+    ],
+    "age_flag": "--age",
+    "sex_flag": "--sex",
+    "out_flag": "--out",
+    "result_json": true,
+    "targets_flag": "--targets",
+    "levers_json": true
+  },
+  "population": {
+    "age_years": [
+      17,
+      77
+    ],
+    "note_zh": "加拿大Ontario Science Centre的当前吸烟志愿者；未用于非吸烟者、已戒烟者或其他尼古丁产品换算。"
+  },
+  "inputs_status": "verified",
+  "inputs": [
+    {
+      "key": "current_cigarette_smoker",
+      "label_zh": "当前是否吸卷烟",
+      "aliases": [
+        "current cigarette smoker",
+        "目前吸卷烟"
+      ],
+      "unit": "1",
+      "accept": {},
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "适用性确认，1=当前吸卷烟，0=不吸；只接受1，其他尼古丁产品不能折算成卷烟。此项不计分。"
+    },
+    {
+      "key": "time_to_first_cigarette_min",
+      "label_zh": "醒后第一支烟时间",
+      "aliases": [
+        "TTF",
+        "time to first cigarette",
+        "起床后第一支烟时间"
+      ],
+      "unit": "min",
+      "accept": {
+        "h": 60
+      },
+      "range": [
+        0,
+        1440
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "问卷第1题。填写醒来到第一支卷烟的整数分钟；小时按60换算。小数分钟不自动取整。上限为输入检查界限，不是论文适用性阈值。",
+      "unit_required": true
+    },
+    {
+      "key": "difficulty_refraining",
+      "label_zh": "禁烟场所是否难以忍住不吸烟",
+      "aliases": [
+        "difficulty refraining",
+        "forbidden smoking",
+        "禁烟场所难忍"
+      ],
+      "unit": "1",
+      "accept": {},
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "问卷第2题。例如教堂、图书馆、电影院等禁止吸烟的地方。1=是，0=否；未知须补问。"
+    },
+    {
+      "key": "morning_cigarette_hardest",
+      "label_zh": "最不愿放弃的是否为晨起第一支烟",
+      "aliases": [
+        "morning cigarette hardest",
+        "hate to give up",
+        "晨起第一支最难放弃"
+      ],
+      "unit": "1",
+      "accept": {},
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "问卷第3题。1=晨起第一支，0=其他任何一支；不是询问哪支最满足。"
+    },
+    {
+      "key": "cigarettes_per_day_count",
+      "label_zh": "每天吸卷烟支数",
+      "aliases": [
+        "CPD",
+        "cigarettes per day",
+        "日吸烟支数",
+        "每日卷烟数"
+      ],
+      "unit": "1",
+      "accept": {},
+      "range": [
+        1,
+        200
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "问卷第4题。数值为每日支数，unit=1表示计数，不是包/日或毫克；不做包数换算。填写整数，0不适用当前吸烟者。200是输入检查上限，不是研究阈值。"
+    },
+    {
+      "key": "smoke_more_after_waking",
+      "label_zh": "醒后最初几小时是否吸烟更频繁",
+      "aliases": [
+        "smoke more after waking",
+        "morning smoking",
+        "醒后吸烟更频繁"
+      ],
+      "unit": "1",
+      "accept": {},
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "问卷第5题。与一天其余时间比较，1=是，0=否；未知须补问。"
+    },
+    {
+      "key": "smoke_when_ill_in_bed",
+      "label_zh": "病重到大部分时间卧床时是否仍吸烟",
+      "aliases": [
+        "smoke when ill in bed",
+        "smoke if ill",
+        "卧床仍吸烟"
+      ],
+      "unit": "1",
+      "accept": {},
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "问卷第6题。1=是，0=否；未知须补问。"
+    },
+    {
+      "key": "age",
+      "label_zh": "年龄",
+      "unit": "a",
+      "accept": {},
+      "range": [
+        0,
+        120
+      ],
+      "required": false,
+      "from": "profile",
+      "flag": "--age",
+      "note_zh": "仅提示是否在研究17–77岁范围，不计分。"
+    },
+    {
+      "key": "sex",
+      "label_zh": "性别",
+      "required": false,
+      "from": "profile",
+      "flag": "--sex",
+      "note_zh": "可省略；接受male/female或男/女，不计分。"
+    }
+  ],
+  "outputs": [
+    {
+      "key": "ftnd_score",
+      "label_zh": "FTND总分",
+      "unit": "score",
+      "note_zh": "六题相加，理论范围0–10；不添加原文未给出的严重度分档。"
+    },
+    {
+      "key": "q1_points",
+      "label_zh": "第1题得分",
+      "unit": "score"
+    },
+    {
+      "key": "q2_points",
+      "label_zh": "第2题得分",
+      "unit": "score"
+    },
+    {
+      "key": "q3_points",
+      "label_zh": "第3题得分",
+      "unit": "score"
+    },
+    {
+      "key": "q4_points",
+      "label_zh": "第4题得分",
+      "unit": "score"
+    },
+    {
+      "key": "q5_points",
+      "label_zh": "第5题得分",
+      "unit": "score"
+    },
+    {
+      "key": "q6_points",
+      "label_zh": "第6题得分",
+      "unit": "score"
+    }
+  ],
+  "validation": {
+    "status": "reproduced",
+    "examples": [
+      {
+        "locator": "Table 3, p. 1125, question 1: Answers / Points",
+        "quote": "Within 5 minutes 3\n6–30 minutes 2\n31–60 minutes 1\nAfter 60 minutes 0",
+        "values": [
+          3,
+          2,
+          1,
+          0
+        ],
+        "tolerance": "整数逐题得分完全相等，无四舍五入；不是完整个人总分示例。",
+        "test": "tests/test_manifest.py::test_table3_time_to_first"
+      },
+      {
+        "locator": "Table 3, p. 1125, question 4: Answers / Points",
+        "quote": "10 or less 0\n11–20 1\n21–30 2\n31 or more 3",
+        "values": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "tolerance": "整数逐题得分完全相等，无四舍五入。",
+        "test": "tests/test_manifest.py::test_table3_cigarettes_per_day"
+      }
+    ]
+  }
+}
