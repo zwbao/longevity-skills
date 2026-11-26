@@ -1,0 +1,195 @@
+{
+  "schema": "longevity-skill/1",
+  "name": "genome-wide-polygenic-score",
+  "kind": "paper",
+  "tier": "A",
+  "species": [
+    "human"
+  ],
+  "evidence": "cross_sectional",
+  "domains": [
+    "多基因评分",
+    "遗传易感性"
+  ],
+  "topic": [
+    "genetics",
+    "cardiovascular",
+    "screening_prevention"
+  ],
+  "blurb_zh": "用个人基因型剂量计算五种常见病的原始多基因加权分数，要求位点齐全，不换算患病概率。",
+  "intents": [
+    "gene_variant"
+  ],
+  "triage": {
+    "reason_zh": "原创人体研究公开五种疾病全部逐变异权重，可由个人基因型剂量加权求和；未发现个人输入与总分配对示例，保留为待验证版本。",
+    "reviewed": false
+  },
+  "paper": {
+    "doi": "10.1038/s41588-018-0183-z",
+    "title": "Genome-wide polygenic scores for common diseases identify individuals with risk equivalent to monogenic mutations.",
+    "title_zh": "常见病全基因组多基因评分识别风险接近单基因突变的个体",
+    "journal": "Nature Genetics",
+    "year": 2018,
+    "authors": "Khera 等",
+    "article_url": "https://www.nature.com/articles/s41588-018-0183-z",
+    "supplements": [
+      {
+        "label": "Supplementary Figures 1–3 / Tables 1–10",
+        "url": "https://static-content.springer.com/esm/art%3A10.1038%2Fs41588-018-0183-z/MediaObjects/41588_2018_183_MOESM1_ESM.pdf"
+      },
+      {
+        "label": "Life Sciences Reporting Summary",
+        "url": "https://static-content.springer.com/esm/art%3A10.1038%2Fs41588-018-0183-z/MediaObjects/41588_2018_183_MOESM2_ESM.pdf"
+      },
+      {
+        "label": "Broad 五病权重下载页",
+        "url": "https://hugeampkpncms.org/node/1199"
+      }
+    ],
+    "code_url": "https://github.com/hail-is/hail",
+    "card_notes": [
+      "Hail 是论文使用的通用计算框架，论文没有链接其专用分析脚本。此处按 Methods 的加权求和公式实现。",
+      "作者权重注明学术研究用途；完整数据按需从 Broad 下载并校验，不随技能再分发。",
+      "原始分数未经个人示例复现；未提供个人百分位、标准分、患病概率或高风险分档。"
+    ],
+    "summary_zh": "这项研究在人群中发现，把许多遗传变异合在一起得到的多基因评分能够识别多种常见疾病的高易感性群体，研究主要在英国欧洲祖源参与者中完成。个人报告只按公开权重计算所选疾病的原始遗传加权分数，不推算个人患病概率或筛查方案。",
+    "summary_status": "draft"
+  },
+  "entry": {
+    "script": "scripts/personal_report.py",
+    "measurements_flag": "--genotypes",
+    "age_flag": "--age",
+    "sex_flag": "--sex",
+    "out_flag": "--out",
+    "result_json": true
+  },
+  "population": {
+    "age_years": [
+      40,
+      69
+    ],
+    "note_zh": "UK Biobank 招募年龄；主要为白人英国祖源。乳腺癌分析限女性。原始分数可算不代表对其他祖源或年龄已校准。"
+  },
+  "inputs_status": "draft",
+  "inputs": [
+    {
+      "key": "genotypes",
+      "label_zh": "个人单样本基因型剂量表",
+      "aliases": [
+        "基因型剂量",
+        "genotype dosage",
+        "imputed genotype"
+      ],
+      "required": true,
+      "from": "argument",
+      "flag": "--genotypes",
+      "note_zh": "CSV/TSV（可 gzip）：variant,dosage_allele,dosage_copies,unit。variant 为 hg19 染色体:位置:等位基因1:等位基因2；每个所需位点一行。单位 1 表示二倍体拷贝计数，不是百分比。"
+    },
+    {
+      "key": "dosage_copies",
+      "label_zh": "逐位点等位基因剂量",
+      "aliases": [
+        "dosage",
+        "DS",
+        "等位基因剂量",
+        "效应等位基因剂量"
+      ],
+      "unit": "1",
+      "accept": {
+        "1": 1
+      },
+      "range": [
+        0,
+        2
+      ],
+      "unit_required": true,
+      "required": true,
+      "from": "measurements",
+      "note_zh": "每行计数对应 dosage_allele；允许填补后的小数剂量。不接受概率百分比或基因型字符串。"
+    },
+    {
+      "key": "disease",
+      "label_zh": "要计算的疾病",
+      "required": true,
+      "from": "argument",
+      "flag": "--disease",
+      "note_zh": "cad、af、t2d、ibd 或 bc；每次计算一种。"
+    },
+    {
+      "key": "build",
+      "label_zh": "基因组坐标版本",
+      "required": true,
+      "from": "argument",
+      "flag": "--build",
+      "note_zh": "仅接受 hg19 或 GRCh37；不自动转换坐标或链方向。"
+    },
+    {
+      "key": "age",
+      "label_zh": "年龄",
+      "aliases": [
+        "年龄",
+        "age"
+      ],
+      "unit": "a",
+      "accept": {
+        "a": 1
+      },
+      "range": [
+        0,
+        120
+      ],
+      "required": false,
+      "from": "profile",
+      "note_zh": "只作适用范围说明，不进入加权公式。"
+    },
+    {
+      "key": "sex",
+      "label_zh": "性别",
+      "required": false,
+      "from": "profile",
+      "note_zh": "female 或 male；bc 必须提供 female，其他模型只作上下文。"
+    }
+  ],
+  "outputs": [
+    {
+      "key": "disease",
+      "label_zh": "所选疾病"
+    },
+    {
+      "key": "raw_score",
+      "label_zh": "原始多基因加权分数",
+      "unit": "score",
+      "note_zh": "全部已发布位点的剂量乘权重之和；不是概率、标准分或百分位。"
+    },
+    {
+      "key": "variants_scored",
+      "label_zh": "纳入计算的位点数",
+      "unit": "1"
+    },
+    {
+      "key": "extra_variants",
+      "label_zh": "输入中不属于所选模型的位点数",
+      "unit": "1"
+    }
+  ],
+  "validation": {
+    "status": "draft",
+    "gap_zh": "已核读正文、Supplementary Figures 1–3、Tables 1–10、Reporting Summary 及 Broad 五份完整 v3 权重；均未发现一名个体的完整剂量输入与总 GPS 配对示例。人群 AUC、OR 和位点数不能复现个人分数。离线测试仅用原文权重片段及明确标注的合成剂量检查实现。"
+  },
+  "data_files": [
+    {
+      "path": "tests/fixtures/bc_weights.tsv",
+      "source_url": "https://personal.broadinstitute.org/ryank/BreastCancer_PRS_PT_r2_0.2_p_0.0005_v3.zip",
+      "sha256": "cca426c95771ec4b548e2ef413dd397be983a2fb7eb93513c93fd9a2772bfa10",
+      "license": "Broad academic research use; tiny source excerpt for verification",
+      "redistributable": "unknown"
+    },
+    {
+      "path": "tests/fixtures/cad_weights.tsv",
+      "source_url": "https://personal.broadinstitute.org/ryank/CoronaryArteryDisease_PRS_LDpred_rho0.001_v3.zip",
+      "sha256": "5a1c042876e6091545a5db3180f7cdfed69452ca25a0f0ce2fd4e6fcb472979d",
+      "license": "Broad academic research use; tiny source excerpt for verification",
+      "redistributable": "unknown"
+    }
+  ]
+}
