@@ -1,7 +1,7 @@
 {
   "schema": "longevity-coverage/1",
   "reference_items": 583,
-  "reference_covered": 71,
+  "reference_covered": 74,
   "unlabelled": {
     "claims": 0,
     "effects": 0,
@@ -385,7 +385,7 @@
         "method": {
           "rows": 0,
           "effects": 0,
-          "papers": 9,
+          "papers": 10,
           "skills": [
             "burden-of-proof-dietary-risk",
             "chinese-healthy-eating-index",
@@ -393,13 +393,14 @@
             "fruit-vegetable-risk-lookup",
             "gbd-dietary-intake-gap",
             "medas-mediterranean-diet-adherence",
+            "mifflin-st-jeor-ree",
             "red-meat-burden-of-proof",
             "vegetable-tmrel-gap",
             "whole-grain-dose-response"
           ],
           "latest": "2026-11-26",
           "reference": 8,
-          "covered": 2,
+          "covered": 3,
           "missing": [
             {
               "id": "diet-nutrition-method-ahei-2010",
@@ -423,18 +424,6 @@
               "by": [],
               "doi": [
                 "10.1016/j.jand.2023.05.015"
-              ]
-            },
-            {
-              "id": "diet-nutrition-method-mifflin-st-jeor",
-              "item": "Mifflin-St Jeor resting energy expenditure equation",
-              "item_zh": "Mifflin-St Jeor静息能量消耗公式",
-              "priority": "P0",
-              "status": "reviewed",
-              "covered": false,
-              "by": [],
-              "doi": [
-                "10.1093/ajcn/51.2.241"
               ]
             },
             {
@@ -1151,10 +1140,11 @@
         "method": {
           "rows": 0,
           "effects": 0,
-          "papers": 5,
+          "papers": 6,
           "skills": [
             "alcohol-burden-of-proof",
             "alcohol-consumption-thresholds",
+            "frax-uk-risk-lookup",
             "gbd-alcohol-tmrel-nde",
             "modifiable-risk-factor-score",
             "smoking-burden-of-proof"
@@ -1550,7 +1540,7 @@
         "method": {
           "rows": 0,
           "effects": 0,
-          "papers": 9,
+          "papers": 10,
           "skills": [
             "bmi-mortality-category",
             "burden-of-proof-dietary-risk",
@@ -1558,6 +1548,7 @@
             "elsa-hba1c-model-a",
             "fib4-index",
             "finnish-diabetes-risk-score",
+            "mifflin-st-jeor-ree",
             "modifiable-risk-factor-score",
             "navy-circumference-body-fat",
             "new-chinese-diabetes-risk-score",
@@ -2799,7 +2790,7 @@
         "method": {
           "rows": 0,
           "effects": 0,
-          "papers": 14,
+          "papers": 16,
           "skills": [
             "calf-circumference-decline-falls",
             "clinical-frailty-scale-7",
@@ -2808,9 +2799,11 @@
             "epigenetic-frailty-risk-score",
             "fnih-sarcopenia-cutpoints",
             "frail-scale",
+            "frax-uk-risk-lookup",
             "genome-wide-proteomics-frailty",
             "lee-mortality-index",
             "reactive-agility-fall-history",
+            "sarc-f",
             "schonberg-mortality-index",
             "senior-fitness-independence",
             "share-intrinsic-capacity-domains",
@@ -2818,7 +2811,7 @@
           ],
           "latest": "2026-11-26",
           "reference": 16,
-          "covered": 4,
+          "covered": 6,
           "missing": [
             {
               "id": "musculoskeletal-frailty-method-awgs-2019-2025",
@@ -2843,18 +2836,6 @@
               "by": [],
               "doi": [
                 "10.1093/ageing/afy169"
-              ]
-            },
-            {
-              "id": "musculoskeletal-frailty-method-frax",
-              "item": "FRAX fracture risk assessment tool",
-              "item_zh": "FRAX 骨折风险评估工具",
-              "priority": "P0",
-              "status": "reviewed",
-              "covered": false,
-              "by": [],
-              "doi": [
-                "10.1007/s00198-007-0543-5"
               ]
             },
             {
@@ -2927,19 +2908,6 @@
               "by": [],
               "doi": [
                 "10.1136/bmj.e3427"
-              ]
-            },
-            {
-              "id": "musculoskeletal-frailty-method-sarc-f",
-              "item": "SARC-F sarcopenia screening questionnaire",
-              "item_zh": "SARC-F 肌少症筛查问卷",
-              "priority": "P0",
-              "status": "reviewed",
-              "covered": false,
-              "by": [],
-              "doi": [
-                "10.1002/jcsm.12048",
-                "10.1016/j.jamda.2013.05.018"
               ]
             },
             {
@@ -3670,11 +3638,12 @@
         "method": {
           "rows": 0,
           "effects": 0,
-          "papers": 4,
+          "papers": 5,
           "skills": [
             "fib4-index",
             "finnish-diabetes-risk-score",
             "new-chinese-diabetes-risk-score",
+            "sarc-f",
             "stop-bang"
           ],
           "latest": "2026-11-26",

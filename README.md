@@ -295,6 +295,10 @@ python3 -m tools.lsk test --changed origin/main   # 只测相对 main 改动过�
 
 - `skills/bmi-mortality-category/` — 用身高体重计算 BMI，查询从不吸烟且无相关既往慢病人群的分档死亡危险比。
 
+## 体重与代谢
+
+- `skills/mifflin-st-jeor-ree/` — 用体重、身高、年龄和性别估算静息能量消耗，并查看自定体重目标代入方程后的变化。
+
 ## 克隆性造血
 
 - `skills/hotspot-somatic-sweep/` — 用一条血液变异的读段计数计算 VAF，核对是否满足论文热点名单、支持读段和克隆扫荡阈值；不估算个人白血病概率。
@@ -380,6 +384,10 @@ python3 -m tools.lsk test --changed origin/main   # 只测相对 main 改动过�
 
 - `skills/new-chinese-diabetes-risk-score/` — 用年龄、性别、腰围、BMI、收缩压和家族史计算糖尿病筛查分数。
 
+## 肌少症与身体功能
+
+- `skills/sarc-f/` — 用提物、走路、起身、爬楼和跌倒问卷计算SARC-F肌少症风险筛查分数。
+
 ## 肝脏与代谢
 
 - `skills/fib4-index/` — 用年龄、肝酶和血小板计算脂肪肝成人的 FIB-4 纤维化指数。
@@ -428,6 +436,10 @@ python3 -m tools.lsk test --changed origin/main   # 只测相对 main 改动过�
 
 - `skills/nonoccupational-activity-risk/` — 用每周非职业活动时长查询死亡、心血管病和癌症的人群相对风险，并比较自定目标。
 
+## 静息能量消耗
+
+- `skills/mifflin-st-jeor-ree/` — 见「体重与代谢」。
+
 ## 饮食
 
 - `skills/gbd-dietary-intake-gap/` — 见「营养」。
@@ -447,6 +459,14 @@ python3 -m tools.lsk test --changed origin/main   # 只测相对 main 改动过�
 - `skills/chinese-healthy-eating-index/` — 用每日食物标准份数、总能量、烹调油、钠、添加糖和酒精摄入计算中国健康膳食指数 CHEI。
 - `skills/vegetable-tmrel-gap/` — 用饮食记录中的蔬菜日均克数，计算与论文蔬菜摄入参考范围的差距。
 - `skills/whole-grain-dose-response/` — 按每日全谷物食品摄入量匹配论文中的群体相对风险及置信区间。
+
+## 骨折
+
+- `skills/frax-uk-risk-lookup/` — 按年龄、性别和单一危险因素查英国模型的十年骨折概率，仅适用BMI为25的论文已印出年龄点。
+
+## 骨质疏松
+
+- `skills/frax-uk-risk-lookup/` — 见「骨折」。
 
 ## 只收录，不参与个人调度
 
