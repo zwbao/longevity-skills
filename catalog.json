@@ -2,9 +2,9 @@
   "schema": "longevity-catalog/1",
   "version": "2026.48.0",
   "counts": {
-    "skills": 227,
+    "skills": 230,
     "tiers": {
-      "A": 63,
+      "A": 66,
       "B": 83,
       "C": 73,
       "tool": 8
@@ -10970,6 +10970,235 @@
         "title": "General cardiovascular risk profile for use in primary care: the Framingham Heart Study.",
         "title_zh": "Framingham 十年总体心血管风险",
         "journal": "Circulation",
+        "year": 2008
+      }
+    },
+    {
+      "name": "frax-uk-risk-lookup",
+      "kind": "paper",
+      "tier": "A",
+      "species": [
+        "human"
+      ],
+      "evidence": "method",
+      "domains": [
+        "骨折",
+        "骨质疏松"
+      ],
+      "blurb_zh": "按年龄、性别和单一危险因素查英国模型的十年骨折概率，仅适用BMI为25的论文已印出年龄点。",
+      "description": "Tier A personal readout: computes one person's value with the paper's printed method and reproduces a printed example. Matches personal age, sex and a single clinical risk factor to the printed 2008 UK FRAX Table 2 ten-year major osteoporotic and hip fracture probabilities at BMI 25 without BMD. Use for a historical UK fracture-probability lookup when age is exactly 50, 60, 70 or 80 and all risk-factor answers are known. Rejects unsupported combinations and never interpolates or substitutes for the full FRAX calculator.",
+      "intents": [
+        "frailty_mortality"
+      ],
+      "has_script": true,
+      "validation_status": "reproduced",
+      "validation_label_zh": "已复现论文",
+      "entry": {
+        "script": "scripts/personal_report.py",
+        "measurements_flag": "--measurements",
+        "measurements_header": [
+          "item",
+          "value",
+          "unit"
+        ],
+        "age_flag": "--age",
+        "sex_flag": "--sex",
+        "out_flag": "--out",
+        "result_json": true,
+        "targets_flag": "--targets",
+        "levers_json": true
+      },
+      "inputs_status": "verified",
+      "inputs": [
+        {
+          "key": "bmi_kg_m2",
+          "label_zh": "体质指数",
+          "unit": "kg/m^2",
+          "range": [
+            10,
+            80
+          ],
+          "aliases": [
+            "BMI",
+            "body mass index",
+            "体重指数"
+          ],
+          "accept": {},
+          "required": true,
+          "from": "measurements",
+          "note_zh": "10–80为输入合理性检查；查表仅接受恰为25，不取整。"
+        },
+        {
+          "key": "parental_hip_fracture",
+          "label_zh": "父母髋部骨折史",
+          "unit": "1",
+          "range": [
+            0,
+            1
+          ],
+          "aliases": [
+            "parental history of hip fracture",
+            "parental hip fracture"
+          ],
+          "accept": {},
+          "required": true,
+          "from": "measurements",
+          "note_zh": "0=否，1=是；未知必须补充，不能按0处理。父亲或母亲的髋部骨折史。"
+        },
+        {
+          "key": "current_smoking",
+          "label_zh": "目前吸烟",
+          "unit": "1",
+          "range": [
+            0,
+            1
+          ],
+          "aliases": [
+            "current smoking",
+            "current cigarette smoking",
+            "当前吸烟"
+          ],
+          "accept": {},
+          "required": true,
+          "from": "measurements",
+          "note_zh": "0=否，1=是；未知必须补充，不能按0处理。当前是否吸烟。"
+        },
+        {
+          "key": "high_alcohol",
+          "label_zh": "高酒精摄入分类",
+          "unit": "1",
+          "range": [
+            0,
+            1
+          ],
+          "aliases": [
+            "high alcohol intake",
+            "alcohol intake >2 units daily",
+            "高酒精摄入"
+          ],
+          "accept": {},
+          "required": true,
+          "from": "measurements",
+          "note_zh": "0=否，1=是；未知必须补充，不能按0处理。表2行名为>2 units daily，方法段为平均每天3个及以上单位；需已按论文口径确认分类，本文未给出克数换算，不按杯数自行推断。"
+        },
+        {
+          "key": "rheumatoid_arthritis",
+          "label_zh": "类风湿关节炎",
+          "unit": "1",
+          "range": [
+            0,
+            1
+          ],
+          "aliases": [
+            "rheumatoid arthritis",
+            "RA"
+          ],
+          "accept": {},
+          "required": true,
+          "from": "measurements",
+          "note_zh": "0=否，1=是；未知必须补充，不能按0处理。已有类风湿关节炎诊断，不等同于骨关节炎。"
+        },
+        {
+          "key": "oral_glucocorticoids",
+          "label_zh": "曾长期口服糖皮质激素",
+          "unit": "1",
+          "range": [
+            0,
+            1
+          ],
+          "aliases": [
+            "oral glucocorticoids",
+            "ever long-term use of oral glucocorticoids",
+            "口服糖皮质激素史"
+          ],
+          "accept": {},
+          "required": true,
+          "from": "measurements",
+          "note_zh": "0=否，1=是；未知必须补充，不能按0处理。按病史确认曾长期口服使用；本文未将长期的时长阈值写死，不按药名猜测，不读取剂量或建议调整。"
+        },
+        {
+          "key": "previous_fragility_fracture",
+          "label_zh": "既往脆性骨折",
+          "unit": "1",
+          "range": [
+            0,
+            1
+          ],
+          "aliases": [
+            "previous fragility fracture",
+            "prior fragility fracture",
+            "脆性骨折史"
+          ],
+          "accept": {},
+          "required": true,
+          "from": "measurements",
+          "note_zh": "0=否，1=是；未知必须补充，不能按0处理。由病历确认脆性骨折史，不把任意创伤性骨折自动归入。"
+        },
+        {
+          "key": "secondary_osteoporosis",
+          "label_zh": "其他继发性骨质疏松",
+          "unit": "1",
+          "range": [
+            0,
+            1
+          ],
+          "aliases": [
+            "other secondary osteoporosis",
+            "其他原因骨质疏松"
+          ],
+          "accept": {},
+          "required": true,
+          "from": "measurements",
+          "note_zh": "0=否，1=是；未知必须补充，不能按0处理。适用性门槛：必须明确为0；表2未单列此项，不自动映射为类风湿关节炎。"
+        },
+        {
+          "key": "age",
+          "label_zh": "年龄",
+          "unit": "a",
+          "range": [
+            50,
+            80
+          ],
+          "required": true,
+          "from": "profile",
+          "flag": "--age",
+          "aliases": [
+            "age",
+            "年龄（岁）"
+          ],
+          "accept": {},
+          "note_zh": "仅50、60、70、80这四个已印出年龄点。"
+        },
+        {
+          "key": "sex",
+          "label_zh": "论文性别分组",
+          "required": true,
+          "from": "profile",
+          "flag": "--sex",
+          "aliases": [
+            "sex",
+            "性别"
+          ],
+          "note_zh": "male或female，按论文男性/女性分组。"
+        }
+      ],
+      "outputs": [
+        {
+          "key": "major_osteoporotic_10y_pct",
+          "label_zh": "主要骨质疏松性骨折十年概率",
+          "unit": "%"
+        },
+        {
+          "key": "hip_fracture_10y_pct",
+          "label_zh": "髋部骨折十年概率",
+          "unit": "%"
+        }
+      ],
+      "paper": {
+        "doi": "10.1007/s00198-007-0543-5",
+        "title": "FRAX and the assessment of fracture probability in men and women from the UK.",
+        "title_zh": "FRAX与英国男性和女性骨折概率的评估",
+        "journal": "Osteoporosis International",
         "year": 2008
       }
     },
@@ -28901,6 +29130,407 @@
         "title_zh": "DNA 甲基化变异性为衰老异质性提供互补的表观遗传特征：来自加拿大和巴尔的摩老龄化纵向研究",
         "journal": "The Journals of Gerontology, Series A: Biological Sciences and Medical Sciences",
         "year": 2026
+      }
+    },
+    {
+      "name": "mifflin-st-jeor-ree",
+      "kind": "paper",
+      "tier": "A",
+      "species": [
+        "human"
+      ],
+      "evidence": "cross_sectional",
+      "domains": [
+        "体重与代谢",
+        "静息能量消耗"
+      ],
+      "blurb_zh": "用体重、身高、年龄和性别估算静息能量消耗，并查看自定体重目标代入方程后的变化。",
+      "description": "Tier A personal readout: computes one person's value with the paper's printed method and reproduces a printed example. Estimates resting energy expenditure from weight, height, age, and sex using the original and simplified Mifflin–St Jeor equations. Use when a healthy adult asks about resting calorie expenditure, the Mifflin equation, or how a self-selected weight scenario changes the equation's estimate. Reports in Chinese and distinguishes REE from total daily energy needs.",
+      "intents": [
+        "lab_meaning",
+        "before_after"
+      ],
+      "has_script": true,
+      "validation_status": "reproduced",
+      "validation_label_zh": "已复现论文",
+      "entry": {
+        "script": "scripts/personal_report.py",
+        "measurements_flag": "--measurements",
+        "measurements_header": [
+          "marker",
+          "value",
+          "unit"
+        ],
+        "age_flag": "--age",
+        "sex_flag": "--sex",
+        "out_flag": "--out",
+        "result_json": true,
+        "targets_flag": "--targets",
+        "levers_json": true
+      },
+      "population": {
+        "age_years": [
+          19,
+          78
+        ],
+        "note_zh": "美国RENO Diet-Heart Study健康成人；女性20–76岁，男性正文19–78岁；未作独立外部验证。极端体重及患病、妊娠哺乳情境不在本研究验证范围。"
+      },
+      "inputs_status": "verified",
+      "inputs": [
+        {
+          "key": "weight_kg",
+          "label_zh": "体重",
+          "aliases": [
+            "Weight",
+            "body weight",
+            "体质量",
+            "体重(kg)"
+          ],
+          "unit": "kg",
+          "accept": {
+            "g": 0.001,
+            "lb": 0.45359237
+          },
+          "range": [
+            25,
+            350
+          ],
+          "unit_required": true,
+          "required": true,
+          "from": "measurements",
+          "note_zh": "当前实测体重，不用理想体重或调整体重。范围是输入错误检查，不是已验证人群范围。"
+        },
+        {
+          "key": "height_cm",
+          "label_zh": "身高",
+          "aliases": [
+            "Height",
+            "body height",
+            "身高(cm)"
+          ],
+          "unit": "cm",
+          "accept": {
+            "m": 100,
+            "mm": 0.1,
+            "in": 2.54
+          },
+          "range": [
+            120,
+            230
+          ],
+          "unit_required": true,
+          "required": true,
+          "from": "measurements"
+        },
+        {
+          "key": "age",
+          "label_zh": "年龄",
+          "aliases": [
+            "Age",
+            "实足年龄"
+          ],
+          "unit": "a",
+          "range": [
+            19,
+            78
+          ],
+          "required": true,
+          "from": "profile",
+          "flag": "--age",
+          "note_zh": "允许小数年；超出总体研究年龄范围停止计算。"
+        },
+        {
+          "key": "sex",
+          "label_zh": "方程使用的性别",
+          "aliases": [
+            "Sex",
+            "性别"
+          ],
+          "required": true,
+          "from": "profile",
+          "flag": "--sex",
+          "note_zh": "male/男 或 female/女；按论文二分类系数，不推断未知类别。"
+        }
+      ],
+      "outputs": [
+        {
+          "key": "ree_original_kcal_d",
+          "label_zh": "静息能量消耗（原式）",
+          "unit": "kcal/d"
+        },
+        {
+          "key": "ree_simplified_kcal_d",
+          "label_zh": "静息能量消耗（简化式）",
+          "unit": "kcal/d"
+        }
+      ],
+      "paper": {
+        "doi": "10.1093/ajcn/51.2.241",
+        "title": "A new predictive equation for resting energy expenditure in healthy individuals.",
+        "title_zh": "健康成人静息能量消耗预测方程",
+        "journal": "The American Journal of Clinical Nutrition",
+        "year": 1990
+      }
+    },
+    {
+      "name": "mini-mental-state",
+      "kind": "paper",
+      "tier": "A",
+      "species": [
+        "human"
+      ],
+      "evidence": "method",
+      "domains": [
+        "认知与脑"
+      ],
+      "blurb_zh": "用施测者记录的 MMSE 各项得分计算两部分小计与总分，不作痴呆诊断。",
+      "description": "Tier A personal readout: computes one person's value with the paper's printed method and reproduces a printed example. 汇总施测者已记录的原版 Mini-Mental State（MMSE）各项得分，生成中文小计与总分报告。适用于用户提供完整 MMSE 分项记录并要求核算分数；不自动施测、不判读作答，也不作痴呆诊断。",
+      "intents": [
+        "cognition_dementia"
+      ],
+      "has_script": true,
+      "validation_status": "reproduced",
+      "validation_label_zh": "已复现论文",
+      "entry": {
+        "script": "scripts/personal_report.py",
+        "measurements_flag": "--measurements",
+        "measurements_header": [
+          "marker",
+          "value",
+          "unit"
+        ],
+        "out_flag": "--out",
+        "result_json": true
+      },
+      "inputs_status": "verified",
+      "inputs": [
+        {
+          "key": "time_orientation_score",
+          "label_zh": "时间定向得分",
+          "aliases": [
+            "时间定向力",
+            "orientation to time"
+          ],
+          "unit": "score",
+          "accept": {},
+          "range": [
+            0,
+            5
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "附录第 196 页时间定向小计。 仅接受整数分。"
+        },
+        {
+          "key": "place_orientation_score",
+          "label_zh": "地点定向得分",
+          "aliases": [
+            "地点定向力",
+            "orientation to place"
+          ],
+          "unit": "score",
+          "accept": {},
+          "range": [
+            0,
+            5
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "附录第 196 页地点定向小计。 仅接受整数分。"
+        },
+        {
+          "key": "registration_score",
+          "label_zh": "即刻记忆得分",
+          "aliases": [
+            "即刻回忆",
+            "registration"
+          ],
+          "unit": "score",
+          "accept": {},
+          "range": [
+            0,
+            3
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "只用首次复述得分；后续学习成功不能改写首次得分。 仅接受整数分。"
+        },
+        {
+          "key": "attention_score",
+          "label_zh": "注意与计算得分",
+          "aliases": [
+            "注意力和计算力",
+            "attention and calculation"
+          ],
+          "unit": "score",
+          "accept": {},
+          "range": [
+            0,
+            5
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "使用施测者按原文选择的一个任务得分，不能相加或取两种任务的较高分。 仅接受整数分。"
+        },
+        {
+          "key": "recall_score",
+          "label_zh": "延迟回忆得分",
+          "aliases": [
+            "回忆能力",
+            "recall"
+          ],
+          "unit": "score",
+          "accept": {},
+          "range": [
+            0,
+            3
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "只有先前已学会全部记忆材料才能有意义地测回忆。 仅接受整数分。"
+        },
+        {
+          "key": "naming_score",
+          "label_zh": "命名得分",
+          "aliases": [
+            "命名能力",
+            "naming"
+          ],
+          "unit": "score",
+          "accept": {},
+          "range": [
+            0,
+            2
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "由施测者记录命名小计。 仅接受整数分。"
+        },
+        {
+          "key": "repetition_score",
+          "label_zh": "复述得分",
+          "aliases": [
+            "语言复述",
+            "repetition"
+          ],
+          "unit": "score",
+          "accept": {},
+          "range": [
+            0,
+            1
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "由施测者按一次尝试记录。 仅接受整数分。"
+        },
+        {
+          "key": "command_score",
+          "label_zh": "三步指令得分",
+          "aliases": [
+            "三级命令",
+            "3-stage command"
+          ],
+          "unit": "score",
+          "accept": {},
+          "range": [
+            0,
+            3
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "由施测者记录正确完成部分的合计。 仅接受整数分。"
+        },
+        {
+          "key": "reading_score",
+          "label_zh": "阅读执行得分",
+          "aliases": [
+            "阅读理解",
+            "reading"
+          ],
+          "unit": "score",
+          "accept": {},
+          "range": [
+            0,
+            1
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "由施测者记录阅读并执行的得分。 仅接受整数分。"
+        },
+        {
+          "key": "writing_score",
+          "label_zh": "书写得分",
+          "aliases": [
+            "书写能力",
+            "writing"
+          ],
+          "unit": "score",
+          "accept": {},
+          "range": [
+            0,
+            1
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "由施测者判定句子是否符合原文标准。 仅接受整数分。"
+        },
+        {
+          "key": "copying_score",
+          "label_zh": "图形复制得分",
+          "aliases": [
+            "结构能力",
+            "copying"
+          ],
+          "unit": "score",
+          "accept": {},
+          "range": [
+            0,
+            1
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "由施测者判定图形是否符合原文标准。 仅接受整数分。"
+        },
+        {
+          "key": "registration_learned",
+          "label_zh": "记忆材料已全部学会",
+          "aliases": [
+            "all registration items learned"
+          ],
+          "unit": "1",
+          "accept": {},
+          "range": [
+            0,
+            1
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "施测者确认值：1=在原文允许的学习尝试内全部学会，0=未全部学会；0 或未知时停止计算。二元编码为接口约定，不计入得分。"
+        }
+      ],
+      "outputs": [
+        {
+          "key": "part_one_score",
+          "label_zh": "第一部分得分",
+          "unit": "score"
+        },
+        {
+          "key": "part_two_score",
+          "label_zh": "第二部分得分",
+          "unit": "score"
+        },
+        {
+          "key": "mmse_total_score",
+          "label_zh": "MMSE 总分",
+          "unit": "score"
+        }
+      ],
+      "paper": {
+        "doi": "10.1016/0022-3956(75)90026-6",
+        "title": "\"Mini-mental state\". A practical method for grading the cognitive state of patients for the clinician.",
+        "title_zh": "简易精神状态检查：供临床医生量化患者认知状态的实用方法",
+        "journal": "Journal of Psychiatric Research",
+        "year": 1975
       }
     },
     {
