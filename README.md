@@ -301,6 +301,10 @@ python3 -m tools.lsk test --changed origin/main   # 只测相对 main 改动过�
 
 - `skills/emfra-factor-scores/` — 用已评定的 EMFRA 九项分数分别计算老年自主性和心理困扰分数。
 
+## 吸烟与疾病风险
+
+- `skills/smoking-burden-of-proof/` — 按当前吸烟者的累计包年或每日支数，在论文印出的暴露点查相对风险与不确定区间。
+
 ## 心理与认知
 
 - `skills/emfra-factor-scores/` — 见「功能与衰弱」。

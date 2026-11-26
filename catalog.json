@@ -2,9 +2,9 @@
   "schema": "longevity-catalog/1",
   "version": "2026.48.0",
   "counts": {
-    "skills": 222,
+    "skills": 223,
     "tiers": {
-      "A": 58,
+      "A": 59,
       "B": 83,
       "C": 73,
       "tool": 8
@@ -38817,6 +38817,164 @@
         "title": "Age estimation from sleep studies using deep learning predicts life expectancy",
         "title_zh": "睡眠年龄差",
         "journal": "npj Digital Medicine",
+        "year": 2022
+      }
+    },
+    {
+      "name": "smoking-burden-of-proof",
+      "kind": "paper",
+      "tier": "A",
+      "species": [
+        "human"
+      ],
+      "evidence": "method",
+      "domains": [
+        "吸烟与疾病风险"
+      ],
+      "blurb_zh": "按当前吸烟者的累计包年或每日支数，在论文印出的暴露点查相对风险与不确定区间。",
+      "description": "Tier A personal readout: computes one person's value with the paper's printed method and reproduces a printed example. 按当前吸烟者的累计包年或每日吸烟支数，在 Burden of Proof 方法公开的精确暴露点查出对应人群相对风险及不确定区间。用于询问吸烟暴露与疾病关联；限定成人、论文暴露点以及心血管参考年龄组，不计算个人绝对风险或戒烟收益。",
+      "intents": [
+        "intervention_evidence"
+      ],
+      "has_script": true,
+      "validation_status": "reproduced",
+      "validation_label_zh": "已复现论文",
+      "entry": {
+        "script": "scripts/personal_report.py",
+        "measurements_flag": "--measurements",
+        "measurements_header": [
+          "marker",
+          "value",
+          "unit"
+        ],
+        "age_flag": "--age",
+        "sex_flag": "--sex",
+        "out_flag": "--out",
+        "result_json": true,
+        "targets_flag": "--targets",
+        "levers_json": true
+      },
+      "inputs_status": "verified",
+      "inputs": [
+        {
+          "key": "current_smoker",
+          "label_zh": "当前吸烟状态",
+          "unit": "1",
+          "accept": {},
+          "range": [
+            0,
+            1
+          ],
+          "aliases": [
+            "目前吸烟",
+            "current smoking"
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "1=当前吸烟，0=非当前吸烟；本方法仅接受1。"
+        },
+        {
+          "key": "equivalent_smoking_years",
+          "label_zh": "每天一包强度折算的累计吸烟年数",
+          "unit": "a",
+          "accept": {
+            "year": 1
+          },
+          "range": [
+            0,
+            300
+          ],
+          "aliases": [
+            "累计包年数",
+            "包年",
+            "pack-years",
+            "pack years"
+          ],
+          "required": false,
+          "from": "measurements",
+          "note_zh": "这是按每天一包强度折算的年数，数值等于包年数，不是直接填写吸烟持续年数。a表示这种等效暴露的年；不从当前吸烟量推算历史暴露。"
+        },
+        {
+          "key": "daily_cigarette_count",
+          "label_zh": "每日平均吸烟支数",
+          "unit": "1",
+          "accept": {},
+          "range": [
+            0,
+            200
+          ],
+          "aliases": [
+            "每日吸烟量",
+            "cigarettes per day",
+            "daily cigarette count"
+          ],
+          "required": false,
+          "from": "measurements",
+          "note_zh": "固定观察窗为一天，填写这一天内的平均卷烟等效支数，1表示计数单位。不是包数、烟草克数或电子烟吸口数；不自动换算其他烟草制品。"
+        },
+        {
+          "key": "age",
+          "label_zh": "实足年龄",
+          "unit": "a",
+          "accept": {
+            "year": 1
+          },
+          "range": [
+            30,
+            120
+          ],
+          "aliases": [
+            "年龄",
+            "age"
+          ],
+          "required": true,
+          "from": "argument",
+          "flag": "--age"
+        },
+        {
+          "key": "sex",
+          "label_zh": "论文适用的性别组",
+          "required": true,
+          "from": "argument",
+          "flag": "--sex",
+          "note_zh": "male/female 或 男/女，用于性别限定癌症的适用性核对。"
+        },
+        {
+          "key": "outcome",
+          "label_zh": "健康结局",
+          "required": true,
+          "from": "argument",
+          "flag": "--outcome",
+          "note_zh": "见 references/outcomes.md；选择一项结局。"
+        }
+      ],
+      "outputs": [
+        {
+          "key": "mean_rr",
+          "label_zh": "对应暴露点的人群平均相对风险",
+          "unit": "1"
+        },
+        {
+          "key": "ui_lower",
+          "label_zh": "95%不确定区间下限",
+          "unit": "1"
+        },
+        {
+          "key": "ui_upper",
+          "label_zh": "95%不确定区间上限",
+          "unit": "1"
+        },
+        {
+          "key": "star_rating",
+          "label_zh": "该关联的论文证据星级",
+          "unit": "1"
+        }
+      ],
+      "paper": {
+        "doi": "10.1038/s41591-022-01978-x",
+        "title": "Health effects associated with smoking: a Burden of Proof study",
+        "title_zh": "吸烟相关健康效应的证据负担分析",
+        "journal": "Nature Medicine",
         "year": 2022
       }
     },
