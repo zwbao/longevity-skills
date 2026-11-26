@@ -2,9 +2,9 @@
   "schema": "longevity-catalog/1",
   "version": "2026.48.0",
   "counts": {
-    "skills": 225,
+    "skills": 226,
     "tiers": {
-      "A": 61,
+      "A": 62,
       "B": 83,
       "C": 73,
       "tool": 8
@@ -14975,6 +14975,221 @@
         "title_zh": "痴呆研究里的用药类别",
         "journal": "Nature Aging",
         "year": 2022
+      }
+    },
+    {
+      "name": "insomnia-severity-index",
+      "kind": "paper",
+      "tier": "A",
+      "species": [
+        "human"
+      ],
+      "evidence": "method",
+      "domains": [
+        "睡眠"
+      ],
+      "blurb_zh": "用过去两周七项失眠自评分计算ISI总分及严重程度筛查分档。",
+      "description": "Tier A personal readout: computes one person's value with the paper's printed method and reproduces a printed example. Calculates the Insomnia Severity Index total and published severity band from seven completed self-report item scores covering the last two weeks. Use when a person supplies ISI responses or asks to score their insomnia questionnaire. Produces a Chinese report with input checks and screening limits.",
+      "intents": [
+        "wearable_sleep"
+      ],
+      "has_script": true,
+      "validation_status": "reproduced",
+      "validation_label_zh": "已复现论文",
+      "entry": {
+        "script": "scripts/personal_report.py",
+        "measurements_flag": "--measurements",
+        "measurements_header": [
+          "marker",
+          "value",
+          "unit"
+        ],
+        "age_flag": "--age",
+        "sex_flag": "--sex",
+        "out_flag": "--out",
+        "result_json": true
+      },
+      "population": {
+        "age_years": [
+          17,
+          84
+        ],
+        "note_zh": "两个失眠临床样本的观察年龄并集：研究1为17–82岁，研究2为55–84岁；不是一般人群诊断效能验证，也非中文译本验证。"
+      },
+      "inputs_status": "verified",
+      "inputs": [
+        {
+          "key": "sleep_onset_score",
+          "label_zh": "入睡困难",
+          "aliases": [
+            "Difficulty falling asleep",
+            "Initial",
+            "ISI 1a",
+            "入睡困难"
+          ],
+          "unit": "score",
+          "accept": {},
+          "range": [
+            0,
+            4
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "图1第1a项；按过去两周严重程度填0至4分，0无、1轻、2中、3重、4很重。"
+        },
+        {
+          "key": "sleep_maintenance_score",
+          "label_zh": "睡眠维持困难",
+          "aliases": [
+            "Difficulty staying asleep",
+            "Middle",
+            "ISI 1b",
+            "睡眠维持困难"
+          ],
+          "unit": "score",
+          "accept": {},
+          "range": [
+            0,
+            4
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "图1第1b项；按过去两周严重程度填0至4分，0无、1轻、2中、3重、4很重。"
+        },
+        {
+          "key": "early_awakening_score",
+          "label_zh": "早醒",
+          "aliases": [
+            "Problem waking up too early",
+            "Terminal",
+            "ISI 1c",
+            "早醒"
+          ],
+          "unit": "score",
+          "accept": {},
+          "range": [
+            0,
+            4
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "图1第1c项；按过去两周严重程度填0至4分，0无、1轻、2中、3重、4很重。"
+        },
+        {
+          "key": "sleep_dissatisfaction_score",
+          "label_zh": "对睡眠的不满意程度",
+          "aliases": [
+            "Satisfaction",
+            "ISI 2",
+            "睡眠满意度",
+            "睡眠不满意度"
+          ],
+          "unit": "score",
+          "accept": {},
+          "range": [
+            0,
+            4
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "图1第2项；0非常满意，4非常不满意，中间保留1、2、3原始得分；不反向再计分。"
+        },
+        {
+          "key": "daily_interference_score",
+          "label_zh": "日间功能干扰",
+          "aliases": [
+            "Interference",
+            "ISI 3",
+            "日间功能干扰"
+          ],
+          "unit": "score",
+          "accept": {},
+          "range": [
+            0,
+            4
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "图1第3项；睡眠问题对日间功能的干扰：0无、1一点、2一些、3多、4非常多。"
+        },
+        {
+          "key": "noticeability_score",
+          "label_zh": "自觉他人能察觉的生活质量影响",
+          "aliases": [
+            "Noticeability",
+            "ISI 4",
+            "他人可察觉程度"
+          ],
+          "unit": "score",
+          "accept": {},
+          "range": [
+            0,
+            4
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "图1第4项；本人判断他人能否察觉睡眠问题对自己生活质量的损害：0完全不能、1几乎不能、2一些、3多、4非常多；不是家属代填。"
+        },
+        {
+          "key": "sleep_distress_score",
+          "label_zh": "对睡眠问题的担忧或苦恼",
+          "aliases": [
+            "Distress",
+            "Worried",
+            "ISI 5",
+            "睡眠困扰",
+            "担忧程度"
+          ],
+          "unit": "score",
+          "accept": {},
+          "range": [
+            0,
+            4
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "图1第5项；担忧或苦恼程度：0无、1一点、2一些、3多、4非常多。"
+        },
+        {
+          "key": "age",
+          "label_zh": "年龄",
+          "unit": "a",
+          "range": [
+            0,
+            120
+          ],
+          "required": false,
+          "from": "profile",
+          "flag": "--age",
+          "note_zh": "可选背景，仅用于提示研究年龄范围；0–120是输入防错范围，不是临床切点。"
+        },
+        {
+          "key": "sex",
+          "label_zh": "性别",
+          "required": false,
+          "from": "profile",
+          "flag": "--sex",
+          "note_zh": "可选男/女/其他/未知或male/female/other/unknown；不改变得分。"
+        }
+      ],
+      "outputs": [
+        {
+          "key": "isi_total_score",
+          "label_zh": "ISI总分",
+          "unit": "score"
+        },
+        {
+          "key": "isi_category",
+          "label_zh": "ISI严重程度筛查分档",
+          "note_zh": "no_clinically_significant_insomnia=未达临床显著分档；subthreshold_insomnia=阈下；moderate_insomnia=中度；severe_insomnia=重度。不是诊断。"
+        }
+      ],
+      "paper": {
+        "doi": "10.1016/s1389-9457(00)00065-4",
+        "title": "Validation of the Insomnia Severity Index as an outcome measure for insomnia research.",
+        "title_zh": "失眠严重程度指数作为失眠研究结局指标的验证",
+        "journal": "Sleep medicine",
+        "year": 2001
       }
     },
     {

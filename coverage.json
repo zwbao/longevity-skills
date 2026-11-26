@@ -1,7 +1,7 @@
 {
   "schema": "longevity-coverage/1",
   "reference_items": 583,
-  "reference_covered": 68,
+  "reference_covered": 69,
   "unlabelled": {
     "claims": 0,
     "effects": 0,
@@ -773,14 +773,15 @@
         "method": {
           "rows": 0,
           "effects": 0,
-          "papers": 2,
+          "papers": 3,
           "skills": [
+            "insomnia-severity-index",
             "sleep-duration-risk-lookup",
             "wearable-circadian-aging-biomarker"
           ],
-          "latest": "2026-11-25",
+          "latest": "2026-11-26",
           "reference": 9,
-          "covered": 0,
+          "covered": 1,
           "missing": [
             {
               "id": "sleep-circadian-method-consensus-sleep-diary",
@@ -816,18 +817,6 @@
               "by": [],
               "doi": [
                 "10.1093/sleep/14.6.540"
-              ]
-            },
-            {
-              "id": "sleep-circadian-method-isi",
-              "item": "Insomnia Severity Index (ISI)",
-              "item_zh": "失眠严重程度指数（ISI）",
-              "priority": "P0",
-              "status": "reviewed",
-              "covered": false,
-              "by": [],
-              "doi": [
-                "10.1016/s1389-9457(00)00065-4"
               ]
             },
             {

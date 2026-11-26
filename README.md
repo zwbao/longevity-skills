@@ -365,6 +365,7 @@ python3 -m tools.lsk test --changed origin/main   # 只测相对 main 改动过�
 
 ## 睡眠
 
+- `skills/insomnia-severity-index/` — 用过去两周七项失眠自评分计算ISI总分及严重程度筛查分档。
 - `skills/sleep-duration-risk-lookup/` — 用通常睡眠时长匹配论文整数小时查表值，查看全因死亡、心血管疾病、冠心病和卒中的人群相对风险。
 
 ## 糖代谢
