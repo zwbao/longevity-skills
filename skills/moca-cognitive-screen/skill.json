@@ -1,0 +1,335 @@
+{
+  "schema": "longevity-skill/1",
+  "name": "moca-cognitive-screen",
+  "kind": "paper",
+  "tier": "A",
+  "species": [
+    "human"
+  ],
+  "evidence": "method",
+  "domains": [
+    "认知筛查"
+  ],
+  "topic": [
+    "brain_cognition",
+    "screening_prevention"
+  ],
+  "blurb_zh": "核对原版完整 MoCA 的任务得分、教育校正和认知筛查分档。",
+  "intents": [
+    "cognition_dementia"
+  ],
+  "triage": {
+    "reason_zh": "原始人体方法验证论文印出各任务分值、教育校正和筛查切点，可用个人已完成测评的得分重算当前筛查结果。",
+    "reviewed": false
+  },
+  "paper": {
+    "doi": "10.1111/j.1532-5415.2005.53221.x",
+    "title": "The Montreal Cognitive Assessment, MoCA: a brief screening tool for mild cognitive impairment.",
+    "title_zh": "蒙特利尔认知评估：轻度认知障碍的简短筛查工具",
+    "journal": "Journal of the American Geriatrics Society",
+    "year": 2005,
+    "authors": "Nasreddine 等",
+    "article_url": "https://doi.org/10.1111/j.1532-5415.2005.53221.x",
+    "supplements": [],
+    "summary_zh": "这项研究在人类老年门诊患者与健康对照中开发并验证了简短认知筛查工具，能够识别部分传统简易精神状态检查未发现的轻度认知障碍。个人报告只合计已完成标准测评的任务得分，作教育校正并给出原文切点分档，不诊断疾病或预测未来痴呆风险。",
+    "summary_status": "draft",
+    "card_notes": [
+      "原文全文由 Concordia 大学作者机构公开副本核对，页码 695–699；计算依据为第 697 页任务分值与教育校正、第 698 页筛查切点。",
+      "复现范围是原文逐项满分合计为 30 分，不是个体病例、诊断效能或独立队列复现。",
+      "仅合计已评分任务；不复制测试题目、不代替标准施测，不适用于简版、盲人版、电话版或 Basic 版。",
+      "正文及可访问的出版社页面未列出补充文件或代码、数据链接；完整访问记录和受阻的外部计分说明见 references/contract.md。"
+    ]
+  },
+  "entry": {
+    "script": "scripts/personal_report.py",
+    "measurements_flag": "--measurements",
+    "measurements_header": [
+      "item",
+      "value",
+      "unit"
+    ],
+    "out_flag": "--out",
+    "result_json": true
+  },
+  "inputs_status": "verified",
+  "inputs": [
+    {
+      "key": "delayed_recall_score",
+      "label_zh": "延迟回忆",
+      "aliases": [
+        "Delayed recall",
+        "MoCA延迟回忆"
+      ],
+      "unit": "score",
+      "accept": {},
+      "range": [
+        0,
+        5
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "由施测人员按原版完整 MoCA 说明确认的整数任务得分，尚未加入教育校正；不是答对次数或自评。"
+    },
+    {
+      "key": "clock_drawing_score",
+      "label_zh": "画钟",
+      "aliases": [
+        "Clock drawing",
+        "MoCA画钟"
+      ],
+      "unit": "score",
+      "accept": {},
+      "range": [
+        0,
+        3
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "由施测人员按原版完整 MoCA 说明确认的整数任务得分，尚未加入教育校正；不是答对次数或自评。"
+    },
+    {
+      "key": "cube_copy_score",
+      "label_zh": "立方体复制",
+      "aliases": [
+        "Cube copy",
+        "立方体临摹"
+      ],
+      "unit": "score",
+      "accept": {},
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "由施测人员按原版完整 MoCA 说明确认的整数任务得分，尚未加入教育校正；不是答对次数或自评。"
+    },
+    {
+      "key": "alternation_score",
+      "label_zh": "交替连线",
+      "aliases": [
+        "Alternation",
+        "Trail making",
+        "交替连线测验"
+      ],
+      "unit": "score",
+      "accept": {},
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "由施测人员按原版完整 MoCA 说明确认的整数任务得分，尚未加入教育校正；不是答对次数或自评。"
+    },
+    {
+      "key": "phonemic_fluency_score",
+      "label_zh": "音位流畅性",
+      "aliases": [
+        "Phonemic fluency",
+        "词语流畅性"
+      ],
+      "unit": "score",
+      "accept": {},
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "由施测人员按原版完整 MoCA 说明确认的整数任务得分，尚未加入教育校正；不是答对次数或自评。"
+    },
+    {
+      "key": "abstraction_score",
+      "label_zh": "抽象",
+      "aliases": [
+        "Abstraction",
+        "抽象思维"
+      ],
+      "unit": "score",
+      "accept": {},
+      "range": [
+        0,
+        2
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "由施测人员按原版完整 MoCA 说明确认的整数任务得分，尚未加入教育校正；不是答对次数或自评。"
+    },
+    {
+      "key": "sustained_attention_score",
+      "label_zh": "持续注意",
+      "aliases": [
+        "Sustained attention",
+        "警觉性"
+      ],
+      "unit": "score",
+      "accept": {},
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "由施测人员按原版完整 MoCA 说明确认的整数任务得分，尚未加入教育校正；不是答对次数或自评。"
+    },
+    {
+      "key": "serial_subtraction_score",
+      "label_zh": "连续减法",
+      "aliases": [
+        "Serial subtraction",
+        "Serial 7",
+        "连续减七"
+      ],
+      "unit": "score",
+      "accept": {},
+      "range": [
+        0,
+        3
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "由施测人员按原版完整 MoCA 说明确认的整数任务得分，尚未加入教育校正；不是答对次数或自评。"
+    },
+    {
+      "key": "digits_forward_score",
+      "label_zh": "数字顺背",
+      "aliases": [
+        "Digits forward",
+        "顺背数字"
+      ],
+      "unit": "score",
+      "accept": {},
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "由施测人员按原版完整 MoCA 说明确认的整数任务得分，尚未加入教育校正；不是答对次数或自评。"
+    },
+    {
+      "key": "digits_backward_score",
+      "label_zh": "数字倒背",
+      "aliases": [
+        "Digits backward",
+        "倒背数字"
+      ],
+      "unit": "score",
+      "accept": {},
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "由施测人员按原版完整 MoCA 说明确认的整数任务得分，尚未加入教育校正；不是答对次数或自评。"
+    },
+    {
+      "key": "naming_score",
+      "label_zh": "命名",
+      "aliases": [
+        "Naming",
+        "MoCA命名"
+      ],
+      "unit": "score",
+      "accept": {},
+      "range": [
+        0,
+        3
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "由施测人员按原版完整 MoCA 说明确认的整数任务得分，尚未加入教育校正；不是答对次数或自评。"
+    },
+    {
+      "key": "sentence_repetition_score",
+      "label_zh": "句子复述",
+      "aliases": [
+        "Sentence repetition",
+        "语句复述"
+      ],
+      "unit": "score",
+      "accept": {},
+      "range": [
+        0,
+        2
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "由施测人员按原版完整 MoCA 说明确认的整数任务得分，尚未加入教育校正；不是答对次数或自评。"
+    },
+    {
+      "key": "orientation_score",
+      "label_zh": "定向",
+      "aliases": [
+        "Orientation",
+        "定向力"
+      ],
+      "unit": "score",
+      "accept": {},
+      "range": [
+        0,
+        6
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "由施测人员按原版完整 MoCA 说明确认的整数任务得分，尚未加入教育校正；不是答对次数或自评。"
+    },
+    {
+      "key": "education_years",
+      "label_zh": "受教育年限",
+      "aliases": [
+        "Education years",
+        "Years of education",
+        "教育年限",
+        "正式教育年数"
+      ],
+      "unit": "a",
+      "accept": {},
+      "range": [
+        0,
+        40
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "用于原文教育校正的已完成正式教育年数，可为小数；0–40 是输入合理性范围，不是论文纳入标准。未知不能填零；不把年龄填入此项。"
+    }
+  ],
+  "outputs": [
+    {
+      "key": "raw_score",
+      "label_zh": "原始总分",
+      "unit": "score"
+    },
+    {
+      "key": "education_bonus",
+      "label_zh": "教育校正加分",
+      "unit": "score"
+    },
+    {
+      "key": "adjusted_score",
+      "label_zh": "校正后总分",
+      "unit": "score"
+    },
+    {
+      "key": "screening_category",
+      "label_zh": "原文切点分档",
+      "unit": ""
+    }
+  ],
+  "validation": {
+    "status": "reproduced",
+    "examples": [
+      {
+        "locator": "p. 697, Montreal Cognitive Assessment: per-task point maxima and total (excerpts)",
+        "quote": "one-page 30-point test … (5 points) … (3 points) … (1 point) … (2 points) … (6 points)",
+        "values": [
+          30
+        ],
+        "tolerance": "精确相等。输入为同段逐项印出的满分；只核对满分结构合计，不声称原文有该个体的完整病例。省略号分隔同段原文短摘录，各任务对应关系见 contract.md。",
+        "test": "tests/test_manifest.py::test_printed_task_maxima_sum_to_30"
+      }
+    ]
+  }
+}
