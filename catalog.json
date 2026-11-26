@@ -2,9 +2,9 @@
   "schema": "longevity-catalog/1",
   "version": "2026.48.0",
   "counts": {
-    "skills": 230,
+    "skills": 231,
     "tiers": {
-      "A": 66,
+      "A": 67,
       "B": 83,
       "C": 73,
       "tool": 8
@@ -36220,6 +36220,212 @@
         "title_zh": "视网膜年龄差",
         "journal": "npj Digital Medicine",
         "year": 2025
+      }
+    },
+    {
+      "name": "sarc-f",
+      "kind": "paper",
+      "tier": "A",
+      "species": [
+        "human"
+      ],
+      "evidence": "cohort",
+      "domains": [
+        "肌少症与身体功能"
+      ],
+      "blurb_zh": "用提物、走路、起身、爬楼和跌倒问卷计算SARC-F肌少症风险筛查分数。",
+      "description": "Tier A personal readout: computes one person's value with the paper's printed method and reproduces a printed example. Calculates the standard SARC-F symptom screening score from five personal questionnaire responses. Use for SARC-F scoring, sarcopenia screening, or questions about lifting, walking, rising, stair climbing and falls. Reports component points, total score and screening category in Chinese.",
+      "intents": [
+        "frailty_mortality"
+      ],
+      "has_script": true,
+      "validation_status": "reproduced",
+      "validation_label_zh": "已复现论文",
+      "entry": {
+        "script": "scripts/personal_report.py",
+        "measurements_flag": "--measurements",
+        "measurements_header": [
+          "marker",
+          "value",
+          "unit"
+        ],
+        "age_flag": "--age",
+        "sex_flag": "--sex",
+        "out_flag": "--out",
+        "result_json": true
+      },
+      "inputs_status": "verified",
+      "inputs": [
+        {
+          "key": "strength_score",
+          "label_zh": "提举重物困难程度",
+          "aliases": [
+            "Strength",
+            "力量",
+            "提举重物"
+          ],
+          "unit": "1",
+          "accept": {},
+          "range": [
+            0,
+            2
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "提举或搬运10磅物品：0=无困难，1=有些困难，2=很困难或无法完成。 只填整数；未知须补问，不得当作0。"
+        },
+        {
+          "key": "walking_score",
+          "label_zh": "室内步行困难程度",
+          "aliases": [
+            "Assistance walking",
+            "行走辅助",
+            "步行困难"
+          ],
+          "unit": "1",
+          "accept": {},
+          "range": [
+            0,
+            2
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "走过一个房间：0=无困难，1=有些困难，2=很困难、使用助具或无法在无人帮助时完成；任一2分条件成立即填2。 只填整数；未知须补问，不得当作0。"
+        },
+        {
+          "key": "chair_score",
+          "label_zh": "椅子或床起身困难程度",
+          "aliases": [
+            "Rise from a chair",
+            "起身",
+            "从椅子起立"
+          ],
+          "unit": "1",
+          "accept": {},
+          "range": [
+            0,
+            2
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "从椅子或床起身转移：0=无困难，1=有些困难，2=很困难、使用助具或无法在无人帮助时完成；任一2分条件成立即填2。 只填整数；未知须补问，不得当作0。"
+        },
+        {
+          "key": "stairs_score",
+          "label_zh": "爬楼梯困难程度",
+          "aliases": [
+            "Climb stairs",
+            "爬楼梯",
+            "登阶"
+          ],
+          "unit": "1",
+          "accept": {},
+          "range": [
+            0,
+            2
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "爬一段10级台阶：0=无困难，1=有些困难，2=很困难或无法完成。 只填整数；未知须补问，不得当作0。"
+        },
+        {
+          "key": "falls_past_year_count",
+          "label_zh": "过去一年跌倒次数",
+          "aliases": [
+            "falls in the past year",
+            "number of falls",
+            "一年跌倒次数"
+          ],
+          "unit": "1",
+          "accept": {},
+          "range": [
+            0,
+            10000
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "填过去一年实际跌倒次数，不是该项得分，也不是平衡困难。只接受非负整数；10000为软件防误填上限，并非论文阈值。"
+        },
+        {
+          "key": "age",
+          "label_zh": "年龄",
+          "aliases": [
+            "age"
+          ],
+          "unit": "a",
+          "accept": {
+            "years": 1
+          },
+          "range": [
+            18,
+            120
+          ],
+          "required": false,
+          "from": "profile",
+          "flag": "--age",
+          "note_zh": "可省略；仅作背景。18–120为软件成人输入范围，不代表论文验证年龄范围。"
+        },
+        {
+          "key": "sex",
+          "label_zh": "性别",
+          "aliases": [
+            "sex"
+          ],
+          "unit": "1",
+          "accept": {},
+          "range": [
+            0,
+            1
+          ],
+          "required": false,
+          "from": "profile",
+          "flag": "--sex",
+          "note_zh": "可省略；male/男/1或female/女/0，仅作背景。"
+        }
+      ],
+      "outputs": [
+        {
+          "key": "strength_score",
+          "label_zh": "提举重物困难程度得分",
+          "unit": "1"
+        },
+        {
+          "key": "walking_score",
+          "label_zh": "室内步行困难程度得分",
+          "unit": "1"
+        },
+        {
+          "key": "chair_score",
+          "label_zh": "椅子或床起身困难程度得分",
+          "unit": "1"
+        },
+        {
+          "key": "stairs_score",
+          "label_zh": "爬楼梯困难程度得分",
+          "unit": "1"
+        },
+        {
+          "key": "falls_score",
+          "label_zh": "跌倒项目得分",
+          "unit": "1"
+        },
+        {
+          "key": "sarc_f_score",
+          "label_zh": "SARC-F总分",
+          "unit": "1"
+        },
+        {
+          "key": "screening_category",
+          "label_zh": "SARC-F筛查分层",
+          "note_zh": "总分≥4为筛查阳性，<4为筛查阴性；不能确诊或排除肌少症。"
+        }
+      ],
+      "paper": {
+        "doi": "10.1002/jcsm.12048",
+        "title": "SARC-F: a symptom score to predict persons with sarcopenia at risk for poor functional outcomes.",
+        "title_zh": "SARC-F：识别肌少症相关不良功能结局风险的症状评分",
+        "journal": "Journal of Cachexia, Sarcopenia and Muscle",
+        "year": 2016
       }
     },
     {

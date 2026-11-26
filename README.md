@@ -384,6 +384,10 @@ python3 -m tools.lsk test --changed origin/main   # 只测相对 main 改动过�
 
 - `skills/new-chinese-diabetes-risk-score/` — 用年龄、性别、腰围、BMI、收缩压和家族史计算糖尿病筛查分数。
 
+## 肌少症与身体功能
+
+- `skills/sarc-f/` — 用提物、走路、起身、爬楼和跌倒问卷计算SARC-F肌少症风险筛查分数。
+
 ## 肝脏与代谢
 
 - `skills/fib4-index/` — 用年龄、肝酶和血小板计算脂肪肝成人的 FIB-4 纤维化指数。
