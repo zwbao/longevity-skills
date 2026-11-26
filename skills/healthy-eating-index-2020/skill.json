@@ -1,0 +1,421 @@
+{
+  "schema": "longevity-skill/1",
+  "name": "healthy-eating-index-2020",
+  "kind": "paper",
+  "tier": "A",
+  "species": [
+    "human"
+  ],
+  "evidence": "review",
+  "domains": [
+    "饮食",
+    "营养"
+  ],
+  "topic": [
+    "diet_nutrition"
+  ],
+  "blurb_zh": "根据饮食记录的食物密度和供能比例计算HEI-2020总分与分项分，比较自定目标情景。",
+  "intents": [
+    "before_after"
+  ],
+  "triage": {
+    "reason_zh": "图3印出13项完整权重与评分切点，可用个人膳食密度计算；端点分项得分已复现，本文复核摄入分布和内容效度。",
+    "reviewed": false
+  },
+  "paper": {
+    "doi": "10.1016/j.jand.2023.05.015",
+    "title": "Healthy Eating Index-2020: Review and Update Process to Reflect the Dietary Guidelines for Americans,2020-2025.",
+    "title_zh": "健康饮食指数2020：对应美国膳食指南的复核和更新过程",
+    "journal": "Journal of the Academy of Nutrition and Dietetics",
+    "year": 2023,
+    "authors": "Shams-White 等",
+    "article_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10524328/",
+    "supplements": [],
+    "code_url": "https://epi.grants.cancer.gov/hei/sas-code.html",
+    "card_notes": [
+      "使用图3及脚注的固定评分标准；全文采用PMC作者接收稿。PMC未列独立补充附件，出版社全文入口受限，未独立确认其附件清单。",
+      "已查看NCI评分宏及MCMC示例包；运行不需联网，未运行SAS或复现NHANES人群估计。验证的是图3分项评分端点。",
+      "饮食表需先按食物当量与同一时期的总能量整理；不从食物名称、照片或任意克重推定当量。"
+    ],
+    "summary_zh": "这项面向人群的综述复核了膳食指南、摄入分布和内容效度，发现原有健康饮食评分标准仍与更新后的美国膳食指南一致。个人报告只计算所提供饮食记录的总分、分项分及目标情景的算术差值，不估计疾病风险或寿命。",
+    "summary_status": "draft"
+  },
+  "entry": {
+    "script": "scripts/personal_report.py",
+    "measurements_flag": "--measurements",
+    "measurements_header": [
+      "item",
+      "value",
+      "unit"
+    ],
+    "age_flag": "--age",
+    "sex_flag": "--sex",
+    "out_flag": "--out",
+    "result_json": true,
+    "targets_flag": "--targets",
+    "levers_json": true
+  },
+  "inputs_status": "verified",
+  "inputs": [
+    {
+      "key": "total_fruits_density_ratio",
+      "label_zh": "总水果密度比",
+      "aliases": [
+        "Total Fruits",
+        "Total Fruits density ratio",
+        "总水果摄入密度比"
+      ],
+      "unit": "1",
+      "accept": {},
+      "range": [
+        0,
+        50
+      ],
+      "unit_required": true,
+      "required": true,
+      "from": "measurements",
+      "note_zh": "无量纲密度比 = 已计算的摄入密度 / (1 cup equiv. per 1,000 kcal)；数字与论文该密度的数值相同。单位列填1（比值），不是把杯、盎司或克当作无量纲物理单位。包括100%果汁。范围仅用于输入排错，不是临床界值。"
+    },
+    {
+      "key": "whole_fruits_density_ratio",
+      "label_zh": "完整水果密度比",
+      "aliases": [
+        "Whole Fruits",
+        "Whole Fruits density ratio",
+        "完整水果摄入密度比"
+      ],
+      "unit": "1",
+      "accept": {},
+      "range": [
+        0,
+        50
+      ],
+      "unit_required": true,
+      "required": true,
+      "from": "measurements",
+      "note_zh": "无量纲密度比 = 已计算的摄入密度 / (1 cup equiv. per 1,000 kcal)；数字与论文该密度的数值相同。单位列填1（比值），不是把杯、盎司或克当作无量纲物理单位。不含果汁，包含其他形式水果。范围仅用于输入排错，不是临床界值。"
+    },
+    {
+      "key": "total_vegetables_density_ratio",
+      "label_zh": "总蔬菜密度比",
+      "aliases": [
+        "Total Vegetables",
+        "Total Vegetables density ratio",
+        "总蔬菜摄入密度比"
+      ],
+      "unit": "1",
+      "accept": {},
+      "range": [
+        0,
+        50
+      ],
+      "unit_required": true,
+      "required": true,
+      "from": "measurements",
+      "note_zh": "无量纲密度比 = 已计算的摄入密度 / (1 cup equiv. per 1,000 kcal)；数字与论文该密度的数值相同。单位列填1（比值），不是把杯、盎司或克当作无量纲物理单位。包括豆、豌豆和扁豆；与深绿色蔬菜和豆类使用相同分母。范围仅用于输入排错，不是临床界值。"
+    },
+    {
+      "key": "greens_beans_density_ratio",
+      "label_zh": "深绿色蔬菜和豆类密度比",
+      "aliases": [
+        "Greens and Beans",
+        "Greens and Beans density ratio",
+        "深绿色蔬菜和豆类摄入密度比"
+      ],
+      "unit": "1",
+      "accept": {},
+      "range": [
+        0,
+        50
+      ],
+      "unit_required": true,
+      "required": true,
+      "from": "measurements",
+      "note_zh": "无量纲密度比 = 已计算的摄入密度 / (1 cup equiv. per 1,000 kcal)；数字与论文该密度的数值相同。单位列填1（比值），不是把杯、盎司或克当作无量纲物理单位。包括深绿色蔬菜及豆、豌豆和扁豆。范围仅用于输入排错，不是临床界值。"
+    },
+    {
+      "key": "whole_grains_density_ratio",
+      "label_zh": "全谷物密度比",
+      "aliases": [
+        "Whole Grains",
+        "Whole Grains density ratio",
+        "全谷物摄入密度比"
+      ],
+      "unit": "1",
+      "accept": {},
+      "range": [
+        0,
+        50
+      ],
+      "unit_required": true,
+      "required": true,
+      "from": "measurements",
+      "note_zh": "无量纲密度比 = 已计算的摄入密度 / (1 oz equiv. per 1,000 kcal)；数字与论文该密度的数值相同。单位列填1（比值），不是把杯、盎司或克当作无量纲物理单位。全谷物的盎司当量，不是食物重量盎司。范围仅用于输入排错，不是临床界值。"
+    },
+    {
+      "key": "dairy_density_ratio",
+      "label_zh": "乳制品密度比",
+      "aliases": [
+        "Dairy",
+        "Dairy density ratio",
+        "乳制品摄入密度比"
+      ],
+      "unit": "1",
+      "accept": {},
+      "range": [
+        0,
+        50
+      ],
+      "unit_required": true,
+      "required": true,
+      "from": "measurements",
+      "note_zh": "无量纲密度比 = 已计算的摄入密度 / (1 cup equiv. per 1,000 kcal)；数字与论文该密度的数值相同。单位列填1（比值），不是把杯、盎司或克当作无量纲物理单位。包括奶、酸奶、奶酪及强化豆饮料。范围仅用于输入排错，不是临床界值。"
+    },
+    {
+      "key": "total_protein_density_ratio",
+      "label_zh": "总蛋白质食物密度比",
+      "aliases": [
+        "Total Protein Foods",
+        "Total Protein Foods density ratio",
+        "总蛋白质食物摄入密度比"
+      ],
+      "unit": "1",
+      "accept": {},
+      "range": [
+        0,
+        50
+      ],
+      "unit_required": true,
+      "required": true,
+      "from": "measurements",
+      "note_zh": "无量纲密度比 = 已计算的摄入密度 / (1 oz equiv. per 1,000 kcal)；数字与论文该密度的数值相同。单位列填1（比值），不是把杯、盎司或克当作无量纲物理单位。包括豆、豌豆和扁豆；是蛋白质食物当量，不是营养素蛋白质克数。范围仅用于输入排错，不是临床界值。"
+    },
+    {
+      "key": "seafood_plant_density_ratio",
+      "label_zh": "海鲜和植物蛋白质食物密度比",
+      "aliases": [
+        "Seafood and Plant Proteins",
+        "Seafood and Plant Proteins density ratio",
+        "海鲜和植物蛋白质食物摄入密度比"
+      ],
+      "unit": "1",
+      "accept": {},
+      "range": [
+        0,
+        50
+      ],
+      "unit_required": true,
+      "required": true,
+      "from": "measurements",
+      "note_zh": "无量纲密度比 = 已计算的摄入密度 / (1 oz equiv. per 1,000 kcal)；数字与论文该密度的数值相同。单位列填1（比值），不是把杯、盎司或克当作无量纲物理单位。包括海鲜、坚果、种子、非饮料豆制品以及豆、豌豆、扁豆。范围仅用于输入排错，不是临床界值。"
+    },
+    {
+      "key": "fatty_acids_ratio",
+      "label_zh": "不饱和与饱和脂肪酸比",
+      "aliases": [
+        "Fatty Acids"
+      ],
+      "unit": "1",
+      "accept": {},
+      "range": [
+        0,
+        50
+      ],
+      "unit_required": true,
+      "required": true,
+      "from": "measurements",
+      "note_zh": "单位1表示质量比。(多不饱和脂肪酸+单不饱和脂肪酸)/饱和脂肪酸，同期摄入质量比；分母必须大于零。范围仅用于输入排错，不是临床界值。"
+    },
+    {
+      "key": "refined_grains_density_ratio",
+      "label_zh": "精制谷物密度比",
+      "aliases": [
+        "Refined Grains",
+        "Refined Grains density ratio",
+        "精制谷物摄入密度比"
+      ],
+      "unit": "1",
+      "accept": {},
+      "range": [
+        0,
+        50
+      ],
+      "unit_required": true,
+      "required": true,
+      "from": "measurements",
+      "note_zh": "无量纲密度比 = 已计算的摄入密度 / (1 oz equiv. per 1,000 kcal)；数字与论文该密度的数值相同。单位列填1（比值），不是把杯、盎司或克当作无量纲物理单位。精制谷物盎司当量，不是食物重量盎司。范围仅用于输入排错，不是临床界值。"
+    },
+    {
+      "key": "sodium_density_ratio",
+      "label_zh": "钠密度比",
+      "aliases": [
+        "Sodium",
+        "Sodium density ratio",
+        "钠摄入密度比"
+      ],
+      "unit": "1",
+      "accept": {},
+      "range": [
+        0,
+        50
+      ],
+      "unit_required": true,
+      "required": true,
+      "from": "measurements",
+      "note_zh": "无量纲密度比 = 已计算的摄入密度 / (1 gram per 1,000 kcal)；数字与论文该密度的数值相同。单位列填1（比值），不是把杯、盎司或克当作无量纲物理单位。钠而非食盐；不是血钠、尿钠或全天钠克数。范围仅用于输入排错，不是临床界值。"
+    },
+    {
+      "key": "added_sugars_energy_pct",
+      "label_zh": "添加糖供能比例",
+      "aliases": [
+        "Added Sugars"
+      ],
+      "unit": "%",
+      "accept": {
+        "1": 100
+      },
+      "range": [
+        0,
+        100
+      ],
+      "unit_required": true,
+      "required": true,
+      "from": "measurements",
+      "note_zh": "单位%表示总能量百分数；接受1表示0至1的供能分数，乘100精确换算。添加糖占总能量百分比，不是总糖、糖克数或糖占食物重量比例。范围仅用于输入排错，不是临床界值。"
+    },
+    {
+      "key": "saturated_fats_energy_pct",
+      "label_zh": "饱和脂肪供能比例",
+      "aliases": [
+        "Saturated Fats"
+      ],
+      "unit": "%",
+      "accept": {
+        "1": 100
+      },
+      "range": [
+        0,
+        100
+      ],
+      "unit_required": true,
+      "required": true,
+      "from": "measurements",
+      "note_zh": "单位%表示总能量百分数；接受1表示0至1的供能分数，乘100精确换算。饱和脂肪占总能量百分比，不是占总脂肪比例。分母为同一记录期的全部能量。范围仅用于输入排错，不是临床界值。"
+    },
+    {
+      "key": "age",
+      "label_zh": "年龄",
+      "aliases": [
+        "年龄",
+        "age"
+      ],
+      "unit": "a",
+      "accept": {},
+      "range": [
+        2,
+        120
+      ],
+      "required": true,
+      "from": "profile",
+      "flag": "--age",
+      "note_zh": "至少2周岁；120为工具输入排错上限，非论文适用年龄上限。年龄不参与评分。"
+    },
+    {
+      "key": "sex",
+      "label_zh": "性别",
+      "required": false,
+      "from": "profile",
+      "flag": "--sex",
+      "note_zh": "可选背景，不参与评分；所有性别使用同一组评分标准。"
+    }
+  ],
+  "outputs": [
+    {
+      "key": "hei_total_score",
+      "label_zh": "HEI-2020总分",
+      "unit": "score",
+      "note_zh": "13项之和；不赋予未经论文定义的优良差类别。"
+    },
+    {
+      "key": "total_fruits_score",
+      "label_zh": "总水果得分",
+      "unit": "score"
+    },
+    {
+      "key": "whole_fruits_score",
+      "label_zh": "完整水果得分",
+      "unit": "score"
+    },
+    {
+      "key": "total_vegetables_score",
+      "label_zh": "总蔬菜得分",
+      "unit": "score"
+    },
+    {
+      "key": "greens_beans_score",
+      "label_zh": "深绿色蔬菜和豆类得分",
+      "unit": "score"
+    },
+    {
+      "key": "whole_grains_score",
+      "label_zh": "全谷物得分",
+      "unit": "score"
+    },
+    {
+      "key": "dairy_score",
+      "label_zh": "乳制品得分",
+      "unit": "score"
+    },
+    {
+      "key": "total_protein_score",
+      "label_zh": "总蛋白质食物得分",
+      "unit": "score"
+    },
+    {
+      "key": "seafood_plant_score",
+      "label_zh": "海鲜和植物蛋白质食物得分",
+      "unit": "score"
+    },
+    {
+      "key": "fatty_acids_score",
+      "label_zh": "不饱和与饱和脂肪酸比得分",
+      "unit": "score"
+    },
+    {
+      "key": "refined_grains_score",
+      "label_zh": "精制谷物得分",
+      "unit": "score"
+    },
+    {
+      "key": "sodium_score",
+      "label_zh": "钠得分",
+      "unit": "score"
+    },
+    {
+      "key": "added_sugars_score",
+      "label_zh": "添加糖供能比例得分",
+      "unit": "score"
+    },
+    {
+      "key": "saturated_fats_score",
+      "label_zh": "饱和脂肪供能比例得分",
+      "unit": "score"
+    }
+  ],
+  "validation": {
+    "status": "reproduced",
+    "examples": [
+      {
+        "locator": "Figure 3, Added Sugars row (maximum and zero-score standard columns)",
+        "quote": "Added Sugars | 10 | ≤6.5% of energy | ≥26% of energy",
+        "values": [
+          10,
+          6.5,
+          26
+        ],
+        "tolerance": "端点得分精确相等；未重估常数。测试另核对全部13项端点，不宣称复现图4人群均值。",
+        "test": "tests/test_manifest.py::test_figure3_added_sugars"
+      }
+    ]
+  }
+}
