@@ -311,6 +311,10 @@ python3 -m tools.lsk test --changed origin/main   # 只测相对 main 改动过�
 
 - `skills/smoking-burden-of-proof/` — 按当前吸烟者的累计包年或每日支数，在论文印出的暴露点查相对风险与不确定区间。
 
+## 心理与社交
+
+- `skills/ucla-loneliness-scale-v3/` — 用UCLA第三版完整问卷的原始回答计算孤独感总分，逐题显示反向计分。
+
 ## 心理与认知
 
 - `skills/emfra-factor-scores/` — 见「功能与衰弱」。
@@ -375,6 +379,10 @@ python3 -m tools.lsk test --changed origin/main   # 只测相对 main 改动过�
 ## 睡眠与呼吸
 
 - `skills/stop-bang/` — 用打鼾、白天疲倦、目击呼吸暂停、高血压及体型年龄信息计算原版STOP和STOP-Bang筛查分档。
+
+## 睡眠与昼夜节律
+
+- `skills/epworth-sleepiness-scale/` — 把已完成ESS问卷的八项分数相加，读出日间容易打瞌睡的程度。
 
 ## 糖代谢
 

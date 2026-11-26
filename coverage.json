@@ -1,7 +1,7 @@
 {
   "schema": "longevity-coverage/1",
   "reference_items": 583,
-  "reference_covered": 74,
+  "reference_covered": 76,
   "unlabelled": {
     "claims": 0,
     "effects": 0,
@@ -762,8 +762,9 @@
         "method": {
           "rows": 0,
           "effects": 0,
-          "papers": 4,
+          "papers": 5,
           "skills": [
+            "epworth-sleepiness-scale",
             "insomnia-severity-index",
             "sleep-duration-risk-lookup",
             "stop-bang",
@@ -771,7 +772,7 @@
           ],
           "latest": "2026-11-26",
           "reference": 9,
-          "covered": 2,
+          "covered": 3,
           "missing": [
             {
               "id": "sleep-circadian-method-consensus-sleep-diary",
@@ -795,18 +796,6 @@
               "by": [],
               "doi": [
                 "10.1007/s11136-005-4346-x"
-              ]
-            },
-            {
-              "id": "sleep-circadian-method-ess",
-              "item": "Epworth Sleepiness Scale (ESS)",
-              "item_zh": "Epworth嗜睡量表（ESS）",
-              "priority": "P0",
-              "status": "reviewed",
-              "covered": false,
-              "by": [],
-              "doi": [
-                "10.1093/sleep/14.6.540"
               ]
             },
             {
@@ -864,7 +853,7 @@
           "effects": 18,
           "papers": 32,
           "skills": [],
-          "latest": "2026-11-25",
+          "latest": "2026-11-26",
           "reference": 17,
           "covered": 2,
           "missing": [
@@ -3203,13 +3192,14 @@
         "method": {
           "rows": 0,
           "effects": 0,
-          "papers": 1,
+          "papers": 2,
           "skills": [
-            "emfra-factor-scores"
+            "emfra-factor-scores",
+            "ucla-loneliness-scale-v3"
           ],
-          "latest": "2026-11-25",
+          "latest": "2026-11-26",
           "reference": 14,
-          "covered": 0,
+          "covered": 1,
           "missing": [
             {
               "id": "mental-social-method-cesd10",
@@ -3353,18 +3343,6 @@
               "by": [],
               "doi": [
                 "10.1177/0164027504268574"
-              ]
-            },
-            {
-              "id": "mental-social-method-ucla-loneliness-v3",
-              "item": "UCLA Loneliness Scale, Version 3",
-              "item_zh": "UCLA 孤独感量表（第3版）",
-              "priority": "P0",
-              "status": "reviewed",
-              "covered": false,
-              "by": [],
-              "doi": [
-                "10.1207/s15327752jpa6601_2"
               ]
             },
             {

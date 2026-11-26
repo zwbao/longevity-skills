@@ -1,0 +1,313 @@
+{
+  "schema": "longevity-skill/1",
+  "name": "epworth-sleepiness-scale",
+  "kind": "paper",
+  "tier": "A",
+  "species": [
+    "human"
+  ],
+  "evidence": "method",
+  "domains": [
+    "睡眠与昼夜节律"
+  ],
+  "topic": [
+    "sleep_circadian"
+  ],
+  "blurb_zh": "把已完成ESS问卷的八项分数相加，读出日间容易打瞌睡的程度。",
+  "intents": [
+    "wearable_sleep"
+  ],
+  "triage": {
+    "reason_zh": "原始人体方法论文表1印出ESS八项0–3分及求和规则，可用个人问卷计算0–24分的日间嗜睡读出。",
+    "reviewed": false
+  },
+  "paper": {
+    "doi": "10.1093/sleep/14.6.540",
+    "title": "A new method for measuring daytime sleepiness: the Epworth sleepiness scale.",
+    "title_zh": "测量日间嗜睡的新方法：Epworth嗜睡量表",
+    "journal": "Sleep",
+    "year": 1991,
+    "authors": "Johns",
+    "article_url": "https://academic.oup.com/sleep/article/14/6/540/2742871",
+    "supplements": [],
+    "card_notes": [
+      "全文来源：作者官网公开的1991年六页原文；评分依据为第541页表1及同页开发方法段。",
+      "已复现表1的单项计分；原文未提供八项作答齐全的个人总分示例，不声称复现整例患者或人群统计量。",
+      "仅接收已完成问卷的单项分数；中文条目名为字段简称，不是获授权或经过验证的中文版问卷。",
+      "正文未指向补充文件或代码、数据仓库；Europe PMC标记hasSuppl=N。出版社网页访问受限，检索范围详见references/claims.md。"
+    ],
+    "summary_zh": "这项研究在人类成人中开发并验证了自填的日间嗜睡问卷，发现不同睡眠障碍人群的分数存在差异，并与部分睡眠检查指标相关。个人报告只计算已完成问卷的单项分数与总分，不推断个人睡眠疾病、衰老速度或寿命。",
+    "summary_status": "draft"
+  },
+  "entry": {
+    "script": "scripts/personal_report.py",
+    "measurements_flag": "--measurements",
+    "measurements_header": [
+      "marker",
+      "value",
+      "unit"
+    ],
+    "age_flag": "--age",
+    "sex_flag": "--sex",
+    "out_flag": "--out",
+    "result_json": true
+  },
+  "inputs_status": "verified",
+  "inputs": [
+    {
+      "key": "ess_item_1_score",
+      "label_zh": "第1项：坐着阅读",
+      "aliases": [
+        "ESS1",
+        "ESS item 1",
+        "ESS第1项",
+        "Seated reading"
+      ],
+      "unit": "score",
+      "accept": {},
+      "range": [
+        0,
+        3
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "原问卷第1项：坐着阅读时。填已完成问卷的整数单项分数；中文为字段说明，不是经过验证的量表译本。"
+    },
+    {
+      "key": "ess_item_2_score",
+      "label_zh": "第2项：看电视",
+      "aliases": [
+        "ESS2",
+        "ESS item 2",
+        "ESS第2项",
+        "TV viewing"
+      ],
+      "unit": "score",
+      "accept": {},
+      "range": [
+        0,
+        3
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "原问卷第2项：观看电视时。填已完成问卷的整数单项分数；中文为字段说明，不是经过验证的量表译本。"
+    },
+    {
+      "key": "ess_item_3_score",
+      "label_zh": "第3项：公共场所静坐",
+      "aliases": [
+        "ESS3",
+        "ESS item 3",
+        "ESS第3项",
+        "Public inactivity"
+      ],
+      "unit": "score",
+      "accept": {},
+      "range": [
+        0,
+        3
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "原问卷第3项：在公共场所不活动地坐着时，例如剧场或会议。填已完成问卷的整数单项分数；中文为字段说明，不是经过验证的量表译本。"
+    },
+    {
+      "key": "ess_item_4_score",
+      "label_zh": "第4项：连续乘车一小时",
+      "aliases": [
+        "ESS4",
+        "ESS item 4",
+        "ESS第4项",
+        "One-hour car passenger"
+      ],
+      "unit": "score",
+      "accept": {},
+      "range": [
+        0,
+        3
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "原问卷第4项：作为乘客连续乘车一小时、没有中途休息时。填已完成问卷的整数单项分数；中文为字段说明，不是经过验证的量表译本。"
+    },
+    {
+      "key": "ess_item_5_score",
+      "label_zh": "第5项：下午躺下休息",
+      "aliases": [
+        "ESS5",
+        "ESS item 5",
+        "ESS第5项",
+        "Afternoon rest"
+      ],
+      "unit": "score",
+      "accept": {},
+      "range": [
+        0,
+        3
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "原问卷第5项：条件允许时，下午躺下休息。填已完成问卷的整数单项分数；中文为字段说明，不是经过验证的量表译本。"
+    },
+    {
+      "key": "ess_item_6_score",
+      "label_zh": "第6项：坐着交谈",
+      "aliases": [
+        "ESS6",
+        "ESS item 6",
+        "ESS第6项",
+        "Seated conversation"
+      ],
+      "unit": "score",
+      "accept": {},
+      "range": [
+        0,
+        3
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "原问卷第6项：坐着与人交谈时。填已完成问卷的整数单项分数；中文为字段说明，不是经过验证的量表译本。"
+    },
+    {
+      "key": "ess_item_7_score",
+      "label_zh": "第7项：无酒午餐后静坐",
+      "aliases": [
+        "ESS7",
+        "ESS item 7",
+        "ESS第7项",
+        "After-lunch sitting"
+      ],
+      "unit": "score",
+      "accept": {},
+      "range": [
+        0,
+        3
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "原问卷第7项：未饮酒的午餐后安静坐着时。填已完成问卷的整数单项分数；中文为字段说明，不是经过验证的量表译本。"
+    },
+    {
+      "key": "ess_item_8_score",
+      "label_zh": "第8项：车在路上短暂停驶",
+      "aliases": [
+        "ESS8",
+        "ESS item 8",
+        "ESS第8项",
+        "Car traffic stop"
+      ],
+      "unit": "score",
+      "accept": {},
+      "range": [
+        0,
+        3
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "原问卷第8项：车在交通中停下数分钟时；不是驾车途中持续行驶情境。填已完成问卷的整数单项分数；中文为字段说明，不是经过验证的量表译本。"
+    },
+    {
+      "key": "age",
+      "label_zh": "实足年龄",
+      "aliases": [
+        "年龄",
+        "Age"
+      ],
+      "unit": "a",
+      "accept": {
+        "year": 1
+      },
+      "range": [
+        18,
+        120
+      ],
+      "required": false,
+      "from": "profile",
+      "flag": "--age",
+      "note_zh": "可选成人年龄，不加权；原文患者18–78岁，对照年龄范围未单列。120岁是输入防错上限，不是论文切点。"
+    },
+    {
+      "key": "sex",
+      "label_zh": "性别",
+      "required": false,
+      "from": "profile",
+      "flag": "--sex",
+      "note_zh": "可选上下文，不参与计分；男/女/其他/未知或male/female/other/unknown。"
+    }
+  ],
+  "outputs": [
+    {
+      "key": "ess_item_1_score",
+      "label_zh": "第1项：坐着阅读得分",
+      "unit": "score"
+    },
+    {
+      "key": "ess_item_2_score",
+      "label_zh": "第2项：看电视得分",
+      "unit": "score"
+    },
+    {
+      "key": "ess_item_3_score",
+      "label_zh": "第3项：公共场所静坐得分",
+      "unit": "score"
+    },
+    {
+      "key": "ess_item_4_score",
+      "label_zh": "第4项：连续乘车一小时得分",
+      "unit": "score"
+    },
+    {
+      "key": "ess_item_5_score",
+      "label_zh": "第5项：下午躺下休息得分",
+      "unit": "score"
+    },
+    {
+      "key": "ess_item_6_score",
+      "label_zh": "第6项：坐着交谈得分",
+      "unit": "score"
+    },
+    {
+      "key": "ess_item_7_score",
+      "label_zh": "第7项：无酒午餐后静坐得分",
+      "unit": "score"
+    },
+    {
+      "key": "ess_item_8_score",
+      "label_zh": "第8项：车在路上短暂停驶得分",
+      "unit": "score"
+    },
+    {
+      "key": "ess_total_score",
+      "label_zh": "ESS总分",
+      "unit": "score",
+      "note_zh": "八项等权相加；不输出疾病诊断或后来版本的轻中重分档。"
+    }
+  ],
+  "validation": {
+    "status": "reproduced",
+    "examples": [
+      {
+        "locator": "Table 1, p. 541: four printed per-item response scores",
+        "quote": "0 = would never doze\n1 = slight chance of dozing\n2 = moderate change of dozing\n3 = high chance of dozing",
+        "values": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "tolerance": "整数逐项完全一致；验证八项各自保留原分值，不声称原文给出了完整个人总分示例。",
+        "test": "tests/test_manifest.py::test_table1_item_scores"
+      },
+      {
+        "locator": "Development of the ESS, p. 541, last paragraph: printed total-score range",
+        "quote": "The numbers selected for the eight situations in the ESS were added together to give a score for each subject, between 0 and 24.",
+        "values": [
+          0,
+          24
+        ],
+        "tolerance": "整数完全一致；八项全为0得0分、全为3得24分，复现原文印出的总分上下限，不是个人病例示例。",
+        "test": "tests/test_manifest.py::test_printed_total_range"
+      }
+    ]
+  }
+}
