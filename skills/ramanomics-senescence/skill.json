@@ -10,6 +10,9 @@
   "domains": [
     "细胞衰老"
   ],
+  "topic": [
+    "aging_biology"
+  ],
   "blurb_zh": "拉曼组学衰老研究里 p21 阳性细胞差异基因的查表。",
   "intents": [
     "model_organism"

@@ -10,6 +10,10 @@
   "domains": [
     "衰弱与死亡风险"
   ],
+  "topic": [
+    "biological_age",
+    "sleep_circadian"
+  ],
   "blurb_zh": "你已有的睡眠年龄估计减去实足年龄，只做相减，不跑论文的深度网络。",
   "intents": [
     "wearable_sleep",

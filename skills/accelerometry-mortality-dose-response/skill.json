@@ -12,6 +12,9 @@
     "久坐",
     "死亡风险"
   ],
+  "topic": [
+    "physical_activity"
+  ],
   "blurb_zh": "按符合原文处理定义的加速度计活动或久坐日均值，查全因死亡相对危险比。",
   "intents": [
     "frailty_mortality"

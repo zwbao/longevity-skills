@@ -10,6 +10,9 @@
   "domains": [
     "蛋白、代谢与器官年龄"
   ],
+  "topic": [
+    "brain_cognition"
+  ],
   "blurb_zh": "照录你交来的三个肽段结构可及性；不做阿尔茨海默病分组。",
   "intents": [
     "cognition_dementia"

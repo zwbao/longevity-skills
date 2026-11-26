@@ -10,6 +10,10 @@
   "domains": [
     "线粒体"
   ],
+  "topic": [
+    "aging_biology",
+    "genetics"
+  ],
   "blurb_zh": "60 岁以后的重链替换类型，以及正文点名的克隆性造血基因。",
   "intents": [
     "gene_variant"

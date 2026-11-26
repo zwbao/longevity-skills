@@ -1,0 +1,169 @@
+{
+  "schema": "longevity-skill/1",
+  "name": "mifflin-st-jeor-ree",
+  "kind": "paper",
+  "tier": "A",
+  "species": [
+    "human"
+  ],
+  "evidence": "cross_sectional",
+  "domains": [
+    "体重与代谢",
+    "静息能量消耗"
+  ],
+  "topic": [
+    "body_weight_metabolism",
+    "diet_nutrition"
+  ],
+  "blurb_zh": "用体重、身高、年龄和性别估算静息能量消耗，并查看自定体重目标代入方程后的变化。",
+  "intents": [
+    "lab_meaning",
+    "before_after"
+  ],
+  "triage": {
+    "reason_zh": "健康成人横断面数据建立的静息能量消耗方程，正文公开全部系数，Table 1输入均值可复现Table 3预测均值。",
+    "reviewed": false
+  },
+  "population": {
+    "age_years": [
+      19,
+      78
+    ],
+    "note_zh": "美国RENO Diet-Heart Study健康成人；女性20–76岁，男性正文19–78岁；未作独立外部验证。极端体重及患病、妊娠哺乳情境不在本研究验证范围。"
+  },
+  "paper": {
+    "doi": "10.1093/ajcn/51.2.241",
+    "title": "A new predictive equation for resting energy expenditure in healthy individuals.",
+    "title_zh": "健康成人静息能量消耗预测方程",
+    "journal": "The American Journal of Clinical Nutrition",
+    "year": 1990,
+    "authors": "Mifflin 等",
+    "article_url": "https://ajcn.nutrition.org/article/S0002-9165(23)16698-6/fulltext",
+    "supplements": [],
+    "card_notes": [
+      "使用正文方程3及简化方程7、8；复现的是Table 3的群体平均预测值，不是个人预测误差验证。",
+      "已读取公开原版PDF全文（https://www.carnotdiet.com/Files/BMRMifflin1990.pdf）；全文未点名补充文件或公开代码数据。出版社实时页面受访问验证阻挡，附件列表完整性未能独立核实。"
+    ],
+    "summary_zh": "这项研究用健康成年人的体重、身高、年龄和性别建立了静息能量消耗预测方程，并与间接测热结果进行比较。个人报告只估算静息能量消耗和用户提供的体重情景，不计算每日总能量消耗、饮食热量处方或寿命。",
+    "summary_status": "draft"
+  },
+  "entry": {
+    "script": "scripts/personal_report.py",
+    "measurements_flag": "--measurements",
+    "measurements_header": [
+      "marker",
+      "value",
+      "unit"
+    ],
+    "age_flag": "--age",
+    "sex_flag": "--sex",
+    "out_flag": "--out",
+    "result_json": true,
+    "targets_flag": "--targets",
+    "levers_json": true
+  },
+  "inputs_status": "verified",
+  "inputs": [
+    {
+      "key": "weight_kg",
+      "label_zh": "体重",
+      "aliases": [
+        "Weight",
+        "body weight",
+        "体质量",
+        "体重(kg)"
+      ],
+      "unit": "kg",
+      "accept": {
+        "g": 0.001,
+        "lb": 0.45359237
+      },
+      "range": [
+        25,
+        350
+      ],
+      "unit_required": true,
+      "required": true,
+      "from": "measurements",
+      "note_zh": "当前实测体重，不用理想体重或调整体重。范围是输入错误检查，不是已验证人群范围。"
+    },
+    {
+      "key": "height_cm",
+      "label_zh": "身高",
+      "aliases": [
+        "Height",
+        "body height",
+        "身高(cm)"
+      ],
+      "unit": "cm",
+      "accept": {
+        "m": 100,
+        "mm": 0.1,
+        "in": 2.54
+      },
+      "range": [
+        120,
+        230
+      ],
+      "unit_required": true,
+      "required": true,
+      "from": "measurements"
+    },
+    {
+      "key": "age",
+      "label_zh": "年龄",
+      "aliases": [
+        "Age",
+        "实足年龄"
+      ],
+      "unit": "a",
+      "range": [
+        19,
+        78
+      ],
+      "required": true,
+      "from": "profile",
+      "flag": "--age",
+      "note_zh": "允许小数年；超出总体研究年龄范围停止计算。"
+    },
+    {
+      "key": "sex",
+      "label_zh": "方程使用的性别",
+      "aliases": [
+        "Sex",
+        "性别"
+      ],
+      "required": true,
+      "from": "profile",
+      "flag": "--sex",
+      "note_zh": "male/男 或 female/女；按论文二分类系数，不推断未知类别。"
+    }
+  ],
+  "outputs": [
+    {
+      "key": "ree_original_kcal_d",
+      "label_zh": "静息能量消耗（原式）",
+      "unit": "kcal/d"
+    },
+    {
+      "key": "ree_simplified_kcal_d",
+      "label_zh": "静息能量消耗（简化式）",
+      "unit": "kcal/d"
+    }
+  ],
+  "validation": {
+    "status": "reproduced",
+    "examples": [
+      {
+        "locator": "Table 1 (p. 243), All men / All women: Weight, Height, Age; Table 3 (p. 246), REE without LBM: MSJE",
+        "quote": "All men (n = 251) 87.5 ± 14.4 178.3 ± 6.8 44.4 ± 14.3\nAll women (n = 247) 70.2 ± 14.1 164.2 ± 6.3 44.6 ± 14.0\nMales (n = 251) 1775 ± 192\nFemales (n = 247) 1348 ± 179",
+        "values": [
+          1775,
+          1348
+        ],
+        "tolerance": "原式绝对误差≤1.6 kcal/d；线性式代入分性别均值等于预测均值。输入各保留1位小数、输出取整数，舍入界限为0.05×(9.99+6.25+4.92)+0.5=1.558 kcal/d。简化式另扣除已印系数舍入造成的0.01×体重−0.08×年龄偏移后核对；不把群体均值当作个人实测示例。",
+        "test": "tests/test_manifest.py::test_printed_table3_means"
+      }
+    ]
+  }
+}

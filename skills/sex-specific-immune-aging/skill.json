@@ -10,6 +10,9 @@
   "domains": [
     "免疫与炎症"
   ],
+  "topic": [
+    "organ_aging"
+  ],
   "blurb_zh": "单细胞免疫衰老轨迹。补充材料没有保存多层感知机。",
   "intents": [],
   "triage": {

@@ -10,6 +10,9 @@
   "domains": [
     "工具与证据库"
   ],
+  "topic": [
+    "drugs_supplements"
+  ],
   "blurb_zh": "AI4L 1.3.29（forever-healthy/AI4L c3ea3e9）。按 Forever Healthy 的协议写干预证据综述。已有 Evipedia 综述时先引用综述。",
   "intents": [
     "intervention_evidence"

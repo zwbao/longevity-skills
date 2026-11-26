@@ -10,6 +10,9 @@
   "domains": [
     "甲基化"
   ],
+  "topic": [
+    "biological_age"
+  ],
   "blurb_zh": "血液甲基化芯片的 91 个位点 β 值，按论文补充表 1 算甲基化内在能力（认知、行走、情绪、感官和活力的综合）。",
   "intents": [
     "epigenetic_age",

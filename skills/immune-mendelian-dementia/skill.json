@@ -10,6 +10,11 @@
   "domains": [
     "免疫与炎症"
   ],
+  "topic": [
+    "brain_cognition",
+    "drugs_supplements",
+    "organ_aging"
+  ],
   "blurb_zh": "痴呆研究里点名的用药类别。",
   "intents": [
     "cognition_dementia"

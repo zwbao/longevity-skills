@@ -11,6 +11,10 @@
     "衰弱与死亡风险",
     "昼夜节律"
   ],
+  "topic": [
+    "sleep_circadian",
+    "musculoskeletal_frailty"
+  ],
   "blurb_zh": "用最活跃十小时和最不活跃五小时的活动量算相对振幅，并把两道疲劳题相加；不判断衰弱。",
   "intents": [
     "wearable_sleep",

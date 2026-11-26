@@ -10,6 +10,10 @@
   "domains": [
     "临床年龄与可穿戴"
   ],
+  "topic": [
+    "musculoskeletal_frailty",
+    "biological_age"
+  ],
   "blurb_zh": "用已评估的健康缺陷计数算虚弱指数，附原论文的探索性生存模型。",
   "intents": [
     "biological_age"

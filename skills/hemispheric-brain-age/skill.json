@@ -10,6 +10,9 @@
   "domains": [
     "影像"
   ],
+  "topic": [
+    "brain_cognition"
+  ],
   "blurb_zh": "左右脑磁共振测量的侧化指数（左减右除以左加右），不预测半球脑年龄。",
   "intents": [
     "imaging"
