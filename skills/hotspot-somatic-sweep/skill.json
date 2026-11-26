@@ -11,6 +11,10 @@
     "克隆性造血",
     "血液测序"
   ],
+  "topic": [
+    "organ_aging",
+    "aging_biology"
+  ],
   "blurb_zh": "用一条血液变异的读段计数计算 VAF，核对是否满足论文热点名单、支持读段和克隆扫荡阈值；不估算个人白血病概率。",
   "intents": [
     "gene_variant"

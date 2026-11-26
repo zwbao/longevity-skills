@@ -10,6 +10,10 @@
   "domains": [
     "营养感应"
   ],
+  "topic": [
+    "aging_biology",
+    "genetics"
+  ],
   "blurb_zh": "是不是论文点名的 PTEN 替换。",
   "intents": [
     "model_organism"

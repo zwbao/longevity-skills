@@ -10,6 +10,10 @@
   "domains": [
     "蛋白、代谢与器官年龄"
   ],
+  "topic": [
+    "biological_age",
+    "organ_aging"
+  ],
   "blurb_zh": "已经算好的口腔微生物年龄残差。",
   "intents": [],
   "triage": {

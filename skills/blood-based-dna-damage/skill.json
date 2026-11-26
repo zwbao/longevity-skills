@@ -10,6 +10,10 @@
   "domains": [
     "蛋白、代谢与器官年龄"
   ],
+  "topic": [
+    "brain_cognition",
+    "aging_biology"
+  ],
   "blurb_zh": "血液转录本的倍数变化、校正显著性和长度偏倚。",
   "intents": [],
   "triage": {

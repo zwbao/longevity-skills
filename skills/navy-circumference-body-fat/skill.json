@@ -10,6 +10,9 @@
   "domains": [
     "体脂与腰围"
   ],
+  "topic": [
+    "body_weight_metabolism"
+  ],
   "blurb_zh": "用身高、颈围、腰围（女性加臀围）按美国海军围度方程估算体脂率，再算腰围身高比、腰臀比，并按国家标准看是否中心型肥胖。",
   "intents": [
     "body_fat_waist"

@@ -10,6 +10,11 @@
   "domains": [
     "皮肤"
   ],
+  "topic": [
+    "organ_aging",
+    "musculoskeletal_frailty",
+    "drugs_supplements"
+  ],
   "blurb_zh": "IL-36 家族，以及 spesolimab 这个名字。",
   "intents": [
     "model_organism"

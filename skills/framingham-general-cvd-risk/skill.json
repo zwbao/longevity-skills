@@ -10,6 +10,9 @@
   "domains": [
     "临床年龄与可穿戴"
   ],
+  "topic": [
+    "cardiovascular"
+  ],
   "blurb_zh": "用年龄、血压、血脂或体质指数估算十年总体心血管风险和等价心脏年龄。",
   "intents": [
     "lab_meaning",

@@ -10,6 +10,11 @@
   "domains": [
     "影像"
   ],
+  "topic": [
+    "biological_age",
+    "body_weight_metabolism",
+    "cardiovascular"
+  ],
   "blurb_zh": "把腹部CT八项测量放在同性别、同年龄段存活者和死亡者的中位数旁边。",
   "intents": [
     "imaging",

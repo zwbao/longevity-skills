@@ -10,6 +10,10 @@
   "domains": [
     "甲基化"
   ],
+  "topic": [
+    "biological_age",
+    "diet_nutrition"
+  ],
   "blurb_zh": "限食试验里的时钟数值。",
   "intents": [
     "epigenetic_age",

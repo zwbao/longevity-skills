@@ -11,6 +11,9 @@
   "domains": [
     "基质、软骨与纤维化"
   ],
+  "topic": [
+    "aging_biology"
+  ],
   "blurb_zh": "与 128 个基因的交集，以及纤维化的 ABSENT-MILD 或 MODERATE-SEVERE。",
   "intents": [
     "model_organism"

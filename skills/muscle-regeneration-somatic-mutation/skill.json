@@ -10,6 +10,10 @@
   "domains": [
     "骨骼肌"
   ],
+  "topic": [
+    "musculoskeletal_frailty",
+    "aging_biology"
+  ],
   "blurb_zh": "基因名是否落在补充表加粗的小鼠行。",
   "intents": [
     "model_organism"

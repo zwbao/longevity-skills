@@ -11,6 +11,9 @@
     "饮食与营养",
     "死亡风险"
   ],
+  "topic": [
+    "diet_nutrition"
+  ],
   "blurb_zh": "按每日全谷物食品摄入量匹配论文中的群体相对风险及置信区间。",
   "intents": [
     "frailty_mortality",

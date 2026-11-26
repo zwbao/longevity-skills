@@ -10,6 +10,11 @@
   "domains": [
     "运动与慢病风险"
   ],
+  "topic": [
+    "physical_activity",
+    "cardiovascular",
+    "organ_aging"
+  ],
   "blurb_zh": "用每周非职业活动时长查询死亡、心血管病和癌症的人群相对风险，并比较自定目标。",
   "intents": [
     "intervention_evidence",

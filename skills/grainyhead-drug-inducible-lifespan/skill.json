@@ -10,6 +10,10 @@
   "domains": [
     "老年保护"
   ],
+  "topic": [
+    "drugs_supplements",
+    "aging_biology"
+  ],
   "blurb_zh": "线虫寿命试验里点名的化合物。",
   "intents": [
     "model_organism"

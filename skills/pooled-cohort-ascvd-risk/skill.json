@@ -10,6 +10,9 @@
   "domains": [
     "心血管"
   ],
+  "topic": [
+    "cardiovascular"
+  ],
   "blurb_zh": "用年龄、血脂、血压、吸烟和糖尿病状态，按原始 PCE 方程估计十年首次心血管病风险。",
   "intents": [
     "frailty_mortality",

@@ -10,6 +10,9 @@
   "domains": [
     "生活方式与寿命"
   ],
+  "topic": [
+    "tobacco_alcohol"
+  ],
   "blurb_zh": "用每周纯酒精总量匹配论文分档，查看对应研究人群的寿命差。",
   "intents": [
     "frailty_mortality"

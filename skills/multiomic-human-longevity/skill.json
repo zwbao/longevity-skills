@@ -10,6 +10,10 @@
   "domains": [
     "长寿基因"
   ],
+  "topic": [
+    "genetics",
+    "biological_age"
+  ],
   "blurb_zh": "正文表 1 和表 2 里的基因，以及表上的正负号。",
   "intents": [
     "gene_variant"

@@ -10,6 +10,9 @@
   "domains": [
     "蛋白、代谢与器官年龄"
   ],
+  "topic": [
+    "biological_age"
+  ],
   "blurb_zh": "八种氨基酸各占总和的比例（不出氨基酸年龄）。",
   "intents": [
     "metabolomic_age"
