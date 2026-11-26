@@ -10,6 +10,11 @@
   "domains": [
     "衰弱与死亡风险"
   ],
+  "topic": [
+    "body_weight_metabolism",
+    "tobacco_alcohol",
+    "physical_activity"
+  ],
   "blurb_zh": "数一数 11 项可改变的危险因素（教育、抑郁、吸烟、饮酒、运动、饮食、睡眠、体重、血糖、血压、血脂）有几项，并给出你所在年龄段每多一项对应的全因死亡风险比。",
   "intents": [
     "frailty_mortality",

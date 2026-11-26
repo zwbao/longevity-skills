@@ -10,6 +10,10 @@
   "domains": [
     "基质、软骨与纤维化"
   ],
+  "topic": [
+    "musculoskeletal_frailty",
+    "aging_biology"
+  ],
   "blurb_zh": "研究用：把单细胞测序得到的每个软骨细胞突变数按覆盖和灵敏度校正成突变负担；普通人拿不到这类数据。",
   "intents": [],
   "triage": {

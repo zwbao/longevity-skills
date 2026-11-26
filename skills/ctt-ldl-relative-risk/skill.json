@@ -10,6 +10,10 @@
   "domains": [
     "心血管与代谢"
   ],
+  "topic": [
+    "cardiovascular",
+    "body_weight_metabolism"
+  ],
   "blurb_zh": "将 LDL-C 绝对降幅换算为主要血管事件的相对发生率情景。",
   "intents": [
     "lab_meaning",

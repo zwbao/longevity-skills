@@ -11,6 +11,10 @@
   "domains": [
     "卵巢与生殖"
   ],
+  "topic": [
+    "organ_aging",
+    "aging_biology"
+  ],
   "blurb_zh": "卵母细胞阶段在复合体组装和鱼藤酮存活上的方向。",
   "intents": [
     "model_organism"

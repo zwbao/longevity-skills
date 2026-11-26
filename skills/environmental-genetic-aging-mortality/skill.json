@@ -10,6 +10,10 @@
   "domains": [
     "衰弱与死亡风险"
   ],
+  "topic": [
+    "environment",
+    "genetics"
+  ],
   "blurb_zh": "暴露回答。",
   "intents": [
     "frailty_mortality"

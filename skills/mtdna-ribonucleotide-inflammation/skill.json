@@ -11,6 +11,9 @@
   "domains": [
     "线粒体"
   ],
+  "topic": [
+    "aging_biology"
+  ],
   "blurb_zh": "热图上印出的干扰素刺激基因。",
   "intents": [
     "model_organism"

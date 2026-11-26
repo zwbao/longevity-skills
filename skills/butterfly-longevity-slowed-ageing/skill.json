@@ -11,6 +11,9 @@
     "衰弱与死亡风险",
     "比较生物学"
   ],
+  "topic": [
+    "aging_biology"
+  ],
   "blurb_zh": "对上的物种的最长寿命，以及成虫日龄。",
   "intents": [
     "model_organism"

@@ -10,6 +10,9 @@
   "domains": [
     "蛋白、代谢与器官年龄"
   ],
+  "topic": [
+    "biological_age"
+  ],
   "blurb_zh": "把你已经算好的各器官预测年龄减去实足年龄（简单相减）；论文的器官年龄模型权重没有公开，这里不重算。",
   "intents": [
     "biological_age",

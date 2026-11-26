@@ -10,6 +10,10 @@
   "domains": [
     "再生"
   ],
+  "topic": [
+    "brain_cognition",
+    "aging_biology"
+  ],
   "blurb_zh": "正文写明方向的基因。双向基因表没有倍数列。",
   "intents": [
     "model_organism"

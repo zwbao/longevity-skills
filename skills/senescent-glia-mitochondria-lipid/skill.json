@@ -10,6 +10,10 @@
   "domains": [
     "线粒体"
   ],
+  "topic": [
+    "brain_cognition",
+    "aging_biology"
+  ],
   "blurb_zh": "衰老胶质的标志、爬管高度占瓶高的比例，以及脂质方向。",
   "intents": [
     "model_organism"

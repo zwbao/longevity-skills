@@ -11,6 +11,10 @@
   "domains": [
     "营养感应"
   ],
+  "topic": [
+    "aging_biology",
+    "organ_aging"
+  ],
   "blurb_zh": "肝细胞因子 HPS 经 ANXA2–ERK–LKB1 激活 AMPK 的通路清单。",
   "intents": [
     "model_organism"

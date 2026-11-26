@@ -12,6 +12,11 @@
   "domains": [
     "自噬"
   ],
+  "topic": [
+    "musculoskeletal_frailty",
+    "aging_biology",
+    "drugs_supplements"
+  ],
   "blurb_zh": "正文点名的自噬激活物。香芹酚和百里香酚保留斑马鱼实验里的名次。",
   "intents": [
     "model_organism"

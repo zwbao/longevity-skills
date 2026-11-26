@@ -11,6 +11,9 @@
   "domains": [
     "再生"
   ],
+  "topic": [
+    "aging_biology"
+  ],
   "blurb_zh": "CTH、CBS、半胱氨酸相关代谢物和组蛋白标记的方向。",
   "intents": [
     "model_organism"
