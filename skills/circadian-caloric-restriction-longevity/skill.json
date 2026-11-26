@@ -10,6 +10,10 @@
   "domains": [
     "昼夜节律"
   ],
+  "topic": [
+    "sleep_circadian",
+    "diet_nutrition"
+  ],
   "blurb_zh": "30% 削减、进食时相和 2 小时或 12 小时窗口对应的实验组别。",
   "intents": [
     "model_organism"

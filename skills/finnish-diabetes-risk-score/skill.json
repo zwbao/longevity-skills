@@ -10,6 +10,10 @@
   "domains": [
     "代谢与心血管"
   ],
+  "topic": [
+    "body_weight_metabolism",
+    "screening_prevention"
+  ],
   "blurb_zh": "用年龄、腰围、BMI和四项问卷计算原版七项糖尿病风险筛查分数。",
   "intents": [
     "lab_meaning",

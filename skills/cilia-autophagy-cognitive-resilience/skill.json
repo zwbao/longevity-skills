@@ -11,6 +11,10 @@
     "脑、认知与痴呆",
     "自噬"
   ],
+  "topic": [
+    "brain_cognition",
+    "aging_biology"
+  ],
   "blurb_zh": "纤毛–自噬轴上的蛋白，以及纤毛长度。",
   "intents": [
     "model_organism"

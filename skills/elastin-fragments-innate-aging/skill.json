@@ -11,6 +11,9 @@
   "domains": [
     "基质、软骨与纤维化"
   ],
+  "topic": [
+    "aging_biology"
+  ],
   "blurb_zh": "血清弹性蛋白片段是否落在论文比较的高组或正常组浓度区间。",
   "intents": [
     "immune_inflammation"

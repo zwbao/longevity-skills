@@ -10,6 +10,9 @@
   "domains": [
     "影像"
   ],
+  "topic": [
+    "brain_cognition"
+  ],
   "blurb_zh": "把你交来的预期白质和非典型白质 SUVR 相减；这两个值要用论文自建的脑区掩模从 PET 提取，论文没有给个人切点。",
   "intents": [
     "imaging",

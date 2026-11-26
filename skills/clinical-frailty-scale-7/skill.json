@@ -10,6 +10,9 @@
   "domains": [
     "衰弱与功能"
   ],
+  "topic": [
+    "musculoskeletal_frailty"
+  ],
   "blurb_zh": "把临床人员选定的整体功能描述对应到原版七级临床衰弱量表，解释该等级；不自动判断症状或计算个人死亡概率。",
   "intents": [
     "frailty_mortality"

@@ -10,6 +10,9 @@
   "domains": [
     "脑、认知与痴呆"
   ],
+  "topic": [
+    "brain_cognition"
+  ],
   "blurb_zh": "轻度认知障碍脑结构特征研究；模型权重未公开，只有论文卡片。",
   "intents": [],
   "triage": {

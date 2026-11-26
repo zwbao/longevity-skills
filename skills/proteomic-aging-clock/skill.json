@@ -10,6 +10,9 @@
   "domains": [
     "蛋白、代谢与器官年龄"
   ],
+  "topic": [
+    "biological_age"
+  ],
   "blurb_zh": "你已有的蛋白质年龄减去实足年龄，只做相减，不从蛋白量重算论文的时钟。",
   "intents": [
     "proteomic_organ_age"

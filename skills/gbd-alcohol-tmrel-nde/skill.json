@@ -10,6 +10,9 @@
   "domains": [
     "生活方式与健康风险"
   ],
+  "topic": [
+    "tobacco_alcohol"
+  ],
   "blurb_zh": "把自己的平均每日纯酒精摄入量与按年龄、性别、地区和历史年份分层的 GBD 人群阈值比较，显示差值及所在侧，不给安全饮酒量。",
   "intents": [
     "intervention_evidence"

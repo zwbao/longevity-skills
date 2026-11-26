@@ -10,6 +10,10 @@
   "domains": [
     "脑、认知与痴呆"
   ],
+  "topic": [
+    "brain_cognition",
+    "genetics"
+  ],
   "blurb_zh": "e2 或 e4，以及蛋白符号。",
   "intents": [
     "cognition_dementia",

@@ -10,6 +10,9 @@
   "domains": [
     "甲基化"
   ],
+  "topic": [
+    "biological_age"
+  ],
   "blurb_zh": "位点取值为 0 或 1 时的单细胞月龄。",
   "intents": [
     "model_organism"

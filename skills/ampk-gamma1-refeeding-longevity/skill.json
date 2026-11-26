@@ -11,6 +11,9 @@
   "domains": [
     "营养感应"
   ],
+  "topic": [
+    "musculoskeletal_frailty"
+  ],
   "blurb_zh": "八个多维预后指数分项点数的平均和分档；不从 PRKAG1 表达算任何个人分数。",
   "intents": [
     "frailty_mortality"

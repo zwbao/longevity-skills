@@ -10,6 +10,9 @@
   "domains": [
     "临床年龄与可穿戴"
   ],
+  "topic": [
+    "biological_age"
+  ],
   "blurb_zh": "同一时钟多次生物年龄的波动（只算差值，不算新的生物年龄）。",
   "intents": [
     "before_after",

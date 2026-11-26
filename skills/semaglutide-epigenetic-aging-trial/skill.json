@@ -10,6 +10,10 @@
   "domains": [
     "甲基化"
   ],
+  "topic": [
+    "biological_age",
+    "drugs_supplements"
+  ],
   "blurb_zh": "同一时钟第 32 周减基线（只做减法，旁边附论文组间差）。",
   "intents": [
     "before_after",

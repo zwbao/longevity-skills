@@ -10,6 +10,9 @@
   "domains": [
     "糖代谢"
   ],
+  "topic": [
+    "body_weight_metabolism"
+  ],
   "blurb_zh": "用糖化血红蛋白、年龄、性别和随访间隔计算 ELSA Model A 的糖尿病检出概率（预印本研究模型）。",
   "intents": [
     "lab_meaning"

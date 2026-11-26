@@ -10,6 +10,9 @@
   "domains": [
     "体能与衰弱"
   ],
+  "topic": [
+    "musculoskeletal_frailty"
+  ],
   "blurb_zh": "根据半串联与并足或全串联站立、8英尺常速步行和五次起立记录，计算原版 SPPB 三项得分及总分。",
   "intents": [
     "frailty_mortality"
