@@ -1,7 +1,7 @@
 {
   "schema": "longevity-coverage/1",
   "reference_items": 583,
-  "reference_covered": 72,
+  "reference_covered": 75,
   "unlabelled": {
     "claims": 0,
     "effects": 0,
@@ -1140,10 +1140,11 @@
         "method": {
           "rows": 0,
           "effects": 0,
-          "papers": 5,
+          "papers": 6,
           "skills": [
             "alcohol-burden-of-proof",
             "alcohol-consumption-thresholds",
+            "frax-uk-risk-lookup",
             "gbd-alcohol-tmrel-nde",
             "modifiable-risk-factor-score",
             "smoking-burden-of-proof"
@@ -2789,7 +2790,7 @@
         "method": {
           "rows": 0,
           "effects": 0,
-          "papers": 14,
+          "papers": 16,
           "skills": [
             "calf-circumference-decline-falls",
             "clinical-frailty-scale-7",
@@ -2798,9 +2799,11 @@
             "epigenetic-frailty-risk-score",
             "fnih-sarcopenia-cutpoints",
             "frail-scale",
+            "frax-uk-risk-lookup",
             "genome-wide-proteomics-frailty",
             "lee-mortality-index",
             "reactive-agility-fall-history",
+            "sarc-f",
             "schonberg-mortality-index",
             "senior-fitness-independence",
             "share-intrinsic-capacity-domains",
@@ -2808,7 +2811,7 @@
           ],
           "latest": "2026-11-26",
           "reference": 16,
-          "covered": 4,
+          "covered": 6,
           "missing": [
             {
               "id": "musculoskeletal-frailty-method-awgs-2019-2025",
@@ -2833,18 +2836,6 @@
               "by": [],
               "doi": [
                 "10.1093/ageing/afy169"
-              ]
-            },
-            {
-              "id": "musculoskeletal-frailty-method-frax",
-              "item": "FRAX fracture risk assessment tool",
-              "item_zh": "FRAX 骨折风险评估工具",
-              "priority": "P0",
-              "status": "reviewed",
-              "covered": false,
-              "by": [],
-              "doi": [
-                "10.1007/s00198-007-0543-5"
               ]
             },
             {
@@ -2917,19 +2908,6 @@
               "by": [],
               "doi": [
                 "10.1136/bmj.e3427"
-              ]
-            },
-            {
-              "id": "musculoskeletal-frailty-method-sarc-f",
-              "item": "SARC-F sarcopenia screening questionnaire",
-              "item_zh": "SARC-F 肌少症筛查问卷",
-              "priority": "P0",
-              "status": "reviewed",
-              "covered": false,
-              "by": [],
-              "doi": [
-                "10.1002/jcsm.12048",
-                "10.1016/j.jamda.2013.05.018"
               ]
             },
             {
@@ -3225,13 +3203,14 @@
         "method": {
           "rows": 0,
           "effects": 0,
-          "papers": 1,
+          "papers": 2,
           "skills": [
-            "emfra-factor-scores"
+            "emfra-factor-scores",
+            "ucla-loneliness-scale-v3"
           ],
-          "latest": "2026-11-25",
+          "latest": "2026-11-26",
           "reference": 14,
-          "covered": 0,
+          "covered": 1,
           "missing": [
             {
               "id": "mental-social-method-cesd10",
@@ -3375,18 +3354,6 @@
               "by": [],
               "doi": [
                 "10.1177/0164027504268574"
-              ]
-            },
-            {
-              "id": "mental-social-method-ucla-loneliness-v3",
-              "item": "UCLA Loneliness Scale, Version 3",
-              "item_zh": "UCLA 孤独感量表（第3版）",
-              "priority": "P0",
-              "status": "reviewed",
-              "covered": false,
-              "by": [],
-              "doi": [
-                "10.1207/s15327752jpa6601_2"
               ]
             },
             {
@@ -3660,11 +3627,12 @@
         "method": {
           "rows": 0,
           "effects": 0,
-          "papers": 4,
+          "papers": 5,
           "skills": [
             "fib4-index",
             "finnish-diabetes-risk-score",
             "new-chinese-diabetes-risk-score",
+            "sarc-f",
             "stop-bang"
           ],
           "latest": "2026-11-26",

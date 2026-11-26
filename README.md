@@ -311,6 +311,10 @@ python3 -m tools.lsk test --changed origin/main   # 只测相对 main 改动过�
 
 - `skills/smoking-burden-of-proof/` — 按当前吸烟者的累计包年或每日支数，在论文印出的暴露点查相对风险与不确定区间。
 
+## 心理与社交
+
+- `skills/ucla-loneliness-scale-v3/` — 用UCLA第三版完整问卷的原始回答计算孤独感总分，逐题显示反向计分。
+
 ## 心理与认知
 
 - `skills/emfra-factor-scores/` — 见「功能与衰弱」。
@@ -384,6 +388,10 @@ python3 -m tools.lsk test --changed origin/main   # 只测相对 main 改动过�
 
 - `skills/new-chinese-diabetes-risk-score/` — 用年龄、性别、腰围、BMI、收缩压和家族史计算糖尿病筛查分数。
 
+## 肌少症与身体功能
+
+- `skills/sarc-f/` — 用提物、走路、起身、爬楼和跌倒问卷计算SARC-F肌少症风险筛查分数。
+
 ## 肝脏与代谢
 
 - `skills/fib4-index/` — 用年龄、肝酶和血小板计算脂肪肝成人的 FIB-4 纤维化指数。
@@ -455,6 +463,14 @@ python3 -m tools.lsk test --changed origin/main   # 只测相对 main 改动过�
 - `skills/chinese-healthy-eating-index/` — 用每日食物标准份数、总能量、烹调油、钠、添加糖和酒精摄入计算中国健康膳食指数 CHEI。
 - `skills/vegetable-tmrel-gap/` — 用饮食记录中的蔬菜日均克数，计算与论文蔬菜摄入参考范围的差距。
 - `skills/whole-grain-dose-response/` — 按每日全谷物食品摄入量匹配论文中的群体相对风险及置信区间。
+
+## 骨折
+
+- `skills/frax-uk-risk-lookup/` — 按年龄、性别和单一危险因素查英国模型的十年骨折概率，仅适用BMI为25的论文已印出年龄点。
+
+## 骨质疏松
+
+- `skills/frax-uk-risk-lookup/` — 见「骨折」。
 
 ## 只收录，不参与个人调度
 
