@@ -1,0 +1,193 @@
+{
+  "schema": "longevity-skill/1",
+  "name": "alcohol-mortality-risk-lookup",
+  "kind": "paper",
+  "tier": "A",
+  "species": [
+    "human"
+  ],
+  "evidence": "review",
+  "domains": [
+    "饮酒",
+    "全因死亡"
+  ],
+  "topic": [
+    "tobacco_alcohol"
+  ],
+  "blurb_zh": "用日均纯酒精摄入量和饮酒史，查阅总体或男女性分层的全因死亡人群相对风险及置信区间。",
+  "intents": [
+    "frailty_mortality",
+    "intervention_evidence"
+  ],
+  "triage": {
+    "reason_zh": "正文表2和表4完整印出饮酒量区间及完全调整RR和置信区间，可按个人摄入量和可选性别直接查表复现。",
+    "reviewed": false
+  },
+  "paper": {
+    "doi": "10.1001/jamanetworkopen.2023.6185",
+    "title": "Association Between Daily Alcohol Intake and Risk of All-Cause Mortality: A Systematic Review and Meta-analyses.",
+    "title_zh": "日均饮酒量与全因死亡风险：系统综述与荟萃分析",
+    "journal": "JAMA Network Open",
+    "year": 2023,
+    "authors": "Zhao 等",
+    "article_url": "https://jamanetwork.com/journals/jamanetworkopen/fullarticle/2802963",
+    "supplements": [
+      {
+        "label": "Supplement 1：eAppendix、eTables 1–3、eFigures 1–4（已读；个人读出使用正文表2和表4）",
+        "url": "https://pmc.ncbi.nlm.nih.gov/articles/instance/10066463/bin/jamanetwopen-e236185-s001.pdf"
+      },
+      {
+        "label": "Supplement 2：Data Sharing Statement（已读）",
+        "url": "https://pmc.ncbi.nlm.nih.gov/articles/instance/10066463/bin/jamanetwopen-e236185-s002.pdf"
+      }
+    ],
+    "summary_zh": "这项人群队列的系统综述与荟萃分析发现，调整研究层面的偏倚和混杂后，低量饮酒未呈现显著的全因死亡保护关联，较高饮酒量与死亡风险升高相关，女性在较低饮酒档位即出现升高关联。个人报告只按日均纯酒精量、饮酒史及可选性别匹配人群相对风险和置信区间，不计算个人死亡概率或改变饮酒后的因果效果。",
+    "summary_status": "draft",
+    "card_notes": [
+      "采用表2和表4的完全调整列，统一参照终身不饮酒者；不把队列中位年龄分层作为个人年龄模型。",
+      "已读取全文、两份附件及2023年5月更正（图和附件的置信区间）；补充文件从期刊签名链接下载。原始数据不开放。",
+      "OSF预注册 https://osf.io/tnhd3/ 本次访问受阻；不是已核对的代码或数据来源。查表所需数值均已印在正文。"
+    ]
+  },
+  "entry": {
+    "script": "scripts/personal_report.py",
+    "measurements_flag": "--measurements",
+    "measurements_header": [
+      "item",
+      "value",
+      "unit"
+    ],
+    "age_flag": "--age",
+    "sex_flag": "--sex",
+    "out_flag": "--out",
+    "result_json": true,
+    "targets_flag": "--targets",
+    "levers_json": true
+  },
+  "inputs_status": "verified",
+  "inputs": [
+    {
+      "key": "ethanol_g_day",
+      "label_zh": "日均纯酒精摄入量",
+      "aliases": [
+        "日均纯乙醇摄入量",
+        "每日平均酒精摄入量",
+        "纯酒精摄入量",
+        "酒精摄入量",
+        "daily alcohol intake",
+        "mean daily alcohol intake",
+        "ethanol intake",
+        "alcohol consumption"
+      ],
+      "unit": "g/d",
+      "accept": {
+        "g/d": 1
+      },
+      "range": [
+        0,
+        300
+      ],
+      "unit_required": true,
+      "required": true,
+      "from": "measurements",
+      "note_zh": "通常的日均纯乙醇克数，包含不饮酒的日子。0–300仅是本工具的宽范围填报检查，不是论文安全范围；最高分档本身无上限。不接收杯、酒液毫升、g/week或单次饮酒量；先核实原始记录口径。规范键名已含单位时可省略单位，别名须写单位。"
+    },
+    {
+      "key": "drinking_status",
+      "label_zh": "饮酒史",
+      "aliases": [
+        "drinking status",
+        "饮酒状态"
+      ],
+      "required": false,
+      "from": "argument",
+      "flag": "--drinking-status",
+      "note_zh": "current/former/lifetime_abstainer。正值默认current；零摄入必须明确former（既往饮酒、现已完全不饮酒）或lifetime_abstainer（终身未饮酒）。不是可调整目标。"
+    },
+    {
+      "key": "sex",
+      "label_zh": "性别",
+      "required": false,
+      "from": "profile",
+      "flag": "--sex",
+      "note_zh": "male/female使用表4同性别参照；省略时用表2总体，不猜测性别。"
+    },
+    {
+      "key": "age",
+      "label_zh": "年龄",
+      "unit": "a",
+      "range": [
+        18,
+        120
+      ],
+      "required": false,
+      "from": "profile",
+      "flag": "--age",
+      "note_zh": "仅作成人使用范围检查，18–120为工具限制，不是论文人群年龄界限。个人年龄不参与查表。"
+    }
+  ],
+  "outputs": [
+    {
+      "key": "ethanol_g_day",
+      "label_zh": "输入日均纯乙醇量",
+      "unit": "g/d"
+    },
+    {
+      "key": "category",
+      "label_zh": "饮酒分档",
+      "note_zh": "lifetime_abstainer/former/occasional/low/medium/high/higher；定义见报告。"
+    },
+    {
+      "key": "stratum",
+      "label_zh": "所用人群分层",
+      "note_zh": "overall（表2）、male或female（表4）。"
+    },
+    {
+      "key": "rr",
+      "label_zh": "全因死亡人群相对风险",
+      "unit": "1",
+      "note_zh": "完全调整列，相对终身不饮酒者；不是个人概率。"
+    },
+    {
+      "key": "ci_lower",
+      "label_zh": "人群RR的95%置信区间下限",
+      "unit": "1",
+      "note_zh": "参照行未报告区间时为null。"
+    },
+    {
+      "key": "ci_upper",
+      "label_zh": "人群RR的95%置信区间上限",
+      "unit": "1",
+      "note_zh": "参照行未报告区间时为null。"
+    }
+  ],
+  "validation": {
+    "status": "reproduced",
+    "examples": [
+      {
+        "locator": "Table 2, lifetime nondrinker reference, High volume row, Fully adjusted RR (95% CI)",
+        "quote": "High volume (45 to <65) | 1.19 (1.07-1.32)",
+        "values": [
+          45,
+          1.19,
+          1.07,
+          1.32
+        ],
+        "tolerance": "直接查表，精确等于印出的两位小数；测试在45 g/d下边界复现该行，并逐行验证表2和表4。",
+        "test": "tests/test_manifest.py::test_printed_tables_2_and_4"
+      },
+      {
+        "locator": "Table 4, Women, Medium volume row, Fully adjusted RR (95% CI)",
+        "quote": "Medium volume (25 to <45) | 1.21 (1.08-1.36)",
+        "values": [
+          25,
+          1.21,
+          1.08,
+          1.36
+        ],
+        "tolerance": "直接查表，精确等于印出的两位小数；25 g/d为印出区间的下边界。",
+        "test": "tests/test_manifest.py::test_printed_tables_2_and_4"
+      }
+    ]
+  }
+}
