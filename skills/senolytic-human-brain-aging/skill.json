@@ -11,6 +11,11 @@
   "domains": [
     "老年保护"
   ],
+  "topic": [
+    "brain_cognition",
+    "aging_biology",
+    "drugs_supplements"
+  ],
   "blurb_zh": "用负的 P 值乘 logfc 的符号给基因排序。",
   "intents": [
     "model_organism"

@@ -10,6 +10,9 @@
   "domains": [
     "衰弱与死亡风险"
   ],
+  "topic": [
+    "musculoskeletal_frailty"
+  ],
   "blurb_zh": "用年龄、病史和日常功能问卷计算Lee四年死亡风险指数。",
   "intents": [
     "frailty_mortality"

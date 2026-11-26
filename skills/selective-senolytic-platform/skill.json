@@ -11,6 +11,10 @@
   "domains": [
     "老年保护"
   ],
+  "topic": [
+    "aging_biology",
+    "drugs_supplements"
+  ],
   "blurb_zh": "两个浓度都给出时，LC50 除以 IC50。",
   "intents": [
     "model_organism"

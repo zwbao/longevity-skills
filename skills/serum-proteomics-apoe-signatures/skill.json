@@ -10,6 +10,10 @@
   "domains": [
     "脑、认知与痴呆"
   ],
+  "topic": [
+    "brain_cognition",
+    "genetics"
+  ],
   "blurb_zh": "APOE 基因型，可带四个血清蛋白。",
   "intents": [
     "cognition_dementia",

@@ -10,6 +10,10 @@
   "domains": [
     "比较生物学"
   ],
+  "topic": [
+    "organ_aging",
+    "aging_biology"
+  ],
   "blurb_zh": "物种的癌症死亡比例。",
   "intents": [
     "model_organism"

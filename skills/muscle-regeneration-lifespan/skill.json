@@ -10,6 +10,10 @@
   "domains": [
     "骨骼肌"
   ],
+  "topic": [
+    "musculoskeletal_frailty",
+    "aging_biology"
+  ],
   "blurb_zh": "单向 FBR 衰老分对照论文里的界值。",
   "intents": [
     "model_organism"

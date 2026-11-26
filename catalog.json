@@ -2,9 +2,9 @@
   "schema": "longevity-catalog/1",
   "version": "2026.48.0",
   "counts": {
-    "skills": 223,
+    "skills": 225,
     "tiers": {
-      "A": 59,
+      "A": 61,
       "B": 83,
       "C": 73,
       "tool": 8
@@ -6041,6 +6041,491 @@
       }
     },
     {
+      "name": "chinese-healthy-eating-index",
+      "kind": "paper",
+      "tier": "A",
+      "species": [
+        "human"
+      ],
+      "evidence": "cross_sectional",
+      "domains": [
+        "饮食与营养"
+      ],
+      "blurb_zh": "用每日食物标准份数、总能量、烹调油、钠、添加糖和酒精摄入计算中国健康膳食指数 CHEI。",
+      "description": "Tier A personal readout: computes one person's value with the paper's printed method and reproduces a printed example. Calculates the 2017 Chinese Healthy Eating Index (CHEI) from confirmed daily standard portions and nutrient intake, with 17 component scores and a total. Use for 中国健康膳食指数、CHEI、饮食质量评分 or comparing the same person's dietary records. Requires age, sex, pregnancy/lactation status and complete intake data; supports user-supplied targets.",
+      "intents": [
+        "intervention_evidence",
+        "before_after"
+      ],
+      "has_script": true,
+      "validation_status": "reproduced",
+      "validation_label_zh": "已复现论文",
+      "entry": {
+        "script": "scripts/personal_report.py",
+        "measurements_flag": "--intake",
+        "measurements_header": [
+          "marker",
+          "value",
+          "unit"
+        ],
+        "age_flag": "--age",
+        "sex_flag": "--sex",
+        "out_flag": "--out",
+        "result_json": true,
+        "targets_flag": "--targets",
+        "levers_json": true
+      },
+      "inputs_status": "verified",
+      "inputs": [
+        {
+          "label_zh": "总谷物每日标准份数",
+          "unit": "1",
+          "range": [
+            0,
+            60
+          ],
+          "key": "total_grains_sp_d",
+          "required": true,
+          "from": "measurements",
+          "unit_required": true,
+          "aliases": [
+            "Total Grains",
+            "总谷物"
+          ],
+          "note_zh": "同一记录时段的每日平均标准份数（SP/d），数值单位填 1；不是普通份数或克数。不吃须明确填 0。使用 references/portions.md 核对，不能由范围中点猜份量。"
+        },
+        {
+          "label_zh": "全谷物和杂豆每日标准份数",
+          "unit": "1",
+          "range": [
+            0,
+            60
+          ],
+          "key": "whole_grains_mixed_beans_sp_d",
+          "required": true,
+          "from": "measurements",
+          "unit_required": true,
+          "aliases": [
+            "Whole Grains and Mixed Beans",
+            "全谷物和杂豆"
+          ],
+          "note_zh": "同一记录时段的每日平均标准份数（SP/d），数值单位填 1；不是普通份数或克数。不吃须明确填 0。使用 references/portions.md 核对，不能由范围中点猜份量。"
+        },
+        {
+          "label_zh": "薯类每日标准份数",
+          "unit": "1",
+          "range": [
+            0,
+            60
+          ],
+          "key": "tubers_sp_d",
+          "required": true,
+          "from": "measurements",
+          "unit_required": true,
+          "aliases": [
+            "Tubers",
+            "薯类"
+          ],
+          "note_zh": "同一记录时段的每日平均标准份数（SP/d），数值单位填 1；不是普通份数或克数。不吃须明确填 0。使用 references/portions.md 核对，不能由范围中点猜份量。"
+        },
+        {
+          "label_zh": "总蔬菜每日标准份数",
+          "unit": "1",
+          "range": [
+            0,
+            60
+          ],
+          "key": "total_vegetables_sp_d",
+          "required": true,
+          "from": "measurements",
+          "unit_required": true,
+          "aliases": [
+            "Total Vegetables",
+            "总蔬菜"
+          ],
+          "note_zh": "同一记录时段的每日平均标准份数（SP/d），数值单位填 1；不是普通份数或克数。不吃须明确填 0。使用 references/portions.md 核对，不能由范围中点猜份量。"
+        },
+        {
+          "label_zh": "深色蔬菜每日标准份数",
+          "unit": "1",
+          "range": [
+            0,
+            60
+          ],
+          "key": "dark_vegetables_sp_d",
+          "required": true,
+          "from": "measurements",
+          "unit_required": true,
+          "aliases": [
+            "Dark Vegetables",
+            "深色蔬菜"
+          ],
+          "note_zh": "同一记录时段的每日平均标准份数（SP/d），数值单位填 1；不是普通份数或克数。不吃须明确填 0。使用 references/portions.md 核对，不能由范围中点猜份量。"
+        },
+        {
+          "label_zh": "水果每日标准份数",
+          "unit": "1",
+          "range": [
+            0,
+            60
+          ],
+          "key": "fruits_sp_d",
+          "required": true,
+          "from": "measurements",
+          "unit_required": true,
+          "aliases": [
+            "Fruits",
+            "水果"
+          ],
+          "note_zh": "同一记录时段的每日平均标准份数（SP/d），数值单位填 1；不是普通份数或克数。不吃须明确填 0。使用 references/portions.md 核对，不能由范围中点猜份量。"
+        },
+        {
+          "label_zh": "奶类每日标准份数",
+          "unit": "1",
+          "range": [
+            0,
+            60
+          ],
+          "key": "dairy_sp_d",
+          "required": true,
+          "from": "measurements",
+          "unit_required": true,
+          "aliases": [
+            "Dairy",
+            "奶类"
+          ],
+          "note_zh": "同一记录时段的每日平均标准份数（SP/d），数值单位填 1；不是普通份数或克数。不吃须明确填 0。使用 references/portions.md 核对，不能由范围中点猜份量。"
+        },
+        {
+          "label_zh": "大豆及制品每日标准份数",
+          "unit": "1",
+          "range": [
+            0,
+            60
+          ],
+          "key": "soybeans_sp_d",
+          "required": true,
+          "from": "measurements",
+          "unit_required": true,
+          "aliases": [
+            "Soybeans",
+            "大豆及制品"
+          ],
+          "note_zh": "同一记录时段的每日平均标准份数（SP/d），数值单位填 1；不是普通份数或克数。不吃须明确填 0。使用 references/portions.md 核对，不能由范围中点猜份量。"
+        },
+        {
+          "label_zh": "鱼和水产品每日标准份数",
+          "unit": "1",
+          "range": [
+            0,
+            60
+          ],
+          "key": "fish_seafood_sp_d",
+          "required": true,
+          "from": "measurements",
+          "unit_required": true,
+          "aliases": [
+            "Fish and Seafood",
+            "鱼和水产品"
+          ],
+          "note_zh": "同一记录时段的每日平均标准份数（SP/d），数值单位填 1；不是普通份数或克数。不吃须明确填 0。使用 references/portions.md 核对，不能由范围中点猜份量。"
+        },
+        {
+          "label_zh": "禽肉每日标准份数",
+          "unit": "1",
+          "range": [
+            0,
+            60
+          ],
+          "key": "poultry_sp_d",
+          "required": true,
+          "from": "measurements",
+          "unit_required": true,
+          "aliases": [
+            "Poultry",
+            "禽肉"
+          ],
+          "note_zh": "同一记录时段的每日平均标准份数（SP/d），数值单位填 1；不是普通份数或克数。不吃须明确填 0。使用 references/portions.md 核对，不能由范围中点猜份量。"
+        },
+        {
+          "label_zh": "蛋类每日标准份数",
+          "unit": "1",
+          "range": [
+            0,
+            60
+          ],
+          "key": "eggs_sp_d",
+          "required": true,
+          "from": "measurements",
+          "unit_required": true,
+          "aliases": [
+            "Eggs",
+            "蛋类"
+          ],
+          "note_zh": "同一记录时段的每日平均标准份数（SP/d），数值单位填 1；不是普通份数或克数。不吃须明确填 0。使用 references/portions.md 核对，不能由范围中点猜份量。"
+        },
+        {
+          "label_zh": "种子和坚果每日标准份数",
+          "unit": "1",
+          "range": [
+            0,
+            60
+          ],
+          "key": "seeds_nuts_sp_d",
+          "required": true,
+          "from": "measurements",
+          "unit_required": true,
+          "aliases": [
+            "Seeds and Nuts",
+            "种子和坚果"
+          ],
+          "note_zh": "同一记录时段的每日平均标准份数（SP/d），数值单位填 1；不是普通份数或克数。不吃须明确填 0。使用 references/portions.md 核对，不能由范围中点猜份量。"
+        },
+        {
+          "label_zh": "红肉每日标准份数",
+          "unit": "1",
+          "range": [
+            0,
+            60
+          ],
+          "key": "red_meat_sp_d",
+          "required": true,
+          "from": "measurements",
+          "unit_required": true,
+          "aliases": [
+            "Red Meat",
+            "红肉"
+          ],
+          "note_zh": "同一记录时段的每日平均标准份数（SP/d），数值单位填 1；不是普通份数或克数。不吃须明确填 0。使用 references/portions.md 核对，不能由范围中点猜份量。"
+        },
+        {
+          "label_zh": "烹调油每日克数",
+          "unit": "g/d",
+          "range": [
+            0,
+            300
+          ],
+          "key": "cooking_oils_g_d",
+          "required": true,
+          "from": "measurements",
+          "unit_required": true,
+          "aliases": [
+            "Cooking Oils",
+            "烹调油"
+          ],
+          "note_zh": "同一记录时段每日平均摄入克数；烹调油含植物油和动物脂肪，不等于全部膳食脂肪。"
+        },
+        {
+          "label_zh": "钠每日克数",
+          "unit": "g/d",
+          "range": [
+            0,
+            30
+          ],
+          "key": "sodium_g_d",
+          "required": true,
+          "from": "measurements",
+          "unit_required": true,
+          "aliases": [
+            "Sodium intake",
+            "膳食钠"
+          ],
+          "note_zh": "每日钠克数，本文口径为食盐及钠含量≥500 mg/100 g食品中的钠；不是食盐克数。毫克记录先精确除以 1000，再以 g/d 填入；不接收血钠。"
+        },
+        {
+          "label_zh": "添加糖供能百分比",
+          "unit": "%",
+          "range": [
+            0,
+            100
+          ],
+          "key": "added_sugars_energy_pct",
+          "required": true,
+          "from": "measurements",
+          "unit_required": true,
+          "aliases": [
+            "Added Sugars energy percent",
+            "添加糖供能比"
+          ],
+          "accept": {
+            "1": 100
+          },
+          "note_zh": "添加糖占总摄入能量的百分比，不是总糖克数；若用 0–1 比例，单位填 1，按精确倍数 100 换算。"
+        },
+        {
+          "label_zh": "酒精每日克数",
+          "unit": "g/d",
+          "range": [
+            0,
+            300
+          ],
+          "key": "alcohol_g_d",
+          "required": true,
+          "from": "measurements",
+          "unit_required": true,
+          "aliases": [
+            "Alcohol intake",
+            "乙醇摄入量"
+          ],
+          "note_zh": "每日纯乙醇克数，不是酒液重量或毫升数；零饮酒填 0。"
+        },
+        {
+          "label_zh": "每日总能量千卡数",
+          "unit": "1",
+          "range": [
+            100,
+            10000
+          ],
+          "key": "energy_kcal_d",
+          "required": true,
+          "from": "measurements",
+          "unit_required": true,
+          "aliases": [
+            "Energy intake kcal per day",
+            "总能量千卡数"
+          ],
+          "note_zh": "同一时段每日总千卡数（kcal/d），数值单位填 1。必须提供，不能填千焦、也不按默认能量补齐。"
+        },
+        {
+          "label_zh": "孕期或哺乳期",
+          "unit": "1",
+          "range": [
+            0,
+            1
+          ],
+          "key": "pregnant_lactating_yes",
+          "required": true,
+          "from": "measurements",
+          "unit_required": true,
+          "aliases": [
+            "Pregnant or lactating",
+            "孕哺期"
+          ],
+          "note_zh": "孕期或哺乳期为 1，否或不适用为 0；这是评分分组，不能作为目标修改。"
+        },
+        {
+          "key": "age",
+          "label_zh": "年龄",
+          "unit": "a",
+          "range": [
+            2,
+            120
+          ],
+          "required": true,
+          "from": "profile",
+          "flag": "--age",
+          "note_zh": "两岁以下不适用；上限 120 是软件录入保护，不是原队列年龄上限。"
+        },
+        {
+          "key": "sex",
+          "label_zh": "论文性别分组",
+          "required": true,
+          "from": "profile",
+          "flag": "--sex",
+          "note_zh": "male 或 female，用于成年人的酒精计分。"
+        }
+      ],
+      "outputs": [
+        {
+          "key": "chei_total",
+          "label_zh": "CHEI总分",
+          "unit": "score"
+        },
+        {
+          "key": "total_grains_score",
+          "label_zh": "总谷物得分",
+          "unit": "score"
+        },
+        {
+          "key": "whole_grains_mixed_beans_score",
+          "label_zh": "全谷物和杂豆得分",
+          "unit": "score"
+        },
+        {
+          "key": "tubers_score",
+          "label_zh": "薯类得分",
+          "unit": "score"
+        },
+        {
+          "key": "total_vegetables_score",
+          "label_zh": "总蔬菜得分",
+          "unit": "score"
+        },
+        {
+          "key": "dark_vegetables_score",
+          "label_zh": "深色蔬菜得分",
+          "unit": "score"
+        },
+        {
+          "key": "fruits_score",
+          "label_zh": "水果得分",
+          "unit": "score"
+        },
+        {
+          "key": "dairy_score",
+          "label_zh": "奶类得分",
+          "unit": "score"
+        },
+        {
+          "key": "soybeans_score",
+          "label_zh": "大豆及制品得分",
+          "unit": "score"
+        },
+        {
+          "key": "fish_seafood_score",
+          "label_zh": "鱼和水产品得分",
+          "unit": "score"
+        },
+        {
+          "key": "poultry_score",
+          "label_zh": "禽肉得分",
+          "unit": "score"
+        },
+        {
+          "key": "eggs_score",
+          "label_zh": "蛋类得分",
+          "unit": "score"
+        },
+        {
+          "key": "seeds_nuts_score",
+          "label_zh": "种子和坚果得分",
+          "unit": "score"
+        },
+        {
+          "key": "red_meat_score",
+          "label_zh": "红肉得分",
+          "unit": "score"
+        },
+        {
+          "key": "cooking_oils_score",
+          "label_zh": "烹调油得分",
+          "unit": "score"
+        },
+        {
+          "key": "sodium_score",
+          "label_zh": "钠得分",
+          "unit": "score"
+        },
+        {
+          "key": "added_sugars_score",
+          "label_zh": "添加糖得分",
+          "unit": "score"
+        },
+        {
+          "key": "alcohol_score",
+          "label_zh": "酒精得分",
+          "unit": "score"
+        }
+      ],
+      "paper": {
+        "doi": "10.3390/nu9090977",
+        "title": "The Development of a Chinese Healthy Eating Index and Its Application in the General Population.",
+        "title_zh": "中国健康膳食指数的开发及其在一般人群中的应用",
+        "journal": "Nutrients",
+        "year": 2017
+      }
+    },
+    {
       "name": "chromatin-rna-ageing-brain",
       "kind": "paper",
       "tier": "C",
@@ -9382,6 +9867,147 @@
         "title_zh": "临床生物年龄的前后差",
         "journal": "Nature Communications",
         "year": 2024
+      }
+    },
+    {
+      "name": "fib4-index",
+      "kind": "paper",
+      "tier": "A",
+      "species": [
+        "human"
+      ],
+      "evidence": "cross_sectional",
+      "domains": [
+        "肝脏与代谢"
+      ],
+      "blurb_zh": "用年龄、肝酶和血小板计算脂肪肝成人的 FIB-4 纤维化指数。",
+      "description": "Tier A draft: the paper's printed example is not reproduced yet, so treat the readout as provisional. 根据年龄、AST、ALT 和血小板计算 FIB-4 指数，按 Shah 等成人非酒精性脂肪肝研究的切点分档。用于用户询问 FIB-4、脂肪肝的肝纤维化指标，或提供相关化验时；可展示指定化验值的数学情景，不输出个人患病概率或治疗目标。",
+      "intents": [
+        "lab_meaning"
+      ],
+      "has_script": true,
+      "validation_status": "draft",
+      "validation_label_zh": "仍在验证",
+      "entry": {
+        "script": "scripts/personal_report.py",
+        "measurements_flag": "--measurements",
+        "measurements_header": [
+          "marker",
+          "value",
+          "unit"
+        ],
+        "age_flag": "--age",
+        "out_flag": "--out",
+        "result_json": true,
+        "targets_flag": "--targets",
+        "levers_json": true
+      },
+      "inputs_status": "draft",
+      "inputs": [
+        {
+          "key": "ast_u_l",
+          "label_zh": "天门冬氨酸氨基转移酶",
+          "aliases": [
+            "AST",
+            "SGOT",
+            "GOT",
+            "谷草转氨酶",
+            "门冬氨酸氨基转移酶",
+            "aspartate aminotransferase"
+          ],
+          "unit": "U/L",
+          "accept": {
+            "ukat/L": 60
+          },
+          "range": [
+            1,
+            20000
+          ],
+          "required": true,
+          "unit_required": true,
+          "from": "measurements"
+        },
+        {
+          "key": "alt_u_l",
+          "label_zh": "丙氨酸氨基转移酶",
+          "aliases": [
+            "ALT",
+            "SGPT",
+            "GPT",
+            "谷丙转氨酶",
+            "alanine aminotransferase"
+          ],
+          "unit": "U/L",
+          "accept": {
+            "ukat/L": 60
+          },
+          "range": [
+            1,
+            20000
+          ],
+          "required": true,
+          "unit_required": true,
+          "from": "measurements"
+        },
+        {
+          "key": "platelets_10e9_l",
+          "label_zh": "血小板计数",
+          "aliases": [
+            "PLT",
+            "血小板",
+            "platelet",
+            "platelets",
+            "platelet count"
+          ],
+          "unit": "10^9/L",
+          "accept": {
+            "10^3/uL": 1,
+            "/uL": 0.001
+          },
+          "range": [
+            1,
+            2000
+          ],
+          "required": true,
+          "unit_required": true,
+          "from": "measurements"
+        },
+        {
+          "key": "age_years",
+          "label_zh": "实足年龄",
+          "aliases": [
+            "age",
+            "年龄",
+            "Age at biopsy"
+          ],
+          "unit": "a",
+          "range": [
+            18,
+            120
+          ],
+          "required": true,
+          "from": "argument",
+          "flag": "--age",
+          "note_zh": "年龄上限是软件防误填范围，论文未给出完整年龄范围；不是验证人群上限。"
+        }
+      ],
+      "outputs": [
+        {
+          "key": "fib4_index",
+          "label_zh": "FIB-4 指数",
+          "unit": "score"
+        },
+        {
+          "key": "fib4_category",
+          "label_zh": "表 5 分档"
+        }
+      ],
+      "paper": {
+        "doi": "10.1016/j.cgh.2009.05.033",
+        "title": "Comparison of noninvasive markers of fibrosis in patients with nonalcoholic fatty liver disease.",
+        "title_zh": "脂肪肝成人的 FIB-4 肝纤维化指数",
+        "journal": "Clinical Gastroenterology and Hepatology",
+        "year": 2009
       }
     },
     {

@@ -13,6 +13,11 @@
     "脑、认知与痴呆",
     "自噬"
   ],
+  "topic": [
+    "drugs_supplements",
+    "brain_cognition",
+    "aging_biology"
+  ],
   "blurb_zh": "正文点名的线粒体自噬诱导物。",
   "intents": [
     "model_organism"

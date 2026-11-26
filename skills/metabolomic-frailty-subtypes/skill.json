@@ -10,6 +10,9 @@
   "domains": [
     "衰弱与死亡风险"
   ],
+  "topic": [
+    "musculoskeletal_frailty"
+  ],
   "blurb_zh": "十一项核磁代谢物离哪个已发表亚型均值最近（近似，不是论文的分型）。",
   "intents": [
     "metabolomic_age",

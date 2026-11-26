@@ -14,6 +14,11 @@
     "营养感应",
     "骨骼肌"
   ],
+  "topic": [
+    "musculoskeletal_frailty",
+    "aging_biology",
+    "drugs_supplements"
+  ],
   "blurb_zh": "血清葫芦巴碱。",
   "intents": [
     "intervention_evidence"

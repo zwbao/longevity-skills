@@ -10,6 +10,9 @@
   "domains": [
     "吸烟与疾病风险"
   ],
+  "topic": [
+    "tobacco_alcohol"
+  ],
   "blurb_zh": "按当前吸烟者的累计包年或每日支数，在论文印出的暴露点查相对风险与不确定区间。",
   "intents": [
     "intervention_evidence"

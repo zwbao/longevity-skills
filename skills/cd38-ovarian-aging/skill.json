@@ -11,6 +11,10 @@
   "domains": [
     "卵巢与生殖"
   ],
+  "topic": [
+    "organ_aging",
+    "aging_biology"
+  ],
   "blurb_zh": "20–25 岁或大于 35 岁，以及卵巢相对其他器官的 CD38 和 NAD+ 方向。",
   "intents": [
     "model_organism"

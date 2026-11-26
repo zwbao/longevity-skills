@@ -10,6 +10,10 @@
   "domains": [
     "皮肤"
   ],
+  "topic": [
+    "organ_aging",
+    "aging_biology"
+  ],
   "blurb_zh": "NOTCH1、NOTCH2、NOTCH3、TP53 和 FAT1。",
   "intents": [
     "gene_variant"

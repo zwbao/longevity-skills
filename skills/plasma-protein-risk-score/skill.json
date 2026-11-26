@@ -10,6 +10,9 @@
   "domains": [
     "衰弱与死亡风险"
   ],
+  "topic": [
+    "musculoskeletal_frailty"
+  ],
   "blurb_zh": "按论文系数把你交来的标准化蛋白值加权求和，可算足跟超声骨密度；不是你的骨折风险。",
   "intents": [
     "frailty_mortality"

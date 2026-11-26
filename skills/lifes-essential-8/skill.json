@@ -10,6 +10,9 @@
   "domains": [
     "心血管健康"
   ],
+  "topic": [
+    "cardiovascular"
+  ],
   "blurb_zh": "用饮食、运动、吸烟、睡眠和体检数据计算成人心血管健康八项评分。",
   "intents": [
     "lab_meaning",

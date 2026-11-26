@@ -10,6 +10,9 @@
   "domains": [
     "脑、认知与痴呆"
   ],
+  "topic": [
+    "brain_cognition"
+  ],
   "blurb_zh": "神经退行相关血浆蛋白的符号和数值。",
   "intents": [
     "cognition_dementia"

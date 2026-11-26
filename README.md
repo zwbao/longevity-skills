@@ -375,6 +375,10 @@ python3 -m tools.lsk test --changed origin/main   # 只测相对 main 改动过�
 
 - `skills/new-chinese-diabetes-risk-score/` — 用年龄、性别、腰围、BMI、收缩压和家族史计算糖尿病筛查分数。
 
+## 肝脏与代谢
+
+- `skills/fib4-index/` — 用年龄、肝酶和血小板计算脂肪肝成人的 FIB-4 纤维化指数。
+
 ## 肾脏
 
 - `skills/ckd-epi-2021-egfr/` — 血肌酐、年龄和性别算肾小球滤过率估计值（eGFR），有胱抑素 C 时用肌酐加胱抑素 C 方程，按 KDIGO 分 G1–G5；有尿白蛋白/肌酐比时再分 A1–A3。
@@ -431,6 +435,7 @@ python3 -m tools.lsk test --changed origin/main   # 只测相对 main 改动过�
 ## 饮食与营养
 
 - `skills/alcohol-burden-of-proof/` — 用自己的每日平均纯酒精摄入量，查阅论文中各疾病相对于无饮酒的风险比及不确定性区间；不推算个人患病概率。
+- `skills/chinese-healthy-eating-index/` — 用每日食物标准份数、总能量、烹调油、钠、添加糖和酒精摄入计算中国健康膳食指数 CHEI。
 - `skills/vegetable-tmrel-gap/` — 用饮食记录中的蔬菜日均克数，计算与论文蔬菜摄入参考范围的差距。
 - `skills/whole-grain-dose-response/` — 按每日全谷物食品摄入量匹配论文中的群体相对风险及置信区间。
 

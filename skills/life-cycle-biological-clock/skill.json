@@ -10,6 +10,9 @@
   "domains": [
     "临床年龄与可穿戴"
   ],
+  "topic": [
+    "biological_age"
+  ],
   "blurb_zh": "常规化验对照论文点名的时钟指标（不算生物年龄）。",
   "intents": [
     "biological_age",

@@ -10,6 +10,11 @@
   "domains": [
     "蛋白、代谢与器官年龄"
   ],
+  "topic": [
+    "biological_age",
+    "brain_cognition",
+    "organ_aging"
+  ],
   "blurb_zh": "研究用：把已在一批样本内 z 分数化的血浆蛋白乘补充表系数得出器官预测年龄，或标出你交来的器官 z；单个人的化验值没法直接套。",
   "intents": [
     "proteomic_organ_age",

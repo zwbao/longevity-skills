@@ -10,6 +10,10 @@
   "domains": [
     "衰弱与死亡风险"
   ],
+  "topic": [
+    "genetics",
+    "aging_biology"
+  ],
   "blurb_zh": "对上的位点的效应类型或 Soma 位点名。",
   "intents": [
     "model_organism"
