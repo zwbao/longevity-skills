@@ -1,0 +1,602 @@
+{
+  "schema": "longevity-skill/1",
+  "name": "ucla-loneliness-scale-v3",
+  "kind": "paper",
+  "tier": "A",
+  "species": [
+    "human"
+  ],
+  "evidence": "method",
+  "domains": [
+    "心理与社交"
+  ],
+  "topic": [
+    "mental_social"
+  ],
+  "blurb_zh": "用UCLA第三版完整问卷的原始回答计算孤独感总分，逐题显示反向计分。",
+  "intents": [],
+  "triage": {
+    "reason_zh": "人体心理测量研究的表1印出完整量表和反向计分规则，可由个人20题原始回答计算总分，并复现原文单项计分映射。",
+    "reviewed": false
+  },
+  "paper": {
+    "doi": "10.1207/s15327752jpa6601_2",
+    "title": "UCLA Loneliness Scale (Version 3): reliability, validity, and factor structure.",
+    "title_zh": "UCLA第三版孤独感量表的信度、效度与因子结构",
+    "journal": "Journal of Personality Assessment",
+    "year": 1996,
+    "authors": "Russell",
+    "article_url": "https://www.tandfonline.com/doi/10.1207/s15327752jpa6601_2",
+    "supplements": [],
+    "card_notes": [
+      "采用期刊版表1（第23页）的20题原始回答编码；全文公开副本见references/sources.md。",
+      "已核对的全文未列独立补充文件或研究代码；出版社直连受403限制，未将访问失败解释为没有补充材料。",
+      "验证复现表1印出的四组反向计分映射，不声称复现完整受试者总分或队列统计量。",
+      "中文报告及题号标签不是经过验证的中文版量表；只接收第三版完整问卷的原始回答。"
+    ],
+    "summary_zh": "这项研究在人类大学生、护士、教师和老年人中评估了新版孤独感量表，结果支持其测量信度和效度。个人报告只计算完整问卷的逐题得分与孤独感总分，不推算个人疾病风险、诊断类别或寿命。",
+    "summary_status": "draft"
+  },
+  "entry": {
+    "script": "scripts/personal_report.py",
+    "measurements_flag": "--measurements",
+    "measurements_header": [
+      "marker",
+      "value",
+      "unit"
+    ],
+    "age_flag": "--age",
+    "sex_flag": "--sex",
+    "out_flag": "--out",
+    "result_json": true
+  },
+  "inputs_status": "verified",
+  "inputs": [
+    {
+      "key": "ucla_v3_item_01_response_score",
+      "label_zh": "UCLA第三版第1题原始回答",
+      "aliases": [
+        "UCLA V3 Q1",
+        "UCLA Loneliness Scale Version 3 item 1",
+        "UCLA第三版第1题",
+        "Q1"
+      ],
+      "unit": "score",
+      "range": [
+        1,
+        4
+      ],
+      "accept": {},
+      "required": true,
+      "from": "measurements",
+      "group": "questionnaire",
+      "note_zh": "依表1原题序：1=从不Never，2=很少Rarely，3=有时Sometimes，4=总是Always。填写原始回答，不要预先反向计分；不接受旧版或短版题号。"
+    },
+    {
+      "key": "ucla_v3_item_02_response_score",
+      "label_zh": "UCLA第三版第2题原始回答",
+      "aliases": [
+        "UCLA V3 Q2",
+        "UCLA Loneliness Scale Version 3 item 2",
+        "UCLA第三版第2题",
+        "Q2"
+      ],
+      "unit": "score",
+      "range": [
+        1,
+        4
+      ],
+      "accept": {},
+      "required": true,
+      "from": "measurements",
+      "group": "questionnaire",
+      "note_zh": "依表1原题序：1=从不Never，2=很少Rarely，3=有时Sometimes，4=总是Always。填写原始回答，不要预先反向计分；不接受旧版或短版题号。"
+    },
+    {
+      "key": "ucla_v3_item_03_response_score",
+      "label_zh": "UCLA第三版第3题原始回答",
+      "aliases": [
+        "UCLA V3 Q3",
+        "UCLA Loneliness Scale Version 3 item 3",
+        "UCLA第三版第3题",
+        "Q3"
+      ],
+      "unit": "score",
+      "range": [
+        1,
+        4
+      ],
+      "accept": {},
+      "required": true,
+      "from": "measurements",
+      "group": "questionnaire",
+      "note_zh": "依表1原题序：1=从不Never，2=很少Rarely，3=有时Sometimes，4=总是Always。填写原始回答，不要预先反向计分；不接受旧版或短版题号。"
+    },
+    {
+      "key": "ucla_v3_item_04_response_score",
+      "label_zh": "UCLA第三版第4题原始回答",
+      "aliases": [
+        "UCLA V3 Q4",
+        "UCLA Loneliness Scale Version 3 item 4",
+        "UCLA第三版第4题",
+        "Q4"
+      ],
+      "unit": "score",
+      "range": [
+        1,
+        4
+      ],
+      "accept": {},
+      "required": true,
+      "from": "measurements",
+      "group": "questionnaire",
+      "note_zh": "依表1原题序：1=从不Never，2=很少Rarely，3=有时Sometimes，4=总是Always。填写原始回答，不要预先反向计分；不接受旧版或短版题号。"
+    },
+    {
+      "key": "ucla_v3_item_05_response_score",
+      "label_zh": "UCLA第三版第5题原始回答",
+      "aliases": [
+        "UCLA V3 Q5",
+        "UCLA Loneliness Scale Version 3 item 5",
+        "UCLA第三版第5题",
+        "Q5"
+      ],
+      "unit": "score",
+      "range": [
+        1,
+        4
+      ],
+      "accept": {},
+      "required": true,
+      "from": "measurements",
+      "group": "questionnaire",
+      "note_zh": "依表1原题序：1=从不Never，2=很少Rarely，3=有时Sometimes，4=总是Always。填写原始回答，不要预先反向计分；不接受旧版或短版题号。"
+    },
+    {
+      "key": "ucla_v3_item_06_response_score",
+      "label_zh": "UCLA第三版第6题原始回答",
+      "aliases": [
+        "UCLA V3 Q6",
+        "UCLA Loneliness Scale Version 3 item 6",
+        "UCLA第三版第6题",
+        "Q6"
+      ],
+      "unit": "score",
+      "range": [
+        1,
+        4
+      ],
+      "accept": {},
+      "required": true,
+      "from": "measurements",
+      "group": "questionnaire",
+      "note_zh": "依表1原题序：1=从不Never，2=很少Rarely，3=有时Sometimes，4=总是Always。填写原始回答，不要预先反向计分；不接受旧版或短版题号。"
+    },
+    {
+      "key": "ucla_v3_item_07_response_score",
+      "label_zh": "UCLA第三版第7题原始回答",
+      "aliases": [
+        "UCLA V3 Q7",
+        "UCLA Loneliness Scale Version 3 item 7",
+        "UCLA第三版第7题",
+        "Q7"
+      ],
+      "unit": "score",
+      "range": [
+        1,
+        4
+      ],
+      "accept": {},
+      "required": true,
+      "from": "measurements",
+      "group": "questionnaire",
+      "note_zh": "依表1原题序：1=从不Never，2=很少Rarely，3=有时Sometimes，4=总是Always。填写原始回答，不要预先反向计分；不接受旧版或短版题号。"
+    },
+    {
+      "key": "ucla_v3_item_08_response_score",
+      "label_zh": "UCLA第三版第8题原始回答",
+      "aliases": [
+        "UCLA V3 Q8",
+        "UCLA Loneliness Scale Version 3 item 8",
+        "UCLA第三版第8题",
+        "Q8"
+      ],
+      "unit": "score",
+      "range": [
+        1,
+        4
+      ],
+      "accept": {},
+      "required": true,
+      "from": "measurements",
+      "group": "questionnaire",
+      "note_zh": "依表1原题序：1=从不Never，2=很少Rarely，3=有时Sometimes，4=总是Always。填写原始回答，不要预先反向计分；不接受旧版或短版题号。"
+    },
+    {
+      "key": "ucla_v3_item_09_response_score",
+      "label_zh": "UCLA第三版第9题原始回答",
+      "aliases": [
+        "UCLA V3 Q9",
+        "UCLA Loneliness Scale Version 3 item 9",
+        "UCLA第三版第9题",
+        "Q9"
+      ],
+      "unit": "score",
+      "range": [
+        1,
+        4
+      ],
+      "accept": {},
+      "required": true,
+      "from": "measurements",
+      "group": "questionnaire",
+      "note_zh": "依表1原题序：1=从不Never，2=很少Rarely，3=有时Sometimes，4=总是Always。填写原始回答，不要预先反向计分；不接受旧版或短版题号。"
+    },
+    {
+      "key": "ucla_v3_item_10_response_score",
+      "label_zh": "UCLA第三版第10题原始回答",
+      "aliases": [
+        "UCLA V3 Q10",
+        "UCLA Loneliness Scale Version 3 item 10",
+        "UCLA第三版第10题",
+        "Q10"
+      ],
+      "unit": "score",
+      "range": [
+        1,
+        4
+      ],
+      "accept": {},
+      "required": true,
+      "from": "measurements",
+      "group": "questionnaire",
+      "note_zh": "依表1原题序：1=从不Never，2=很少Rarely，3=有时Sometimes，4=总是Always。填写原始回答，不要预先反向计分；不接受旧版或短版题号。"
+    },
+    {
+      "key": "ucla_v3_item_11_response_score",
+      "label_zh": "UCLA第三版第11题原始回答",
+      "aliases": [
+        "UCLA V3 Q11",
+        "UCLA Loneliness Scale Version 3 item 11",
+        "UCLA第三版第11题",
+        "Q11"
+      ],
+      "unit": "score",
+      "range": [
+        1,
+        4
+      ],
+      "accept": {},
+      "required": true,
+      "from": "measurements",
+      "group": "questionnaire",
+      "note_zh": "依表1原题序：1=从不Never，2=很少Rarely，3=有时Sometimes，4=总是Always。填写原始回答，不要预先反向计分；不接受旧版或短版题号。"
+    },
+    {
+      "key": "ucla_v3_item_12_response_score",
+      "label_zh": "UCLA第三版第12题原始回答",
+      "aliases": [
+        "UCLA V3 Q12",
+        "UCLA Loneliness Scale Version 3 item 12",
+        "UCLA第三版第12题",
+        "Q12"
+      ],
+      "unit": "score",
+      "range": [
+        1,
+        4
+      ],
+      "accept": {},
+      "required": true,
+      "from": "measurements",
+      "group": "questionnaire",
+      "note_zh": "依表1原题序：1=从不Never，2=很少Rarely，3=有时Sometimes，4=总是Always。填写原始回答，不要预先反向计分；不接受旧版或短版题号。"
+    },
+    {
+      "key": "ucla_v3_item_13_response_score",
+      "label_zh": "UCLA第三版第13题原始回答",
+      "aliases": [
+        "UCLA V3 Q13",
+        "UCLA Loneliness Scale Version 3 item 13",
+        "UCLA第三版第13题",
+        "Q13"
+      ],
+      "unit": "score",
+      "range": [
+        1,
+        4
+      ],
+      "accept": {},
+      "required": true,
+      "from": "measurements",
+      "group": "questionnaire",
+      "note_zh": "依表1原题序：1=从不Never，2=很少Rarely，3=有时Sometimes，4=总是Always。填写原始回答，不要预先反向计分；不接受旧版或短版题号。"
+    },
+    {
+      "key": "ucla_v3_item_14_response_score",
+      "label_zh": "UCLA第三版第14题原始回答",
+      "aliases": [
+        "UCLA V3 Q14",
+        "UCLA Loneliness Scale Version 3 item 14",
+        "UCLA第三版第14题",
+        "Q14"
+      ],
+      "unit": "score",
+      "range": [
+        1,
+        4
+      ],
+      "accept": {},
+      "required": true,
+      "from": "measurements",
+      "group": "questionnaire",
+      "note_zh": "依表1原题序：1=从不Never，2=很少Rarely，3=有时Sometimes，4=总是Always。填写原始回答，不要预先反向计分；不接受旧版或短版题号。"
+    },
+    {
+      "key": "ucla_v3_item_15_response_score",
+      "label_zh": "UCLA第三版第15题原始回答",
+      "aliases": [
+        "UCLA V3 Q15",
+        "UCLA Loneliness Scale Version 3 item 15",
+        "UCLA第三版第15题",
+        "Q15"
+      ],
+      "unit": "score",
+      "range": [
+        1,
+        4
+      ],
+      "accept": {},
+      "required": true,
+      "from": "measurements",
+      "group": "questionnaire",
+      "note_zh": "依表1原题序：1=从不Never，2=很少Rarely，3=有时Sometimes，4=总是Always。填写原始回答，不要预先反向计分；不接受旧版或短版题号。"
+    },
+    {
+      "key": "ucla_v3_item_16_response_score",
+      "label_zh": "UCLA第三版第16题原始回答",
+      "aliases": [
+        "UCLA V3 Q16",
+        "UCLA Loneliness Scale Version 3 item 16",
+        "UCLA第三版第16题",
+        "Q16"
+      ],
+      "unit": "score",
+      "range": [
+        1,
+        4
+      ],
+      "accept": {},
+      "required": true,
+      "from": "measurements",
+      "group": "questionnaire",
+      "note_zh": "依表1原题序：1=从不Never，2=很少Rarely，3=有时Sometimes，4=总是Always。填写原始回答，不要预先反向计分；不接受旧版或短版题号。"
+    },
+    {
+      "key": "ucla_v3_item_17_response_score",
+      "label_zh": "UCLA第三版第17题原始回答",
+      "aliases": [
+        "UCLA V3 Q17",
+        "UCLA Loneliness Scale Version 3 item 17",
+        "UCLA第三版第17题",
+        "Q17"
+      ],
+      "unit": "score",
+      "range": [
+        1,
+        4
+      ],
+      "accept": {},
+      "required": true,
+      "from": "measurements",
+      "group": "questionnaire",
+      "note_zh": "依表1原题序：1=从不Never，2=很少Rarely，3=有时Sometimes，4=总是Always。填写原始回答，不要预先反向计分；不接受旧版或短版题号。"
+    },
+    {
+      "key": "ucla_v3_item_18_response_score",
+      "label_zh": "UCLA第三版第18题原始回答",
+      "aliases": [
+        "UCLA V3 Q18",
+        "UCLA Loneliness Scale Version 3 item 18",
+        "UCLA第三版第18题",
+        "Q18"
+      ],
+      "unit": "score",
+      "range": [
+        1,
+        4
+      ],
+      "accept": {},
+      "required": true,
+      "from": "measurements",
+      "group": "questionnaire",
+      "note_zh": "依表1原题序：1=从不Never，2=很少Rarely，3=有时Sometimes，4=总是Always。填写原始回答，不要预先反向计分；不接受旧版或短版题号。"
+    },
+    {
+      "key": "ucla_v3_item_19_response_score",
+      "label_zh": "UCLA第三版第19题原始回答",
+      "aliases": [
+        "UCLA V3 Q19",
+        "UCLA Loneliness Scale Version 3 item 19",
+        "UCLA第三版第19题",
+        "Q19"
+      ],
+      "unit": "score",
+      "range": [
+        1,
+        4
+      ],
+      "accept": {},
+      "required": true,
+      "from": "measurements",
+      "group": "questionnaire",
+      "note_zh": "依表1原题序：1=从不Never，2=很少Rarely，3=有时Sometimes，4=总是Always。填写原始回答，不要预先反向计分；不接受旧版或短版题号。"
+    },
+    {
+      "key": "ucla_v3_item_20_response_score",
+      "label_zh": "UCLA第三版第20题原始回答",
+      "aliases": [
+        "UCLA V3 Q20",
+        "UCLA Loneliness Scale Version 3 item 20",
+        "UCLA第三版第20题",
+        "Q20"
+      ],
+      "unit": "score",
+      "range": [
+        1,
+        4
+      ],
+      "accept": {},
+      "required": true,
+      "from": "measurements",
+      "group": "questionnaire",
+      "note_zh": "依表1原题序：1=从不Never，2=很少Rarely，3=有时Sometimes，4=总是Always。填写原始回答，不要预先反向计分；不接受旧版或短版题号。"
+    },
+    {
+      "key": "age",
+      "label_zh": "实足年龄",
+      "unit": "a",
+      "range": [
+        0,
+        120
+      ],
+      "required": false,
+      "from": "profile",
+      "flag": "--age",
+      "note_zh": "可选上下文，不改变分数；0–120岁只用于输入错误防护，不表示论文验证了所有年龄。"
+    },
+    {
+      "key": "sex",
+      "label_zh": "性别",
+      "required": false,
+      "from": "profile",
+      "flag": "--sex",
+      "note_zh": "可选上下文，不改变分数；男/女/其他/未知或male/female/other/unknown。"
+    }
+  ],
+  "outputs": [
+    {
+      "key": "ucla_v3_total_score",
+      "label_zh": "UCLA第三版孤独感总分",
+      "unit": "score",
+      "note_zh": "20题按表1计分后求和，理论范围20–80分，越高表示自报孤独感越强；不设诊断分档。"
+    },
+    {
+      "key": "item_01_score",
+      "label_zh": "第1题计分后得分",
+      "unit": "score"
+    },
+    {
+      "key": "item_02_score",
+      "label_zh": "第2题计分后得分",
+      "unit": "score"
+    },
+    {
+      "key": "item_03_score",
+      "label_zh": "第3题计分后得分",
+      "unit": "score"
+    },
+    {
+      "key": "item_04_score",
+      "label_zh": "第4题计分后得分",
+      "unit": "score"
+    },
+    {
+      "key": "item_05_score",
+      "label_zh": "第5题计分后得分",
+      "unit": "score"
+    },
+    {
+      "key": "item_06_score",
+      "label_zh": "第6题计分后得分",
+      "unit": "score"
+    },
+    {
+      "key": "item_07_score",
+      "label_zh": "第7题计分后得分",
+      "unit": "score"
+    },
+    {
+      "key": "item_08_score",
+      "label_zh": "第8题计分后得分",
+      "unit": "score"
+    },
+    {
+      "key": "item_09_score",
+      "label_zh": "第9题计分后得分",
+      "unit": "score"
+    },
+    {
+      "key": "item_10_score",
+      "label_zh": "第10题计分后得分",
+      "unit": "score"
+    },
+    {
+      "key": "item_11_score",
+      "label_zh": "第11题计分后得分",
+      "unit": "score"
+    },
+    {
+      "key": "item_12_score",
+      "label_zh": "第12题计分后得分",
+      "unit": "score"
+    },
+    {
+      "key": "item_13_score",
+      "label_zh": "第13题计分后得分",
+      "unit": "score"
+    },
+    {
+      "key": "item_14_score",
+      "label_zh": "第14题计分后得分",
+      "unit": "score"
+    },
+    {
+      "key": "item_15_score",
+      "label_zh": "第15题计分后得分",
+      "unit": "score"
+    },
+    {
+      "key": "item_16_score",
+      "label_zh": "第16题计分后得分",
+      "unit": "score"
+    },
+    {
+      "key": "item_17_score",
+      "label_zh": "第17题计分后得分",
+      "unit": "score"
+    },
+    {
+      "key": "item_18_score",
+      "label_zh": "第18题计分后得分",
+      "unit": "score"
+    },
+    {
+      "key": "item_19_score",
+      "label_zh": "第19题计分后得分",
+      "unit": "score"
+    },
+    {
+      "key": "item_20_score",
+      "label_zh": "第20题计分后得分",
+      "unit": "score"
+    }
+  ],
+  "validation": {
+    "status": "reproduced",
+    "examples": [
+      {
+        "locator": "Table 1, p. 23, Scoring: printed reverse-scoring input/output pairs",
+        "quote": "(i.e., 1 = 4, 2 = 3, 3 = 2, 4 = 1)",
+        "values": [
+          4,
+          3,
+          2,
+          1
+        ],
+        "tolerance": "整数精确相等；对表1所有星号题逐一检查四组原始回答与反向得分。没有完整个人回答向量及总分示例，不声称复现该类示例。",
+        "test": "tests/test_manifest.py::test_table1_printed_reverse_scores"
+      }
+    ]
+  }
+}
