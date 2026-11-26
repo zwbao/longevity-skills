@@ -2,9 +2,9 @@
   "schema": "longevity-catalog/1",
   "version": "2026.48.0",
   "counts": {
-    "skills": 220,
+    "skills": 221,
     "tiers": {
-      "A": 56,
+      "A": 57,
       "B": 83,
       "C": 73,
       "tool": 8
@@ -5217,6 +5217,117 @@
         "title_zh": "加工肉、含糖饮料和反式脂肪摄入的健康关联",
         "journal": "Nature Medicine",
         "year": 2025
+      }
+    },
+    {
+      "name": "burden-of-proof-sbp-ihd",
+      "kind": "paper",
+      "tier": "A",
+      "species": [
+        "human"
+      ],
+      "evidence": "method",
+      "domains": [
+        "心血管与代谢"
+      ],
+      "blurb_zh": "用收缩压查算缺血性心脏病的人群相对风险，支持目标血压的模型对比。",
+      "description": "Tier A personal readout: computes one person's value with the paper's printed method and reproduces a printed example. Uses a person's systolic blood pressure to read the published Burden of Proof SBP–IHD relative-risk table, with uncertainty intervals and optional target comparisons. Triggers on 收缩压与冠心病风险、血压相对风险、SBP–IHD or comparing a supplied blood pressure target. Labels interpolation explicitly and does not estimate personal event probability or treatment benefit.",
+      "intents": [
+        "lab_meaning",
+        "before_after"
+      ],
+      "has_script": true,
+      "validation_status": "reproduced",
+      "validation_label_zh": "已复现论文",
+      "entry": {
+        "script": "scripts/personal_report.py",
+        "measurements_flag": "--measurements",
+        "measurements_header": [
+          "marker",
+          "value",
+          "unit"
+        ],
+        "out_flag": "--out",
+        "result_json": true,
+        "targets_flag": "--targets",
+        "levers_json": true
+      },
+      "inputs_status": "verified",
+      "inputs": [
+        {
+          "key": "sbp_mmhg",
+          "label_zh": "收缩压",
+          "aliases": [
+            "SBP",
+            "Systolic blood pressure",
+            "Systolic BP",
+            "收缩期血压",
+            "高压"
+          ],
+          "unit": "mmHg",
+          "accept": {
+            "kPa": 7.500617
+          },
+          "range": [
+            50,
+            300
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "提供一个已汇总的收缩压数值，不能填 130/80；合理性检查后仅在论文表格范围 100–200 mmHg 内计算，范围外不外推。"
+        }
+      ],
+      "outputs": [
+        {
+          "key": "sbp_mmhg",
+          "label_zh": "输入收缩压",
+          "unit": "mmHg"
+        },
+        {
+          "key": "reference_sbp_mmhg",
+          "label_zh": "论文参照收缩压",
+          "unit": "mmHg"
+        },
+        {
+          "key": "ihd_rr",
+          "label_zh": "人群平均相对风险",
+          "unit": "1"
+        },
+        {
+          "key": "ihd_rr_ui_lower",
+          "label_zh": "95% 不确定区间下界（含研究间异质性）",
+          "unit": "1"
+        },
+        {
+          "key": "ihd_rr_ui_upper",
+          "label_zh": "95% 不确定区间上界（含研究间异质性）",
+          "unit": "1"
+        },
+        {
+          "key": "bracket_lower_sbp_mmhg",
+          "label_zh": "查表或插值的下方血压节点",
+          "unit": "mmHg"
+        },
+        {
+          "key": "bracket_upper_sbp_mmhg",
+          "label_zh": "查表或插值的上方血压节点",
+          "unit": "mmHg"
+        },
+        {
+          "key": "readout_method",
+          "label_zh": "读取方式"
+        },
+        {
+          "key": "evidence_region",
+          "label_zh": "证据密集或稀疏区段"
+        }
+      ],
+      "paper": {
+        "doi": "10.1038/s41591-022-01974-1",
+        "title": "Effects of elevated systolic blood pressure on ischemic heart disease: a Burden of Proof study",
+        "title_zh": "收缩压与缺血性心脏病的相对风险",
+        "journal": "Nature Medicine",
+        "year": 2022
       }
     },
     {

@@ -314,6 +314,7 @@ python3 -m tools.lsk test --changed origin/main   # 只测相对 main 改动过�
 
 ## 心血管与代谢
 
+- `skills/burden-of-proof-sbp-ihd/` — 用收缩压查算缺血性心脏病的人群相对风险，支持目标血压的模型对比。
 - `skills/ctt-ldl-relative-risk/` — 将 LDL-C 绝对降幅换算为主要血管事件的相对发生率情景。
 
 ## 心血管与代谢风险
