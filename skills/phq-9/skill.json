@@ -1,0 +1,287 @@
+{
+  "schema": "longevity-skill/1",
+  "name": "phq-9",
+  "kind": "paper",
+  "tier": "A",
+  "species": [
+    "human"
+  ],
+  "evidence": "cross_sectional",
+  "domains": [
+    "心理健康"
+  ],
+  "topic": [
+    "mental_social"
+  ],
+  "blurb_zh": "用过去两周的九项问卷得分计算PHQ-9总分与抑郁症状严重度分档。",
+  "intents": [
+    "before_after"
+  ],
+  "triage": {
+    "reason_zh": "人体横断面验证，正文、Table 2和附录印出九题计分及分档，可计算个人症状严重度。",
+    "reviewed": false
+  },
+  "paper": {
+    "doi": "10.1046/j.1525-1497.2001.016009606.x",
+    "title": "The PHQ-9: validity of a brief depression severity measure.",
+    "title_zh": "PHQ-9简短抑郁症状严重度量表的效度验证",
+    "journal": "Journal of General Internal Medicine",
+    "year": 2001,
+    "authors": "Kroenke 等",
+    "article_url": "https://onlinelibrary.wiley.com/doi/full/10.1046/j.1525-1497.2001.016009606.x",
+    "supplements": [
+      {
+        "label": "文内附录：Nine-symptom Checklist（第613页）",
+        "url": "https://reachoutandread.org/wp-content/uploads/2023/06/PHQ-9-2-Kroenke-2001.pdf#page=8"
+      }
+    ],
+    "card_notes": [
+      "九题计分与分档均来自原文；未见独立补充材料或作者发布的研究代码、个体数据链接。",
+      "复现Table 2印出的总分区间与严重度对应关系；原文没有单个患者九题回答的完整算例。",
+      "中文题意仅为解释性翻译，本文未验证中文版；无中文或年龄、性别修正系数。",
+      "研究获Pfizer教育资助；原文声明PRIME-MD商标及版权归Pfizer。"
+    ],
+    "summary_zh": "这项研究在成人门诊患者中验证了简短抑郁问卷，症状严重度与功能受损及专业访谈结果相关。个人报告只计算问卷总分和症状严重度分档，不计算确诊概率、寿命或治疗收益。",
+    "summary_status": "draft"
+  },
+  "entry": {
+    "script": "scripts/personal_report.py",
+    "measurements_flag": "--measurements",
+    "measurements_header": [
+      "marker",
+      "value",
+      "unit"
+    ],
+    "age_flag": "--age",
+    "sex_flag": "--sex",
+    "out_flag": "--out",
+    "result_json": true
+  },
+  "inputs_status": "verified",
+  "inputs": [
+    {
+      "key": "phq9_q1_score",
+      "label_zh": "PHQ-9第1题：做事缺乏兴趣或乐趣",
+      "aliases": [
+        "PHQ-9 item 1",
+        "PHQ9 Q1",
+        "PHQ-9第1题"
+      ],
+      "unit": "score",
+      "accept": {},
+      "range": [
+        0,
+        3
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "过去两周：0完全没有，1有几天，2超过一半天数，3几乎每天；只收整数选项得分，不接受天数或总分。"
+    },
+    {
+      "key": "phq9_q2_score",
+      "label_zh": "PHQ-9第2题：情绪低落、抑郁或绝望",
+      "aliases": [
+        "PHQ-9 item 2",
+        "PHQ9 Q2",
+        "PHQ-9第2题"
+      ],
+      "unit": "score",
+      "accept": {},
+      "range": [
+        0,
+        3
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "过去两周：0完全没有，1有几天，2超过一半天数，3几乎每天；只收整数选项得分，不接受天数或总分。"
+    },
+    {
+      "key": "phq9_q3_score",
+      "label_zh": "PHQ-9第3题：难以入睡、睡眠中断或睡得过多",
+      "aliases": [
+        "PHQ-9 item 3",
+        "PHQ9 Q3",
+        "PHQ-9第3题"
+      ],
+      "unit": "score",
+      "accept": {},
+      "range": [
+        0,
+        3
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "过去两周：0完全没有，1有几天，2超过一半天数，3几乎每天；只收整数选项得分，不接受天数或总分。"
+    },
+    {
+      "key": "phq9_q4_score",
+      "label_zh": "PHQ-9第4题：疲倦或缺乏精力",
+      "aliases": [
+        "PHQ-9 item 4",
+        "PHQ9 Q4",
+        "PHQ-9第4题"
+      ],
+      "unit": "score",
+      "accept": {},
+      "range": [
+        0,
+        3
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "过去两周：0完全没有，1有几天，2超过一半天数，3几乎每天；只收整数选项得分，不接受天数或总分。"
+    },
+    {
+      "key": "phq9_q5_score",
+      "label_zh": "PHQ-9第5题：食欲差或进食过量",
+      "aliases": [
+        "PHQ-9 item 5",
+        "PHQ9 Q5",
+        "PHQ-9第5题"
+      ],
+      "unit": "score",
+      "accept": {},
+      "range": [
+        0,
+        3
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "过去两周：0完全没有，1有几天，2超过一半天数，3几乎每天；只收整数选项得分，不接受天数或总分。"
+    },
+    {
+      "key": "phq9_q6_score",
+      "label_zh": "PHQ-9第6题：对自己失望、觉得失败或让自己或家人失望",
+      "aliases": [
+        "PHQ-9 item 6",
+        "PHQ9 Q6",
+        "PHQ-9第6题"
+      ],
+      "unit": "score",
+      "accept": {},
+      "range": [
+        0,
+        3
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "过去两周：0完全没有，1有几天，2超过一半天数，3几乎每天；只收整数选项得分，不接受天数或总分。"
+    },
+    {
+      "key": "phq9_q7_score",
+      "label_zh": "PHQ-9第7题：难以集中注意力",
+      "aliases": [
+        "PHQ-9 item 7",
+        "PHQ9 Q7",
+        "PHQ-9第7题"
+      ],
+      "unit": "score",
+      "accept": {},
+      "range": [
+        0,
+        3
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "过去两周：0完全没有，1有几天，2超过一半天数，3几乎每天；只收整数选项得分，不接受天数或总分。"
+    },
+    {
+      "key": "phq9_q8_score",
+      "label_zh": "PHQ-9第8题：别人可察觉的动作或说话迟缓，或比平常明显坐立不安",
+      "aliases": [
+        "PHQ-9 item 8",
+        "PHQ9 Q8",
+        "PHQ-9第8题"
+      ],
+      "unit": "score",
+      "accept": {},
+      "range": [
+        0,
+        3
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "过去两周：0完全没有，1有几天，2超过一半天数，3几乎每天；只收整数选项得分，不接受天数或总分。"
+    },
+    {
+      "key": "phq9_q9_score",
+      "label_zh": "PHQ-9第9题：觉得不如死去，或想到以某种方式伤害自己",
+      "aliases": [
+        "PHQ-9 item 9",
+        "PHQ9 Q9",
+        "PHQ-9第9题"
+      ],
+      "unit": "score",
+      "accept": {},
+      "range": [
+        0,
+        3
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "过去两周：0完全没有，1有几天，2超过一半天数，3几乎每天；只收整数选项得分，不接受天数或总分。"
+    },
+    {
+      "key": "age",
+      "label_zh": "年龄",
+      "unit": "a",
+      "range": [
+        18,
+        120
+      ],
+      "required": false,
+      "from": "profile",
+      "flag": "--age",
+      "note_zh": "成人使用；18岁为研究纳入下限，120岁仅为输入错误防护上限，不是论文样本最大年龄。未提供时由调用方确认成人。"
+    },
+    {
+      "key": "sex",
+      "label_zh": "性别",
+      "required": false,
+      "from": "profile",
+      "flag": "--sex",
+      "note_zh": "可选男/女/其他/未知或male/female/other/unknown，不参与计分。"
+    }
+  ],
+  "outputs": [
+    {
+      "key": "phq9_total_score",
+      "label_zh": "PHQ-9总分",
+      "unit": "score"
+    },
+    {
+      "key": "phq9_severity",
+      "label_zh": "抑郁症状严重度分档",
+      "note_zh": "minimal极少、mild轻度、moderate中度、moderately_severe中重度、severe重度；不代表诊断。"
+    },
+    {
+      "key": "item9_followup_needed",
+      "label_zh": "第九题需进一步了解",
+      "unit": "1",
+      "note_zh": "1表示第九题非零，0表示回答为零；这是支持提示标记，不是自杀风险等级。"
+    }
+  ],
+  "validation": {
+    "status": "reproduced",
+    "examples": [
+      {
+        "locator": "Table 2, p608, Level of Depression Severity, PHQ-9 Score column",
+        "quote": "Minimal, 0–4\nMild, 5–9\nModerate, 10–14\nModerately severe, 15–19\nSevere, 20–27",
+        "values": [
+          0,
+          4,
+          5,
+          9,
+          10,
+          14,
+          15,
+          19,
+          20,
+          27
+        ],
+        "tolerance": "整数区间及英文档名完全一致，枚举表中各区间；这是印出的分档查表示例，不是患者级总分算例。",
+        "test": "tests/test_manifest.py::test_table_2_printed_severity_intervals"
+      }
+    ]
+  }
+}
