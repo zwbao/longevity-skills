@@ -2,9 +2,9 @@
   "schema": "longevity-catalog/1",
   "version": "2026.48.0",
   "counts": {
-    "skills": 225,
+    "skills": 227,
     "tiers": {
-      "A": 61,
+      "A": 63,
       "B": 83,
       "C": 73,
       "tool": 8
@@ -14975,6 +14975,221 @@
         "title_zh": "痴呆研究里的用药类别",
         "journal": "Nature Aging",
         "year": 2022
+      }
+    },
+    {
+      "name": "insomnia-severity-index",
+      "kind": "paper",
+      "tier": "A",
+      "species": [
+        "human"
+      ],
+      "evidence": "method",
+      "domains": [
+        "睡眠"
+      ],
+      "blurb_zh": "用过去两周七项失眠自评分计算ISI总分及严重程度筛查分档。",
+      "description": "Tier A personal readout: computes one person's value with the paper's printed method and reproduces a printed example. Calculates the Insomnia Severity Index total and published severity band from seven completed self-report item scores covering the last two weeks. Use when a person supplies ISI responses or asks to score their insomnia questionnaire. Produces a Chinese report with input checks and screening limits.",
+      "intents": [
+        "wearable_sleep"
+      ],
+      "has_script": true,
+      "validation_status": "reproduced",
+      "validation_label_zh": "已复现论文",
+      "entry": {
+        "script": "scripts/personal_report.py",
+        "measurements_flag": "--measurements",
+        "measurements_header": [
+          "marker",
+          "value",
+          "unit"
+        ],
+        "age_flag": "--age",
+        "sex_flag": "--sex",
+        "out_flag": "--out",
+        "result_json": true
+      },
+      "population": {
+        "age_years": [
+          17,
+          84
+        ],
+        "note_zh": "两个失眠临床样本的观察年龄并集：研究1为17–82岁，研究2为55–84岁；不是一般人群诊断效能验证，也非中文译本验证。"
+      },
+      "inputs_status": "verified",
+      "inputs": [
+        {
+          "key": "sleep_onset_score",
+          "label_zh": "入睡困难",
+          "aliases": [
+            "Difficulty falling asleep",
+            "Initial",
+            "ISI 1a",
+            "入睡困难"
+          ],
+          "unit": "score",
+          "accept": {},
+          "range": [
+            0,
+            4
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "图1第1a项；按过去两周严重程度填0至4分，0无、1轻、2中、3重、4很重。"
+        },
+        {
+          "key": "sleep_maintenance_score",
+          "label_zh": "睡眠维持困难",
+          "aliases": [
+            "Difficulty staying asleep",
+            "Middle",
+            "ISI 1b",
+            "睡眠维持困难"
+          ],
+          "unit": "score",
+          "accept": {},
+          "range": [
+            0,
+            4
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "图1第1b项；按过去两周严重程度填0至4分，0无、1轻、2中、3重、4很重。"
+        },
+        {
+          "key": "early_awakening_score",
+          "label_zh": "早醒",
+          "aliases": [
+            "Problem waking up too early",
+            "Terminal",
+            "ISI 1c",
+            "早醒"
+          ],
+          "unit": "score",
+          "accept": {},
+          "range": [
+            0,
+            4
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "图1第1c项；按过去两周严重程度填0至4分，0无、1轻、2中、3重、4很重。"
+        },
+        {
+          "key": "sleep_dissatisfaction_score",
+          "label_zh": "对睡眠的不满意程度",
+          "aliases": [
+            "Satisfaction",
+            "ISI 2",
+            "睡眠满意度",
+            "睡眠不满意度"
+          ],
+          "unit": "score",
+          "accept": {},
+          "range": [
+            0,
+            4
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "图1第2项；0非常满意，4非常不满意，中间保留1、2、3原始得分；不反向再计分。"
+        },
+        {
+          "key": "daily_interference_score",
+          "label_zh": "日间功能干扰",
+          "aliases": [
+            "Interference",
+            "ISI 3",
+            "日间功能干扰"
+          ],
+          "unit": "score",
+          "accept": {},
+          "range": [
+            0,
+            4
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "图1第3项；睡眠问题对日间功能的干扰：0无、1一点、2一些、3多、4非常多。"
+        },
+        {
+          "key": "noticeability_score",
+          "label_zh": "自觉他人能察觉的生活质量影响",
+          "aliases": [
+            "Noticeability",
+            "ISI 4",
+            "他人可察觉程度"
+          ],
+          "unit": "score",
+          "accept": {},
+          "range": [
+            0,
+            4
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "图1第4项；本人判断他人能否察觉睡眠问题对自己生活质量的损害：0完全不能、1几乎不能、2一些、3多、4非常多；不是家属代填。"
+        },
+        {
+          "key": "sleep_distress_score",
+          "label_zh": "对睡眠问题的担忧或苦恼",
+          "aliases": [
+            "Distress",
+            "Worried",
+            "ISI 5",
+            "睡眠困扰",
+            "担忧程度"
+          ],
+          "unit": "score",
+          "accept": {},
+          "range": [
+            0,
+            4
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "图1第5项；担忧或苦恼程度：0无、1一点、2一些、3多、4非常多。"
+        },
+        {
+          "key": "age",
+          "label_zh": "年龄",
+          "unit": "a",
+          "range": [
+            0,
+            120
+          ],
+          "required": false,
+          "from": "profile",
+          "flag": "--age",
+          "note_zh": "可选背景，仅用于提示研究年龄范围；0–120是输入防错范围，不是临床切点。"
+        },
+        {
+          "key": "sex",
+          "label_zh": "性别",
+          "required": false,
+          "from": "profile",
+          "flag": "--sex",
+          "note_zh": "可选男/女/其他/未知或male/female/other/unknown；不改变得分。"
+        }
+      ],
+      "outputs": [
+        {
+          "key": "isi_total_score",
+          "label_zh": "ISI总分",
+          "unit": "score"
+        },
+        {
+          "key": "isi_category",
+          "label_zh": "ISI严重程度筛查分档",
+          "note_zh": "no_clinically_significant_insomnia=未达临床显著分档；subthreshold_insomnia=阈下；moderate_insomnia=中度；severe_insomnia=重度。不是诊断。"
+        }
+      ],
+      "paper": {
+        "doi": "10.1016/s1389-9457(00)00065-4",
+        "title": "Validation of the Insomnia Severity Index as an outcome measure for insomnia research.",
+        "title_zh": "失眠严重程度指数作为失眠研究结局指标的验证",
+        "journal": "Sleep medicine",
+        "year": 2001
       }
     },
     {
@@ -39739,6 +39954,247 @@
         "title_zh": "表观遗传随机成分",
         "journal": "Nature Aging",
         "year": 2024
+      }
+    },
+    {
+      "name": "stop-bang",
+      "kind": "paper",
+      "tier": "A",
+      "species": [
+        "human"
+      ],
+      "evidence": "method",
+      "domains": [
+        "睡眠与呼吸"
+      ],
+      "blurb_zh": "用打鼾、白天疲倦、目击呼吸暂停、高血压及体型年龄信息计算原版STOP和STOP-Bang筛查分档。",
+      "description": "Tier A draft: the paper's printed example is not reproduced yet, so treat the readout as provisional. Calculates the original 2008 STOP and STOP-Bang affirmative-answer scores and binary obstructive sleep apnea screening categories from personal questionnaire answers, BMI, neck circumference, age and sex. Use for STOP、STOP-Bang、打鼾、 睡眠呼吸暂停筛查 or an adult preoperative screening readout.",
+      "intents": [
+        "wearable_sleep"
+      ],
+      "has_script": true,
+      "validation_status": "draft",
+      "validation_label_zh": "仍在验证",
+      "entry": {
+        "script": "scripts/personal_report.py",
+        "measurements_flag": "--measurements",
+        "measurements_header": [
+          "marker",
+          "value",
+          "unit"
+        ],
+        "age_flag": "--age",
+        "sex_flag": "--sex",
+        "out_flag": "--out",
+        "result_json": true
+      },
+      "inputs_status": "draft",
+      "inputs": [
+        {
+          "key": "snoring_binary",
+          "label_zh": "大声打鼾",
+          "aliases": [
+            "Snoring",
+            "打鼾"
+          ],
+          "unit": "1",
+          "range": [
+            0,
+            1
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "打鼾声是否超过说话声，或关门后仍能听到；1是，0否。"
+        },
+        {
+          "key": "tiredness_binary",
+          "label_zh": "白天经常疲倦或困倦",
+          "aliases": [
+            "Tired",
+            "Tiredness",
+            "白天疲倦"
+          ],
+          "unit": "1",
+          "range": [
+            0,
+            1
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "白天是否经常疲劳、倦怠或困倦；1是，0否。"
+        },
+        {
+          "key": "observed_apnea_binary",
+          "label_zh": "他人目击睡眠中停止呼吸",
+          "aliases": [
+            "Observed apnea",
+            "Observed",
+            "目击呼吸暂停"
+          ],
+          "unit": "1",
+          "range": [
+            0,
+            1
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "是否有人看到你睡眠中停止呼吸；1是，0否。不知道不能当作否。"
+        },
+        {
+          "key": "hypertension_binary",
+          "label_zh": "有高血压或正在接受高血压治疗",
+          "aliases": [
+            "High blood pressure",
+            "Hypertension",
+            "高血压"
+          ],
+          "unit": "1",
+          "range": [
+            0,
+            1
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "已知高血压或正在接受高血压治疗均填1，否则填0；不能用某次正常血压代替回答。"
+        },
+        {
+          "key": "bmi_kg_m2",
+          "label_zh": "体质指数",
+          "aliases": [
+            "BMI",
+            "Body mass index",
+            "体重指数"
+          ],
+          "unit": "kg/m^2",
+          "range": [
+            10,
+            100
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "提供本人BMI；10–100为输入防错范围，不是论文风险切点。"
+        },
+        {
+          "key": "neck_circumference_cm",
+          "label_zh": "颈围",
+          "aliases": [
+            "Neck circumference",
+            "Neck size"
+          ],
+          "unit": "cm",
+          "range": [
+            15,
+            80
+          ],
+          "accept": {
+            "mm": 0.1,
+            "m": 100,
+            "in": 2.54
+          },
+          "unit_required": true,
+          "required": true,
+          "from": "measurements",
+          "note_zh": "论文由工作人员测量颈围；不以S/M/L衣领尺码推算。15–80 cm为输入防错范围。"
+        },
+        {
+          "key": "age",
+          "label_zh": "实足年龄",
+          "aliases": [
+            "Age",
+            "年龄"
+          ],
+          "unit": "a",
+          "range": [
+            18,
+            120
+          ],
+          "required": true,
+          "from": "profile",
+          "flag": "--age",
+          "note_zh": "岁；18岁为研究最低纳入年龄，120岁是技术防错上限，不是验证样本最大年龄。"
+        },
+        {
+          "key": "sex",
+          "label_zh": "原问卷性别项",
+          "aliases": [
+            "Sex",
+            "Gender",
+            "性别"
+          ],
+          "required": true,
+          "from": "profile",
+          "flag": "--sex",
+          "note_zh": "male/female 或 男/女；原论文二元男性项，未知或无法套用时不自动归零。"
+        }
+      ],
+      "outputs": [
+        {
+          "key": "snoring_score",
+          "label_zh": "打鼾项",
+          "unit": "score"
+        },
+        {
+          "key": "tiredness_score",
+          "label_zh": "白天疲倦项",
+          "unit": "score"
+        },
+        {
+          "key": "observed_apnea_score",
+          "label_zh": "目击呼吸暂停项",
+          "unit": "score"
+        },
+        {
+          "key": "hypertension_score",
+          "label_zh": "高血压项",
+          "unit": "score"
+        },
+        {
+          "key": "bmi_score",
+          "label_zh": "BMI项",
+          "unit": "score"
+        },
+        {
+          "key": "age_score",
+          "label_zh": "年龄项",
+          "unit": "score"
+        },
+        {
+          "key": "neck_score",
+          "label_zh": "颈围项",
+          "unit": "score"
+        },
+        {
+          "key": "male_score",
+          "label_zh": "男性项",
+          "unit": "score"
+        },
+        {
+          "key": "stop_score",
+          "label_zh": "STOP肯定项总分",
+          "unit": "score"
+        },
+        {
+          "key": "stop_bang_score",
+          "label_zh": "STOP-Bang肯定项总分",
+          "unit": "score"
+        },
+        {
+          "key": "stop_category",
+          "label_zh": "STOP风险档",
+          "note_zh": "high=高风险，low=低风险；2008原版二档筛查分类。"
+        },
+        {
+          "key": "stop_bang_category",
+          "label_zh": "STOP-Bang风险档",
+          "note_zh": "high=高风险，low=低风险；2008原版二档筛查分类。"
+        }
+      ],
+      "paper": {
+        "doi": "10.1097/aln.0b013e31816d83e4",
+        "title": "STOP questionnaire: a tool to screen patients for obstructive sleep apnea.",
+        "title_zh": "STOP问卷：阻塞性睡眠呼吸暂停筛查工具",
+        "journal": "Anesthesiology",
+        "year": 2008
       }
     },
     {
