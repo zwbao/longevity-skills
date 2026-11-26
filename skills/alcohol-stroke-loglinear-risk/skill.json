@@ -1,0 +1,230 @@
+{
+  "schema": "longevity-skill/1",
+  "name": "alcohol-stroke-loglinear-risk",
+  "kind": "paper",
+  "tier": "A",
+  "species": [
+    "human"
+  ],
+  "evidence": "cohort",
+  "domains": [
+    "饮酒与心血管"
+  ],
+  "topic": [
+    "tobacco_alcohol",
+    "cardiovascular"
+  ],
+  "blurb_zh": "用两个纯酒精摄入量情景，计算男性卒中相对风险的模型差异。",
+  "intents": [
+    "before_after",
+    "intervention_evidence"
+  ],
+  "triage": {
+    "reason_zh": "全文和附录印出男性卒中的对数线性风险系数，可按个人纯酒精摄入量差换算，并复现正文每周100克差异的风险比。",
+    "reviewed": false
+  },
+  "paper": {
+    "doi": "10.1016/s0140-6736(18)31772-0",
+    "title": "Conventional and genetic evidence on alcohol and vascular disease aetiology: a prospective study of 500 000 men and women in China.",
+    "title_zh": "饮酒与血管疾病的传统及遗传证据：中国前瞻性队列研究",
+    "journal": "Lancet (London, England)",
+    "year": 2019,
+    "authors": "Millwood 等",
+    "article_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6497989/",
+    "supplements": [
+      {
+        "label": "Supplementary appendix（45页，方法及Webtable 12）",
+        "url": "https://pmc.ncbi.nlm.nih.gov/articles/instance/6497989/bin/mmc1.pdf"
+      }
+    ],
+    "card_notes": [
+      "系数取男性遗传分析（按地区与年龄调整）；不是个人基因检测评分，也不是随机改变饮酒量的试验。",
+      "适用范围为无既往冠心病、卒中或短暂性脑缺血的中国成年男性；年龄只作范围检查。"
+    ],
+    "summary_zh": "这项中国人群前瞻性研究结合遗传分析，发现男性饮酒量与卒中风险持续正相关，传统观察中适量饮酒的保护性关联可能主要来自偏倚。个人报告只按两个纯酒精摄入量情景换算卒中相对风险及系数不确定区间，不计算个人发病概率或改变饮酒后的实际效果。",
+    "summary_status": "draft"
+  },
+  "entry": {
+    "script": "scripts/personal_report.py",
+    "measurements_flag": "--measurements",
+    "measurements_header": [
+      "marker",
+      "value",
+      "unit"
+    ],
+    "age_flag": "--age",
+    "sex_flag": "--sex",
+    "out_flag": "--out",
+    "result_json": true,
+    "targets_flag": "--targets",
+    "levers_json": true
+  },
+  "population": {
+    "age_years": [
+      30,
+      79
+    ],
+    "note_zh": "中国CKB成人男性；招募目标35–74岁，纳入部分目标范围外成人，附录年龄组30–79岁。疾病分析排除既往冠心病、卒中或短暂性脑缺血。"
+  },
+  "inputs_status": "verified",
+  "inputs": [
+    {
+      "key": "alcohol_g_day",
+      "label_zh": "当前纯酒精摄入量",
+      "aliases": [
+        "平均每日纯酒精摄入量",
+        "alcohol intake",
+        "ethanol intake",
+        "current alcohol"
+      ],
+      "unit": "g/d",
+      "accept": {},
+      "range": [
+        0,
+        200
+      ],
+      "unit_required": true,
+      "required": true,
+      "from": "measurements",
+      "note_zh": "平均到所有日历日的纯酒精克数；只接受 g/d。已知每周纯酒精克数时除以 7。不接收酒水毫升、杯数或仅饮酒日摄入量。"
+    },
+    {
+      "key": "reference_alcohol_g_day",
+      "label_zh": "比较纯酒精摄入量",
+      "aliases": [
+        "参照纯酒精摄入量",
+        "reference alcohol intake",
+        "comparison alcohol"
+      ],
+      "unit": "g/d",
+      "accept": {},
+      "range": [
+        0,
+        200
+      ],
+      "unit_required": true,
+      "required": true,
+      "from": "measurements",
+      "note_zh": "平均到所有日历日的纯酒精克数；只接受 g/d。已知每周纯酒精克数时除以 7。不接收酒水毫升、杯数或仅饮酒日摄入量。"
+    },
+    {
+      "key": "age",
+      "label_zh": "实足年龄",
+      "unit": "a",
+      "range": [
+        30,
+        79
+      ],
+      "required": true,
+      "from": "profile",
+      "flag": "--age",
+      "note_zh": "仅检查适用年龄，不参与斜率计算。"
+    },
+    {
+      "key": "sex",
+      "label_zh": "性别",
+      "required": true,
+      "from": "profile",
+      "flag": "--sex",
+      "note_zh": "仅接受 male 或男；女性分析是多效性对照，不能用作女性摄入量风险系数。"
+    },
+    {
+      "key": "prior_cvd",
+      "label_zh": "既往冠心病、卒中或短暂性脑缺血病史",
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "argument",
+      "flag": "--prior-cvd",
+      "note_zh": "0=三者均无，1=任一有；有病史或未知时不计算。"
+    }
+  ],
+  "outputs": [
+    {
+      "key": "weekly_alcohol_difference_g",
+      "label_zh": "当前情景减比较情景的一周纯酒精总量差",
+      "unit": "g"
+    },
+    {
+      "key": "applicability",
+      "label_zh": "摄入量情景是否超出研究类别均值范围"
+    },
+    {
+      "key": "ischaemic_stroke_rr",
+      "label_zh": "缺血性卒中模型相对风险",
+      "unit": "1",
+      "note_zh": "当前情景相对比较情景；区间仅传播论文斜率的95%置信区间，不是个人预测区间。"
+    },
+    {
+      "key": "ischaemic_stroke_rr_ci_low",
+      "label_zh": "缺血性卒中模型相对风险区间下限",
+      "unit": "1",
+      "note_zh": "当前情景相对比较情景；区间仅传播论文斜率的95%置信区间，不是个人预测区间。"
+    },
+    {
+      "key": "ischaemic_stroke_rr_ci_high",
+      "label_zh": "缺血性卒中模型相对风险区间上限",
+      "unit": "1",
+      "note_zh": "当前情景相对比较情景；区间仅传播论文斜率的95%置信区间，不是个人预测区间。"
+    },
+    {
+      "key": "intracerebral_haemorrhage_rr",
+      "label_zh": "脑内出血模型相对风险",
+      "unit": "1",
+      "note_zh": "当前情景相对比较情景；区间仅传播论文斜率的95%置信区间，不是个人预测区间。"
+    },
+    {
+      "key": "intracerebral_haemorrhage_rr_ci_low",
+      "label_zh": "脑内出血模型相对风险区间下限",
+      "unit": "1",
+      "note_zh": "当前情景相对比较情景；区间仅传播论文斜率的95%置信区间，不是个人预测区间。"
+    },
+    {
+      "key": "intracerebral_haemorrhage_rr_ci_high",
+      "label_zh": "脑内出血模型相对风险区间上限",
+      "unit": "1",
+      "note_zh": "当前情景相对比较情景；区间仅传播论文斜率的95%置信区间，不是个人预测区间。"
+    },
+    {
+      "key": "total_stroke_rr",
+      "label_zh": "总卒中模型相对风险",
+      "unit": "1",
+      "note_zh": "当前情景相对比较情景；区间仅传播论文斜率的95%置信区间，不是个人预测区间。"
+    },
+    {
+      "key": "total_stroke_rr_ci_low",
+      "label_zh": "总卒中模型相对风险区间下限",
+      "unit": "1",
+      "note_zh": "当前情景相对比较情景；区间仅传播论文斜率的95%置信区间，不是个人预测区间。"
+    },
+    {
+      "key": "total_stroke_rr_ci_high",
+      "label_zh": "总卒中模型相对风险区间上限",
+      "unit": "1",
+      "note_zh": "当前情景相对比较情景；区间仅传播论文斜率的95%置信区间，不是个人预测区间。"
+    }
+  ],
+  "validation": {
+    "status": "reproduced",
+    "examples": [
+      {
+        "locator": "Results, paragraph accompanying Figure 4; Appendix p 6 scaling rule; Webtable 12 Model 1 coefficients",
+        "quote": "The mean intake in all men was about 100 g per week (appendix p 12), and the corresponding RRs per 100 g per week were 1·09 (1·04–1·14), 1·18 (1·12–1·24), and 1·12 (1·09–1·16), respectively.",
+        "values": [
+          1.09,
+          1.04,
+          1.14,
+          1.18,
+          1.12,
+          1.24,
+          1.16
+        ],
+        "tolerance": "绝对误差≤0.006：期望值及原始每280 g/week的RR均仅印两位小数，容纳两次四舍五入。未反推或拟合常数。",
+        "test": "tests/test_manifest.py::test_printed_100_g_week_example"
+      }
+    ]
+  }
+}
