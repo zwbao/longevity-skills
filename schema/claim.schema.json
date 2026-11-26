@@ -158,6 +158,22 @@
         "list_member"
       ],
       "description": "finding: a statement about this entity. list_member: one entry of a list the paper prints (a clock's CpG genes, a supplementary table of hits); rows of one list share the same claim_zh and the query shows them as one line."
+    },
+    "topic": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 3,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "pattern": "^[a-z_]+$"
+      },
+      "description": "One to three topic ids from schema/taxonomy.json, the main one first. Assigned by an agent, not by keywords."
+    },
+    "evidence_level": {
+      "type": "string",
+      "pattern": "^[a-z_]+$",
+      "description": "Design behind this statement, an id from schema/taxonomy.json evidence_levels. A background sentence in a trial's introduction is narrative, not rct."
     }
   }
 }

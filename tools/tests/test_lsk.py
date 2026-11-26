@@ -450,3 +450,53 @@ def test_raised_decimal_points_count_as_decimal_points():
     assert datasets.numbers_missing("HR 0\u00b782 (0\u00b771\u20130\u00b794)", [0.82, 0.71, 0.94]) == []
     assert datasets.numbers_missing("3 \u00b7 5 items", [3.5]) == [3.5]
     assert datasets.sign_shown("MD \u22120\u22c544 (\u22120\u22c559 to \u22120\u22c529)", -0.44)
+
+
+def test_coverage_labels_and_reference(tmp_path, monkeypatch):
+    from tools.lsk import coverage
+
+    topics = set(coverage.topic_ids())
+    assert {"physical_activity", "cardiovascular", "aging_biology"} <= topics
+    assert "rct" in coverage.human_levels() and "animal" not in coverage.human_levels()
+    rows = [{"topic": ["cardiovascular"], "evidence_level": "rct"}, {"topic": ["nope"]}, {"evidence_level": "anecdote"}, {}]
+    errors = coverage.check_labels(rows, "claims", with_level=True)
+    assert len(errors) == 2 and "nope" in errors[0] and "anecdote" in errors[1]
+
+    claims = tmp_path / "claims.jsonl"
+    claims.write_text("\n".join(json.dumps(row) for row in [
+        {"id": "x:1", "entity": "SBP", "claim_zh": "降压降低卒中", "direction": "protective", "species": ["human"],
+         "evidence": "rct", "evidence_level": "rct", "topic": ["cardiovascular"], "source": {"skill": "x", "doi": "10.1000/a"}},
+        {"id": "x:2", "entity": "tau", "claim_zh": "背景", "direction": "named", "species": ["human"],
+         "evidence": "review", "evidence_level": "narrative", "topic": ["brain_cognition"], "source": {"skill": "x", "doi": "10.1000/a"}},
+        {"id": "x:3", "entity": "mTOR", "claim_zh": "小鼠寿命", "direction": "extends_lifespan", "species": ["mouse"],
+         "evidence": "animal", "evidence_level": "animal", "topic": ["aging_biology"], "source": {"skill": "x", "doi": "10.1000/b"}},
+        {"id": "x:4", "entity": "y", "claim_zh": "未标注", "direction": "up", "species": ["human"], "evidence": "cohort", "source": {"skill": "x"}},
+    ]) + "\n", encoding="utf-8")
+    reference = tmp_path / "reference.jsonl"
+    reference.write_text("\n".join(json.dumps(row, ensure_ascii=False) for row in [
+        {"id": "cv-pop-sprint", "topic": "cardiovascular", "layer": "population", "item": "SPRINT", "item_zh": "SPRINT 试验",
+         "why_zh": "强化降压的标志性试验", "doi": ["10.1000/A"], "priority": "P0", "status": "draft"},
+        {"id": "cv-method-prevent", "topic": "cardiovascular", "layer": "method", "item": "PREVENT", "item_zh": "PREVENT 方程",
+         "why_zh": "美国心脏协会推荐", "doi": ["10.1000/c"], "priority": "P0", "status": "draft"},
+        {"id": "ab-mech-x", "topic": "aging_biology", "layer": "mechanism", "item": "Tool X", "item_zh": "某数据库",
+         "why_zh": "常用资源", "skill": ["tool-x"], "priority": "P1", "status": "draft"},
+    ]) + "\n", encoding="utf-8")
+    monkeypatch.setattr(coverage, "EVIDENCE", claims)
+    monkeypatch.setattr(coverage, "REFERENCE", reference)
+    monkeypatch.setattr(coverage, "EFFECTS", tmp_path / "none.jsonl")
+    monkeypatch.setattr(coverage, "REGISTRY", tmp_path / "none.jsonl")
+    manifests = {"tool-x": {"tier": "tool", "topic": ["aging_biology"], "species": ["human"]},
+                 "score-y": {"tier": "A", "topic": ["cardiovascular"], "species": ["human"], "paper": {"doi": "10.1000/d"}}}
+    assert coverage.check_reference() == []
+    data = coverage.build(manifests)
+    cells = {row["topic"]: row for row in data["topics"]}
+    cv = cells["cardiovascular"]["cells"]
+    assert cv["population"]["rows"] == 1 and cv["population"]["covered"] == 1
+    assert cv["method"]["skills"] == ["score-y"] and cv["method"]["covered"] == 0
+    assert [item["id"] for item in cv["method"]["missing"]] == ["cv-method-prevent"]
+    assert cells["aging_biology"]["cells"]["mechanism"]["rows"] == 1
+    assert cells["aging_biology"]["cells"]["mechanism"]["covered"] == 1
+    assert cells["brain_cognition"]["background_rows"] == 0  # a bare mention is not counted
+    assert data["unlabelled"]["claims"] == 1
+    assert coverage.missing_dois(manifests) == ["10.1000/c"]
+    assert "PREVENT 方程" in coverage.render_md(data)

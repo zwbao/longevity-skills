@@ -60,4 +60,6 @@ def check(manifests: Dict[str, Dict[str, Any]]) -> List[str]:
         skill_species = set(manifests[skill].get("species", []))
         if species == {"human"} and "human" not in skill_species:
             errors.append(f"{where}: {skill} has no human evidence ({sorted(skill_species)}) but the claim says human only")
+    from .coverage import check_labels
+    errors += check_labels(rows, "skills/longevity-evidence/data/claims.jsonl", with_level=True)
     return errors

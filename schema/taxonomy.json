@@ -1,0 +1,41 @@
+{
+  "schema": "longevity-taxonomy/1",
+  "description": "Controlled values for topic (claims, effects, skills, coverage reference items) and evidence_level (claims). An agent assigns them row by row; there is no keyword rule. The coverage table (python3 -m tools.lsk coverage) has one row per topic and one column per layer.",
+  "topics": [
+    {"id": "physical_activity", "label_zh": "运动与体力活动", "scope_zh": "运动、步数、久坐、心肺耐力、肌肉力量训练及其健康结局。"},
+    {"id": "diet_nutrition", "label_zh": "饮食与营养", "scope_zh": "膳食模式、食物与营养素摄入、热量限制与禁食、饮食评分。"},
+    {"id": "sleep_circadian", "label_zh": "睡眠与昼夜节律", "scope_zh": "睡眠时长与质量、失眠、睡眠呼吸、昼夜节律与轮班。"},
+    {"id": "tobacco_alcohol", "label_zh": "吸烟与饮酒", "scope_zh": "吸烟、二手烟、电子烟、饮酒量与饮酒模式。"},
+    {"id": "body_weight_metabolism", "label_zh": "体重与代谢", "scope_zh": "肥胖与体成分、血糖与糖尿病、血脂、肝脏脂肪、代谢综合征。"},
+    {"id": "cardiovascular", "label_zh": "心血管", "scope_zh": "血压、动脉粥样硬化性心血管病、卒中、心衰、心血管风险评分。"},
+    {"id": "brain_cognition", "label_zh": "认知与脑", "scope_zh": "认知功能、痴呆与阿尔茨海默病、脑影像、神经退行。"},
+    {"id": "musculoskeletal_frailty", "label_zh": "肌骨与衰弱", "scope_zh": "肌少症、骨质疏松与骨折、跌倒、衰弱、身体功能与失能。"},
+    {"id": "mental_social", "label_zh": "心理与社交", "scope_zh": "抑郁、焦虑、压力、孤独与社会联系、生活目的感。"},
+    {"id": "screening_prevention", "label_zh": "筛查与疫苗", "scope_zh": "癌症与慢病筛查、疫苗接种、预防性服务与体检项目。"},
+    {"id": "drugs_supplements", "label_zh": "药物与补充剂", "scope_zh": "处方药与老年保护候选药、膳食补充剂、多重用药。"},
+    {"id": "environment", "label_zh": "环境暴露", "scope_zh": "空气污染、重金属、温度、噪声、绿地等外部暴露。"},
+    {"id": "biological_age", "label_zh": "生物年龄与时钟", "scope_zh": "表观遗传、蛋白组、临床生化与影像等衰老时钟及生物年龄测量。"},
+    {"id": "genetics", "label_zh": "遗传", "scope_zh": "长寿相关基因与变异、多基因评分、家族史、孟德尔随机化。"},
+    {"id": "aging_biology", "label_zh": "衰老机制", "scope_zh": "衰老标志：细胞衰老、自噬、线粒体、端粒、营养感应、干细胞、炎症衰老等机制。"},
+    {"id": "organ_aging", "label_zh": "器官与系统老化", "scope_zh": "以上未单列的器官与系统：皮肤、生殖与绝经、听力与视力、肾、免疫、口腔、癌症等。"}
+  ],
+  "evidence_levels": [
+    {"id": "guideline", "label_zh": "指南或共识", "human": true, "scope_zh": "临床或公共卫生指南、专业学会共识、官方推荐。"},
+    {"id": "meta_analysis", "label_zh": "系统综述或荟萃分析", "human": true, "scope_zh": "系统综述、荟萃分析、伞形综述、合并队列分析、全球疾病负担类风险曲线。"},
+    {"id": "rct", "label_zh": "随机对照试验", "human": true, "scope_zh": "随机对照试验及其事后分析。"},
+    {"id": "cohort", "label_zh": "队列研究", "human": true, "scope_zh": "前瞻或回顾性队列、巢式病例对照。"},
+    {"id": "case_control", "label_zh": "病例对照", "human": true, "scope_zh": "病例对照研究。"},
+    {"id": "cross_sectional", "label_zh": "横断面", "human": true, "scope_zh": "横断面调查与相关分析。"},
+    {"id": "genetic", "label_zh": "遗传关联", "human": true, "scope_zh": "全基因组关联、孟德尔随机化、人群遗传分析。"},
+    {"id": "narrative", "label_zh": "叙述性综述或背景陈述", "human": false, "scope_zh": "叙述性综述、观点文章，或论文引言与讨论里引用他人结果的陈述。"},
+    {"id": "animal", "label_zh": "动物实验", "human": false, "scope_zh": "小鼠、线虫、果蝇等动物实验与比较生物学。"},
+    {"id": "in_vitro", "label_zh": "体外实验", "human": false, "scope_zh": "细胞系、类器官、离体组织实验。"},
+    {"id": "computational", "label_zh": "方法或数据资源", "human": false, "scope_zh": "方法开发、数据库、模型、模拟；没有新的人群结论。"}
+  ],
+  "layers": [
+    {"id": "method", "label_zh": "方法", "scope_zh": "个人可计算的评分、风险模型、时钟（A 类与工具技能）。"},
+    {"id": "population", "label_zh": "人群证据", "scope_zh": "人类研究的风险因素—结局、干预—指标效应、指南推荐（证据库与效应量）。"},
+    {"id": "reference_data", "label_zh": "参考数据", "scope_zh": "MET 值、食物成分、参考区间、个体波动等整表数据。"},
+    {"id": "mechanism", "label_zh": "机制知识", "scope_zh": "基因、蛋白、通路、动物与体外研究、外部机制数据库。"}
+  ]
+}

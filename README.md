@@ -14,6 +14,8 @@
 | `intents.json` | 用户会怎么问（我的生物年龄、甲基化年龄、某个补剂有没有用……）对应到哪些技能。 |
 | `skills/longevity-evidence/data/claims.jsonl` | 从收录论文冻结名单里抽出的实体和论文对它的说法，按人群、动物、细胞标注。`kind` 区分对这个实体的发现（finding）和论文名单里的一项（list_member）；每行都来自全文（`source.access: fulltext`），全文打不开的论文不收。由 `longevity-evidence` 技能查询，查询结果同时列出 `data/effects.jsonl` 里的试验平均效应。 |
 | `registry/papers.jsonl` | 每周流水线看过的每篇论文（DOI 已规范化、唯一），以及它的去向：技能、证据、只收录或拒收。也是文献索引。 |
+| `schema/taxonomy.json` | 主题（16 个）、证据等级和知识层的取值。证据行、效应量和技能带 `topic`，证据行另带 `evidence_level`，由 agent 逐条判定，不用关键词规则。 |
+| `coverage/reference.jsonl`、`docs/coverage.md` | 参照清单：每个主题、每一层公认应有的方法、指南、综合证据、参考数据和机制资源，各带 DOI。`python3 -m tools.lsk coverage` 按它生成覆盖度表（`coverage.json`、`docs/coverage.md`），列出已覆盖 / 应有和尚缺的条目；`--missing-dois` 输出尚缺条目的 DOI，供流水线定向补齐。 |
 
 ## 标签
 
