@@ -1,0 +1,340 @@
+{
+  "schema": "longevity-skill/1",
+  "name": "daily-steps-health-lookup",
+  "kind": "paper",
+  "tier": "A",
+  "species": [
+    "human"
+  ],
+  "evidence": "review",
+  "domains": [
+    "运动",
+    "死亡风险",
+    "慢病风险"
+  ],
+  "topic": [
+    "physical_activity",
+    "cardiovascular",
+    "brain_cognition"
+  ],
+  "blurb_zh": "用设备记录的日均步数查论文已印出的九类健康结局人群HR及置信区间，区分主要分析与更正后的事后分析。",
+  "intents": [
+    "wearable_sleep",
+    "frailty_mortality",
+    "cognition_dementia"
+  ],
+  "triage": {
+    "reason_zh": "正文表2与更正后补表8印出日均步数对应的九类健康结局HR及区间，可用个人步数精确查表并复现印出结果。",
+    "reviewed": false
+  },
+  "paper": {
+    "doi": "10.1016/s2468-2667(25)00164-1",
+    "title": "Daily steps and health outcomes in adults: a systematic review and dose-response meta-analysis.",
+    "title_zh": "成人日均步数与健康结局：系统综述及剂量反应荟萃分析",
+    "journal": "The Lancet. Public health",
+    "year": 2025,
+    "authors": "Ding 等",
+    "article_url": "https://www.sciencedirect.com/science/article/pii/S2468266725001641",
+    "supplements": [
+      {
+        "label": "Supplementary appendix（2025-08-27更正版；表8第82页）",
+        "url": "https://ars.els-cdn.com/content/image/1-s2.0-S2468266725001641-mmc1.pdf"
+      }
+    ],
+    "card_notes": [
+      "默认查正文表2，相对每日2000步；另可选择更正后补表8，相对每日7000步。两表不能直接比较，也不通过相除换算参照。",
+      "仅支持每1000步一个已印出的查表点；不插值、取整或外推。2型糖尿病在7000步时采用表2印出的置信区间上限1.00，摘要为0.99。",
+      "代码按需向作者索取；没有公开代码仓库。技能仅冻结表格数值，不重建连续剂量反应模型。"
+    ],
+    "summary_zh": "这项成人前瞻性观察研究的系统综述和荟萃分析发现，日均步数较多与多种健康结局的较低风险相关，不同结局的关联形状有所不同。个人报告只把设备测得的日均步数匹配到论文已印出的点，展示人群关联及其不确定性，不计算个人绝对风险或增加步数后的因果获益。",
+    "summary_status": "draft"
+  },
+  "entry": {
+    "script": "scripts/personal_report.py",
+    "measurements_flag": "--measurements",
+    "measurements_header": [
+      "item",
+      "value",
+      "unit"
+    ],
+    "age_flag": "--age",
+    "sex_flag": "--sex",
+    "out_flag": "--out",
+    "result_json": true,
+    "targets_flag": "--targets",
+    "levers_json": true
+  },
+  "inputs_status": "verified",
+  "inputs": [
+    {
+      "key": "daily_steps_per_day",
+      "label_zh": "日均步数",
+      "aliases": [
+        "日均步数",
+        "每日步数",
+        "平均每日步数",
+        "日平均步数",
+        "步数",
+        "daily steps",
+        "daily step count",
+        "steps per day",
+        "average steps/day",
+        "mean daily steps"
+      ],
+      "unit": "1",
+      "accept": {},
+      "range": [
+        0,
+        100000
+      ],
+      "unit_required": true,
+      "required": true,
+      "from": "measurements",
+      "note_zh": "固定一日窗口的计数，显示为步/日；机器单位1表示计数，只接受已算好的设备日均数。不能填周总数、步频、距离或万步。防错范围不是研究切点；表2支持2000至12000、补表8支持7000至12000，每1000步一个印出点。其他数值不取整，请保留真实测量。"
+    },
+    {
+      "key": "age",
+      "label_zh": "年龄",
+      "unit": "a",
+      "range": [
+        18,
+        120
+      ],
+      "required": false,
+      "from": "profile",
+      "flag": "--age",
+      "note_zh": "可选背景；成人使用范围18–120岁，120为软件防错上限；不参与查表，不做年龄校准。"
+    },
+    {
+      "key": "sex",
+      "label_zh": "性别",
+      "required": false,
+      "from": "profile",
+      "flag": "--sex",
+      "note_zh": "可选male/female背景；不改变查表值。"
+    },
+    {
+      "key": "reference_steps_per_day",
+      "label_zh": "论文参照步数",
+      "unit": "1",
+      "accept": {},
+      "range": [
+        2000,
+        7000
+      ],
+      "required": false,
+      "from": "argument",
+      "flag": "--reference-steps",
+      "note_zh": "仅接受2000（默认，正文表2）或7000（补表8）；这是查表选择，不是用户的测量或目标。"
+    }
+  ],
+  "outputs": [
+    {
+      "key": "daily_steps_per_day",
+      "label_zh": "已匹配的日均步数（步/日）",
+      "unit": "1"
+    },
+    {
+      "key": "reference_steps_per_day",
+      "label_zh": "所选表的参照步数（步/日）",
+      "unit": "1"
+    },
+    {
+      "key": "source_table",
+      "label_zh": "数值来源表"
+    },
+    {
+      "key": "all_cause_mortality_hr",
+      "label_zh": "全因死亡人群HR",
+      "unit": "1",
+      "note_zh": "按所选表精确查表；不是个人概率。参照点未印出置信区间，保留null。"
+    },
+    {
+      "key": "all_cause_mortality_ci_lower",
+      "label_zh": "全因死亡人群95%置信区间下限",
+      "unit": "1",
+      "note_zh": "按所选表精确查表；不是个人概率。参照点未印出置信区间，保留null。"
+    },
+    {
+      "key": "all_cause_mortality_ci_upper",
+      "label_zh": "全因死亡人群95%置信区间上限",
+      "unit": "1",
+      "note_zh": "按所选表精确查表；不是个人概率。参照点未印出置信区间，保留null。"
+    },
+    {
+      "key": "cvd_incidence_hr",
+      "label_zh": "心血管疾病发病人群HR",
+      "unit": "1",
+      "note_zh": "按所选表精确查表；不是个人概率。参照点未印出置信区间，保留null。"
+    },
+    {
+      "key": "cvd_incidence_ci_lower",
+      "label_zh": "心血管疾病发病人群95%置信区间下限",
+      "unit": "1",
+      "note_zh": "按所选表精确查表；不是个人概率。参照点未印出置信区间，保留null。"
+    },
+    {
+      "key": "cvd_incidence_ci_upper",
+      "label_zh": "心血管疾病发病人群95%置信区间上限",
+      "unit": "1",
+      "note_zh": "按所选表精确查表；不是个人概率。参照点未印出置信区间，保留null。"
+    },
+    {
+      "key": "cvd_mortality_hr",
+      "label_zh": "心血管疾病死亡人群HR",
+      "unit": "1",
+      "note_zh": "按所选表精确查表；不是个人概率。参照点未印出置信区间，保留null。"
+    },
+    {
+      "key": "cvd_mortality_ci_lower",
+      "label_zh": "心血管疾病死亡人群95%置信区间下限",
+      "unit": "1",
+      "note_zh": "按所选表精确查表；不是个人概率。参照点未印出置信区间，保留null。"
+    },
+    {
+      "key": "cvd_mortality_ci_upper",
+      "label_zh": "心血管疾病死亡人群95%置信区间上限",
+      "unit": "1",
+      "note_zh": "按所选表精确查表；不是个人概率。参照点未印出置信区间，保留null。"
+    },
+    {
+      "key": "cancer_incidence_hr",
+      "label_zh": "癌症发病人群HR",
+      "unit": "1",
+      "note_zh": "按所选表精确查表；不是个人概率。参照点未印出置信区间，保留null。"
+    },
+    {
+      "key": "cancer_incidence_ci_lower",
+      "label_zh": "癌症发病人群95%置信区间下限",
+      "unit": "1",
+      "note_zh": "按所选表精确查表；不是个人概率。参照点未印出置信区间，保留null。"
+    },
+    {
+      "key": "cancer_incidence_ci_upper",
+      "label_zh": "癌症发病人群95%置信区间上限",
+      "unit": "1",
+      "note_zh": "按所选表精确查表；不是个人概率。参照点未印出置信区间，保留null。"
+    },
+    {
+      "key": "cancer_mortality_hr",
+      "label_zh": "癌症死亡人群HR",
+      "unit": "1",
+      "note_zh": "按所选表精确查表；不是个人概率。参照点未印出置信区间，保留null。"
+    },
+    {
+      "key": "cancer_mortality_ci_lower",
+      "label_zh": "癌症死亡人群95%置信区间下限",
+      "unit": "1",
+      "note_zh": "按所选表精确查表；不是个人概率。参照点未印出置信区间，保留null。"
+    },
+    {
+      "key": "cancer_mortality_ci_upper",
+      "label_zh": "癌症死亡人群95%置信区间上限",
+      "unit": "1",
+      "note_zh": "按所选表精确查表；不是个人概率。参照点未印出置信区间，保留null。"
+    },
+    {
+      "key": "type2_diabetes_hr",
+      "label_zh": "2型糖尿病发病人群HR",
+      "unit": "1",
+      "note_zh": "按所选表精确查表；不是个人概率。参照点未印出置信区间，保留null。"
+    },
+    {
+      "key": "type2_diabetes_ci_lower",
+      "label_zh": "2型糖尿病发病人群95%置信区间下限",
+      "unit": "1",
+      "note_zh": "按所选表精确查表；不是个人概率。参照点未印出置信区间，保留null。"
+    },
+    {
+      "key": "type2_diabetes_ci_upper",
+      "label_zh": "2型糖尿病发病人群95%置信区间上限",
+      "unit": "1",
+      "note_zh": "按所选表精确查表；不是个人概率。参照点未印出置信区间，保留null。"
+    },
+    {
+      "key": "dementia_hr",
+      "label_zh": "痴呆人群HR",
+      "unit": "1",
+      "note_zh": "按所选表精确查表；不是个人概率。参照点未印出置信区间，保留null。"
+    },
+    {
+      "key": "dementia_ci_lower",
+      "label_zh": "痴呆人群95%置信区间下限",
+      "unit": "1",
+      "note_zh": "按所选表精确查表；不是个人概率。参照点未印出置信区间，保留null。"
+    },
+    {
+      "key": "dementia_ci_upper",
+      "label_zh": "痴呆人群95%置信区间上限",
+      "unit": "1",
+      "note_zh": "按所选表精确查表；不是个人概率。参照点未印出置信区间，保留null。"
+    },
+    {
+      "key": "depressive_symptoms_hr",
+      "label_zh": "抑郁症状人群HR",
+      "unit": "1",
+      "note_zh": "按所选表精确查表；不是个人概率。参照点未印出置信区间，保留null。"
+    },
+    {
+      "key": "depressive_symptoms_ci_lower",
+      "label_zh": "抑郁症状人群95%置信区间下限",
+      "unit": "1",
+      "note_zh": "按所选表精确查表；不是个人概率。参照点未印出置信区间，保留null。"
+    },
+    {
+      "key": "depressive_symptoms_ci_upper",
+      "label_zh": "抑郁症状人群95%置信区间上限",
+      "unit": "1",
+      "note_zh": "按所选表精确查表；不是个人概率。参照点未印出置信区间，保留null。"
+    },
+    {
+      "key": "falls_hr",
+      "label_zh": "跌倒人群HR",
+      "unit": "1",
+      "note_zh": "按所选表精确查表；不是个人概率。参照点未印出置信区间，保留null。"
+    },
+    {
+      "key": "falls_ci_lower",
+      "label_zh": "跌倒人群95%置信区间下限",
+      "unit": "1",
+      "note_zh": "按所选表精确查表；不是个人概率。参照点未印出置信区间，保留null。"
+    },
+    {
+      "key": "falls_ci_upper",
+      "label_zh": "跌倒人群95%置信区间上限",
+      "unit": "1",
+      "note_zh": "按所选表精确查表；不是个人概率。参照点未印出置信区间，保留null。"
+    }
+  ],
+  "validation": {
+    "status": "reproduced",
+    "examples": [
+      {
+        "locator": "Table 2, p e676, 7000 steps/day row, all-cause mortality",
+        "quote": "7000\n0·53\n(0·46–0·6)",
+        "values": [
+          7000,
+          0.53,
+          0.46,
+          0.6
+        ],
+        "tolerance": "逐字数值查表，精确相等；保留论文印出的精度，不重新拟合。",
+        "test": "tests/test_manifest.py::test_table_2_7000_printed"
+      },
+      {
+        "locator": "Corrected Supplementary Table 8, p82, 10,000 steps/day row, CVD mortality",
+        "quote": "10,000\n1.68 (1.02, 2.78)",
+        "values": [
+          1.68,
+          1.02,
+          2.78
+        ],
+        "tolerance": "逐字数值查表，精确相等；更正版封面日期2025-08-27。",
+        "test": "tests/test_manifest.py::test_corrected_s8_10000_printed"
+      }
+    ]
+  },
+  "related_not_same": [
+    "age-stratified-step-range"
+  ]
+}
