@@ -1,0 +1,213 @@
+{
+  "schema": "longevity-skill/1",
+  "name": "sarc-f",
+  "kind": "paper",
+  "tier": "A",
+  "species": [
+    "human"
+  ],
+  "evidence": "method",
+  "domains": [
+    "肌少症筛查"
+  ],
+  "topic": [
+    "musculoskeletal_frailty"
+  ],
+  "blurb_zh": "用力量、步行、起身、上楼困难和一年跌倒次数计算SARC-F肌少症风险筛查分数。",
+  "intents": [
+    "frailty_mortality"
+  ],
+  "triage": {
+    "reason_zh": "虽为社论，但原文表1完整提出人体SARC-F五题计分，正文给出≥4界值，可据个人回答计算且复现印出的单项得分。",
+    "reviewed": false
+  },
+  "paper": {
+    "doi": "10.1016/j.jamda.2013.05.018",
+    "title": "SARC-F: a simple questionnaire to rapidly diagnose sarcopenia.",
+    "title_zh": "SARC-F：快速识别肌少症的简易问卷",
+    "journal": "Journal of the American Medical Directors Association",
+    "year": 2013,
+    "authors": "Malmstrom 与 Morley",
+    "article_url": "https://www.jamda.com/article/S1525-8610(13)00303-4/fulltext",
+    "supplements": [],
+    "card_notes": [
+      "出版类型为社论；实现其原创问卷方法，不视为完整的诊断效能验证研究。",
+      "计分依据正文与表1；作者上传全文见 https://www.researchgate.net/publication/243966215_SARC-F_A_Simple_Questionnaire_to_Rapidly_Diagnose_Sarcopenia 。",
+      "全文未指向独立补充表、代码或数据；出版社页面受访问限制，未能独立核查该页面附件列表。",
+      "复现的是表1跌倒次数到单项得分的映射；本文未报告完整个人算例、初步研究样本量及诊断准确度。"
+    ],
+    "summary_zh": "这项研究面向老年人提出一份简易肌少症问卷，并描述了与肌少症及不良结局有关的初步观察。个人报告只计算各项得分、总分及筛查分层，不计算个人患病概率、肌肉量或预期寿命。",
+    "summary_status": "draft"
+  },
+  "entry": {
+    "script": "scripts/personal_report.py",
+    "measurements_flag": "--measurements",
+    "measurements_header": [
+      "marker",
+      "value",
+      "unit"
+    ],
+    "age_flag": "--age",
+    "sex_flag": "--sex",
+    "out_flag": "--out",
+    "result_json": true
+  },
+  "inputs_status": "verified",
+  "inputs": [
+    {
+      "key": "strength_score",
+      "label_zh": "提起并搬运10磅物品的困难得分",
+      "aliases": [
+        "力量",
+        "Strength"
+      ],
+      "unit": "score",
+      "range": [
+        0,
+        2
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "提起并搬运10磅物品：0无困难，1有些困难，2很困难或无法完成。10磅约4.54千克，仅解释原题，不要求实际试举。"
+    },
+    {
+      "key": "walking_score",
+      "label_zh": "穿过房间的步行困难得分",
+      "aliases": [
+        "步行",
+        "Assistance in walking"
+      ],
+      "unit": "score",
+      "range": [
+        0,
+        2
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "穿过一个房间：0无困难，1有些困难，2很困难、使用辅助器具或无法完成。"
+    },
+    {
+      "key": "chair_score",
+      "label_zh": "从椅子或床转移的困难得分",
+      "aliases": [
+        "起身",
+        "Rise from a chair"
+      ],
+      "unit": "score",
+      "range": [
+        0,
+        2
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "从椅子或床转移：0无困难，1有些困难，2很困难或不借助他人无法完成。"
+    },
+    {
+      "key": "stairs_score",
+      "label_zh": "上十级台阶的困难得分",
+      "aliases": [
+        "上楼",
+        "Climb stairs"
+      ],
+      "unit": "score",
+      "range": [
+        0,
+        2
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "上一段10级台阶：0无困难，1有些困难，2很困难或无法完成。"
+    },
+    {
+      "key": "falls_past_year_count",
+      "label_zh": "过去一年跌倒次数",
+      "aliases": [
+        "跌倒次数",
+        "Falls in the past year",
+        "Falls"
+      ],
+      "unit": "1",
+      "range": [
+        0,
+        1000
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "填过去一年实际跌倒次数的非负整数，不是跌倒项得分；1000为输入错误防护上限，不是论文切点。"
+    },
+    {
+      "key": "age",
+      "label_zh": "实足年龄",
+      "unit": "a",
+      "range": [
+        18,
+        120
+      ],
+      "required": false,
+      "from": "profile",
+      "flag": "--age",
+      "note_zh": "可选成人上下文；年龄不进入计分，原文未报告验证年龄范围。"
+    },
+    {
+      "key": "sex",
+      "label_zh": "性别",
+      "required": false,
+      "from": "profile",
+      "flag": "--sex",
+      "note_zh": "可选上下文，不进入计分；男/女/其他/未知或male/female/other/unknown。"
+    }
+  ],
+  "outputs": [
+    {
+      "key": "strength_score",
+      "label_zh": "提起并搬运10磅物品的困难得分",
+      "unit": "score"
+    },
+    {
+      "key": "walking_score",
+      "label_zh": "穿过房间的步行困难得分",
+      "unit": "score"
+    },
+    {
+      "key": "chair_score",
+      "label_zh": "从椅子或床转移的困难得分",
+      "unit": "score"
+    },
+    {
+      "key": "stairs_score",
+      "label_zh": "上十级台阶的困难得分",
+      "unit": "score"
+    },
+    {
+      "key": "falls_score",
+      "label_zh": "跌倒项得分",
+      "unit": "score"
+    },
+    {
+      "key": "sarc_f_total_score",
+      "label_zh": "SARC-F总分",
+      "unit": "score"
+    },
+    {
+      "key": "sarc_f_category",
+      "label_zh": "SARC-F筛查分层",
+      "note_zh": "screen_positive=达到筛查界值；below_cutoff=低于界值，不能排除肌少症。"
+    }
+  ],
+  "validation": {
+    "status": "reproduced",
+    "examples": [
+      {
+        "locator": "Table 1, p. 531, Falls: Scoring column",
+        "quote": "None = 0\n1–3 falls = 1\n4 or more falls = 2",
+        "values": [
+          0,
+          1,
+          2
+        ],
+        "tolerance": "整数单项得分完全一致；输入为表中无跌倒、1–3次及4次的印出计分条件，不声称复现个人完整病例。",
+        "test": "tests/test_manifest.py::test_table1_falls_per_term_scores"
+      }
+    ]
+  }
+}
