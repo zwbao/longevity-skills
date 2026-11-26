@@ -456,6 +456,14 @@ python3 -m tools.lsk test --changed origin/main   # 只测相对 main 改动过�
 - `skills/vegetable-tmrel-gap/` — 用饮食记录中的蔬菜日均克数，计算与论文蔬菜摄入参考范围的差距。
 - `skills/whole-grain-dose-response/` — 按每日全谷物食品摄入量匹配论文中的群体相对风险及置信区间。
 
+## 骨折
+
+- `skills/frax-uk-risk-lookup/` — 按年龄、性别和单一危险因素查英国模型的十年骨折概率，仅适用BMI为25的论文已印出年龄点。
+
+## 骨质疏松
+
+- `skills/frax-uk-risk-lookup/` — 见「骨折」。
+
 ## 只收录，不参与个人调度
 
 下面这些是动物、细胞实验，或者输入只能是队列统计量的方法。它们留在仓库里供检索和科普，个人问题不会调度到它们，除非问题点名了对应的模式生物。
