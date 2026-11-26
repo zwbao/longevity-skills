@@ -448,6 +448,10 @@ python3 -m tools.lsk test --changed origin/main   # 只测相对 main 改动过�
 
 - `skills/mifflin-st-jeor-ree/` — 见「体重与代谢」。
 
+## 饮酒与健康筛查
+
+- `skills/audit-c/` — 按过去一年饮酒频率、典型杯数和单次至少六杯频率，计算AUDIT-C总分及原研究两个筛查切点。
+
 ## 饮食
 
 - `skills/gbd-dietary-intake-gap/` — 见「营养」。

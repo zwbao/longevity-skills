@@ -2,9 +2,9 @@
   "schema": "longevity-catalog/1",
   "version": "2026.48.0",
   "counts": {
-    "skills": 233,
+    "skills": 234,
     "tiers": {
-      "A": 69,
+      "A": 70,
       "B": 83,
       "C": 73,
       "tool": 8
@@ -3236,6 +3236,156 @@
         "proteomic-apoe-alzheimers-signatures",
         "serum-proteomics-apoe-signatures"
       ]
+    },
+    {
+      "name": "audit-c",
+      "kind": "paper",
+      "tier": "A",
+      "species": [
+        "human"
+      ],
+      "evidence": "cross_sectional",
+      "domains": [
+        "饮酒与健康筛查"
+      ],
+      "blurb_zh": "按过去一年饮酒频率、典型杯数和单次至少六杯频率，计算AUDIT-C总分及原研究两个筛查切点。",
+      "description": "Tier A personal readout: computes one person's value with the paper's printed method and reproduces a printed example. Computes the original AUDIT-C alcohol screening score from three past-year response options and compares it with both published screening cutoffs. Use for AUDIT-C, 饮酒筛查, 喝酒频率, or 酒精使用问卷. Preserves the original male validation population and six-drink third question.",
+      "intents": [
+        "lab_meaning"
+      ],
+      "has_script": true,
+      "validation_status": "reproduced",
+      "validation_label_zh": "已复现论文",
+      "entry": {
+        "script": "scripts/personal_report.py",
+        "measurements_flag": "--measurements",
+        "measurements_header": [
+          "marker",
+          "value",
+          "unit"
+        ],
+        "age_flag": "--age",
+        "sex_flag": "--sex",
+        "out_flag": "--out",
+        "result_json": true
+      },
+      "inputs_status": "verified",
+      "inputs": [
+        {
+          "key": "q1_response_code",
+          "label_zh": "饮酒频率选项",
+          "aliases": [
+            "饮酒频率选项",
+            "AUDIT-C Q1 response",
+            "Alcohol frequency response"
+          ],
+          "unit": "1",
+          "accept": {},
+          "range": [
+            0,
+            5
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "过去一年，自定义从0开始的选项编码，非得分或原始杯数。0从不；1每月或更少；2每月2–4次；3每周2–3次；4每周4–5次；5每周至少6次。无可转换的物理单位。"
+        },
+        {
+          "key": "q2_response_code",
+          "label_zh": "典型饮酒日杯数选项",
+          "aliases": [
+            "典型杯数选项",
+            "AUDIT-C Q2 response",
+            "Typical drinks response"
+          ],
+          "unit": "1",
+          "accept": {},
+          "range": [
+            0,
+            5
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "过去一年，自定义从0开始的选项编码，非得分或原始杯数。0为0杯；1为1–2杯；2为3–4杯；3为5–6杯；4为7–9杯；5为至少10杯。无可转换的物理单位。"
+        },
+        {
+          "key": "q3_response_code",
+          "label_zh": "单次至少六杯频率选项",
+          "aliases": [
+            "单次至少六杯频率选项",
+            "AUDIT-C Q3 response",
+            "Six or more drinks frequency response"
+          ],
+          "unit": "1",
+          "accept": {},
+          "range": [
+            0,
+            4
+          ],
+          "required": true,
+          "from": "measurements",
+          "note_zh": "过去一年，自定义从0开始的选项编码，非得分或原始杯数。0从不；1不到每月一次；2每月；3每周；4每天或几乎每天。无可转换的物理单位。"
+        },
+        {
+          "key": "age",
+          "label_zh": "年龄",
+          "unit": "a",
+          "range": [
+            18,
+            120
+          ],
+          "required": false,
+          "from": "profile",
+          "flag": "--age",
+          "note_zh": "可选成年用户年龄，不进入计分；范围仅为产品输入防错限制。"
+        },
+        {
+          "key": "sex",
+          "label_zh": "性别",
+          "required": false,
+          "from": "profile",
+          "flag": "--sex",
+          "note_zh": "可选male/female/other/unknown或男/女/其他/未知，仅用于适用性说明，不改变切点。"
+        }
+      ],
+      "outputs": [
+        {
+          "key": "q1_score",
+          "label_zh": "第1题得分",
+          "unit": "score"
+        },
+        {
+          "key": "q2_score",
+          "label_zh": "第2题得分",
+          "unit": "score"
+        },
+        {
+          "key": "q3_score",
+          "label_zh": "第3题得分",
+          "unit": "score"
+        },
+        {
+          "key": "audit_c_total_score",
+          "label_zh": "AUDIT-C总分",
+          "unit": "score"
+        },
+        {
+          "key": "screen_ge3",
+          "label_zh": "原研究≥3分筛查结果",
+          "note_zh": "positive达到、negative未达到；仅为数值比较，非诊断，性能验证仅来自男性样本。"
+        },
+        {
+          "key": "screen_ge4",
+          "label_zh": "原研究≥4分筛查结果",
+          "note_zh": "positive达到、negative未达到；仅为数值比较，非诊断，不是女性或男性专用切点。"
+        }
+      ],
+      "paper": {
+        "doi": "10.1001/archinte.158.16.1789",
+        "title": "The AUDIT alcohol consumption questions (AUDIT-C): an effective brief screening test for problem drinking. Ambulatory Care Quality Improvement Project (ACQUIP). Alcohol Use Disorders Identification Test.",
+        "title_zh": "AUDIT-C三题饮酒筛查的原始验证",
+        "journal": "Archives of internal medicine",
+        "year": 1998
+      }
     },
     {
       "name": "biological-age-ct-cardiometabolic",

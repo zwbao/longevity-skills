@@ -1,7 +1,7 @@
 {
   "schema": "longevity-coverage/1",
   "reference_items": 583,
-  "reference_covered": 76,
+  "reference_covered": 77,
   "unlabelled": {
     "claims": 0,
     "effects": 0,
@@ -1129,10 +1129,11 @@
         "method": {
           "rows": 0,
           "effects": 0,
-          "papers": 6,
+          "papers": 7,
           "skills": [
             "alcohol-burden-of-proof",
             "alcohol-consumption-thresholds",
+            "audit-c",
             "frax-uk-risk-lookup",
             "gbd-alcohol-tmrel-nde",
             "modifiable-risk-factor-score",
@@ -1140,7 +1141,7 @@
           ],
           "latest": "2026-11-26",
           "reference": 6,
-          "covered": 0,
+          "covered": 1,
           "missing": [
             {
               "id": "tobacco-alcohol-method-audit",
@@ -1152,18 +1153,6 @@
               "by": [],
               "doi": [
                 "10.1111/j.1360-0443.1993.tb02093.x"
-              ]
-            },
-            {
-              "id": "tobacco-alcohol-method-audit-c",
-              "item": "AUDIT-C (AUDIT alcohol consumption questions)",
-              "item_zh": "AUDIT-C简版饮酒筛查",
-              "priority": "P0",
-              "status": "reviewed",
-              "covered": false,
-              "by": [],
-              "doi": [
-                "10.1001/archinte.158.16.1789"
               ]
             },
             {
@@ -1221,7 +1210,7 @@
           "effects": 3,
           "papers": 45,
           "skills": [],
-          "latest": "2026-11-25",
+          "latest": "2026-11-26",
           "reference": 21,
           "covered": 1,
           "missing": [
@@ -3616,8 +3605,9 @@
         "method": {
           "rows": 0,
           "effects": 0,
-          "papers": 5,
+          "papers": 6,
           "skills": [
+            "audit-c",
             "fib4-index",
             "finnish-diabetes-risk-score",
             "new-chinese-diabetes-risk-score",
@@ -3719,7 +3709,7 @@
           "effects": 0,
           "papers": 22,
           "skills": [],
-          "latest": "2026-11-25",
+          "latest": "2026-11-26",
           "reference": 27,
           "covered": 1,
           "missing": [
