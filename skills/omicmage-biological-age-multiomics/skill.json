@@ -10,6 +10,9 @@
   "domains": [
     "蛋白、代谢与器官年龄"
   ],
+  "topic": [
+    "biological_age"
+  ],
   "blurb_zh": "多组学测定里保留下来的特征。",
   "intents": [
     "lab_meaning"

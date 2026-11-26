@@ -10,6 +10,9 @@
   "domains": [
     "再生"
   ],
+  "topic": [
+    "aging_biology"
+  ],
   "blurb_zh": "正文点名的方向。头部面积和全身面积都在时计算相对头大小。",
   "intents": [
     "model_organism"

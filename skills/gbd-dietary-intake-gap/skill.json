@@ -12,6 +12,9 @@
     "营养",
     "饮食"
   ],
+  "topic": [
+    "diet_nutrition"
+  ],
   "blurb_zh": "把每日食物、营养素和24小时尿钠记录换算为相对GBD饮食参考值的差值与比例。",
   "intents": [
     "intervention_evidence",

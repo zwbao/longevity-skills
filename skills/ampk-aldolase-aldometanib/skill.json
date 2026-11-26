@@ -11,6 +11,10 @@
   "domains": [
     "营养感应"
   ],
+  "topic": [
+    "aging_biology",
+    "drugs_supplements"
+  ],
   "blurb_zh": "论文里两次空腹血糖做差的算法。",
   "intents": [
     "model_organism"

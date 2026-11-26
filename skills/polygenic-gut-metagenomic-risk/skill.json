@@ -10,6 +10,9 @@
   "domains": [
     "长寿基因"
   ],
+  "topic": [
+    "genetics"
+  ],
   "blurb_zh": "病种，可带年龄、多基因分数和菌群分数。",
   "intents": [
     "gene_variant"

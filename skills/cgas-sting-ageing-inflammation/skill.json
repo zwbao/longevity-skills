@@ -10,6 +10,10 @@
   "domains": [
     "免疫与炎症"
   ],
+  "topic": [
+    "aging_biology",
+    "brain_cognition"
+  ],
   "blurb_zh": "同时带有倍数和校正 P 值、并过扩展数据图十门槛的基因。",
   "intents": [
     "model_organism"

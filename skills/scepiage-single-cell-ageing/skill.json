@@ -10,6 +10,9 @@
   "domains": [
     "甲基化"
   ],
+  "topic": [
+    "biological_age"
+  ],
   "blurb_zh": "单细胞甲基化周龄。",
   "intents": [
     "model_organism"

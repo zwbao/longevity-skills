@@ -1,0 +1,159 @@
+{
+  "schema": "longevity-skill/1",
+  "name": "fib4-index",
+  "kind": "paper",
+  "tier": "A",
+  "species": [
+    "human"
+  ],
+  "evidence": "cross_sectional",
+  "domains": [
+    "肝脏与代谢"
+  ],
+  "topic": [
+    "body_weight_metabolism",
+    "screening_prevention"
+  ],
+  "blurb_zh": "用年龄、肝酶和血小板计算脂肪肝成人的 FIB-4 纤维化指数。",
+  "intents": [
+    "lab_meaning"
+  ],
+  "triage": {
+    "reason_zh": "人体 NAFLD 验证研究的表 1 公开完整 FIB-4 公式，表 5 公开切点，可用个人常规化验计算。",
+    "reviewed": false
+  },
+  "paper": {
+    "doi": "10.1016/j.cgh.2009.05.033",
+    "title": "Comparison of noninvasive markers of fibrosis in patients with nonalcoholic fatty liver disease.",
+    "title_zh": "脂肪肝成人的 FIB-4 肝纤维化指数",
+    "journal": "Clinical Gastroenterology and Hepatology",
+    "year": 2009,
+    "authors": "Shah 等",
+    "article_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC3079239/",
+    "supplements": [],
+    "card_notes": [
+      "按 PMC 接收稿表 1 计算，按表 5 的严格不等号分档；等于任一切点时归入不确定档，摘要的等号写法不同。",
+      "仍在验证：未取得可复现的个人输入与输出算例，软件测试不等于论文算例复现。"
+    ],
+    "summary_zh": "这项研究比较了非酒精性脂肪肝成人的多种无创肝纤维化指标，发现年龄、肝酶和血小板组成的指数能帮助区分进展期纤维化，但仍有误判和不确定结果。个人报告只计算这一指数及论文分档，不计算个人患病概率或纤维化改善幅度。",
+    "summary_status": "draft"
+  },
+  "entry": {
+    "script": "scripts/personal_report.py",
+    "measurements_flag": "--measurements",
+    "measurements_header": [
+      "marker",
+      "value",
+      "unit"
+    ],
+    "age_flag": "--age",
+    "out_flag": "--out",
+    "result_json": true,
+    "targets_flag": "--targets",
+    "levers_json": true
+  },
+  "inputs_status": "draft",
+  "inputs": [
+    {
+      "key": "ast_u_l",
+      "label_zh": "天门冬氨酸氨基转移酶",
+      "aliases": [
+        "AST",
+        "SGOT",
+        "GOT",
+        "谷草转氨酶",
+        "门冬氨酸氨基转移酶",
+        "aspartate aminotransferase"
+      ],
+      "unit": "U/L",
+      "accept": {
+        "ukat/L": 60
+      },
+      "range": [
+        1,
+        20000
+      ],
+      "required": true,
+      "unit_required": true,
+      "from": "measurements"
+    },
+    {
+      "key": "alt_u_l",
+      "label_zh": "丙氨酸氨基转移酶",
+      "aliases": [
+        "ALT",
+        "SGPT",
+        "GPT",
+        "谷丙转氨酶",
+        "alanine aminotransferase"
+      ],
+      "unit": "U/L",
+      "accept": {
+        "ukat/L": 60
+      },
+      "range": [
+        1,
+        20000
+      ],
+      "required": true,
+      "unit_required": true,
+      "from": "measurements"
+    },
+    {
+      "key": "platelets_10e9_l",
+      "label_zh": "血小板计数",
+      "aliases": [
+        "PLT",
+        "血小板",
+        "platelet",
+        "platelets",
+        "platelet count"
+      ],
+      "unit": "10^9/L",
+      "accept": {
+        "10^3/uL": 1,
+        "/uL": 0.001
+      },
+      "range": [
+        1,
+        2000
+      ],
+      "required": true,
+      "unit_required": true,
+      "from": "measurements"
+    },
+    {
+      "key": "age_years",
+      "label_zh": "实足年龄",
+      "aliases": [
+        "age",
+        "年龄",
+        "Age at biopsy"
+      ],
+      "unit": "a",
+      "range": [
+        18,
+        120
+      ],
+      "required": true,
+      "from": "argument",
+      "flag": "--age",
+      "note_zh": "年龄上限是软件防误填范围，论文未给出完整年龄范围；不是验证人群上限。"
+    }
+  ],
+  "outputs": [
+    {
+      "key": "fib4_index",
+      "label_zh": "FIB-4 指数",
+      "unit": "score"
+    },
+    {
+      "key": "fib4_category",
+      "label_zh": "表 5 分档"
+    }
+  ],
+  "validation": {
+    "status": "draft",
+    "gap_zh": "已核查 PMC3079239 接收稿正文、表 1–6 和原始 XML；表 1 有完整公式，表 2–4 仅为队列汇总值，表 5–6 是分档与群体诊断性能，不能拼成个人算例。XML 图 1–2 未含可读取的个人数值输入输出，图像未能取得；Europe PMC hasSuppl=N，XML 无补充材料、附录或外部代码数据链接；出版社页面被拦截。未取得论文印出的个人输入及对应 FIB-4 输出，故不声称已复现。"
+  }
+}

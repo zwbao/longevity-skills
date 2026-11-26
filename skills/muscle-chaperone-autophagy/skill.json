@@ -11,6 +11,10 @@
   "domains": [
     "骨骼肌"
   ],
+  "topic": [
+    "aging_biology",
+    "musculoskeletal_frailty"
+  ],
   "blurb_zh": "伴侣介导自噬里点名的测量。权重列不在已打开的表里。",
   "intents": [
     "model_organism"

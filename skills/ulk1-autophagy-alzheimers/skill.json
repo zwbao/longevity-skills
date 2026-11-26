@@ -14,6 +14,11 @@
     "脑、认知与痴呆",
     "自噬"
   ],
+  "topic": [
+    "brain_cognition",
+    "aging_biology",
+    "drugs_supplements"
+  ],
   "blurb_zh": "两次血清或脑脊液 ULK1 之间的百分比变化（通用算术），并列出论文点名的化合物。",
   "intents": [
     "cognition_dementia",

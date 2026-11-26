@@ -10,6 +10,10 @@
   "domains": [
     "营养感应"
   ],
+  "topic": [
+    "aging_biology",
+    "cardiovascular"
+  ],
   "blurb_zh": "内皮 C/EBPβ–AEP–NAMPT 通路里点名的分子和方向。",
   "intents": [
     "model_organism"

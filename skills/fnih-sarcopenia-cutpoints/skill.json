@@ -10,6 +10,9 @@
   "domains": [
     "跌倒与肌肉"
   ],
+  "topic": [
+    "musculoskeletal_frailty"
+  ],
   "blurb_zh": "用最大握力、四肢瘦体重和 BMI 对照 FNIH 老年人切点，分别查看肌力弱与低瘦体重分层。",
   "intents": [
     "frailty_mortality"

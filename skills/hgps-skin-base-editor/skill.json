@@ -10,6 +10,10 @@
   "domains": [
     "皮肤"
   ],
+  "topic": [
+    "genetics",
+    "aging_biology"
+  ],
   "blurb_zh": "等位基因是不是 LMNA c.1824C>T。",
   "intents": [
     "model_organism"

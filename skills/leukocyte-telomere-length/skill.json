@@ -10,6 +10,9 @@
   "domains": [
     "端粒"
   ],
+  "topic": [
+    "aging_biology"
+  ],
   "blurb_zh": "你交来的英国生物银行式 z 标准化端粒放进四分位档；自己测的 T/S 比值不能分档。",
   "intents": [
     "telomere"

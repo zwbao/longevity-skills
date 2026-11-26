@@ -11,6 +11,9 @@
     "卵巢与生殖",
     "比较生物学"
   ],
+  "topic": [
+    "organ_aging"
+  ],
   "blurb_zh": "切片计数按正文的校正因子换成卵巢储备。",
   "intents": [
     "model_organism"
