@@ -10,6 +10,10 @@
   "domains": [
     "免疫与炎症"
   ],
+  "topic": [
+    "brain_cognition",
+    "aging_biology"
+  ],
   "blurb_zh": "正文点名的血小板因子和炎症标志。",
   "intents": [
     "model_organism"

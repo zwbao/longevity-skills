@@ -10,6 +10,9 @@
   "domains": [
     "卵巢与生殖"
   ],
+  "topic": [
+    "organ_aging"
+  ],
   "blurb_zh": "23–29 或 49–54 岁，细胞比例方向，以及补充表六的基因列。",
   "intents": [
     "gene_variant"

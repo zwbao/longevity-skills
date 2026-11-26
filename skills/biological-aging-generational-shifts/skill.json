@@ -10,6 +10,10 @@
   "domains": [
     "临床年龄与可穿戴"
   ],
+  "topic": [
+    "biological_age",
+    "organ_aging"
+  ],
   "blurb_zh": "你交来的 PhenoAge 减去年龄的未标准化差和出生年；不是论文的标准化年龄差。",
   "intents": [
     "biological_age"

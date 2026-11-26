@@ -10,6 +10,10 @@
   "domains": [
     "临床年龄与可穿戴"
   ],
+  "topic": [
+    "biological_age",
+    "diet_nutrition"
+  ],
   "blurb_zh": "两次已经算好的生物年龄相减（不从化验重算生物年龄）。",
   "intents": [
     "before_after",

@@ -10,6 +10,10 @@
   "domains": [
     "昼夜节律"
   ],
+  "topic": [
+    "sleep_circadian",
+    "biological_age"
+  ],
   "blurb_zh": "MESOR、振幅、峰值相位和年龄到齐时的 CosinorAge。缺一项就不算。",
   "intents": [
     "wearable_sleep",

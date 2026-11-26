@@ -10,6 +10,10 @@
   "domains": [
     "基质、软骨与纤维化"
   ],
+  "topic": [
+    "aging_biology",
+    "organ_aging"
+  ],
   "blurb_zh": "背景均值加三倍标准差的检出限，以及肽是可切开肽还是对照肽。",
   "intents": [
     "model_organism"

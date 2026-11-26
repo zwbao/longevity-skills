@@ -11,6 +11,9 @@
     "衰弱与死亡风险",
     "比较生物学"
   ],
+  "topic": [
+    "aging_biology"
+  ],
   "blurb_zh": "健康期天数和衰弱期天数的相对比例。",
   "intents": [
     "model_organism"

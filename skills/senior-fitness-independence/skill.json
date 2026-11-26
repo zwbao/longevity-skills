@@ -10,6 +10,10 @@
   "domains": [
     "体能与独立生活"
   ],
+  "topic": [
+    "musculoskeletal_frailty",
+    "physical_activity"
+  ],
   "blurb_zh": "按年龄和性别比较起立、弯举、步行、踏步及起立行走成绩与独立生活体能参考标准。",
   "intents": [
     "frailty_mortality",

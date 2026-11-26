@@ -10,6 +10,10 @@
   "domains": [
     "免疫与炎症"
   ],
+  "topic": [
+    "brain_cognition",
+    "organ_aging"
+  ],
   "blurb_zh": "住院感染距今年数和部位，对照论文的群体比值比（查表，不算个人风险）。",
   "intents": [],
   "triage": {

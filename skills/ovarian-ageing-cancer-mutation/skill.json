@@ -10,6 +10,10 @@
   "domains": [
     "卵巢与生殖"
   ],
+  "topic": [
+    "organ_aging",
+    "genetics"
+  ],
   "blurb_zh": "正文写出的绝经年龄差，以及 PALB2 和 PNPLA8 在补充表里的 Beta。",
   "intents": [
     "gene_variant"

@@ -10,6 +10,9 @@
   "domains": [
     "比较生物学"
   ],
+  "topic": [
+    "aging_biology"
+  ],
   "blurb_zh": "隐窝替换数除以年龄，以及补充表里的物种年均替换率。",
   "intents": [
     "model_organism"

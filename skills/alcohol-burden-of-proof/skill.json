@@ -12,6 +12,11 @@
     "心血管健康",
     "癌症风险"
   ],
+  "topic": [
+    "tobacco_alcohol",
+    "cardiovascular",
+    "organ_aging"
+  ],
   "blurb_zh": "用自己的每日平均纯酒精摄入量，查阅论文中各疾病相对于无饮酒的风险比及不确定性区间；不推算个人患病概率。",
   "intents": [
     "intervention_evidence"

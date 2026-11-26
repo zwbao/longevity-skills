@@ -11,6 +11,9 @@
   "domains": [
     "比较生物学"
   ],
+  "topic": [
+    "aging_biology"
+  ],
   "blurb_zh": "GFP 阳性细胞数除以 DsRed 阳性细胞数，以及人和弓头鲸成纤维细胞的转化组合。",
   "intents": [
     "model_organism"

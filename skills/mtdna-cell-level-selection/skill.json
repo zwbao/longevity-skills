@@ -10,6 +10,9 @@
   "domains": [
     "线粒体"
   ],
+  "topic": [
+    "aging_biology"
+  ],
   "blurb_zh": "错义异质性相对约 56% 和约 60% 的位置，以及 UMI 是否达到 64。",
   "intents": [
     "model_organism"

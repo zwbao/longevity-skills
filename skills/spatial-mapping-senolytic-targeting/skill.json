@@ -10,6 +10,10 @@
   "domains": [
     "脑、认知与痴呆"
   ],
+  "topic": [
+    "brain_cognition",
+    "aging_biology"
+  ],
   "blurb_zh": "白质里 GAL3 阳性和阴性细胞的表达。",
   "intents": [
     "model_organism"

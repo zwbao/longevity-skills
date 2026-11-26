@@ -10,6 +10,10 @@
   "domains": [
     "跌倒与肌肉"
   ],
+  "topic": [
+    "musculoskeletal_frailty",
+    "brain_cognition"
+  ],
   "blurb_zh": "用 SKILLCOURT 反应敏捷测试（随机星形跑完成时间、站立踏步简单和选择反应时）的成绩，对照论文印出的探索性切点，看落在有跌倒史一侧还是没有跌倒史一侧。",
   "intents": [
     "frailty_mortality"

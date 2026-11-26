@@ -10,6 +10,10 @@
   "domains": [
     "工具与证据库"
   ],
+  "topic": [
+    "biological_age",
+    "drugs_supplements"
+  ],
   "blurb_zh": "个人全血甲基化报告：对照公开队列找出偏离的蛋白网络模块，并列出靶点与这些模块对齐的化合物假设；不是用药建议。",
   "intents": [
     "epigenetic_age"

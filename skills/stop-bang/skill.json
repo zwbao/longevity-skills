@@ -1,0 +1,265 @@
+{
+  "schema": "longevity-skill/1",
+  "name": "stop-bang",
+  "kind": "paper",
+  "tier": "A",
+  "species": [
+    "human"
+  ],
+  "evidence": "method",
+  "domains": [
+    "睡眠与呼吸"
+  ],
+  "topic": [
+    "sleep_circadian",
+    "screening_prevention"
+  ],
+  "blurb_zh": "用打鼾、白天疲倦、目击呼吸暂停、高血压及体型年龄信息计算原版STOP和STOP-Bang筛查分档。",
+  "intents": [
+    "wearable_sleep"
+  ],
+  "triage": {
+    "reason_zh": "人体术前门诊开发验证，文内附录完整列出题项和分档切点，可由个人问卷与测量计算；缺少印出的个人实例，验证暂列draft。",
+    "reviewed": false
+  },
+  "paper": {
+    "doi": "10.1097/aln.0b013e31816d83e4",
+    "title": "STOP questionnaire: a tool to screen patients for obstructive sleep apnea.",
+    "title_zh": "STOP问卷：阻塞性睡眠呼吸暂停筛查工具",
+    "journal": "Anesthesiology",
+    "year": 2008,
+    "authors": "Chung 等",
+    "article_url": "https://doi.org/10.1097/aln.0b013e31816d83e4",
+    "supplements": [
+      {
+        "label": "作者官网全文及文内附录1、2（第821页）",
+        "url": "https://www.stopbang.ca/publication/pdf/pub6.pdf"
+      }
+    ],
+    "card_notes": [
+      "使用2008年原版二档分类；颈围、BMI和年龄均为严格大于阈值。",
+      "已读作者官网十页全文；期刊页面受访问验证限制。全文未列独立补充文件或公开代码数据链接。",
+      "个人实例仍在验证；已核对规则，未复现论文的个体输入与总分示例。"
+    ],
+    "summary_zh": "这项研究在人类成人术前门诊患者中开发并验证了睡眠呼吸暂停筛查问卷，发现加入体型、年龄和性别信息后更容易识别中重度病例。个人报告只计算肯定回答数及原版高低风险分档，不估计个人患病概率或疾病严重程度。",
+    "summary_status": "draft"
+  },
+  "entry": {
+    "script": "scripts/personal_report.py",
+    "measurements_flag": "--measurements",
+    "measurements_header": [
+      "marker",
+      "value",
+      "unit"
+    ],
+    "age_flag": "--age",
+    "sex_flag": "--sex",
+    "out_flag": "--out",
+    "result_json": true
+  },
+  "inputs_status": "draft",
+  "inputs": [
+    {
+      "key": "snoring_binary",
+      "label_zh": "大声打鼾",
+      "aliases": [
+        "Snoring",
+        "打鼾"
+      ],
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "打鼾声是否超过说话声，或关门后仍能听到；1是，0否。"
+    },
+    {
+      "key": "tiredness_binary",
+      "label_zh": "白天经常疲倦或困倦",
+      "aliases": [
+        "Tired",
+        "Tiredness",
+        "白天疲倦"
+      ],
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "白天是否经常疲劳、倦怠或困倦；1是，0否。"
+    },
+    {
+      "key": "observed_apnea_binary",
+      "label_zh": "他人目击睡眠中停止呼吸",
+      "aliases": [
+        "Observed apnea",
+        "Observed",
+        "目击呼吸暂停"
+      ],
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "是否有人看到你睡眠中停止呼吸；1是，0否。不知道不能当作否。"
+    },
+    {
+      "key": "hypertension_binary",
+      "label_zh": "有高血压或正在接受高血压治疗",
+      "aliases": [
+        "High blood pressure",
+        "Hypertension",
+        "高血压"
+      ],
+      "unit": "1",
+      "range": [
+        0,
+        1
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "已知高血压或正在接受高血压治疗均填1，否则填0；不能用某次正常血压代替回答。"
+    },
+    {
+      "key": "bmi_kg_m2",
+      "label_zh": "体质指数",
+      "aliases": [
+        "BMI",
+        "Body mass index",
+        "体重指数"
+      ],
+      "unit": "kg/m^2",
+      "range": [
+        10,
+        100
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "提供本人BMI；10–100为输入防错范围，不是论文风险切点。"
+    },
+    {
+      "key": "neck_circumference_cm",
+      "label_zh": "颈围",
+      "aliases": [
+        "Neck circumference",
+        "Neck size"
+      ],
+      "unit": "cm",
+      "range": [
+        15,
+        80
+      ],
+      "accept": {
+        "mm": 0.1,
+        "m": 100,
+        "in": 2.54
+      },
+      "unit_required": true,
+      "required": true,
+      "from": "measurements",
+      "note_zh": "论文由工作人员测量颈围；不以S/M/L衣领尺码推算。15–80 cm为输入防错范围。"
+    },
+    {
+      "key": "age",
+      "label_zh": "实足年龄",
+      "aliases": [
+        "Age",
+        "年龄"
+      ],
+      "unit": "a",
+      "range": [
+        18,
+        120
+      ],
+      "required": true,
+      "from": "profile",
+      "flag": "--age",
+      "note_zh": "岁；18岁为研究最低纳入年龄，120岁是技术防错上限，不是验证样本最大年龄。"
+    },
+    {
+      "key": "sex",
+      "label_zh": "原问卷性别项",
+      "aliases": [
+        "Sex",
+        "Gender",
+        "性别"
+      ],
+      "required": true,
+      "from": "profile",
+      "flag": "--sex",
+      "note_zh": "male/female 或 男/女；原论文二元男性项，未知或无法套用时不自动归零。"
+    }
+  ],
+  "outputs": [
+    {
+      "key": "snoring_score",
+      "label_zh": "打鼾项",
+      "unit": "score"
+    },
+    {
+      "key": "tiredness_score",
+      "label_zh": "白天疲倦项",
+      "unit": "score"
+    },
+    {
+      "key": "observed_apnea_score",
+      "label_zh": "目击呼吸暂停项",
+      "unit": "score"
+    },
+    {
+      "key": "hypertension_score",
+      "label_zh": "高血压项",
+      "unit": "score"
+    },
+    {
+      "key": "bmi_score",
+      "label_zh": "BMI项",
+      "unit": "score"
+    },
+    {
+      "key": "age_score",
+      "label_zh": "年龄项",
+      "unit": "score"
+    },
+    {
+      "key": "neck_score",
+      "label_zh": "颈围项",
+      "unit": "score"
+    },
+    {
+      "key": "male_score",
+      "label_zh": "男性项",
+      "unit": "score"
+    },
+    {
+      "key": "stop_score",
+      "label_zh": "STOP肯定项总分",
+      "unit": "score"
+    },
+    {
+      "key": "stop_bang_score",
+      "label_zh": "STOP-Bang肯定项总分",
+      "unit": "score"
+    },
+    {
+      "key": "stop_category",
+      "label_zh": "STOP风险档",
+      "note_zh": "high=高风险，low=低风险；2008原版二档筛查分类。"
+    },
+    {
+      "key": "stop_bang_category",
+      "label_zh": "STOP-Bang风险档",
+      "note_zh": "high=高风险，low=低风险；2008原版二档筛查分类。"
+    }
+  ],
+  "validation": {
+    "status": "draft",
+    "gap_zh": "已逐页核对作者官网2008年全文第812–821页、Tables 1–7、Figures 1–2及Appendices 1–2。附录完整给出题项与切点，但未印出个人回答/测量与总分配对实例或逐项数值得分；表图仅有队列性能统计，未提供逐人原始数据，不能用合成病例声称复现。已用附录规则编写边界及输入校验测试。"
+  }
+}

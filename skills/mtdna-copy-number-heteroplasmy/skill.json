@@ -10,6 +10,9 @@
   "domains": [
     "线粒体"
   ],
+  "topic": [
+    "aging_biology"
+  ],
   "blurb_zh": "把你已有的线粒体变异异质性、拷贝数和污染比例按论文的质控切点分档；不算校正拷贝数或风险。",
   "intents": [
     "gene_variant"

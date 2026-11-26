@@ -10,6 +10,9 @@
   "domains": [
     "心血管与代谢"
   ],
+  "topic": [
+    "cardiovascular"
+  ],
   "blurb_zh": "用收缩压查算缺血性心脏病的人群相对风险，支持目标血压的模型对比。",
   "intents": [
     "lab_meaning",

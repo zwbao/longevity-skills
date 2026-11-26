@@ -10,6 +10,10 @@
   "domains": [
     "基质、软骨与纤维化"
   ],
+  "topic": [
+    "aging_biology",
+    "cardiovascular"
+  ],
   "blurb_zh": "与已发表均值的差，以及软硬和年龄组成的四种基质。",
   "intents": [
     "model_organism"

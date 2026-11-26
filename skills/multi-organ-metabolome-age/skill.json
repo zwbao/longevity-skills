@@ -10,6 +10,9 @@
   "domains": [
     "蛋白、代谢与器官年龄"
   ],
+  "topic": [
+    "biological_age"
+  ],
   "blurb_zh": "你交来的器官代谢组预测年龄减实足年龄；不从代谢物算年龄。",
   "intents": [
     "metabolomic_age",
