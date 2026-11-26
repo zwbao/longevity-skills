@@ -272,6 +272,17 @@
           "minLength": 5
         }
       }
+    },
+    "topic": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 3,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "pattern": "^[a-z_]+$"
+      },
+      "description": "One to three topic ids from schema/taxonomy.json, the main one first. Assigned by an agent, not by keywords."
     }
   },
   "$defs": {

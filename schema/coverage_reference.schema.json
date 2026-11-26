@@ -1,0 +1,106 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/zwbao/longevity-skills/schema/coverage_reference.schema.json",
+  "title": "One row of coverage/reference.jsonl",
+  "description": "An item that a complete library should hold in one topic and layer: a method, a guideline, a risk-outcome synthesis, a reference table or a mechanism resource. Coverage = items found in the library / items listed.",
+  "type": "object",
+  "required": [
+    "id",
+    "topic",
+    "layer",
+    "item",
+    "item_zh",
+    "why_zh",
+    "status"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9-]*$"
+    },
+    "topic": {
+      "type": "string",
+      "pattern": "^[a-z_]+$"
+    },
+    "layer": {
+      "enum": [
+        "method",
+        "population",
+        "reference_data",
+        "mechanism"
+      ]
+    },
+    "item": {
+      "type": "string",
+      "minLength": 2,
+      "maxLength": 160
+    },
+    "item_zh": {
+      "type": "string",
+      "minLength": 2,
+      "maxLength": 160
+    },
+    "why_zh": {
+      "type": "string",
+      "minLength": 4,
+      "maxLength": 300,
+      "description": "Why the item belongs on the list: which guideline recommends it or how widely it is used."
+    },
+    "doi": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "pattern": "^10\\.[0-9]{4,9}/\\S+$"
+      }
+    },
+    "pmid": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "pattern": "^[0-9]{5,9}$"
+      }
+    },
+    "url": {
+      "type": "string",
+      "pattern": "^https?://"
+    },
+    "skill": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "pattern": "^[a-z0-9][a-z0-9-]*$"
+      },
+      "description": "Skill directories that count as covering the item, besides a DOI match."
+    },
+    "file": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string"
+      },
+      "description": "Repository files that hold the item (reference data)."
+    },
+    "priority": {
+      "enum": [
+        "P0",
+        "P1",
+        "P2"
+      ]
+    },
+    "status": {
+      "enum": [
+        "draft",
+        "reviewed",
+        "confirmed"
+      ],
+      "description": "draft: written by an agent; reviewed: a second agent checked it; confirmed: a person checked it."
+    },
+    "note_zh": {
+      "type": "string"
+    }
+  }
+}

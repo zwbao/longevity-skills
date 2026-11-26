@@ -17,7 +17,7 @@ from .common import INTENTS, KIT_SOURCE, SCHEMA, read_json, skill_dirs, write_js
 from .doi import normalize_doi
 
 KEY_ORDER = [
-    "$schema", "schema", "name", "kind", "tier", "species", "evidence", "domains", "blurb_zh", "intents",
+    "$schema", "schema", "name", "kind", "tier", "species", "evidence", "domains", "topic", "blurb_zh", "intents",
     "triage", "paper", "tool", "entry", "population", "inputs_status", "inputs", "outputs", "related_not_same", "data_files", "validation",
 ]
 PAPER_ORDER = [
@@ -92,6 +92,8 @@ def check_one(skill_dir: Path, manifest: Dict[str, Any], schema: Dict[str, Any],
         return errors
     if manifest["name"] != name:
         errors.append(f"{name}: name is {manifest['name']!r}, directory is {name!r}")
+    from .coverage import check_topic, topic_ids
+    errors += check_topic(manifest.get("topic"), name, set(topic_ids()))
     kind, tier = manifest["kind"], manifest["tier"]
     if kind == "paper":
         if tier not in {"A", "B", "C"}:

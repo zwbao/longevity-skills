@@ -149,6 +149,8 @@ def check_effects() -> List[str]:
             errors.append(f"{where}: tau_pct needs its own tau_source (doi, quote, locator)")
         if "tau_source" in row and "tau_pct" not in row:
             errors.append(f"{where}: tau_source without tau_pct")
+    from .coverage import check_labels
+    errors += check_labels(read_jsonl(EFFECTS), "data/effects.jsonl", with_level=False)
     return errors
 
 

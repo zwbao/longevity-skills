@@ -22,7 +22,7 @@ import json
 import sys
 from typing import List
 
-from . import catalog, datasets, dispatch, evidence, frontmatter, manifest, readme, registry, testrun, vendor
+from . import catalog, coverage, datasets, dispatch, evidence, frontmatter, manifest, readme, registry, testrun, vendor
 from .common import CATALOG, PLUGIN, README, dump_json, read_json, write_json
 from .doi import normalize_doi
 
@@ -76,6 +76,8 @@ def cmd_check() -> int:
     status |= _report(datasets.check_readout_noise(), "data/readout_noise.json")
     status |= _report(datasets.check_effects(), "data/effects.jsonl")
     print(datasets.effects_review_share())
+    status |= _report(coverage.check_reference(), "coverage/reference.jsonl")
+    print(coverage.label_share())
     dispatch_errors, skipped = dispatch.check(manifests)
     status |= _report(dispatch_errors, "dispatch (coach 常用方法, analyst whitelists)" + (f" [{'; '.join(skipped)}]" if skipped else ""))
     if not errors:
@@ -151,6 +153,9 @@ def main(argv: List[str] = None) -> int:
     test.add_argument("--jobs", type=int, default=8)
     test.add_argument("--timeout", type=int, default=300)
     sub.add_parser("build")
+    cov = sub.add_parser("coverage", help="write coverage.json and docs/coverage.md")
+    cov.add_argument("--missing-dois", action="store_true", help="print the DOIs of reference items not yet covered, one per line")
+    cov.add_argument("--priority", nargs="*", default=["P0", "P1", "P2"])
     for name in ("catalog", "readme"):
         item = sub.add_parser(name)
         item.add_argument("--check", action="store_true")
@@ -191,6 +196,14 @@ def main(argv: List[str] = None) -> int:
         return testrun.run(args.names, jobs=args.jobs, timeout=args.timeout)
     if args.command == "build":
         return cmd_build()
+    if args.command == "coverage":
+        manifests = manifest.load_all()
+        if args.missing_dois:
+            print("\n".join(coverage.missing_dois(manifests, args.priority)))
+            return 0
+        data = coverage.write(manifests)
+        print(f"coverage.json and docs/coverage.md written: reference {data['reference_covered']}/{data['reference_items']}, unlabelled {data['unlabelled']}")
+        return 0
     if args.command == "catalog":
         return cmd_catalog(args.check)
     if args.command == "readme":
