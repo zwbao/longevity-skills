@@ -11,6 +11,9 @@
   "domains": [
     "基质、软骨与纤维化"
   ],
+  "topic": [
+    "musculoskeletal_frailty"
+  ],
   "blurb_zh": "delta PSI 和错误发现率是否过正文门槛。",
   "intents": [
     "model_organism"

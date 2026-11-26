@@ -11,6 +11,9 @@
     "甲基化",
     "衰弱与死亡风险"
   ],
+  "topic": [
+    "biological_age"
+  ],
   "blurb_zh": "血液甲基化芯片（450K 或 EPIC）的 β 值，按论文补充表和作者代码算把甲基化水平和变异性合在一起的衰老评分。",
   "intents": [
     "epigenetic_age",

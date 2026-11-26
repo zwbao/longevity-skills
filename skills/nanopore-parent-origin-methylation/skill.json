@@ -10,6 +10,10 @@
   "domains": [
     "甲基化"
   ],
+  "topic": [
+    "biological_age",
+    "genetics"
+  ],
   "blurb_zh": "已标准化的甲基化套论文系数，或两数相减（个人原始甲基化比例做不出标准化）。",
   "intents": [
     "epigenetic_age"

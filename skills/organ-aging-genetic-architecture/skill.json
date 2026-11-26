@@ -10,6 +10,10 @@
   "domains": [
     "蛋白、代谢与器官年龄"
   ],
+  "topic": [
+    "genetics",
+    "biological_age"
+  ],
   "blurb_zh": "点到的器官。这是遗传结构，不是上面的蛋白质年龄差。",
   "intents": [
     "proteomic_organ_age"

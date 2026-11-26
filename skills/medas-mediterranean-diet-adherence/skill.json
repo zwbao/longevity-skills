@@ -12,6 +12,9 @@
     "nutrition",
     "cardiovascular"
   ],
+  "topic": [
+    "diet_nutrition"
+  ],
   "blurb_zh": "用14项饮食问卷计算地中海饮食依从性总分及逐项得分。",
   "intents": [
     "before_after"

@@ -10,6 +10,9 @@
   "domains": [
     "长寿基因"
   ],
+  "topic": [
+    "aging_biology"
+  ],
   "blurb_zh": "这项研究没有给出可核对的基因或变异名单。",
   "intents": [],
   "triage": {

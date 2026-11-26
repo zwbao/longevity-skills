@@ -10,6 +10,9 @@
   "domains": [
     "跌倒与肌肉"
   ],
+  "topic": [
+    "musculoskeletal_frailty"
+  ],
   "blurb_zh": "用前后两次自己量的小腿围算绝对和相对减少量，按论文切点分档，给出中国老人队列里该档与小腿围没减少者相比的跌倒比值比。",
   "intents": [
     "frailty_mortality"

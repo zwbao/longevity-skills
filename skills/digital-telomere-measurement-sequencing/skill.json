@@ -10,6 +10,9 @@
   "domains": [
     "端粒"
   ],
+  "topic": [
+    "aging_biology"
+  ],
   "blurb_zh": "一批端粒长度的通用分布统计（不套论文的分类模型）。",
   "intents": [
     "telomere"

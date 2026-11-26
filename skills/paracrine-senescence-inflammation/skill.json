@@ -13,6 +13,9 @@
   "domains": [
     "免疫与炎症"
   ],
+  "topic": [
+    "aging_biology"
+  ],
   "blurb_zh": "旁分泌衰老里点名的标志和方向。",
   "intents": [
     "model_organism"

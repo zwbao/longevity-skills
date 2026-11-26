@@ -10,6 +10,9 @@
   "domains": [
     "临床年龄与可穿戴"
   ],
+  "topic": [
+    "biological_age"
+  ],
   "blurb_zh": "用常规化验、血压和健康问卷算 LinAge 临床衰老年龄。",
   "intents": [
     "biological_age"

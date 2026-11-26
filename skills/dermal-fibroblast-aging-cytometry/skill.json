@@ -10,6 +10,10 @@
   "domains": [
     "皮肤"
   ],
+  "topic": [
+    "organ_aging",
+    "aging_biology"
+  ],
   "blurb_zh": "第 5 代或第 15 代；置信度高于 0.50 时保留。",
   "intents": [
     "model_organism"

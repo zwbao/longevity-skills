@@ -10,6 +10,9 @@
   "domains": [
     "临床年龄与可穿戴"
   ],
+  "topic": [
+    "physical_activity"
+  ],
   "blurb_zh": "用年龄和设备记录的日均步数，比较所在年龄组的研究平台范围。",
   "intents": [
     "frailty_mortality"

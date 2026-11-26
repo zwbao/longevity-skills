@@ -10,6 +10,10 @@
   "domains": [
     "心血管与运动"
   ],
+  "topic": [
+    "cardiovascular",
+    "physical_activity"
+  ],
   "blurb_zh": "用运动试验的峰值和主动恢复1分钟心率，计算心率下降量并按原文切点分档。",
   "intents": [
     "lab_meaning",

@@ -10,6 +10,9 @@
   "domains": [
     "脑、认知与痴呆"
   ],
+  "topic": [
+    "brain_cognition"
+  ],
   "blurb_zh": "核对年龄和情景记忆比较是否合乎“记忆超常高龄者”的入组写法；不评估大脑。",
   "intents": [
     "cognition_dementia"

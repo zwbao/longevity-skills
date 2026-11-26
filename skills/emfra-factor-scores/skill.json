@@ -11,6 +11,10 @@
     "功能与衰弱",
     "心理与认知"
   ],
+  "topic": [
+    "musculoskeletal_frailty",
+    "mental_social"
+  ],
   "blurb_zh": "用已评定的 EMFRA 九项分数分别计算老年自主性和心理困扰分数。",
   "intents": [
     "frailty_mortality"

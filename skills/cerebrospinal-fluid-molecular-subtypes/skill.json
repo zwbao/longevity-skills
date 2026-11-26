@@ -10,6 +10,9 @@
   "domains": [
     "脑、认知与痴呆"
   ],
+  "topic": [
+    "brain_cognition"
+  ],
   "blurb_zh": "脑脊液蛋白。分型载荷不在已读材料里时，报告停在蛋白读出。",
   "intents": [
     "cognition_dementia"

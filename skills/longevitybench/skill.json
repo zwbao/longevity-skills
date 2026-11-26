@@ -10,6 +10,10 @@
   "domains": [
     "工具与证据库"
   ],
+  "topic": [
+    "aging_biology",
+    "drugs_supplements"
+  ],
   "blurb_zh": "DrugAge 的回顾性排序，以及 Longevity Claw 的标志物向量场顺序。",
   "intents": [
     "model_organism"

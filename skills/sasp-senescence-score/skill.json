@@ -11,6 +11,10 @@
     "细胞衰老",
     "蛋白、代谢与器官年龄"
   ],
+  "topic": [
+    "biological_age",
+    "aging_biology"
+  ],
   "blurb_zh": "38 个血浆蛋白（Olink 蛋白组 NPX）算细胞衰老分泌表型（SASP）评分。",
   "intents": [
     "proteomic_organ_age",

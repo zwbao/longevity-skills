@@ -10,6 +10,10 @@
   "domains": [
     "用药与基因"
   ],
+  "topic": [
+    "drugs_supplements",
+    "genetics"
+  ],
   "blurb_zh": "基因检测原始数据里的药物代谢基因，对照 CPIC 用药指南看哪些药要先问医生。",
   "intents": [
     "pharmacogenomics",

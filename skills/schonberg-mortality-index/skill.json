@@ -10,6 +10,9 @@
   "domains": [
     "衰弱与死亡风险"
   ],
+  "topic": [
+    "musculoskeletal_frailty"
+  ],
   "blurb_zh": "用年龄、体重指数及自报健康情况计算Schonberg五年死亡风险积分。",
   "intents": [
     "frailty_mortality"
