@@ -1,7 +1,7 @@
 {
   "schema": "longevity-coverage/1",
   "reference_items": 583,
-  "reference_covered": 66,
+  "reference_covered": 67,
   "unlabelled": {
     "claims": 0,
     "effects": 0,
@@ -1583,21 +1583,22 @@
         "method": {
           "rows": 0,
           "effects": 0,
-          "papers": 8,
+          "papers": 9,
           "skills": [
             "bmi-mortality-category",
             "burden-of-proof-dietary-risk",
             "ctt-ldl-relative-risk",
             "elsa-hba1c-model-a",
+            "fib4-index",
             "finnish-diabetes-risk-score",
             "modifiable-risk-factor-score",
             "navy-circumference-body-fat",
             "new-chinese-diabetes-risk-score",
             "relative-fat-mass"
           ],
-          "latest": "2026-11-25",
+          "latest": "2026-11-26",
           "reference": 11,
-          "covered": 2,
+          "covered": 3,
           "missing": [
             {
               "id": "body-weight-metabolism-method-adag-estimated-average-glucose",
@@ -1621,19 +1622,6 @@
               "by": [],
               "doi": [
                 "10.1186/1471-230x-6-33"
-              ]
-            },
-            {
-              "id": "body-weight-metabolism-method-fib-4",
-              "item": "Fibrosis-4 index (FIB-4)",
-              "item_zh": "肝纤维化 4 因子指数（FIB-4）",
-              "priority": "P0",
-              "status": "reviewed",
-              "covered": false,
-              "by": [],
-              "doi": [
-                "10.1002/hep.21178",
-                "10.1016/j.cgh.2009.05.033"
               ]
             },
             {
@@ -1715,7 +1703,7 @@
           "effects": 147,
           "papers": 142,
           "skills": [],
-          "latest": "2026-11-25",
+          "latest": "2026-11-26",
           "reference": 22,
           "covered": 5,
           "missing": [
@@ -3726,12 +3714,13 @@
         "method": {
           "rows": 0,
           "effects": 0,
-          "papers": 2,
+          "papers": 3,
           "skills": [
+            "fib4-index",
             "finnish-diabetes-risk-score",
             "new-chinese-diabetes-risk-score"
           ],
-          "latest": "2026-11-25",
+          "latest": "2026-11-26",
           "reference": 7,
           "covered": 0,
           "missing": [
@@ -4297,7 +4286,7 @@
           "effects": 64,
           "papers": 82,
           "skills": [],
-          "latest": "2026-11-25",
+          "latest": "2026-11-26",
           "reference": 18,
           "covered": 2,
           "missing": [
@@ -6535,7 +6524,7 @@
           "effects": 9,
           "papers": 129,
           "skills": [],
-          "latest": "2026-11-25",
+          "latest": "2026-11-26",
           "reference": 31,
           "covered": 0,
           "missing": [
