@@ -20,7 +20,7 @@ def domain_problems(values):
         if key in values and values[key] not in (0, 1):
             errors.append(problem(key, f'{key}只能填0（否）或1（是），未知不能填0。'))
     if values.get('secondary_osteoporosis', 0) != 0:
-        errors.append(problem('secondary_osteoporosis', '表2没有其他继发性骨质疏松的单列，本技能不作替代映射。'))
+        errors.append(problem('secondary_osteoporosis', '表2没有其他继发性骨质疏松的单列；完整FRAX计算器会套用类风湿关节炎系数，但本查表技能不作替代映射，请使用完整计算器。'))
     if sum(values.get(key, 0) == 1 for key in FACTORS) > 1:
         errors.append(problem('risk_factors', '表2只支持无危险因素或一个危险因素；多因素没有对应单元格。'))
     return errors
