@@ -101,6 +101,7 @@ python3 -m tools.lsk test --changed origin/main   # 只测相对 main 改动过�
 - `skills/aging-biomarker-framework/` — 把你已经算好的时钟预测年龄减去实足年龄（简单相减），再标出这个时钟在论文评测里的队列结果。（名单类）
 - `skills/biological-aging-generational-shifts/` — 你交来的 PhenoAge 减去年龄的未标准化差和出生年；不是论文的标准化年龄差。（名单类）
 - `skills/blood-protein-assessment/` — 研究用：把已在一批样本内秩逆正态变换、缩放好的血液蛋白量乘论文系数加总；单个人的化验值没法直接套，糖化血红蛋白只作对照。（名单类）
+- `skills/deficit-accumulation-frailty-index/` — 用已评估的健康缺陷计数算虚弱指数，附原论文的探索性生存模型。
 - `skills/face-aging-rate-cancer/` — 你交来的两次面容年龄之差除以相隔年数；不从照片算面容年龄。（名单类）
 - `skills/fasting-mimicking-diet/` — 两次已经算好的生物年龄相减（不从化验重算生物年龄）。（名单类）
 - `skills/framingham-general-cvd-risk/` — 用年龄、血压、血脂或体质指数估算十年总体心血管风险和等价心脏年龄。
@@ -187,11 +188,13 @@ python3 -m tools.lsk test --changed origin/main   # 只测相对 main 改动过�
 - `skills/environmental-genetic-aging-mortality/` — 暴露回答。（名单类）
 - `skills/epigenetic-frailty-risk-score/` — 见「甲基化」。
 - `skills/genome-wide-proteomics-frailty/` — 已经算好的医院衰弱风险分。
+- `skills/lee-mortality-index/` — 用年龄、病史和日常功能问卷计算Lee四年死亡风险指数。
 - `skills/metabolomic-frailty-subtypes/` — 十一项核磁代谢物离哪个已发表亚型均值最近（近似，不是论文的分型）。（名单类）
 - `skills/methylation-variability-aging-score/` — 见「甲基化」。
 - `skills/modifiable-risk-factor-score/` — 数一数 11 项可改变的危险因素（教育、抑郁、吸烟、饮酒、运动、饮食、睡眠、体重、血糖、血压、血脂）有几项，并给出你所在年龄段每多一项对应的全因死亡风险比。
 - `skills/one-year-mortality-aging-marker/` — 年龄和性别。一年死亡概率的回归系数没有印出。（名单类）
 - `skills/plasma-protein-risk-score/` — 按论文系数把你交来的标准化蛋白值加权求和，可算足跟超声骨密度；不是你的骨折风险。（名单类）
+- `skills/schonberg-mortality-index/` — 用年龄、体重指数及自报健康情况计算Schonberg五年死亡风险积分。
 - `skills/sleep-study-life-expectancy/` — 你已有的睡眠年龄估计减去实足年龄，只做相减，不跑论文的深度网络。（名单类）
 
 ## 线粒体
@@ -254,9 +257,41 @@ python3 -m tools.lsk test --changed origin/main   # 只测相对 main 改动过�
 - `skills/digital-telomere-measurement-sequencing/` — 一批端粒长度的通用分布统计（不套论文的分类模型）。（名单类）
 - `skills/leukocyte-telomere-length/` — 你交来的英国生物银行式 z 标准化端粒放进四分位档；自己测的 T/S 比值不能分档。（名单类）
 
+## cardiovascular
+
+- `skills/medas-mediterranean-diet-adherence/` — 见「nutrition」。
+
+## nutrition
+
+- `skills/medas-mediterranean-diet-adherence/` — 用14项饮食问卷计算地中海饮食依从性总分及逐项得分。
+
+## 久坐
+
+- `skills/accelerometry-mortality-dose-response/` — 见「身体活动」。
+
+## 代谢与心血管
+
+- `skills/finnish-diabetes-risk-score/` — 用年龄、腰围、BMI和四项问卷计算原版七项糖尿病风险筛查分数。
+
+## 体能与独立生活
+
+- `skills/senior-fitness-independence/` — 按年龄和性别比较起立、弯举、步行、踏步及起立行走成绩与独立生活体能参考标准。
+
+## 体能与衰弱
+
+- `skills/short-physical-performance-battery/` — 根据半串联与并足或全串联站立、8英尺常速步行和五次起立记录，计算原版 SPPB 三项得分及总分。
+
+## 体脂与人体测量
+
+- `skills/relative-fat-mass/` — 用身高、腰围和性别估算成人全身体脂率。
+
 ## 体脂与腰围
 
 - `skills/navy-circumference-body-fat/` — 用身高、颈围、腰围（女性加臀围）按美国海军围度方程估算体脂率，再算腰围身高比、腰臀比，并按国家标准看是否中心型肥胖。
+
+## 体重
+
+- `skills/bmi-mortality-category/` — 用身高体重计算 BMI，查询从不吸烟且无相关既往慢病人群的分档死亡危险比。
 
 ## 克隆性造血
 
@@ -274,6 +309,12 @@ python3 -m tools.lsk test --changed origin/main   # 只测相对 main 改动过�
 
 - `skills/china-par-ascvd-risk/` — 收缩压、血脂、腰围、年龄和几个是否项到齐时，按 China-PAR 算中国成人的 10 年心血管病风险，男女都算。
 - `skills/pooled-cohort-ascvd-risk/` — 用年龄、血脂、血压、吸烟和糖尿病状态，按原始 PCE 方程估计十年首次心血管病风险。
+- `skills/qrisk3-cvd-risk/` — 用血压及重复记录标准差、体质指数、血脂比值和病史估计十年心血管病风险；需英国Townsend评分，仍在验证。
+- `skills/sleep-duration-risk-lookup/` — 见「睡眠」。
+
+## 心血管与代谢
+
+- `skills/ctt-ldl-relative-risk/` — 将 LDL-C 绝对降幅换算为主要血管事件的相对发生率情景。
 
 ## 心血管与代谢风险
 
@@ -285,23 +326,67 @@ python3 -m tools.lsk test --changed origin/main   # 只测相对 main 改动过�
 
 ## 心血管健康
 
+- `skills/alcohol-burden-of-proof/` — 见「饮食与营养」。
 - `skills/lifes-essential-8/` — 用饮食、运动、吸烟、睡眠和体检数据计算成人心血管健康八项评分。
+
+## 死亡风险
+
+- `skills/accelerometry-mortality-dose-response/` — 见「身体活动」。
+- `skills/bmi-mortality-category/` — 见「体重」。
+- `skills/sleep-duration-risk-lookup/` — 见「睡眠」。
+- `skills/whole-grain-dose-response/` — 见「饮食与营养」。
+
+## 生活方式与健康风险
+
+- `skills/gbd-alcohol-tmrel-nde/` — 把自己的平均每日纯酒精摄入量与按年龄、性别、地区和历史年份分层的 GBD 人群阈值比较，显示差值及所在侧，不给安全饮酒量。
+
+## 生活方式与寿命
+
+- `skills/alcohol-consumption-thresholds/` — 用每周纯酒精总量匹配论文分档，查看对应研究人群的寿命差。
+
+## 生活方式与死亡风险
+
+- `skills/sedentary-dose-response/` — 用每天久坐及看电视时长查人群相对风险和研究分段阈值。
 
 ## 用药与基因
 
 - `skills/cpic-pharmacogenomics/` — 基因检测原始数据里的药物代谢基因，对照 CPIC 用药指南看哪些药要先问医生。（名单类）
 
+## 癌症风险
+
+- `skills/alcohol-burden-of-proof/` — 见「饮食与营养」。
+
+## 睡眠
+
+- `skills/sleep-duration-risk-lookup/` — 用通常睡眠时长匹配论文整数小时查表值，查看全因死亡、心血管疾病、冠心病和卒中的人群相对风险。
+
 ## 糖代谢
 
 - `skills/elsa-hba1c-model-a/` — 用糖化血红蛋白、年龄、性别和随访间隔计算 ELSA Model A 的糖尿病检出概率（预印本研究模型）。
+
+## 糖尿病风险筛查
+
+- `skills/new-chinese-diabetes-risk-score/` — 用年龄、性别、腰围、BMI、收缩压和家族史计算糖尿病筛查分数。
 
 ## 肾脏
 
 - `skills/ckd-epi-2021-egfr/` — 血肌酐、年龄和性别算肾小球滤过率估计值（eGFR），有胱抑素 C 时用肌酐加胱抑素 C 方程，按 KDIGO 分 G1–G5；有尿白蛋白/肌酐比时再分 A1–A3。
 
+## 营养
+
+- `skills/gbd-dietary-intake-gap/` — 把每日食物、营养素和24小时尿钠记录换算为相对GBD饮食参考值的差值与比例。
+
+## 营养与代谢
+
+- `skills/fruit-vegetable-risk-lookup/` — 用日均果蔬摄入量查出论文中的人群相对风险及相邻表格行。
+
 ## 血液测序
 
 - `skills/hotspot-somatic-sweep/` — 见「克隆性造血」。
+
+## 衰弱与功能
+
+- `skills/frail-scale/` — 用疲劳、上楼和步行困难、疾病种数及一年体重变化计算FRAIL衰弱筛查分数。
 
 ## 认知与神经
 
@@ -310,12 +395,36 @@ python3 -m tools.lsk test --changed origin/main   # 只测相对 main 改动过�
 ## 跌倒与肌肉
 
 - `skills/calf-circumference-decline-falls/` — 用前后两次自己量的小腿围算绝对和相对减少量，按论文切点分档，给出中国老人队列里该档与小腿围没减少者相比的跌倒比值比。
+- `skills/fnih-sarcopenia-cutpoints/` — 用最大握力、四肢瘦体重和 BMI 对照 FNIH 老年人切点，分别查看肌力弱与低瘦体重分层。
 - `skills/reactive-agility-fall-history/` — 用 SKILLCOURT 反应敏捷测试（随机星形跑完成时间、站立踏步简单和选择反应时）的成绩，对照论文印出的探索性切点，看落在有跌倒史一侧还是没有跌倒史一侧。
 - `skills/share-intrinsic-capacity-domains/` — 见「认知与神经」。
+
+## 身体活动
+
+- `skills/accelerometry-mortality-dose-response/` — 按符合原文处理定义的加速度计活动或久坐日均值，查全因死亡相对危险比。
+
+## 运动与慢病风险
+
+- `skills/nonoccupational-activity-risk/` — 用每周非职业活动时长查询死亡、心血管病和癌症的人群相对风险，并比较自定目标。
+
+## 饮食
+
+- `skills/gbd-dietary-intake-gap/` — 见「营养」。
+
+## 饮食与代谢
+
+- `skills/burden-of-proof-dietary-risk/` — 用加工肉、含糖饮料或反式脂肪的日常摄入量，读取已发表摄入量点对应的慢病相对风险及不确定区间。
+- `skills/red-meat-burden-of-proof/` — 按未加工红肉日均摄入量查询慢病相对风险与不确定区间，仅支持论文列出的摄入点。
 
 ## 饮食与基因
 
 - `skills/nutrigenetic-variant-panel/` — 基因检测原始数据里和喝酒、叶酸、喝奶有关的三个位点，按要求再看 APOE 与血脂。（名单类）
+
+## 饮食与营养
+
+- `skills/alcohol-burden-of-proof/` — 用自己的每日平均纯酒精摄入量，查阅论文中各疾病相对于无饮酒的风险比及不确定性区间；不推算个人患病概率。
+- `skills/vegetable-tmrel-gap/` — 用饮食记录中的蔬菜日均克数，计算与论文蔬菜摄入参考范围的差距。
+- `skills/whole-grain-dose-response/` — 按每日全谷物食品摄入量匹配论文中的群体相对风险及置信区间。
 
 ## 只收录，不参与个人调度
 

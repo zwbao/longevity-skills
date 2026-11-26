@@ -18,7 +18,8 @@ permissions:
 
 # One at a time: two branches of the same week both touch the registry.
 concurrency:
-  group: pipeline-pr
+  # One group per branch: a shared group keeps a single waiting run and cancels the rest.
+  group: pipeline-pr-${{ github.ref }}
   cancel-in-progress: false
 
 jobs:
@@ -100,17 +101,22 @@ jobs:
           git config user.name "longevity-skills-bot"
           git config user.email "longevity-skills-bot@users.noreply.github.com"
           git config merge.registry.driver "python3 tools/merge_registry.py %O %A %B"
-          git fetch origin main
-          git checkout -B main origin/main
-          git merge --no-ff -m "$(cat "$RUNNER_TEMP/title") (#${{ steps.pr.outputs.number }})" "origin/$BRANCH"
-          python -m tools.lsk registry --sync
-          python -m tools.lsk build
-          python -m tools.lsk check
-          if [ -n "$(git status --porcelain)" ]; then
-            git add -A catalog.json README.md skills/_registry registry skills .claude-plugin/plugin.json
-            git commit -m "Regenerate catalog, README list and registry"
-          fi
-          git push origin main
+          # Other branches and the daily review also push to main, so try again when it moved.
+          for attempt in 1 2 3 4 5 6; do
+            git fetch origin main
+            git checkout -B main origin/main
+            git merge --no-ff -m "$(cat "$RUNNER_TEMP/title") (#${{ steps.pr.outputs.number }})" "origin/$BRANCH"
+            python -m tools.lsk registry --sync
+            python -m tools.lsk build
+            python -m tools.lsk check
+            if [ -n "$(git status --porcelain)" ]; then
+              git add -A catalog.json README.md skills/_registry registry skills .claude-plugin/plugin.json
+              git commit -m "Regenerate catalog, README list and registry"
+            fi
+            if git push origin main; then break; fi
+            if [ "$attempt" = 6 ]; then echo "main kept moving; giving up"; exit 1; fi
+            sleep $((attempt * 10))
+          done
           git push origin --delete "$BRANCH"
 
       - name: Fail the run when the checks failed
