@@ -11,6 +11,10 @@
     "甲基化",
     "衰弱与死亡风险"
   ],
+  "topic": [
+    "diet_nutrition",
+    "biological_age"
+  ],
   "blurb_zh": "用茶、全谷物、水果、薯条、酒、加工肉、甜饮料等十类食物每天的份数，算与表观衰老较慢相关的饮食指数 EDISEA。",
   "intents": [
     "intervention_evidence",

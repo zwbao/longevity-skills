@@ -10,6 +10,10 @@
   "domains": [
     "皮肤"
   ],
+  "topic": [
+    "organ_aging",
+    "aging_biology"
+  ],
   "blurb_zh": "小鼠周龄落在成年、年老或中和开始的哪一个窗口，以及 Il17 基因。",
   "intents": [
     "model_organism"

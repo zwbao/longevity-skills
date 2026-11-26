@@ -10,6 +10,9 @@
   "domains": [
     "衰弱与死亡风险"
   ],
+  "topic": [
+    "musculoskeletal_frailty"
+  ],
   "blurb_zh": "已经算好的医院衰弱风险分。",
   "intents": [
     "frailty_mortality"

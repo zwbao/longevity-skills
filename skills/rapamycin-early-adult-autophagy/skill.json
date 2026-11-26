@@ -11,6 +11,10 @@
   "domains": [
     "老年保护"
   ],
+  "topic": [
+    "aging_biology",
+    "drugs_supplements"
+  ],
   "blurb_zh": "绿色荧光面积占肠段总面积的比例；计数到齐时还有弥漫溶菌酶比例。",
   "intents": [
     "model_organism"

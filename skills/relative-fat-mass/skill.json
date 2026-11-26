@@ -10,6 +10,9 @@
   "domains": [
     "体脂与人体测量"
   ],
+  "topic": [
+    "body_weight_metabolism"
+  ],
   "blurb_zh": "用身高、腰围和性别估算成人全身体脂率。",
   "intents": [
     "body_fat_waist"

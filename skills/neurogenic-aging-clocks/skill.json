@@ -10,6 +10,10 @@
   "domains": [
     "脑、认知与痴呆"
   ],
+  "topic": [
+    "biological_age",
+    "brain_cognition"
+  ],
   "blurb_zh": "细胞类型，可带月龄和已经算好的预测月龄。",
   "intents": [
     "model_organism"

@@ -10,6 +10,9 @@
   "domains": [
     "再生"
   ],
+  "topic": [
+    "aging_biology"
+  ],
   "blurb_zh": "八个全局衰老 miRNA，以及 Eln、Col1a1 和 Col3a1 的方向。",
   "intents": [
     "model_organism"

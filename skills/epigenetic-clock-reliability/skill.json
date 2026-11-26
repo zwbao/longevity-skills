@@ -10,6 +10,9 @@
   "domains": [
     "甲基化"
   ],
+  "topic": [
+    "biological_age"
+  ],
   "blurb_zh": "同一个时钟两次年龄的差，只做相减，不计算论文的主成分时钟。",
   "intents": [
     "epigenetic_age",

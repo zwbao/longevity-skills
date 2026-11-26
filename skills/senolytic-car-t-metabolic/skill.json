@@ -10,6 +10,11 @@
   "domains": [
     "老年保护"
   ],
+  "topic": [
+    "body_weight_metabolism",
+    "aging_biology",
+    "drugs_supplements"
+  ],
   "blurb_zh": "两个对照 P 值是否都低于 0.05。",
   "intents": [
     "model_organism"

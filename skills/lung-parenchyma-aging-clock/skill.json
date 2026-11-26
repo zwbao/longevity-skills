@@ -10,6 +10,9 @@
   "domains": [
     "影像"
   ],
+  "topic": [
+    "biological_age"
+  ],
   "blurb_zh": "用你已经有的肺实质预测年龄和实足年龄相减得出残差；论文的时钟模型没有公开，这里不重算。",
   "intents": [
     "biological_age"

@@ -11,6 +11,9 @@
     "体重",
     "死亡风险"
   ],
+  "topic": [
+    "body_weight_metabolism"
+  ],
   "blurb_zh": "用身高体重计算 BMI，查询从不吸烟且无相关既往慢病人群的分档死亡危险比。",
   "intents": [
     "frailty_mortality",

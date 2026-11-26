@@ -11,6 +11,9 @@
   "domains": [
     "免疫与炎症"
   ],
+  "topic": [
+    "aging_biology"
+  ],
   "blurb_zh": "全血图一里的炎症基因，以及 MCU 和 MICU1。",
   "intents": [
     "immune_inflammation"

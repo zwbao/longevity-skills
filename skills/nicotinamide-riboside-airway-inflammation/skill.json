@@ -10,6 +10,10 @@
   "domains": [
     "免疫与炎症"
   ],
+  "topic": [
+    "drugs_supplements",
+    "organ_aging"
+  ],
   "blurb_zh": "两次痰液白细胞介素-8之间的百分比变化（通用算术）。",
   "intents": [
     "before_after",

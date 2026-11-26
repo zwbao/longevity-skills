@@ -10,6 +10,10 @@
   "domains": [
     "骨骼肌"
   ],
+  "topic": [
+    "musculoskeletal_frailty",
+    "aging_biology"
+  ],
   "blurb_zh": "总铁减亚铁得到的三价铁。小鼠实验化合物只出现名字。",
   "intents": [
     "model_organism"

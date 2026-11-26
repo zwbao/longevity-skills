@@ -10,6 +10,10 @@
   "domains": [
     "影像"
   ],
+  "topic": [
+    "biological_age",
+    "organ_aging"
+  ],
   "blurb_zh": "把你已拿到的视网膜预测年龄（或模型给的年龄箱概率）减去实足年龄；不分析眼底照片。",
   "intents": [
     "imaging",

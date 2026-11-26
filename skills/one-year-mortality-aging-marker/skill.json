@@ -10,6 +10,9 @@
   "domains": [
     "衰弱与死亡风险"
   ],
+  "topic": [
+    "biological_age"
+  ],
   "blurb_zh": "年龄和性别。一年死亡概率的回归系数没有印出。",
   "intents": [
     "frailty_mortality"

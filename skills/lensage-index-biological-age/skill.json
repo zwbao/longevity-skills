@@ -10,6 +10,9 @@
   "domains": [
     "影像"
   ],
+  "topic": [
+    "biological_age"
+  ],
   "blurb_zh": "把你已拿到的晶状体年龄减去实足年龄，并对照论文提到的5、10、20年三条线；不分析照片。",
   "intents": [
     "imaging",

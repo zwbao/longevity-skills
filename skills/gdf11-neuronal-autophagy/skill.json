@@ -12,6 +12,11 @@
     "脑、认知与痴呆",
     "自噬"
   ],
+  "topic": [
+    "brain_cognition",
+    "mental_social",
+    "aging_biology"
+  ],
   "blurb_zh": "血清 GDF11 浓度。",
   "intents": [
     "model_organism"

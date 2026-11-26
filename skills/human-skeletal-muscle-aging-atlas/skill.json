@@ -10,6 +10,10 @@
   "domains": [
     "骨骼肌"
   ],
+  "topic": [
+    "musculoskeletal_frailty",
+    "aging_biology"
+  ],
   "blurb_zh": "点到的细胞或纤维，以及正文里的方向。",
   "intents": [],
   "triage": {
