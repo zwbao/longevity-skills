@@ -311,6 +311,10 @@ python3 -m tools.lsk test --changed origin/main   # 只测相对 main 改动过�
 
 - `skills/smoking-burden-of-proof/` — 按当前吸烟者的累计包年或每日支数，在论文印出的暴露点查相对风险与不确定区间。
 
+## 心理与社交
+
+- `skills/ucla-loneliness-scale-v3/` — 用UCLA第三版完整问卷的原始回答计算孤独感总分，逐题显示反向计分。
+
 ## 心理与认知
 
 - `skills/emfra-factor-scores/` — 见「功能与衰弱」。
