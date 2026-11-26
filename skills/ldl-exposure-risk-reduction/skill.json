@@ -1,0 +1,136 @@
+{
+  "schema": "longevity-skill/1",
+  "name": "ldl-exposure-risk-reduction",
+  "kind": "paper",
+  "tier": "A",
+  "species": [
+    "human"
+  ],
+  "evidence": "consensus",
+  "domains": [
+    "心血管与血脂"
+  ],
+  "topic": [
+    "cardiovascular",
+    "body_weight_metabolism"
+  ],
+  "blurb_zh": "按 LDL 胆固醇下降量与持续年数估计相对心血管风险下降。",
+  "intents": [
+    "lab_meaning",
+    "before_after"
+  ],
+  "triage": {
+    "reason_zh": "人体证据共识表2印出完整降幅—持续时间方程，可用个人LDL-C下降量计算相对风险下降并复现表内示例。",
+    "reviewed": false
+  },
+  "paper": {
+    "doi": "10.1093/eurheartj/ehx144",
+    "title": "Low-density lipoproteins cause atherosclerotic cardiovascular disease. 1. Evidence from genetic, epidemiologic, and clinical studies. A consensus statement from the European Atherosclerosis Society Consensus Panel.",
+    "title_zh": "LDL 暴露时间与心血管相对风险下降",
+    "journal": "European Heart Journal",
+    "year": 2017,
+    "authors": "Ference 等",
+    "article_url": "https://academic.oup.com/eurheartj/article/38/32/2459/3745109",
+    "supplements": [],
+    "card_notes": [
+      "计算依据为正文表2脚注；开放全文：https://pmc.ncbi.nlm.nih.gov/articles/PMC5837225/ 。",
+      "复现范围为表2所选印出示例。表2部分单元格以及表3、4与脚注公式不一致，详见 references/contract.md；不计算绝对风险或 NNT。"
+    ],
+    "summary_zh": "这项研究汇总人体遗传、流行病学和临床试验证据，形成低密度脂蛋白参与动脉粥样硬化性心血管病发生、其影响随暴露时间累积的专家共识。个人报告只按胆固醇下降量和持续时间计算相对风险下降情景，不计算个人发病概率或寿命。",
+    "summary_status": "draft"
+  },
+  "entry": {
+    "script": "scripts/personal_report.py",
+    "measurements_flag": "--measurements",
+    "measurements_header": [
+      "marker",
+      "value",
+      "unit"
+    ],
+    "out_flag": "--out",
+    "result_json": true,
+    "targets_flag": "--targets",
+    "levers_json": true
+  },
+  "inputs_status": "verified",
+  "inputs": [
+    {
+      "key": "ldl_reduction_mmol_l",
+      "label_zh": "LDL-C绝对下降量",
+      "aliases": [
+        "LDL-C reduction",
+        "absolute LDL-C reduction",
+        "LDL cholesterol reduction",
+        "低密度脂蛋白胆固醇下降量",
+        "LDL-C降幅",
+        "ΔLDL-C reduction"
+      ],
+      "unit": "mmol/L",
+      "accept": {
+        "umol/L": 0.001
+      },
+      "range": [
+        0,
+        3.5
+      ],
+      "unit_required": true,
+      "required": true,
+      "from": "measurements",
+      "note_zh": "需给出基线减降低后的LDL-C，或明确的假设下降量；不是单次LDL-C浓度，也不是百分比。仅支持摩尔浓度单位，不按论文粗略的mg/dL括号值换算。范围限于表2的最大下降量，0代表没有下降的对照情景。"
+    },
+    {
+      "key": "duration_years",
+      "label_zh": "持续年数",
+      "aliases": [
+        "duration of treatment exposure",
+        "duration",
+        "years of treatment",
+        "LDL降低持续年数"
+      ],
+      "unit": "a",
+      "range": [
+        5,
+        40
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "持续较低LDL-C的总年数，不是实足年龄；限表2展示的5至40年，允许区间内小数年。"
+    }
+  ],
+  "outputs": [
+    {
+      "key": "relative_risk_reduction_pct",
+      "label_zh": "相对风险下降（情景估计）",
+      "unit": "%"
+    },
+    {
+      "key": "relative_risk",
+      "label_zh": "相对风险（情景估计）",
+      "unit": "1"
+    }
+  ],
+  "validation": {
+    "status": "reproduced",
+    "examples": [
+      {
+        "locator": "Table 2, baseline 7 / reduction 3.5 and baseline 3 / reduction 0.5; duration columns 5–40 years",
+        "quote": "5 years | 10 years | 20 years | 30 years | 40 years\n7 | 3.5 | 58 | 68 | 81 | 89 | 93\n3 | 0.5 | 12 | 15 | 21 | 27 | 32",
+        "values": [
+          58,
+          68,
+          81,
+          89,
+          93,
+          12,
+          15,
+          21,
+          27,
+          32
+        ],
+        "tolerance": "最多0.51个百分点：整数表值容许0.5个百分点，脚注对数系数另经舍入；3.5 mmol/L、40年的计算值超过半点界线约0.00086个百分点。该容差仍不能掩盖合同所列其他单元格差异。",
+        "test": "tests/test_manifest.py::test_table2_printed_examples"
+      }
+    ],
+    "gap_zh": "表2下降1.0 mmol/L持续30年的单元格印46%，脚注公式为46.69%；下降2.0持续30年印71%，公式为71.58%。表3、4另有较大不一致。本技能忠实计算表2脚注，不修改常数、不计算表3、4绝对风险或NNT。"
+  }
+}
