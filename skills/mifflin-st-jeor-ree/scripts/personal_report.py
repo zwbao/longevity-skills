@@ -117,7 +117,7 @@ def main(argv=None):
              '两个结果来自原文系数的舍入差异；这不是两次独立测量，也不是置信区间。', '',
              f"本次输入：体重{values['weight_kg']:g} kg，身高{values['height_cm']:g} cm，年龄{age:g}岁，"
              f"方程性别{'男' if sex == 'male' else '女'}。", '',
-             '原研究对象为健康成人；患病、妊娠、哺乳、极端体重或与原研究不同的人群不能据此获得已验证的能量需求。']
+             '原研究对象为美国内华达州里诺RENO Diet-Heart Study的498名19–78岁健康成人（间接测热法测REE）；该方程在原文中未作独立外部验证；患病、妊娠、哺乳、极端体重或与原研究不同的人群不能据此获得已验证的能量需求。']
     lines += population_warnings(values, age, sex)
     if targets:
         lines += ['', '## 你提供的体重情景', '', TARGET_NOTE]
