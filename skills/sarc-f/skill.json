@@ -1,0 +1,217 @@
+{
+  "schema": "longevity-skill/1",
+  "kind": "paper",
+  "tier": "A",
+  "species": [
+    "human"
+  ],
+  "evidence": "cohort",
+  "domains": [
+    "衰弱与功能"
+  ],
+  "topic": [
+    "musculoskeletal_frailty"
+  ],
+  "intents": [
+    "frailty_mortality"
+  ],
+  "entry": {
+    "script": "scripts/personal_report.py",
+    "measurements_flag": "--measurements",
+    "measurements_header": [
+      "marker",
+      "value",
+      "unit"
+    ],
+    "age_flag": "--age",
+    "sex_flag": "--sex",
+    "out_flag": "--out",
+    "result_json": true
+  },
+  "inputs_status": "verified",
+  "name": "sarc-f",
+  "blurb_zh": "用提物、室内步行、起身、上楼和跌倒自述计算SARC-F分数与肌少症相关功能风险筛查分档。",
+  "triage": {
+    "reason_zh": "人体三个人群验证，全文印出五项0至2分规则及总分≥4切点，可用个人自述计算。",
+    "reviewed": false
+  },
+  "paper": {
+    "doi": "10.1002/jcsm.12048",
+    "title": "SARC-F: a symptom score to predict persons with sarcopenia at risk for poor functional outcomes.",
+    "title_zh": "SARC-F：识别肌少症相关不良功能结局风险的症状评分",
+    "journal": "Journal of Cachexia, Sarcopenia and Muscle",
+    "year": 2016,
+    "authors": "Malmstrom 等",
+    "article_url": "https://onlinelibrary.wiley.com/doi/10.1002/jcsm.12048",
+    "supplements": [],
+    "card_notes": [
+      "采用正文AAH/BLSA版本；NHANES跌倒项为近似替代题，不与次数版本混用。",
+      "出版社页面与PMC全文未列独立补充文件、附录或配套代码；评分规则位于方法段。",
+      "复现验证针对原文跌倒次数的单项得分，不是个人结局概率。",
+      "AAH在2000–01年入组49–65岁非裔成年人，本研究从2003–04年Wave 4开始分析；BLSA分析者≥60岁，NHANES分析者60–85岁。个人评分采用AAH/BLSA题干；中文为解释性翻译。"
+    ],
+    "summary_zh": "这项研究在美国社区中晚年及老年人群中发现，自述肌力和活动困难的症状评分与不良身体功能、住院及死亡有关。个人报告只计算问卷各项得分、总分和筛查分档，不估计个人死亡概率或预期寿命。",
+    "summary_status": "draft"
+  },
+  "inputs": [
+    {
+      "key": "strength_response_score",
+      "label_zh": "提物困难回答分",
+      "aliases": [
+        "Strength",
+        "提物困难",
+        "Lifting or carrying 10 lbs"
+      ],
+      "unit": "score",
+      "range": [
+        0,
+        2
+      ],
+      "accept": {},
+      "required": true,
+      "from": "measurements",
+      "note_zh": "提举或搬运10磅物品：0无困难，1有些困难，2很困难或无法完成。10磅约4.54千克，保留原题10磅，不是握力测量。"
+    },
+    {
+      "key": "walking_response_score",
+      "label_zh": "室内步行困难回答分",
+      "aliases": [
+        "Assistance walking",
+        "室内步行困难"
+      ],
+      "unit": "score",
+      "range": [
+        0,
+        2
+      ],
+      "accept": {},
+      "required": true,
+      "from": "measurements",
+      "note_zh": "走过一个房间：0无困难，1有些困难；很困难、使用辅助器具或无法在无人帮助下完成，任一情况填2。"
+    },
+    {
+      "key": "chair_response_score",
+      "label_zh": "起身转移困难回答分",
+      "aliases": [
+        "Rise from a chair",
+        "起身困难"
+      ],
+      "unit": "score",
+      "range": [
+        0,
+        2
+      ],
+      "accept": {},
+      "required": true,
+      "from": "measurements",
+      "note_zh": "从椅子或床起身转移：0无困难，1有些困难；很困难、使用辅助器具或需要他人帮助，任一情况填2。"
+    },
+    {
+      "key": "stairs_response_score",
+      "label_zh": "上楼困难回答分",
+      "aliases": [
+        "Climb stairs",
+        "上楼困难"
+      ],
+      "unit": "score",
+      "range": [
+        0,
+        2
+      ],
+      "accept": {},
+      "required": true,
+      "from": "measurements",
+      "note_zh": "登上10级台阶：0无困难，1有些困难，2很困难或无法完成。"
+    },
+    {
+      "key": "falls_past_year_count",
+      "label_zh": "过去一年跌倒次数",
+      "aliases": [
+        "Falls in past year",
+        "Falls count",
+        "过去一年跌倒次数"
+      ],
+      "unit": "1",
+      "range": [
+        0,
+        1000
+      ],
+      "accept": {},
+      "required": true,
+      "from": "measurements",
+      "note_zh": "填过去一年实际跌倒次数（整数），不是单项得分；0–1000是软件输入防错范围，不是临床切点。"
+    },
+    {
+      "key": "age",
+      "label_zh": "年龄",
+      "unit": "a",
+      "range": [
+        18,
+        120
+      ],
+      "required": false,
+      "from": "profile",
+      "flag": "--age",
+      "note_zh": "可选上下文，不进入评分；18–120为软件防错范围，不是本研究验证年龄范围。"
+    },
+    {
+      "key": "sex",
+      "label_zh": "性别",
+      "required": false,
+      "from": "profile",
+      "flag": "--sex",
+      "note_zh": "可选上下文，不进入评分。"
+    }
+  ],
+  "outputs": [
+    {
+      "key": "strength_score",
+      "label_zh": "提物项得分",
+      "unit": "score"
+    },
+    {
+      "key": "walking_score",
+      "label_zh": "步行项得分",
+      "unit": "score"
+    },
+    {
+      "key": "chair_score",
+      "label_zh": "起身项得分",
+      "unit": "score"
+    },
+    {
+      "key": "stairs_score",
+      "label_zh": "上楼项得分",
+      "unit": "score"
+    },
+    {
+      "key": "falls_score",
+      "label_zh": "跌倒项得分",
+      "unit": "score"
+    },
+    {
+      "key": "sarc_f_total_score",
+      "label_zh": "SARC-F总分",
+      "unit": "score"
+    },
+    {
+      "key": "sarc_f_category",
+      "label_zh": "SARC-F筛查分档",
+      "note_zh": "screen_positive：总分≥4；screen_negative：总分<4，不能排除肌少症。"
+    }
+  ],
+  "validation": {
+    "status": "reproduced",
+    "examples": [
+      {
+        "locator": "Materials and methods → SARC-F questionnaire (0–10 points), falls scoring (AAH/BLSA)",
+        "quote": "Falls was scored a 2 for respondents who reported falling four or more times in the past year",
+        "values": [
+          2
+        ],
+        "tolerance": "整数精确相等。原文four次跌倒对应2分；复现该逐项得分，不声称有完整病例示例。",
+        "test": "tests/test_manifest.py::test_printed_falls_per_term_score"
+      }
+    ]
+  }
+}
