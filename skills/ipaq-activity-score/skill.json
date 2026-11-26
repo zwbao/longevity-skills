@@ -1,0 +1,276 @@
+{
+  "schema": "longevity-skill/1",
+  "name": "ipaq-activity-score",
+  "kind": "paper",
+  "tier": "A",
+  "species": [
+    "human"
+  ],
+  "evidence": "method",
+  "domains": [
+    "体力活动问卷"
+  ],
+  "topic": [
+    "physical_activity"
+  ],
+  "blurb_zh": "按过去七天的活动天数、时长和步行速度，计算 IPAQ 短表的每周加权活动量。",
+  "intents": [
+    "before_after"
+  ],
+  "triage": {
+    "reason_zh": "人体多国测量验证论文表1及方法印出短表分强度与步行速度的权重和时长×天数×MET求和算法，可用个人问卷计算；未印个人总分算例，保留draft。",
+    "reviewed": false
+  },
+  "paper": {
+    "doi": "10.1249/01.mss.0000078924.61453.fb",
+    "title": "International physical activity questionnaire: 12-country reliability and validity.",
+    "title_zh": "国际体力活动问卷：十二国信度与效度研究",
+    "journal": "Medicine and Science in Sports and Exercise",
+    "year": 2003,
+    "authors": "Craig 等",
+    "article_url": "https://journals.lww.com/acsm-msse/fulltext/2003/08000/international_physical_activity_questionnaire_.20.aspx",
+    "supplements": [
+      {
+        "label": "完整论文及内附 Appendix A、B（NESDO 副本）",
+        "url": "https://nesdo.onderzoek.io/wp-content/uploads/2016/08/IPAQ_Craig-et-al-2003.pdf"
+      }
+    ],
+    "summary_zh": "这项研究在人群中比较不同国家和不同版本的体力活动问卷，发现其重复测量表现较好，与客观活动记录的一致程度有限。个人报告只按自报天数、时长及步行速度汇总每周加权活动量，不计算热量消耗或疾病风险。",
+    "summary_status": "draft",
+    "card_notes": [
+      "使用2003年短表按步行速度计分的分析分支；作者最终建议删除速度问题，不能与后来的标准版本混称。",
+      "已读完整15页PDF，包括图像形式的Appendix B；期刊页面被访问验证拦截，额外下载列表未能独立核对。原文未指向代码或数据仓库，详见references/contract.md。",
+      "公式与所需权重齐全，但未找到完整个人总分算例；验证状态为draft。"
+    ]
+  },
+  "population": {
+    "age_years": [
+      18,
+      65
+    ],
+    "note_zh": "正文用于成年人人群监测，主要为城市便利样本；不外推至儿童或高龄成人。"
+  },
+  "entry": {
+    "script": "scripts/personal_report.py",
+    "measurements_flag": "--measurements",
+    "measurements_header": [
+      "marker",
+      "value",
+      "unit"
+    ],
+    "age_flag": "--age",
+    "sex_flag": "--sex",
+    "out_flag": "--out",
+    "result_json": true,
+    "targets_flag": "--targets",
+    "levers_json": true
+  },
+  "inputs_status": "draft",
+  "inputs": [
+    {
+      "key": "walking_days",
+      "label_zh": "步行活动天数",
+      "aliases": [
+        "walking days",
+        "WDAY",
+        "步行天数"
+      ],
+      "unit": "d",
+      "range": [
+        0,
+        7
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "过去七天中的活动天数，必须为整数；8/9 等不知道或拒答编码不能作为天数。此处 d 是一周内的天数，不是每日活动时长。"
+    },
+    {
+      "key": "walking_min",
+      "label_zh": "步行活动日平均时长",
+      "aliases": [
+        "walking minutes",
+        "WDMIN",
+        "步行分钟"
+      ],
+      "unit": "min",
+      "accept": {
+        "h": 60
+      },
+      "unit_required": true,
+      "range": [
+        0,
+        960
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "在有此活动的日子平均花费的分钟数；只计每次持续至少10分钟的活动，不是全周总分钟。零活动须天数和时长均明确为零，不将缺项补零。"
+    },
+    {
+      "key": "moderate_days",
+      "label_zh": "中等强度活动活动天数",
+      "aliases": [
+        "moderate days",
+        "MDAY",
+        "中等强度活动天数"
+      ],
+      "unit": "d",
+      "range": [
+        0,
+        7
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "过去七天中的活动天数，必须为整数；8/9 等不知道或拒答编码不能作为天数。此处 d 是一周内的天数，不是每日活动时长。"
+    },
+    {
+      "key": "moderate_min",
+      "label_zh": "中等强度活动活动日平均时长",
+      "aliases": [
+        "moderate minutes",
+        "MDMIN",
+        "中等强度活动分钟"
+      ],
+      "unit": "min",
+      "accept": {
+        "h": 60
+      },
+      "unit_required": true,
+      "range": [
+        0,
+        960
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "在有此活动的日子平均花费的分钟数；只计每次持续至少10分钟的活动，不是全周总分钟。零活动须天数和时长均明确为零，不将缺项补零。"
+    },
+    {
+      "key": "vigorous_days",
+      "label_zh": "高强度活动活动天数",
+      "aliases": [
+        "vigorous days",
+        "VDAY",
+        "高强度活动天数"
+      ],
+      "unit": "d",
+      "range": [
+        0,
+        7
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "过去七天中的活动天数，必须为整数；8/9 等不知道或拒答编码不能作为天数。此处 d 是一周内的天数，不是每日活动时长。"
+    },
+    {
+      "key": "vigorous_min",
+      "label_zh": "高强度活动活动日平均时长",
+      "aliases": [
+        "vigorous minutes",
+        "VDMIN",
+        "高强度活动分钟"
+      ],
+      "unit": "min",
+      "accept": {
+        "h": 60
+      },
+      "unit_required": true,
+      "range": [
+        0,
+        960
+      ],
+      "required": true,
+      "from": "measurements",
+      "note_zh": "在有此活动的日子平均花费的分钟数；只计每次持续至少10分钟的活动，不是全周总分钟。零活动须天数和时长均明确为零，不将缺项补零。"
+    },
+    {
+      "key": "sitting_weekday_min",
+      "label_zh": "工作日坐姿时长",
+      "aliases": [
+        "sitting on a weekday",
+        "SDMIN",
+        "工作日久坐分钟"
+      ],
+      "unit": "min",
+      "accept": {
+        "h": 60
+      },
+      "unit_required": true,
+      "range": [
+        0,
+        960
+      ],
+      "required": false,
+      "from": "measurements",
+      "note_zh": "可选的工作日平均坐姿分钟，包含清醒时躺卧；不外推到全周，不进入活动量总分。"
+    },
+    {
+      "key": "walking_pace",
+      "label_zh": "自报步行速度",
+      "aliases": [
+        "walking pace",
+        "步行速度"
+      ],
+      "required": true,
+      "from": "argument",
+      "flag": "--walking-pace",
+      "note_zh": "slow、moderate、vigorous 三种自报速度；不按公里/小时推断。本技能仅实现论文按速度计分分支。"
+    },
+    {
+      "key": "age",
+      "label_zh": "实足年龄",
+      "unit": "a",
+      "range": [
+        18,
+        65
+      ],
+      "required": true,
+      "from": "profile",
+      "flag": "--age",
+      "note_zh": "仅核对正文适用范围，不参与算式；附录封面15–69岁不作为验证范围。"
+    },
+    {
+      "key": "sex",
+      "label_zh": "性别背景",
+      "required": false,
+      "from": "profile",
+      "flag": "--sex",
+      "note_zh": "可选 male/female，不影响计算。"
+    }
+  ],
+  "outputs": [
+    {
+      "key": "walking_met_min_week",
+      "label_zh": "步行每周加权活动量",
+      "unit": "MET·min/week"
+    },
+    {
+      "key": "moderate_met_min_week",
+      "label_zh": "中等强度每周加权活动量",
+      "unit": "MET·min/week"
+    },
+    {
+      "key": "vigorous_met_min_week",
+      "label_zh": "高强度每周加权活动量",
+      "unit": "MET·min/week"
+    },
+    {
+      "key": "total_met_min_week",
+      "label_zh": "合计每周加权活动量",
+      "unit": "MET·min/week"
+    },
+    {
+      "key": "walking_pace",
+      "label_zh": "本次采用的步行速度",
+      "note_zh": "slow / moderate / vigorous"
+    },
+    {
+      "key": "sitting_weekday_min",
+      "label_zh": "工作日平均坐姿时长",
+      "unit": "min",
+      "note_zh": "未提供为 null，不进入总分。"
+    }
+  ],
+  "validation": {
+    "status": "draft",
+    "gap_zh": "已逐项核对正文表1至6、方法和讨论，以及Appendix A两表和Appendix B全部五页；只有MET权重、编码/单位示例和群体相关系数或中位数，没有同时给出个人活动天数、时长、速度及加权总分的印刷算例。没有个体原始数据，不能从中位数重建个人结果。期刊额外下载列表受访问验证阻挡；原文未指向额外补充文件或代码数据仓库。工程测试核对权重、代数关系和输入检查，不冒称复现个人算例。"
+  }
+}
