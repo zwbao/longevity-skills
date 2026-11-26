@@ -117,6 +117,7 @@ def main(argv=None):
         levers = {"schema": "longevity-levers/1", "skill": manifest["name"], "current": values, "targets": scenario, "sensitivity": [], "levers": [{"key": key, "from": exposure, "to": target, "mean_rr": scenario["mean_rr"], "mean_rr_delta": delta}], "note_zh": note}
         (out / "levers.json").write_text(json.dumps(levers, ensure_ascii=False, indent=2) + "\n")
         lines += ["", "## 你提供的假设暴露点", "", f"{target:g} {unit_zh}：表中 RR {scenario['mean_rr']:.2f}，95%不确定区间 {scenario['ui_lower']:.2f}–{scenario['ui_upper']:.2f}。两表值之差为 {delta:+.2f}（RR单位）。", "", note, "", "未计算差值的不确定区间：论文未给出这两个表值所需的联合抽样数据。"]
+    lines += ["", "适用人群：论文汇总1970–2022年发表的793项前瞻性队列和病例对照研究（多国人群），估计对象为30岁及以上成人当前吸烟者，参照为从不吸烟者或原研究的非吸烟组；没有独立的个人风险验证队列。"]
     lines += ["", f"边界：{BOUNDARY}", "", "本查表不估计绝对风险、患病时间、寿命变化或治疗效果。"]
     (out / "report.md").write_text("\n".join(lines) + "\n")
     return 0

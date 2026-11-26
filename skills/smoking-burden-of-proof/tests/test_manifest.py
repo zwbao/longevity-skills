@@ -49,6 +49,7 @@ def test_table2_lung_cancer(tmp_path, exposure, rr, lower, upper):
     report = (out / "report.md").read_text()
     assert report.index("论文卡片") < report.index("你的查表结果")
     assert "边界" in report and "不是个人发病概率" in report
+    assert "793项" in report and "30岁及以上成人" in report
 
 
 def test_table2_diabetes(tmp_path):
