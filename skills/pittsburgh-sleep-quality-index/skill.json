@@ -1,0 +1,495 @@
+{
+  "schema": "longevity-skill/1",
+  "name": "pittsburgh-sleep-quality-index",
+  "kind": "paper",
+  "tier": "A",
+  "species": [
+    "human"
+  ],
+  "evidence": "method",
+  "domains": [
+    "睡眠与昼夜节律"
+  ],
+  "topic": [
+    "sleep_circadian"
+  ],
+  "blurb_zh": "用过去一个月的睡眠问卷回答计算PSQI七个分量、总分与睡眠质量筛查分组。",
+  "intents": [
+    "wearable_sleep"
+  ],
+  "triage": {
+    "reason_zh": "原始人体量表研究的附录印出七分量及0–21分合计规则和大于5分切点，可提供个人睡眠质量读出；原文歧义输入不自动计分。",
+    "reviewed": false
+  },
+  "paper": {
+    "doi": "10.1016/0165-1781(89)90047-4",
+    "title": "The Pittsburgh Sleep Quality Index: a new instrument for psychiatric practice and research.",
+    "title_zh": "匹兹堡睡眠质量指数：精神科实践和研究的新工具",
+    "journal": "Psychiatry research",
+    "year": 1989,
+    "authors": "Buysse 等",
+    "article_url": "https://doi.org/10.1016/0165-1781(89)90047-4",
+    "supplements": [
+      {
+        "label": "原论文及文内计分附录（pp.211–213）",
+        "url": "https://www.psychiatry.pitt.edu/sites/default/files/inline-files/PSQI%20Article.pdf"
+      }
+    ],
+    "card_notes": [
+      "采用1989年原版完整回答计分；恰好6小时等印刷歧义输入停止计分，不补猜规则。",
+      "已核对官方现行说明，未采用2005年的Q5j缺失置零修改；官网列出的Access计分数据库未能取得。",
+      "验证复现附录逐项映射；不代表重新验证诊断准确度。"
+    ],
+    "summary_zh": "这项研究在人类健康对照、抑郁患者和睡眠障碍患者中发现，自评睡眠问卷能够区分睡眠质量不同的人群。个人报告只计算过去一个月的睡眠质量分量、总分及筛查分组，不估计生物年龄、寿命或疾病概率。",
+    "summary_status": "draft"
+  },
+  "entry": {
+    "script": "scripts/personal_report.py",
+    "measurements_flag": "--measurements",
+    "measurements_header": [
+      "marker",
+      "value",
+      "unit"
+    ],
+    "age_flag": "--age",
+    "sex_flag": "--sex",
+    "out_flag": "--out",
+    "result_json": true
+  },
+  "population": {
+    "age_years": [
+      19,
+      83
+    ],
+    "note_zh": "美国匹兹堡健康对照及临床患者；正文分析148人。年龄范围是观察范围，不是经过验证的适用界限。"
+  },
+  "inputs_status": "verified",
+  "inputs": [
+    {
+      "key": "bedtime_min",
+      "label_zh": "通常上床时刻（自午夜起分钟）",
+      "aliases": [
+        "Q1",
+        "Usual bedtime",
+        "上床时刻"
+      ],
+      "unit": "min",
+      "range": [
+        0,
+        1439
+      ],
+      "required": true,
+      "unit_required": true,
+      "from": "measurements",
+      "note_zh": "过去一个月通常时刻；按24小时制转换为自午夜起整数分钟，例如23:00填1380。时刻不是卧床时长。"
+    },
+    {
+      "key": "rise_time_min",
+      "label_zh": "通常起床时刻（自午夜起分钟）",
+      "aliases": [
+        "Q3",
+        "Usual getting up time",
+        "起床时刻"
+      ],
+      "unit": "min",
+      "range": [
+        0,
+        1439
+      ],
+      "required": true,
+      "unit_required": true,
+      "from": "measurements",
+      "note_zh": "过去一个月通常时刻，按自午夜起整数分钟填写；取上床后的下一次起床，不支持跨多天。"
+    },
+    {
+      "key": "sleep_latency_min",
+      "label_zh": "通常入睡所需分钟",
+      "aliases": [
+        "Q2",
+        "Sleep latency",
+        "入睡潜伏期"
+      ],
+      "unit": "min",
+      "range": [
+        0,
+        1440
+      ],
+      "required": true,
+      "unit_required": true,
+      "from": "measurements",
+      "note_zh": "原附录以整数分钟列区间，换算后必须为整数；这是过去一个月通常估计，不是某一夜。",
+      "accept": {
+        "s": 0.016666666666666666,
+        "h": 60
+      }
+    },
+    {
+      "key": "sleep_duration_h",
+      "label_zh": "通常实际睡眠小时",
+      "aliases": [
+        "Q4",
+        "Hours of sleep",
+        "实际睡眠时长"
+      ],
+      "unit": "h",
+      "range": [
+        0,
+        24
+      ],
+      "required": true,
+      "unit_required": true,
+      "from": "measurements",
+      "note_zh": "排除在床清醒时间；允许小数但恰好6小时在原印刷表中歧义，返回问题。不可超过卧床时长。",
+      "accept": {
+        "min": 0.016666666666666666
+      }
+    },
+    {
+      "key": "q5a_code",
+      "label_zh": "难以在半小时内入睡频度编码",
+      "aliases": [
+        "Q5a",
+        "PSQI 5a",
+        "难以在半小时内入睡"
+      ],
+      "unit": "score",
+      "range": [
+        0,
+        3
+      ],
+      "required": true,
+      "unit_required": true,
+      "from": "measurements",
+      "note_zh": "按已填问卷四档编码：0过去一个月没有，1每周不足一次，2每周一至两次，3每周至少三次。填类别，不填实际次数。"
+    },
+    {
+      "key": "q5b_code",
+      "label_zh": "夜间或清晨醒来频度编码",
+      "aliases": [
+        "Q5b",
+        "PSQI 5b",
+        "夜间或清晨醒来"
+      ],
+      "unit": "score",
+      "range": [
+        0,
+        3
+      ],
+      "required": true,
+      "unit_required": true,
+      "from": "measurements",
+      "note_zh": "按已填问卷四档编码：0过去一个月没有，1每周不足一次，2每周一至两次，3每周至少三次。填类别，不填实际次数。"
+    },
+    {
+      "key": "q5c_code",
+      "label_zh": "起夜如厕频度编码",
+      "aliases": [
+        "Q5c",
+        "PSQI 5c",
+        "起夜如厕"
+      ],
+      "unit": "score",
+      "range": [
+        0,
+        3
+      ],
+      "required": true,
+      "unit_required": true,
+      "from": "measurements",
+      "note_zh": "按已填问卷四档编码：0过去一个月没有，1每周不足一次，2每周一至两次，3每周至少三次。填类别，不填实际次数。"
+    },
+    {
+      "key": "q5d_code",
+      "label_zh": "呼吸不畅频度编码",
+      "aliases": [
+        "Q5d",
+        "PSQI 5d",
+        "呼吸不畅"
+      ],
+      "unit": "score",
+      "range": [
+        0,
+        3
+      ],
+      "required": true,
+      "unit_required": true,
+      "from": "measurements",
+      "note_zh": "按已填问卷四档编码：0过去一个月没有，1每周不足一次，2每周一至两次，3每周至少三次。填类别，不填实际次数。"
+    },
+    {
+      "key": "q5e_code",
+      "label_zh": "咳嗽或大声打鼾频度编码",
+      "aliases": [
+        "Q5e",
+        "PSQI 5e",
+        "咳嗽或大声打鼾"
+      ],
+      "unit": "score",
+      "range": [
+        0,
+        3
+      ],
+      "required": true,
+      "unit_required": true,
+      "from": "measurements",
+      "note_zh": "按已填问卷四档编码：0过去一个月没有，1每周不足一次，2每周一至两次，3每周至少三次。填类别，不填实际次数。"
+    },
+    {
+      "key": "q5f_code",
+      "label_zh": "感觉过冷频度编码",
+      "aliases": [
+        "Q5f",
+        "PSQI 5f",
+        "感觉过冷"
+      ],
+      "unit": "score",
+      "range": [
+        0,
+        3
+      ],
+      "required": true,
+      "unit_required": true,
+      "from": "measurements",
+      "note_zh": "按已填问卷四档编码：0过去一个月没有，1每周不足一次，2每周一至两次，3每周至少三次。填类别，不填实际次数。"
+    },
+    {
+      "key": "q5g_code",
+      "label_zh": "感觉过热频度编码",
+      "aliases": [
+        "Q5g",
+        "PSQI 5g",
+        "感觉过热"
+      ],
+      "unit": "score",
+      "range": [
+        0,
+        3
+      ],
+      "required": true,
+      "unit_required": true,
+      "from": "measurements",
+      "note_zh": "按已填问卷四档编码：0过去一个月没有，1每周不足一次，2每周一至两次，3每周至少三次。填类别，不填实际次数。"
+    },
+    {
+      "key": "q5h_code",
+      "label_zh": "噩梦频度编码",
+      "aliases": [
+        "Q5h",
+        "PSQI 5h",
+        "噩梦"
+      ],
+      "unit": "score",
+      "range": [
+        0,
+        3
+      ],
+      "required": true,
+      "unit_required": true,
+      "from": "measurements",
+      "note_zh": "按已填问卷四档编码：0过去一个月没有，1每周不足一次，2每周一至两次，3每周至少三次。填类别，不填实际次数。"
+    },
+    {
+      "key": "q5i_code",
+      "label_zh": "疼痛频度编码",
+      "aliases": [
+        "Q5i",
+        "PSQI 5i",
+        "疼痛"
+      ],
+      "unit": "score",
+      "range": [
+        0,
+        3
+      ],
+      "required": true,
+      "unit_required": true,
+      "from": "measurements",
+      "note_zh": "按已填问卷四档编码：0过去一个月没有，1每周不足一次，2每周一至两次，3每周至少三次。填类别，不填实际次数。"
+    },
+    {
+      "key": "q5j_code",
+      "label_zh": "其他原因干扰睡眠频度编码",
+      "aliases": [
+        "Q5j",
+        "PSQI 5j",
+        "其他原因干扰睡眠"
+      ],
+      "unit": "score",
+      "range": [
+        0,
+        3
+      ],
+      "required": true,
+      "unit_required": true,
+      "from": "measurements",
+      "note_zh": "按已填问卷四档编码：0过去一个月没有，1每周不足一次，2每周一至两次，3每周至少三次。填类别，不填实际次数。 没有其他原因须明确填0，缺失不自动置零。"
+    },
+    {
+      "key": "q6_code",
+      "label_zh": "总体睡眠质量编码",
+      "aliases": [
+        "Q6",
+        "Subjective sleep quality",
+        "睡眠质量自评"
+      ],
+      "unit": "score",
+      "range": [
+        0,
+        3
+      ],
+      "required": true,
+      "unit_required": true,
+      "from": "measurements",
+      "note_zh": "原问卷Q6四选项依顺序编码0、1、2、3；由很好到很差。请使用已填写的正式问卷。"
+    },
+    {
+      "key": "q7_code",
+      "label_zh": "助眠药使用频度编码",
+      "aliases": [
+        "Q7",
+        "Use of sleeping medication",
+        "助眠药使用"
+      ],
+      "unit": "score",
+      "range": [
+        0,
+        3
+      ],
+      "required": true,
+      "unit_required": true,
+      "from": "measurements",
+      "note_zh": "按已填问卷四档编码：0过去一个月没有，1每周不足一次，2每周一至两次，3每周至少三次。填类别，不填实际次数。 仅记录既往情况，不据此改变用药。"
+    },
+    {
+      "key": "q8_code",
+      "label_zh": "白天保持清醒困难频度编码",
+      "aliases": [
+        "Q8",
+        "Trouble staying awake",
+        "白天清醒困难"
+      ],
+      "unit": "score",
+      "range": [
+        0,
+        3
+      ],
+      "required": true,
+      "unit_required": true,
+      "from": "measurements",
+      "note_zh": "按已填问卷四档编码：0过去一个月没有，1每周不足一次，2每周一至两次，3每周至少三次。填类别，不填实际次数。 使用问卷Q8原选项；附录p.213对第二档简写为偶发一次或两次，不重新解释其频率。"
+    },
+    {
+      "key": "q9_code",
+      "label_zh": "做事精力困难程度编码",
+      "aliases": [
+        "Q9",
+        "Enthusiasm to get things done",
+        "做事精力困难"
+      ],
+      "unit": "score",
+      "range": [
+        0,
+        3
+      ],
+      "required": true,
+      "unit_required": true,
+      "from": "measurements",
+      "note_zh": "已填Q9四选项依困难程度递增编码0、1、2、3；无困难、很轻、一定困难、很大困难。"
+    },
+    {
+      "key": "age",
+      "label_zh": "实足年龄",
+      "unit": "a",
+      "range": [
+        18,
+        120
+      ],
+      "required": false,
+      "from": "profile",
+      "flag": "--age",
+      "note_zh": "仅提示外推边界，不进入计分。成人工程适用范围；原样本观察范围19–83岁。"
+    },
+    {
+      "key": "sex",
+      "label_zh": "性别",
+      "required": false,
+      "from": "profile",
+      "flag": "--sex",
+      "note_zh": "可选male/female/other/unknown或男/女/其他/未知，不进入计分。"
+    }
+  ],
+  "outputs": [
+    {
+      "key": "component_1_score",
+      "label_zh": "主观睡眠质量分量得分",
+      "unit": "score"
+    },
+    {
+      "key": "component_2_score",
+      "label_zh": "入睡潜伏期分量得分",
+      "unit": "score"
+    },
+    {
+      "key": "component_3_score",
+      "label_zh": "睡眠时长分量得分",
+      "unit": "score"
+    },
+    {
+      "key": "component_4_score",
+      "label_zh": "习惯性睡眠效率分量得分",
+      "unit": "score"
+    },
+    {
+      "key": "component_5_score",
+      "label_zh": "睡眠障碍分量得分",
+      "unit": "score"
+    },
+    {
+      "key": "component_6_score",
+      "label_zh": "助眠药使用频度分量得分",
+      "unit": "score"
+    },
+    {
+      "key": "component_7_score",
+      "label_zh": "日间功能障碍分量得分",
+      "unit": "score"
+    },
+    {
+      "key": "psqi_global_score",
+      "label_zh": "PSQI总分",
+      "unit": "score"
+    },
+    {
+      "key": "sleep_quality_category",
+      "label_zh": "论文切点分组",
+      "note_zh": "above_cutoff=总分严格大于5；not_above_cutoff=未超过切点，不排除疾病。"
+    },
+    {
+      "key": "time_in_bed_h",
+      "label_zh": "计算用卧床时长",
+      "unit": "h"
+    },
+    {
+      "key": "sleep_efficiency_pct",
+      "label_zh": "习惯性睡眠效率",
+      "unit": "%"
+    }
+  ],
+  "validation": {
+    "status": "reproduced",
+    "examples": [
+      {
+        "locator": "Appendix p.212, Component 5: Sleep disturbances, sum-to-component table",
+        "quote": "Sum of # 5b-5j    Component 5 score\n0    0\n1-9    1\n10-18    2\n19-27    3",
+        "values": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "tolerance": "整数完全一致，枚举印刷区间内全部和数；仅规范化表格空白，没有拟合常数。",
+        "test": "tests/test_manifest.py::test_appendix_disturbance_scores"
+      }
+    ]
+  }
+}
