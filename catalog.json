@@ -2,9 +2,9 @@
   "schema": "longevity-catalog/1",
   "version": "2026.48.0",
   "counts": {
-    "skills": 228,
+    "skills": 229,
     "tiers": {
-      "A": 64,
+      "A": 65,
       "B": 83,
       "C": 73,
       "tool": 8
@@ -28901,6 +28901,146 @@
         "title_zh": "DNA 甲基化变异性为衰老异质性提供互补的表观遗传特征：来自加拿大和巴尔的摩老龄化纵向研究",
         "journal": "The Journals of Gerontology, Series A: Biological Sciences and Medical Sciences",
         "year": 2026
+      }
+    },
+    {
+      "name": "mifflin-st-jeor-ree",
+      "kind": "paper",
+      "tier": "A",
+      "species": [
+        "human"
+      ],
+      "evidence": "cross_sectional",
+      "domains": [
+        "体重与代谢",
+        "静息能量消耗"
+      ],
+      "blurb_zh": "用体重、身高、年龄和性别估算静息能量消耗，并查看自定体重目标代入方程后的变化。",
+      "description": "Tier A personal readout: computes one person's value with the paper's printed method and reproduces a printed example. Estimates resting energy expenditure from weight, height, age, and sex using the original and simplified Mifflin–St Jeor equations. Use when a healthy adult asks about resting calorie expenditure, the Mifflin equation, or how a self-selected weight scenario changes the equation's estimate. Reports in Chinese and distinguishes REE from total daily energy needs.",
+      "intents": [
+        "lab_meaning",
+        "before_after"
+      ],
+      "has_script": true,
+      "validation_status": "reproduced",
+      "validation_label_zh": "已复现论文",
+      "entry": {
+        "script": "scripts/personal_report.py",
+        "measurements_flag": "--measurements",
+        "measurements_header": [
+          "marker",
+          "value",
+          "unit"
+        ],
+        "age_flag": "--age",
+        "sex_flag": "--sex",
+        "out_flag": "--out",
+        "result_json": true,
+        "targets_flag": "--targets",
+        "levers_json": true
+      },
+      "population": {
+        "age_years": [
+          19,
+          78
+        ],
+        "note_zh": "美国RENO Diet-Heart Study健康成人；女性20–76岁，男性正文19–78岁；未作独立外部验证。极端体重及患病、妊娠哺乳情境不在本研究验证范围。"
+      },
+      "inputs_status": "verified",
+      "inputs": [
+        {
+          "key": "weight_kg",
+          "label_zh": "体重",
+          "aliases": [
+            "Weight",
+            "body weight",
+            "体质量",
+            "体重(kg)"
+          ],
+          "unit": "kg",
+          "accept": {
+            "g": 0.001,
+            "lb": 0.45359237
+          },
+          "range": [
+            25,
+            350
+          ],
+          "unit_required": true,
+          "required": true,
+          "from": "measurements",
+          "note_zh": "当前实测体重，不用理想体重或调整体重。范围是输入错误检查，不是已验证人群范围。"
+        },
+        {
+          "key": "height_cm",
+          "label_zh": "身高",
+          "aliases": [
+            "Height",
+            "body height",
+            "身高(cm)"
+          ],
+          "unit": "cm",
+          "accept": {
+            "m": 100,
+            "mm": 0.1,
+            "in": 2.54
+          },
+          "range": [
+            120,
+            230
+          ],
+          "unit_required": true,
+          "required": true,
+          "from": "measurements"
+        },
+        {
+          "key": "age",
+          "label_zh": "年龄",
+          "aliases": [
+            "Age",
+            "实足年龄"
+          ],
+          "unit": "a",
+          "range": [
+            19,
+            78
+          ],
+          "required": true,
+          "from": "profile",
+          "flag": "--age",
+          "note_zh": "允许小数年；超出总体研究年龄范围停止计算。"
+        },
+        {
+          "key": "sex",
+          "label_zh": "方程使用的性别",
+          "aliases": [
+            "Sex",
+            "性别"
+          ],
+          "required": true,
+          "from": "profile",
+          "flag": "--sex",
+          "note_zh": "male/男 或 female/女；按论文二分类系数，不推断未知类别。"
+        }
+      ],
+      "outputs": [
+        {
+          "key": "ree_original_kcal_d",
+          "label_zh": "静息能量消耗（原式）",
+          "unit": "kcal/d"
+        },
+        {
+          "key": "ree_simplified_kcal_d",
+          "label_zh": "静息能量消耗（简化式）",
+          "unit": "kcal/d"
+        }
+      ],
+      "paper": {
+        "doi": "10.1093/ajcn/51.2.241",
+        "title": "A new predictive equation for resting energy expenditure in healthy individuals.",
+        "title_zh": "健康成人静息能量消耗预测方程",
+        "journal": "The American Journal of Clinical Nutrition",
+        "year": 1990
       }
     },
     {

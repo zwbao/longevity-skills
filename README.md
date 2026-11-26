@@ -295,6 +295,10 @@ python3 -m tools.lsk test --changed origin/main   # 只测相对 main 改动过�
 
 - `skills/bmi-mortality-category/` — 用身高体重计算 BMI，查询从不吸烟且无相关既往慢病人群的分档死亡危险比。
 
+## 体重与代谢
+
+- `skills/mifflin-st-jeor-ree/` — 用体重、身高、年龄和性别估算静息能量消耗，并查看自定体重目标代入方程后的变化。
+
 ## 克隆性造血
 
 - `skills/hotspot-somatic-sweep/` — 用一条血液变异的读段计数计算 VAF，核对是否满足论文热点名单、支持读段和克隆扫荡阈值；不估算个人白血病概率。
@@ -427,6 +431,10 @@ python3 -m tools.lsk test --changed origin/main   # 只测相对 main 改动过�
 ## 运动与慢病风险
 
 - `skills/nonoccupational-activity-risk/` — 用每周非职业活动时长查询死亡、心血管病和癌症的人群相对风险，并比较自定目标。
+
+## 静息能量消耗
+
+- `skills/mifflin-st-jeor-ree/` — 见「体重与代谢」。
 
 ## 饮食
 

@@ -1,7 +1,7 @@
 {
   "schema": "longevity-coverage/1",
   "reference_items": 583,
-  "reference_covered": 71,
+  "reference_covered": 72,
   "unlabelled": {
     "claims": 0,
     "effects": 0,
@@ -385,7 +385,7 @@
         "method": {
           "rows": 0,
           "effects": 0,
-          "papers": 9,
+          "papers": 10,
           "skills": [
             "burden-of-proof-dietary-risk",
             "chinese-healthy-eating-index",
@@ -393,13 +393,14 @@
             "fruit-vegetable-risk-lookup",
             "gbd-dietary-intake-gap",
             "medas-mediterranean-diet-adherence",
+            "mifflin-st-jeor-ree",
             "red-meat-burden-of-proof",
             "vegetable-tmrel-gap",
             "whole-grain-dose-response"
           ],
           "latest": "2026-11-26",
           "reference": 8,
-          "covered": 2,
+          "covered": 3,
           "missing": [
             {
               "id": "diet-nutrition-method-ahei-2010",
@@ -423,18 +424,6 @@
               "by": [],
               "doi": [
                 "10.1016/j.jand.2023.05.015"
-              ]
-            },
-            {
-              "id": "diet-nutrition-method-mifflin-st-jeor",
-              "item": "Mifflin-St Jeor resting energy expenditure equation",
-              "item_zh": "Mifflin-St Jeor静息能量消耗公式",
-              "priority": "P0",
-              "status": "reviewed",
-              "covered": false,
-              "by": [],
-              "doi": [
-                "10.1093/ajcn/51.2.241"
               ]
             },
             {
@@ -1550,7 +1539,7 @@
         "method": {
           "rows": 0,
           "effects": 0,
-          "papers": 9,
+          "papers": 10,
           "skills": [
             "bmi-mortality-category",
             "burden-of-proof-dietary-risk",
@@ -1558,6 +1547,7 @@
             "elsa-hba1c-model-a",
             "fib4-index",
             "finnish-diabetes-risk-score",
+            "mifflin-st-jeor-ree",
             "modifiable-risk-factor-score",
             "navy-circumference-body-fat",
             "new-chinese-diabetes-risk-score",
