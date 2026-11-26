@@ -387,6 +387,7 @@ python3 -m tools.lsk test --changed origin/main   # 只测相对 main 改动过�
 
 ## 衰弱与功能
 
+- `skills/clinical-frailty-scale-7/` — 把临床人员选定的整体功能描述对应到原版七级临床衰弱量表，解释该等级；不自动判断症状或计算个人死亡概率。
 - `skills/frail-scale/` — 用疲劳、上楼和步行困难、疾病种数及一年体重变化计算FRAIL衰弱筛查分数。
 
 ## 认知与神经
