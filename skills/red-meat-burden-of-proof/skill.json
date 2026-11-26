@@ -1,0 +1,254 @@
+{
+  "schema": "longevity-skill/1",
+  "name": "red-meat-burden-of-proof",
+  "kind": "paper",
+  "tier": "A",
+  "species": [
+    "human"
+  ],
+  "evidence": "review",
+  "domains": [
+    "饮食与代谢"
+  ],
+  "blurb_zh": "按未加工红肉日均摄入量查询慢病相对风险与不确定区间，仅支持论文列出的摄入点。",
+  "intents": [
+    "intervention_evidence"
+  ],
+  "triage": {
+    "reason_zh": "人体研究的表2及补充表7印出个人摄入量对应的相对风险和保守不确定区间，可精确查表。",
+    "reviewed": false
+  },
+  "paper": {
+    "doi": "10.1038/s41591-022-01968-z",
+    "title": "Health effects associated with consumption of unprocessed red meat: a Burden of Proof study.",
+    "title_zh": "未加工红肉摄入与慢性病的证据负担研究",
+    "journal": "Nature Medicine",
+    "year": 2022,
+    "authors": "Lescinsky 等",
+    "article_url": "https://www.nature.com/articles/s41591-022-01968-z",
+    "supplements": [
+      {
+        "label": "Supplementary Information（表7，印刷页39–40）",
+        "url": "https://static-content.springer.com/esm/art%3A10.1038%2Fs41591-022-01968-z/MediaObjects/41591_2022_1968_MOESM1_ESM.pdf"
+      },
+      {
+        "label": "Reporting Summary",
+        "url": "https://static-content.springer.com/esm/art%3A10.1038%2Fs41591-022-01968-z/MediaObjects/41591_2022_1968_MOESM2_ESM.pdf"
+      }
+    ],
+    "code_url": "https://github.com/ihmeuw-msca/burden-of-proof",
+    "card_notes": [
+      "本实现查询2022年论文印出的表值，不重跑荟萃回归。",
+      "缺血性卒中表值未统一归一到零摄入；保留补充表7原值，详见报告参照说明。"
+    ],
+    "summary_zh": "这项研究汇总人群观察性研究，发现未加工红肉与结直肠癌、乳腺癌、缺血性心脏病和糖尿病的关联证据较弱，与两类卒中的关联证据不足。个人报告只按日均摄入量查询论文列出的相对风险和不确定区间，不计算个人患病概率或饮食改变的因果效应。",
+    "summary_status": "draft"
+  },
+  "entry": {
+    "script": "scripts/personal_report.py",
+    "measurements_flag": "--measurements",
+    "measurements_header": [
+      "marker",
+      "value",
+      "unit"
+    ],
+    "age_flag": "--age",
+    "sex_flag": "--sex",
+    "out_flag": "--out",
+    "result_json": true,
+    "targets_flag": "--targets",
+    "levers_json": true
+  },
+  "inputs_status": "verified",
+  "inputs": [
+    {
+      "key": "unprocessed_red_meat_g_d",
+      "label_zh": "未加工红肉摄入量",
+      "aliases": [
+        "未加工红肉日均摄入量",
+        "未加工红肉",
+        "unprocessed red meat",
+        "unprocessed red meat consumption",
+        "unprocessed red meat intake"
+      ],
+      "unit": "g/d",
+      "accept": {},
+      "range": [
+        0,
+        200
+      ],
+      "unit_required": true,
+      "required": true,
+      "from": "measurements",
+      "note_zh": "只支持0、25、50、75、100、125、150、175、200 g/d；日均未加工牛、羊、猪肉，不含加工肉。不是膳食推荐量。不自动换算份量、生熟重量或每周摄入。"
+    },
+    {
+      "key": "age",
+      "label_zh": "实足年龄",
+      "unit": "a",
+      "range": [
+        25,
+        120
+      ],
+      "required": true,
+      "from": "profile",
+      "flag": "--age",
+      "note_zh": "仅用于适用人群检查，不调整相对风险；研究涵盖25岁至95岁以上，120是输入质量检查上限。"
+    },
+    {
+      "key": "sex",
+      "label_zh": "性别",
+      "required": true,
+      "from": "profile",
+      "flag": "--sex",
+      "note_zh": "female、male、unknown；仅female展示乳腺癌表值。其他结局没有性别分层。"
+    }
+  ],
+  "outputs": [
+    {
+      "key": "intake_g_d",
+      "label_zh": "本次查询摄入量",
+      "unit": "g/d"
+    },
+    {
+      "key": "colorectal_cancer_rr",
+      "label_zh": "结直肠癌相对风险表值",
+      "unit": "1",
+      "note_zh": "补充表7；含研究间异质性，不是个人概率。"
+    },
+    {
+      "key": "colorectal_cancer_ui_lower",
+      "label_zh": "结直肠癌保守95%不确定区间下限",
+      "unit": "1",
+      "note_zh": "补充表7；含研究间异质性，不是个人概率。"
+    },
+    {
+      "key": "colorectal_cancer_ui_upper",
+      "label_zh": "结直肠癌保守95%不确定区间上限",
+      "unit": "1",
+      "note_zh": "补充表7；含研究间异质性，不是个人概率。"
+    },
+    {
+      "key": "breast_cancer_rr",
+      "label_zh": "乳腺癌相对风险表值",
+      "unit": "1",
+      "note_zh": "补充表7；含研究间异质性，不是个人概率。只对female返回数值。"
+    },
+    {
+      "key": "breast_cancer_ui_lower",
+      "label_zh": "乳腺癌保守95%不确定区间下限",
+      "unit": "1",
+      "note_zh": "补充表7；含研究间异质性，不是个人概率。只对female返回数值。"
+    },
+    {
+      "key": "breast_cancer_ui_upper",
+      "label_zh": "乳腺癌保守95%不确定区间上限",
+      "unit": "1",
+      "note_zh": "补充表7；含研究间异质性，不是个人概率。只对female返回数值。"
+    },
+    {
+      "key": "ischemic_heart_disease_rr",
+      "label_zh": "缺血性心脏病相对风险表值",
+      "unit": "1",
+      "note_zh": "补充表7；含研究间异质性，不是个人概率。"
+    },
+    {
+      "key": "ischemic_heart_disease_ui_lower",
+      "label_zh": "缺血性心脏病保守95%不确定区间下限",
+      "unit": "1",
+      "note_zh": "补充表7；含研究间异质性，不是个人概率。"
+    },
+    {
+      "key": "ischemic_heart_disease_ui_upper",
+      "label_zh": "缺血性心脏病保守95%不确定区间上限",
+      "unit": "1",
+      "note_zh": "补充表7；含研究间异质性，不是个人概率。"
+    },
+    {
+      "key": "type_2_diabetes_rr",
+      "label_zh": "2型糖尿病相对风险表值",
+      "unit": "1",
+      "note_zh": "补充表7；含研究间异质性，不是个人概率。"
+    },
+    {
+      "key": "type_2_diabetes_ui_lower",
+      "label_zh": "2型糖尿病保守95%不确定区间下限",
+      "unit": "1",
+      "note_zh": "补充表7；含研究间异质性，不是个人概率。"
+    },
+    {
+      "key": "type_2_diabetes_ui_upper",
+      "label_zh": "2型糖尿病保守95%不确定区间上限",
+      "unit": "1",
+      "note_zh": "补充表7；含研究间异质性，不是个人概率。"
+    },
+    {
+      "key": "ischemic_stroke_rr",
+      "label_zh": "缺血性卒中相对风险表值",
+      "unit": "1",
+      "note_zh": "补充表7；含研究间异质性，不是个人概率。"
+    },
+    {
+      "key": "ischemic_stroke_ui_lower",
+      "label_zh": "缺血性卒中保守95%不确定区间下限",
+      "unit": "1",
+      "note_zh": "补充表7；含研究间异质性，不是个人概率。"
+    },
+    {
+      "key": "ischemic_stroke_ui_upper",
+      "label_zh": "缺血性卒中保守95%不确定区间上限",
+      "unit": "1",
+      "note_zh": "补充表7；含研究间异质性，不是个人概率。"
+    },
+    {
+      "key": "hemorrhagic_stroke_rr",
+      "label_zh": "出血性卒中相对风险表值",
+      "unit": "1",
+      "note_zh": "补充表7；含研究间异质性，不是个人概率。"
+    },
+    {
+      "key": "hemorrhagic_stroke_ui_lower",
+      "label_zh": "出血性卒中保守95%不确定区间下限",
+      "unit": "1",
+      "note_zh": "补充表7；含研究间异质性，不是个人概率。"
+    },
+    {
+      "key": "hemorrhagic_stroke_ui_upper",
+      "label_zh": "出血性卒中保守95%不确定区间上限",
+      "unit": "1",
+      "note_zh": "补充表7；含研究间异质性，不是个人概率。"
+    }
+  ],
+  "validation": {
+    "status": "reproduced",
+    "examples": [
+      {
+        "locator": "Table 2, Colorectal cancer row, RR at 50 and 100 g/day (conservative 95% UI)",
+        "quote": "RR at 50 g d−1 (conservative 95% UI) | RR at 100 g d−1 (conservative 95% UI)\nColorectal cancer | 0.06 | 1.06 | 2 stars | 1.3 (1.01, 1.64) | 1.37 (1.01, 1.78)",
+        "values": [
+          50,
+          100,
+          1.3,
+          1.01,
+          1.64,
+          1.37,
+          1.78
+        ],
+        "tolerance": "Exact equality to printed rounded table values; this is a lookup, not refitting the model.",
+        "test": "tests/test_manifest.py::test_table2_all_six_outcomes"
+      },
+      {
+        "locator": "Supplementary Table 7, p.39, Ischemic Stroke, intake 0, conservative 95% UI",
+        "quote": "Ischemic Stroke    0                           1.03 (0.98,1.07)                       1.03 (1.01,1.04)",
+        "values": [
+          0,
+          1.03,
+          0.98,
+          1.07
+        ],
+        "tolerance": "Exact printed values; do not replace the zero-intake estimate by 1.",
+        "test": "tests/test_manifest.py::test_supplementary_table7_all_printed_cells"
+      }
+    ]
+  }
+}

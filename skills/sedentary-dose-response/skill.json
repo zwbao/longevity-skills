@@ -1,0 +1,900 @@
+{
+  "schema": "longevity-skill/1",
+  "name": "sedentary-dose-response",
+  "kind": "paper",
+  "tier": "A",
+  "species": [
+    "human"
+  ],
+  "evidence": "review",
+  "domains": [
+    "生活方式与死亡风险"
+  ],
+  "blurb_zh": "用每天久坐及看电视时长查人群相对风险和研究分段阈值。",
+  "intents": [
+    "frailty_mortality"
+  ],
+  "triage": {
+    "reason_zh": "人体荟萃分析的附表5给出分段阈值，附表7–8印出时长、相对风险及置信区间，可用个人时长查表。",
+    "reviewed": false
+  },
+  "paper": {
+    "doi": "10.1007/s10654-018-0380-1",
+    "title": "Sedentary behaviour and risk of all-cause, cardiovascular and cancer mortality, and incident type 2 diabetes: a systematic review and dose response meta-analysis.",
+    "title_zh": "久坐、看电视与死亡及糖尿病风险的剂量反应荟萃分析",
+    "journal": "European Journal of Epidemiology",
+    "year": 2018,
+    "authors": "Patterson 等",
+    "article_url": "https://link.springer.com/article/10.1007/s10654-018-0380-1",
+    "supplements": [
+      {
+        "label": "Supplementary material 1：附表5、7–8（完整文件含附表1–8、附图1–5）",
+        "url": "https://static-content.springer.com/esm/art%3A10.1007%2Fs10654-018-0380-1/MediaObjects/10654_2018_380_MOESM1_ESM.docx"
+      }
+    ],
+    "card_notes": [
+      "使用附表7–8的体力活动调整后非线性模型输出；各结局参照时长不同，保留原表参照。",
+      "只复现印刷查表值和附表5阈值，不重建样条模型。论文未链接分析代码仓库。",
+      "摘要与正文对电视时长和癌症死亡的线性RR记载不同；此处使用附表8的非线性查表值。"
+    ],
+    "summary_zh": "这项研究汇总成人前瞻性队列，发现久坐和看电视时间较长与多种死亡结局及新发糖尿病相关，校正体力活动后仍可观察到部分关联。个人报告只把日常时长对应到研究公开的相对风险表和分段位置，不计算个人发病概率或预期寿命。",
+    "summary_status": "draft"
+  },
+  "entry": {
+    "script": "scripts/personal_report.py",
+    "measurements_flag": "--measurements",
+    "measurements_header": [
+      "marker",
+      "value",
+      "unit"
+    ],
+    "age_flag": "--age",
+    "sex_flag": "--sex",
+    "out_flag": "--out",
+    "result_json": true,
+    "targets_flag": "--targets",
+    "levers_json": true
+  },
+  "inputs_status": "verified",
+  "inputs": [
+    {
+      "key": "sitting_hours_day",
+      "label_zh": "总久坐时间",
+      "aliases": [
+        "sedentary time",
+        "total sitting",
+        "Total sedentary behaviour",
+        "总坐位时间",
+        "每日久坐时长"
+      ],
+      "unit": "h",
+      "accept": {
+        "min": 0.016666666666666666
+      },
+      "range": [
+        0,
+        24
+      ],
+      "unit_required": true,
+      "required": false,
+      "from": "measurements",
+      "note_zh": "平均每天清醒时的时长（h/日）；unit填h或min，必须至少提供总久坐或看电视之一。看电视按坐位观看计，总久坐包含这一部分。"
+    },
+    {
+      "key": "tv_hours_day",
+      "label_zh": "看电视时间",
+      "aliases": [
+        "TV viewing",
+        "television viewing",
+        "TV viewing time",
+        "每日看电视时长"
+      ],
+      "unit": "h",
+      "accept": {
+        "min": 0.016666666666666666
+      },
+      "range": [
+        0,
+        24
+      ],
+      "unit_required": true,
+      "required": false,
+      "from": "measurements",
+      "note_zh": "平均每天清醒时的时长（h/日）；unit填h或min，必须至少提供总久坐或看电视之一。看电视按坐位观看计，总久坐包含这一部分。"
+    },
+    {
+      "key": "age",
+      "label_zh": "年龄",
+      "aliases": [
+        "年龄（岁）",
+        "age years"
+      ],
+      "unit": "a",
+      "range": [
+        18,
+        120
+      ],
+      "required": true,
+      "from": "profile",
+      "flag": "--age",
+      "note_zh": "只确认成人适用范围，不进入查表；上限120是输入合理性检查。"
+    },
+    {
+      "key": "sex",
+      "label_zh": "性别",
+      "required": false,
+      "from": "profile",
+      "flag": "--sex",
+      "note_zh": "可选上下文，不改变合并人群查表值。"
+    }
+  ],
+  "outputs": [
+    {
+      "key": "sitting_hours_day",
+      "label_zh": "总久坐每日时长",
+      "unit": "h"
+    },
+    {
+      "key": "sitting_all_cause_status",
+      "label_zh": "总久坐—全因死亡 查表状态",
+      "note_zh": "exact原表点；between两点之间；outside超出该结局表；missing未提供该暴露。"
+    },
+    {
+      "key": "sitting_all_cause_reference_hours",
+      "label_zh": "总久坐—全因死亡 原表参照时长",
+      "unit": "h"
+    },
+    {
+      "key": "sitting_all_cause_rr",
+      "label_zh": "总久坐—全因死亡 相对风险",
+      "unit": "1"
+    },
+    {
+      "key": "sitting_all_cause_lci",
+      "label_zh": "总久坐—全因死亡 95%置信区间下限",
+      "unit": "1"
+    },
+    {
+      "key": "sitting_all_cause_uci",
+      "label_zh": "总久坐—全因死亡 95%置信区间上限",
+      "unit": "1"
+    },
+    {
+      "key": "sitting_all_cause_lower_hours",
+      "label_zh": "总久坐—全因死亡 较低时长行时长",
+      "unit": "h",
+      "note_zh": "仅用于未命中原表点时列示相邻行；不是该输入时长的风险或置信区间。"
+    },
+    {
+      "key": "sitting_all_cause_lower_rr",
+      "label_zh": "总久坐—全因死亡 较低时长行RR",
+      "unit": "1",
+      "note_zh": "仅用于未命中原表点时列示相邻行；不是该输入时长的风险或置信区间。"
+    },
+    {
+      "key": "sitting_all_cause_lower_lci",
+      "label_zh": "总久坐—全因死亡 较低时长行95%CI下限",
+      "unit": "1",
+      "note_zh": "仅用于未命中原表点时列示相邻行；不是该输入时长的风险或置信区间。"
+    },
+    {
+      "key": "sitting_all_cause_lower_uci",
+      "label_zh": "总久坐—全因死亡 较低时长行95%CI上限",
+      "unit": "1",
+      "note_zh": "仅用于未命中原表点时列示相邻行；不是该输入时长的风险或置信区间。"
+    },
+    {
+      "key": "sitting_all_cause_upper_hours",
+      "label_zh": "总久坐—全因死亡 较高时长行时长",
+      "unit": "h",
+      "note_zh": "仅用于未命中原表点时列示相邻行；不是该输入时长的风险或置信区间。"
+    },
+    {
+      "key": "sitting_all_cause_upper_rr",
+      "label_zh": "总久坐—全因死亡 较高时长行RR",
+      "unit": "1",
+      "note_zh": "仅用于未命中原表点时列示相邻行；不是该输入时长的风险或置信区间。"
+    },
+    {
+      "key": "sitting_all_cause_upper_lci",
+      "label_zh": "总久坐—全因死亡 较高时长行95%CI下限",
+      "unit": "1",
+      "note_zh": "仅用于未命中原表点时列示相邻行；不是该输入时长的风险或置信区间。"
+    },
+    {
+      "key": "sitting_all_cause_upper_uci",
+      "label_zh": "总久坐—全因死亡 较高时长行95%CI上限",
+      "unit": "1",
+      "note_zh": "仅用于未命中原表点时列示相邻行；不是该输入时长的风险或置信区间。"
+    },
+    {
+      "key": "sitting_all_cause_threshold_hours",
+      "label_zh": "总久坐—全因死亡 研究分段阈值",
+      "unit": "h"
+    },
+    {
+      "key": "sitting_all_cause_band",
+      "label_zh": "总久坐—全因死亡 分段位置",
+      "note_zh": "at_or_below含阈值；above大于阈值；不是安全或临床风险等级。"
+    },
+    {
+      "key": "sitting_all_cause_per_hour_rr",
+      "label_zh": "总久坐—全因死亡 所在段每增加一小时的RR",
+      "unit": "1",
+      "note_zh": "附表5整段平均梯度摘要，不是个人风险或局部导数。"
+    },
+    {
+      "key": "sitting_all_cause_per_hour_lci",
+      "label_zh": "总久坐—全因死亡 所在段每增加一小时的LCI",
+      "unit": "1",
+      "note_zh": "附表5整段平均梯度摘要，不是个人风险或局部导数。"
+    },
+    {
+      "key": "sitting_all_cause_per_hour_uci",
+      "label_zh": "总久坐—全因死亡 所在段每增加一小时的UCI",
+      "unit": "1",
+      "note_zh": "附表5整段平均梯度摘要，不是个人风险或局部导数。"
+    },
+    {
+      "key": "sitting_cvd_status",
+      "label_zh": "总久坐—心血管死亡 查表状态",
+      "note_zh": "exact原表点；between两点之间；outside超出该结局表；missing未提供该暴露。"
+    },
+    {
+      "key": "sitting_cvd_reference_hours",
+      "label_zh": "总久坐—心血管死亡 原表参照时长",
+      "unit": "h"
+    },
+    {
+      "key": "sitting_cvd_rr",
+      "label_zh": "总久坐—心血管死亡 相对风险",
+      "unit": "1"
+    },
+    {
+      "key": "sitting_cvd_lci",
+      "label_zh": "总久坐—心血管死亡 95%置信区间下限",
+      "unit": "1"
+    },
+    {
+      "key": "sitting_cvd_uci",
+      "label_zh": "总久坐—心血管死亡 95%置信区间上限",
+      "unit": "1"
+    },
+    {
+      "key": "sitting_cvd_lower_hours",
+      "label_zh": "总久坐—心血管死亡 较低时长行时长",
+      "unit": "h",
+      "note_zh": "仅用于未命中原表点时列示相邻行；不是该输入时长的风险或置信区间。"
+    },
+    {
+      "key": "sitting_cvd_lower_rr",
+      "label_zh": "总久坐—心血管死亡 较低时长行RR",
+      "unit": "1",
+      "note_zh": "仅用于未命中原表点时列示相邻行；不是该输入时长的风险或置信区间。"
+    },
+    {
+      "key": "sitting_cvd_lower_lci",
+      "label_zh": "总久坐—心血管死亡 较低时长行95%CI下限",
+      "unit": "1",
+      "note_zh": "仅用于未命中原表点时列示相邻行；不是该输入时长的风险或置信区间。"
+    },
+    {
+      "key": "sitting_cvd_lower_uci",
+      "label_zh": "总久坐—心血管死亡 较低时长行95%CI上限",
+      "unit": "1",
+      "note_zh": "仅用于未命中原表点时列示相邻行；不是该输入时长的风险或置信区间。"
+    },
+    {
+      "key": "sitting_cvd_upper_hours",
+      "label_zh": "总久坐—心血管死亡 较高时长行时长",
+      "unit": "h",
+      "note_zh": "仅用于未命中原表点时列示相邻行；不是该输入时长的风险或置信区间。"
+    },
+    {
+      "key": "sitting_cvd_upper_rr",
+      "label_zh": "总久坐—心血管死亡 较高时长行RR",
+      "unit": "1",
+      "note_zh": "仅用于未命中原表点时列示相邻行；不是该输入时长的风险或置信区间。"
+    },
+    {
+      "key": "sitting_cvd_upper_lci",
+      "label_zh": "总久坐—心血管死亡 较高时长行95%CI下限",
+      "unit": "1",
+      "note_zh": "仅用于未命中原表点时列示相邻行；不是该输入时长的风险或置信区间。"
+    },
+    {
+      "key": "sitting_cvd_upper_uci",
+      "label_zh": "总久坐—心血管死亡 较高时长行95%CI上限",
+      "unit": "1",
+      "note_zh": "仅用于未命中原表点时列示相邻行；不是该输入时长的风险或置信区间。"
+    },
+    {
+      "key": "sitting_cvd_threshold_hours",
+      "label_zh": "总久坐—心血管死亡 研究分段阈值",
+      "unit": "h"
+    },
+    {
+      "key": "sitting_cvd_band",
+      "label_zh": "总久坐—心血管死亡 分段位置",
+      "note_zh": "at_or_below含阈值；above大于阈值；不是安全或临床风险等级。"
+    },
+    {
+      "key": "sitting_cvd_per_hour_rr",
+      "label_zh": "总久坐—心血管死亡 所在段每增加一小时的RR",
+      "unit": "1",
+      "note_zh": "附表5整段平均梯度摘要，不是个人风险或局部导数。"
+    },
+    {
+      "key": "sitting_cvd_per_hour_lci",
+      "label_zh": "总久坐—心血管死亡 所在段每增加一小时的LCI",
+      "unit": "1",
+      "note_zh": "附表5整段平均梯度摘要，不是个人风险或局部导数。"
+    },
+    {
+      "key": "sitting_cvd_per_hour_uci",
+      "label_zh": "总久坐—心血管死亡 所在段每增加一小时的UCI",
+      "unit": "1",
+      "note_zh": "附表5整段平均梯度摘要，不是个人风险或局部导数。"
+    },
+    {
+      "key": "sitting_cancer_status",
+      "label_zh": "总久坐—癌症死亡 查表状态",
+      "note_zh": "exact原表点；between两点之间；outside超出该结局表；missing未提供该暴露。"
+    },
+    {
+      "key": "sitting_cancer_reference_hours",
+      "label_zh": "总久坐—癌症死亡 原表参照时长",
+      "unit": "h"
+    },
+    {
+      "key": "sitting_cancer_rr",
+      "label_zh": "总久坐—癌症死亡 相对风险",
+      "unit": "1"
+    },
+    {
+      "key": "sitting_cancer_lci",
+      "label_zh": "总久坐—癌症死亡 95%置信区间下限",
+      "unit": "1"
+    },
+    {
+      "key": "sitting_cancer_uci",
+      "label_zh": "总久坐—癌症死亡 95%置信区间上限",
+      "unit": "1"
+    },
+    {
+      "key": "sitting_cancer_lower_hours",
+      "label_zh": "总久坐—癌症死亡 较低时长行时长",
+      "unit": "h",
+      "note_zh": "仅用于未命中原表点时列示相邻行；不是该输入时长的风险或置信区间。"
+    },
+    {
+      "key": "sitting_cancer_lower_rr",
+      "label_zh": "总久坐—癌症死亡 较低时长行RR",
+      "unit": "1",
+      "note_zh": "仅用于未命中原表点时列示相邻行；不是该输入时长的风险或置信区间。"
+    },
+    {
+      "key": "sitting_cancer_lower_lci",
+      "label_zh": "总久坐—癌症死亡 较低时长行95%CI下限",
+      "unit": "1",
+      "note_zh": "仅用于未命中原表点时列示相邻行；不是该输入时长的风险或置信区间。"
+    },
+    {
+      "key": "sitting_cancer_lower_uci",
+      "label_zh": "总久坐—癌症死亡 较低时长行95%CI上限",
+      "unit": "1",
+      "note_zh": "仅用于未命中原表点时列示相邻行；不是该输入时长的风险或置信区间。"
+    },
+    {
+      "key": "sitting_cancer_upper_hours",
+      "label_zh": "总久坐—癌症死亡 较高时长行时长",
+      "unit": "h",
+      "note_zh": "仅用于未命中原表点时列示相邻行；不是该输入时长的风险或置信区间。"
+    },
+    {
+      "key": "sitting_cancer_upper_rr",
+      "label_zh": "总久坐—癌症死亡 较高时长行RR",
+      "unit": "1",
+      "note_zh": "仅用于未命中原表点时列示相邻行；不是该输入时长的风险或置信区间。"
+    },
+    {
+      "key": "sitting_cancer_upper_lci",
+      "label_zh": "总久坐—癌症死亡 较高时长行95%CI下限",
+      "unit": "1",
+      "note_zh": "仅用于未命中原表点时列示相邻行；不是该输入时长的风险或置信区间。"
+    },
+    {
+      "key": "sitting_cancer_upper_uci",
+      "label_zh": "总久坐—癌症死亡 较高时长行95%CI上限",
+      "unit": "1",
+      "note_zh": "仅用于未命中原表点时列示相邻行；不是该输入时长的风险或置信区间。"
+    },
+    {
+      "key": "sitting_t2d_status",
+      "label_zh": "总久坐—新发2型糖尿病 查表状态",
+      "note_zh": "exact原表点；between两点之间；outside超出该结局表；missing未提供该暴露。"
+    },
+    {
+      "key": "sitting_t2d_reference_hours",
+      "label_zh": "总久坐—新发2型糖尿病 原表参照时长",
+      "unit": "h"
+    },
+    {
+      "key": "sitting_t2d_rr",
+      "label_zh": "总久坐—新发2型糖尿病 相对风险",
+      "unit": "1"
+    },
+    {
+      "key": "sitting_t2d_lci",
+      "label_zh": "总久坐—新发2型糖尿病 95%置信区间下限",
+      "unit": "1"
+    },
+    {
+      "key": "sitting_t2d_uci",
+      "label_zh": "总久坐—新发2型糖尿病 95%置信区间上限",
+      "unit": "1"
+    },
+    {
+      "key": "sitting_t2d_lower_hours",
+      "label_zh": "总久坐—新发2型糖尿病 较低时长行时长",
+      "unit": "h",
+      "note_zh": "仅用于未命中原表点时列示相邻行；不是该输入时长的风险或置信区间。"
+    },
+    {
+      "key": "sitting_t2d_lower_rr",
+      "label_zh": "总久坐—新发2型糖尿病 较低时长行RR",
+      "unit": "1",
+      "note_zh": "仅用于未命中原表点时列示相邻行；不是该输入时长的风险或置信区间。"
+    },
+    {
+      "key": "sitting_t2d_lower_lci",
+      "label_zh": "总久坐—新发2型糖尿病 较低时长行95%CI下限",
+      "unit": "1",
+      "note_zh": "仅用于未命中原表点时列示相邻行；不是该输入时长的风险或置信区间。"
+    },
+    {
+      "key": "sitting_t2d_lower_uci",
+      "label_zh": "总久坐—新发2型糖尿病 较低时长行95%CI上限",
+      "unit": "1",
+      "note_zh": "仅用于未命中原表点时列示相邻行；不是该输入时长的风险或置信区间。"
+    },
+    {
+      "key": "sitting_t2d_upper_hours",
+      "label_zh": "总久坐—新发2型糖尿病 较高时长行时长",
+      "unit": "h",
+      "note_zh": "仅用于未命中原表点时列示相邻行；不是该输入时长的风险或置信区间。"
+    },
+    {
+      "key": "sitting_t2d_upper_rr",
+      "label_zh": "总久坐—新发2型糖尿病 较高时长行RR",
+      "unit": "1",
+      "note_zh": "仅用于未命中原表点时列示相邻行；不是该输入时长的风险或置信区间。"
+    },
+    {
+      "key": "sitting_t2d_upper_lci",
+      "label_zh": "总久坐—新发2型糖尿病 较高时长行95%CI下限",
+      "unit": "1",
+      "note_zh": "仅用于未命中原表点时列示相邻行；不是该输入时长的风险或置信区间。"
+    },
+    {
+      "key": "sitting_t2d_upper_uci",
+      "label_zh": "总久坐—新发2型糖尿病 较高时长行95%CI上限",
+      "unit": "1",
+      "note_zh": "仅用于未命中原表点时列示相邻行；不是该输入时长的风险或置信区间。"
+    },
+    {
+      "key": "tv_hours_day",
+      "label_zh": "看电视每日时长",
+      "unit": "h"
+    },
+    {
+      "key": "tv_all_cause_status",
+      "label_zh": "看电视—全因死亡 查表状态",
+      "note_zh": "exact原表点；between两点之间；outside超出该结局表；missing未提供该暴露。"
+    },
+    {
+      "key": "tv_all_cause_reference_hours",
+      "label_zh": "看电视—全因死亡 原表参照时长",
+      "unit": "h"
+    },
+    {
+      "key": "tv_all_cause_rr",
+      "label_zh": "看电视—全因死亡 相对风险",
+      "unit": "1"
+    },
+    {
+      "key": "tv_all_cause_lci",
+      "label_zh": "看电视—全因死亡 95%置信区间下限",
+      "unit": "1"
+    },
+    {
+      "key": "tv_all_cause_uci",
+      "label_zh": "看电视—全因死亡 95%置信区间上限",
+      "unit": "1"
+    },
+    {
+      "key": "tv_all_cause_lower_hours",
+      "label_zh": "看电视—全因死亡 较低时长行时长",
+      "unit": "h",
+      "note_zh": "仅用于未命中原表点时列示相邻行；不是该输入时长的风险或置信区间。"
+    },
+    {
+      "key": "tv_all_cause_lower_rr",
+      "label_zh": "看电视—全因死亡 较低时长行RR",
+      "unit": "1",
+      "note_zh": "仅用于未命中原表点时列示相邻行；不是该输入时长的风险或置信区间。"
+    },
+    {
+      "key": "tv_all_cause_lower_lci",
+      "label_zh": "看电视—全因死亡 较低时长行95%CI下限",
+      "unit": "1",
+      "note_zh": "仅用于未命中原表点时列示相邻行；不是该输入时长的风险或置信区间。"
+    },
+    {
+      "key": "tv_all_cause_lower_uci",
+      "label_zh": "看电视—全因死亡 较低时长行95%CI上限",
+      "unit": "1",
+      "note_zh": "仅用于未命中原表点时列示相邻行；不是该输入时长的风险或置信区间。"
+    },
+    {
+      "key": "tv_all_cause_upper_hours",
+      "label_zh": "看电视—全因死亡 较高时长行时长",
+      "unit": "h",
+      "note_zh": "仅用于未命中原表点时列示相邻行；不是该输入时长的风险或置信区间。"
+    },
+    {
+      "key": "tv_all_cause_upper_rr",
+      "label_zh": "看电视—全因死亡 较高时长行RR",
+      "unit": "1",
+      "note_zh": "仅用于未命中原表点时列示相邻行；不是该输入时长的风险或置信区间。"
+    },
+    {
+      "key": "tv_all_cause_upper_lci",
+      "label_zh": "看电视—全因死亡 较高时长行95%CI下限",
+      "unit": "1",
+      "note_zh": "仅用于未命中原表点时列示相邻行；不是该输入时长的风险或置信区间。"
+    },
+    {
+      "key": "tv_all_cause_upper_uci",
+      "label_zh": "看电视—全因死亡 较高时长行95%CI上限",
+      "unit": "1",
+      "note_zh": "仅用于未命中原表点时列示相邻行；不是该输入时长的风险或置信区间。"
+    },
+    {
+      "key": "tv_all_cause_threshold_hours",
+      "label_zh": "看电视—全因死亡 研究分段阈值",
+      "unit": "h"
+    },
+    {
+      "key": "tv_all_cause_band",
+      "label_zh": "看电视—全因死亡 分段位置",
+      "note_zh": "at_or_below含阈值；above大于阈值；不是安全或临床风险等级。"
+    },
+    {
+      "key": "tv_all_cause_per_hour_rr",
+      "label_zh": "看电视—全因死亡 所在段每增加一小时的RR",
+      "unit": "1",
+      "note_zh": "附表5整段平均梯度摘要，不是个人风险或局部导数。"
+    },
+    {
+      "key": "tv_all_cause_per_hour_lci",
+      "label_zh": "看电视—全因死亡 所在段每增加一小时的LCI",
+      "unit": "1",
+      "note_zh": "附表5整段平均梯度摘要，不是个人风险或局部导数。"
+    },
+    {
+      "key": "tv_all_cause_per_hour_uci",
+      "label_zh": "看电视—全因死亡 所在段每增加一小时的UCI",
+      "unit": "1",
+      "note_zh": "附表5整段平均梯度摘要，不是个人风险或局部导数。"
+    },
+    {
+      "key": "tv_cvd_status",
+      "label_zh": "看电视—心血管死亡 查表状态",
+      "note_zh": "exact原表点；between两点之间；outside超出该结局表；missing未提供该暴露。"
+    },
+    {
+      "key": "tv_cvd_reference_hours",
+      "label_zh": "看电视—心血管死亡 原表参照时长",
+      "unit": "h"
+    },
+    {
+      "key": "tv_cvd_rr",
+      "label_zh": "看电视—心血管死亡 相对风险",
+      "unit": "1"
+    },
+    {
+      "key": "tv_cvd_lci",
+      "label_zh": "看电视—心血管死亡 95%置信区间下限",
+      "unit": "1"
+    },
+    {
+      "key": "tv_cvd_uci",
+      "label_zh": "看电视—心血管死亡 95%置信区间上限",
+      "unit": "1"
+    },
+    {
+      "key": "tv_cvd_lower_hours",
+      "label_zh": "看电视—心血管死亡 较低时长行时长",
+      "unit": "h",
+      "note_zh": "仅用于未命中原表点时列示相邻行；不是该输入时长的风险或置信区间。"
+    },
+    {
+      "key": "tv_cvd_lower_rr",
+      "label_zh": "看电视—心血管死亡 较低时长行RR",
+      "unit": "1",
+      "note_zh": "仅用于未命中原表点时列示相邻行；不是该输入时长的风险或置信区间。"
+    },
+    {
+      "key": "tv_cvd_lower_lci",
+      "label_zh": "看电视—心血管死亡 较低时长行95%CI下限",
+      "unit": "1",
+      "note_zh": "仅用于未命中原表点时列示相邻行；不是该输入时长的风险或置信区间。"
+    },
+    {
+      "key": "tv_cvd_lower_uci",
+      "label_zh": "看电视—心血管死亡 较低时长行95%CI上限",
+      "unit": "1",
+      "note_zh": "仅用于未命中原表点时列示相邻行；不是该输入时长的风险或置信区间。"
+    },
+    {
+      "key": "tv_cvd_upper_hours",
+      "label_zh": "看电视—心血管死亡 较高时长行时长",
+      "unit": "h",
+      "note_zh": "仅用于未命中原表点时列示相邻行；不是该输入时长的风险或置信区间。"
+    },
+    {
+      "key": "tv_cvd_upper_rr",
+      "label_zh": "看电视—心血管死亡 较高时长行RR",
+      "unit": "1",
+      "note_zh": "仅用于未命中原表点时列示相邻行；不是该输入时长的风险或置信区间。"
+    },
+    {
+      "key": "tv_cvd_upper_lci",
+      "label_zh": "看电视—心血管死亡 较高时长行95%CI下限",
+      "unit": "1",
+      "note_zh": "仅用于未命中原表点时列示相邻行；不是该输入时长的风险或置信区间。"
+    },
+    {
+      "key": "tv_cvd_upper_uci",
+      "label_zh": "看电视—心血管死亡 较高时长行95%CI上限",
+      "unit": "1",
+      "note_zh": "仅用于未命中原表点时列示相邻行；不是该输入时长的风险或置信区间。"
+    },
+    {
+      "key": "tv_cvd_threshold_hours",
+      "label_zh": "看电视—心血管死亡 研究分段阈值",
+      "unit": "h"
+    },
+    {
+      "key": "tv_cvd_band",
+      "label_zh": "看电视—心血管死亡 分段位置",
+      "note_zh": "at_or_below含阈值；above大于阈值；不是安全或临床风险等级。"
+    },
+    {
+      "key": "tv_cvd_per_hour_rr",
+      "label_zh": "看电视—心血管死亡 所在段每增加一小时的RR",
+      "unit": "1",
+      "note_zh": "附表5整段平均梯度摘要，不是个人风险或局部导数。"
+    },
+    {
+      "key": "tv_cvd_per_hour_lci",
+      "label_zh": "看电视—心血管死亡 所在段每增加一小时的LCI",
+      "unit": "1",
+      "note_zh": "附表5整段平均梯度摘要，不是个人风险或局部导数。"
+    },
+    {
+      "key": "tv_cvd_per_hour_uci",
+      "label_zh": "看电视—心血管死亡 所在段每增加一小时的UCI",
+      "unit": "1",
+      "note_zh": "附表5整段平均梯度摘要，不是个人风险或局部导数。"
+    },
+    {
+      "key": "tv_cancer_status",
+      "label_zh": "看电视—癌症死亡 查表状态",
+      "note_zh": "exact原表点；between两点之间；outside超出该结局表；missing未提供该暴露。"
+    },
+    {
+      "key": "tv_cancer_reference_hours",
+      "label_zh": "看电视—癌症死亡 原表参照时长",
+      "unit": "h"
+    },
+    {
+      "key": "tv_cancer_rr",
+      "label_zh": "看电视—癌症死亡 相对风险",
+      "unit": "1"
+    },
+    {
+      "key": "tv_cancer_lci",
+      "label_zh": "看电视—癌症死亡 95%置信区间下限",
+      "unit": "1"
+    },
+    {
+      "key": "tv_cancer_uci",
+      "label_zh": "看电视—癌症死亡 95%置信区间上限",
+      "unit": "1"
+    },
+    {
+      "key": "tv_cancer_lower_hours",
+      "label_zh": "看电视—癌症死亡 较低时长行时长",
+      "unit": "h",
+      "note_zh": "仅用于未命中原表点时列示相邻行；不是该输入时长的风险或置信区间。"
+    },
+    {
+      "key": "tv_cancer_lower_rr",
+      "label_zh": "看电视—癌症死亡 较低时长行RR",
+      "unit": "1",
+      "note_zh": "仅用于未命中原表点时列示相邻行；不是该输入时长的风险或置信区间。"
+    },
+    {
+      "key": "tv_cancer_lower_lci",
+      "label_zh": "看电视—癌症死亡 较低时长行95%CI下限",
+      "unit": "1",
+      "note_zh": "仅用于未命中原表点时列示相邻行；不是该输入时长的风险或置信区间。"
+    },
+    {
+      "key": "tv_cancer_lower_uci",
+      "label_zh": "看电视—癌症死亡 较低时长行95%CI上限",
+      "unit": "1",
+      "note_zh": "仅用于未命中原表点时列示相邻行；不是该输入时长的风险或置信区间。"
+    },
+    {
+      "key": "tv_cancer_upper_hours",
+      "label_zh": "看电视—癌症死亡 较高时长行时长",
+      "unit": "h",
+      "note_zh": "仅用于未命中原表点时列示相邻行；不是该输入时长的风险或置信区间。"
+    },
+    {
+      "key": "tv_cancer_upper_rr",
+      "label_zh": "看电视—癌症死亡 较高时长行RR",
+      "unit": "1",
+      "note_zh": "仅用于未命中原表点时列示相邻行；不是该输入时长的风险或置信区间。"
+    },
+    {
+      "key": "tv_cancer_upper_lci",
+      "label_zh": "看电视—癌症死亡 较高时长行95%CI下限",
+      "unit": "1",
+      "note_zh": "仅用于未命中原表点时列示相邻行；不是该输入时长的风险或置信区间。"
+    },
+    {
+      "key": "tv_cancer_upper_uci",
+      "label_zh": "看电视—癌症死亡 较高时长行95%CI上限",
+      "unit": "1",
+      "note_zh": "仅用于未命中原表点时列示相邻行；不是该输入时长的风险或置信区间。"
+    },
+    {
+      "key": "tv_t2d_status",
+      "label_zh": "看电视—新发2型糖尿病 查表状态",
+      "note_zh": "exact原表点；between两点之间；outside超出该结局表；missing未提供该暴露。"
+    },
+    {
+      "key": "tv_t2d_reference_hours",
+      "label_zh": "看电视—新发2型糖尿病 原表参照时长",
+      "unit": "h"
+    },
+    {
+      "key": "tv_t2d_rr",
+      "label_zh": "看电视—新发2型糖尿病 相对风险",
+      "unit": "1"
+    },
+    {
+      "key": "tv_t2d_lci",
+      "label_zh": "看电视—新发2型糖尿病 95%置信区间下限",
+      "unit": "1"
+    },
+    {
+      "key": "tv_t2d_uci",
+      "label_zh": "看电视—新发2型糖尿病 95%置信区间上限",
+      "unit": "1"
+    },
+    {
+      "key": "tv_t2d_lower_hours",
+      "label_zh": "看电视—新发2型糖尿病 较低时长行时长",
+      "unit": "h",
+      "note_zh": "仅用于未命中原表点时列示相邻行；不是该输入时长的风险或置信区间。"
+    },
+    {
+      "key": "tv_t2d_lower_rr",
+      "label_zh": "看电视—新发2型糖尿病 较低时长行RR",
+      "unit": "1",
+      "note_zh": "仅用于未命中原表点时列示相邻行；不是该输入时长的风险或置信区间。"
+    },
+    {
+      "key": "tv_t2d_lower_lci",
+      "label_zh": "看电视—新发2型糖尿病 较低时长行95%CI下限",
+      "unit": "1",
+      "note_zh": "仅用于未命中原表点时列示相邻行；不是该输入时长的风险或置信区间。"
+    },
+    {
+      "key": "tv_t2d_lower_uci",
+      "label_zh": "看电视—新发2型糖尿病 较低时长行95%CI上限",
+      "unit": "1",
+      "note_zh": "仅用于未命中原表点时列示相邻行；不是该输入时长的风险或置信区间。"
+    },
+    {
+      "key": "tv_t2d_upper_hours",
+      "label_zh": "看电视—新发2型糖尿病 较高时长行时长",
+      "unit": "h",
+      "note_zh": "仅用于未命中原表点时列示相邻行；不是该输入时长的风险或置信区间。"
+    },
+    {
+      "key": "tv_t2d_upper_rr",
+      "label_zh": "看电视—新发2型糖尿病 较高时长行RR",
+      "unit": "1",
+      "note_zh": "仅用于未命中原表点时列示相邻行；不是该输入时长的风险或置信区间。"
+    },
+    {
+      "key": "tv_t2d_upper_lci",
+      "label_zh": "看电视—新发2型糖尿病 较高时长行95%CI下限",
+      "unit": "1",
+      "note_zh": "仅用于未命中原表点时列示相邻行；不是该输入时长的风险或置信区间。"
+    },
+    {
+      "key": "tv_t2d_upper_uci",
+      "label_zh": "看电视—新发2型糖尿病 较高时长行95%CI上限",
+      "unit": "1",
+      "note_zh": "仅用于未命中原表点时列示相邻行；不是该输入时长的风险或置信区间。"
+    }
+  ],
+  "validation": {
+    "status": "reproduced",
+    "examples": [
+      {
+        "locator": "Appendix Table 7, PA-adjusted total sitting, 8 h/day rows, outcome order: all-cause / CVD / cancer / T2D",
+        "quote": "8\t1.06\t1.03\t1.09\n8\t1.11\t1.01\t1.22\n8\t1.02\t0.96\t1.08\n8\t1.08\t0.99\t1.17",
+        "values": [
+          8,
+          1.06,
+          1.03,
+          1.09,
+          1.11,
+          1.01,
+          1.22,
+          1.02,
+          0.96,
+          1.08,
+          0.99,
+          1.17
+        ],
+        "tolerance": "逐格返回印出的两位小数，精确相等；这是查表复现，不是样条系数验证。",
+        "test": "tests/test_manifest.py::test_printed_sitting_eight_hours"
+      },
+      {
+        "locator": "Appendix Table 8, PA-adjusted TV viewing, 4 h/day rows, outcome order: all-cause / CVD / cancer / T2D",
+        "quote": "4\t1.12\t1.06\t1.18\n4\t1.06\t0.97\t1.16\n4\t1.07\t1.01\t1.13\n4\t1.56\t1.38\t1.77",
+        "values": [
+          4,
+          1.12,
+          1.06,
+          1.18,
+          0.97,
+          1.16,
+          1.07,
+          1.01,
+          1.13,
+          1.56,
+          1.38,
+          1.77
+        ],
+        "tolerance": "逐格返回印出的两位小数，精确相等；输入240分钟由精确因子1/60换算为4小时。",
+        "test": "tests/test_manifest.py::test_printed_tv_four_hours"
+      }
+    ]
+  },
+  "data_files": [
+    {
+      "path": "data/sitting.csv",
+      "source_url": "https://static-content.springer.com/esm/art%3A10.1007%2Fs10654-018-0380-1/MediaObjects/10654_2018_380_MOESM1_ESM.docx",
+      "license": "CC BY 4.0; transcribed numeric cells; Patterson et al. 2018",
+      "sha256": "54249c954722c50ccabbe461e7f7516ee2de4da9c530a24db3ed474026bcc8d3",
+      "redistributable": "yes"
+    },
+    {
+      "path": "data/tv.csv",
+      "source_url": "https://static-content.springer.com/esm/art%3A10.1007%2Fs10654-018-0380-1/MediaObjects/10654_2018_380_MOESM1_ESM.docx",
+      "license": "CC BY 4.0; transcribed numeric cells; Patterson et al. 2018",
+      "sha256": "dcc78bc37e194168c3128bf2cac00bd7fc4c4a5f56fc16bf9a20c90725c048a6",
+      "redistributable": "yes"
+    }
+  ]
+}
