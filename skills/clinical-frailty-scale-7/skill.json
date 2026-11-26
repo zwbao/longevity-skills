@@ -1,0 +1,205 @@
+{
+  "schema": "longevity-skill/1",
+  "name": "clinical-frailty-scale-7",
+  "kind": "paper",
+  "tier": "A",
+  "species": [
+    "human"
+  ],
+  "evidence": "cohort",
+  "domains": [
+    "衰弱与功能"
+  ],
+  "blurb_zh": "把临床人员选定的整体功能描述对应到原版七级临床衰弱量表，解释该等级；不自动判断症状或计算个人死亡概率。",
+  "intents": [
+    "frailty_mortality"
+  ],
+  "triage": {
+    "reason_zh": "人体随访研究的框 1 完整印出七种整体临床描述及对应等级，可将个人经临床确认的描述映射为等级。",
+    "reviewed": false
+  },
+  "paper": {
+    "doi": "10.1503/cmaj.050051",
+    "title": "A global clinical measure of fitness and frailty in elderly people.",
+    "title_zh": "老年人体能与衰弱的整体临床评估",
+    "journal": "CMAJ",
+    "year": 2005,
+    "authors": "Rockwood 等",
+    "article_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC1188185/",
+    "supplements": [
+      {
+        "label": "框 1：原版量表（正文）",
+        "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC1188185/figure/fb1-25/"
+      },
+      {
+        "label": "附录 1：比较用衰弱指数的条目",
+        "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC1188185/table/tua1-25/"
+      }
+    ],
+    "card_notes": [
+      "使用 2005 年原版七级量表；整体描述须由临床人员确认。复现验证只覆盖框 1 的描述与等级映射。",
+      "CSHA-2 临床样本 2305 人，随访至 CSHA-3；样本偏向认知受损和机构居住者。最高等级把完全依赖和终末期疾病合在一起。",
+      "已阅读正文、框 1–2、表 1–3、图 1、附录 1；没有发现另列的补充文件或本文发布的代码、数据链接。本文不提供可用于个体绝对风险预测的完整参数。"
+    ],
+    "summary_zh": "这项研究随访加拿大老年人，发现医生对整体衰弱程度的临床判断与之后死亡及入住照护机构的风险有关。个人报告只把经临床确认的整体描述对应到原版量表等级并解释其含义，不从症状自动评分或推算个人结局概率。",
+    "summary_status": "draft"
+  },
+  "entry": {
+    "script": "scripts/personal_report.py",
+    "measurements_flag": "--measurements",
+    "measurements_header": [
+      "item",
+      "value",
+      "unit"
+    ],
+    "out_flag": "--out",
+    "result_json": true
+  },
+  "inputs_status": "verified",
+  "inputs": [
+    {
+      "key": "very_fit_selected",
+      "label_zh": "非常健壮",
+      "aliases": [
+        "Very fit"
+      ],
+      "unit": "1",
+      "accept": {},
+      "range": [
+        0,
+        1
+      ],
+      "required": false,
+      "from": "measurements",
+      "note_zh": "临床人员确认的完整描述：精力和体能充沛、积极主动，通常规律锻炼，属于同龄人中体能最好的群体。 1 表示选中、0 表示未选；全表必须且只能选中一个描述。不是独立症状，不累加。"
+    },
+    {
+      "key": "well_selected",
+      "label_zh": "健康",
+      "aliases": [
+        "Well"
+      ],
+      "unit": "1",
+      "accept": {},
+      "range": [
+        0,
+        1
+      ],
+      "required": false,
+      "from": "measurements",
+      "note_zh": "临床人员确认的完整描述：没有活动性疾病，但体能不及非常健壮的人。 1 表示选中、0 表示未选；全表必须且只能选中一个描述。不是独立症状，不累加。"
+    },
+    {
+      "key": "well_treated_comorbidity_selected",
+      "label_zh": "健康但有已治疗的合并疾病",
+      "aliases": [
+        "Well, with treated comorbid disease",
+        "Well with treated comorbid disease"
+      ],
+      "unit": "1",
+      "accept": {},
+      "range": [
+        0,
+        1
+      ],
+      "required": false,
+      "from": "measurements",
+      "note_zh": "临床人员确认的完整描述：合并疾病的症状控制良好，较看似易受损的状态控制得更好。 1 表示选中、0 表示未选；全表必须且只能选中一个描述。不是独立症状，不累加。"
+    },
+    {
+      "key": "apparently_vulnerable_selected",
+      "label_zh": "看似易受损",
+      "aliases": [
+        "Apparently vulnerable"
+      ],
+      "unit": "1",
+      "accept": {},
+      "range": [
+        0,
+        1
+      ],
+      "required": false,
+      "from": "measurements",
+      "note_zh": "临床人员确认的完整描述：尚无明显依赖，但常觉得行动变慢，或存在疾病症状。 1 表示选中、0 表示未选；全表必须且只能选中一个描述。不是独立症状，不累加。"
+    },
+    {
+      "key": "mildly_frail_selected",
+      "label_zh": "轻度衰弱",
+      "aliases": [
+        "Mildly frail"
+      ],
+      "unit": "1",
+      "accept": {},
+      "range": [
+        0,
+        1
+      ],
+      "required": false,
+      "from": "measurements",
+      "note_zh": "临床人员确认的完整描述：在工具性日常生活活动方面有限度地依赖他人。 1 表示选中、0 表示未选；全表必须且只能选中一个描述。不是独立症状，不累加。"
+    },
+    {
+      "key": "moderately_frail_selected",
+      "label_zh": "中度衰弱",
+      "aliases": [
+        "Moderately frail"
+      ],
+      "unit": "1",
+      "accept": {},
+      "range": [
+        0,
+        1
+      ],
+      "required": false,
+      "from": "measurements",
+      "note_zh": "临床人员确认的完整描述：工具性及非工具性日常生活活动都需要他人帮助。 1 表示选中、0 表示未选；全表必须且只能选中一个描述。不是独立症状，不累加。"
+    },
+    {
+      "key": "severely_frail_selected",
+      "label_zh": "重度衰弱",
+      "aliases": [
+        "Severely frail"
+      ],
+      "unit": "1",
+      "accept": {},
+      "range": [
+        0,
+        1
+      ],
+      "required": false,
+      "from": "measurements",
+      "note_zh": "临床人员确认的完整描述：日常生活活动完全依赖他人，或处于终末期疾病状态。 1 表示选中、0 表示未选；全表必须且只能选中一个描述。不是独立症状，不累加。"
+    }
+  ],
+  "outputs": [
+    {
+      "key": "cfs7_grade",
+      "label_zh": "原版临床衰弱量表等级",
+      "unit": "score"
+    },
+    {
+      "key": "cfs7_category",
+      "label_zh": "原版等级名称",
+      "unit": ""
+    },
+    {
+      "key": "cfs7_description",
+      "label_zh": "对应整体临床描述",
+      "unit": ""
+    }
+  ],
+  "validation": {
+    "status": "reproduced",
+    "examples": [
+      {
+        "locator": "Box 1: The CSHA Clinical Frailty Scale, category 5",
+        "quote": "5 Mildly frail — with limited dependence on others for instrumental activities of daily living",
+        "values": [
+          5
+        ],
+        "tolerance": "精确相等；原文印出的离散等级。只复现临床描述到等级的映射，不验证临床人员如何选择描述。",
+        "test": "tests/test_manifest.py::test_box1_mildly_frail_grade"
+      }
+    ]
+  }
+}
