@@ -3,7 +3,7 @@
   "reference_items": 0,
   "reference_covered": 0,
   "unlabelled": {
-    "claims": 12607,
+    "claims": 11902,
     "effects": 293,
     "skills": 67
   },
@@ -165,11 +165,11 @@
           "missing": []
         },
         "population": {
-          "rows": 1,
+          "rows": 5,
           "effects": 0,
-          "papers": 1,
+          "papers": 2,
           "skills": [],
-          "latest": "2026-09-23",
+          "latest": "2026-10-04",
           "reference": 0,
           "covered": 0,
           "missing": []
@@ -212,9 +212,9 @@
           "missing": []
         },
         "population": {
-          "rows": 8,
+          "rows": 10,
           "effects": 0,
-          "papers": 1,
+          "papers": 3,
           "skills": [],
           "latest": "2026-09-23",
           "reference": 0,
@@ -259,11 +259,11 @@
           "missing": []
         },
         "population": {
-          "rows": 20,
+          "rows": 26,
           "effects": 0,
-          "papers": 2,
+          "papers": 5,
           "skills": [],
-          "latest": "2026-09-23",
+          "latest": "2026-10-04",
           "reference": 0,
           "covered": 0,
           "missing": []
@@ -279,9 +279,9 @@
           "missing": []
         },
         "mechanism": {
-          "rows": 10,
+          "rows": 12,
           "effects": 0,
-          "papers": 2,
+          "papers": 3,
           "skills": [],
           "latest": "2026-09-23",
           "reference": 0,
@@ -306,9 +306,9 @@
           "missing": []
         },
         "population": {
-          "rows": 191,
+          "rows": 647,
           "effects": 0,
-          "papers": 7,
+          "papers": 11,
           "skills": [],
           "latest": "2026-10-04",
           "reference": 0,
@@ -326,9 +326,9 @@
           "missing": []
         },
         "mechanism": {
-          "rows": 85,
+          "rows": 116,
           "effects": 0,
-          "papers": 8,
+          "papers": 10,
           "skills": [],
           "latest": "2026-10-04",
           "reference": 0,
@@ -353,11 +353,11 @@
           "missing": []
         },
         "population": {
-          "rows": 23,
+          "rows": 24,
           "effects": 0,
-          "papers": 3,
+          "papers": 4,
           "skills": [],
-          "latest": "2026-09-23",
+          "latest": "2026-10-04",
           "reference": 0,
           "covered": 0,
           "missing": []
@@ -514,9 +514,9 @@
           "missing": []
         },
         "mechanism": {
-          "rows": 588,
+          "rows": 595,
           "effects": 0,
-          "papers": 9,
+          "papers": 12,
           "skills": [],
           "latest": "2026-10-04",
           "reference": 0,
@@ -588,11 +588,11 @@
           "missing": []
         },
         "population": {
-          "rows": 31,
+          "rows": 42,
           "effects": 0,
-          "papers": 4,
+          "papers": 7,
           "skills": [],
-          "latest": "2026-09-23",
+          "latest": "2026-10-04",
           "reference": 0,
           "covered": 0,
           "missing": []
@@ -608,9 +608,9 @@
           "missing": []
         },
         "mechanism": {
-          "rows": 104,
+          "rows": 108,
           "effects": 0,
-          "papers": 5,
+          "papers": 7,
           "skills": [],
           "latest": "2026-10-04",
           "reference": 0,
@@ -635,9 +635,9 @@
           "missing": []
         },
         "population": {
-          "rows": 147,
+          "rows": 601,
           "effects": 0,
-          "papers": 11,
+          "papers": 14,
           "skills": [],
           "latest": "2026-10-04",
           "reference": 0,
@@ -682,9 +682,9 @@
           "missing": []
         },
         "population": {
-          "rows": 257,
+          "rows": 260,
           "effects": 0,
-          "papers": 8,
+          "papers": 9,
           "skills": [],
           "latest": "2026-10-04",
           "reference": 0,
@@ -702,9 +702,9 @@
           "missing": []
         },
         "mechanism": {
-          "rows": 919,
+          "rows": 1098,
           "effects": 0,
-          "papers": 34,
+          "papers": 42,
           "skills": [],
           "latest": "2026-10-04",
           "reference": 0,
@@ -729,9 +729,9 @@
           "missing": []
         },
         "population": {
-          "rows": 94,
+          "rows": 111,
           "effects": 0,
-          "papers": 6,
+          "papers": 10,
           "skills": [],
           "latest": "2026-10-04",
           "reference": 0,
@@ -749,9 +749,9 @@
           "missing": []
         },
         "mechanism": {
-          "rows": 17,
+          "rows": 132,
           "effects": 0,
-          "papers": 5,
+          "papers": 7,
           "skills": [],
           "latest": "2026-10-04",
           "reference": 0,
