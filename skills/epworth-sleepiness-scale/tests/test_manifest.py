@@ -120,3 +120,12 @@ def test_duplicate_item_is_not_summed(tmp_path):
     run, out = run_report(tmp_path, [*VALID, (VALID[0][0], "3", "score")])
     assert run.returncode == 3
     assert not (out / "result.json").exists()
+
+
+def test_printed_total_range():
+    from personal_report import calculate
+    from presets import ITEM_KEYS
+
+    # p. 541: "added together to give a score for each subject, between 0 and 24."
+    assert calculate(dict.fromkeys(ITEM_KEYS, 0))["ess_total_score"] == 0
+    assert calculate(dict.fromkeys(ITEM_KEYS, 3))["ess_total_score"] == 24

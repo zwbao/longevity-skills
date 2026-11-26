@@ -297,6 +297,16 @@
         ],
         "tolerance": "整数逐项完全一致；验证八项各自保留原分值，不声称原文给出了完整个人总分示例。",
         "test": "tests/test_manifest.py::test_table1_item_scores"
+      },
+      {
+        "locator": "Development of the ESS, p. 541, last paragraph: printed total-score range",
+        "quote": "The numbers selected for the eight situations in the ESS were added together to give a score for each subject, between 0 and 24.",
+        "values": [
+          0,
+          24
+        ],
+        "tolerance": "整数完全一致；八项全为0得0分、全为3得24分，复现原文印出的总分上下限，不是个人病例示例。",
+        "test": "tests/test_manifest.py::test_printed_total_range"
       }
     ]
   }
