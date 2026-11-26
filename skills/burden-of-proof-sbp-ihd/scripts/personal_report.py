@@ -135,6 +135,8 @@ def main(argv=None) -> int:
     lever = levers(sbp, targets.get(INPUT_KEY))
     rows = [f"# {TITLE}", "", *paper_card_lines(), "", "## 你的查算结果", "",
             *readout_lines(result), "",
+            "曲线来自已发表前瞻性队列研究与降压随机对照试验的荟萃分析（66 个国家、1,486,007 名参与者、"
+            "12,628 例缺血性心脏病事件）；它是人群平均关系，只在这些研究人群中拟合。",
             "这条曲线合并不同研究人群，没有按你的年龄、性别、既往病史或用药校准。",
             "100 mmHg 是论文的数学参照，不是为你设定的治疗目标；研究的五星评级描述整条证据关系，不是个人风险分级。"]
     if "targets" in lever:
